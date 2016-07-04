@@ -1,0 +1,20 @@
+Package: Rvision
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+LazyData: TRUE
+NeedsCompilation: yes
+Imports:
+    Rcpp (>= 0.11.0),
+    RcppArmadillo (>= 0.4.000.2),
+    methods
+Depends:
+    Rcpp (>= 0.11.0),
+    RcppArmadillo (>= 0.4.000.2)
+LinkingTo: Rcpp, RcppArmadillo
+RcppModules: Image, Video
+RoxygenNote: 5.0.1

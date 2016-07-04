@@ -1,0 +1,1 @@
+Video <- setRcppClass("Video", "Video")

@@ -1,0 +1,5 @@
+useDynLib(Rvision)
+exportPattern("^[[:alpha:]]+")
+#importFrom(Rcpp, evalCpp)
+import(Rcpp)
+import(methods)

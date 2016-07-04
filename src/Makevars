@@ -1,0 +1,3 @@
+PKG_LIBS = `Rscript -e 'ROpenCV::opencvConfig("libs")'` -llapack
+PKG_CPPFLAGS = `Rscript -e 'ROpenCV::opencvConfig("cflags")'`
+PKG_CXXFLAGS = `Rscript -e 'Rcpp:::CxxFlags()'`
