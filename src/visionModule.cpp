@@ -3,8 +3,10 @@
 using namespace Rcpp;
 
 #include "opencv2/opencv.hpp"
+#include "utils.hpp"
 #include "Image.hpp"
 #include "Video.hpp"
+#include "Stream.hpp"
 
 
 bool ImageConst1(SEXP* args, int nargs) {
@@ -48,5 +50,26 @@ RCPP_MODULE(class_Video) {
   .method("open", &Video::open)
   .method("isOpened", &Video::isOpened)
   .method("release", &Video::release)
+  .method("get", &Video::get)
+  .method("set", &Video::set)
+  .method("readNext", &Video::readNext)
+  .method("readFrame", &Video::readFrame)
+  ;
+}
+
+
+RCPP_MODULE(class_Stream) {
+
+  class_<Stream>("Stream")
+
+  .constructor()
+  .constructor<int>()
+
+  .method("open", &Stream::open)
+  .method("isOpened", &Stream::isOpened)
+  .method("release", &Stream::release)
+  .method("get", &Stream::get)
+  .method("set", &Stream::set)
+  .method("readNext", &Stream::readNext)
   ;
 }
