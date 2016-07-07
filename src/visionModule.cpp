@@ -73,3 +73,10 @@ RCPP_MODULE(methods_Arithmetic) {
   function("_multiplyScalar", &_multiplyScalar, List::create(_["image"], _["value"]), "");
   function("_divide", &_divide, List::create(_["image1"], _["image2"]), "");
 }
+
+#include "statistics.hpp"
+RCPP_MODULE(methods_Statistics) {
+
+  function("_sum", &_sum, List::create(_["images"]), "");
+  function("_mean", &_mean, List::create(_["images"]), "");
+}

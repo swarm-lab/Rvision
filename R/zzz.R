@@ -3,6 +3,7 @@ loadModule("class_Image", TRUE)
 loadModule("class_Video", TRUE)
 loadModule("class_Stream", TRUE)
 loadModule("methods_Arithmetic", TRUE)
+loadModule("methods_Statistics", TRUE)
 
 
 ### Define generic methods ###

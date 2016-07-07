@@ -16,5 +16,6 @@ Depends:
     Rcpp (>= 0.11.0),
     RcppArmadillo (>= 0.4.000.2)
 LinkingTo: Rcpp, RcppArmadillo
-RcppModules: class_Image, class_Video, class_Stream, methods_Arithmetic
+RcppModules: class_Image, class_Video, class_Stream, methods_Arithmetic,
+    methods_Statistics
 RoxygenNote: 5.0.1
