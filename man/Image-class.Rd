@@ -6,37 +6,21 @@
 \alias{Image-class}
 \alias{Rcpp_Image}
 \title{An S4 class containing an OpenCV image}
+\format{An object of class \code{C++Class} of length 1.}
 \usage{
-Image(...)
-}
-\arguments{
-\item{...}{When created from an image file, \code{Image} takes one argument
-that is a character string indicating the path to the image file. When
-created from an array (e.g. a matrix), it takes this array as its single
-argument. An \code{Image} object can also be created without any argument,
-in which case it is empty and can be populated with an image later.}
-}
-\value{
-An \code{Image} object.
+Image
 }
 \description{
 \code{Image} objects are the base objects of the \pkg{\link{Rvision}}
  package. They contain an \href{http://opencv.org/}{OpenCV} image that can
  originate from an image file, an array, a video file or a video stream.
- This image can be manipulated using the functions of the \pkg{\link{Rvision}}.
-}
-\note{
-\code{Image} objects can be created from video files and video streams
- using the following functions: ...
-}
-\examples{
-# TODO
-
+ This image can be manipulated using the functions of \pkg{\link{Rvision}}.
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
 \seealso{
-\code{\link{Video}}, \code{\link{Stream}}
+\code{\link{image}}, \code{\link{Video}}, \code{\link{Stream}}
 }
+\keyword{datasets}
 

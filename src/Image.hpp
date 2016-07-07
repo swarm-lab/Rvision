@@ -4,6 +4,7 @@ public:
   Image(std::string inputFile);
   Image(cv::Mat InputImage);
   Image(Rcpp::NumericVector inputArray);
+  cv::Mat image;
   bool open(std::string filename);
   bool loadCV(cv::Mat InputImage);
   bool loadArray(Rcpp::NumericVector inputArray);
@@ -12,7 +13,6 @@ public:
   int nrow(), ncol(), nchan();
 
 private:
-  cv::Mat image;
   std::string imageType();
 };
 

@@ -6,30 +6,16 @@
 \alias{Video}
 \alias{Video-class}
 \title{An S4 class containing an OpenCV video}
+\format{An object of class \code{C++Class} of length 1.}
 \usage{
-Video(...)
-}
-\arguments{
-\item{...}{\code{Video} takes one argument that is a character string
-indicating the path to the video file. A \code{Video} object can also be
-created without any argument, in which case it is empty and can be populated
-with a video later.}
-}
-\value{
-A \code{Video} object.
+Video
 }
 \description{
 \code{Video} objects contains an \href{http://opencv.org/}{OpenCV}
  video that originates from a video file.
 }
-\examples{
-# TODO
-
-}
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
-\seealso{
-\code{\link{Image}}, \code{\link{Stream}}
-}
+\keyword{datasets}
 

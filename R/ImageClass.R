@@ -9,33 +9,70 @@
 #' @description \code{Image} objects are the base objects of the \pkg{\link{Rvision}}
 #'  package. They contain an \href{http://opencv.org/}{OpenCV} image that can
 #'  originate from an image file, an array, a video file or a video stream.
-#'  This image can be manipulated using the functions of the \pkg{\link{Rvision}}.
+#'  This image can be manipulated using the functions of \pkg{\link{Rvision}}.
 #'
-#' @usage Image(...)
+#' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @param ... When created from an image file, \code{Image} takes one argument
+#' @seealso \code{\link{image}}, \code{\link{Video}}, \code{\link{Stream}}
+#'
+"Image"
+
+#' @title Create an object of class \code{Image}
+#'
+#' @description Function for creating \code{\link{Image}} objects from arrays
+#'  and image files.
+#'
+#' @param ... When created from an image file, \code{image} takes one argument
 #'  that is a character string indicating the path to the image file. When
 #'  created from an array (e.g. a matrix), it takes this array as its single
 #'  argument. An \code{Image} object can also be created without any argument,
 #'  in which case it is empty and can be populated with an image later.
 #'
-#' @return An \code{Image} object.
+#' @return An \code{\link{Image}} object.
 #'
 #' @note \code{Image} objects can be created from video files and video streams
-#'  using the following functions: ...
+#'  using the following functions: \code{\link{video}}, \code{\link{stream}}.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Video}}, \code{\link{Stream}}
+#' @seealso \code{\link{Image}}
 #'
 #' @examples
 #' # TODO
 #'
-Image <- setRcppClass("Image", "Image")
+image <- function(...) {
+  new(Image, ...)
+}
 
 
-.plot.Image <- function(img, min = 0, max = 255, ...) {
+#' @title Plotting \pkg{Rvision} Images
+#'
+#' @name plot.Image
+#'
+#' @aliases plot.Rcpp_Image
+#'
+#' @description Plotting method for objects inheriting from class \code{\link{Image}}.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param min The minimum value that a pixel in the image can take (default: 0).
+#'
+#' @param max The maximum value that a pixel in the image can take (default: 255).
+#'
+#' @param ... Additional arguments to be passed to \code{\link{rasterImage}}.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' # TODO
+#'
+plot.Rcpp_Image <- function(image, min = 0, max = 255, ...) {
+  img <- image$toR()
   img <- (img - min) / (max - min)
+  img[img > 1] <- 1
+  img[img < 0] <- 0
   imgDims <- dim(img)
 
   if (imgDims[3] == 1) {
@@ -48,16 +85,6 @@ Image <- setRcppClass("Image", "Image")
 
   rasterImage(img, xleft = 1, xright = imgDims[2], ybottom = 1, ytop = imgDims[1], ...)
   par(op)
-}
-
-plot.Image <- function(image, min = 0, max = 255, ...) {
-  img <- image$toR()
-  .plot.Image(img, min = min, max = max, ...)
-}
-
-plot.Rcpp_Image <- function(image, min = 0, max = 255, ...) {
-  img <- image$toR()
-  .plot.Image(img, min = min, max = max, ...)
 }
 
 

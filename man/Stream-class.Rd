@@ -6,30 +6,16 @@
 \alias{Stream}
 \alias{Stream-class}
 \title{An S4 class containing an OpenCV stream}
+\format{An object of class \code{C++Class} of length 1.}
 \usage{
-Stream(...)
-}
-\arguments{
-\item{...}{\code{Stream} takes one argument that is a number indicating the
-index of the camera to use (0 is usually the default webcam on most
-computers). A \code{Stream} object can also be created without any argument,
-in which case it is empty and can be populated with a stream later.}
-}
-\value{
-A \code{Stream} object.
+Stream
 }
 \description{
 \code{Stream} objects contains an \href{http://opencv.org/}{OpenCV}
  stream that originates from a camera connected to the computer.
 }
-\examples{
-# TODO
-
-}
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
-\seealso{
-\code{\link{Image}}, \code{\link{Video}}
-}
+\keyword{datasets}
 

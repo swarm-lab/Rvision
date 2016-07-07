@@ -9,20 +9,28 @@
 #' @description \code{Stream} objects contains an \href{http://opencv.org/}{OpenCV}
 #'  stream that originates from a camera connected to the computer.
 #'
-#' @usage Stream(...)
+#' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @param ... \code{Stream} takes one argument that is a number indicating the
+"Stream"
+
+
+#' @title Create an object of class \code{Stream}
+#'
+#' @description Function for creating \code{\link{Stream}} objects from video
+#'  streams.
+#'
+#' @param ... \code{stream} takes one argument that is a number indicating the
 #'  index of the camera to use (0 is usually the default webcam on most
 #'  computers). A \code{Stream} object can also be created without any argument,
 #'  in which case it is empty and can be populated with a stream later.
 #'
-#' @return A \code{Stream} object.
+#' @return A \code{\link{Stream}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Image}}, \code{\link{Video}}
 #'
 #' @examples
 #' # TODO
 #'
-Stream <- setRcppClass("Stream", "Stream")
+stream <- function(...) {
+  new(Stream, ...)
+}

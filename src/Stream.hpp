@@ -5,7 +5,7 @@ public:
   bool open(int index);
   bool isOpened();
   void release();
-  SEXP readNext();
+  Image readNext();
   bool set(std::string propId, double value);
   double get(std::string propId);
 
@@ -51,11 +51,11 @@ double Stream::get(std::string propId) {
   return this->stream.get(getPropId(propId));
 }
 
-SEXP Stream::readNext() {
+Image Stream::readNext() {
   cv::Mat outputFrame;
   this->stream.read(outputFrame);
 
-  return Rcpp::internal::make_new_object(new Image(outputFrame));
+  return Image(outputFrame);
 }
 
 

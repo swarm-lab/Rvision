@@ -1,3 +1,15 @@
+bool ImageConst1(SEXP* args, int nargs) {
+  if(nargs != 1) return false;
+  if(TYPEOF(args[0]) != STRSXP) return false ;
+  return true ;
+}
+
+bool ImageConst2(SEXP* args, int nargs) {
+  if(nargs != 1) return false;
+  if(TYPEOF(args[0]) != REALSXP) return false ;
+  return true ;
+}
+
 int getPropId(std::string propId) {
   int numPropId = 46;
 
