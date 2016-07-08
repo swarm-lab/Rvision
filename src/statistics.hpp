@@ -10,9 +10,12 @@ Image _sum(Rcpp::List images) {
   case 3:
     out = cv::Mat::zeros(as<Image>(images[0]).image.size(), CV_32FC3);
     break;
-  default:
+  case 4:
     out = cv::Mat::zeros(as<Image>(images[0]).image.size(), CV_32FC4);
-  break;
+    break;
+  default:
+    throw std::range_error("Not a valid image.");
+    break;
   }
 
   for (int i = 0; i < images.size(); i++) {
