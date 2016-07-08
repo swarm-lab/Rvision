@@ -9,6 +9,7 @@ public:
   bool loadCV(cv::Mat InputImage);
   bool loadArray(Rcpp::NumericVector inputArray);
   arma::cube toR();
+  arma::cube toR2();
   Rcpp::NumericVector dim();
   int nrow(), ncol(), nchan();
 
@@ -161,73 +162,51 @@ std::string Image::imageType() {
 }
 
 arma::cube Image::toR() {
+  cv::Mat tmp;
   arma::cube outputArray;
   outputArray.set_size(this->image.rows, this->image.cols, this->image.channels());
-  int type = this->image.type();
 
-  switch (this->image.channels()) {
+  switch(this->image.channels()) {
   case 1:
-    switch (type) {
-    case CV_8U:
-      for(int i = 0; i < this->image.rows; i++) {
-        for(int j = 0; j < this->image.cols; j++) {
-          outputArray(i, j, 0) = this->image.at<uint8_t>(i, j);
-        }
-      }
-      break;
-
-    case CV_16U:
-      for(int i = 0; i < this->image.rows; i++) {
-        for(int j = 0; j < this->image.cols; j++) {
-          outputArray(i, j, 0) = this->image.at<uint16_t>(i, j);
-        }
-      }
-      break;
-
-    default:
-      for(int i = 0; i < this->image.rows; i++) {
-        for(int j = 0; j < this->image.cols; j++) {
-          outputArray(i, j, 0) = this->image.at<double>(i, j);
-        }
+    this->image.convertTo(tmp, CV_32F);
+    for (int i = 0; i < tmp.rows; i++) {
+      for (int j = 0; j < tmp.cols; j++) {
+        outputArray(i, j, 0) = tmp.at<float>(i, j);
       }
     }
     break;
-
+  case 2:
+    this->image.convertTo(tmp, CV_32FC2);
+    for (int i = 0; i < tmp.rows; i++) {
+      for (int j = 0; j < tmp.cols; j++) {
+        for (int k = 0; k < tmp.channels(); k++)
+          outputArray(i, j, k) = tmp.at<cv::Vec2f>(i, j)[tmp.channels() - k - 1];
+      }
+    }
+    break;
   case 3:
-    switch (type) {
-    case CV_8UC3:
-    case CV_16UC3:
-      for(int i = 0; i < this->image.rows; i++) {
-        for(int j = 0; j < this->image.cols; j++) {
-          outputArray(i, j, 0) = this->image.at<cv::Vec3b>(i, j)[2];
-          outputArray(i, j, 1) = this->image.at<cv::Vec3b>(i, j)[1];
-          outputArray(i, j, 2) = this->image.at<cv::Vec3b>(i, j)[0];
-        }
-      }
-      break;
-
-    default:
-      for(int i = 0; i < this->image.rows; i++) {
-        for(int j = 0; j < this->image.cols; j++) {
-          outputArray(i, j, 0) = this->image.at<cv::Vec3d>(i, j)[2];
-          outputArray(i, j, 1) = this->image.at<cv::Vec3d>(i, j)[1];
-          outputArray(i, j, 2) = this->image.at<cv::Vec3d>(i, j)[0];
-        }
+    this->image.convertTo(tmp, CV_32FC3);
+    for (int i = 0; i < tmp.rows; i++) {
+      for (int j = 0; j < tmp.cols; j++) {
+        for (int k = 0; k < tmp.channels(); k++)
+          outputArray(i, j, k) = tmp.at<cv::Vec3f>(i, j)[tmp.channels() - k - 1];
       }
     }
     break;
-
+  case 4:
+    this->image.convertTo(tmp, CV_32FC4);
+    for (int i = 0; i < tmp.rows; i++) {
+      for (int j = 0; j < tmp.cols; j++) {
+        for (int k = 0; k < tmp.channels(); k++)
+          outputArray(i, j, k) = tmp.at<cv::Vec4f>(i, j)[tmp.channels() - k - 1];
+      }
+    }
+    break;
   default:
-    throw std::range_error("Cannot convert this image to an R matrix or array.");
-  break;
+    throw std::range_error("Not a valid image.");
+    break;
   }
 
   return outputArray;
 }
-
-
-
-
-
-
 
