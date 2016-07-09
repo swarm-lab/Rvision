@@ -1,5 +1,6 @@
 Image _sum(Rcpp::List images) {
   cv::Mat out;
+
   switch(as<Image>(images[0]).image.channels()) {
   case 1:
     out = cv::Mat::zeros(as<Image>(images[0]).image.size(), CV_32F);
@@ -19,7 +20,7 @@ Image _sum(Rcpp::List images) {
   }
 
   for (int i = 0; i < images.size(); i++) {
-    cv::accumulate(as<Image>(images[i]).image, out);
+    cv::add(out, as<Image>(images[i]).image, out, cv::noArray(), out.type());
   }
 
   return Image(out);
