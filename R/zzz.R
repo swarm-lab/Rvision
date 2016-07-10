@@ -94,3 +94,9 @@ evalqOnLoad({
                 mean(x, ...)
             })
 })
+
+
+### Cleanup function ###
+.onUnload <- function(libpath) {
+  library.dynam.unload("Rvision", libpath)
+}
