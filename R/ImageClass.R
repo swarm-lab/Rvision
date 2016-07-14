@@ -88,6 +88,10 @@ plot.Rcpp_Image <- function(image, min = 0, max = 255, ...) {
 }
 
 
+write.Image <- function(image, filename) {
+  image$write(filename)
+}
+
 
 
 

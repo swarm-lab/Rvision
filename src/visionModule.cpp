@@ -16,6 +16,7 @@ RCPP_MODULE(class_Image) {
   .constructor<Rcpp::NumericVector>("", &ImageConst2)
 
   .method("open", &Image::open)
+  .method("write", &Image::write)
   .method("loadArray", &Image::loadArray)
   .method("toR", &Image::toR)
   .method("dim", &Image::dim)

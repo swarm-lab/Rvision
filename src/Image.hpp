@@ -5,8 +5,9 @@ public:
   Image(cv::Mat InputImage);
   Image(Rcpp::NumericVector inputArray);
   cv::Mat image;
-  bool open(std::string filename);
-  bool loadCV(cv::Mat InputImage);
+  bool open(std::string inputFile);
+  bool write(std::string outputFile);
+  bool loadCV(cv::Mat inputImage);
   bool loadArray(Rcpp::NumericVector inputArray);
   arma::cube toR();
   arma::cube toR2();
@@ -78,8 +79,21 @@ bool Image::open(std::string inputFile) {
   }
 }
 
-bool Image::loadCV(cv::Mat InputImage) {
-  this->image = InputImage;
+bool Image::write(std::string outputFile) {
+  Rcpp::Environment base = Rcpp::Environment::base_env();
+  Rcpp::Function pathExpand = base["path.expand"];
+
+  bool success = imwrite(Rcpp::as<std::string>(pathExpand(outputFile)), this->image);
+
+  if (!success) {
+    throw std::range_error("Could not save the image.");
+  } else {
+    return success;
+  }
+}
+
+bool Image::loadCV(cv::Mat inputImage) {
+  this->image = inputImage;
 
   if (!this->image.data) {
     throw std::range_error("Could not read the OpenCV matrix.");

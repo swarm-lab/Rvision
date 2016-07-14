@@ -1,4 +1,3 @@
-CXX = clang++
 PKG_LIBS = $(shell "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e "ROpenCVLite::opencvConfig('libs', arch = Sys.getenv('R_ARCH'))")
 PKG_CPPFLAGS = $(shell "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e "ROpenCVLite::opencvConfig('cflags')")
 PKG_CXXFLAGS = $(shell "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e "Rcpp:::CxxFlags()")

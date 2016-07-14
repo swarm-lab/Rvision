@@ -34,3 +34,65 @@
 stream <- function(...) {
   new(Stream, ...)
 }
+
+
+#' @title Make timelapse from \code{Stream} object
+#'
+#' @description Generates a timelapse sequence from a \code{Stream} object with
+#'  a given duration and interval between images.
+#'
+#' @param stream The \code{Stream} object to use.
+#'
+#' @param outputFolder The path to the folder where the timelapse images will be
+#'  saved. If it does not exist, it will be created. Note: the function will
+#'  overwrite files present in this folder if they have the same names as the
+#'  timelapse images.
+#'
+#' @param interval The interval in seconds between two successive images
+#'  (default: 1).
+#'
+#' @param duration The duration in seconds of the timelapse. If infinite (the
+#'  default), the timelapse will run until the user interrupts the function
+#'  manually.
+#'
+#' @format format A character string corresponding to the format of the images
+#'  (default: "png").
+#'
+#' @return This function does not return anything. It saves captured images in
+#'  \code{outputFolder}.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @examples
+#' # TODO
+#'
+timelapse <- function(stream, outputFolder, interval = 1, duration = Inf,
+                      format = "png") {
+  if (class(myStream) != "Rcpp_Stream")
+    stop("stream must be a Stream object.")
+
+  outputFolder <- suppressWarnings(normalizePath(outputFolder))
+  if (!file.exists(outputFolder)) {
+    message("The output folder does not exist. It will be created.")
+    dir.create(outputFolder)
+  }
+
+  counter <- 0
+  start <- now()
+  end <- start + duration * 1000
+
+  while (now() < end) {
+    img <- stream$readNext()
+    img$write(paste0(outputFolder, "/", counter, ".", format))
+    counter <- counter + 1
+    print(paste0("Last picture taken at: ", Sys.time()))
+
+    Sys.sleep(((start + counter * interval * 1000) - now()) / 1000)
+  }
+
+  NULL
+}
+
+
+
+
