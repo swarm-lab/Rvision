@@ -12,11 +12,11 @@ NeedsCompilation: yes
 Imports:
     Rcpp (>= 0.11.0),
     RcppArmadillo (>= 0.4.000.2),
+    ROpenCVLite (>= 0.1.31),
     methods
 Depends:
     Rcpp (>= 0.11.0),
-    RcppArmadillo (>= 0.4.000.2),
-    ROpenCVLite (>= 0.1.31)
+    RcppArmadillo (>= 0.4.000.2)
 LinkingTo: Rcpp, RcppArmadillo
 RcppModules: class_Image, class_Video, class_Stream, methods_Arithmetic,
     methods_Statistics
