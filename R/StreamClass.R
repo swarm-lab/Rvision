@@ -68,7 +68,7 @@ stream <- function(...) {
 #'
 timelapse <- function(stream, outputFolder, interval = 1, duration = Inf,
                       format = "png") {
-  if (class(myStream) != "Rcpp_Stream")
+  if (class(stream) != "Rcpp_Stream")
     stop("stream must be a Stream object.")
 
   outputFolder <- suppressWarnings(normalizePath(outputFolder))
@@ -78,16 +78,16 @@ timelapse <- function(stream, outputFolder, interval = 1, duration = Inf,
   }
 
   counter <- 0
-  start <- now()
+  start <- .now()
   end <- start + duration * 1000
 
-  while (now() < end) {
+  while (.now() < end) {
     img <- stream$readNext()
     img$write(paste0(outputFolder, "/", counter, ".", format))
     counter <- counter + 1
     print(paste0("Last picture taken at: ", Sys.time()))
 
-    Sys.sleep(((start + counter * interval * 1000) - now()) / 1000)
+    Sys.sleep(((start + counter * interval * 1000) - .now()) / 1000)
   }
 
   NULL
