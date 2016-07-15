@@ -92,7 +92,31 @@ write.Image <- function(image, filename) {
   image$write(filename)
 }
 
+dim.Rcpp_Image <- function(image) {
+  image$dim()
+}
 
+nrow.Rcpp_Image <- function(image) {
+  image$nrow()
+}
 
+ncol.Rcpp_Image <- function(image) {
+  image$ncol()
+}
+
+nchan <- function(image) {
+  image$nchan()
+}
+
+as.array.Rcpp_Image <- function(image) {
+  image$toR()
+}
+
+as.matrix.Rcpp_Image <- function(image) {
+  if (nchan(image) == 1)
+    image$toR()[, , 1]
+  else
+    image$toR()
+}
 
 
