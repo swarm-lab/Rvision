@@ -4,3 +4,6 @@
   options(digits.secs = NULL)
   time
 }
+
+
+release <- function(obj) UseMethod("release")

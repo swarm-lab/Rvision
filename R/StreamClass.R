@@ -94,5 +94,28 @@ timelapse <- function(stream, outputFolder, interval = 1, duration = Inf,
 }
 
 
+isStream <- function(obj) {
+  class(obj) == "Rcpp_Stream"
+}
 
 
+release.Rcpp_Stream <- function(stream) {
+  if (!isStream)
+    stop("This is not a Stream object.")
+
+  stream$release()
+
+  if (!stream$isOpened())
+    "Stream released successfully."
+  else
+    "An error occured while trying to release the stream"
+}
+
+
+
+readNext <- function(stream) {
+  if (!isStream(stream))
+    stop("This is not a Video object.")
+
+  stream$readNext()
+}

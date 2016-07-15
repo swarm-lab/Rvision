@@ -34,3 +34,37 @@
 video <- function(...) {
   new(Video, ...)
 }
+
+
+isVideo <- function(obj) {
+  class(obj) == "Rcpp_Video"
+}
+
+
+release.Rcpp_Video <- function(video) {
+  if (!isVideo(video))
+    stop("This is not a Video object.")
+
+  video$release()
+
+  if (!video$isOpened())
+    "Video released successfully."
+  else
+    "An error occured while trying to release the video."
+}
+
+
+readFrame <- function(video, pos) {
+  if (!isVideo(video))
+    stop("This is not a Video object.")
+
+  video$readFrame(pos)
+}
+
+
+readNext <- function(video) {
+  if (!isVideo(video))
+    stop("This is not a Video object.")
+
+  video$readNext()
+}
