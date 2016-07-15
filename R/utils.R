@@ -4,8 +4,3 @@
   options(digits.secs = NULL)
   time
 }
-
-
-release <- function(obj) UseMethod("release")
-
-readNext <- function(obj) UseMethod("readNext")
