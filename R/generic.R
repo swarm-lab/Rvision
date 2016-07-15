@@ -2,6 +2,6 @@ release <- function(obj) UseMethod("release")
 
 readNext <- function(obj) UseMethod("readNext")
 
-setProp <- function(obj, prop) UseMethod("setProp")
+setProp <- function(obj, property, value) UseMethod("setProp")
 
-getProp <- function(obj, prop) UseMethod("getProp")
+getProp <- function(obj, property) UseMethod("getProp")

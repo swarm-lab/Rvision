@@ -68,3 +68,18 @@ readNext.Rcpp_Video <- function(video) {
 
   video$readNext()
 }
+
+setProp.Rcpp_Video <- function(video, property, value) {
+  if (!isVideo(video))
+    stop("This is not a Video object.")
+
+  video(property, value)
+}
+
+getProp.Rcpp_Video <- function(video, property) {
+  if (!isVideo(video))
+    stop("This is not a Video object.")
+
+  video$get(property)
+}
+

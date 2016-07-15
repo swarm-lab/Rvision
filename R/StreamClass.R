@@ -36,6 +36,47 @@ stream <- function(...) {
 }
 
 
+isStream <- function(obj) {
+  class(obj) == "Rcpp_Stream"
+}
+
+
+release.Rcpp_Stream <- function(stream) {
+  if (!isStream)
+    stop("This is not a Stream object.")
+
+  stream$release()
+
+  if (!stream$isOpened())
+    "Stream released successfully."
+  else
+    "An error occured while trying to release the stream"
+}
+
+
+readNext.Rcpp_Stream <- function(stream) {
+  if (!isStream(stream))
+    stop("This is not a Stream object.")
+
+  stream$readNext()
+}
+
+
+setProp.Rcpp_Stream <- function(stream, property, value) {
+  if (!isStream(stream))
+    stop("This is not a Stream object.")
+
+  stream$set(property, value)
+}
+
+getProp.Rcpp_Stream <- function(stream, property) {
+  if (!isStream(stream))
+    stop("This is not a Stream object.")
+
+  stream$get(property)
+}
+
+
 #' @title Make timelapse from \code{Stream} object
 #'
 #' @description Generates a timelapse sequence from a \code{Stream} object with
@@ -68,8 +109,8 @@ stream <- function(...) {
 #'
 timelapse <- function(stream, outputFolder, interval = 1, duration = Inf,
                       format = "png") {
-  if (class(stream) != "Rcpp_Stream")
-    stop("stream must be a Stream object.")
+  if (!isStream(stream))
+    stop("This is not a Stream object.")
 
   outputFolder <- suppressWarnings(normalizePath(outputFolder))
   if (!file.exists(outputFolder)) {
@@ -91,31 +132,4 @@ timelapse <- function(stream, outputFolder, interval = 1, duration = Inf,
   }
 
   NULL
-}
-
-
-isStream <- function(obj) {
-  class(obj) == "Rcpp_Stream"
-}
-
-
-release.Rcpp_Stream <- function(stream) {
-  if (!isStream)
-    stop("This is not a Stream object.")
-
-  stream$release()
-
-  if (!stream$isOpened())
-    "Stream released successfully."
-  else
-    "An error occured while trying to release the stream"
-}
-
-
-
-readNext.Rcpp_Stream <- function(stream) {
-  if (!isStream(stream))
-    stop("This is not a Video object.")
-
-  stream$readNext()
 }

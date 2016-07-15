@@ -57,6 +57,3 @@ Image Stream::readNext() {
 
   return Image(outputFrame);
 }
-
-
-
