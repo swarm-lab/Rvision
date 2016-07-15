@@ -88,7 +88,14 @@ plot.Rcpp_Image <- function(image, min = 0, max = 255, ...) {
 }
 
 
+isImage <- function(obj) {
+  class(obj) == "Rcpp_Image"
+}
+
 write.Image <- function(image, filename) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
   image$write(filename)
 }
 
@@ -105,6 +112,9 @@ ncol.Rcpp_Image <- function(image) {
 }
 
 nchan <- function(image) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
   image$nchan()
 }
 
