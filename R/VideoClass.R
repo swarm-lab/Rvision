@@ -62,7 +62,7 @@ readFrame <- function(video, pos) {
 }
 
 
-readNext <- function(video) {
+readNext.Rcpp_Video <- function(video) {
   if (!isVideo(video))
     stop("This is not a Video object.")
 

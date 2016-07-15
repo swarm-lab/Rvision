@@ -113,7 +113,7 @@ release.Rcpp_Stream <- function(stream) {
 
 
 
-readNext <- function(stream) {
+readNext.Rcpp_Stream <- function(stream) {
   if (!isStream(stream))
     stop("This is not a Video object.")
 
