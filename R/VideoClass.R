@@ -36,8 +36,24 @@ video <- function(...) {
 }
 
 
-isVideo <- function(obj) {
-  class(obj) == "Rcpp_Video"
+#' @title Test for a Video object
+#'
+#' @description Tests whether the object is of class \code{\link{Video}}
+#'
+#' @param object Any R object.
+#'
+#' @return A logical indicating whether the object is of class
+#'  \code{\link{Video}} (TRUE) or not (FALSE).
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Video}}, \code{\link{video}}
+#'
+#' @examples
+#' # TODO
+#'
+isVideo <- function(object) {
+  class(object) == "Rcpp_Video"
 }
 
 

@@ -36,8 +36,24 @@ stream <- function(...) {
 }
 
 
-isStream <- function(obj) {
-  class(obj) == "Rcpp_Stream"
+#' @title Test for a Stream object
+#'
+#' @description Tests whether the object is of class \code{\link{Stream}}
+#'
+#' @param object Any R object.
+#'
+#' @return A logical indicating whether the object is of class
+#'  \code{\link{Stream}} (TRUE) or not (FALSE).
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Stream}}, \code{\link{stream}}
+#'
+#' @examples
+#' # TODO
+#'
+isStream <- function(object) {
+  class(object) == "Rcpp_Stream"
 }
 
 
