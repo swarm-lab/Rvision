@@ -5,7 +5,7 @@
 \alias{Rcpp_Video}
 \alias{Video}
 \alias{Video-class}
-\title{An S4 class containing an OpenCV video}
+\title{An S4 Class Containing an OpenCV Video}
 \format{An object of class \code{C++Class} of length 1.}
 \usage{
 Video

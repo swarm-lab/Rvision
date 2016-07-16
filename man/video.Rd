@@ -2,7 +2,7 @@
 % Please edit documentation in R/VideoClass.R
 \name{video}
 \alias{video}
-\title{Create an object of class \code{Video}}
+\title{Create an Object of Class \code{Video}}
 \usage{
 video(...)
 }
