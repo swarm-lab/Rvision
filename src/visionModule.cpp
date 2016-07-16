@@ -40,6 +40,12 @@ RCPP_MODULE(class_Video) {
   .method("release", &Video::release)
   .method("get", &Video::get)
   .method("set", &Video::set)
+  .method("dim", &Video::dim)
+  .method("nrow", &Video::nrow)
+  .method("ncol", &Video::ncol)
+  .method("nframes", &Video::nframes)
+  .method("fps", &Video::fps)
+  .method("codec", &Video::codec)
   .method("readNext", &Video::readNext)
   .method("readFrame", &Video::readFrame)
   ;

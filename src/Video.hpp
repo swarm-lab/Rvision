@@ -9,6 +9,10 @@ public:
   Image readFrame(int frameId);
   bool set(std::string propId, double value);
   double get(std::string propId);
+  Rcpp::NumericVector dim();
+  int nrow(), ncol(), nframes();
+  double fps();
+  std::string codec();
 
 private:
   cv::VideoCapture video;
@@ -56,6 +60,38 @@ bool Video::set(std::string propId, double value) {
 
 double Video::get(std::string propId) {
   return this->video.get(getPropId(propId));
+}
+
+Rcpp::NumericVector Video::dim() {
+  return Rcpp::NumericVector::create(this->video.get(cv::CAP_PROP_FRAME_HEIGHT),
+                                     this->video.get(cv::CAP_PROP_FRAME_WIDTH),
+                                     this->video.get(cv::CAP_PROP_FRAME_COUNT));
+}
+
+int Video::nrow() {
+  return this->video.get(cv::CAP_PROP_FRAME_HEIGHT);
+}
+
+int Video::ncol() {
+  return this->video.get(cv::CAP_PROP_FRAME_WIDTH);
+}
+
+int Video::nframes() {
+  return this->video.get(cv::CAP_PROP_FRAME_COUNT);
+}
+
+double Video::fps() {
+  return this->video.get(cv::CAP_PROP_FPS);
+}
+
+std::string Video::codec() {
+  union {
+    char    c[5];
+    int     i;
+  } fourcc;
+  fourcc.i = this->video.get(CV_CAP_PROP_FOURCC);
+  fourcc.c[4] = '\0';
+  return fourcc.c;
 }
 
 Image Video::readNext() {
