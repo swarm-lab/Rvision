@@ -2,7 +2,7 @@
 % Please edit documentation in R/ImageClass.R
 \name{image}
 \alias{image}
-\title{Create an object of class \code{Image}}
+\title{Create an Object of Class \code{Image}}
 \usage{
 image(...)
 }

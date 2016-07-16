@@ -5,7 +5,7 @@
 \alias{Image}
 \alias{Image-class}
 \alias{Rcpp_Image}
-\title{An S4 class containing an OpenCV image}
+\title{An S4 Class Containing an OpenCV Image}
 \format{An object of class \code{C++Class} of length 1.}
 \usage{
 Image

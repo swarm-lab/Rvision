@@ -1,4 +1,4 @@
-#' @title An S4 class containing an OpenCV image
+#' @title An S4 Class Containing an OpenCV Image
 #'
 #' @name Image-class
 #'
@@ -17,7 +17,8 @@
 #'
 "Image"
 
-#' @title Create an object of class \code{Image}
+
+#' @title Create an Object of Class \code{Image}
 #'
 #' @description Function for creating \code{\link{Image}} objects from arrays
 #'  and image files.
@@ -88,21 +89,97 @@ plot.Rcpp_Image <- function(image, min = 0, max = 255, ...) {
 }
 
 
-isImage <- function(obj) {
-  class(obj) == "Rcpp_Image"
+#' @title Test for an Image Object
+#'
+#' @description Tests whether the object is of class \code{\link{Image}}
+#'
+#' @param object Any R object.
+#'
+#' @return A logical indicating whether the object is of class
+#'  \code{\link{Image}} (TRUE) or not (FALSE).
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{image}}
+#'
+#' @examples
+#' # TODO
+#'
+isImage <- function(object) {
+  class(object) == "Rcpp_Image"
 }
 
-write.Image <- function(image, filename) {
+
+#' @title Image Output
+#'
+#' @description Writes the content of an \code{\link{Image}} object to a file.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param file A character string naming the path to a file.
+#'
+#' @return A logical indicating whether writing was successful (TRUE) or not
+#'  (FALSE).
+#'
+#' @note The function will guess the format of the output file using the file
+#'  extension provided by the user.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{image}}
+#'
+#' @examples
+#' # TODO
+#'
+write.Image <- function(image, file) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  image$write(filename)
+  image$write(file)
 }
 
+
+#' @title Dimensions of an Image
+#'
+#' @description Retrieve the dimensions an \code{\link{Image}} object.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @return A vector with 3 values corresponding to the number of rows, columns
+#'  and channels of the image (in this order).
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{image}}
+#'
+#' @examples
+#' # TODO
+#'
 dim.Rcpp_Image <- function(image) {
   image$dim()
 }
 
+
+#' @title The Number of Rows/Columns/Channels of an Image
+#'
+#' @aliases ncol.Rcpp_Image nchan
+#'
+#' @usage nrow(image)
+#' ncol(image)
+#' nchan(image)
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @return An numeric value.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link[=dim.Rcpp_Image]{dim}} which returns \emph{all}
+#'  dimensions.
+#'
+#' @examples
+#' # TODO
+#'
 nrow.Rcpp_Image <- function(image) {
   image$nrow()
 }
@@ -118,6 +195,26 @@ nchan <- function(image) {
   image$nchan()
 }
 
+
+#' @title Convert Image to Array or Matrix
+#'
+#' @aliases as.matrix.Rcpp_Image
+#'
+#' @usage as.array(image)
+#' as.matrix(image)
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @return A matrix or array of the same dimensions as the \code{\link{Image}}
+#'  object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{matrix}}, \code{\link{array}}
+#'
+#' @examples
+#' # TODO
+#'
 as.array.Rcpp_Image <- function(image) {
   image$toR()
 }
