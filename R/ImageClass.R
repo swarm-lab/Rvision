@@ -164,13 +164,16 @@ dim.Rcpp_Image <- function(image) {
 #'
 #' @aliases ncol.Rcpp_Image nchan
 #'
+#' @description nrow, ncol and nchan return the number of rows, columns or
+#'  channels present in an \code{\link{Image}} object.
+#'
 #' @usage nrow(image)
 #' ncol(image)
 #' nchan(image)
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @return An numeric value.
+#' @return A numeric value.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'

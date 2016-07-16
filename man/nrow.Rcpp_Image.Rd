@@ -14,7 +14,11 @@ nchan(image)
 \item{image}{An \code{\link{Image}} object.}
 }
 \value{
-An numeric value.
+A numeric value.
+}
+\description{
+nrow, ncol and nchan return the number of rows, columns or
+ channels present in an \code{\link{Image}} object.
 }
 \examples{
 # TODO
