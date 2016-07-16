@@ -10,7 +10,7 @@ public:
   bool set(std::string propId, double value);
   double get(std::string propId);
   Rcpp::NumericVector dim();
-  int nrow(), ncol(), nframes();
+  int nrow(), ncol(), nframes(), frame();
   double fps();
   std::string codec();
 
@@ -80,6 +80,10 @@ int Video::nframes() {
   return this->video.get(cv::CAP_PROP_FRAME_COUNT);
 }
 
+int Video::frame() {
+  return this->video.get(cv::CAP_PROP_POS_FRAMES);
+}
+
 double Video::fps() {
   return this->video.get(cv::CAP_PROP_FPS);
 }
@@ -108,7 +112,7 @@ Image Video::readFrame(int frameId) {
 
   cv::Mat outputFrame;
 
-  this->video.set(CV_CAP_PROP_POS_FRAMES, frameId);
+  this->video.set(CV_CAP_PROP_POS_FRAMES, frameId - 1);
   this->video.read(outputFrame);
 
   return Image(outputFrame);

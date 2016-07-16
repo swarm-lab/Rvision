@@ -44,6 +44,7 @@ RCPP_MODULE(class_Video) {
   .method("nrow", &Video::nrow)
   .method("ncol", &Video::ncol)
   .method("nframes", &Video::nframes)
+  .method("frame", &Video::frame)
   .method("fps", &Video::fps)
   .method("codec", &Video::codec)
   .method("readNext", &Video::readNext)
