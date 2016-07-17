@@ -7,11 +7,10 @@
 \method{release}{Rcpp_Video}(video)
 }
 \arguments{
-\item{A}{\code{\link{Video}} object.}
+\item{video}{A \code{\link{Video}} object.}
 }
 \value{
-If successful, the A \code{\link{Video}} object is cleared from
- memory
+If successful, the \code{\link{Video}} object is cleared from memory
 }
 \description{
 Close a \code{\link{Video}} object.
