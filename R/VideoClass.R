@@ -195,10 +195,9 @@ codec <- function(video) {
 #'
 #' @description Close a \code{\link{Video}} object.
 #'
-#' @param A \code{\link{Video}} object.
+#' @param video A \code{\link{Video}} object.
 #'
-#' @return If successful, the A \code{\link{Video}} object is cleared from
-#'  memory
+#' @return If successful, the \code{\link{Video}} object is cleared from memory
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -216,9 +215,9 @@ release.Rcpp_Video <- function(video) {
   if (!video$isOpened()) {
     tmp <- deparse(substitute(video))
     rm(list = tmp, envir = parent.frame(1))
-    "Video released successfully."
+    cat("Video released successfully.\n")
   } else {
-    "An error occured while trying to release the video."
+    cat("An error occured while trying to release the video.\n")
   }
 }
 
