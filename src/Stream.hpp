@@ -8,6 +8,8 @@ public:
   Image readNext();
   bool set(std::string propId, double value);
   double get(std::string propId);
+  Rcpp::NumericVector dim();
+  int nrow(), ncol();
 
 private:
   cv::VideoCapture stream;
@@ -49,6 +51,19 @@ bool Stream::set(std::string propId, double value) {
 
 double Stream::get(std::string propId) {
   return this->stream.get(getPropId(propId));
+}
+
+Rcpp::NumericVector Stream::dim() {
+  return Rcpp::NumericVector::create(this->stream.get(cv::CAP_PROP_FRAME_HEIGHT),
+                                     this->stream.get(cv::CAP_PROP_FRAME_WIDTH));
+}
+
+int Stream::nrow() {
+  return this->stream.get(cv::CAP_PROP_FRAME_HEIGHT);
+}
+
+int Stream::ncol() {
+  return this->stream.get(cv::CAP_PROP_FRAME_WIDTH);
 }
 
 Image Stream::readNext() {

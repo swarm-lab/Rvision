@@ -66,6 +66,9 @@ RCPP_MODULE(class_Stream) {
   .method("release", &Stream::release)
   .method("get", &Stream::get)
   .method("set", &Stream::set)
+  .method("dim", &Stream::dim)
+  .method("nrow", &Stream::nrow)
+  .method("ncol", &Stream::ncol)
   .method("readNext", &Stream::readNext)
   ;
 }
@@ -88,3 +91,10 @@ RCPP_MODULE(methods_Statistics) {
   function("_sum", &_sum, List::create(_["images"]), "");
   function("_mean", &_mean, List::create(_["images"]), "");
 }
+
+#include "conversions.hpp"
+RCPP_MODULE(methods_Conversions) {
+
+
+}
+
