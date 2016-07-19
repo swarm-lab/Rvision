@@ -5,7 +5,8 @@ Version: 0.1.0
 Author: Simon Garnier
 Maintainer: Simon Garnier <garnier@njit.edu>
 Description: This package uses the OpenCV library to provide R users with some
-    basic functions to read and manipulate video and image files.
+    basic functions to read and manipulate video and image files, as well as
+    camera streams.
 License: GPL-3
 LazyData: TRUE
 NeedsCompilation: yes
