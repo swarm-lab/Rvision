@@ -109,3 +109,10 @@ RCPP_MODULE(methods_Comparisons) {
   function("_ieqScalar", &_ieqScalar, List::create(_["image"], _["value"]), "");
 }
 
+#include "logical.hpp"
+RCPP_MODULE(methods_Logical) {
+
+  function("_and", &_and, List::create(_["image1"], _["image2"]), "");
+  function("_or", &_or, List::create(_["image1"], _["image2"]), "");
+  function("_not", &_not, List::create(_["image"]), "");
+}

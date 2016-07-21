@@ -5,6 +5,7 @@ loadModule("class_Stream", TRUE)
 loadModule("methods_Arithmetic", TRUE)
 loadModule("methods_Statistics", TRUE)
 loadModule("methods_Comparisons", TRUE)
+loadModule("methods_Logical", TRUE)
 
 
 ### Define generic arithmetic methods ###
@@ -190,6 +191,22 @@ evalqOnLoad({
             }, where = .GlobalEnv)
 })
 
+evalqOnLoad({
+  setMethod("&", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_and`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod("|", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_or`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod("!", signature(x = "Rcpp_Image"),
+            function(x) {
+              `_not`(x)
+            }, where = .GlobalEnv)
+})
 
 ### Cleanup function ###
 .onUnload <- function(libpath) {
