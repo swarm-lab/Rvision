@@ -2,13 +2,23 @@
 
 **Not ready for production. Try at your own risks.**
 
+---
+
++ [1 - Package description](#1---package-description)
++ [2 - Package installation](#2---package-installation)
+  + [2.1 - Before installing ](#21---Before-installing )
+  + [2.2 - Installing `Rvision`](#22---installing-rvision)
++ [3. FAQ](#3---faq)
+
+---
+
 ## 1 - Package description
 
 This package uses the [`OpenCV` library](http://opencv.org/) to provide R users 
 with functions to read and manipulate video and image files, as well as camera 
 streams.
 
-Read the [FAQ](#3-faq) below for more info about the what, why, and how of 
+Read the [FAQ](#3---faq) below for more info about the what, why, and how of 
 `Rvision`.
 
 ---
