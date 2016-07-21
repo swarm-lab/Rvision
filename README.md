@@ -56,7 +56,7 @@ devtools::install_github("swarm-lab/Rvision")
 Heck yeah! You can AND you should! You can even take pictures of your dog if 
 you are that kind of degenerate person :-)
 
-After placing your favorite pet in front of the wwebcam, just do:
+After placing your favorite pet in front of the webcam, just do:
 
 ```r
 myStream <- stream(0)   # 0 will start your default webcam in general. 
