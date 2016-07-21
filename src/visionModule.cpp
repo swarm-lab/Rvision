@@ -92,9 +92,20 @@ RCPP_MODULE(methods_Statistics) {
   function("_mean", &_mean, List::create(_["images"]), "");
 }
 
-#include "conversions.hpp"
-RCPP_MODULE(methods_Conversions) {
+#include "comparisons.hpp"
+RCPP_MODULE(methods_Comparisons) {
 
-
+  function("_sup", &_sup, List::create(_["image1"], _["image2"]), "");
+  function("_inf", &_inf, List::create(_["image1"], _["image2"]), "");
+  function("_eq", &_eq, List::create(_["image1"], _["image2"]), "");
+  function("_dif", &_dif, List::create(_["image1"], _["image2"]), "");
+  function("_seq", &_seq, List::create(_["image1"], _["image2"]), "");
+  function("_ieq", &_ieq, List::create(_["image1"], _["image2"]), "");
+  function("_supScalar", &_supScalar, List::create(_["image"], _["value"]), "");
+  function("_infScalar", &_infScalar, List::create(_["image"], _["value"]), "");
+  function("_eqScalar", &_eqScalar, List::create(_["image"], _["value"]), "");
+  function("_difScalar", &_difScalar, List::create(_["image"], _["value"]), "");
+  function("_seqScalar", &_seqScalar, List::create(_["image"], _["value"]), "");
+  function("_ieqScalar", &_ieqScalar, List::create(_["image"], _["value"]), "");
 }
 

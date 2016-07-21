@@ -4,6 +4,7 @@ loadModule("class_Video", TRUE)
 loadModule("class_Stream", TRUE)
 loadModule("methods_Arithmetic", TRUE)
 loadModule("methods_Statistics", TRUE)
+loadModule("methods_Comparisons", TRUE)
 
 
 ### Define generic arithmetic methods ###
@@ -70,7 +71,7 @@ evalqOnLoad({
 })
 
 
-### Define generic statistics method ###
+### Define generic statistics methods ###
 evalqOnLoad({
   setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),
              useAsDefault = function(x, ..., na.rm = FALSE) base::sum(x, ..., na.rm = na.rm),
@@ -93,6 +94,100 @@ evalqOnLoad({
               else
                 mean(x, ...)
             })
+})
+
+
+### Define generic comparison methods ###
+evalqOnLoad({
+  setMethod(">", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_sup`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod("<", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_inf`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod("==", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_eq`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod("!=", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_dif`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod(">=", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_seq`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod("<=", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_ieq`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod(">", signature(e1 = "Rcpp_Image", e2 = "numeric"),
+            function(e1, e2) {
+              `_supScalar`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod(">", signature(e1 = "numeric", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_ieqScalar`(e2, e1)
+            }, where = .GlobalEnv)
+
+  setMethod("<", signature(e1 = "Rcpp_Image", e2 = "numeric"),
+            function(e1, e2) {
+              `_infScalar`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod("<", signature(e1 = "numeric", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_seqScalar`(e2, e1)
+            }, where = .GlobalEnv)
+
+  setMethod("==", signature(e1 = "Rcpp_Image", e2 = "numeric"),
+            function(e1, e2) {
+              `_eqScalar`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod("==", signature(e1 = "numeric", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_eqScalar`(e2, e1)
+            }, where = .GlobalEnv)
+
+  setMethod("!=", signature(e1 = "Rcpp_Image", e2 = "numeric"),
+            function(e1, e2) {
+              `_difScalar`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod("!=", signature(e1 = "numeric", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_difScalar`(e2, e1)
+            }, where = .GlobalEnv)
+
+  setMethod(">=", signature(e1 = "Rcpp_Image", e2 = "numeric"),
+            function(e1, e2) {
+              `_seqScalar`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod(">=", signature(e1 = "numeric", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_infScalar`(e2, e1)
+            }, where = .GlobalEnv)
+
+  setMethod("<=", signature(e1 = "Rcpp_Image", e2 = "numeric"),
+            function(e1, e2) {
+              `_ieqScalar`(e1, e2)
+            }, where = .GlobalEnv)
+
+  setMethod("<=", signature(e1 = "numeric", e2 = "Rcpp_Image"),
+            function(e1, e2) {
+              `_supScalar`(e2, e1)
+            }, where = .GlobalEnv)
 })
 
 
