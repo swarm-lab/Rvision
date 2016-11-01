@@ -42,11 +42,11 @@
 #' # TODO
 #'
 image <- function(...) {
-  new(Image, ...)
+  new(Rvision::Image, ...)
 }
 
 
-#' @title Plotting \pkg{Rvision} Images
+#' @title Plot \pkg{Rvision} Images
 #'
 #' @name plot.Image
 #'
@@ -55,10 +55,6 @@ image <- function(...) {
 #' @description Plotting method for objects inheriting from class \code{\link{Image}}.
 #'
 #' @param image An \code{\link{Image}} object.
-#'
-#' @param min The minimum value that a pixel in the image can take (default: 0).
-#'
-#' @param max The maximum value that a pixel in the image can take (default: 255).
 #'
 #' @param ... Additional arguments to be passed to \code{\link{rasterImage}}.
 #'
@@ -69,9 +65,17 @@ image <- function(...) {
 #' @examples
 #' # TODO
 #'
-plot.Rcpp_Image <- function(image, min = 0, max = 255, ...) {
+plot.Rcpp_Image <- function(image, ...) {
   img <- image$toR()
-  img <- (img - min) / (max - min)
+
+  if (image$depth() == "8U") {
+    img <- img / 255
+  } else if (image$depth() == "16U") {
+    img <- img / 65535
+  } else {
+    stop("Invalid image depth.")
+  }
+
   img[img > 1] <- 1
   img[img < 0] <- 0
   imgDims <- dim(img)
@@ -230,3 +234,26 @@ as.matrix.Rcpp_Image <- function(image) {
 }
 
 
+#' @title Make a copy of an Image object
+#'
+#' @description \code{\link{Image}} objects are pointers toward C++ objects
+#'  stored in memory. When copying an \code{\link{Image}} object using an
+#'  assignment operator, this creates a copy of the pointer, but not a copy of
+#'  the C++ object. Any operation on the copied \code{\link{Image}} object will
+#'  therefore result in a modification of the orginal \code{\link{Image}} object.
+#'  This function duplicates the original \code{\link{Image}} object instead,
+#'  allowing safe operations on it while maintaining the integrity of the
+#'  original \code{\link{Image}} object.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @return An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' # TODO
+#'
+"cloneImage"

@@ -3,16 +3,12 @@
 \name{plot.Image}
 \alias{plot.Image}
 \alias{plot.Rcpp_Image}
-\title{Plotting \pkg{Rvision} Images}
+\title{Plot \pkg{Rvision} Images}
 \usage{
-\method{plot}{Rcpp_Image}(image, min = 0, max = 255, ...)
+\method{plot}{Rcpp_Image}(image, ...)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
-
-\item{min}{The minimum value that a pixel in the image can take (default: 0).}
-
-\item{max}{The maximum value that a pixel in the image can take (default: 255).}
 
 \item{...}{Additional arguments to be passed to \code{\link{rasterImage}}.}
 }

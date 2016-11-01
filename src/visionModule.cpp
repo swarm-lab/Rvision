@@ -23,7 +23,13 @@ RCPP_MODULE(class_Image) {
   .method("nrow", &Image::nrow)
   .method("ncol", &Image::ncol)
   .method("nchan", &Image::nchan)
+  .method("depth", &Image::depth)
+  .method("space", &Image::space)
+  .method("changeBitDepth", &Image::changeBitDepth)
+  .method("changeColorSpace", &Image::changeColorSpace)
   ;
+
+  function("cloneImage", &cloneImage, List::create(_["image"]), "");
 }
 
 #include "Video.hpp"

@@ -10,12 +10,14 @@ public:
   bool loadCV(cv::Mat inputImage);
   bool loadArray(Rcpp::NumericVector inputArray);
   arma::cube toR();
-  arma::cube toR2();
   Rcpp::NumericVector dim();
   int nrow(), ncol(), nchan();
+  std::string depth(), space(); // mode();
+  void changeBitDepth(int depth), changeColorSpace(std::string colorSpace);
 
 private:
-  std::string imageType();
+  void init(); // initMode();
+  std::string imageSpace, imageDepth; // imageMode;
 };
 
 Image::Image() {
@@ -26,11 +28,13 @@ Image::Image(std::string inputFile) {
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
 
-  this->image = cv::imread(Rcpp::as<std::string>(pathExpand(inputFile)));
+  this->image = cv::imread(Rcpp::as<std::string>(pathExpand(inputFile)), cv::IMREAD_UNCHANGED);
 
   if (!this->image.data) {
     throw std::range_error("Could not open the image file.");
   }
+
+  this->init();
 }
 
 Image::Image(cv::Mat inputImage) {
@@ -39,6 +43,8 @@ Image::Image(cv::Mat inputImage) {
   if (!this->image.data) {
     throw std::range_error("Could not read the image matrix.");
   }
+
+  this->init();
 }
 
 Image::Image(Rcpp::NumericVector inputArray) {
@@ -64,6 +70,8 @@ Image::Image(Rcpp::NumericVector inputArray) {
   } else {
     throw std::range_error("The array must 2 or 3 dimensional.");
   }
+
+  this->init();
 }
 
 bool Image::open(std::string inputFile) {
@@ -75,6 +83,7 @@ bool Image::open(std::string inputFile) {
   if (!this->image.data) {
     throw std::range_error("Could not open the image file.");
   } else {
+    this->init();
     return true;
   }
 }
@@ -98,6 +107,7 @@ bool Image::loadCV(cv::Mat inputImage) {
   if (!this->image.data) {
     throw std::range_error("Could not read the OpenCV matrix.");
   } else {
+    this->init();
     return true;
   }
 }
@@ -129,6 +139,7 @@ bool Image::loadArray(Rcpp::NumericVector inputArray) {
   if (!this->image.data) {
     throw std::range_error("Could not read the input array.");
   } else {
+    this->init();
     return true;
   }
 }
@@ -149,30 +160,73 @@ int Image::nchan() {
   return this->image.channels();
 }
 
-std::string Image::imageType() {
-  int numImgTypes = 35; // 7 base types, with five channel options each (none or C1, ..., C4)
+std::string Image::depth() {
+  return this->imageDepth;
+}
 
-  int enum_ints[] = {CV_8U,  CV_8UC1,  CV_8UC2,  CV_8UC3,  CV_8UC4,
-                     CV_8S,  CV_8SC1,  CV_8SC2,  CV_8SC3,  CV_8SC4,
-                     CV_16U, CV_16UC1, CV_16UC2, CV_16UC3, CV_16UC4,
-                     CV_16S, CV_16SC1, CV_16SC2, CV_16SC3, CV_16SC4,
-                     CV_32S, CV_32SC1, CV_32SC2, CV_32SC3, CV_32SC4,
-                     CV_32F, CV_32FC1, CV_32FC2, CV_32FC3, CV_32FC4,
-                     CV_64F, CV_64FC1, CV_64FC2, CV_64FC3, CV_64FC4};
+std::string Image::space() {
+  return this->imageSpace;
+}
 
-  std::string enum_strings[] = {"CV_8U",  "CV_8UC1",  "CV_8UC2",  "CV_8UC3",  "CV_8UC4",
-                                "CV_8S",  "CV_8SC1",  "CV_8SC2",  "CV_8SC3",  "CV_8SC4",
-                                "CV_16U", "CV_16UC1", "CV_16UC2", "CV_16UC3", "CV_16UC4",
-                                "CV_16S", "CV_16SC1", "CV_16SC2", "CV_16SC3", "CV_16SC4",
-                                "CV_32S", "CV_32SC1", "CV_32SC2", "CV_32SC3", "CV_32SC4",
-                                "CV_32F", "CV_32FC1", "CV_32FC2", "CV_32FC3", "CV_32FC4",
-                                "CV_64F", "CV_64FC1", "CV_64FC2", "CV_64FC3", "CV_64FC4"};
-
-  for(int i=0; i<numImgTypes; i++) {
-    if(this->image.type() == enum_ints[i]) return enum_strings[i];
+void Image::init() {
+  if (this->image.depth() == 0) {
+    this->imageDepth = "8U";
+  } else if (this->image.depth() == 1) {
+    switch(this->nchan()) {
+    case 1:
+      this->image.convertTo(this->image, CV_8UC1);
+      break;
+    case 2:
+      this->image.convertTo(this->image, CV_8UC2);
+      break;
+    case 3:
+      this->image.convertTo(this->image, CV_8UC3);
+      break;
+    case 4:
+      this->image.convertTo(this->image, CV_8UC4);
+      break;
+    default:
+      throw std::range_error("Invalid number of channels.");
+    }
+    this->imageDepth = "8U";
+  } else if (this->image.depth() == 2) {
+    this->imageDepth = "16U";
+  } else {
+    switch(this->nchan()) {
+    case 1:
+      this->image.convertTo(this->image, CV_16UC1);
+      break;
+    case 2:
+      this->image.convertTo(this->image, CV_16UC2);
+      break;
+    case 3:
+      this->image.convertTo(this->image, CV_16UC3);
+      break;
+    case 4:
+      this->image.convertTo(this->image, CV_16UC4);
+      break;
+    default:
+      throw std::range_error("Invalid number of channels.");
+    }
+    this->imageDepth = "16U";
   }
 
-  return "unknown image type";
+  switch(this->nchan()) {
+  case 1:
+    this->imageSpace = "GRAY";
+    break;
+  case 2:
+    this->imageSpace = "2CHAN";
+    break;
+  case 3:
+    this->imageSpace = "BGR";
+    break;
+  case 4:
+    this->imageSpace = "BGRA";
+    break;
+  default:
+    throw std::range_error("Invalid number of channels.");
+  }
 }
 
 arma::cube Image::toR() {
@@ -222,5 +276,84 @@ arma::cube Image::toR() {
   }
 
   return outputArray;
+}
+
+void Image::changeBitDepth(int depth) {
+  if (depth == 8) {
+    if (this->imageDepth == "16U") {
+      switch(this->nchan()) {
+      case 1:
+        this->image.convertTo(this->image, CV_8UC1, 1.0 / 256.0);
+        break;
+      case 2:
+        this->image.convertTo(this->image, CV_8UC2, 1.0 / 256.0);
+        break;
+      case 3:
+        this->image.convertTo(this->image, CV_8UC3, 1.0 / 256.0);
+        break;
+      case 4:
+        this->image.convertTo(this->image, CV_8UC4, 1.0 / 256.0);
+        break;
+      default:
+        throw std::range_error("Invalid number of channels.");
+      }
+    }
+  } else if (depth == 16) {
+    if (this->imageDepth == "8U") {
+      switch(this->nchan()) {
+      case 1:
+        this->image.convertTo(this->image, CV_16UC1, 256.0);
+        break;
+      case 2:
+        this->image.convertTo(this->image, CV_16UC2, 256.0);
+        break;
+      case 3:
+        this->image.convertTo(this->image, CV_16UC3, 256.0);
+        break;
+      case 4:
+        this->image.convertTo(this->image, CV_16UC4, 256.0);
+        break;
+      default:
+        throw std::range_error("Invalid number of channels.");
+      }
+    }
+  } else {
+    throw std::range_error("Invalid bit depth.");
+  }
+
+  this->init();
+}
+
+void Image::changeColorSpace(std::string colorSpace) {
+  if ((colorSpace != "BGR") && (colorSpace != "BGRA") && (colorSpace != "GRAY")) {
+    throw std::range_error("Unknown colorspace.");
+  }
+
+  if (this->imageSpace == "BGR") {
+    if (colorSpace == "BGRA") {
+      cv::cvtColor(this->image, this->image, cv::COLOR_BGR2BGRA);
+    } else if (colorSpace == "GRAY") {
+      cv::cvtColor(this->image, this->image, cv::COLOR_BGR2GRAY);
+    }
+  } else if (this->imageSpace == "BGRA") {
+    if (colorSpace == "BGR") {
+      cv::cvtColor(this->image, this->image, cv::COLOR_BGRA2BGR);
+    } else if (colorSpace == "GRAY") {
+      cv::cvtColor(this->image, this->image, cv::COLOR_BGRA2GRAY);
+    }
+  } else {
+    if (colorSpace == "BGR") {
+      cv::cvtColor(this->image, this->image, cv::COLOR_GRAY2BGR);
+    } else if (colorSpace == "BGR") {
+      cv::cvtColor(this->image, this->image, cv::COLOR_GRAY2BGRA);
+    }
+  }
+
+  this->init();
+}
+
+Image cloneImage(Image image) {
+  Image out = Image(image.image);
+  return(out);
 }
 

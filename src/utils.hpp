@@ -50,3 +50,55 @@ int getPropId(std::string propId) {
 
   throw std::range_error("Unknown property.");
 }
+
+std::string type2str(int type) {
+  int numImgTypes = 35; // 7 base types, with five channel options each (none or C1, ..., C4)
+
+  int enum_ints[] = {CV_8U,  CV_8UC1,  CV_8UC2,  CV_8UC3,  CV_8UC4,
+                     CV_8S,  CV_8SC1,  CV_8SC2,  CV_8SC3,  CV_8SC4,
+                     CV_16U, CV_16UC1, CV_16UC2, CV_16UC3, CV_16UC4,
+                     CV_16S, CV_16SC1, CV_16SC2, CV_16SC3, CV_16SC4,
+                     CV_32S, CV_32SC1, CV_32SC2, CV_32SC3, CV_32SC4,
+                     CV_32F, CV_32FC1, CV_32FC2, CV_32FC3, CV_32FC4,
+                     CV_64F, CV_64FC1, CV_64FC2, CV_64FC3, CV_64FC4};
+
+  std::string enum_strings[] = {"8U",  "8UC1",  "8UC2",  "8UC3",  "8UC4",
+                                "8S",  "8SC1",  "8SC2",  "8SC3",  "8SC4",
+                                "16U", "16UC1", "16UC2", "16UC3", "16UC4",
+                                "16S", "16SC1", "16SC2", "16SC3", "16SC4",
+                                "32S", "32SC1", "32SC2", "32SC3", "32SC4",
+                                "32F", "32FC1", "32FC2", "32FC3", "32FC4",
+                                "64F", "64FC1", "64FC2", "64FC3", "64FC4"};
+
+  for(int i=0; i<numImgTypes; i++) {
+    if(type == enum_ints[i]) return enum_strings[i];
+  }
+
+  throw std::range_error("Unknown image type.");
+}
+
+int str2type(std::string str) {
+  int numImgTypes = 35; // 7 base types, with five channel options each (none or C1, ..., C4)
+
+  int enum_ints[] = {CV_8U,  CV_8UC1,  CV_8UC2,  CV_8UC3,  CV_8UC4,
+                     CV_8S,  CV_8SC1,  CV_8SC2,  CV_8SC3,  CV_8SC4,
+                     CV_16U, CV_16UC1, CV_16UC2, CV_16UC3, CV_16UC4,
+                     CV_16S, CV_16SC1, CV_16SC2, CV_16SC3, CV_16SC4,
+                     CV_32S, CV_32SC1, CV_32SC2, CV_32SC3, CV_32SC4,
+                     CV_32F, CV_32FC1, CV_32FC2, CV_32FC3, CV_32FC4,
+                     CV_64F, CV_64FC1, CV_64FC2, CV_64FC3, CV_64FC4};
+
+  std::string enum_strings[] = {"8U",  "8UC1",  "8UC2",  "8UC3",  "8UC4",
+                                "8S",  "8SC1",  "8SC2",  "8SC3",  "8SC4",
+                                "16U", "16UC1", "16UC2", "16UC3", "16UC4",
+                                "16S", "16SC1", "16SC2", "16SC3", "16SC4",
+                                "32S", "32SC1", "32SC2", "32SC3", "32SC4",
+                                "32F", "32FC1", "32FC2", "32FC3", "32FC4",
+                                "64F", "64FC1", "64FC2", "64FC3", "64FC4"};
+
+  for(int i=0; i<numImgTypes; i++) {
+    if(str == enum_strings[i]) return enum_ints[i];
+  }
+
+  throw std::range_error("Unknown image type.");
+}
