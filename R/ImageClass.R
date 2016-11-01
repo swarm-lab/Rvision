@@ -68,20 +68,18 @@ image <- function(...) {
 plot.Rcpp_Image <- function(image, ...) {
   img <- image$toR()
 
-  if (image$depth() == "8U") {
-    img <- img / 255
-  } else if (image$depth() == "16U") {
-    img <- img / 65535
+  if (Rvision::bitdepth(image) == "8U") {
+    imgMax <- 255
+  } else if (Rvision::bitdepth(image) == "16U") {
+    imgMax <- 65535
   } else {
     stop("Invalid image depth.")
   }
 
-  img[img > 1] <- 1
-  img[img < 0] <- 0
-  imgDims <- dim(img)
-
-  if (imgDims[3] == 1) {
-    img <- img[, , 1]
+  if (Rvision::colorspace(image) == "BGR" | Rvision::colorspace(image) == "BGRA") {
+    img <- img[, , 3:1] / imgMax
+  } else if (Rvision::colorspace(image) == "GRAY") {
+    img <- img[, , 1] / imgMax
   }
 
   op <- par(mar = rep(0, 4))

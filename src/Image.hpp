@@ -248,7 +248,7 @@ arma::cube Image::toR() {
     for (int i = 0; i < tmp.rows; i++) {
       for (int j = 0; j < tmp.cols; j++) {
         for (int k = 0; k < tmp.channels(); k++)
-          outputArray(i, j, k) = tmp.at<cv::Vec2f>(i, j)[tmp.channels() - k - 1];
+          outputArray(i, j, k) = tmp.at<cv::Vec2f>(i, j)[k]; // [tmp.channels() - k - 1];
       }
     }
     break;
@@ -257,7 +257,7 @@ arma::cube Image::toR() {
     for (int i = 0; i < tmp.rows; i++) {
       for (int j = 0; j < tmp.cols; j++) {
         for (int k = 0; k < tmp.channels(); k++)
-          outputArray(i, j, k) = tmp.at<cv::Vec3f>(i, j)[tmp.channels() - k - 1];
+          outputArray(i, j, k) = tmp.at<cv::Vec3f>(i, j)[k]; // [tmp.channels() - k - 1];
       }
     }
     break;
@@ -266,7 +266,7 @@ arma::cube Image::toR() {
     for (int i = 0; i < tmp.rows; i++) {
       for (int j = 0; j < tmp.cols; j++) {
         for (int k = 0; k < tmp.channels(); k++)
-          outputArray(i, j, k) = tmp.at<cv::Vec4f>(i, j)[tmp.channels() - k - 1];
+          outputArray(i, j, k) = tmp.at<cv::Vec4f>(i, j)[k]; // [tmp.channels() - k - 1];
       }
     }
     break;
