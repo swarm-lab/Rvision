@@ -32,8 +32,8 @@ in `R`.
 
 You can install `devtools` as follows. 
 
-```{r, eval=FALSE}
-install.package("devtools")
+```{r, include=FALSE}
+install.packages("devtools")
 ```
 
 Installation instructions for `ROpenCVLite` can be found here:
@@ -43,7 +43,7 @@ you (compilation speed will depend on your computer).
 
 ## Installing Rvision
 
-```{r, eval=FALSE}
+```{r, include=FALSE}
 devtools::install_github("swarm-lab/Rvision")
 ```
 

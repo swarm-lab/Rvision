@@ -203,6 +203,67 @@ nchan <- function(image) {
 }
 
 
+#' @title The Bit Depth of an Image
+#'
+#' @description This function returns the bit depth of an \code{\link{Image}}
+#'  object, that is the number of bits of information used to encode each
+#'  channel of each pixel in an image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @return A character string indicating the bit depth of the image. For now, it
+#'  can only be one of the following:
+#'  \itemize{
+#'   \item 8U: an image with a bit depth of 8 unsigned bits.
+#'   \item 16U: an image with a bit depth of 16 unsigned bits.
+#'  }
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{colorspace}}.
+#'
+#' @examples
+#' # TODO
+#'
+bitdepth <- function(image) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  image$depth()
+}
+
+
+#' @title The Color Space of an Image
+#'
+#' @description This function returns the color space of an \code{\link{Image}}
+#'  object, that is the range of colors of an image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @return A character string indicating the color space of the image. For now,
+#'  it can only be one of the following:
+#'  \itemize{
+#'   \item BGR: an image with 3 channels, Blue, Green, and Red.
+#'   \item BGRA: an image with 3 channels, Blue, Green, Red, and Alpha
+#'               (transparency).
+#'   \item GRAY: a grayscale image (1 channel only).
+#'  }
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{bitdepth}}.
+#'
+#' @examples
+#' # TODO
+#'
+colorspace <- function(image) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  image$space()
+}
+
+
 #' @title Convert Image to Array or Matrix
 #'
 #' @aliases as.matrix.Rcpp_Image
