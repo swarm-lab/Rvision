@@ -32,7 +32,7 @@ in `R`.
 
 You can install `devtools` as follows. 
 
-```{r, include=FALSE}
+```{r, eval=FALSE, include=FALSE}
 install.packages("devtools")
 ```
 
@@ -43,7 +43,7 @@ you (compilation speed will depend on your computer).
 
 ## Installing Rvision
 
-```{r, include=FALSE}
+```{r, eval=FALSE, include=FALSE}
 devtools::install_github("swarm-lab/Rvision")
 ```
 
@@ -79,6 +79,8 @@ dim(img1)
 nrow(img1)
 ncol(img1)
 nchan(img1)
+bitdepth(img1)
+colorspace(img1)
 ```
 
 ## Save image to disk
@@ -90,15 +92,15 @@ write.Image(img1, file = "~/Desktop/img1.png")
 ## Convert color image to grayscale
 
 ```{r, fig.height=8*720/1280}
-img2 <- convert(img1, "gray")
+img2 <- changeColorSpace(img1, "GRAY")
 plot(img2)
 ```
 
 ## Convert grayscale image to black and white
 
 ```{r, fig.height=8*720/1280}
-img3 <- img2 > 75   # Gray values > 75 are turned to white (255)
-                    # Gray values <= 75 are turned to black (0)
+img3 <- img2 > 128   # Gray values > 128 are turned to white (255)
+                    # Gray values <= 128 are turned to black (0)
 plot(img3)
 ```
 
