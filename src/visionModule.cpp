@@ -89,6 +89,8 @@ RCPP_MODULE(methods_Arithmetic) {
   function("_multiply", &_multiply, List::create(_["image1"], _["image2"]), "");
   function("_multiplyScalar", &_multiplyScalar, List::create(_["image"], _["value"]), "");
   function("_divide", &_divide, List::create(_["image1"], _["image2"]), "");
+  function("absdiff", &absdiff, List::create(_["image1"], _["image2"]), "");
+  function("addWeighted", &addWeighted, List::create(_["image1"], _["alpha"], _["image2"], _["beta"]), "");
 }
 
 #include "statistics.hpp"

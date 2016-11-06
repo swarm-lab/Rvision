@@ -83,10 +83,10 @@ plot.Rcpp_Image <- function(image, ...) {
   }
 
   op <- par(mar = rep(0, 4))
-  plot(NA, xlim = c(1, imgDims[2]), ylim = c(1, imgDims[1]), asp = 1, xaxt = "n",
+  plot(NA, xlim = c(1, ncol(img)), ylim = c(1, nrow(img)), asp = 1, xaxt = "n",
        yaxt = "n", ann = FALSE, bty = "n", xaxs = "i", yaxs = "i")
 
-  rasterImage(img, xleft = 1, xright = imgDims[2], ybottom = 1, ytop = imgDims[1], ...)
+  rasterImage(img, xleft = 1, xright = ncol(img), ybottom = 1, ytop = nrow(img), ...)
   par(op)
 }
 
