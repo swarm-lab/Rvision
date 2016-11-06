@@ -15,7 +15,7 @@ backgrounder <- function(video, n = 10, method = "mean") {
   print("Done.")
 
   if (method == "mean") {
-    return(mean(l1))
+    out <- mean(l1)
   } else if (method == "median") {
     l2 <- lapply(l1, as.array)
 
@@ -32,11 +32,18 @@ backgrounder <- function(video, n = 10, method = "mean") {
       mat[, , i] <- pbapply::pbapply(l3[[i]], c(1, 2), median.default)
     }
 
+    if (bitdepth(l1[[1]]) == "8U") {
+      mat <- mat * 256
+      out <- changeBitDepth(image(mat), 8)
+    } else {
+      out <- image(mat)
+    }
     print("Done.")
-    return(image(mat))
   } else {
     stop("'method' should be 'mean' or 'median'")
   }
+
+  out
 }
 
 
