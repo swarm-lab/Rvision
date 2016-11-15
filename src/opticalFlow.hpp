@@ -18,6 +18,3 @@ arma::cube _farneback(Image image1, Image image2, double pyr_scale, int levels,
 
   return(outputArray);
 }
-
-
-

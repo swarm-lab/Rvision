@@ -55,6 +55,6 @@ Farnebäck G. Two-Frame Motion Estimation Based on Polynomial
  Berlin Heidelberg; 2003. pp. 363–370. doi:10.1007/3-540-45103-X_50
 }
 \seealso{
-\code{\link{Image}}
+\code{\link{plot.OF_array}}
 }
 
