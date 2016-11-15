@@ -6,6 +6,7 @@ loadModule("methods_Arithmetic", TRUE)
 loadModule("methods_Statistics", TRUE)
 loadModule("methods_Comparisons", TRUE)
 loadModule("methods_Logical", TRUE)
+loadModule("methods_OpticalFlow", TRUE)
 
 
 ### Define generic arithmetic methods ###

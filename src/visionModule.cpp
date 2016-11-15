@@ -124,3 +124,13 @@ RCPP_MODULE(methods_Logical) {
   function("_or", &_or, List::create(_["image1"], _["image2"]), "");
   function("_not", &_not, List::create(_["image"]), "");
 }
+
+#include "opticalFlow.hpp"
+RCPP_MODULE(methods_OpticalFlow) {
+
+  function("_farneback", &_farneback, List::create(_["image1"], _["image2"], _["pyr_scale"],
+    _["levels"], _["winsize"], _["iterations"], _["poly_n"], _["poly_sigma"]), "");
+}
+
+
+
