@@ -65,7 +65,7 @@ image <- function(...) {
 #' @examples
 #' # TODO
 #'
-plot.Rcpp_Image <- function(image, ...) {
+plot.Rcpp_Image <- function(image, xlim = NULL, ylim = NULL, ...) {
   img <- image$toR()
 
   if (Rvision::bitdepth(image) == "8U") {
@@ -82,8 +82,16 @@ plot.Rcpp_Image <- function(image, ...) {
     img <- img[, , 1] / imgMax
   }
 
+  if (is.null(xlim)) {
+    xlim <- c(1, ncol(img))
+  }
+
+  if (is.null(ylim)) {
+    ylim <- c(1, nrow(img))
+  }
+
   op <- par(mar = rep(0, 4))
-  plot(NA, xlim = c(1, ncol(img)), ylim = c(1, nrow(img)), asp = 1, xaxt = "n",
+  plot(NA, xlim = xlim, ylim = ylim, asp = 1, xaxt = "n",
        yaxt = "n", ann = FALSE, bty = "n", xaxs = "i", yaxs = "i")
 
   rasterImage(img, xleft = 1, xright = ncol(img), ybottom = 1, ytop = nrow(img), ...)

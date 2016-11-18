@@ -5,7 +5,7 @@
 \alias{plot.Rcpp_Image}
 \title{Plot \pkg{Rvision} Images}
 \usage{
-\method{plot}{Rcpp_Image}(image, ...)
+\method{plot}{Rcpp_Image}(image, xlim = NULL, ylim = NULL, ...)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
