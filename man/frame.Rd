@@ -23,10 +23,9 @@ Frame index starts at 0 (i.e. the first image has index 0).
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Video}}, \code{\link{video}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

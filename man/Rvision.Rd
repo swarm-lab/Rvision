@@ -18,12 +18,11 @@ some basic functions to read and manipulate images, videos and camera streams.
  License: \tab GPL-3\cr
 }
 }
+\references{
+More about OpenCV at \link{http://opencv.org/}.
+}
 \author{
 Simon Garnier <garnier@njit.edu>
 
 Maintainer: Simon Garnier <garnier@njit.edu>
 }
-\references{
-More about OpenCV at \link{http://opencv.org/}.
-}
-

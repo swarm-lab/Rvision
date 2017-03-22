@@ -2,9 +2,9 @@
 % Please edit documentation in R/StreamClass.R
 \docType{class}
 \name{Stream-class}
-\alias{Rcpp_Stream}
-\alias{Stream}
 \alias{Stream-class}
+\alias{Stream}
+\alias{Rcpp_Stream}
 \title{An S4 class containing an OpenCV stream}
 \format{An object of class \code{C++Class} of length 1.}
 \usage{
@@ -18,4 +18,3 @@ Stream
 Simon Garnier, \email{garnier@njit.edu}
 }
 \keyword{datasets}
-

@@ -26,10 +26,9 @@ This function returns the bit depth of an \code{\link{Image}}
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Image}}, \code{\link{colorspace}}.
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

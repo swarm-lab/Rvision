@@ -20,10 +20,9 @@ Read the next frame of a \code{\link{Video}} object and returns
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Video}}, \code{\link{Image}}, \code{\link{readFrame}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

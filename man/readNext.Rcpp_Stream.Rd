@@ -20,10 +20,9 @@ Read the next frame of a \code{\link{Stream}} object and returns
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Stream}}, \code{\link{Image}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

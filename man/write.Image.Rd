@@ -26,10 +26,9 @@ The function will guess the format of the output file using the file
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Image}}, \code{\link{image}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

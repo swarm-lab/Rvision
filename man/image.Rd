@@ -28,10 +28,9 @@ Function for creating \code{\link{Image}} objects from arrays
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Image}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

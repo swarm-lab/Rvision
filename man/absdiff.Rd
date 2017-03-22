@@ -22,10 +22,9 @@ This function computes the absolute difference between two
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Image}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

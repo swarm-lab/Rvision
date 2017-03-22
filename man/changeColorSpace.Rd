@@ -24,10 +24,9 @@ This function takes an \code{\link{Image}} object and converts
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Image}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

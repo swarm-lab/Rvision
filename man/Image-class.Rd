@@ -2,8 +2,8 @@
 % Please edit documentation in R/ImageClass.R
 \docType{class}
 \name{Image-class}
-\alias{Image}
 \alias{Image-class}
+\alias{Image}
 \alias{Rcpp_Image}
 \title{An S4 Class Containing an OpenCV Image}
 \format{An object of class \code{C++Class} of length 1.}
@@ -16,11 +16,10 @@ Image
  originate from an image file, an array, a video file or a video stream.
  This image can be manipulated using the functions of \pkg{\link{Rvision}}.
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{image}}, \code{\link{Video}}, \code{\link{Stream}}
 }
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}
 \keyword{datasets}
-

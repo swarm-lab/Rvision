@@ -26,10 +26,9 @@ An \code{\link{Image}} object.
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Image}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

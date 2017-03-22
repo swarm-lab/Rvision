@@ -147,9 +147,3 @@ plot.OF_array <- function(array, gridsize = c(25, 25), thresh = 0,
   arrows(x[valid], y[valid], x[valid] + u[valid], y[valid] + v[valid], ...)
   par(xpd = old.xpd)
 }
-
-
-
-
-
-

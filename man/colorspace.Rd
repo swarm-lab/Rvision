@@ -27,10 +27,9 @@ This function returns the color space of an \code{\link{Image}}
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Image}}, \code{\link{bitdepth}}.
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

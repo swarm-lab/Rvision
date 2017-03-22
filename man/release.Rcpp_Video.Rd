@@ -19,10 +19,9 @@ Close a \code{\link{Video}} object.
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Video}}, \code{\link{video}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

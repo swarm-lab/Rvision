@@ -46,9 +46,6 @@ Computes a dense optical flow using the Gunnar Farneback’s algorithm.
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \references{
 Farnebäck G. Two-Frame Motion Estimation Based on Polynomial
  Expansion. In: Bigun J, Gustavsson T, editors. Image Analysis. Springer
@@ -57,4 +54,6 @@ Farnebäck G. Two-Frame Motion Estimation Based on Polynomial
 \seealso{
 \code{\link{plot.OF_array}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

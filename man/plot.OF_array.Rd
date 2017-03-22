@@ -35,10 +35,9 @@ Plotting method for objects of class \code{OF_array} as produced
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{farneback}}, \code{\link{arrows}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

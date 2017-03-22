@@ -22,10 +22,9 @@ Read a specific frame of a \code{\link{Video}} object and
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Video}}, \code{\link{Image}}, \code{\link{readNext}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

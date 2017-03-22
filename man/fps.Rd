@@ -20,10 +20,9 @@ Retrieve the framerate (in frames per second) of a
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Video}}, \code{\link{video}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

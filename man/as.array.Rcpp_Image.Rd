@@ -19,10 +19,9 @@ A matrix or array of the same dimensions as the \code{\link{Image}}
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Image}}, \code{\link{matrix}}, \code{\link{array}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

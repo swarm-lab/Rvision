@@ -2,9 +2,9 @@
 % Please edit documentation in R/VideoClass.R
 \docType{class}
 \name{Video-class}
-\alias{Rcpp_Video}
-\alias{Video}
 \alias{Video-class}
+\alias{Video}
+\alias{Rcpp_Video}
 \title{An S4 Class Containing an OpenCV Video}
 \format{An object of class \code{C++Class} of length 1.}
 \usage{
@@ -18,4 +18,3 @@ Video
 Simon Garnier, \email{garnier@njit.edu}
 }
 \keyword{datasets}
-

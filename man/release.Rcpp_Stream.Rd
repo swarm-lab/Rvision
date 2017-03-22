@@ -19,10 +19,9 @@ Close a \code{\link{Stream}} object.
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Stream}}, \code{\link{stream}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

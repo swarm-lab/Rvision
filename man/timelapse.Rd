@@ -39,4 +39,3 @@ Generates a timelapse sequence from a \code{Stream} object with
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
-

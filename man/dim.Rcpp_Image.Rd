@@ -20,10 +20,9 @@ Retrieve the dimensions an \code{\link{Image}} object.
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Image}}, \code{\link{image}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

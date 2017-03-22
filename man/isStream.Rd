@@ -20,10 +20,9 @@ Tests whether the object is of class \code{\link{Stream}}
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Stream}}, \code{\link{stream}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

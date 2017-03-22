@@ -20,10 +20,9 @@ Tests whether the object is of class \code{\link{Video}}
 # TODO
 
 }
-\author{
-Simon Garnier, \email{garnier@njit.edu}
-}
 \seealso{
 \code{\link{Video}}, \code{\link{video}}
 }
-
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

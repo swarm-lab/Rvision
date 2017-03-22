@@ -26,4 +26,3 @@ Function for creating \code{\link{Video}} objects from video
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
-
