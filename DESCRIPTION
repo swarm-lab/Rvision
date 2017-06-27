@@ -23,4 +23,5 @@ Depends:
 LinkingTo: Rcpp, RcppArmadillo
 RcppModules: class_Image, class_Video, class_Stream, methods_Arithmetic,
     methods_Statistics, methods_Comparisons, methods_Logical, methods_OpticalFlow
+Remotes: swarm-lab/ROpenCVLite
 RoxygenNote: 6.0.1
