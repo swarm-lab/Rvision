@@ -1,7 +1,7 @@
 Package: Rvision
 Type: Package
 Title: Basic Computer Vision Library
-Version: 0.1.1.1
+Version: 0.1.1
 Author: Simon Garnier
 Maintainer: Simon Garnier <garnier@njit.edu>
 Description: This package uses the OpenCV library to provide R users with some
