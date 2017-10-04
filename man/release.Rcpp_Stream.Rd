@@ -4,10 +4,10 @@
 \alias{release.Rcpp_Stream}
 \title{Release Stream from Memory}
 \usage{
-\method{release}{Rcpp_Stream}(stream)
+\method{release}{Rcpp_Stream}(obj)
 }
 \arguments{
-\item{stream}{A \code{\link{Stream}} object.}
+\item{obj}{A \code{\link{Stream}} object.}
 }
 \value{
 If successful, the \code{\link{Stream}} object is cleared from memory

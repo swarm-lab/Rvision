@@ -3,14 +3,11 @@
 \name{timelapse}
 \alias{timelapse}
 \title{Make timelapse from \code{Stream} object}
-\format{format A character string corresponding to the format of the images
- (default: "png").}
 \usage{
-timelapse(stream, outputFolder, interval = 1, duration = Inf,
-  format = "png")
+timelapse(obj, outputFolder, interval = 1, duration = Inf, format = "png")
 }
 \arguments{
-\item{stream}{The \code{Stream} object to use.}
+\item{obj}{The \code{Stream} object to use.}
 
 \item{outputFolder}{The path to the folder where the timelapse images will be
 saved. If it does not exist, it will be created. Note: the function will
@@ -23,6 +20,9 @@ timelapse images.}
 \item{duration}{The duration in seconds of the timelapse. If infinite (the
 default), the timelapse will run until the user interrupts the function
 manually.}
+
+\item{format}{A character string corresponding to the format of the images
+(default: "png").}
 }
 \value{
 This function does not return anything. It saves captured images in

@@ -4,10 +4,10 @@
 \alias{dim.Rcpp_Video}
 \title{Dimensions of a Video}
 \usage{
-\method{dim}{Rcpp_Video}(video)
+\method{dim}{Rcpp_Video}(x)
 }
 \arguments{
-\item{image}{A \code{\link{Video}} object.}
+\item{x}{A \code{\link{Video}} object.}
 }
 \value{
 A vector with 3 values corresponding to the number of rows, columns

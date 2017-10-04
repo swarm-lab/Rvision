@@ -15,7 +15,7 @@ output:
   pdf_document:
     toc: yes
 vignette: |
-  %\VignetteIndexEntry{Vignette Title} 
+  %\VignetteIndexEntry{Rvision computer vision library}
   %\VignetteEngine{knitr::rmarkdown} 
   %\VignetteEncoding{UTF-8}
 ---
@@ -29,14 +29,15 @@ vignette: |
 Before installing `Rvision`, you will need to install the latest version of the 
 `devtools` package in `R`.You can install `devtools` as follows: 
 
-```r
+```{r, eval = FALSE}
 install.package("devtools")
+```
 
 ## Installing Rvision
 
 You can install `Rvision` as follows:
 
-```r
+```{r, eval = FALSE}
 devtools::install_github("swarm-lab/Rvision")
 ```
 
@@ -58,7 +59,7 @@ a cup of tea or coffee while `ROpenCVLite` is installing ;-)
 library(Rvision)
 
 # Locate sample file
-samplePath <- paste0(find.package("Rvision"), "/sample_img/bunny.png")
+samplePath <- system.file("sample_img", "bunny.png", package = "Rvision")
 
 # Read image file
 img1 <- image(samplePath)

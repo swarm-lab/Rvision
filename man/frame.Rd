@@ -4,10 +4,10 @@
 \alias{frame}
 \title{Video Reader Position}
 \usage{
-frame(video)
+frame(x)
 }
 \arguments{
-\item{video}{A \code{\link{Video}} object.}
+\item{x}{A \code{\link{Video}} object.}
 }
 \value{
 A numeric value.

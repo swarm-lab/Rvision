@@ -143,7 +143,7 @@ plot.OF_array <- function(array, gridsize = c(25, 25), thresh = 0,
   v <- (arrow.ex * v) / maxr
   invisible()
   old.xpd <- par()$xpd
-  par(xpd = xpd)
-  arrows(x[valid], y[valid], x[valid] + u[valid], y[valid] + v[valid], ...)
-  par(xpd = old.xpd)
+  graphics::par(xpd = xpd)
+  graphics::arrows(x[valid], y[valid], x[valid] + u[valid], y[valid] + v[valid], ...)
+  graphics::par(xpd = old.xpd)
 }

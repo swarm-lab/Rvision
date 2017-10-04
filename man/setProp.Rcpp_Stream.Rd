@@ -5,11 +5,11 @@
 \alias{getProp.Rcpp_Stream}
 \title{Set/Get Stream Properties}
 \usage{
-setProp(stream, property, value)
-getProp(stream, property)
+setProp(obj, property, value)
+getProp(obj, property)
 }
 \arguments{
-\item{stream}{A \code{\link{Stream}} object.}
+\item{obj}{A \code{\link{Stream}} object.}
 
 \item{property}{A character string specifying the name of the property to
 modify (see details below for a complete list).}

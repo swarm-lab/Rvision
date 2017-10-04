@@ -6,12 +6,12 @@
 \alias{nframes}
 \title{The Number of Rows/Columns/Frames of a Video}
 \usage{
-nrow(video)
-ncol(video)
-nframes(video)
+nrow(x)
+ncol(x)
+nframes(x)
 }
 \arguments{
-\item{video}{A \code{\link{Video}} object.}
+\item{x}{A \code{\link{Video}} object.}
 }
 \value{
 A numeric value.

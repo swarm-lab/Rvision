@@ -4,10 +4,10 @@
 \alias{readNext.Rcpp_Video}
 \title{Read Next Video Frame}
 \usage{
-\method{readNext}{Rcpp_Video}(video)
+\method{readNext}{Rcpp_Video}(obj)
 }
 \arguments{
-\item{video}{A \code{\link{Video}} object.}
+\item{obj}{A \code{\link{Video}} object.}
 }
 \value{
 An \code{\link{Image}} object.

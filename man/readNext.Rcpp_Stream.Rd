@@ -4,10 +4,10 @@
 \alias{readNext.Rcpp_Stream}
 \title{Read Next Stream Frame}
 \usage{
-\method{readNext}{Rcpp_Stream}(stream)
+\method{readNext}{Rcpp_Stream}(obj)
 }
 \arguments{
-\item{stream}{A \code{\link{Stream}} object.}
+\item{obj}{A \code{\link{Stream}} object.}
 }
 \value{
 An \code{\link{Image}} object.

@@ -61,7 +61,7 @@ isStream <- function(object) {
 #'
 #' @description Close a \code{\link{Stream}} object.
 #'
-#' @param stream A \code{\link{Stream}} object.
+#' @param obj A \code{\link{Stream}} object.
 #'
 #' @return If successful, the \code{\link{Stream}} object is cleared from memory
 #'
@@ -72,14 +72,14 @@ isStream <- function(object) {
 #' @examples
 #' # TODO
 #'
-release.Rcpp_Stream <- function(stream) {
-  if (!isStream(stream))
+release.Rcpp_Stream <- function(obj) {
+  if (!isStream(obj))
     stop("This is not a Stream object.")
 
-  stream$release()
+  obj$release()
 
-  if (!stream$isOpened()) {
-    tmp <- deparse(substitute(stream))
+  if (!obj$isOpened()) {
+    tmp <- deparse(substitute(obj))
     rm(list = tmp, envir = parent.frame(1))
     cat("Stream released successfully. \n")
   } else {
@@ -93,7 +93,7 @@ release.Rcpp_Stream <- function(stream) {
 #' @description Read the next frame of a \code{\link{Stream}} object and returns
 #'  it as an \code{\link{Image}} object.
 #'
-#' @param stream A \code{\link{Stream}} object.
+#' @param obj A \code{\link{Stream}} object.
 #'
 #' @return An \code{\link{Image}} object.
 #'
@@ -104,11 +104,11 @@ release.Rcpp_Stream <- function(stream) {
 #' @examples
 #' # TODO
 #'
-readNext.Rcpp_Stream <- function(stream) {
-  if (!isStream(stream))
+readNext.Rcpp_Stream <- function(obj) {
+  if (!isStream(obj))
     stop("This is not a Stream object.")
 
-  stream$readNext()
+  obj$readNext()
 }
 
 
@@ -116,13 +116,13 @@ readNext.Rcpp_Stream <- function(stream) {
 #'
 #' @aliases getProp.Rcpp_Stream
 #'
-#' @usage setProp(stream, property, value)
-#' getProp(stream, property)
+#' @usage setProp(obj, property, value)
+#' getProp(obj, property)
 #'
 #' @description Set or get the values of various properties of the
 #'  \code{\link{Stream}} object.
 #'
-#' @param stream A \code{\link{Stream}} object.
+#' @param obj A \code{\link{Stream}} object.
 #'
 #' @param property A character string specifying the name of the property to
 #'  modify (see details below for a complete list).
@@ -157,18 +157,18 @@ readNext.Rcpp_Stream <- function(stream) {
 #' @examples
 #' # TODO
 #'
-setProp.Rcpp_Stream <- function(stream, property, value) {
-  if (!isStream(stream))
+setProp.Rcpp_Stream <- function(obj, property, value) {
+  if (!isStream(obj))
     stop("This is not a Stream object.")
 
-  stream$set(property, value)
+  obj$set(property, value)
 }
 
-getProp.Rcpp_Stream <- function(stream, property) {
-  if (!isStream(stream))
+getProp.Rcpp_Stream <- function(obj, property) {
+  if (!isStream(obj))
     stop("This is not a Stream object.")
 
-  stream$get(property)
+  obj$get(property)
 }
 
 
@@ -177,7 +177,7 @@ getProp.Rcpp_Stream <- function(stream, property) {
 #' @description Generates a timelapse sequence from a \code{Stream} object with
 #'  a given duration and interval between images.
 #'
-#' @param stream The \code{Stream} object to use.
+#' @param obj The \code{Stream} object to use.
 #'
 #' @param outputFolder The path to the folder where the timelapse images will be
 #'  saved. If it does not exist, it will be created. Note: the function will
@@ -191,7 +191,7 @@ getProp.Rcpp_Stream <- function(stream, property) {
 #'  default), the timelapse will run until the user interrupts the function
 #'  manually.
 #'
-#' @format format A character string corresponding to the format of the images
+#' @param format A character string corresponding to the format of the images
 #'  (default: "png").
 #'
 #' @return This function does not return anything. It saves captured images in
@@ -202,9 +202,9 @@ getProp.Rcpp_Stream <- function(stream, property) {
 #' @examples
 #' # TODO
 #'
-timelapse <- function(stream, outputFolder, interval = 1, duration = Inf,
+timelapse <- function(obj, outputFolder, interval = 1, duration = Inf,
                       format = "png") {
-  if (!isStream(stream))
+  if (!isStream(obj))
     stop("This is not a Stream object.")
 
   outputFolder <- suppressWarnings(normalizePath(outputFolder))
@@ -218,7 +218,7 @@ timelapse <- function(stream, outputFolder, interval = 1, duration = Inf,
   end <- start + duration * 1000
 
   while (.now() < end) {
-    img <- stream$readNext()
+    img <- obj$readNext()
     img$write(paste0(outputFolder, "/", counter, ".", format))
     counter <- counter + 1
     print(paste0("Last picture taken at: ", Sys.time()))

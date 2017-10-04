@@ -4,10 +4,10 @@
 \alias{dim.Rcpp_Image}
 \title{Dimensions of an Image}
 \usage{
-\method{dim}{Rcpp_Image}(image)
+\method{dim}{Rcpp_Image}(x)
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{x}{An \code{\link{Image}} object.}
 }
 \value{
 A vector with 3 values corresponding to the number of rows, columns

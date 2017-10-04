@@ -4,10 +4,10 @@
 \alias{release.Rcpp_Video}
 \title{Release Video from Memory}
 \usage{
-\method{release}{Rcpp_Video}(video)
+\method{release}{Rcpp_Video}(obj)
 }
 \arguments{
-\item{video}{A \code{\link{Video}} object.}
+\item{obj}{A \code{\link{Video}} object.}
 }
 \value{
 If successful, the \code{\link{Video}} object is cleared from memory

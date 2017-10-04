@@ -54,7 +54,7 @@ image <- function(...) {
 #'
 #' @description Plotting method for objects inheriting from class \code{\link{Image}}.
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param x An \code{\link{Image}} object.
 #'
 #' @param ... Additional arguments to be passed to \code{\link{rasterImage}}.
 #'
@@ -65,20 +65,20 @@ image <- function(...) {
 #' @examples
 #' # TODO
 #'
-plot.Rcpp_Image <- function(image, xlim = NULL, ylim = NULL, ...) {
-  img <- image$toR()
+plot.Rcpp_Image <- function(x, xlim = NULL, ylim = NULL, ...) {
+  img <- x$toR()
 
-  if (Rvision::bitdepth(image) == "8U") {
+  if (Rvision::bitdepth(x) == "8U") {
     imgMax <- 255
-  } else if (Rvision::bitdepth(image) == "16U") {
+  } else if (Rvision::bitdepth(x) == "16U") {
     imgMax <- 65535
   } else {
     stop("Invalid image depth.")
   }
 
-  if (Rvision::colorspace(image) == "BGR" | Rvision::colorspace(image) == "BGRA") {
+  if (Rvision::colorspace(x) == "BGR" | Rvision::colorspace(x) == "BGRA") {
     img <- img[, , 3:1] / imgMax
-  } else if (Rvision::colorspace(image) == "GRAY") {
+  } else if (Rvision::colorspace(x) == "GRAY") {
     img <- img[, , 1] / imgMax
   }
 
@@ -124,7 +124,7 @@ isImage <- function(object) {
 #'
 #' @description Writes the content of an \code{\link{Image}} object to a file.
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param x An \code{\link{Image}} object.
 #'
 #' @param file A character string naming the path to a file.
 #'
@@ -141,11 +141,11 @@ isImage <- function(object) {
 #' @examples
 #' # TODO
 #'
-write.Image <- function(image, file) {
-  if (!isImage(image))
+write.Image <- function(x, file) {
+  if (!isImage(x))
     stop("This is not an Image object.")
 
-  image$write(file)
+  x$write(file)
 }
 
 
@@ -153,7 +153,7 @@ write.Image <- function(image, file) {
 #'
 #' @description Retrieve the dimensions an \code{\link{Image}} object.
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param x An \code{\link{Image}} object.
 #'
 #' @return A vector with 3 values corresponding to the number of rows, columns
 #'  and channels of the image (in this order).
@@ -165,8 +165,8 @@ write.Image <- function(image, file) {
 #' @examples
 #' # TODO
 #'
-dim.Rcpp_Image <- function(image) {
-  image$dim()
+dim.Rcpp_Image <- function(x) {
+  x$dim()
 }
 
 
@@ -177,11 +177,11 @@ dim.Rcpp_Image <- function(image) {
 #' @description nrow, ncol and nchan return the number of rows, columns or
 #'  channels present in an \code{\link{Image}} object.
 #'
-#' @usage nrow(image)
-#' ncol(image)
-#' nchan(image)
+#' @usage nrow(x)
+#' ncol(x)
+#' nchan(x)
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param x An \code{\link{Image}} object.
 #'
 #' @return A numeric value.
 #'
@@ -193,19 +193,19 @@ dim.Rcpp_Image <- function(image) {
 #' @examples
 #' # TODO
 #'
-nrow.Rcpp_Image <- function(image) {
-  image$nrow()
+nrow.Rcpp_Image <- function(x) {
+  x$nrow()
 }
 
-ncol.Rcpp_Image <- function(image) {
-  image$ncol()
+ncol.Rcpp_Image <- function(x) {
+  x$ncol()
 }
 
-nchan <- function(image) {
-  if (!isImage(image))
+nchan <- function(x) {
+  if (!isImage(x))
     stop("This is not an Image object.")
 
-  image$nchan()
+  x$nchan()
 }
 
 
@@ -215,7 +215,7 @@ nchan <- function(image) {
 #'  object, that is the number of bits of information used to encode each
 #'  channel of each pixel in an image.
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param x An \code{\link{Image}} object.
 #'
 #' @return A character string indicating the bit depth of the image. For now, it
 #'  can only be one of the following:
@@ -231,11 +231,11 @@ nchan <- function(image) {
 #' @examples
 #' # TODO
 #'
-bitdepth <- function(image) {
-  if (!isImage(image))
+bitdepth <- function(x) {
+  if (!isImage(x))
     stop("This is not an Image object.")
 
-  image$depth()
+  x$depth()
 }
 
 
@@ -244,7 +244,7 @@ bitdepth <- function(image) {
 #' @description This function returns the color space of an \code{\link{Image}}
 #'  object, that is the range of colors of an image.
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param x An \code{\link{Image}} object.
 #'
 #' @return A character string indicating the color space of the image. For now,
 #'  it can only be one of the following:
@@ -262,11 +262,11 @@ bitdepth <- function(image) {
 #' @examples
 #' # TODO
 #'
-colorspace <- function(image) {
-  if (!isImage(image))
+colorspace <- function(x) {
+  if (!isImage(x))
     stop("This is not an Image object.")
 
-  image$space()
+  x$space()
 }
 
 
@@ -274,10 +274,10 @@ colorspace <- function(image) {
 #'
 #' @aliases as.matrix.Rcpp_Image
 #'
-#' @usage as.array(image)
-#' as.matrix(image)
+#' @usage as.array(x)
+#' as.matrix(x)
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param x An \code{\link{Image}} object.
 #'
 #' @return A matrix or array of the same dimensions as the \code{\link{Image}}
 #'  object.
@@ -289,15 +289,15 @@ colorspace <- function(image) {
 #' @examples
 #' # TODO
 #'
-as.array.Rcpp_Image <- function(image) {
-  image$toR()
+as.array.Rcpp_Image <- function(x, ...) {
+  x$toR()
 }
 
-as.matrix.Rcpp_Image <- function(image) {
-  if (nchan(image) == 1)
-    image$toR()[, , 1]
+as.matrix.Rcpp_Image <- function(x, ...) {
+  if (nchan(x) == 1)
+    x$toR()[, , 1]
   else
-    image$toR()
+    x$toR()
 }
 
 

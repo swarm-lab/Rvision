@@ -6,12 +6,12 @@
 \alias{nchan}
 \title{The Number of Rows/Columns/Channels of an Image}
 \usage{
-nrow(image)
-ncol(image)
-nchan(image)
+nrow(x)
+ncol(x)
+nchan(x)
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{x}{An \code{\link{Image}} object.}
 }
 \value{
 A numeric value.

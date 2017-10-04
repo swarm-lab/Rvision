@@ -15,14 +15,16 @@ Imports:
     RcppArmadillo (>= 0.4.000.2),
     ROpenCVLite (>= 0.1.31),
     methods,
-    pbapply
-Depends:
-    Rcpp (>= 0.11.0),
-    RcppArmadillo (>= 0.4.000.2),
-    ROpenCVLite (>= 0.1.31)
+    pbapply,
+    stats,
+    graphics
 LinkingTo: Rcpp, RcppArmadillo
 RcppModules: class_Image, class_Video, class_Stream, methods_Arithmetic,
     methods_Statistics, methods_Comparisons, methods_Logical, methods_OpticalFlow
 Remotes: swarm-lab/ROpenCVLite
 RoxygenNote: 6.0.1.9000
 Encoding: UTF-8
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

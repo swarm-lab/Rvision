@@ -4,10 +4,10 @@
 \alias{fps}
 \title{Framerate of a Video}
 \usage{
-fps(video)
+fps(x)
 }
 \arguments{
-\item{video}{A \code{\link{Video}} object.}
+\item{x}{A \code{\link{Video}} object.}
 }
 \value{
 A numeric value.

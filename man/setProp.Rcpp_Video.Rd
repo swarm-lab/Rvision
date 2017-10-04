@@ -5,11 +5,11 @@
 \alias{getProp.Rcpp_Video}
 \title{Set/Get Video Properties}
 \usage{
-setProp(video, property, value)
-getProp(video, property)
+setProp(obj, property, value)
+getProp(obj, property)
 }
 \arguments{
-\item{video}{A \code{\link{Video}} object.}
+\item{obj}{A \code{\link{Video}} object.}
 
 \item{property}{A character string specifying the name of the property to
 modify (see details below for a complete list).}

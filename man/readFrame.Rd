@@ -4,10 +4,10 @@
 \alias{readFrame}
 \title{Read Specific Video Frame}
 \usage{
-readFrame(video, pos)
+readFrame(x, pos)
 }
 \arguments{
-\item{video}{A \code{\link{Video}} object.}
+\item{x}{A \code{\link{Video}} object.}
 
 \item{pos}{An integer corresponding to the number of the frame to read.}
 }

@@ -4,10 +4,10 @@
 \alias{write.Image}
 \title{Image Output}
 \usage{
-write.Image(image, file)
+write.Image(x, file)
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{x}{An \code{\link{Image}} object.}
 
 \item{file}{A character string naming the path to a file.}
 }
