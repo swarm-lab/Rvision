@@ -98,7 +98,7 @@ farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
 #' @param xpd If true does not clip arrows to fit inside the plot region,
 #'  default is not to clip.
 #'
-#' @param ... Graphics arguments passed to the \code{\link{arrows} function that
+#' @param ... Graphics arguments passed to the \code{\link{arrows}} function that
 #'  can change the color or arrow sizes. See help on this for details.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}

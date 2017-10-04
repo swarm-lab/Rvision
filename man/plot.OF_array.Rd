@@ -26,6 +26,9 @@ arrows of maximum length can line up end to end along the shorter axis.}
 
 \item{xpd}{If true does not clip arrows to fit inside the plot region,
 default is not to clip.}
+
+\item{...}{Graphics arguments passed to the \code{\link{arrows}} function that
+can change the color or arrow sizes. See help on this for details.}
 }
 \description{
 Plotting method for objects of class \code{OF_array} as produced

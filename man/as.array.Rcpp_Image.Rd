@@ -15,6 +15,9 @@ as.matrix(image)
 A matrix or array of the same dimensions as the \code{\link{Image}}
  object.
 }
+\description{
+Convert Image to Array or Matrix
+}
 \examples{
 # TODO
 
