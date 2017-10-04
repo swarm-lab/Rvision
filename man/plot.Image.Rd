@@ -5,7 +5,7 @@
 \alias{plot.Rcpp_Image}
 \title{Plot \pkg{Rvision} Images}
 \usage{
-\method{plot}{Rcpp_Image}(x, xlim = NULL, ylim = NULL, ...)
+\method{plot}{Rcpp_Image}(x, ...)
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object.}
@@ -17,7 +17,6 @@ Plotting method for objects inheriting from class \code{\link{Image}}.
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}

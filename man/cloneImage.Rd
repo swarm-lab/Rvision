@@ -24,7 +24,6 @@ An \code{\link{Image}} object.
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}

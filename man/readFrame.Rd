@@ -20,10 +20,9 @@ Read a specific frame of a \code{\link{Video}} object and
 }
 \examples{
 # TODO
-
 }
 \seealso{
-\code{\link{Video}}, \code{\link{Image}}, \code{\link{readNext}}
+\code{\link{Video}}, \code{\link{Image}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

@@ -19,8 +19,7 @@ A matrix or array of the same dimensions as the \code{\link{Image}}
 Convert Image to Array or Matrix
 }
 \examples{
-# TODO
-
+# TODO\\
 }
 \seealso{
 \code{\link{Image}}, \code{\link{matrix}}, \code{\link{array}}

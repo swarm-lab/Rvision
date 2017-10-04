@@ -40,7 +40,6 @@ Video properties are:
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Video}}, \code{\link{video}}

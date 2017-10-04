@@ -26,7 +26,6 @@ Function for creating \code{\link{Image}} objects from arrays
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}

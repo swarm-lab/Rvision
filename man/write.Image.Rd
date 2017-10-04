@@ -24,7 +24,6 @@ The function will guess the format of the output file using the file
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}, \code{\link{image}}

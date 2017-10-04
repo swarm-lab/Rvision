@@ -45,7 +45,6 @@ Setting stream properties depends on a lot of things, mainly your
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Stream}}, \code{\link{stream}}

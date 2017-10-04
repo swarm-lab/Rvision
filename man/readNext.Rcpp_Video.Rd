@@ -18,7 +18,6 @@ Read the next frame of a \code{\link{Video}} object and returns
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Video}}, \code{\link{Image}}, \code{\link{readFrame}}

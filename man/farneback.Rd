@@ -44,7 +44,6 @@ Computes a dense optical flow using the Gunnar Farneback’s algorithm.
 }
 \examples{
 # TODO
-
 }
 \references{
 Farnebäck G. Two-Frame Motion Estimation Based on Polynomial

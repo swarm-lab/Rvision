@@ -42,7 +42,7 @@
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
                       iterations = 3, poly_n = 7, poly_sigma = 1.5) {
   if (pyr_scale >= 1)
@@ -107,7 +107,7 @@ farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 plot.OF_array <- function(array, gridsize = c(25, 25), thresh = 0,
                           add = TRUE, arrow.ex = 0.05, xpd = TRUE, ...) {
   if (class(array) != "OF_array")

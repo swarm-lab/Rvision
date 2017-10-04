@@ -14,7 +14,7 @@
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{image}}, \code{\link{Video}}, \code{\link{Stream}}
-#'
+#' @export
 "Image"
 
 
@@ -40,7 +40,7 @@
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 image <- function(...) {
   new(Rvision::Image, ...)
 }
@@ -64,8 +64,8 @@ image <- function(...) {
 #'
 #' @examples
 #' # TODO
-#'
-plot.Rcpp_Image <- function(x, xlim = NULL, ylim = NULL, ...) {
+#' @export
+plot.Rcpp_Image <- function(x, ...) {
   img <- x$toR()
 
   if (Rvision::bitdepth(x) == "8U") {
@@ -114,7 +114,7 @@ plot.Rcpp_Image <- function(x, xlim = NULL, ylim = NULL, ...) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 isImage <- function(object) {
   class(object) == "Rcpp_Image"
 }
@@ -140,7 +140,7 @@ isImage <- function(object) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 write.Image <- function(x, file) {
   if (!isImage(x))
     stop("This is not an Image object.")
@@ -164,7 +164,7 @@ write.Image <- function(x, file) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 dim.Rcpp_Image <- function(x) {
   x$dim()
 }
@@ -192,15 +192,17 @@ dim.Rcpp_Image <- function(x) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 nrow.Rcpp_Image <- function(x) {
   x$nrow()
 }
 
+#' @export
 ncol.Rcpp_Image <- function(x) {
   x$ncol()
 }
 
+#' @export
 nchan <- function(x) {
   if (!isImage(x))
     stop("This is not an Image object.")
@@ -230,7 +232,7 @@ nchan <- function(x) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 bitdepth <- function(x) {
   if (!isImage(x))
     stop("This is not an Image object.")
@@ -261,7 +263,7 @@ bitdepth <- function(x) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 colorspace <- function(x) {
   if (!isImage(x))
     stop("This is not an Image object.")
@@ -287,12 +289,13 @@ colorspace <- function(x) {
 #' @seealso \code{\link{Image}}, \code{\link{matrix}}, \code{\link{array}}
 #'
 #' @examples
-#' # TODO
-#'
+#' # TODO\
+#' @export
 as.array.Rcpp_Image <- function(x, ...) {
   x$toR()
 }
 
+#' @export
 as.matrix.Rcpp_Image <- function(x, ...) {
   if (nchan(x) == 1)
     x$toR()[, , 1]
@@ -322,5 +325,5 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 "cloneImage"

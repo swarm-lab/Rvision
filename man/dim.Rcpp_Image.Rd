@@ -18,7 +18,6 @@ Retrieve the dimensions an \code{\link{Image}} object.
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}, \code{\link{image}}

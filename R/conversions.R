@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 changeColorSpace <- function(image, colorspace) {
   out <- Rvision::cloneImage(image)
   out$changeColorSpace(colorspace)
@@ -43,7 +43,7 @@ changeColorSpace <- function(image, colorspace) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 changeBitDepth <- function(image, bitdepth) {
   out <- Rvision::cloneImage(image)
   out$changeBitDepth(bitdepth)

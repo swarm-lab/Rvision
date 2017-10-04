@@ -235,11 +235,11 @@ release.Rcpp_Video <- function(obj) {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Video}}, \code{\link{Image}}, \code{\link{readNext}}
+#' @seealso \code{\link{Video}}, \code{\link{Image}}
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 readFrame <- function(x, pos) {
   if (!isVideo(x))
     stop("This is not a Video object.")
@@ -263,7 +263,7 @@ readFrame <- function(x, pos) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 readNext.Rcpp_Video <- function(obj) {
   if (!isVideo(obj))
     stop("This is not a Video object.")
@@ -311,7 +311,7 @@ readNext.Rcpp_Video <- function(obj) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 setProp.Rcpp_Video <- function(obj, property, value) {
   if (!isVideo(obj))
     stop("This is not a Video object.")

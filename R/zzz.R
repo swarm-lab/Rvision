@@ -1,16 +1,15 @@
 ### Load package module ###
-loadModule("class_Image", TRUE)
-loadModule("class_Video", TRUE)
-loadModule("class_Stream", TRUE)
-loadModule("methods_Arithmetic", TRUE)
-loadModule("methods_Statistics", TRUE)
-loadModule("methods_Comparisons", TRUE)
-loadModule("methods_Logical", TRUE)
-loadModule("methods_OpticalFlow", TRUE)
-
+Rcpp::loadModule("class_Image", TRUE)
+Rcpp::loadModule("class_Video", TRUE)
+Rcpp::loadModule("class_Stream", TRUE)
+Rcpp::loadModule("methods_Arithmetic", TRUE)
+Rcpp::loadModule("methods_Statistics", TRUE)
+Rcpp::loadModule("methods_Comparisons", TRUE)
+Rcpp::loadModule("methods_Logical", TRUE)
+Rcpp::loadModule("methods_OpticalFlow", TRUE)
 
 ### Define generic arithmetic methods ###
-evalqOnLoad({
+methods::evalqOnLoad({
   setMethod("+", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
               `_plus`(e1, e2)
@@ -74,7 +73,7 @@ evalqOnLoad({
 
 
 ### Define generic statistics methods ###
-evalqOnLoad({
+methods::evalqOnLoad({
   setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),
              useAsDefault = function(x, ..., na.rm = FALSE) base::sum(x, ..., na.rm = na.rm),
              group = "Summary")
@@ -100,7 +99,7 @@ evalqOnLoad({
 
 
 ### Define generic comparison methods ###
-evalqOnLoad({
+methods::evalqOnLoad({
   setMethod(">", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
               `_sup`(e1, e2)
@@ -192,7 +191,7 @@ evalqOnLoad({
             }, where = .GlobalEnv)
 })
 
-evalqOnLoad({
+methods::evalqOnLoad({
   setMethod("&", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
               `_and`(e1, e2)

@@ -18,7 +18,6 @@ Read the next frame of a \code{\link{Stream}} object and returns
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Stream}}, \code{\link{Image}}

@@ -17,7 +17,6 @@ Close a \code{\link{Stream}} object.
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Stream}}, \code{\link{stream}}

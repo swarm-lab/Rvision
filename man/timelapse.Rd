@@ -34,7 +34,6 @@ Generates a timelapse sequence from a \code{Stream} object with
 }
 \examples{
 # TODO
-
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

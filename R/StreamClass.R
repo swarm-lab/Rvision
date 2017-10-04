@@ -10,7 +10,7 @@
 #'  stream that originates from a camera connected to the computer.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
+#' @export
 "Stream"
 
 
@@ -30,7 +30,13 @@
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
+#' @useDynLib Rvision
+#' @import Rcpp
+#' @import methods
+#' @importFrom graphics arrows par plot rasterImage
+#' @importFrom stats median.default
+#' @import pbapply
 stream <- function(...) {
   new(Stream, ...)
 }
@@ -51,6 +57,7 @@ stream <- function(...) {
 #'
 #' @examples
 #' # TODO
+#' @export
 #'
 isStream <- function(object) {
   class(object) == "Rcpp_Stream"
@@ -71,7 +78,7 @@ isStream <- function(object) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 release.Rcpp_Stream <- function(obj) {
   if (!isStream(obj))
     stop("This is not a Stream object.")
@@ -103,7 +110,7 @@ release.Rcpp_Stream <- function(obj) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 readNext.Rcpp_Stream <- function(obj) {
   if (!isStream(obj))
     stop("This is not a Stream object.")
@@ -156,7 +163,7 @@ readNext.Rcpp_Stream <- function(obj) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 setProp.Rcpp_Stream <- function(obj, property, value) {
   if (!isStream(obj))
     stop("This is not a Stream object.")
@@ -201,7 +208,7 @@ getProp.Rcpp_Stream <- function(obj, property) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 timelapse <- function(obj, outputFolder, interval = 1, duration = Inf,
                       format = "png") {
   if (!isStream(obj))

@@ -25,7 +25,6 @@ This function returns the color space of an \code{\link{Image}}
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}, \code{\link{bitdepth}}.

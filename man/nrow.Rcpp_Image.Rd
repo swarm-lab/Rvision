@@ -22,7 +22,6 @@ nrow, ncol and nchan return the number of rows, columns or
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link[=dim.Rcpp_Image]{dim}} which returns \emph{all}

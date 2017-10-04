@@ -24,7 +24,6 @@ This function returns the bit depth of an \code{\link{Image}}
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}, \code{\link{colorspace}}.

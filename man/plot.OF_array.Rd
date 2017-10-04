@@ -36,7 +36,6 @@ Plotting method for objects of class \code{OF_array} as produced
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{farneback}}, \code{\link{arrows}}
