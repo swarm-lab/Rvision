@@ -1,0 +1,40 @@
+init:
+  ps: |
+    $ErrorActionPreference = "Stop"
+    Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+    Import-Module '..\appveyor-tool.ps1'
+install:
+  ps: Bootstrap
+cache: C:\RLibrary
+build_script: travis-tool.sh install_deps
+test_script: travis-tool.sh run_tests
+on_failure:
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
+artifacts:
+  - path: '*.Rcheck\**\*.log'
+    name: Logs
+  - path: '*.Rcheck\**\*.out'
+    name: Logs
+  - path: '*.Rcheck\**\*.fail'
+    name: Logs
+  - path: '*.Rcheck\**\*.Rout'
+    name: Logs
+  - path: \*_*.zip
+    name: Bits
+
+environment:
+  global:
+    WARNINGS_ARE_ERRORS: 1.0
+    USE_RTOOLS: yes
+    R_CHECK_INSTALL_ARGS: --install-args=--build --no-multiarch
+
+deploy:
+  provider: GitHub
+  description: Windows Binary
+  auth_token:
+    secure: tc2Va9OWLH9H/uKPUKCUmv+q+wQpzRVJd6t8ckXjqzGnOo9eWyiQCmuuUjcuM3b8
+  draft: no
+  prerelease: no
+  'on':
+    appveyor_repo_tag: true
