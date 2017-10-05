@@ -18,7 +18,6 @@ Retrieve the framerate (in frames per second) of a
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Video}}, \code{\link{video}}

@@ -74,12 +74,10 @@ farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
 
 #' @title Plot Optical Flow Arrays
 #'
-#' @name plot.OF_array
-#'
 #' @description Plotting method for objects of class \code{OF_array} as produced
 #'  by the \code{\link{farneback}} function.
 #'
-#' @param array An object of class \code{OF_array}.
+#' @param x An object of class \code{OF_array}.
 #'
 #' @param gridsize A 2-element vector indicating the number of optical flow
 #'  vectors to plot in each x-y dimension (default: c(25, 25)). Alternatively, a
@@ -108,9 +106,9 @@ farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
 #' @examples
 #' # TODO
 #' @export
-plot.OF_array <- function(array, gridsize = c(25, 25), thresh = 0,
+plot.OF_array <- function(x, gridsize = c(25, 25), thresh = 0,
                           add = TRUE, arrow.ex = 0.05, xpd = TRUE, ...) {
-  if (class(array) != "OF_array")
+  if (class(x) != "OF_array")
     stop("array must be an object of class OF_array as produced by the farneback function.")
 
   if (length(gridsize) == 1)
@@ -119,20 +117,20 @@ plot.OF_array <- function(array, gridsize = c(25, 25), thresh = 0,
   if (length(gridsize) > 2)
     gridsize <- gridsize[1:2]
 
-  locs <- expand.grid(x = floor(seq(1, ncol(array), length.out = gridsize[1])),
-                      y = floor(seq(1, nrow(array), length.out = gridsize[2])))
+  locs <- expand.grid(x = floor(seq(1, ncol(x), length.out = gridsize[1])),
+                      y = floor(seq(1, nrow(x), length.out = gridsize[2])))
   x <- locs$x
   y <- locs$y
 
-  id <- (x - 1) * nrow(array) + y
+  id <- (x - 1) * nrow(x) + y
   y <- max(y) - y
-  u <- array[, , 1][id]
-  v <- array[, , 2][id]
+  u <- x[, , 1][id]
+  v <- x[, , 2][id]
 
   valid <- sqrt(u ^ 2 + v ^ 2) >= thresh
 
   if (add == FALSE) {
-    plot(NA, xlim = c(1, ncol(array)), ylim = c(1, nrow(array)))
+    plot(NA, xlim = c(1, ncol(x)), ylim = c(1, nrow(x)))
   }
 
   ucord <- par()$usr

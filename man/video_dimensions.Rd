@@ -6,8 +6,10 @@
 \alias{nframes}
 \title{The Number of Rows/Columns/Frames of a Video}
 \usage{
-nrow(x)
-ncol(x)
+nrow.Rcpp_Video(x)
+
+ncol.Rcpp_Video(x)
+
 nframes(x)
 }
 \arguments{
@@ -22,7 +24,6 @@ nrow, ncol and nframes return the number of rows, columns or
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link[=dim.Rcpp_Video]{dim}} which returns \emph{all}

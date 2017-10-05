@@ -4,11 +4,11 @@
 \alias{plot.OF_array}
 \title{Plot Optical Flow Arrays}
 \usage{
-\method{plot}{OF_array}(array, gridsize = c(25, 25), thresh = 0,
-  add = TRUE, arrow.ex = 0.05, xpd = TRUE, ...)
+\method{plot}{OF_array}(x, gridsize = c(25, 25), thresh = 0, add = TRUE,
+  arrow.ex = 0.05, xpd = TRUE, ...)
 }
 \arguments{
-\item{array}{An object of class \code{OF_array}.}
+\item{x}{An object of class \code{OF_array}.}
 
 \item{gridsize}{A 2-element vector indicating the number of optical flow
 vectors to plot in each x-y dimension (default: c(25, 25)). Alternatively, a

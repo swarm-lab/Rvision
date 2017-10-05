@@ -21,7 +21,6 @@ Frame index starts at 0 (i.e. the first image has index 0).
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Video}}, \code{\link{video}}

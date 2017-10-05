@@ -82,10 +82,13 @@ plot.Rcpp_Image <- function(x, ...) {
     img <- img[, , 1] / imgMax
   }
 
+  args = list(...)
+  xlim = args$xlim
   if (is.null(xlim)) {
     xlim <- c(1, ncol(img))
   }
 
+  ylim = args$ylim
   if (is.null(ylim)) {
     ylim <- c(1, nrow(img))
   }
@@ -94,7 +97,9 @@ plot.Rcpp_Image <- function(x, ...) {
   plot(NA, xlim = xlim, ylim = ylim, asp = 1, xaxt = "n",
        yaxt = "n", ann = FALSE, bty = "n", xaxs = "i", yaxs = "i")
 
-  rasterImage(img, xleft = 1, xright = ncol(img), ybottom = 1, ytop = nrow(img), ...)
+  rasterImage(
+    img, xleft = 1, xright = ncol(img),
+    ybottom = 1, ytop = nrow(img), ...)
   par(op)
 }
 
@@ -177,9 +182,6 @@ dim.Rcpp_Image <- function(x) {
 #' @description nrow, ncol and nchan return the number of rows, columns or
 #'  channels present in an \code{\link{Image}} object.
 #'
-#' @usage nrow(x)
-#' ncol(x)
-#' nchan(x)
 #'
 #' @param x An \code{\link{Image}} object.
 #'
@@ -276,10 +278,9 @@ colorspace <- function(x) {
 #'
 #' @aliases as.matrix.Rcpp_Image
 #'
-#' @usage as.array(x)
-#' as.matrix(x)
 #'
 #' @param x An \code{\link{Image}} object.
+#' @param ... additional arguments to be passed to or from methods.
 #'
 #' @return A matrix or array of the same dimensions as the \code{\link{Image}}
 #'  object.

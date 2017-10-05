@@ -64,21 +64,9 @@ isStream <- function(object) {
 }
 
 
-#' @title Release Stream from Memory
-#'
-#' @description Close a \code{\link{Stream}} object.
-#'
-#' @param obj A \code{\link{Stream}} object.
-#'
-#' @return If successful, the \code{\link{Stream}} object is cleared from memory
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Stream}}, \code{\link{stream}}
-#'
-#' @examples
-#' # TODO
+
 #' @export
+#' @rdname release
 release.Rcpp_Stream <- function(obj) {
   if (!isStream(obj))
     stop("This is not a Stream object.")
@@ -95,22 +83,8 @@ release.Rcpp_Stream <- function(obj) {
 }
 
 
-#' @title Read Next Stream Frame
-#'
-#' @description Read the next frame of a \code{\link{Stream}} object and returns
-#'  it as an \code{\link{Image}} object.
-#'
-#' @param obj A \code{\link{Stream}} object.
-#'
-#' @return An \code{\link{Image}} object.
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Stream}}, \code{\link{Image}}
-#'
-#' @examples
-#' # TODO
 #' @export
+#' @rdname readNext
 readNext.Rcpp_Stream <- function(obj) {
   if (!isStream(obj))
     stop("This is not a Stream object.")
@@ -119,50 +93,8 @@ readNext.Rcpp_Stream <- function(obj) {
 }
 
 
-#' @title Set/Get Stream Properties
-#'
-#' @aliases getProp.Rcpp_Stream
-#'
-#' @usage setProp(obj, property, value)
-#' getProp(obj, property)
-#'
-#' @description Set or get the values of various properties of the
-#'  \code{\link{Stream}} object.
-#'
-#' @param obj A \code{\link{Stream}} object.
-#'
-#' @param property A character string specifying the name of the property to
-#'  modify (see details below for a complete list).
-#'
-#' @param value The new value of the property.
-#'
-#' @return \code{setProp} returns TRUE is the property was set successfully.
-#'  \code{getProp} returns a numeric value or a character string depending on
-#'  \code{property}.
-#'
-#' @note Setting stream properties depends on a lot of things, mainly your
-#'  operating system, the camera drivers installed on your coputer and the
-#'  camera itself. As a consequence, setting stream values might not work at all
-#'  with your installation.
-#'
-#'  Stream properties are:
-#'  \itemize{
-#'    \item{\code{FRAME_WIDTH}: Width in pixels of the frames in the video stream.}
-#'    \item{\code{FRAME_HEIGHT}: Height in pixels of the frames in the video stream.}
-#'    \item{\code{BRIGHTNESS}: Brightness of the image}
-#'    \item{\code{CONTRAST}: Contrast of the image }
-#'    \item{\code{SATURATION}: Saturation of the image}
-#'    \item{\code{HUE}: Hue of the image}
-#'    \item{\code{GAIN}: Gain of the image}
-#'    \item{\code{EXPOSURE}: Exposure}
-#'  }
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Stream}}, \code{\link{stream}}
-#'
-#' @examples
-#' # TODO
+
+#' @rdname setProp
 #' @export
 setProp.Rcpp_Stream <- function(obj, property, value) {
   if (!isStream(obj))
@@ -171,6 +103,8 @@ setProp.Rcpp_Stream <- function(obj, property, value) {
   obj$set(property, value)
 }
 
+#' @export
+#' @rdname setProp
 getProp.Rcpp_Stream <- function(obj, property) {
   if (!isStream(obj))
     stop("This is not a Stream object.")

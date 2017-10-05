@@ -72,7 +72,7 @@ isVideo <- function(object) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 dim.Rcpp_Video <- function(x) {
   x$dim()
 }
@@ -85,9 +85,6 @@ dim.Rcpp_Video <- function(x) {
 #' @description nrow, ncol and nframes return the number of rows, columns or
 #'  frames present in a \code{\link{Video}} object.
 #'
-#' @usage nrow(x)
-#' ncol(x)
-#' nframes(x)
 #'
 #' @param x A \code{\link{Video}} object.
 #'
@@ -100,15 +97,20 @@ dim.Rcpp_Video <- function(x) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
+#' @rdname video_dimensions
 nrow.Rcpp_Video <- function(x) {
   x$nrow()
 }
 
+#' @rdname video_dimensions
+#' @export
 ncol.Rcpp_Video <- function(x) {
   x$ncol()
 }
 
+#' @rdname video_dimensions
+#' @export
 nframes <- function(x) {
   if (!isVideo(x))
     stop("This is not a Video object.")
@@ -134,7 +136,7 @@ nframes <- function(x) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 frame <- function(x) {
   if (!isVideo(x))
     stop("This is not a Video object.")
@@ -158,7 +160,7 @@ frame <- function(x) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 fps <- function(x) {
   if (!isVideo(x))
     stop("This is not a Video object.")
@@ -182,7 +184,7 @@ fps <- function(x) {
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 codec <- function(x) {
   if (!isVideo(x))
     stop("This is not a Video object.")
@@ -191,21 +193,9 @@ codec <- function(x) {
 }
 
 
-#' @title Release Video from Memory
-#'
-#' @description Close a \code{\link{Video}} object.
-#'
-#' @param obj A \code{\link{Video}} object.
-#'
-#' @return If successful, the \code{\link{Video}} object is cleared from memory
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Video}}, \code{\link{video}}
-#'
-#' @examples
-#' # TODO
-#'
+
+#' @export
+#' @rdname release
 release.Rcpp_Video <- function(obj) {
   if (!isVideo(obj))
     stop("This is not a Video object.")
@@ -248,22 +238,8 @@ readFrame <- function(x, pos) {
 }
 
 
-#' @title Read Next Video Frame
-#'
-#' @description Read the next frame of a \code{\link{Video}} object and returns
-#'  it as an \code{\link{Image}} object.
-#'
-#' @param obj A \code{\link{Video}} object.
-#'
-#' @return An \code{\link{Image}} object.
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Video}}, \code{\link{Image}}, \code{\link{readFrame}}
-#'
-#' @examples
-#' # TODO
 #' @export
+#' @rdname readNext
 readNext.Rcpp_Video <- function(obj) {
   if (!isVideo(obj))
     stop("This is not a Video object.")
@@ -272,45 +248,8 @@ readNext.Rcpp_Video <- function(obj) {
 }
 
 
-#' @title Set/Get Video Properties
-#'
-#' @aliases getProp.Rcpp_Video
-#'
-#' @usage setProp(obj, property, value)
-#' getProp(obj, property)
-#'
-#' @description Set or get the values of various properties of the
-#'  \code{\link{Video}} object.
-#'
-#' @param obj A \code{\link{Video}} object.
-#'
-#' @param property A character string specifying the name of the property to
-#'  modify (see details below for a complete list).
-#'
-#' @param value The new value of the property.
-#'
-#' @return \code{setProp} returns TRUE is the property was set successfully.
-#'  \code{getProp} returns a numeric value or a character string depending on
-#'  \code{property}.
-#'
-#' @note Video properties are:
-#' \itemize{
-#'  \item{\code{POS_MSEC}: Current position of the video file in milliseconds.}
-#'  \item{\code{POS_FRAMES}: 0-based index of the frame to be decoded/captured next.}
-#'  \item{\code{POS_AVI_RATIO} Relative position of the video file: 0=start of the film, 1=end of the film.}
-#'  \item{\code{FRAME_WIDTH}: Width in pixels of the frames in the video stream.}
-#'  \item{\code{FRAME_HEIGHT}: Height in pixels of the frames in the video stream.}
-#'  \item{\code{FPS}: Frame rate in frames per second.}
-#'  \item{\code{FOURCC}: 4-character \href{http://www.fourcc.org/codecs.php}{FOURCC} code of the codec}
-#'  \item{\code{FRAME_COUNT}: Number of frames in the video file.}
-#' }
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Video}}, \code{\link{video}}
-#'
-#' @examples
-#' # TODO
+
+#' @rdname setProp
 #' @export
 setProp.Rcpp_Video <- function(obj, property, value) {
   if (!isVideo(obj))
@@ -319,6 +258,8 @@ setProp.Rcpp_Video <- function(obj, property, value) {
   tryCatch({obj$set(property, value); TRUE}, finally = FALSE)
 }
 
+#' @export
+#' @rdname setProp
 getProp.Rcpp_Video <- function(obj, property) {
   if (!isVideo(obj))
     stop("This is not a Video object.")

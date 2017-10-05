@@ -10,6 +10,10 @@ Rcpp::loadModule("methods_OpticalFlow", TRUE)
 
 ### Define generic arithmetic methods ###
 methods::evalqOnLoad({
+  #' @aliases Arith,Rcpp_Image,Rcpp_Image-method
+  #' @aliases Arith,Rcpp_Image,numeric-method
+  #' @aliases Arith,numeric,Rcpp_Image-method
+
   setMethod("+", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
               `_plus`(e1, e2)
@@ -71,12 +75,19 @@ methods::evalqOnLoad({
             }, where = .GlobalEnv)
 })
 
+#' @title Sum Generic for additional arguments
+#' @description Overloaded Sum to pass additional arguments
+#' @param x is an object of class \code{Rcpp_Image}.
+#' @param ... further arguments passed to summary methods
+#' @param na.rm logical: should missing values be removed?
+#' @export
+setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),
+           useAsDefault = function(x, ..., na.rm = FALSE) base::sum(x, ..., na.rm = na.rm),
+           group = "Summary")
 
 ### Define generic statistics methods ###
 methods::evalqOnLoad({
-  setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),
-             useAsDefault = function(x, ..., na.rm = FALSE) base::sum(x, ..., na.rm = na.rm),
-             group = "Summary")
+
 
   setMethod("sum", "list",
             function(x, ...) {
@@ -100,6 +111,10 @@ methods::evalqOnLoad({
 
 ### Define generic comparison methods ###
 methods::evalqOnLoad({
+
+  #' @aliases Comparison,Rcpp_Image,Rcpp_Image-method
+  #' @aliases Comparison,Rcpp_Image,numeric-method
+  #' @aliases Comparison,numeric,Rcpp_Image-method
   setMethod(">", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
               `_sup`(e1, e2)
@@ -192,6 +207,7 @@ methods::evalqOnLoad({
 })
 
 methods::evalqOnLoad({
+
   setMethod("&", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
               `_and`(e1, e2)
@@ -202,7 +218,7 @@ methods::evalqOnLoad({
               `_or`(e1, e2)
             }, where = .GlobalEnv)
 
-  setMethod("!", signature(x = "Rcpp_Image"),
+    setMethod("!", signature(x = "Rcpp_Image"),
             function(x) {
               `_not`(x)
             }, where = .GlobalEnv)
