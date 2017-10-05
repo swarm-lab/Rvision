@@ -86,7 +86,9 @@ colorspace(img1)
 ## Save image to disk
 
 ```{r}
-write.Image(img1, file = "~/Desktop/img1.png")
+outfile = tempfile(fileext = ".png")
+write.Image(img1, file = outfile)
+file.exists(outfile)
 ```
 
 ## Convert color image to grayscale
