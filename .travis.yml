@@ -1,0 +1,15 @@
+language: R
+sudo: false
+cache: packages
+
+os:
+  - linux
+  - osx 
+after_success: if [ "$TRAVIS_OS_NAME" == "linux" ]; then Rscript -e 'covr::coveralls(type
+  = "all")'; fi
+warnings_are_errors: yes
+before_deploy: if [ "$TRAVIS_OS_NAME" == "osx" ]; then rm -f *.tar.gz; fi
+r_check_args: --as-cran --install-args=--build
+before_install:
+  - Rscript -e 'source("https://install-github.me/mangothecat/callr")'
+  

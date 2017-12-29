@@ -18,7 +18,6 @@ Tests whether the object is of class \code{\link{Stream}}
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Stream}}, \code{\link{stream}}

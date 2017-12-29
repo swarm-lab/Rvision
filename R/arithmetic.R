@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 "absdiff"
 
 
@@ -40,7 +40,7 @@
 #'
 #' @examples
 #' # TODO
-#'
+#' @export
 "addWeighted"
 
 

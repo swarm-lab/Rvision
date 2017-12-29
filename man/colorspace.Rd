@@ -4,10 +4,10 @@
 \alias{colorspace}
 \title{The Color Space of an Image}
 \usage{
-colorspace(image)
+colorspace(x)
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{x}{An \code{\link{Image}} object.}
 }
 \value{
 A character string indicating the color space of the image. For now,
@@ -25,7 +25,6 @@ This function returns the color space of an \code{\link{Image}}
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}, \code{\link{bitdepth}}.

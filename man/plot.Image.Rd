@@ -5,10 +5,10 @@
 \alias{plot.Rcpp_Image}
 \title{Plot \pkg{Rvision} Images}
 \usage{
-\method{plot}{Rcpp_Image}(image, xlim = NULL, ylim = NULL, ...)
+\method{plot}{Rcpp_Image}(x, ...)
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{x}{An \code{\link{Image}} object.}
 
 \item{...}{Additional arguments to be passed to \code{\link{rasterImage}}.}
 }
@@ -17,7 +17,6 @@ Plotting method for objects inheriting from class \code{\link{Image}}.
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}

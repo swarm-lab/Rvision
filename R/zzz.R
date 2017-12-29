@@ -1,16 +1,19 @@
 ### Load package module ###
-loadModule("class_Image", TRUE)
-loadModule("class_Video", TRUE)
-loadModule("class_Stream", TRUE)
-loadModule("methods_Arithmetic", TRUE)
-loadModule("methods_Statistics", TRUE)
-loadModule("methods_Comparisons", TRUE)
-loadModule("methods_Logical", TRUE)
-loadModule("methods_OpticalFlow", TRUE)
-
+Rcpp::loadModule("class_Image", TRUE)
+Rcpp::loadModule("class_Video", TRUE)
+Rcpp::loadModule("class_Stream", TRUE)
+Rcpp::loadModule("methods_Arithmetic", TRUE)
+Rcpp::loadModule("methods_Statistics", TRUE)
+Rcpp::loadModule("methods_Comparisons", TRUE)
+Rcpp::loadModule("methods_Logical", TRUE)
+Rcpp::loadModule("methods_OpticalFlow", TRUE)
 
 ### Define generic arithmetic methods ###
-evalqOnLoad({
+methods::evalqOnLoad({
+  #' @aliases Arith,Rcpp_Image,Rcpp_Image-method
+  #' @aliases Arith,Rcpp_Image,numeric-method
+  #' @aliases Arith,numeric,Rcpp_Image-method
+
   setMethod("+", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
               `_plus`(e1, e2)
@@ -72,12 +75,19 @@ evalqOnLoad({
             }, where = .GlobalEnv)
 })
 
+#' @title Sum Generic for additional arguments
+#' @description Overloaded Sum to pass additional arguments
+#' @param x is an object of class \code{Rcpp_Image}.
+#' @param ... further arguments passed to summary methods
+#' @param na.rm logical: should missing values be removed?
+#' @export
+setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),
+           useAsDefault = function(x, ..., na.rm = FALSE) base::sum(x, ..., na.rm = na.rm),
+           group = "Summary")
 
 ### Define generic statistics methods ###
-evalqOnLoad({
-  setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),
-             useAsDefault = function(x, ..., na.rm = FALSE) base::sum(x, ..., na.rm = na.rm),
-             group = "Summary")
+methods::evalqOnLoad({
+
 
   setMethod("sum", "list",
             function(x, ...) {
@@ -100,7 +110,11 @@ evalqOnLoad({
 
 
 ### Define generic comparison methods ###
-evalqOnLoad({
+methods::evalqOnLoad({
+
+  #' @aliases Comparison,Rcpp_Image,Rcpp_Image-method
+  #' @aliases Comparison,Rcpp_Image,numeric-method
+  #' @aliases Comparison,numeric,Rcpp_Image-method
   setMethod(">", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
               `_sup`(e1, e2)
@@ -192,7 +206,8 @@ evalqOnLoad({
             }, where = .GlobalEnv)
 })
 
-evalqOnLoad({
+methods::evalqOnLoad({
+
   setMethod("&", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
               `_and`(e1, e2)
@@ -203,7 +218,7 @@ evalqOnLoad({
               `_or`(e1, e2)
             }, where = .GlobalEnv)
 
-  setMethod("!", signature(x = "Rcpp_Image"),
+    setMethod("!", signature(x = "Rcpp_Image"),
             function(x) {
               `_not`(x)
             }, where = .GlobalEnv)

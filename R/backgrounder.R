@@ -29,7 +29,7 @@ backgrounder <- function(video, n = 10, method = "mean") {
     mat <- array(NA, dim = dim(l1[[1]]))
     for (i in 1:nchan(l1[[1]])) {
       print(paste0("Processing channel ", i, " out of ", nchan(l1[[1]])))
-      mat[, , i] <- pbapply::pbapply(l3[[i]], c(1, 2), median.default)
+      mat[, , i] <- pbapply::pbapply(l3[[i]], c(1, 2), stats::median.default)
     }
 
     if (bitdepth(l1[[1]]) == "8U") {

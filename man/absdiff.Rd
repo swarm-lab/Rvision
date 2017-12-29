@@ -20,7 +20,6 @@ This function computes the absolute difference between two
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}

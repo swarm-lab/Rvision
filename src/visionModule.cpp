@@ -3,9 +3,9 @@
 using namespace Rcpp;
 
 #include "opencv2/opencv.hpp"
-#include "utils.hpp"
+#include "utils.h"
 
-#include "Image.hpp"
+#include "Image.h"
 RCPP_EXPOSED_CLASS(Image);
 RCPP_MODULE(class_Image) {
 
@@ -32,7 +32,7 @@ RCPP_MODULE(class_Image) {
   function("cloneImage", &cloneImage, List::create(_["image"]), "");
 }
 
-#include "Video.hpp"
+#include "Video.h"
 RCPP_EXPOSED_CLASS(Video);
 RCPP_MODULE(class_Video) {
 
@@ -58,7 +58,7 @@ RCPP_MODULE(class_Video) {
   ;
 }
 
-#include "Stream.hpp"
+#include "Stream.h"
 RCPP_EXPOSED_CLASS(Stream);
 RCPP_MODULE(class_Stream) {
 
@@ -79,7 +79,7 @@ RCPP_MODULE(class_Stream) {
   ;
 }
 
-#include "arithmetic.hpp"
+#include "arithmetic.h"
 RCPP_MODULE(methods_Arithmetic) {
 
   function("_plus", &_plus, List::create(_["image1"], _["image2"]), "");
@@ -93,14 +93,14 @@ RCPP_MODULE(methods_Arithmetic) {
   function("addWeighted", &addWeighted, List::create(_["image1"], _["alpha"], _["image2"], _["beta"]), "");
 }
 
-#include "statistics.hpp"
+#include "statistics.h"
 RCPP_MODULE(methods_Statistics) {
 
   function("_sum", &_sum, List::create(_["images"]), "");
   function("_mean", &_mean, List::create(_["images"]), "");
 }
 
-#include "comparisons.hpp"
+#include "comparisons.h"
 RCPP_MODULE(methods_Comparisons) {
 
   function("_sup", &_sup, List::create(_["image1"], _["image2"]), "");
@@ -117,7 +117,7 @@ RCPP_MODULE(methods_Comparisons) {
   function("_ieqScalar", &_ieqScalar, List::create(_["image"], _["value"]), "");
 }
 
-#include "logical.hpp"
+#include "logical.h"
 RCPP_MODULE(methods_Logical) {
 
   function("_and", &_and, List::create(_["image1"], _["image2"]), "");
@@ -125,7 +125,7 @@ RCPP_MODULE(methods_Logical) {
   function("_not", &_not, List::create(_["image"]), "");
 }
 
-#include "opticalFlow.hpp"
+#include "opticalFlow.h"
 RCPP_MODULE(methods_OpticalFlow) {
 
   function("_farneback", &_farneback, List::create(_["image1"], _["image2"], _["pyr_scale"],

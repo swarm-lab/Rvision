@@ -16,7 +16,7 @@
 #'  License: \tab GPL-3\cr
 #' }
 #'
-#' @references More about OpenCV at \link{http://opencv.org/}.
+#' @references More about OpenCV at \url{http://opencv.org/}.
 #'
 #' @docType package
 #'

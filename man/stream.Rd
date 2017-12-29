@@ -21,7 +21,6 @@ Function for creating \code{\link{Stream}} objects from video
 }
 \examples{
 # TODO
-
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

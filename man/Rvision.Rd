@@ -19,7 +19,7 @@ some basic functions to read and manipulate images, videos and camera streams.
 }
 }
 \references{
-More about OpenCV at \link{http://opencv.org/}.
+More about OpenCV at \url{http://opencv.org/}.
 }
 \author{
 Simon Garnier <garnier@njit.edu>

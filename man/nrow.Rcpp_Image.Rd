@@ -6,12 +6,10 @@
 \alias{nchan}
 \title{The Number of Rows/Columns/Channels of an Image}
 \usage{
-nrow(image)
-ncol(image)
-nchan(image)
+nrow.Rcpp_Image(x)
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{x}{An \code{\link{Image}} object.}
 }
 \value{
 A numeric value.
@@ -22,7 +20,6 @@ nrow, ncol and nchan return the number of rows, columns or
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link[=dim.Rcpp_Image]{dim}} which returns \emph{all}

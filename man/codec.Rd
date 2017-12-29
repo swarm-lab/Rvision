@@ -4,10 +4,10 @@
 \alias{codec}
 \title{Codec of a Video}
 \usage{
-codec(video)
+codec(x)
 }
 \arguments{
-\item{video}{A \code{\link{Video}} object.}
+\item{x}{A \code{\link{Video}} object.}
 }
 \value{
 A character string corresponding to the
@@ -18,7 +18,6 @@ Retrieve the codecof a \code{\link{Video}} object.
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Video}}, \code{\link{video}}

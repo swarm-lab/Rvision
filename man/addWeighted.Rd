@@ -24,7 +24,6 @@ This function computes the weighted sum of two
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}

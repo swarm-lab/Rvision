@@ -12,11 +12,11 @@ material from which these samples have been extracted.
 \references{
 \itemize{
  \item{"Big Buck Bunny", © copyright 2008, Blender Foundation /
-   \link{www.bigbuckbunny.org} - Distributed under the Creative Commons
+   \url{www.bigbuckbunny.org} - Distributed under the Creative Commons
    Attribution 3.0 license.}
  \item{EC Funded CAVIAR project/IST 2001 37540 -
-   \link{http://homepages.inf.ed.ac.uk/rbf/CAVIAR/}}
- \item{Pixabay / \link{https://pixabay.com/en/dots-blue-background-fabric-313325/}
+   \url{http://homepages.inf.ed.ac.uk/rbf/CAVIAR/}}
+ \item{Pixabay / \url{https://pixabay.com/en/dots-blue-background-fabric-313325/}
    - Distributed under the Creative Commons CC0 Public Domain license.}
 }
 }

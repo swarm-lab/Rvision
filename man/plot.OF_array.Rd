@@ -4,11 +4,11 @@
 \alias{plot.OF_array}
 \title{Plot Optical Flow Arrays}
 \usage{
-\method{plot}{OF_array}(array, gridsize = c(25, 25), thresh = 0,
-  add = TRUE, arrow.ex = 0.05, xpd = TRUE, ...)
+\method{plot}{OF_array}(x, gridsize = c(25, 25), thresh = 0, add = TRUE,
+  arrow.ex = 0.05, xpd = TRUE, ...)
 }
 \arguments{
-\item{array}{An object of class \code{OF_array}.}
+\item{x}{An object of class \code{OF_array}.}
 
 \item{gridsize}{A 2-element vector indicating the number of optical flow
 vectors to plot in each x-y dimension (default: c(25, 25)). Alternatively, a
@@ -26,6 +26,9 @@ arrows of maximum length can line up end to end along the shorter axis.}
 
 \item{xpd}{If true does not clip arrows to fit inside the plot region,
 default is not to clip.}
+
+\item{...}{Graphics arguments passed to the \code{\link{arrows}} function that
+can change the color or arrow sizes. See help on this for details.}
 }
 \description{
 Plotting method for objects of class \code{OF_array} as produced
@@ -33,7 +36,6 @@ Plotting method for objects of class \code{OF_array} as produced
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{farneback}}, \code{\link{arrows}}

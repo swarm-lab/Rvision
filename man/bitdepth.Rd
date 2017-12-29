@@ -4,10 +4,10 @@
 \alias{bitdepth}
 \title{The Bit Depth of an Image}
 \usage{
-bitdepth(image)
+bitdepth(x)
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{x}{An \code{\link{Image}} object.}
 }
 \value{
 A character string indicating the bit depth of the image. For now, it
@@ -24,7 +24,6 @@ This function returns the bit depth of an \code{\link{Image}}
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Image}}, \code{\link{colorspace}}.

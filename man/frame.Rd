@@ -4,10 +4,10 @@
 \alias{frame}
 \title{Video Reader Position}
 \usage{
-frame(video)
+frame(x)
 }
 \arguments{
-\item{video}{A \code{\link{Video}} object.}
+\item{x}{A \code{\link{Video}} object.}
 }
 \value{
 A numeric value.
@@ -21,7 +21,6 @@ Frame index starts at 0 (i.e. the first image has index 0).
 }
 \examples{
 # TODO
-
 }
 \seealso{
 \code{\link{Video}}, \code{\link{video}}
