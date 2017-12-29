@@ -2,12 +2,10 @@
 
 `swarm-lab` badges:
 [![Travis build status](https://travis-ci.org/swarm-lab/Rvision.svg?branch=master)](https://travis-ci.org/swarm-lab/Rvision)
-
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/swarm-lab/Rvision?branch=master&svg=true)](https://ci.appveyor.com/project/swarm-lab/Rvision)
 
 `muschellij2` badges:
 [![Travis build status](https://travis-ci.org/muschellij2/Rvision.svg?branch=master)](https://travis-ci.org/muschellij2/Rvision)
-
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/muschellij2/Rvision?branch=master&svg=true)](https://ci.appveyor.com/project/muschellij2/Rvision)
 
 
