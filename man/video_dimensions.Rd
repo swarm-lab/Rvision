@@ -4,6 +4,8 @@
 \alias{nrow.Rcpp_Video}
 \alias{ncol.Rcpp_Video}
 \alias{nframes}
+\alias{ncol.Rcpp_Video}
+\alias{nframes}
 \title{The Number of Rows/Columns/Frames of a Video}
 \usage{
 nrow.Rcpp_Video(x)
