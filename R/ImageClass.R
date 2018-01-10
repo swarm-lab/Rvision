@@ -182,7 +182,6 @@ dim.Rcpp_Image <- function(x) {
 #' @description nrow, ncol and nchan return the number of rows, columns or
 #'  channels present in an \code{\link{Image}} object.
 #'
-#'
 #' @param x An \code{\link{Image}} object.
 #'
 #' @return A numeric value.
@@ -278,8 +277,10 @@ colorspace <- function(x) {
 #'
 #' @aliases as.matrix.Rcpp_Image
 #'
+#' @description Attempts to turn its argument into a matrix or an array.
 #'
 #' @param x An \code{\link{Image}} object.
+#'
 #' @param ... additional arguments to be passed to or from methods.
 #'
 #' @return A matrix or array of the same dimensions as the \code{\link{Image}}

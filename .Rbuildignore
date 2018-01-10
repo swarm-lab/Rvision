@@ -2,5 +2,6 @@
 ^\.Rproj\.user$
 helpers
 LICENSE
+scripts
 ^appveyor\.yml$
 ^\.travis\.yml$

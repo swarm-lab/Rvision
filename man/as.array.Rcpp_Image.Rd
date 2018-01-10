@@ -16,6 +16,9 @@
 A matrix or array of the same dimensions as the \code{\link{Image}}
  object.
 }
+\description{
+Attempts to turn its argument into a matrix or an array.
+}
 \examples{
 # TODO\\
 }
