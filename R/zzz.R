@@ -1,3 +1,11 @@
+#' @useDynLib Rvision
+#' @import Rcpp
+#' @import methods
+#' @importFrom graphics arrows par plot rasterImage
+#' @importFrom stats median.default
+#' @import pbapply
+#' @import ROpenCVLite
+
 ### Load package module ###
 Rcpp::loadModule("class_Image", TRUE)
 Rcpp::loadModule("class_Video", TRUE)

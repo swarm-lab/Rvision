@@ -31,12 +31,6 @@
 #' @examples
 #' # TODO
 #' @export
-#' @useDynLib Rvision
-#' @import Rcpp
-#' @import methods
-#' @importFrom graphics arrows par plot rasterImage
-#' @importFrom stats median.default
-#' @import pbapply
 stream <- function(...) {
   new(Stream, ...)
 }
