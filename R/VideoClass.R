@@ -11,6 +11,7 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
+#' @export
 "Video"
 
 
@@ -31,6 +32,7 @@
 #' @examples
 #' # TODO
 #'
+#' @export
 video <- function(...) {
   new(Video, ...)
 }
@@ -52,6 +54,7 @@ video <- function(...) {
 #' @examples
 #' # TODO
 #'
+#' @export
 isVideo <- function(object) {
   class(object) == "Rcpp_Video"
 }
@@ -72,6 +75,7 @@ isVideo <- function(object) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 dim.Rcpp_Video <- function(x) {
   x$dim()
