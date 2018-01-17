@@ -18,6 +18,7 @@ Retrieve the dimensions a \code{\link{Video}} object.
 }
 \examples{
 # TODO
+
 }
 \seealso{
 \code{\link{Video}}, \code{\link{video}}
