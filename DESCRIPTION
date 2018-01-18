@@ -11,7 +11,7 @@ License: GPL-3
 LazyData: TRUE
 NeedsCompilation: yes
 Imports:
-    Rcpp (>= 0.12),
+    Rcpp (>= 0.12.5),
     RcppArmadillo (>= 0.8.300),
     ROpenCVLite (>= 0.1.34),
     methods,
