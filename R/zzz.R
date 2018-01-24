@@ -1,7 +1,7 @@
 #' @useDynLib Rvision
 #' @import Rcpp
 #' @import methods
-#' @importFrom graphics arrows par plot rasterImage
+#' @importFrom graphics arrows par plot rasterImage points symbols
 #' @importFrom stats median.default
 #' @import pbapply
 #' @import ROpenCVLite

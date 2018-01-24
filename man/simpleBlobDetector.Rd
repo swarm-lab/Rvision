@@ -49,9 +49,16 @@ based on color (default: TRUE).}
 \item{blob_color}{An integer between 0 and 255 representing the color of the
 blobs. 0 will select dark blobs, 255 will select bright blobs (default: 0).}
 
+\item{filter_by_circularity}{A logical indicating whether blobs should be filtered
+based on circularity (default: FALSE).}
+
 \item{min_circularity}{A numeric value representing the smallest acceptable
 circularity for blobs. Blobs with smaller circularity than this value are
 discarded. (default: 0.8).}
+
+\item{max_circularity}{A numeric value representing the largest acceptable
+circularity for blobs. Blobs with larger circularity than this value are
+discarded. (default: Inf).}
 
 \item{filter_by_convexity}{A logical indicating whether blobs should be filtered
 based on convexity (default: TRUE).}
@@ -74,16 +81,9 @@ discarded. (default: 0.1).}
 \item{max_inertia_ratio}{A numeric value representing the largest acceptable
 inertia ratio for blobs. Blobs with larger ratio than this value are
 discarded. (default: Inf).}
-
-\item{filter_by_cicularity}{A logical indicating whether blobs should be filtered
-based on circularity (default: FALSE).}
-
-\item{max_cicularity}{A numeric value representing the largest acceptable
-circularity for blobs. Blobs with larger circularity than this value are
-discarded. (default: Inf).}
 }
 \value{
-A data frame with the following columns:
+A data frame of class \code{blob} with the following columns:
 \itemize{
    \item{"id":}{a unique identifier for each blob in the image.}
    \item{"x":}{the x coordinate of each blob in the image.}
@@ -92,18 +92,30 @@ A data frame with the following columns:
 }
 }
 \description{
-This function implements a simple algorithm for extracting blobs
- an \code{\link{Image}} object. A blob is a region in an image that differs
- in properties (e.g. brightness, color) from surrounding regions.
+\code{simpleBlobDetector} implements a simple algorithm for
+ extracting blobs an \code{\link{Image}} object. A blob is a region in an
+ image that differs in properties (e.g. brightness, color) from surrounding
+ regions.
 }
 \note{
-
+\code{simpleBlobDetector} has the following steps:
+ \enumerate{
+   \item The \code{image} is converted to several binary images, each corresponding
+    to a different threshold starting at \code{min_threshold} and ending at
+    \code{max_threshold}, by increment of \code{threshold_step}.
+   \item In each binary image, connected white pixels grouped together and
+    their center of mass is calculated.
+   \item Groups of connected white pixels across multiple binary images are
+    merged if their centers are less than \code{min_dist_between_blobs} pixels
+    apart. These are the blobs.
+   \item The centers and radii of the blobs are computed and returned.
+ }
 }
 \examples{
 # TODO
 }
 \seealso{
-\code{\link{Image}}
+\code{\link{Image}}, \code{\link{isBlob}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

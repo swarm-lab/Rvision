@@ -1,8 +1,9 @@
 #' @title Simple Blob Detector
 #'
-#' @description This function implements a simple algorithm for extracting blobs
-#'  an \code{\link{Image}} object. A blob is a region in an image that differs
-#'  in properties (e.g. brightness, color) from surrounding regions.
+#' @description \code{simpleBlobDetector} implements a simple algorithm for
+#'  extracting blobs an \code{\link{Image}} object. A blob is a region in an
+#'  image that differs in properties (e.g. brightness, color) from surrounding
+#'  regions.
 #'
 #' @param image An \code{\link{Image}} object.
 #'
@@ -39,14 +40,14 @@
 #' @param blob_color An integer between 0 and 255 representing the color of the
 #'  blobs. 0 will select dark blobs, 255 will select bright blobs (default: 0).
 #'
-#' @param filter_by_cicularity A logical indicating whether blobs should be filtered
+#' @param filter_by_circularity A logical indicating whether blobs should be filtered
 #'  based on circularity (default: FALSE).
 #'
 #' @param min_circularity A numeric value representing the smallest acceptable
 #'  circularity for blobs. Blobs with smaller circularity than this value are
 #'  discarded. (default: 0.8).
 #'
-#' @param max_cicularity A numeric value representing the largest acceptable
+#' @param max_circularity A numeric value representing the largest acceptable
 #'  circularity for blobs. Blobs with larger circularity than this value are
 #'  discarded. (default: Inf).
 #'
@@ -72,7 +73,7 @@
 #'  inertia ratio for blobs. Blobs with larger ratio than this value are
 #'  discarded. (default: Inf).
 #'
-#' @return A data frame with the following columns:
+#' @return A data frame of class \code{blob} with the following columns:
 #' \itemize{
 #'    \item{"id":}{a unique identifier for each blob in the image.}
 #'    \item{"x":}{the x coordinate of each blob in the image.}
@@ -80,11 +81,22 @@
 #'    \item{"size":}{the diameter of the circle containing the blob.}
 #' }
 #'
-#' @note
+#' @note \code{simpleBlobDetector} has the following steps:
+#'  \enumerate{
+#'    \item The \code{image} is converted to several binary images, each corresponding
+#'     to a different threshold starting at \code{min_threshold} and ending at
+#'     \code{max_threshold}, by increment of \code{threshold_step}.
+#'    \item In each binary image, connected white pixels grouped together and
+#'     their center of mass is calculated.
+#'    \item Groups of connected white pixels across multiple binary images are
+#'     merged if their centers are less than \code{min_dist_between_blobs} pixels
+#'     apart. These are the blobs.
+#'    \item The centers and radii of the blobs are computed and returned.
+#'  }
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}
+#' @seealso \code{\link{Image}}, \code{\link{isBlob}}
 #'
 #' @examples
 #' # TODO
@@ -115,11 +127,45 @@ simpleBlobDetector <- function(image, min_threshold = 50, max_threshold = 220,
   blobs
 }
 
+#' @title Test for a Blob Object
+#'
+#' @description Tests whether the object is of class \code{blob}.
+#'
+#' @param object Any R object.
+#'
+#' @return A logical indicating whether the object is of class
+#'  \code{blob} (TRUE) or not (FALSE).
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{simpleBlobDetector}}
+#'
+#' @examples
+#' # TODO
 #' @export
 isBlob <- function(object) {
   inherits(object, "blob")
 }
 
+
+#' @title Plot Blobs
+#'
+#' @description Plotting method for objects inheriting from class \code{blob}.
+#'
+#' @param x A \code{blob} object.
+#'
+#' @param col The color of the \code{blob} center and box (default: "red").
+#'
+#' @param asp The y/x aspect ratio of the plotting window (default: 1).
+#'
+#' @param ... Additional arguments to be passed to \code{\link{plot}}.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{isBlob}}, \code{\link{simpleBlobDetector}}
+#'
+#' @examples
+#' # TODO
 #' @export
 plot.blob <- function(x, col = "red", asp = 1, ...) {
   if (!isBlob(x))
