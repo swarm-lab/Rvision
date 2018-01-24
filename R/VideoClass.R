@@ -56,7 +56,7 @@ video <- function(...) {
 #'
 #' @export
 isVideo <- function(object) {
-  class(object) == "Rcpp_Video"
+  inherits(object, "Rcpp_Video")
 }
 
 

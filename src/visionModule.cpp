@@ -30,6 +30,8 @@ RCPP_MODULE(class_Image) {
   ;
 
   function("cloneImage", &cloneImage, List::create(_["image"]), "");
+  function("split", &split, List::create(_["image"]), "");
+  function("merge", &merge, List::create(_["channels"]), "");
 }
 
 #include "Video.h"
@@ -132,5 +134,25 @@ RCPP_MODULE(methods_OpticalFlow) {
     _["levels"], _["winsize"], _["iterations"], _["poly_n"], _["poly_sigma"]), "");
 }
 
+#include "blob.h"
+RCPP_MODULE(methods_Blob) {
 
+  function("_simpleBlobDetector", &_simpleBlobDetector, List::create(_["image"],
+                                                  _["min_threshold"], _["max_threshold"],
+                                                  _["threshold_step"], _["min_repeatability"],
+                                                  _["min_dist_between_blobs"],
+                                                  _["filter_by_area"], _["min_area"], _["max_area"],
+                                                  _["filter_by_color"], _["blob_color"],
+                                                  _["filter_by_circularity"], _["min_circularity"], _["max_circularity"],
+                                                  _["filter_by_convexity"], _["min_convexity"], _["max_convexity"],
+                                                  _["filter_by_inertia"], _["min_inertia_ratio"], _["max_inertia_ratio"]), "");
+}
 
+#include "morphology.h"
+RCPP_MODULE(methods_Morphology) {
+
+  function("_morph", &_morph, List::create(_["image"], _["operation"], _["k_shape"],
+                                     _["k_height"], _["k_width"], _["iterations"]), "");
+  function("_morphCustom", &_morphCustom, List::create(_["image"], _["operation"], _["kernel"],
+                                      _["iterations"]), "");
+}

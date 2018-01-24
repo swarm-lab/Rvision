@@ -357,3 +357,30 @@ Image cloneImage(Image image) {
   return(out);
 }
 
+Rcpp::List split(Image image) {
+  Rcpp::List out(image.nchan());
+  std::vector<cv::Mat> channels(image.nchan());
+
+  cv::split(image.image, channels);
+
+  for (int i = 0; i < image.nchan(); i++) {
+    out[i] = Image(channels[i]);
+  }
+
+  return out;
+}
+
+Image merge(Rcpp::List & channels) {
+  cv::Mat out;
+  std::vector<cv::Mat> tomerge(channels.size());
+
+  for (int i = 0; i < channels.size(); i++) {
+    tomerge[i] = as<Image>(channels[i]).image;
+  }
+
+  cv::merge(tomerge, out);
+
+  return Image(out);
+}
+
+

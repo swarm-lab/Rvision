@@ -121,7 +121,7 @@ plot.Rcpp_Image <- function(x, ...) {
 #' # TODO
 #' @export
 isImage <- function(object) {
-  class(object) == "Rcpp_Image"
+  inherits(object, "Rcpp_Image")
 }
 
 
@@ -329,3 +329,44 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #' # TODO
 #' @export
 "cloneImage"
+
+
+#' @title Split an Image into Separate Channels
+#'
+#' @description \code{split} returns a list of grayscale images corresponding to
+#'  each of the channels (green, blue, red, or alpha) of an image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @return A list of single channel (grayscale) \code{\link{Image}} objects.
+#'
+#' @note Color images are usually represented by 3 channels (possibly 4) in the
+#'  following order: green (1), blue (2), red (3), and possibly alpha (4).
+#'
+#' @seealso \code{\link{merge}} \code{\link{Image}}
+#'
+#' @examples
+#' # TODO
+#' @export
+"split"
+
+
+#' @title Merge Separate Channels into an Image
+#'
+#' @description \code{merge} returns an image from the combination of grayscale
+#'  images corresponding to single channels (green, blue, red, or alpha).
+#'
+#' @param channels A list of single channel (grayscale) \code{\link{Image}} objects.
+#'
+#' @return An \code{\link{Image}} object.
+#'
+#' @note Color images are usually represented by 3 channels (possibly 4) in the
+#'  following order: green (1), blue (2), red (3), and possibly alpha (4).
+#'
+#' @seealso \code{\link{split}} \code{\link{Image}}
+#'
+#' @examples
+#' # TODO
+#' @export
+"merge"
+

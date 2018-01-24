@@ -54,9 +54,8 @@ stream <- function(...) {
 #' @export
 #'
 isStream <- function(object) {
-  class(object) == "Rcpp_Stream"
+  inherits(object, "Rcpp_Stream")
 }
-
 
 
 #' @export
