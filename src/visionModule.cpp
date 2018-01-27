@@ -164,4 +164,5 @@ RCPP_MODULE(methods_Filters) {
   function("_gaussianBlur", &_gaussianBlur, List::create(_["image"], _["k_height"], _["k_width"],
                                             _["sigma_x"], _["sigma_y"]), "");
   function("_boxFilter", &_boxFilter, List::create(_["image"], _["k_height"], _["k_width"]), "");
+  function("_blur", &_blur, List::create(_["image"], _["k_height"], _["k_width"]), "");
 }

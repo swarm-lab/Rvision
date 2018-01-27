@@ -29,7 +29,7 @@ image An \code{\link{Image}} object.
 # TODO
 }
 \seealso{
-\code{\link{Image}}, \code{\link{boxFilter}}
+\code{\link{Image}}, \code{\link{boxFilter}}, \code{\link{blur}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

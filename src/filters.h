@@ -30,6 +30,13 @@ Image _boxFilter(Image image, int k_height, int k_width) {
   return Image(out);
 }
 
+Image _blur(Image image, int k_height, int k_width) {
+  cv::Mat out;
+
+  cv::blur(image.image, out, cv::Size(2 * k_width + 1, 2 * k_height + 1),
+           cv::Point(-1, -1));
+  return Image(out);
+}
 
 
 

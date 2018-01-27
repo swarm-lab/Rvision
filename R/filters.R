@@ -51,7 +51,7 @@ filter2D <- function(image, kernel) {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}, \code{\link{boxFilter}}
+#' @seealso \code{\link{Image}}, \code{\link{boxFilter}}, \code{\link{blur}}
 #'
 #' @examples
 #' # TODO
@@ -66,7 +66,7 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y 
 
 #' @title Blurs an Image Using a Box Filter
 #'
-#' @description \code{gaussianBlur} convolves the source image with the
+#' @description \code{boxFilter} convolves the source image with the
 #'  specified box kernel (a matrix of 1s). The result is a blurred version of
 #'  the source image.
 #'
@@ -80,7 +80,7 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y 
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}, \code{\link{gaussianBlur}}
+#' @seealso \code{\link{Image}}, \code{\link{blur}}, \code{\link{gaussianBlur}}
 #'
 #' @examples
 #' # TODO
@@ -93,4 +93,31 @@ boxFilter <- function(image, k_height = 5, k_width = 5) {
 }
 
 
+#' @title Blurs an Image Using a Normalized Box Filter
+#'
+#' @description \code{blur} convolves the source image with the specified
+#'  normalized box kernel (a matrix of 1s divided by the number of pixels in the
+#'  kernel). The result is a blurred version of the source image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param k_height The half-height in pixels of the kernel.
+#'
+#' @param k_width The half-width in pixels of the kernel.
+#'
+#' @return image An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{boxFilter}}, \code{\link{gaussianBlur}}
+#'
+#' @examples
+#' # TODO
+#' @export
+blur <- function(image, k_height = 5, k_width = 5) {
+  if (!isImage(image()))
+    stop("'image' must be an Image object.")
+
+  `_blur`(image, k_height, k_width)
+}
 
