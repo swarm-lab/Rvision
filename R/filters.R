@@ -121,3 +121,29 @@ blur <- function(image, k_height = 5, k_width = 5) {
   `_blur`(image, k_height, k_width)
 }
 
+
+#' @title Blurs an Image Using a Median Filter
+#'
+#' @description \code{medianBlur} smoothes an image using a median filter, i.e.
+#'  the value of each pixel is replaced by the median value of all the pixels in
+#'  its neighborhood.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param k_size The half-size in pixels of the kernel.
+#'
+#' @return image An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{gaussianBlur}}
+#'
+#' @examples
+#' # TODO
+#' @export
+medianBlur <- function(image, k_size) {
+  if (!isImage(image()))
+    stop("'image' must be an Image object.")
+
+  `_medianBlur`(image, k_size)
+}

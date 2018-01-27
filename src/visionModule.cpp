@@ -165,4 +165,5 @@ RCPP_MODULE(methods_Filters) {
                                             _["sigma_x"], _["sigma_y"]), "");
   function("_boxFilter", &_boxFilter, List::create(_["image"], _["k_height"], _["k_width"]), "");
   function("_blur", &_blur, List::create(_["image"], _["k_height"], _["k_width"]), "");
+  function("_medianBlur", &_medianBlur, List::create(_["image"], _["k_size"]), "");
 }

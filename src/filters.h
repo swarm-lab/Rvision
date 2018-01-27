@@ -38,5 +38,10 @@ Image _blur(Image image, int k_height, int k_width) {
   return Image(out);
 }
 
+Image _medianBlur(Image image, int k_size) {
+  cv::Mat out;
 
+  cv::medianBlur(image.image, out, 2 * k_size + 1);
+  return Image(out);
+}
 
