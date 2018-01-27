@@ -6,8 +6,7 @@ Image _morph(Image image, int operation, int k_shape, int k_height, int k_width,
 }
 
 Image _morphCustom(Image image, int operation, Rcpp::NumericVector kernel, int iterations) {
-  cv::Mat out;
-  cv::Mat k;
+  cv::Mat out, k;
   Rcpp::IntegerVector kernelDims = kernel.attr("dim");
   k.create(kernelDims[0], kernelDims[1], CV_8U);
 

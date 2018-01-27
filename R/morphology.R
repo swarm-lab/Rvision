@@ -64,6 +64,9 @@
 #' @export
 morph <- function(image, operation, kernel = NULL, k_shape = "rectangle",
                   k_height = 5, k_width = 5, iterations = 1) {
+  if (!isImage(image()))
+    stop("'image' must be an Image object.")
+
   if (is.null(kernel)) {
     `_morph`(image,
              switch(operation,
@@ -83,6 +86,9 @@ morph <- function(image, operation, kernel = NULL, k_shape = "rectangle",
                     stop("This is not a valid kernel.")),
              k_height, k_width, iterations)
   } else {
+    if (!is.matrix(kernel))
+      stop("'kernel' must be a matrix.")
+
     `_morphCustom`(image,
              switch(operation,
                     "erode" = 0,
