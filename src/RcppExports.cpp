@@ -17,6 +17,7 @@ RcppExport SEXP _rcpp_module_boot_methods_Logical();
 RcppExport SEXP _rcpp_module_boot_methods_OpticalFlow();
 RcppExport SEXP _rcpp_module_boot_methods_Blob();
 RcppExport SEXP _rcpp_module_boot_methods_Morphology();
+RcppExport SEXP _rcpp_module_boot_methods_Filters();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_class_Image", (DL_FUNC) &_rcpp_module_boot_class_Image, 0},
@@ -29,6 +30,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_methods_OpticalFlow", (DL_FUNC) &_rcpp_module_boot_methods_OpticalFlow, 0},
     {"_rcpp_module_boot_methods_Blob", (DL_FUNC) &_rcpp_module_boot_methods_Blob, 0},
     {"_rcpp_module_boot_methods_Morphology", (DL_FUNC) &_rcpp_module_boot_methods_Morphology, 0},
+    {"_rcpp_module_boot_methods_Filters", (DL_FUNC) &_rcpp_module_boot_methods_Filters, 0},
     {NULL, NULL, 0}
 };
 

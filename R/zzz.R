@@ -17,6 +17,7 @@ Rcpp::loadModule("methods_Logical", TRUE)
 Rcpp::loadModule("methods_OpticalFlow", TRUE)
 Rcpp::loadModule("methods_Blob", TRUE)
 Rcpp::loadModule("methods_Morphology", TRUE)
+Rcpp::loadModule("methods_Filters", TRUE)
 
 ### Define generic arithmetic methods ###
 methods::evalqOnLoad({
