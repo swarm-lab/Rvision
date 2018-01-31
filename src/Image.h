@@ -392,7 +392,7 @@ Rcpp::List readMulti(std::string file) {
 
   Rcpp::List out(mats.size());
 
-  for (int i = 0; i < mats.size(); i++) {
+  for (unsigned int i = 0; i < mats.size(); i++) {
     out[i] = Image(mats[i]);
   }
 

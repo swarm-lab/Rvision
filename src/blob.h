@@ -50,7 +50,7 @@ Rcpp::DataFrame _simpleBlobDetector(Image image,
   Rcpp::NumericVector angle(keypoints.size());
   Rcpp::NumericVector response(keypoints.size());
 
-  for (int i = 0; i < keypoints.size(); i++) {
+  for (unsigned int i = 0; i < keypoints.size(); i++) {
     id[i] = i + 1;
     x[i] = keypoints[i].pt.x;
     y[i] = keypoints[i].pt.y;
