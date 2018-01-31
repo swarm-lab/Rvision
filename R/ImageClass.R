@@ -343,7 +343,7 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #' @note Color images are usually represented by 3 channels (possibly 4) in the
 #'  following order: green (1), blue (2), red (3), and possibly alpha (4).
 #'
-#' @seealso \code{\link{merge}} \code{\link{Image}}
+#' @seealso \code{\link{merge}}, \code{\link{Image}}
 #'
 #' @examples
 #' # TODO
@@ -363,10 +363,28 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #' @note Color images are usually represented by 3 channels (possibly 4) in the
 #'  following order: green (1), blue (2), red (3), and possibly alpha (4).
 #'
-#' @seealso \code{\link{split}} \code{\link{Image}}
+#' @seealso \code{\link{split}}, \code{\link{Image}}
 #'
 #' @examples
 #' # TODO
 #' @export
 "merge"
+
+
+#' @title Read a Multi-Page Image
+#'
+#' @description \code{readMulti} reads a multi-page image and returns a list of
+#'  \code{\link{Image}} objects, each corresponding to a different page.
+#'
+#' @param file A character string naming the path to a multi-page image file.
+#'
+#' @return A list of \code{\link{Image}} objects.
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' # TODO
+#' @export
+"readMulti"
+
 

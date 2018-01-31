@@ -383,4 +383,18 @@ Image merge(Rcpp::List & channels) {
   return Image(out);
 }
 
+Rcpp::List readMulti(std::string file) {
+  std::vector<cv::Mat> mats;
+  Rcpp::Environment base = Rcpp::Environment::base_env();
+  Rcpp::Function pathExpand = base["path.expand"];
 
+  cv::imreadmulti(Rcpp::as<std::string>(pathExpand(file)), mats, cv::IMREAD_ANYCOLOR);
+
+  Rcpp::List out(mats.size());
+
+  for (int i = 0; i < mats.size(); i++) {
+    out[i] = Image(mats[i]);
+  }
+
+  return out;
+}

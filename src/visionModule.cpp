@@ -32,6 +32,7 @@ RCPP_MODULE(class_Image) {
   function("cloneImage", &cloneImage, List::create(_["image"]), "");
   function("split", &split, List::create(_["image"]), "");
   function("merge", &merge, List::create(_["channels"]), "");
+  function("readMulti", &readMulti, List::create(_["file"]), "");
 }
 
 #include "Video.h"

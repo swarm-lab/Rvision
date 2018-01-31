@@ -24,5 +24,5 @@ Color images are usually represented by 3 channels (possibly 4) in the
 # TODO
 }
 \seealso{
-\code{\link{merge}} \code{\link{Image}}
+\code{\link{merge}}, \code{\link{Image}}
 }
