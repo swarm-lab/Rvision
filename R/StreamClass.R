@@ -58,6 +58,59 @@ isStream <- function(object) {
 }
 
 
+#' @title Dimensions of a Stream
+#'
+#' @description Retrieve the dimensions a \code{\link{Stream}} object.
+#'
+#' @param x A \code{\link{Stream}} object.
+#'
+#' @return A vector with 2 values corresponding to the number of rows and columns
+#'  of the stream (in this order).
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Stream}}, \code{\link{stream}}
+#'
+#' @examples
+#' # TODO
+#'
+#' @export
+dim.Rcpp_Stream <- function(x) {
+  x$dim()
+}
+
+
+#' @title The Number of Rows/Columns of a Stream
+#'
+#' @aliases ncol.Rcpp_Stream
+#'
+#' @description \code{nrow} and \code{ncol} return the number of rows and columns
+#'  present in a \code{\link{Stream}} object.
+#'
+#' @param x A \code{\link{Stream}} object.
+#'
+#' @return A numeric value.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link[=dim.Rcpp_Stream]{dim}} which returns \emph{all}
+#'  dimensions.
+#'
+#' @examples
+#' # TODO
+#' @export
+#' @rdname stream_dimensions
+nrow.Rcpp_Stream <- function(x) {
+  x$nrow()
+}
+
+#' @rdname stream_dimensions
+#' @export
+ncol.Rcpp_Stream <- function(x) {
+  x$ncol()
+}
+
+
 #' @export
 #' @rdname release
 release.Rcpp_Stream <- function(obj) {
