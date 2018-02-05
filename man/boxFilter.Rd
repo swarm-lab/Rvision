@@ -9,9 +9,9 @@ boxFilter(image, k_height = 5, k_width = 5)
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{k_height}{The half-height in pixels of the kernel.}
+\item{k_height}{The half-height in pixels of the kernel (default: 5).}
 
-\item{k_width}{The half-width in pixels of the kernel.}
+\item{k_width}{The half-width in pixels of the kernel (default: 5).}
 }
 \value{
 image An \code{\link{Image}} object.

@@ -64,7 +64,7 @@
 #' @export
 morph <- function(image, operation, kernel = NULL, k_shape = "rectangle",
                   k_height = 5, k_width = 5, iterations = 1) {
-  if (!isImage(image()))
+  if (!isImage(image))
     stop("'image' must be an Image object.")
 
   if (is.null(kernel)) {

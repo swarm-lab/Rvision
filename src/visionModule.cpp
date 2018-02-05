@@ -162,9 +162,17 @@ RCPP_MODULE(methods_Morphology) {
 RCPP_MODULE(methods_Filters) {
 
   function("_filter2D", &_filter2D, List::create(_["image"], _["kernel"]), "");
-  function("_gaussianBlur", &_gaussianBlur, List::create(_["image"], _["k_height"], _["k_width"],
-                                            _["sigma_x"], _["sigma_y"]), "");
+  function("_gaussianBlur", &_gaussianBlur, List::create(_["image"], _["k_height"],
+                                            _["k_width"], _["sigma_x"], _["sigma_y"]), "");
   function("_boxFilter", &_boxFilter, List::create(_["image"], _["k_height"], _["k_width"]), "");
   function("_blur", &_blur, List::create(_["image"], _["k_height"], _["k_width"]), "");
   function("_medianBlur", &_medianBlur, List::create(_["image"], _["k_size"]), "");
+  function("_sqrBoxFilter", &_sqrBoxFilter, List::create(_["image"], _["k_height"],
+                                            _["k_width"], _["normalize"]), "");
+  function("_scharr", &_scharr, List::create(_["image"], _["dx"], _["dy"], _["scale"]), "");
+  function("_sobel", &_sobel, List::create(_["image"], _["dx"], _["dy"], _["k_size"],
+                                     _["scale"]), "");
+  function("_laplacian", &_laplacian, List::create(_["image"], _["k_size"], _["scale"]), "");
+  function("_bilateralFilter", &_bilateralFilter, List::create(_["image"], _["d"],
+                                               _["sigma_color"], _["sigma_space"]), "");
 }

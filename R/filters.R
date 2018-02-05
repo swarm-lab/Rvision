@@ -21,7 +21,7 @@
 #' # TODO
 #' @export
 filter2D <- function(image, kernel) {
-  if (!isImage(image()))
+  if (!isImage(image))
     stop("'image' must be an Image object.")
 
   if (!is.matrix(kernel))
@@ -39,13 +39,15 @@ filter2D <- function(image, kernel) {
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param k_height The half-height in pixels of the kernel.
+#' @param k_height The half-height in pixels of the kernel (default: 5).
 #'
-#' @param k_width The half-width in pixels of the kernel.
+#' @param k_width The half-width in pixels of the kernel (default: 5).
 #'
-#' @param sigma_x The standard deviation of the kernel along the x axis.
+#' @param sigma_x The standard deviation of the kernel along the x axis
+#'  (default: 1).
 #'
-#' @param sigma_y The standard deviation of the kernel along the y axis.
+#' @param sigma_y The standard deviation of the kernel along the y axis
+#'  (default: 1).
 #'
 #' @return image An \code{\link{Image}} object.
 #'
@@ -57,7 +59,7 @@ filter2D <- function(image, kernel) {
 #' # TODO
 #' @export
 gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y = 1) {
-  if (!isImage(image()))
+  if (!isImage(image))
     stop("'image' must be an Image object.")
 
   `_gaussianBlur`(image, k_height, k_width, sigma_x, sigma_y)
@@ -72,9 +74,9 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y 
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param k_height The half-height in pixels of the kernel.
+#' @param k_height The half-height in pixels of the kernel (default: 5).
 #'
-#' @param k_width The half-width in pixels of the kernel.
+#' @param k_width The half-width in pixels of the kernel (default: 5).
 #'
 #' @return image An \code{\link{Image}} object.
 #'
@@ -86,7 +88,7 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y 
 #' # TODO
 #' @export
 boxFilter <- function(image, k_height = 5, k_width = 5) {
-  if (!isImage(image()))
+  if (!isImage(image))
     stop("'image' must be an Image object.")
 
   `_boxFilter`(image, k_height, k_width)
@@ -101,9 +103,9 @@ boxFilter <- function(image, k_height = 5, k_width = 5) {
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param k_height The half-height in pixels of the kernel.
+#' @param k_height The half-height in pixels of the kernel (default: 5).
 #'
-#' @param k_width The half-width in pixels of the kernel.
+#' @param k_width The half-width in pixels of the kernel (default: 5).
 #'
 #' @return image An \code{\link{Image}} object.
 #'
@@ -115,7 +117,7 @@ boxFilter <- function(image, k_height = 5, k_width = 5) {
 #' # TODO
 #' @export
 blur <- function(image, k_height = 5, k_width = 5) {
-  if (!isImage(image()))
+  if (!isImage(image))
     stop("'image' must be an Image object.")
 
   `_blur`(image, k_height, k_width)
@@ -130,7 +132,7 @@ blur <- function(image, k_height = 5, k_width = 5) {
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param k_size The half-size in pixels of the kernel.
+#' @param k_size The half-size in pixels of the kernel (default: 5).
 #'
 #' @return image An \code{\link{Image}} object.
 #'
@@ -141,9 +143,178 @@ blur <- function(image, k_height = 5, k_width = 5) {
 #' @examples
 #' # TODO
 #' @export
-medianBlur <- function(image, k_size) {
-  if (!isImage(image()))
+medianBlur <- function(image, k_size = 5) {
+  if (!isImage(image))
     stop("'image' must be an Image object.")
 
   `_medianBlur`(image, k_size)
 }
+
+
+#' @title Blurs an Image Using a Square Box Filter
+#'
+#' @description \code{sqrBoxFilter} calculates the normalized and unnormalized
+#'  sum of squares of the pixels in a box surrounding focal pixel. The result is
+#'  a blurred version of the source image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param k_height The half-height in pixels of the kernel (default: 5).
+#'
+#' @param k_width The half-width in pixels of the kernel (default: 5).
+#'
+#' @param normalize Whether the kernel is to be normalized by its area (default:
+#'  true).
+#'
+#' @return image An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{boxFilter}}
+#'
+#' @examples
+#' # TODO
+#' @export
+sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE) {
+  if (!isImage(image))
+    stop("'image' must be an Image object.")
+
+  `_sqrBoxFilter`(image, k_height, k_width, normalize)
+}
+
+
+#' @title Calculates an Image Derivatives Using a Scharr Operator
+#'
+#' @description \code{sobel} calculates the derivatives of an image using a
+#'  Scharr operator.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param dx Order of the x derivative (default: 1).
+#'
+#' @param dy Order of the y derivative (default: 1),
+#'
+#' @param scale The scale factor for the computed derivative values (default: 1).
+#'
+#' @return image An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{sobel}}
+#'
+#' @examples
+#' # TODO
+#' @export
+scharr <- function(image, dx = 1, dy = 1, scale = 1) {
+  if (!isImage(image))
+    stop("'image' must be an Image object.")
+
+  `_scharr`(image, dx, dy, scale)
+}
+
+
+#' @title Calculates an Image Derivatives Using an Extended Sobel Operator
+#'
+#' @description \code{sobel} calculates the first, second, third, or mixed image
+#'  derivatives of an image using an extended Sobel operator.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param dx Order of the x derivative (default: 1).
+#'
+#' @param dy Order of the y derivative (default: 1),
+#'
+#' @param k_size The half-size in pixels of the kernel (default: 5).
+#'
+#' @param scale The scale factor for the computed derivative values (default: 1).
+#'
+#' @return image An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{laplacian}}, \code{\link{scharr}}
+#'
+#' @examples
+#' # TODO
+#' @export
+sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1) {
+  if (!isImage(image))
+    stop("'image' must be an Image object.")
+
+  `_sobel`(image, dx, dy, k_size, scale)
+}
+
+
+#' @title Calculates the Laplacian of an Image
+#'
+#' @description \code{laplacian} calculates the Laplacian of the source image by
+#'  adding up the second x and y derivatives calculated using the Sobel operator.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param k_size The half-size in pixels of the kernel (default: 5).
+#'
+#' @param scale The scale factor for the computed Laplacian values (default: 1).
+#'
+#' @return image An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{sobel}}
+#'
+#' @examples
+#' # TODO
+#' @export
+laplacian <- function(image, k_size = 5, scale = 1) {
+  if (!isImage(image))
+    stop("'image' must be an Image object.")
+
+  `_laplacian`(image, k_size, scale)
+}
+
+
+#' @title Edge-Preserving Noise Reduction with a Bilateral Filter
+#'
+#' @description \code{bilateralFilter} applies the bilateral filter to an image.
+#'  This filter can reduce unwanted noise very well while keeping edges fairly
+#'  sharp. However, it is very slow compared to most filters.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param d The diameter in pixels of the filter neighborhood (default: 5).
+#'
+#' @param sigma_color The filter standard deviation in the color space
+#'  (see Note; default: 25).
+#'
+#' @param sigma_space The filter standard deviation in the coordinate space
+#'  (see Note; default: 25).
+#'
+#' @return image An \code{\link{Image}} object.
+#'
+#' @note A larger value of \code{sigma_color} means that farther colors within
+#'  the pixel neighborhood will be mixed together, resulting in larger areas of
+#'  semi-equal color.
+#'
+#' @note A larger value of \code{sigma_space} means that farther pixels will
+#'  influence each other as long as their colors are close enough. When
+#'  \code{d > 0}, it specifies the neighborhood size regardless of
+#'  \code{sigma_space}. Otherwise, \code{d} is proportional to \code{sigma_space}.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{gaussianBlur}}
+#'
+#' @examples
+#' # TODO
+#' @export
+bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
+  if (!isImage(image))
+    stop("'image' must be an Image object.")
+
+  if (!(nchan(image) %in% c(1, 3)))
+    stop("'image' must be an Image object with 1 or 3 channels only.")
+
+  `_bilateralFilter`(image, d, sigma_color, sigma_space)
+}
+
+

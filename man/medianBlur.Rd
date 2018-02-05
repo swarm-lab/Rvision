@@ -4,12 +4,12 @@
 \alias{medianBlur}
 \title{Blurs an Image Using a Median Filter}
 \usage{
-medianBlur(image, k_size)
+medianBlur(image, k_size = 5)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{k_size}{The half-size in pixels of the kernel.}
+\item{k_size}{The half-size in pixels of the kernel (default: 5).}
 }
 \value{
 image An \code{\link{Image}} object.
