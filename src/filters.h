@@ -1,15 +1,31 @@
-Image _filter2D(Image image, Rcpp::NumericVector kernel) {
-  cv::Mat out, k;
-  Rcpp::IntegerVector kernelDims = kernel.attr("dim");
-  k.create(kernelDims[0], kernelDims[1], CV_32F);
+Image _filter2D(Image image, Rcpp::NumericMatrix kernel) {
+  cv::Mat out;
+  cv::Mat k(kernel.nrow(), kernel.ncol(), CV_32F);
 
-  for(int i = 0; i < kernelDims[0]; i++) {
-    for(int j = 0; j < kernelDims[1]; j++) {
-      k.at<float>(i, j) = kernel[kernelDims[0] * j + i];
+  for(int i = 0; i < kernel.nrow(); i++) {
+    for(int j = 0; j < kernel.ncol(); j++) {
+      k.at<float>(i, j) = kernel(i, j);
     }
   }
 
   cv::filter2D(image.image, out, -1, k, cv::Point(-1, -1));
+  return Image(out);
+}
+
+Image _sepFilter2D(Image image, Rcpp::NumericVector kernel_x, Rcpp::NumericVector kernel_y) {
+  cv::Mat out;
+  cv::Mat k_x(kernel_x.length(), 1, CV_32F);
+  cv::Mat k_y(kernel_y.length(), 1, CV_32F);
+
+  for (int i = 0; i < kernel_x.length(); i++) {
+    k_x.at<float>(i, 1) = kernel_x[i];
+  }
+
+  for (int i = 0; i < kernel_y.length(); i++) {
+    k_y.at<float>(i, 1) = kernel_y[i];
+  }
+
+  cv::sepFilter2D(image.image, out, -1, k_x, k_y);
   return Image(out);
 }
 
@@ -80,6 +96,3 @@ Image _bilateralFilter(Image image, int d, double sigma_color, double sigma_spac
   cv::bilateralFilter(image.image, out, d, sigma_color, sigma_space);
   return Image(out);
 }
-
-
-

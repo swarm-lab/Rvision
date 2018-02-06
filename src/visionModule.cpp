@@ -162,6 +162,7 @@ RCPP_MODULE(methods_Morphology) {
 RCPP_MODULE(methods_Filters) {
 
   function("_filter2D", &_filter2D, List::create(_["image"], _["kernel"]), "");
+  function("_sepFilter2D", &_sepFilter2D, List::create(_["image"], _["kernel_x"], _["kernel_y"]), "");
   function("_gaussianBlur", &_gaussianBlur, List::create(_["image"], _["k_height"],
                                             _["k_width"], _["sigma_x"], _["sigma_y"]), "");
   function("_boxFilter", &_boxFilter, List::create(_["image"], _["k_height"], _["k_width"]), "");

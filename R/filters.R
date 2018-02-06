@@ -31,6 +31,41 @@ filter2D <- function(image, kernel) {
 }
 
 
+#' @title Image Filtering with a Separable Linear Filter
+#'
+#' @description \code{sepFilter2D} applies a separable linear filter to an image.
+#'  First, every row of the image is filtered with the 1D kernel \code{kernel_x}.
+#'  Then, every column of the result is filtered with the 1D kernel \code{kernel_y}.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param kernel_x A vector representing the kernel along the x axis.
+#'
+#' @param kernel_y A vector representing the kernel along the y axis.
+#'
+#' @return An \code{\link{Image}} object.
+#'
+#' @note For color images, the same kernel is applied to each channel of the
+#'  image. If you want to apply different kernels to each channel, first split
+#'  the image into separate channels with the \code{\link{split}} and process
+#'  them individually before merging them using the \code{\link{merge}} function.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{filter2D}}, \code{\link{split}},
+#'  \code{\link{merge}}
+#'
+#' @examples
+#' # TODO
+#' @export
+sepFilter2D <- function(image, kernel_x, kernel_y) {
+  if (!isImage(image))
+    stop("'image' must be an Image object.")
+
+  `_sepFilter2D`(image, kernel_x, kernel_y)
+}
+
+
 #' @title Blurs an Image Using a Gaussian Filter
 #'
 #' @description \code{gaussianBlur} convolves the source image with the
@@ -273,6 +308,31 @@ laplacian <- function(image, k_size = 5, scale = 1) {
 }
 
 
+#' @title First Order Derivatives of an Image with the Sobel Operator
+#'
+#' @description \code{spatialGradient} calculates the first order derivative of
+#'  an image in both x and y using a Sobel operator.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param k_size The half-size in pixels of the kernel (default: 5).
+#'
+#' @return image An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{sobel}}
+#'
+#' @examples
+#' # TODO
+#' @export
+spatialGradient <- function(image, k_size) {
+  dx <- sobel(image, dx = 1, dy = 0, k_size)
+  dy <- sobel(image, dx = 0, dy = 1, k_size)
+  list(dx = dx, dy = dy)
+}
+
+
 #' @title Edge-Preserving Noise Reduction with a Bilateral Filter
 #'
 #' @description \code{bilateralFilter} applies the bilateral filter to an image.
@@ -316,5 +376,3 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
 
   `_bilateralFilter`(image, d, sigma_color, sigma_space)
 }
-
-
