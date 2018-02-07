@@ -177,3 +177,18 @@ RCPP_MODULE(methods_Filters) {
   function("_bilateralFilter", &_bilateralFilter, List::create(_["image"], _["d"],
                                                _["sigma_color"], _["sigma_space"]), "");
 }
+
+#include "display.h"
+RCPP_MODULE(methods_Display) {
+  function("_newDisplay", &_newDisplay, List::create(_["window_name"], _["height"], _["width"]), "");
+  function("_display", &_display, List::create(_["image"], _["window_name"], _["delay"], _["height"], _["width"]), "");
+  function("_destroyDisplay", &_destroyDisplay, List::create(_["window_name"]), "");
+  function("_destroyAllDisplays", &_destroyAllDisplays, "", "");
+}
+
+#include "draw.h"
+RCPP_MODULE(methods_Draw) {
+  function("_drawRectangle", &_drawRectangle, List::create(_["image"], _["pt1_x"], _["pt1_y"],
+                                             _["pt2_x"], _["pt2_y"], _["color"], _["thickness"],
+                                             _["linetype"]), "");
+}

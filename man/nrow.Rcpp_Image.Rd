@@ -6,7 +6,9 @@
 \alias{nchan}
 \title{The Number of Rows/Columns/Channels of an Image}
 \usage{
-nrow.Rcpp_Image(x)
+nrow(x)
+ncol(x)
+nchan(x)
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object.}

@@ -182,6 +182,10 @@ dim.Rcpp_Image <- function(x) {
 #' @description nrow, ncol and nchan return the number of rows, columns or
 #'  channels present in an \code{\link{Image}} object.
 #'
+#' @usage nrow(x)
+#' ncol(x)
+#' nchan(x)
+#'
 #' @param x An \code{\link{Image}} object.
 #'
 #' @return A numeric value.
@@ -386,5 +390,3 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #' # TODO
 #' @export
 "readMulti"
-
-
