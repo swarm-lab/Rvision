@@ -5,6 +5,7 @@
 #' @importFrom stats median.default
 #' @import pbapply
 #' @import ROpenCVLite
+#' @importFrom grDevices col2rgb
 
 ### Load package module ###
 Rcpp::loadModule("class_Image", TRUE)

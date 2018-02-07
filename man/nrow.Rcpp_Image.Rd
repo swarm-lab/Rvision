@@ -2,12 +2,14 @@
 % Please edit documentation in R/ImageClass.R
 \name{nrow.Rcpp_Image}
 \alias{nrow.Rcpp_Image}
+\alias{nrow.Image}
 \alias{ncol.Rcpp_Image}
+\alias{ncol.Image}
 \alias{nchan}
 \title{The Number of Rows/Columns/Channels of an Image}
 \usage{
-nrow(x)
-ncol(x)
+nrow.Rcpp_Image(x)
+ncol.Rcpp_Image(x)
 nchan(x)
 }
 \arguments{

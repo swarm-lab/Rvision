@@ -71,7 +71,7 @@ display <- function(image, window_name = "Display", delay = 25, height = 480, wi
 #'  \code{\link{Image}} display window. \code{destroyAllDisplays} all existing
 #'  \code{\link{Image}} display window.
 #'
-#' @usage destroyDisplay(image)
+#' @usage destroyDisplay(window_name)
 #' destroyAllDisplays()
 #'
 #' @param window_name A character string representing the name of the display

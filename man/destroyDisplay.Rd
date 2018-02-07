@@ -5,7 +5,7 @@
 \alias{destroyAllDisplays}
 \title{Destroy \code{\link{Image}} Display}
 \usage{
-destroyDisplay(image)
+destroyDisplay(window_name)
 destroyAllDisplays()
 }
 \arguments{
