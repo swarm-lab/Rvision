@@ -192,3 +192,9 @@ RCPP_MODULE(methods_Draw) {
                                              _["pt2_x"], _["pt2_y"], _["color"], _["thickness"],
                                              _["linetype"]), "");
 }
+
+#include "geometry.h"
+RCPP_MODULE(methods_Geometry) {
+  function("_resize", &_resize, List::create(_["image"], _["height"], _["width"],
+                                             _["fx"], _["fy"], _["interpolation"]), "");
+}

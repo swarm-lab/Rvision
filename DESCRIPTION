@@ -21,7 +21,8 @@ Imports:
 LinkingTo: Rcpp, RcppArmadillo
 RcppModules: class_Image, class_Video, class_Stream, methods_Arithmetic,
     methods_Statistics, methods_Comparisons, methods_Logical, methods_OpticalFlow,
-    methods_Blob, methods_Morphology, methods_Filters, methods_Display, methods_Draw
+    methods_Blob, methods_Morphology, methods_Filters, methods_Display, 
+    methods_Draw, methods_Geometry
 Remotes: swarm-lab/ROpenCVLite
 RoxygenNote: 6.0.1.9000
 Encoding: UTF-8
