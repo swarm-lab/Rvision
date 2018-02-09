@@ -88,12 +88,15 @@ RCPP_MODULE(methods_Arithmetic) {
   function("_plus", &_plus, List::create(_["image1"], _["image2"]), "");
   function("_plusScalar", &_plusScalar, List::create(_["image"], _["value"]), "");
   function("_minus", &_minus, List::create(_["image1"], _["image2"]), "");
-  function("_minusScalar", &_minusScalar, List::create(_["image"], _["value"], _["order"]), "");
+  function("_minusScalar", &_minusScalar, List::create(_["image"], _["value"],
+    _["order"]), "");
   function("_multiply", &_multiply, List::create(_["image1"], _["image2"]), "");
-  function("_multiplyScalar", &_multiplyScalar, List::create(_["image"], _["value"]), "");
+  function("_multiplyScalar", &_multiplyScalar, List::create(_["image"],
+    _["value"]), "");
   function("_divide", &_divide, List::create(_["image1"], _["image2"]), "");
   function("absdiff", &absdiff, List::create(_["image1"], _["image2"]), "");
-  function("addWeighted", &addWeighted, List::create(_["image1"], _["alpha"], _["image2"], _["beta"]), "");
+  function("addWeighted", &addWeighted, List::create(_["image1"], _["alpha"],
+    _["image2"], _["beta"]), "");
 }
 
 #include "statistics.h"
@@ -131,70 +134,85 @@ RCPP_MODULE(methods_Logical) {
 #include "opticalFlow.h"
 RCPP_MODULE(methods_OpticalFlow) {
 
-  function("_farneback", &_farneback, List::create(_["image1"], _["image2"], _["pyr_scale"],
-    _["levels"], _["winsize"], _["iterations"], _["poly_n"], _["poly_sigma"]), "");
+  function("_farneback", &_farneback, List::create(_["image1"], _["image2"],
+    _["pyr_scale"], _["levels"], _["winsize"], _["iterations"], _["poly_n"],
+    _["poly_sigma"]), "");
 }
 
 #include "blob.h"
 RCPP_MODULE(methods_Blob) {
 
   function("_simpleBlobDetector", &_simpleBlobDetector, List::create(_["image"],
-                                                  _["min_threshold"], _["max_threshold"],
-                                                  _["threshold_step"], _["min_repeatability"],
-                                                  _["min_dist_between_blobs"],
-                                                  _["filter_by_area"], _["min_area"], _["max_area"],
-                                                  _["filter_by_color"], _["blob_color"],
-                                                  _["filter_by_circularity"], _["min_circularity"], _["max_circularity"],
-                                                  _["filter_by_convexity"], _["min_convexity"], _["max_convexity"],
-                                                  _["filter_by_inertia"], _["min_inertia_ratio"], _["max_inertia_ratio"]), "");
+    _["min_threshold"], _["max_threshold"], _["threshold_step"],
+    _["min_repeatability"], _["min_dist_between_blobs"], _["filter_by_area"],
+    _["min_area"], _["max_area"], _["filter_by_color"], _["blob_color"],
+    _["filter_by_circularity"], _["min_circularity"], _["max_circularity"],
+    _["filter_by_convexity"], _["min_convexity"], _["max_convexity"],
+    _["filter_by_inertia"], _["min_inertia_ratio"], _["max_inertia_ratio"]), "");
 }
 
 #include "morphology.h"
 RCPP_MODULE(methods_Morphology) {
 
   function("_morph", &_morph, List::create(_["image"], _["operation"], _["k_shape"],
-                                     _["k_height"], _["k_width"], _["iterations"]), "");
-  function("_morphCustom", &_morphCustom, List::create(_["image"], _["operation"], _["kernel"],
-                                      _["iterations"]), "");
+    _["k_height"], _["k_width"], _["iterations"]), "");
+  function("_morphCustom", &_morphCustom, List::create(_["image"], _["operation"],
+    _["kernel"], _["iterations"]), "");
 }
 
 #include "filters.h"
 RCPP_MODULE(methods_Filters) {
 
   function("_filter2D", &_filter2D, List::create(_["image"], _["kernel"]), "");
-  function("_sepFilter2D", &_sepFilter2D, List::create(_["image"], _["kernel_x"], _["kernel_y"]), "");
+  function("_sepFilter2D", &_sepFilter2D, List::create(_["image"], _["kernel_x"],
+    _["kernel_y"]), "");
   function("_gaussianBlur", &_gaussianBlur, List::create(_["image"], _["k_height"],
-                                            _["k_width"], _["sigma_x"], _["sigma_y"]), "");
-  function("_boxFilter", &_boxFilter, List::create(_["image"], _["k_height"], _["k_width"]), "");
+    _["k_width"], _["sigma_x"], _["sigma_y"]), "");
+  function("_boxFilter", &_boxFilter, List::create(_["image"], _["k_height"],
+    _["k_width"]), "");
   function("_blur", &_blur, List::create(_["image"], _["k_height"], _["k_width"]), "");
   function("_medianBlur", &_medianBlur, List::create(_["image"], _["k_size"]), "");
   function("_sqrBoxFilter", &_sqrBoxFilter, List::create(_["image"], _["k_height"],
-                                            _["k_width"], _["normalize"]), "");
-  function("_scharr", &_scharr, List::create(_["image"], _["dx"], _["dy"], _["scale"]), "");
-  function("_sobel", &_sobel, List::create(_["image"], _["dx"], _["dy"], _["k_size"],
-                                     _["scale"]), "");
-  function("_laplacian", &_laplacian, List::create(_["image"], _["k_size"], _["scale"]), "");
+    _["k_width"], _["normalize"]), "");
+  function("_scharr", &_scharr, List::create(_["image"], _["dx"], _["dy"],
+    _["scale"]), "");
+  function("_sobel", &_sobel, List::create(_["image"], _["dx"], _["dy"],
+    _["k_size"], _["scale"]), "");
+  function("_laplacian", &_laplacian, List::create(_["image"], _["k_size"],
+    _["scale"]), "");
   function("_bilateralFilter", &_bilateralFilter, List::create(_["image"], _["d"],
-                                               _["sigma_color"], _["sigma_space"]), "");
+    _["sigma_color"], _["sigma_space"]), "");
 }
 
 #include "display.h"
 RCPP_MODULE(methods_Display) {
-  function("_newDisplay", &_newDisplay, List::create(_["window_name"], _["height"], _["width"]), "");
-  function("_display", &_display, List::create(_["image"], _["window_name"], _["delay"], _["height"], _["width"]), "");
+  function("_newDisplay", &_newDisplay, List::create(_["window_name"], _["height"],
+    _["width"]), "");
+  function("_display", &_display, List::create(_["image"], _["window_name"],
+    _["delay"], _["height"], _["width"]), "");
   function("_destroyDisplay", &_destroyDisplay, List::create(_["window_name"]), "");
   function("_destroyAllDisplays", &_destroyAllDisplays, "", "");
 }
 
 #include "draw.h"
 RCPP_MODULE(methods_Draw) {
-  function("_drawRectangle", &_drawRectangle, List::create(_["image"], _["pt1_x"], _["pt1_y"],
-                                             _["pt2_x"], _["pt2_y"], _["color"], _["thickness"],
-                                             _["linetype"]), "");
+  function("_drawRectangle", &_drawRectangle, List::create(_["image"], _["pt1_x"],
+    _["pt1_y"], _["pt2_x"], _["pt2_y"], _["color"], _["thickness"]), "");
+  function("_drawCircle", &_drawCircle, List::create(_["image"], _["x"], _["y"],
+    _["radius"], _["color"], _["thickness"]), "");
+  function("_drawEllipse", &_drawEllipse, List::create(_["image"], _["x"], _["y"],
+    _["axis1"], _["axis2"], _["angle"], _["start_angle"], _["end_angle"],
+    _["color"], _["thickness"]), "");
+  function("_drawLine", &_drawLine, List::create(_["image"], _["pt1_x"], _["pt1_y"],
+    _["pt2_x"], _["pt2_y"], _["color"], _["thickness"]), "");
+  function("_drawArrow", &_drawArrow, List::create(_["image"], _["pt1_x"], _["pt1_y"],
+    _["pt2_x"], _["pt2_y"], _["tip_length"], _["color"], _["thickness"]), "");
+  function("_drawText", &_drawText, List::create(_["image"], _["text"], _["x"], _["y"],
+    _["font_face"], _["font_scale"], _["color"], _["thickness"], _["bl_orig"]), "");
 }
 
 #include "geometry.h"
 RCPP_MODULE(methods_Geometry) {
   function("_resize", &_resize, List::create(_["image"], _["height"], _["width"],
-                                             _["fx"], _["fy"], _["interpolation"]), "");
+    _["fx"], _["fy"], _["interpolation"]), "");
 }

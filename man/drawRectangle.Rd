@@ -2,7 +2,7 @@
 % Please edit documentation in R/draw.R
 \name{drawRectangle}
 \alias{drawRectangle}
-\title{Draw Rectangle on \code{\link{Image}}}
+\title{Draw a Rectangle on an \code{\link{Image}}}
 \usage{
 drawRectangle(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red",
   thickness = 1)
@@ -23,10 +23,11 @@ opposite to pt1.}
 opposite to pt1.}
 
 \item{color}{Any kind of R color specification compatible with
-\code{\link{col2rgb}} representing the color of the rectangle outline.}
+\code{\link{col2rgb}} representing the color of the rectangle outline
+(default: "red").}
 
 \item{thickness}{A numeric value representing the thickness in pixels of the
-rectangle outline.}
+rectangle outline (default: 1). If negative, then a filled rectangle is drawn.}
 }
 \value{
 This function does not return anything. It modifies \code{image} in
