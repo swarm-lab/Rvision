@@ -3,21 +3,21 @@ public:
   Image();
   Image(std::string inputFile);
   Image(cv::Mat InputImage);
-  Image(Rcpp::NumericVector inputArray);
+  Image(arma::cube inputArray);
   cv::Mat image;
   bool open(std::string inputFile);
   bool write(std::string outputFile);
   bool loadCV(cv::Mat inputImage);
-  bool loadArray(Rcpp::NumericVector inputArray);
+  bool loadArray(arma::cube inputArray);
   arma::cube toR();
   Rcpp::NumericVector dim();
   int nrow(), ncol(), nchan();
-  std::string depth(), space(); // mode();
+  std::string depth(), space();
   void changeBitDepth(int depth), changeColorSpace(std::string colorSpace);
 
 private:
-  void init(); // initMode();
-  std::string imageSpace, imageDepth; // imageMode;
+  void init();
+  std::string imageSpace, imageDepth;
 };
 
 Image::Image() {
@@ -47,31 +47,51 @@ Image::Image(cv::Mat inputImage) {
   this->init();
 }
 
-Image::Image(Rcpp::NumericVector inputArray) {
-  Rcpp::IntegerVector arrayDims = inputArray.attr("dim");
-  int nDims = arrayDims.size();
-
-  if (nDims == 2) {
-    this->image.create(arrayDims[0], arrayDims[1], CV_64FC1);
-    for(int i = 0; i < arrayDims[0]; i++) {
-      for(int j = 0; j < arrayDims[1]; j++) {
-        this->image.at<double>(i, j) = inputArray[arrayDims[0] * j + i];
-      }
-    }
-  } else if (nDims == 3) {
-    this->image.create(arrayDims[0], arrayDims[1], CV_64FC3);
-    for(int i = 0; i < arrayDims[0]; i++) {
-      for(int j = 0; j < arrayDims[1]; j++) {
-        this->image.at<cv::Vec3d>(i, j)[2] = (double_t)inputArray[arrayDims[0] * j + i];
-        this->image.at<cv::Vec3d>(i, j)[1] = (double_t)inputArray[(arrayDims[0] * j + i) + arrayDims[0] * arrayDims[1]];
-        this->image.at<cv::Vec3d>(i, j)[0] = (double_t)inputArray[(arrayDims[0] * j + i) + 2 * arrayDims[0] * arrayDims[1]];
-      }
-    }
-  } else {
-    throw std::range_error("The array must 2 or 3 dimensional.");
+Image::Image(arma::cube inputArray) {
+  switch(inputArray.n_slices) {
+  case 1:
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC1);
+    break;
+  case 3:
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC3);
+    break;
+  case 4:
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC4);
+    break;
+  default:
+    throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
   }
 
-  this->init();
+  if (inputArray.min() < 0 || inputArray.max() > 255) {
+    Rcpp::Rcout << "Note: input array values outside the authorized range of [0;255]. Rescaling was performed." << std::endl;
+    inputArray = 255 * (inputArray - inputArray.min()) / (inputArray.max() - inputArray.min());
+  }
+
+  for (int i = 0; i < inputArray.n_cols; i++) {
+    for (int j = 0; j < inputArray.n_rows; j++) {
+      for (int k = 0; k < inputArray.n_slices; k++) {
+        switch(inputArray.n_slices) {
+        case 1:
+          this->image.at<uint8_t>(j, i) = (int) inputArray(j, i, k);
+          break;
+        case 3:
+          this->image.at<cv::Vec3b>(j, i)[k] = (int) inputArray(j, i, k);
+          break;
+        case 4:
+          this->image.at<cv::Vec4b>(j, i)[k] = (int) inputArray(j, i, k);
+          break;
+        default:
+          throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+        }
+      }
+    }
+  }
+
+  if (!this->image.data) {
+    throw std::range_error("Could not read the input array.");
+  } else {
+    this->init();
+  }
 }
 
 bool Image::open(std::string inputFile) {
@@ -92,13 +112,7 @@ bool Image::write(std::string outputFile) {
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
 
-  bool success = imwrite(Rcpp::as<std::string>(pathExpand(outputFile)), this->image);
-
-  if (!success) {
-    throw std::range_error("Could not save the image.");
-  } else {
-    return success;
-  }
+  return imwrite(Rcpp::as<std::string>(pathExpand(outputFile)), this->image);
 }
 
 bool Image::loadCV(cv::Mat inputImage) {
@@ -112,28 +126,44 @@ bool Image::loadCV(cv::Mat inputImage) {
   }
 }
 
-bool Image::loadArray(Rcpp::NumericVector inputArray) {
-  Rcpp::IntegerVector arrayDims = inputArray.attr("dim");
-  int nDims = arrayDims.size();
+bool Image::loadArray(arma::cube inputArray) {
+  switch(inputArray.n_slices) {
+  case 1:
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC1);
+    break;
+  case 3:
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC3);
+    break;
+  case 4:
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC4);
+    break;
+  default:
+    throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+  }
 
-  if (nDims == 2) {
-    this->image.create(arrayDims[0], arrayDims[1], CV_64FC1);
-    for(int i = 0; i < arrayDims[0]; i++) {
-      for(int j = 0; j < arrayDims[1]; j++) {
-        this->image.at<double>(i, j) = inputArray[arrayDims[0] * j + i];
+  if (inputArray.min() < 0 || inputArray.max() > 255) {
+    Rcpp::Rcout << "Note: input array values outside the authorized range of [0;255]. Rescaling was performed." << std::endl;
+    inputArray = 255 * (inputArray - inputArray.min()) / (inputArray.max() - inputArray.min());
+  }
+
+  for (int i = 0; i < inputArray.n_cols; i++) {
+    for (int j = 0; j < inputArray.n_rows; j++) {
+      for (int k = 0; k < inputArray.n_slices; k++) {
+        switch(inputArray.n_slices) {
+        case 1:
+          this->image.at<uint8_t>(j, i) = (int) inputArray(j, i, k);
+          break;
+        case 3:
+          this->image.at<cv::Vec3b>(j, i)[k] = (int) inputArray(j, i, k);
+          break;
+        case 4:
+          this->image.at<cv::Vec4b>(j, i)[k] = (int) inputArray(j, i, k);
+          break;
+        default:
+          throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+        }
       }
     }
-  } else if (nDims == 3) {
-    this->image.create(arrayDims[0], arrayDims[1], CV_64FC3);
-    for(int i = 0; i < arrayDims[0]; i++) {
-      for(int j = 0; j < arrayDims[1]; j++) {
-        this->image.at<cv::Vec3d>(i, j)[2] = (double_t)inputArray[arrayDims[0] * j + i];
-        this->image.at<cv::Vec3d>(i, j)[1] = (double_t)inputArray[(arrayDims[0] * j + i) + arrayDims[0] * arrayDims[1]];
-        this->image.at<cv::Vec3d>(i, j)[0] = (double_t)inputArray[(arrayDims[0] * j + i) + 2 * arrayDims[0] * arrayDims[1]];
-      }
-    }
-  } else {
-    throw std::range_error("The input array must 2 or 3 dimensional.");
   }
 
   if (!this->image.data) {
