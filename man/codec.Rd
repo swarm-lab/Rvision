@@ -14,7 +14,7 @@ A character string corresponding to the
  \href{http://www.fourcc.org/codecs.php}{FOURCC} code of the codec.
 }
 \description{
-Retrieve the codecof a \code{\link{Video}} object.
+Retrieve the codec of a \code{\link{Video}} object.
 }
 \examples{
 # TODO

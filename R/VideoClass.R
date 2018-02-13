@@ -175,7 +175,7 @@ fps <- function(x) {
 
 #' @title Codec of a Video
 #'
-#' @description Retrieve the codecof a \code{\link{Video}} object.
+#' @description Retrieve the codec of a \code{\link{Video}} object.
 #'
 #' @param x A \code{\link{Video}} object.
 #'
@@ -193,7 +193,7 @@ codec <- function(x) {
   if (!isVideo(x))
     stop("This is not a Video object.")
 
-  x$codec
+  x$codec()
 }
 
 

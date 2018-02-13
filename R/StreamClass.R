@@ -122,9 +122,9 @@ release.Rcpp_Stream <- function(obj) {
   if (!obj$isOpened()) {
     tmp <- deparse(substitute(obj))
     rm(list = tmp, envir = parent.frame(1))
-    cat("Stream released successfully. \n")
+    message("Stream released successfully. \n")
   } else {
-    cat("An error occured while trying to release the stream. \n")
+    message("An error occured while trying to release the stream. \n")
   }
 }
 

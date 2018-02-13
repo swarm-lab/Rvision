@@ -150,7 +150,11 @@ write.Image <- function(x, file) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  x$write(file)
+  if (x$write(file)) {
+    message("Image saved successfully.")
+  } else {
+    stop("The image could not be saved.")
+  }
 }
 
 
