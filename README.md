@@ -40,7 +40,7 @@ Before installing `Rvision`, you will need to install the latest version of the
 `devtools` package in `R`.You can install `devtools` as follows: 
 
 ```r
-install.package("devtools")
+install.packages("devtools")
 ```
 
 ### 2.2 - Installing `Rvision`
