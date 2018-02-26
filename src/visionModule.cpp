@@ -207,7 +207,7 @@ RCPP_MODULE(methods_Draw) {
     _["pt2_x"], _["pt2_y"], _["color"], _["thickness"]), "");
   function("_drawArrows", &_drawArrows, List::create(_["image"], _["pt1_x"], _["pt1_y"],
     _["pt2_x"], _["pt2_y"], _["tip_length"], _["color"], _["thickness"]), "");
-  function("_drawText", &_drawText, List::create(_["image"], _["text"], _["x"], _["y"],
+  function("_drawTexts", &_drawTexts, List::create(_["image"], _["text"], _["x"], _["y"],
     _["font_face"], _["font_scale"], _["color"], _["thickness"], _["bl_orig"]), "");
 }
 

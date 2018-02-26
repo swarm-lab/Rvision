@@ -37,6 +37,9 @@
 #' # TODO
 #' @export
 drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness = 1) {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
   l <- lengths(list(pt1_x, pt1_y, pt2_x, pt2_y))
   if (length(unique(l)) != 1)
     stop("pt1_x, pt1_y, pt2_x and pt2_y must have the same length.")
@@ -84,6 +87,9 @@ drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thic
 #' # TODO
 #' @export
 drawCircle <- function(image, x, y, radius, color = "red", thickness = 1) {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
   l <- lengths(list(x, y))
   if (length(unique(l)) != 1)
     stop("x and y must have the same length.")
@@ -144,6 +150,9 @@ drawCircle <- function(image, x, y, radius, color = "red", thickness = 1) {
 #' @export
 drawEllipse <- function(image, x, y, axis1, axis2, angle, start_angle = 0,
                         end_angle = 360, color = "red", thickness = 1) {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
   l <- lengths(list(x, y))
   if (length(unique(l)) != 1)
     stop("x and y must have the same length.")
@@ -197,6 +206,9 @@ drawEllipse <- function(image, x, y, axis1, axis2, angle, start_angle = 0,
 #' # TODO
 #' @export
 drawLine <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness = 1) {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
   l <- lengths(list(pt1_x, pt1_y, pt2_x, pt2_y))
   if (length(unique(l)) != 1)
     stop("pt1_x, pt1_y, pt2_x and pt2_y must have the same length.")
@@ -251,6 +263,9 @@ drawLine <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness
 #' @export
 drawArrow <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
                       color = "red", thickness = 1) {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
   l <- lengths(list(pt1_x, pt1_y, pt2_x, pt2_y))
   if (length(unique(l)) != 1)
     stop("pt1_x, pt1_y, pt2_x and pt2_y must have the same length.")
@@ -311,19 +326,30 @@ drawArrow <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
 #' @export
 drawText <- function(image, text, x, y, font_face = "simplex", font_scale = 1,
                      italic = FALSE, color = "red", thickness = 1, bl_orig = TRUE) {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
+  font_test <- font_face %in% c("simplex", "plain", "duplex", "complex", "triplex",
+                          "complex_small", "script_simplex", "script_complex")
+  if (any(!font_test))
+    stop(paste0("Unsupported font types were detected (",
+                paste0(font_face[!font_test], collapse = ", "), ")."))
+
+  l <- lengths(list(text, x, y))
+  if (length(unique(l)) != 1)
+    stop("text, x and y must have the same length.")
+
   y <- -y + nrow(image)
-  `_drawText`(image, text, x, y,
-              switch(font_face,
-                     "simplex" = 0,
-                     "plain" = 1,
-                     "duplex" = 2,
-                     "complex" = 3,
-                     "triplex" = 4,
-                     "complex_small" = 5,
-                     "script_simplex" = 6,
-                     "script_complex" = 7,
-                     stop("This is not a valid font.")) + italic * 16,
-              font_scale, as.vector(col2rgb(color))[3:1], thickness, !bl_orig)
+  `_drawTexts`(image, text,
+              x - 1, y,
+              match(rep_len(font_face, l[1]),
+                    c("simplex", "plain", "duplex", "complex", "triplex",
+                      "complex_small", "script_simplex", "script_complex")
+                    ) - 1 + rep_len(italic, l[1]) * 16,
+              rep_len(font_scale, l[1]),
+              as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+              rep_len(thickness, l[1]),
+              rep_len(!bl_orig, l[1]))
 }
 
 

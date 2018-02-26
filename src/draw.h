@@ -58,13 +58,19 @@ void _drawArrows(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1
   }
 }
 
-void _drawText(Image image, std::string text, double x, double y, int font_face,
-               double font_scale, Rcpp::IntegerVector color, int thickness, bool bl_orig) {
-  cv::Scalar col(3);
-  for (int i = 0; i < 3; i++) {
-    col(i) = color(i);
+void _drawTexts(Image image, Rcpp::StringVector text, Rcpp::NumericVector x,
+                Rcpp::NumericVector y, Rcpp::IntegerVector font_face,
+                Rcpp::NumericVector font_scale, Rcpp::IntegerMatrix color,
+                Rcpp::IntegerVector thickness, Rcpp::LogicalVector bl_orig) {
+  for (int i = 0; i < x.size(); i++) {
+    cv::putText(image.image,
+                (std::string)text(i),
+                cv::Point(x(i), y(i)),
+                font_face(i),
+                font_scale(i),
+                cv::Scalar(color(0, i), color(1, i), color(2, i)),
+                thickness(i),
+                8, bl_orig(i));
   }
-
-  cv::putText(image.image, text, cv::Point(x, y), font_face, font_scale, col,
-              thickness, 8, bl_orig);
 }
+
