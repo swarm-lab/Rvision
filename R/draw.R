@@ -1,29 +1,30 @@
-#' @title Draw a Rectangle on an \code{\link{Image}}
+#' @title Draw Rectangles on an \code{\link{Image}}
 #'
-#' @description \code{drawRectangle} draws a rectangle over an \code{\link{Image}}
+#' @description \code{drawRectangle} draws rectangles over an \code{\link{Image}}
 #'  object. This operation is destructive: it changes irreversibly the
 #'  \code{\link{Image}} object and cannot be undone.
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param pt1_x A numeric value representing the x coordinate of a corner of the
-#'  rectangle.
+#' @param pt1_x A numeric value or vector representing the x coordinates of a
+#'  corner of each rectangle.
 #'
-#' @param pt1_y A numeric value representing the y coordinate of a corner of the
-#'  rectangle.
+#' @param pt1_y A numeric value or vector representing the y coordinates of a
+#'  corner of each rectangle.
 #'
-#' @param pt2_x A numeric value representing the x coordinate of the corner
-#'  opposite to pt1.
+#' @param pt2_x A numeric value or vector representing the x coordinates of the
+#'  corners opposite to pt1.
 #'
-#' @param pt2_y A numeric value representing the y coordinate of the corner
-#'  opposite to pt1.
+#' @param pt2_y A numeric value or vector representing the y coordinates of the
+#'  corners opposite to pt1.
 #'
-#' @param color Any kind of R color specification compatible with
-#'  \code{\link{col2rgb}} representing the color of the rectangle outline
+#' @param color A value or vector of any kind of R color specification compatible
+#'  with \code{\link{col2rgb}} representing the color of each rectangle's outline
 #'  (default: "red").
 #'
-#' @param thickness A numeric value representing the thickness in pixels of the
-#'  rectangle outline (default: 1). If negative, then a filled rectangle is drawn.
+#' @param thickness A numeric value or vector representing the thickness in
+#'  pixels of each rectangle's outline (default: 1). If negative, then a filled
+#'  rectangle is drawn.
 #'
 #' @return This function does not return anything. It modifies \code{image} in
 #'  place.
@@ -36,34 +37,41 @@
 #' # TODO
 #' @export
 drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness = 1) {
-  pt1_y <- -pt1_y + nrow(image)
-  pt2_y <- -pt2_y + nrow(image)
-  `_drawRectangle`(image, pt1_x, pt1_y, pt2_x, pt2_y, as.vector(col2rgb(color))[3:1], thickness)
+  l <- lengths(list(pt1_x, pt1_y, pt2_x, pt2_y))
+  if (length(unique(l)) != 1)
+    stop("pt1_x, pt1_y, pt2_x and pt2_y must have the same length.")
+
+  `_drawRectangles`(image,
+                    pt1_x - 1, -pt1_y + nrow(image),
+                    pt2_x - 1, -pt2_y + nrow(image),
+                    as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+                    rep_len(thickness, l[1]))
 }
 
 
-#' @title Draw a Circle on an \code{\link{Image}}
+#' @title Draw Circles on an \code{\link{Image}}
 #'
-#' @description \code{drawCirlc} draws a circle over an \code{\link{Image}}
+#' @description \code{drawCirlc} draws circles over an \code{\link{Image}}
 #'  object. This operation is destructive: it changes irreversibly the
 #'  \code{\link{Image}} object and cannot be undone.
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param x A numeric value representing the x coordinate of the center of the
-#'  circle.
+#' @param x A numeric value or vector representing the x coordinates of the
+#'  centers of each circle.
 #'
-#' @param y A numeric value representing the y coordinate of the center of the
-#'  circle.
+#' @param y A numeric value or vector representing the y coordinates of the
+#'  centers of each circle.
 #'
-#' @param radius A numeric value representing the radius of the circle.
+#' @param radius A numeric value or vector representing the radii of each circle.
 #'
-#' @param color Any kind of R color specification compatible with
-#'  \code{\link{col2rgb}} representing the color of the circle outline
+#' @param color A value or vector of any kind of R color specification compatible
+#'  with \code{\link{col2rgb}} representing the color of each circle's outline
 #'  (default: "red").
 #'
-#' @param thickness A numeric value representing the thickness in pixels of the
-#'  rectangle outline (default: 1). If negative, then a filled circle is drawn.
+#' @param thickness A numeric value or vector representing the thickness in
+#'  pixels of each circle's outline (default: 1). If negative, then a filled
+#'  rectangle is drawn.
 #'
 #' @return This function does not return anything. It modifies \code{image} in
 #'  place.
@@ -76,46 +84,53 @@ drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thic
 #' # TODO
 #' @export
 drawCircle <- function(image, x, y, radius, color = "red", thickness = 1) {
-  y <- -y + nrow(image)
-  `_drawCircle`(image, x, y, radius, as.vector(col2rgb(color))[3:1], thickness)
+  l <- lengths(list(x, y))
+  if (length(unique(l)) != 1)
+    stop("x and y must have the same length.")
+
+  `_drawCircles`(image, x - 1, -y + nrow(image),
+                 rep_len(radius, l[1]),
+                 as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+                 rep_len(thickness, l[1]))
 }
 
 
-#' @title Draw an Ellipse on an \code{\link{Image}}
+#' @title Draw Ellipses on an \code{\link{Image}}
 #'
-#' @description \code{drawEllipse} draws an ellipse (or part of) over an
+#' @description \code{drawEllipse} draws ellipses (or part of) over an
 #'  \code{\link{Image}} object. This operation is destructive: it changes
 #'  irreversibly the \code{\link{Image}} object and cannot be undone.
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param x A numeric value representing the x coordinate of the center of the
-#'  ellipse.
+#' @param x A numeric value or vector representing the x coordinates of the
+#'  centers of each ellipse
 #'
-#' @param y A numeric value representing the y coordinate of the center of the
-#'  ellipse.
+#' @param y A numeric value or vector representing the y coordinates of the
+#'  centers of each ellipse
 #'
-#' @param axis1 A numeric value representing the half-length of the first axis
-#'  of the ellipse.
+#' @param axis1 A numeric value or vector representing the half-length of the
+#'  first axis of each ellipse.
 #'
-#' @param axis2 A numeric value representing the half-length of the second axis
-#'  of the ellipse.
+#' @param axis2 A numeric value or vector representing the half-length of the
+#'  second axis of each ellipse.
 #'
-#' @param angle A numeric value representing the angle in degrees between
-#'  \code{axis1} and the horizontal.
+#' @param angle A numeric value or vector representing the angle in degrees
+#'  between \code{axis1} and the horizontal.
 #'
-#' @param start_angle A numeric value representing the start angle in degrees of
-#'  the elliptic arc (default: 0).
+#' @param start_angle A numeric value or vector representing the start angle in
+#'  degrees of each elliptic arc (default: 0).
 #'
-#' @param end_angle A numeric value representing the end angle in degrees of
-#'  the elliptic arc (default: 360).
+#' @param end_angle A numeric value or vector representing the end angle in
+#'  degrees of each elliptic arc (default: 360).
 #'
-#' @param color Any kind of R color specification compatible with
-#'  \code{\link{col2rgb}} representing the color of the rectangle outline
+#' @param color A value or vector of any kind of R color specification compatible
+#'  with \code{\link{col2rgb}} representing the color of each ellipse's outline
 #'  (default: "red").
 #'
-#' @param thickness A numeric value representing the thickness in pixels of the
-#'  rectangle outline (default: 1). If negative, then a filled ellipse is drawn.
+#' @param thickness A numeric value or vector representing the thickness in
+#'  pixels of each ellipse's outline (default: 1). If negative, then a filled
+#'  ellipse is drawn.
 #'
 #' @return This function does not return anything. It modifies \code{image} in
 #'  place.
@@ -129,38 +144,47 @@ drawCircle <- function(image, x, y, radius, color = "red", thickness = 1) {
 #' @export
 drawEllipse <- function(image, x, y, axis1, axis2, angle, start_angle = 0,
                         end_angle = 360, color = "red", thickness = 1) {
-  y <- -y + nrow(image)
-  angle <- -angle
-  `_drawEllipse`(image, x, y, axis1, axis2, angle, start_angle, end_angle,
-                 as.vector(col2rgb(color))[3:1], thickness)
+  l <- lengths(list(x, y))
+  if (length(unique(l)) != 1)
+    stop("x and y must have the same length.")
+
+  `_drawEllipses`(image, x - 1, -y + nrow(image),
+                  rep_len(axis1, l[1]),
+                  rep_len(axis2, l[1]),
+                  rep_len(-angle, l[1]),
+                  rep_len(start_angle, l[1]),
+                  rep_len(end_angle, l[1]),
+                  as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+                  rep_len(thickness, l[1]))
 }
 
 
-#' @title Draw a Line on an \code{\link{Image}}
+#' @title Draw Lines on an \code{\link{Image}}
 #'
-#' @description \code{drawLine} draws a line over an \code{\link{Image}} object.
+#' @description \code{drawLine} draws lines over an \code{\link{Image}} object.
 #'  This operation is destructive: it changes irreversibly the \code{\link{Image}}
 #'  object and cannot be undone.
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param pt1_x A numeric value representing the x coordinate of the first point
-#'  of the line.
+#' @param pt1_x A numeric value or vector representing the x coordinates of the
+#'  first end of each line.
 #'
-#' @param pt1_y A numeric value representing the y coordinate of the first point
-#'  of the line.
+#' @param pt1_y A numeric value or vector representing the y coordinates of the
+#'  first end of each line.
 #'
-#' @param pt2_x A numeric value representing the x coordinate of the second point
-#'  of the line.
+#' @param pt2_x A numeric value or vector representing the x coordinates of the
+#'  second end of each line.
 #'
-#' @param pt2_y A numeric value representing the y coordinate of the second point
-#'  of the line.
+#' @param pt2_y A numeric value or vector representing the y coordinates of the
+#'  second end of each line.
 #'
-#' @param color Any kind of R color specification compatible with
-#'  \code{\link{col2rgb}} representing the color of the line (default: "red").
+#' @param color A value or vector of any kind of R color specification compatible
+#'  with \code{\link{col2rgb}} representing the color of each line (default:
+#'  "red").
 #'
-#' @param thickness A numeric value representing the thickness in pixels of the
-#'  line (default: 1).
+#' @param thickness A numeric value or vector representing the thickness in
+#'  pixels of each line (default: 1).
 #'
 #' @return This function does not return anything. It modifies \code{image} in
 #'  place.
@@ -173,40 +197,47 @@ drawEllipse <- function(image, x, y, axis1, axis2, angle, start_angle = 0,
 #' # TODO
 #' @export
 drawLine <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness = 1) {
-  pt1_y <- -pt1_y + nrow(image)
-  pt2_y <- -pt2_y + nrow(image)
-  `_drawLine`(image, pt1_x, pt1_y, pt2_x, pt2_y, as.vector(col2rgb(color))[3:1], thickness)
+  l <- lengths(list(pt1_x, pt1_y, pt2_x, pt2_y))
+  if (length(unique(l)) != 1)
+    stop("pt1_x, pt1_y, pt2_x and pt2_y must have the same length.")
+
+  `_drawLines`(image,
+              pt1_x - 1, -pt1_y + nrow(image),
+              pt2_x - 1, -pt2_y + nrow(image),
+              as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+              rep_len(thickness, l[1]))
 }
 
 
-#' @title Draw an Arrow on an \code{\link{Image}}
+#' @title Draw Arrows on an \code{\link{Image}}
 #'
-#' @description \code{drawArrow} draws an arrow segment from the first point to
+#' @description \code{drawArrow} draws arrow segments from the first point to
 #'  the second over an \code{\link{Image}} object. This operation is destructive:
 #'  it changes irreversibly the \code{\link{Image}} object and cannot be undone.
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param pt1_x A numeric value representing the x coordinate of the first point
-#'  of the arrow.
+#' @param pt1_x A numeric value or vector representing the x coordinates of the
+#'  first end of each arrow.
 #'
-#' @param pt1_y A numeric value representing the y coordinate of the first point
-#'  of the arrow.
+#' @param pt1_y A numeric value or vector representing the y coordinates of the
+#'  first end of each arrow.
 #'
-#' @param pt2_x A numeric value representing the x coordinate of the second point
-#'  of the arrow.
+#' @param pt2_x A numeric value or vector representing the x coordinates of the
+#'  second end of each arrow.
 #'
-#' @param pt2_y A numeric value representing the y coordinate of the second point
-#'  of the arrow.
+#' @param pt2_y A numeric value or vector representing the y coordinates of the
+#'  second end of each arrow.
 #'
-#' @param tip_length A numeric value representing the length of the arrow tip in
-#'  relation to the arrow length (default: 0.1).
+#' @param tip_length A numeric value or vector representing the length of each
+#'  arrow's tip as a fraction of each arrow's length (default: 0.1).
 #'
-#' @param color Any kind of R color specification compatible with
-#'  \code{\link{col2rgb}} representing the color of the line (default: "red").
+#' @param color A value or vector of any kind of R color specification compatible
+#'  with \code{\link{col2rgb}} representing the color of each arrow (default:
+#'  "red").
 #'
-#' @param thickness A numeric value representing the thickness in pixels of the
-#'  line (default: 1).
+#' @param thickness A numeric value or vector representing the thickness in
+#'  pixels of each arrow (default: 1).
 #'
 #' @return This function does not return anything. It modifies \code{image} in
 #'  place.
@@ -220,9 +251,16 @@ drawLine <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness
 #' @export
 drawArrow <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
                       color = "red", thickness = 1) {
-  pt1_y <- -pt1_y + nrow(image)
-  pt2_y <- -pt2_y + nrow(image)
-  `_drawArrow`(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length, as.vector(col2rgb(color))[3:1], thickness)
+  l <- lengths(list(pt1_x, pt1_y, pt2_x, pt2_y))
+  if (length(unique(l)) != 1)
+    stop("pt1_x, pt1_y, pt2_x and pt2_y must have the same length.")
+
+  `_drawArrows`(image,
+                pt1_x - 1, -pt1_y + nrow(image),
+                pt2_x - 1, -pt2_y + nrow(image),
+                rep_len(tip_length, l[1]),
+                as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+                rep_len(thickness, l[1]))
 }
 
 

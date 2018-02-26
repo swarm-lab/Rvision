@@ -2,7 +2,7 @@
 % Please edit documentation in R/draw.R
 \name{drawRectangle}
 \alias{drawRectangle}
-\title{Draw a Rectangle on an \code{\link{Image}}}
+\title{Draw Rectangles on an \code{\link{Image}}}
 \usage{
 drawRectangle(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red",
   thickness = 1)
@@ -10,31 +10,32 @@ drawRectangle(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red",
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{pt1_x}{A numeric value representing the x coordinate of a corner of the
-rectangle.}
+\item{pt1_x}{A numeric value or vector representing the x coordinates of a
+corner of each rectangle.}
 
-\item{pt1_y}{A numeric value representing the y coordinate of a corner of the
-rectangle.}
+\item{pt1_y}{A numeric value or vector representing the y coordinates of a
+corner of each rectangle.}
 
-\item{pt2_x}{A numeric value representing the x coordinate of the corner
-opposite to pt1.}
+\item{pt2_x}{A numeric value or vector representing the x coordinates of the
+corners opposite to pt1.}
 
-\item{pt2_y}{A numeric value representing the y coordinate of the corner
-opposite to pt1.}
+\item{pt2_y}{A numeric value or vector representing the y coordinates of the
+corners opposite to pt1.}
 
-\item{color}{Any kind of R color specification compatible with
-\code{\link{col2rgb}} representing the color of the rectangle outline
+\item{color}{A value or vector of any kind of R color specification compatible
+with \code{\link{col2rgb}} representing the color of each rectangle's outline
 (default: "red").}
 
-\item{thickness}{A numeric value representing the thickness in pixels of the
-rectangle outline (default: 1). If negative, then a filled rectangle is drawn.}
+\item{thickness}{A numeric value or vector representing the thickness in
+pixels of each rectangle's outline (default: 1). If negative, then a filled
+rectangle is drawn.}
 }
 \value{
 This function does not return anything. It modifies \code{image} in
  place.
 }
 \description{
-\code{drawRectangle} draws a rectangle over an \code{\link{Image}}
+\code{drawRectangle} draws rectangles over an \code{\link{Image}}
  object. This operation is destructive: it changes irreversibly the
  \code{\link{Image}} object and cannot be undone.
 }

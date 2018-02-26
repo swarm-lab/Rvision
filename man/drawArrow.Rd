@@ -2,7 +2,7 @@
 % Please edit documentation in R/draw.R
 \name{drawArrow}
 \alias{drawArrow}
-\title{Draw an Arrow on an \code{\link{Image}}}
+\title{Draw Arrows on an \code{\link{Image}}}
 \usage{
 drawArrow(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
   color = "red", thickness = 1)
@@ -10,33 +10,34 @@ drawArrow(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{pt1_x}{A numeric value representing the x coordinate of the first point
-of the arrow.}
+\item{pt1_x}{A numeric value or vector representing the x coordinates of the
+first end of each arrow.}
 
-\item{pt1_y}{A numeric value representing the y coordinate of the first point
-of the arrow.}
+\item{pt1_y}{A numeric value or vector representing the y coordinates of the
+first end of each arrow.}
 
-\item{pt2_x}{A numeric value representing the x coordinate of the second point
-of the arrow.}
+\item{pt2_x}{A numeric value or vector representing the x coordinates of the
+second end of each arrow.}
 
-\item{pt2_y}{A numeric value representing the y coordinate of the second point
-of the arrow.}
+\item{pt2_y}{A numeric value or vector representing the y coordinates of the
+second end of each arrow.}
 
-\item{tip_length}{A numeric value representing the length of the arrow tip in
-relation to the arrow length (default: 0.1).}
+\item{tip_length}{A numeric value or vector representing the length of each
+arrow's tip as a fraction of each arrow's length (default: 0.1).}
 
-\item{color}{Any kind of R color specification compatible with
-\code{\link{col2rgb}} representing the color of the line (default: "red").}
+\item{color}{A value or vector of any kind of R color specification compatible
+with \code{\link{col2rgb}} representing the color of each arrow (default:
+"red").}
 
-\item{thickness}{A numeric value representing the thickness in pixels of the
-line (default: 1).}
+\item{thickness}{A numeric value or vector representing the thickness in
+pixels of each arrow (default: 1).}
 }
 \value{
 This function does not return anything. It modifies \code{image} in
  place.
 }
 \description{
-\code{drawArrow} draws an arrow segment from the first point to
+\code{drawArrow} draws arrow segments from the first point to
  the second over an \code{\link{Image}} object. This operation is destructive:
  it changes irreversibly the \code{\link{Image}} object and cannot be undone.
 }

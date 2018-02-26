@@ -196,16 +196,16 @@ RCPP_MODULE(methods_Display) {
 
 #include "draw.h"
 RCPP_MODULE(methods_Draw) {
-  function("_drawRectangle", &_drawRectangle, List::create(_["image"], _["pt1_x"],
+  function("_drawRectangles", &_drawRectangles, List::create(_["image"], _["pt1_x"],
     _["pt1_y"], _["pt2_x"], _["pt2_y"], _["color"], _["thickness"]), "");
-  function("_drawCircle", &_drawCircle, List::create(_["image"], _["x"], _["y"],
+  function("_drawCircles", &_drawCircles, List::create(_["image"], _["x"], _["y"],
     _["radius"], _["color"], _["thickness"]), "");
-  function("_drawEllipse", &_drawEllipse, List::create(_["image"], _["x"], _["y"],
+  function("_drawEllipses", &_drawEllipses, List::create(_["image"], _["x"], _["y"],
     _["axis1"], _["axis2"], _["angle"], _["start_angle"], _["end_angle"],
     _["color"], _["thickness"]), "");
-  function("_drawLine", &_drawLine, List::create(_["image"], _["pt1_x"], _["pt1_y"],
+  function("_drawLines", &_drawLines, List::create(_["image"], _["pt1_x"], _["pt1_y"],
     _["pt2_x"], _["pt2_y"], _["color"], _["thickness"]), "");
-  function("_drawArrow", &_drawArrow, List::create(_["image"], _["pt1_x"], _["pt1_y"],
+  function("_drawArrows", &_drawArrows, List::create(_["image"], _["pt1_x"], _["pt1_y"],
     _["pt2_x"], _["pt2_y"], _["tip_length"], _["color"], _["thickness"]), "");
   function("_drawText", &_drawText, List::create(_["image"], _["text"], _["x"], _["y"],
     _["font_face"], _["font_scale"], _["color"], _["thickness"], _["bl_orig"]), "");
