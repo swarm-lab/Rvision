@@ -93,7 +93,7 @@ std::string Video::codec() {
     char    c[5];
     int     i;
   } fourcc;
-  fourcc.i = this->video.get(CV_CAP_PROP_FOURCC);
+  fourcc.i = this->video.get(cv::CAP_PROP_FOURCC);
   fourcc.c[4] = '\0';
   return fourcc.c;
 }
@@ -106,13 +106,13 @@ Image Video::readNext() {
 }
 
 Image Video::readFrame(int frameId) {
-  if (frameId > this->video.get(CV_CAP_PROP_FRAME_COUNT)) {
+  if (frameId > this->video.get(cv::CAP_PROP_FRAME_COUNT)) {
     throw std::range_error("The requested frame does not exist. Try with a lower frame number.");
   }
 
   cv::Mat outputFrame;
 
-  this->video.set(CV_CAP_PROP_POS_FRAMES, frameId - 1);
+  this->video.set(cv::CAP_PROP_POS_FRAMES, frameId - 1);
   this->video.read(outputFrame);
 
   return Image(outputFrame);

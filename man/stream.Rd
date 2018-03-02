@@ -2,7 +2,7 @@
 % Please edit documentation in R/StreamClass.R
 \name{stream}
 \alias{stream}
-\title{Create an object of class \code{Stream}}
+\title{Create an Object of Class \code{Stream}}
 \usage{
 stream(...)
 }

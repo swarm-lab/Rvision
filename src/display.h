@@ -11,14 +11,13 @@ void _display(Image image, std::string window_name, int delay, int height, int w
     cv::resize(screen, screen, cv::Size(width, height));
   }
 
-  /* Uncomment once cv::getWindowImageRect is included in stable release of OpenCV
+  cv::imshow(window_name, screen);
+
   cv::Rect window = cv::getWindowImageRect(window_name);
   if ((window.height != height) || (window.width != width)) {
     cv::resizeWindow(window_name, width, height);
-  }*/
+  }
 
-  cv::resizeWindow(window_name, width, height); // Remove once cv::getWindowImageRect is included in stable release of OpenCV
-  cv::imshow(window_name, screen);
   cv::waitKey(delay);
 }
 

@@ -82,6 +82,24 @@ RCPP_MODULE(class_Stream) {
   ;
 }
 
+#include "VideoWriter.h"
+RCPP_EXPOSED_CLASS(VideoWriter);
+RCPP_MODULE(class_VideoWriter) {
+
+  class_<VideoWriter>("VideoWriter")
+
+  .constructor()
+  .constructor<std::string, std::string, double, int, int, bool>()
+
+  .method("open", &VideoWriter::open)
+  .method("isOpened", &VideoWriter::isOpened)
+  .method("release", &VideoWriter::release)
+  .method("get", &VideoWriter::get)
+  .method("set", &VideoWriter::set)
+  .method("write", &VideoWriter::write)
+  ;
+}
+
 #include "arithmetic.h"
 RCPP_MODULE(methods_Arithmetic) {
 

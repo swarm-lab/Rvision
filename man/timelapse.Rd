@@ -2,7 +2,7 @@
 % Please edit documentation in R/StreamClass.R
 \name{timelapse}
 \alias{timelapse}
-\title{Make timelapse from \code{Stream} object}
+\title{Make Timelapse from \code{Stream} Object}
 \usage{
 timelapse(obj, outputFolder, interval = 1, duration = Inf, format = "png")
 }

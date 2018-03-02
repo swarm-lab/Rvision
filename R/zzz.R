@@ -11,6 +11,7 @@
 Rcpp::loadModule("class_Image", TRUE)
 Rcpp::loadModule("class_Video", TRUE)
 Rcpp::loadModule("class_Stream", TRUE)
+Rcpp::loadModule("class_VideoWriter", TRUE)
 Rcpp::loadModule("methods_Arithmetic", TRUE)
 Rcpp::loadModule("methods_Statistics", TRUE)
 Rcpp::loadModule("methods_Comparisons", TRUE)

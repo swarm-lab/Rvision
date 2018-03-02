@@ -1,4 +1,4 @@
-#' @title An S4 class containing an OpenCV stream
+#' @title An S4 Class Containing an OpenCV Stream
 #'
 #' @name Stream-class
 #'
@@ -14,7 +14,7 @@
 "Stream"
 
 
-#' @title Create an object of class \code{Stream}
+#' @title Create an Object of Class \code{Stream}
 #'
 #' @description Function for creating \code{\link{Stream}} objects from video
 #'  streams.
@@ -159,7 +159,7 @@ getProp.Rcpp_Stream <- function(obj, property) {
 }
 
 
-#' @title Make timelapse from \code{Stream} object
+#' @title Make Timelapse from \code{Stream} Object
 #'
 #' @description Generates a timelapse sequence from a \code{Stream} object with
 #'  a given duration and interval between images.

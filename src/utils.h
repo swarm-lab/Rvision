@@ -11,7 +11,7 @@ bool ImageConst2(SEXP* args, int nargs) {
 }
 
 int getPropId(std::string propId) {
-  int numPropId = 46;
+  int numPropId = 49;
 
   int enum_ints[] = {CV_CAP_PROP_DC1394_OFF, CV_CAP_PROP_DC1394_MODE_MANUAL,
                      CV_CAP_PROP_DC1394_MODE_AUTO, CV_CAP_PROP_DC1394_MODE_ONE_PUSH_AUTO,
@@ -29,7 +29,8 @@ int getPropId(std::string propId) {
                      CV_CAP_PROP_ISO_SPEED, CV_CAP_PROP_MAX_DC1394, CV_CAP_PROP_BACKLIGHT,
                      CV_CAP_PROP_PAN, CV_CAP_PROP_TILT, CV_CAP_PROP_ROLL, CV_CAP_PROP_IRIS,
                      CV_CAP_PROP_SETTINGS, CV_CAP_PROP_BUFFERSIZE, CV_CAP_PROP_AUTOFOCUS,
-                     CV_CAP_PROP_SAR_NUM, CV_CAP_PROP_SAR_DEN};
+                     CV_CAP_PROP_SAR_NUM, CV_CAP_PROP_SAR_DEN, cv::VIDEOWRITER_PROP_QUALITY,
+                     cv::VIDEOWRITER_PROP_FRAMEBYTES, cv::VIDEOWRITER_PROP_NSTRIPES};
 
   std::string enum_strings[] = {"DC1394_OFF", "DC1394_MODE_MANUAL", "DC1394_MODE_AUTO",
                                 "DC1394_MODE_ONE_PUSH_AUTO", "POS_MSEC", "POS_FRAMES",
@@ -42,7 +43,7 @@ int getPropId(std::string propId) {
                                 "WHITE_BALANCE_RED_V", "ZOOM", "FOCUS", "GUID",
                                 "ISO_SPEED", "MAX_DC1394", "BACKLIGHT", "PAN", "TILT",
                                 "ROLL", "IRIS", "SETTINGS", "BUFFERSIZE", "AUTOFOCUS",
-                                "SAR_NUM", "SAR_DEN"};
+                                "SAR_NUM", "SAR_DEN", "QUALITY", "FRAMEBYTES", "NSTRIPES"};
 
   for(int i = 0; i < numPropId; i++) {
     if(propId == enum_strings[i]) return enum_ints[i];

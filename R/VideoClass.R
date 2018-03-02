@@ -197,7 +197,6 @@ codec <- function(x) {
 }
 
 
-
 #' @export
 #' @rdname release
 release.Rcpp_Video <- function(obj) {
@@ -252,7 +251,6 @@ readNext.Rcpp_Video <- function(obj) {
 }
 
 
-
 #' @rdname setProp
 #' @export
 setProp.Rcpp_Video <- function(obj, property, value) {
@@ -261,6 +259,7 @@ setProp.Rcpp_Video <- function(obj, property, value) {
 
   tryCatch({obj$set(property, value); TRUE}, finally = FALSE)
 }
+
 
 #' @export
 #' @rdname setProp
