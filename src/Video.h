@@ -26,9 +26,7 @@ Video::Video(std::string inputFile) {
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
 
-  this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)));
-
-  if (!this->video.isOpened()) {
+  if (!this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)))) {
     throw std::range_error("Could not open the video.");
   }
 }
@@ -37,9 +35,7 @@ bool Video::open(std::string inputFile) {
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
 
-  this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)));
-
-  if (!this->video.isOpened()) {
+  if (!this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)))) {
     throw std::range_error("Could not open the video.");
   } else {
     return true;

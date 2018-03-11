@@ -20,17 +20,13 @@ Stream::Stream() {
 }
 
 Stream::Stream(int index) {
-  this->stream.open(index);
-
-  if (!this->stream.isOpened()) {
+  if (!this->stream.open(index)) {
     throw std::range_error("Could not open the stream.");
   }
 }
 
 bool Stream::open(int index) {
-  this->stream.open(index);
-
-  if (!this->stream.isOpened()) {
+  if (!this->stream.open(index)) {
     throw std::range_error("Could not open the stream.");
   } else {
     return true;
