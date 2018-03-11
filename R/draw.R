@@ -319,7 +319,7 @@ drawArrow <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}
+#' @seealso \code{\link{Image}}, \code{\link{getTextSize}}
 #'
 #' @examples
 #' # TODO
@@ -353,6 +353,34 @@ drawText <- function(image, text, x, y, font_face = "simplex", font_scale = 1,
 }
 
 
+#' @title Calculate the Height and Width of a Text String
+#'
+#' @description \code{getTextSize} calculates the size of a box that contains
+#'  the specified text string, the tight box surrounding it, and the baseline.
+#'
+#' @param text A character string representing the text to be drawn.
+#'
+#' @param font_face A character string representing the font type of the text
+#'  (default: "simplex"). See notes for a list of available font types.
+#'
+#' @param font_scale A numeric value representing the scale factor by which the
+#'  font-specific base size is multiplied (default: 1).
+#'
+#' @param italic A logical specifying whether the text should italicized
+#'  (default: FALSE).
+#'
+#' @param thickness A numeric value representing the thickness in pixels of the
+#'  line (default: 1).
+#'
+#' @return A two-element vector corresponding to the height and width of the
+#'  text string.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{drawText}}
+#'
+#' @examples
+#' # TODO
 #' @export
 getTextSize <- function(text, font_face = "simplex", font_scale = 1,
                           italic = FALSE, thickness = 1) {
