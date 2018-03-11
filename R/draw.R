@@ -214,10 +214,10 @@ drawLine <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness
     stop("pt1_x, pt1_y, pt2_x and pt2_y must have the same length.")
 
   `_drawLines`(image,
-              pt1_x - 1, -pt1_y + nrow(image),
-              pt2_x - 1, -pt2_y + nrow(image),
-              as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
-              rep_len(thickness, l[1]))
+               pt1_x - 1, -pt1_y + nrow(image),
+               pt2_x - 1, -pt2_y + nrow(image),
+               as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+               rep_len(thickness, l[1]))
 }
 
 
@@ -330,7 +330,7 @@ drawText <- function(image, text, x, y, font_face = "simplex", font_scale = 1,
     stop("image is not an 'Image' object.")
 
   font_test <- font_face %in% c("simplex", "plain", "duplex", "complex", "triplex",
-                          "complex_small", "script_simplex", "script_complex")
+                                "complex_small", "script_simplex", "script_complex")
   if (any(!font_test))
     stop(paste0("Unsupported font types were detected (",
                 paste0(font_face[!font_test], collapse = ", "), ")."))
@@ -341,18 +341,27 @@ drawText <- function(image, text, x, y, font_face = "simplex", font_scale = 1,
 
   y <- -y + nrow(image)
   `_drawTexts`(image, text,
-              x - 1, y,
-              match(rep_len(font_face, l[1]),
-                    c("simplex", "plain", "duplex", "complex", "triplex",
-                      "complex_small", "script_simplex", "script_complex")
-                    ) - 1 + rep_len(italic, l[1]) * 16,
-              rep_len(font_scale, l[1]),
-              as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
-              rep_len(thickness, l[1]),
-              rep_len(!bl_orig, l[1]))
+               x - 1, y,
+               match(rep_len(font_face, l[1]),
+                     c("simplex", "plain", "duplex", "complex", "triplex",
+                       "complex_small", "script_simplex", "script_complex")
+               ) - 1 + rep_len(italic, l[1]) * 16,
+               rep_len(font_scale, l[1]),
+               as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+               rep_len(thickness, l[1]),
+               rep_len(!bl_orig, l[1]))
 }
 
 
+#' @export
+getTextSize <- function(text, font_face = "simplex", font_scale = 1,
+                          italic = FALSE, thickness = 1) {
+  `_getTextSize`(text, match(
+    font_face,
+    c("simplex", "plain", "duplex", "complex", "triplex",
+      "complex_small", "script_simplex", "script_complex")
+  ) - 1 + italic * 16, font_scale, thickness)
+}
 
 
 

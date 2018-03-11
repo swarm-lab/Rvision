@@ -74,3 +74,9 @@ void _drawTexts(Image image, Rcpp::StringVector text, Rcpp::NumericVector x,
   }
 }
 
+Rcpp::NumericVector _getTextSize(std::string text, int font_face, double font_scale,
+                                 int thickness) {
+  cv::Size text_size = cv::getTextSize(text, font_face, font_scale, thickness, 0);
+  return(Rcpp::NumericVector::create(text_size.height, text_size.width));
+}
+
