@@ -42,7 +42,7 @@ RCPP_MODULE(class_Video) {
   class_<Video>("Video")
 
   .constructor()
-  .constructor<std::string>()
+  .constructor<std::string, std::string>()
 
   .method("open", &Video::open)
   .method("isOpened", &Video::isOpened)
@@ -68,7 +68,7 @@ RCPP_MODULE(class_Stream) {
   class_<Stream>("Stream")
 
   .constructor()
-  .constructor<int>()
+  .constructor<int, std::string>()
 
   .method("open", &Stream::open)
   .method("isOpened", &Stream::isOpened)
@@ -89,7 +89,7 @@ RCPP_MODULE(class_VideoWriter) {
   class_<VideoWriter>("VideoWriter")
 
   .constructor()
-  .constructor<std::string, std::string, double, int, int, bool>()
+  .constructor<std::string, std::string, double, int, int, bool, std::string>()
 
   .method("open", &VideoWriter::open)
   .method("isOpened", &VideoWriter::isOpened)
@@ -227,6 +227,8 @@ RCPP_MODULE(methods_Draw) {
     _["pt2_x"], _["pt2_y"], _["tip_length"], _["color"], _["thickness"]), "");
   function("_drawTexts", &_drawTexts, List::create(_["image"], _["text"], _["x"], _["y"],
     _["font_face"], _["font_scale"], _["color"], _["thickness"], _["bl_orig"]), "");
+  function("_getTextSize", &_getTextSize, List::create(_["text"], _["font_face"],
+    _["font_scale"], _["thickness"]), "");
 }
 
 #include "geometry.h"

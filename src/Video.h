@@ -1,8 +1,8 @@
 class Video {
 public:
   Video();
-  Video(std::string filename);
-  bool open(std::string filename);
+  Video(std::string filename, std::string api);
+  bool open(std::string filename, std::string api);
   bool isOpened();
   void release();
   Image readNext();
@@ -22,20 +22,20 @@ Video::Video() {
 
 }
 
-Video::Video(std::string inputFile) {
+Video::Video(std::string inputFile, std::string api) {
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
 
-  if (!this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)))) {
+  if (!this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)), getAPIId(api))) {
     throw std::range_error("Could not open the video.");
   }
 }
 
-bool Video::open(std::string inputFile) {
+bool Video::open(std::string inputFile, std::string api) {
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
 
-  if (!this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)))) {
+  if (!this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)), getAPIId(api))) {
     throw std::range_error("Could not open the video.");
   } else {
     return true;

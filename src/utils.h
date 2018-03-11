@@ -103,3 +103,25 @@ int str2type(std::string str) {
 
   throw std::range_error("Unknown image type.");
 }
+
+int getAPIId(std::string APIId) {
+  int numAPIId = 30;
+
+  int enum_ints[] = {0, 200, 200, 200, 300, 300, 300, 300, 300, 500, 600, 700,
+                     800, 900, 910, 1100, 1200, 1300, 1400, 1410, 1500,
+                     1600, 1610, 1700, 1800, 1900, 2000, 2100, 2200, 2300};
+
+  std::string enum_strings[] = {"ANY", "VFW", "V4L", "V4L2", "FIREWIRE", "FIREWARE",
+                                "IEEE1394", "DC1394", "CMU1394", "QT", "UNICAP",
+                                "DSHOW", "PVAPI", "OPENNI", "OPENNI_ASUS",
+                                "XIAPI", "AVFOUNDATION", "GIGANETIX", "MSMF", "WINRT",
+                                "INTELPERC", "OPENNI2", "OPENNI2_ASUS", "GPHOTO2",
+                                "GSTREAMER", "FFMPEG", "IMAGES", "ARAVIS",
+                                "OPENCV_MJPEG", "INTEL_MFX"};
+
+  for(int i = 0; i < numAPIId; i++) {
+    if(APIId == enum_strings[i]) return enum_ints[i];
+  }
+
+  throw std::range_error("Unknown property.");
+}

@@ -20,12 +20,42 @@
 #' @description Function for creating \code{\link{Video}} objects from video
 #'  files.
 #'
-#' @param ... \code{video} takes one argument that is a character string
-#'  indicating the path to the video file. A \code{Video} object can also be
-#'  created without any argument, in which case it is empty and can be populated
-#'  with a video later.
+#' @param filename An character string corresponding to the path to a video file.
+#'
+#' @param api A character string corresponding to the API to use for reading the
+#'  video from the file (see Note; default: "ANY").
 #'
 #' @return A \code{\link{Video}} object.
+#'
+#' @note Hereafter is a list of all supported APIs. Note that not all APIs will
+#'  be available on your computer (actually most of them will not be).
+#'  \itemize{
+#'   \item{"ANY": }{automatically select an API.}
+#'   \item{"VFW": }{Video For Windows.}
+#'   \item{"V4L", "V4L2": }{Video For Linux.}
+#'   \item{"FIREWIRE", "FIREWARE", "IEEE1394", "DC1394", "CMU1394": }{IEEE 1394 drivers.}
+#'   \item{"QT": }{Quicktime.}
+#'   \item{"UNICAP": }{Unicap drivers.}
+#'   \item{"DSHOW": }{DirectShow.}
+#'   \item{"PVAPI": }{PvAPI, Prosilica GigE SDK.}
+#'   \item{"OPENNI": }{OpenNI (for Kinect).}
+#'   \item{"OPENNI_ASUS": }{OpenNI (for Asus Xtion).}
+#'   \item{"XIAPI": }{XIMEA Camera API.}
+#'   \item{"AVFOUNDATION": }{AVFoundation framework for iOS and OSX > Lion.}
+#'   \item{"GIGANETIX": }{Smartek Giganetix GigEVisionSDK.}
+#'   \item{"MSMF": }{Microsoft Media Foundation.}
+#'   \item{"WINRT": }{Microsoft Windows Runtime using Media Foundation.}
+#'   \item{"INTELPERC": }{Intel Perceptual Computing SDK.}
+#'   \item{"OPENNI2": }{OpenNI2 (for Kinect).}
+#'   \item{"OPENNI2_ASUS": }{OpenNI2 (for Asus Xtion and Occipital Structure sensors).}
+#'   \item{"GPHOTO2": }{gPhoto2 connection.}
+#'   \item{"GSTREAMER": }{GStreamer.}
+#'   \item{"FFMPEG": }{FFMPEG library.}
+#'   \item{"IMAGES": }{OpenCV Image Sequence.}
+#'   \item{"ARAVIS": }{Aravis SDK.}
+#'   \item{"OPENCV_MJPEG": }{Built-in OpenCV MotionJPEG codec.}
+#'   \item{"INTEL_MFX": }{Intel MediaSDK.}
+#'  }
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -33,8 +63,8 @@
 #' # TODO
 #'
 #' @export
-video <- function(...) {
-  new(Video, ...)
+video <- function(filename, api = "ANY") {
+  new(Video, filename = filename, api = api)
 }
 
 
