@@ -35,12 +35,12 @@ An \code{\link{Image}} object.
 \note{
 The following interpolation methods are supported:
  \itemize{
-  \item{"nearest":}{nearest neighbor interpolation.}
-  \item{"linear"}{bilinear interpolation.}
-  \item{"cubic"}{bicubic interpolation.}
-  \item{"area"}{resampling using pixel area relation.}
-  \item{"Lanczos"}{Lanczos interpolation over 8x8 neighborhood.}
-  \item{"exact"}{bit exact bilinear interpolation}
+  \item{"nearest": }{nearest neighbor interpolation.}
+  \item{"linear": }{bilinear interpolation.}
+  \item{"cubic": }{bicubic interpolation.}
+  \item{"area": }{resampling using pixel area relation.}
+  \item{"Lanczos": }{Lanczos interpolation over 8x8 neighborhood.}
+  \item{"exact": }{bit exact bilinear interpolation.}
  }
 }
 \examples{
