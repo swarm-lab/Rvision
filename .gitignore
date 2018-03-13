@@ -6,4 +6,4 @@ src/*.o
 src/*.so
 src/*.dll
 scripts
-vignettes/rsconnect
+vignettes/old
