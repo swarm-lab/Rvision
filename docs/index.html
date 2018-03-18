@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Basic Computer Vision Library • Rvision</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Basic Computer Vision Library">
@@ -20,7 +20,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-vignette">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -42,18 +42,6 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/old/Rvision-vignette.html">`Rvision` - a basic (for now) computer vision library for R</a>
-    </li>
-  </ul>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -65,51 +53,47 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
-    <div id="rvision" class="section level1">
+  <div class="col-md-9">
+    
+
+    
+    
+<div class="contents">
+<div id="rvision" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#rvision" class="anchor"></a>Rvision</h1></div>
-<p><code>swarm-lab</code> badges: <a href="https://travis-ci.org/swarm-lab/Rvision"><img src="https://travis-ci.org/swarm-lab/Rvision.svg?branch=master" alt="Travis build status"></a> <a href="https://ci.appveyor.com/project/swarm-lab/Rvision"><img src="https://ci.appveyor.com/api/projects/status/github/swarm-lab/Rvision?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></p>
-<p><code>muschellij2</code> badges: <a href="https://travis-ci.org/muschellij2/Rvision"><img src="https://travis-ci.org/muschellij2/Rvision.svg?branch=master" alt="Travis build status"></a> <a href="https://ci.appveyor.com/project/muschellij2/Rvision"><img src="https://ci.appveyor.com/api/projects/status/github/muschellij2/Rvision?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></p>
-<p><strong>Not ready for production. Try at your own risks.</strong></p>
-<hr>
-<ul>
-<li><a href="#1---package-description">1 - Package description</a></li>
-<li><a href="#2---package-installation">2 - Package installation</a></li>
-<li><a href="#21---Before-installing">2.1 - Before installing</a></li>
-<li><a href="#22---installing-rvision">2.2 - Installing <code>Rvision</code></a></li>
-<li><a href="#3---faq">3. FAQ</a></li>
-</ul>
-<hr>
-<div id="package-description" class="section level2">
+
+<div id="description" class="section level2">
 <h2 class="hasAnchor">
-<a href="#package-description" class="anchor"></a>1 - Package description</h2>
-<p>This package uses the <a href="http://opencv.org/"><code>OpenCV</code> library</a> to provide R users with functions to read and manipulate video and image files, as well as camera streams.</p>
-<p>Read the <a href="#3---faq">FAQ</a> below for more info about the what, why, and how of <code>Rvision</code>.</p>
+<a href="#description" class="anchor"></a>Description</h2>
+<p><a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> is a - small but growing - computer vision library for <a href="https://cran.r-project.org"><code>R</code></a>. It is based on the powerful <a href="http://opencv.org/"><code>OpenCV</code></a> library for C/C++, the state-of-the-art for computer vision in the open source world.</p>
+<p>The ultimate goal of <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> is to provide <a href="https://cran.r-project.org"><code>R</code></a> users with all the necessary functions to read and manipulate images, videos and camera streams, with an emphasis on speed (thanks to <a href="http://opencv.org/"><code>OpenCV</code></a>). In this respect, it is different from all the other image manipulations packages for <a href="https://cran.r-project.org"><code>R</code></a> that either can not quickly and directly access frames from videos or camera streams or are limited in their processing speed and/or volume.</p>
 <hr>
 </div>
-<div id="package-installation" class="section level2">
+<div id="quick-start-guides" class="section level2">
 <h2 class="hasAnchor">
-<a href="#package-installation" class="anchor"></a>2 - Package installation</h2>
-<div id="before-installing" class="section level3">
-<h3 class="hasAnchor">
-<a href="#before-installing" class="anchor"></a>2.1 - Before installing</h3>
-<p>Before installing <code>Rvision</code>, you will need to install the latest version of the <code>devtools</code> package in <code>R</code>.You can install <code>devtools</code> as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</code></pre></div>
-</div>
-<div id="installing-rvision" class="section level3">
-<h3 class="hasAnchor">
-<a href="#installing-rvision" class="anchor"></a>2.2 - Installing <code>Rvision</code>
-</h3>
-<p>You can install <code>Rvision</code> as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"swarm-lab/Rvision"</span>)</code></pre></div>
-<p><code>Rvision</code> depends on <code>ROpenCVLite</code> to access <code>OpenCV</code>’s functionalities. If not already installed, <code>ROpenCVLite</code> will be installed first by the above command line. This may take some time as it will download, compile and install <code>OpenCV</code> for you (compilation time will depend on your computer). I suggest going out for a cup of tea or coffee while <code>ROpenCVLite</code> is installing ;-)</p>
+<a href="#quick-start-guides" class="anchor"></a>Quick start guides</h2>
+<ol style="list-style-type: decimal">
+<li><a href="/Rvision/articles/install.html">Installation instructions</a></li>
+<li><a href="/Rvision/articles/io.html">Input/output operations</a></li>
+<li><a href="/Rvision/articles/basics.html">Basic operations</a></li>
+<li><a href="/Rvision/articles/videos.html">Advanced operations on videos</a></li>
+<li><a href="/Rvision/articles/streams.html">Advanced operations on streams</a></li>
+<li>
+<a href="/Rvision/articles/images.html">Advanced operations on images</a>
+<ol style="list-style-type: lower-alpha">
+<li><a href="/Rvision/articles/images/drawing.html">Drawing operations</a></li>
+<li><a href="/Rvision/articles/images/arithmetic.html">Arithmetic operations</a></li>
+<li><a href="/Rvision/articles/images/morpho.html">Morphological operations</a></li>
+<li><a href="/Rvision/articles/images/filter.html">Filtering operations</a></li>
+</ol>
+</li>
+</ol>
 <hr>
-</div>
 </div>
 <div id="faq" class="section level2">
 <h2 class="hasAnchor">
-<a href="#faq" class="anchor"></a>3 - FAQ</h2>
+<a href="#faq" class="anchor"></a>FAQ</h2>
 <div id="can-i-take-pictures-of-my-cat-using-rvision" class="section level3">
 <h3 class="hasAnchor">
 <a href="#can-i-take-pictures-of-my-cat-using-rvision" class="anchor"></a>Can I take pictures of my cat using <code>Rvision</code>?</h3>
@@ -123,7 +107,7 @@ my_pet_pic &lt;-<span class="st"> </span><span class="kw"><a href="reference/rea
 <div id="can-i-take-selfies-with-my-webcam-using-rvision" class="section level3">
 <h3 class="hasAnchor">
 <a href="#can-i-take-selfies-with-my-webcam-using-rvision" class="anchor"></a>Can I take selfies with my webcam using <code>Rvision</code>?</h3>
-<p>You certainly can, but you should ask yourself whether you should…</p>
+<p>You certainly can, but ask yourself first whether you should…</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_stream &lt;-<span class="st"> </span><span class="kw"><a href="reference/stream.html">stream</a></span>(<span class="dv">0</span>)   <span class="co"># 0 will start your default webcam in general. </span>
 my_selfie &lt;-<span class="st"> </span><span class="kw"><a href="reference/readNext.html">readNext</a></span>(my_stream)
 <span class="kw">plot</span>(my_selfie)
@@ -133,22 +117,31 @@ my_selfie &lt;-<span class="st"> </span><span class="kw"><a href="reference/read
 </div>
 </div>
 </div>
+</div>
   </div>
 
-  <div class="col-md-3" id="sidebar">
-    <h2>License</h2>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2 class="hasAnchor">
+<a href="#sidebar" class="anchor"></a>License</h2>
 <p><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Simon Garnier <br><small class="roles"> Author, maintainer </small>  </li>
+<li>
+<a href="http://www.theswarmlab.com">Simon Garnier</a> <br><small class="roles"> Author, maintainer </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.org/swarm-lab/Rvision"><img src="https://travis-ci.org/swarm-lab/Rvision.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/swarm-lab/Rvision"><img src="https://ci.appveyor.com/api/projects/status/github/swarm-lab/Rvision?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+</ul>
 </div>
+
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Simon Garnier.</p>
+  <p>Developed by <a href="http://www.theswarmlab.com">Simon Garnier</a>.</p>
 </div>
 
 <div class="pkgdown">
