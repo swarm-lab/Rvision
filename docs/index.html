@@ -29,8 +29,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Rvision</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="index.html">Rvision</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -42,8 +46,30 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/install.html">1 - Installing Rvision</a>
+    </li>
+    <li>
+      <a href="articles/io.html">2 - Input/output operations</a>
+    </li>
+  </ul>
+</li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/swarm-lab/Rvision">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -59,9 +85,9 @@
     
     
 <div class="contents">
-<div id="rvision" class="section level1">
+<div id="rvision---a-computer-vision-library-for-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#rvision" class="anchor"></a>Rvision</h1></div>
+<a href="#rvision---a-computer-vision-library-for-r" class="anchor"></a>Rvision - A computer vision library for R</h1></div>
 
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
@@ -73,47 +99,35 @@
 <div id="quick-start-guides" class="section level2">
 <h2 class="hasAnchor">
 <a href="#quick-start-guides" class="anchor"></a>Quick start guides</h2>
-<ol style="list-style-type: decimal">
-<li><a href="/Rvision/articles/install.html">Installation instructions</a></li>
-<li><a href="/Rvision/articles/io.html">Input/output operations</a></li>
-<li><a href="/Rvision/articles/basics.html">Basic operations</a></li>
-<li><a href="/Rvision/articles/videos.html">Advanced operations on videos</a></li>
-<li><a href="/Rvision/articles/streams.html">Advanced operations on streams</a></li>
-<li>
-<a href="/Rvision/articles/images.html">Advanced operations on images</a>
-<ol style="list-style-type: lower-alpha">
-<li><a href="/Rvision/articles/images/drawing.html">Drawing operations</a></li>
-<li><a href="/Rvision/articles/images/arithmetic.html">Arithmetic operations</a></li>
-<li><a href="/Rvision/articles/images/morpho.html">Morphological operations</a></li>
-<li><a href="/Rvision/articles/images/filter.html">Filtering operations</a></li>
-</ol>
+<ul>
+<li><a href="/Rvision/articles/install.html">1 - Installation instructions</a></li>
+<li><a href="/Rvision/articles/io.html">2 - Input/output operations</a></li>
+<li>3 - Basic operations [TODO]</li>
+<li>4 - Advanced operations on videos [TODO]</li>
+<li>5 - Advanced operations on streams [TODO]</li>
+<li>6 - Advanced operations on images [TODO]
+<ul>
+<li>6.1 - Drawing operations [TODO]</li>
+<li>6.2 - Arithmetic operations [TODO]</li>
+<li>6.3 - Morphological operations [TODO]</li>
+<li>6.4 - Filtering operations [TODO]</li>
+</ul>
 </li>
-</ol>
+</ul>
 <hr>
 </div>
 <div id="faq" class="section level2">
 <h2 class="hasAnchor">
 <a href="#faq" class="anchor"></a>FAQ</h2>
-<div id="can-i-take-pictures-of-my-cat-using-rvision" class="section level3">
-<h3 class="hasAnchor">
-<a href="#can-i-take-pictures-of-my-cat-using-rvision" class="anchor"></a>Can I take pictures of my cat using <code>Rvision</code>?</h3>
-<p>Heck yeah! You can AND you should! You can even take pictures of your dog if you are that kind of degenerate person :-)</p>
-<p>After placing your favorite pet in front of the webcam, just do:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_stream &lt;-<span class="st"> </span><span class="kw"><a href="reference/stream.html">stream</a></span>(<span class="dv">0</span>)   <span class="co"># 0 will start your default webcam in general. </span>
-my_pet_pic &lt;-<span class="st"> </span><span class="kw"><a href="reference/readNext.html">readNext</a></span>(my_stream)
-<span class="kw">plot</span>(my_pet_pic)
-<span class="kw"><a href="reference/release.html">release</a></span>(my_stream)</code></pre></div>
-</div>
 <div id="can-i-take-selfies-with-my-webcam-using-rvision" class="section level3">
 <h3 class="hasAnchor">
-<a href="#can-i-take-selfies-with-my-webcam-using-rvision" class="anchor"></a>Can I take selfies with my webcam using <code>Rvision</code>?</h3>
+<a href="#can-i-take-selfies-with-my-webcam-using-rvision" class="anchor"></a>Can I take selfies with my webcam using <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a>?</h3>
 <p>You certainly can, but ask yourself first whether you should…</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_stream &lt;-<span class="st"> </span><span class="kw"><a href="reference/stream.html">stream</a></span>(<span class="dv">0</span>)   <span class="co"># 0 will start your default webcam in general. </span>
 my_selfie &lt;-<span class="st"> </span><span class="kw"><a href="reference/readNext.html">readNext</a></span>(my_stream)
 <span class="kw">plot</span>(my_selfie)
 <span class="kw"><a href="reference/release.html">release</a></span>(my_stream)</code></pre></div>
 <p>Be careful, this will trigger the explosion of your camera if it detects that you are making a duck face ;-)</p>
-<hr>
 </div>
 </div>
 </div>
@@ -121,20 +135,37 @@ my_selfie &lt;-<span class="st"> </span><span class="kw"><a href="reference/read
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2 class="hasAnchor">
-<a href="#sidebar" class="anchor"></a>License</h2>
-<p><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></p>
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://github.com/swarm-lab/Rvision">https://​github.com/​swarm-lab/​Rvision</a>
+</li>
+<li>Report a bug at <br><a href="https://github.com/swarm-lab/Rvision/issues">https://​github.com/​swarm-lab/​Rvision/​issues</a>
+</li>
+</ul>
+</div>
+<div class="license">
+<h2>License</h2>
+<ul class="list-unstyled">
+<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+</ul>
+</div>
+<div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>
 <a href="http://www.theswarmlab.com">Simon Garnier</a> <br><small class="roles"> Author, maintainer </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
+</div>
+
+      <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/swarm-lab/Rvision"><img src="https://travis-ci.org/swarm-lab/Rvision.svg?branch=master" alt="Travis-CI Build Status"></a></li>
 <li><a href="https://ci.appveyor.com/project/swarm-lab/Rvision"><img src="https://ci.appveyor.com/api/projects/status/github/swarm-lab/Rvision?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
 </ul>
+</div>
 </div>
 
 </div>

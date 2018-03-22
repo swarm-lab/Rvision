@@ -1,12 +1,8 @@
 pandoc: 1.19.2.1
 pkgdown: 0.1.0.9000
-pkgdown_sha: 17f683717d0a1547f13a08a259b34c58927452d6
+pkgdown_sha: e937c92cffd8afb0c98c67ff1a5450fe6419f09b
 articles:
-  Rvision-vignette.R: old/Rvision-vignette.R
-  Rvision-vignette.html: old/Rvision-vignette.html
+  install: install.html
+  io: io.html
   _Rvision-vignette: old/_Rvision-vignette.html
-  custom.css: old/custom.css
-  Document.dcf: old/rsconnect/documents/Rvision-vignette.Rmd/rpubs.com/rpubs/Document.dcf
-  Publish Document.dcf: old/rsconnect/documents/Rvision-vignette.Rmd/rpubs.com/rpubs/Publish
-    Document.dcf
 

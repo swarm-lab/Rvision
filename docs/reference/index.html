@@ -25,9 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
 <meta property="og:title" content="Function reference" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,8 +50,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">Rvision</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">Rvision</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -63,10 +67,30 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/install.html">1 - Installing Rvision</a>
+    </li>
+    <li>
+      <a href="../articles/io.html">2 - Input/output operations</a>
+    </li>
+  </ul>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/swarm-lab/Rvision">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -78,10 +102,7 @@
       <div class="row">
   <div class="col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.3</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
     <div class="contents">
@@ -138,397 +159,397 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="absdiff.html">absdiff</a></code> </p>
+            <p><code><a href="absdiff.html">absdiff()</a></code> </p>
           </td>
           <td><p>Absolute Difference Between Two Images</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="addWeighted.html">addWeighted</a></code> </p>
+            <p><code><a href="addWeighted.html">addWeighted()</a></code> </p>
           </td>
           <td><p>Weighted Sum of Two Images</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="as.array.Rcpp_Image.html">as.array</a></code> </p>
+            <p><code><a href="as.array.Rcpp_Image.html">as.array(<i>&lt;Rcpp_Image&gt;</i>)</a></code> </p>
           </td>
           <td><p>Convert Image to Array or Matrix</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="bilateralFilter.html">bilateralFilter</a></code> </p>
+            <p><code><a href="bilateralFilter.html">bilateralFilter()</a></code> </p>
           </td>
           <td><p>Edge-Preserving Noise Reduction with a Bilateral Filter</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="bitdepth.html">bitdepth</a></code> </p>
+            <p><code><a href="bitdepth.html">bitdepth()</a></code> </p>
           </td>
           <td><p>The Bit Depth of an Image</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="blur.html">blur</a></code> </p>
+            <p><code><a href="blur.html">blur()</a></code> </p>
           </td>
           <td><p>Blurs an Image Using a Normalized Box Filter</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="boxFilter.html">boxFilter</a></code> </p>
+            <p><code><a href="boxFilter.html">boxFilter()</a></code> </p>
           </td>
           <td><p>Blurs an Image Using a Box Filter</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="changeBitDepth.html">changeBitDepth</a></code> </p>
+            <p><code><a href="changeBitDepth.html">changeBitDepth()</a></code> </p>
           </td>
           <td><p>Convert image bit depth</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="changeColorSpace.html">changeColorSpace</a></code> </p>
+            <p><code><a href="changeColorSpace.html">changeColorSpace()</a></code> </p>
           </td>
           <td><p>Convert image between colorspaces</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="cloneImage.html">cloneImage</a></code> </p>
+            <p><code><a href="cloneImage.html">cloneImage()</a></code> </p>
           </td>
           <td><p>Make a copy of an Image object</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="codec.html">codec</a></code> </p>
+            <p><code><a href="codec.html">codec()</a></code> </p>
           </td>
           <td><p>Codec of a Video</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="colorspace.html">colorspace</a></code> </p>
+            <p><code><a href="colorspace.html">colorspace()</a></code> </p>
           </td>
           <td><p>The Color Space of an Image</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="destroyDisplay.html">destroyDisplay</a></code> <code><a href="destroyDisplay.html">destroyAllDisplays</a></code> </p>
+            <p><code><a href="destroyDisplay.html">destroyDisplay()</a></code> <code><a href="destroyDisplay.html">destroyAllDisplays()</a></code> </p>
           </td>
-          <td><p>Destroy <code><a href='reference/Image-class.html'>Image</a></code> Display</p></td>
+          <td><p>Destroy <code>Image</code> Display</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="dim.Rcpp_Image.html">dim</a></code> </p>
+            <p><code><a href="dim.Rcpp_Image.html">dim(<i>&lt;Rcpp_Image&gt;</i>)</a></code> </p>
           </td>
           <td><p>Dimensions of an Image</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="dim.Rcpp_Stream.html">dim</a></code> </p>
+            <p><code><a href="dim.Rcpp_Stream.html">dim(<i>&lt;Rcpp_Stream&gt;</i>)</a></code> </p>
           </td>
           <td><p>Dimensions of a Stream</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="dim.Rcpp_Video.html">dim</a></code> </p>
+            <p><code><a href="dim.Rcpp_Video.html">dim(<i>&lt;Rcpp_Video&gt;</i>)</a></code> </p>
           </td>
           <td><p>Dimensions of a Video</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="display.html">display</a></code> </p>
+            <p><code><a href="display.html">display()</a></code> </p>
           </td>
-          <td><p>Display <code><a href='reference/Image-class.html'>Image</a></code> Object</p></td>
+          <td><p>Display <code>Image</code> Object</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="drawArrow.html">drawArrow</a></code> </p>
+            <p><code><a href="drawArrow.html">drawArrow()</a></code> </p>
           </td>
-          <td><p>Draw Arrows on an <code><a href='reference/Image-class.html'>Image</a></code></p></td>
+          <td><p>Draw Arrows on an <code>Image</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="drawCircle.html">drawCircle</a></code> </p>
+            <p><code><a href="drawCircle.html">drawCircle()</a></code> </p>
           </td>
-          <td><p>Draw Circles on an <code><a href='reference/Image-class.html'>Image</a></code></p></td>
+          <td><p>Draw Circles on an <code>Image</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="drawEllipse.html">drawEllipse</a></code> </p>
+            <p><code><a href="drawEllipse.html">drawEllipse()</a></code> </p>
           </td>
-          <td><p>Draw Ellipses on an <code><a href='reference/Image-class.html'>Image</a></code></p></td>
+          <td><p>Draw Ellipses on an <code>Image</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="drawLine.html">drawLine</a></code> </p>
+            <p><code><a href="drawLine.html">drawLine()</a></code> </p>
           </td>
-          <td><p>Draw Lines on an <code><a href='reference/Image-class.html'>Image</a></code></p></td>
+          <td><p>Draw Lines on an <code>Image</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="drawRectangle.html">drawRectangle</a></code> </p>
+            <p><code><a href="drawRectangle.html">drawRectangle()</a></code> </p>
           </td>
-          <td><p>Draw Rectangles on an <code><a href='reference/Image-class.html'>Image</a></code></p></td>
+          <td><p>Draw Rectangles on an <code>Image</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="drawText.html">drawText</a></code> </p>
+            <p><code><a href="drawText.html">drawText()</a></code> </p>
           </td>
-          <td><p>Draw Text on an <code><a href='reference/Image-class.html'>Image</a></code></p></td>
+          <td><p>Draw Text on an <code>Image</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="farneback.html">farneback</a></code> </p>
+            <p><code><a href="farneback.html">farneback()</a></code> </p>
           </td>
           <td><p>Optical Flow Using Farneback's Algorithm</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="filter2D.html">filter2D</a></code> </p>
+            <p><code><a href="filter2D.html">filter2D()</a></code> </p>
           </td>
           <td><p>Image Convolution with Kernel</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="fps.html">fps</a></code> </p>
+            <p><code><a href="fps.html">fps()</a></code> </p>
           </td>
           <td><p>Framerate of a Video</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="frame.html">frame</a></code> </p>
+            <p><code><a href="frame.html">frame()</a></code> </p>
           </td>
           <td><p>Video Reader Position</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="gaussianBlur.html">gaussianBlur</a></code> </p>
+            <p><code><a href="gaussianBlur.html">gaussianBlur()</a></code> </p>
           </td>
           <td><p>Blurs an Image Using a Gaussian Filter</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="getTextSize.html">getTextSize</a></code> </p>
+            <p><code><a href="getTextSize.html">getTextSize()</a></code> </p>
           </td>
           <td><p>Calculate the Height and Width of a Text String</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="image.html">image</a></code> </p>
+            <p><code><a href="image.html">image()</a></code> </p>
           </td>
           <td><p>Create an Object of Class <code>Image</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="isBlob.html">isBlob</a></code> </p>
+            <p><code><a href="isBlob.html">isBlob()</a></code> </p>
           </td>
           <td><p>Test for a Blob Object</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="isImage.html">isImage</a></code> </p>
+            <p><code><a href="isImage.html">isImage()</a></code> </p>
           </td>
           <td><p>Test for an Image Object</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="isStream.html">isStream</a></code> </p>
+            <p><code><a href="isStream.html">isStream()</a></code> </p>
           </td>
           <td><p>Test for a Stream object</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="isVideo.html">isVideo</a></code> </p>
+            <p><code><a href="isVideo.html">isVideo()</a></code> </p>
           </td>
           <td><p>Test for a Video object</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="isVideoWriter.html">isVideoWriter</a></code> </p>
+            <p><code><a href="isVideoWriter.html">isVideoWriter()</a></code> </p>
           </td>
           <td><p>Test for a VideoWriter object</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="laplacian.html">laplacian</a></code> </p>
+            <p><code><a href="laplacian.html">laplacian()</a></code> </p>
           </td>
           <td><p>Calculates the Laplacian of an Image</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="medianBlur.html">medianBlur</a></code> </p>
+            <p><code><a href="medianBlur.html">medianBlur()</a></code> </p>
           </td>
           <td><p>Blurs an Image Using a Median Filter</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="merge.html">merge</a></code> </p>
+            <p><code><a href="merge.html">merge()</a></code> </p>
           </td>
           <td><p>Merge Separate Channels into an Image</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="morph.html">morph</a></code> </p>
+            <p><code><a href="morph.html">morph()</a></code> </p>
           </td>
           <td><p>Morphological Operations</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="newDisplay.html">newDisplay</a></code> </p>
+            <p><code><a href="newDisplay.html">newDisplay()</a></code> </p>
           </td>
-          <td><p>Open New <code><a href='reference/Image-class.html'>Image</a></code> Display</p></td>
+          <td><p>Open New <code>Image</code> Display</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="nrow.Rcpp_Image.html">nrow.Rcpp_Image</a></code> <code><a href="nrow.Rcpp_Image.html">ncol.Rcpp_Image</a></code> <code><a href="nrow.Rcpp_Image.html">nchan</a></code> </p>
+            <p><code><a href="nrow.Rcpp_Image.html">nrow.Rcpp_Image()</a></code> <code><a href="nrow.Rcpp_Image.html">ncol.Rcpp_Image()</a></code> <code><a href="nrow.Rcpp_Image.html">nchan()</a></code> </p>
           </td>
           <td><p>The Number of Rows/Columns/Channels of an Image</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="plot.Image.html">plot</a></code> </p>
+            <p><code><a href="plot.Image.html">plot(<i>&lt;Rcpp_Image&gt;</i>)</a></code> </p>
           </td>
           <td><p>Plot <span class="pkg">Rvision</span> Images</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="plot.OF_array.html">plot</a></code> </p>
+            <p><code><a href="plot.OF_array.html">plot(<i>&lt;OF_array&gt;</i>)</a></code> </p>
           </td>
           <td><p>Plot Optical Flow Arrays</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="plot.blob.html">plot</a></code> </p>
+            <p><code><a href="plot.blob.html">plot(<i>&lt;blob&gt;</i>)</a></code> </p>
           </td>
           <td><p>Plot Blobs</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="readFrame.html">readFrame</a></code> </p>
+            <p><code><a href="readFrame.html">readFrame()</a></code> </p>
           </td>
           <td><p>Read Specific Video Frame</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="readMulti.html">readMulti</a></code> </p>
+            <p><code><a href="readMulti.html">readMulti()</a></code> </p>
           </td>
           <td><p>Read a Multi-Page Image</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="readNext.html">readNext</a></code> </p>
+            <p><code><a href="readNext.html">readNext()</a></code> </p>
           </td>
           <td><p>Read Next of an Object Frame</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="release.html">release</a></code> </p>
+            <p><code><a href="release.html">release()</a></code> </p>
           </td>
           <td><p>Release Object from Memory</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="resize.html">resize</a></code> </p>
+            <p><code><a href="resize.html">resize()</a></code> </p>
           </td>
-          <td><p>Resize an <code><a href='reference/Image-class.html'>Image</a></code></p></td>
+          <td><p>Resize an <code>Image</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scharr.html">scharr</a></code> </p>
+            <p><code><a href="scharr.html">scharr()</a></code> </p>
           </td>
           <td><p>Calculates an Image Derivatives Using a Scharr Operator</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="sepFilter2D.html">sepFilter2D</a></code> </p>
+            <p><code><a href="sepFilter2D.html">sepFilter2D()</a></code> </p>
           </td>
           <td><p>Image Filtering with a Separable Linear Filter</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="setProp.html">setProp</a></code> <code><a href="setProp.html">getProp</a></code> </p>
+            <p><code><a href="setProp.html">setProp()</a></code> <code><a href="setProp.html">getProp()</a></code> </p>
           </td>
           <td><p>Set/Get Video Properties</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="simpleBlobDetector.html">simpleBlobDetector</a></code> </p>
+            <p><code><a href="simpleBlobDetector.html">simpleBlobDetector()</a></code> </p>
           </td>
           <td><p>Simple Blob Detector</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="sobel.html">sobel</a></code> </p>
+            <p><code><a href="sobel.html">sobel()</a></code> </p>
           </td>
           <td><p>Calculates an Image Derivatives Using an Extended Sobel Operator</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="spatialGradient.html">spatialGradient</a></code> </p>
+            <p><code><a href="spatialGradient.html">spatialGradient()</a></code> </p>
           </td>
           <td><p>First Order Derivatives of an Image with the Sobel Operator</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="split.html">split</a></code> </p>
+            <p><code><a href="split.html">split()</a></code> </p>
           </td>
           <td><p>Split an Image into Separate Channels</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="sqrBoxFilter.html">sqrBoxFilter</a></code> </p>
+            <p><code><a href="sqrBoxFilter.html">sqrBoxFilter()</a></code> </p>
           </td>
           <td><p>Blurs an Image Using a Square Box Filter</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="stream.html">stream</a></code> </p>
+            <p><code><a href="stream.html">stream()</a></code> </p>
           </td>
           <td><p>Create an Object of Class <code>Stream</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="stream_dimensions.html">nrow.Rcpp_Stream</a></code> <code><a href="stream_dimensions.html">ncol.Rcpp_Stream</a></code> </p>
+            <p><code><a href="stream_dimensions.html">nrow.Rcpp_Stream()</a></code> <code><a href="stream_dimensions.html">ncol.Rcpp_Stream()</a></code> </p>
           </td>
           <td><p>The Number of Rows/Columns of a Stream</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="sum.html">sum</a></code> </p>
+            <p><code><a href="sum.html">sum()</a></code> </p>
           </td>
           <td><p>Sum Generic for additional arguments</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="timelapse.html">timelapse</a></code> </p>
+            <p><code><a href="timelapse.html">timelapse()</a></code> </p>
           </td>
           <td><p>Make Timelapse from <code>Stream</code> Object</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="video.html">video</a></code> </p>
+            <p><code><a href="video.html">video()</a></code> </p>
           </td>
           <td><p>Create an Object of Class <code>Video</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="videoWriter.html">videoWriter</a></code> </p>
+            <p><code><a href="videoWriter.html">videoWriter()</a></code> </p>
           </td>
           <td><p>Create an object of class <code>VideoWriter</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="video_dimensions.html">nrow.Rcpp_Video</a></code> <code><a href="video_dimensions.html">ncol.Rcpp_Video</a></code> <code><a href="video_dimensions.html">nframes</a></code> </p>
+            <p><code><a href="video_dimensions.html">nrow.Rcpp_Video()</a></code> <code><a href="video_dimensions.html">ncol.Rcpp_Video()</a></code> <code><a href="video_dimensions.html">nframes()</a></code> </p>
           </td>
           <td><p>The Number of Rows/Columns/Frames of a Video</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="write.Image.html">write.Image</a></code> </p>
+            <p><code><a href="write.Image.html">write.Image()</a></code> </p>
           </td>
           <td><p>Image Output</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="writeFrame.html">writeFrame</a></code> </p>
+            <p><code><a href="writeFrame.html">writeFrame()</a></code> </p>
           </td>
           <td><p>Write Frame to Output Video</p></td>
         </tr>

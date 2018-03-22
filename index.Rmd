@@ -1,4 +1,4 @@
-# Rvision
+# Rvision - A computer vision library for R
 
 [![Travis-CI Build Status](https://travis-ci.org/swarm-lab/Rvision.svg?branch=master)](https://travis-ci.org/swarm-lab/Rvision)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/swarm-lab/Rvision?branch=master&svg=true)](https://ci.appveyor.com/project/swarm-lab/Rvision)
@@ -22,36 +22,22 @@ streams or are limited in their processing speed and/or volume.
 
 ## Quick start guides 
 
-1. [Installation instructions](/Rvision/articles/install.html)
-2. [Input/output operations](/Rvision/articles/io.html)
-3. [Basic operations](/Rvision/articles/basics.html)
-4. [Advanced operations on videos](/Rvision/articles/videos.html)
-5. [Advanced operations on streams](/Rvision/articles/streams.html)
-6. [Advanced operations on images](/Rvision/articles/images.html)
-    a. [Drawing operations](/Rvision/articles/images/drawing.html)
-    b. [Arithmetic operations](/Rvision/articles/images/arithmetic.html)
-    c. [Morphological operations](/Rvision/articles/images/morpho.html)
-    d. [Filtering operations](/Rvision/articles/images/filter.html)
++ [1 - Installation instructions](/Rvision/articles/install.html)
++ [2 - Input/output operations](/Rvision/articles/io.html)
++ 3 - Basic operations [TODO]
++ 4 - Advanced operations on videos [TODO]
++ 5 - Advanced operations on streams [TODO]
++ 6 - Advanced operations on images [TODO]
+    + 6.1 - Drawing operations [TODO]
+    + 6.2 - Arithmetic operations [TODO]
+    + 6.3 - Morphological operations [TODO]
+    + 6.4 - Filtering operations [TODO]
 
 --- 
 
 ## FAQ
 
-### Can I take pictures of my cat using `Rvision`? 
-
-Heck yeah! You can AND you should! You can even take pictures of your dog if 
-you are that kind of degenerate person :-)
-
-After placing your favorite pet in front of the webcam, just do:
-
-```r
-my_stream <- stream(0)   # 0 will start your default webcam in general. 
-my_pet_pic <- readNext(my_stream)
-plot(my_pet_pic)
-release(my_stream)
-```
-
-### Can I take selfies with my webcam using `Rvision`?
+### Can I take selfies with my webcam using [`Rvision`](https://github.com/swarm-lab/Rvision)?
 
 You certainly can, but ask yourself first whether you should...
 
@@ -64,5 +50,3 @@ release(my_stream)
 
 Be careful, this will trigger the explosion of your camera if it detects that 
 you are making a duck face ;-)
-
----
