@@ -24,8 +24,8 @@ streams or are limited in their processing speed and/or volume.
 
 ## Quick start guides 
 
-+ [1 - Installation instructions](/Rvision/articles/install.html)
-+ [2 - Input/output operations](/Rvision/articles/io.html)
++ [1 - Installation instructions](https://swarm-lab.github.io/Rvision/articles/install.html)
++ [2 - Input/output operations](https://swarm-lab.github.io/Rvision/articles/io.html)
 + 3 - Basic operations [TODO]
 + 4 - Advanced operations on videos [TODO]
 + 5 - Advanced operations on streams [TODO]
