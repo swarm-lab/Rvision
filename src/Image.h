@@ -418,7 +418,7 @@ Rcpp::List readMulti(std::string file) {
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
 
-  cv::imreadmulti(Rcpp::as<std::string>(pathExpand(file)), mats, cv::IMREAD_ANYCOLOR);
+  cv::imreadmulti(Rcpp::as<std::string>(pathExpand(file)), mats, cv::IMREAD_ANYCOLOR+cv::IMREAD_ANYDEPTH);
 
   Rcpp::List out(mats.size());
 
