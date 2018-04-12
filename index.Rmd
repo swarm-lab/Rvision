@@ -24,7 +24,7 @@ streams or are limited in their processing speed and/or volume.
 
 + [1 - Installation instructions](/Rvision/articles/install.html)
 + [2 - Input/output operations](/Rvision/articles/io.html)
-+ 3 - Basic operations [TODO]
++ [3 - Basic operations](/Rvision/articles/basic.html)
 + 4 - Advanced operations on videos [TODO]
 + 5 - Advanced operations on streams [TODO]
 + 6 - Advanced operations on images [TODO]

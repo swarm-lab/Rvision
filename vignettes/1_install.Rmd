@@ -18,17 +18,17 @@ All installation steps are described below.
 
 ---
 
-+ [1 - Before installing ](#before-installing)
-    + [1.1 - Devtools](#devtools)
-    + [1.2 - ROpenCVLite](#ropencvlite)
-+ [2 - Installing Rvision](#installing-rvision)
-+ [3 - Loading Rvision](#loading-rvision)
++ [1.1 - Before installing ](#before-installing)
+    + [1.1.1 - Devtools](#devtools)
+    + [1.1.2 - ROpenCVLite](#ropencvlite)
++ [1.2 - Installing Rvision](#installing-rvision)
++ [1.3 - Loading Rvision](#loading-rvision)
   
 ---
 
-## 1 - Before installing
+## 1.1 - Before installing
 
-### 1.1 - Devtools
+### 1.1.1 - Devtools
 
 Before installing [`Rvision`](https://github.com/swarm-lab/Rvision), you will 
 need to install the latest version of the [`devtools`](https://CRAN.R-project.org/package=devtools) 
@@ -40,7 +40,7 @@ if (!require(devtools))
   install.packages("devtools")
 ```
 
-### 1.2 - ROpenCVLite
+### 1.1.2 - ROpenCVLite
 
 You will also need to install the [`ROpenCVLite`](https://github.com/swarm-lab/ROpenCVLite)
 package from its [Github repository](https://github.com/swarm-lab/ROpenCVLite). 
@@ -59,17 +59,17 @@ system is missing one of the external dependencies required to compile
 
 ---
 
-## 2 - Installing Rvision
+## 1.2 - Installing Rvision
 
 You can install [`Rvision`](https://github.com/swarm-lab/Rvision) as follows:
 
 ```{r, message=FALSE}
-install_github("swarm-lab/Rvision")
+devtools::install_github("swarm-lab/Rvision")
 ```
 
 ---
 
-## 3 - Loading Rvision
+## 1.3 - Loading Rvision
 
 ```{r, message=FALSE}
 library(Rvision)

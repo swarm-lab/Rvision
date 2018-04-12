@@ -2,7 +2,8 @@ pandoc: 1.19.2.1
 pkgdown: 0.1.0.9000
 pkgdown_sha: e937c92cffd8afb0c98c67ff1a5450fe6419f09b
 articles:
-  install: install.html
-  io: io.html
+  1_install: 1_install.html
+  2_io: 2_io.html
+  3_basic: 3_basic.html
   _Rvision-vignette: old/_Rvision-vignette.html
 
