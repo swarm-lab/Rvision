@@ -3,7 +3,6 @@
 \name{nrow.Rcpp_Stream}
 \alias{nrow.Rcpp_Stream}
 \alias{ncol.Rcpp_Stream}
-\alias{ncol.Rcpp_Stream}
 \title{The Number of Rows/Columns of a Stream}
 \usage{
 nrow.Rcpp_Stream(x)

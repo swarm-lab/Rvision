@@ -101,6 +101,16 @@ setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),
            useAsDefault = function(x, ..., na.rm = FALSE) base::sum(x, ..., na.rm = na.rm),
            group = "Summary")
 
+#' @title Mean Generic for additional arguments
+#' @description Overloaded Mean to pass additional arguments
+#' @param x is an object of class \code{Rcpp_Image}.
+#' @param ... further arguments passed to summary methods
+#' @param na.rm logical: should missing values be removed?
+#' @export
+setGeneric("mean", function(x, ..., na.rm = FALSE) standardGeneric("mean"),
+           useAsDefault = function(x, ..., na.rm = FALSE) base::mean(x, ..., na.rm = na.rm),
+           group = "Summary")
+
 ### Define generic statistics methods ###
 methods::evalqOnLoad({
 

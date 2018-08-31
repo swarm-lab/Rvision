@@ -4,7 +4,8 @@
 \alias{timelapse}
 \title{Make Timelapse from \code{Stream} Object}
 \usage{
-timelapse(obj, outputFolder, interval = 1, duration = Inf, format = "png")
+timelapse(obj, outputFolder, interval = 1, duration = Inf,
+  format = "png")
 }
 \arguments{
 \item{obj}{The \code{Stream} object to use.}

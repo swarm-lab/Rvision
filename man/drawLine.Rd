@@ -4,7 +4,8 @@
 \alias{drawLine}
 \title{Draw Lines on an \code{\link{Image}}}
 \usage{
-drawLine(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness = 1)
+drawLine(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red",
+  thickness = 1)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

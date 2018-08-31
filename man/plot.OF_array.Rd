@@ -4,8 +4,8 @@
 \alias{plot.OF_array}
 \title{Plot Optical Flow Arrays}
 \usage{
-\method{plot}{OF_array}(x, gridsize = c(25, 25), thresh = 0, add = TRUE,
-  arrow.ex = 0.05, xpd = TRUE, ...)
+\method{plot}{OF_array}(x, gridsize = c(25, 25), thresh = 0,
+  add = TRUE, arrow.ex = 0.05, xpd = TRUE, ...)
 }
 \arguments{
 \item{x}{An object of class \code{OF_array}.}
