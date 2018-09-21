@@ -2,15 +2,17 @@
 % Please edit documentation in R/StreamClass.R
 \name{stream}
 \alias{stream}
-\title{Create an object of class \code{Stream}}
+\title{Create an Object of Class \code{Stream}}
 \usage{
-stream(...)
+stream(index = 0, api = "ANY")
 }
 \arguments{
-\item{...}{\code{stream} takes one argument that is a number indicating the
-index of the camera to use (0 is usually the default webcam on most
-computers). A \code{Stream} object can also be created without any argument,
-in which case it is empty and can be populated with a stream later.}
+\item{index}{An integer value corresponding to the index of the camera to
+read a stream from (default: 0; 0 is usually the default webcam on most
+computers).}
+
+\item{api}{A character string corresponding to the API to use for reading the
+stream from the camera (see Note; default: "ANY").}
 }
 \value{
 A \code{\link{Stream}} object.
@@ -18,6 +20,37 @@ A \code{\link{Stream}} object.
 \description{
 Function for creating \code{\link{Stream}} objects from video
  streams.
+}
+\note{
+Hereafter is a list of all supported APIs. Note that not all APIs will
+ be available on your computer (actually most of them will not be).
+ \itemize{
+  \item{"ANY": }{automatically select an API.}
+  \item{"VFW": }{Video For Windows.}
+  \item{"V4L", "V4L2": }{Video For Linux.}
+  \item{"FIREWIRE", "FIREWARE", "IEEE1394", "DC1394", "CMU1394": }{IEEE 1394 drivers.}
+  \item{"QT": }{Quicktime.}
+  \item{"UNICAP": }{Unicap drivers.}
+  \item{"DSHOW": }{DirectShow.}
+  \item{"PVAPI": }{PvAPI, Prosilica GigE SDK.}
+  \item{"OPENNI": }{OpenNI (for Kinect).}
+  \item{"OPENNI_ASUS": }{OpenNI (for Asus Xtion).}
+  \item{"XIAPI": }{XIMEA Camera API.}
+  \item{"AVFOUNDATION": }{AVFoundation framework for iOS and OSX > Lion.}
+  \item{"GIGANETIX": }{Smartek Giganetix GigEVisionSDK.}
+  \item{"MSMF": }{Microsoft Media Foundation.}
+  \item{"WINRT": }{Microsoft Windows Runtime using Media Foundation.}
+  \item{"INTELPERC": }{Intel Perceptual Computing SDK.}
+  \item{"OPENNI2": }{OpenNI2 (for Kinect).}
+  \item{"OPENNI2_ASUS": }{OpenNI2 (for Asus Xtion and Occipital Structure sensors).}
+  \item{"GPHOTO2": }{gPhoto2 connection.}
+  \item{"GSTREAMER": }{GStreamer.}
+  \item{"FFMPEG": }{FFMPEG library.}
+  \item{"IMAGES": }{OpenCV Image Sequence.}
+  \item{"ARAVIS": }{Aravis SDK.}
+  \item{"OPENCV_MJPEG": }{Built-in OpenCV MotionJPEG codec.}
+  \item{"INTEL_MFX": }{Intel MediaSDK.}
+ }
 }
 \examples{
 # TODO

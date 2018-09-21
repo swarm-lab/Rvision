@@ -50,7 +50,7 @@ This function does not return anything. It modifies \code{image} in
 # TODO
 }
 \seealso{
-\code{\link{Image}}
+\code{\link{Image}}, \code{\link{getTextSize}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

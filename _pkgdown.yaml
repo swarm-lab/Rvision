@@ -1,0 +1,7 @@
+template:
+  params:
+    bootswatch: yeti
+
+authors:
+  Simon Garnier:
+    href: http://www.theswarmlab.coms

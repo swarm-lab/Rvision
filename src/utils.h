@@ -11,7 +11,7 @@ bool ImageConst2(SEXP* args, int nargs) {
 }
 
 int getPropId(std::string propId) {
-  int numPropId = 46;
+  int numPropId = 49;
 
   int enum_ints[] = {CV_CAP_PROP_DC1394_OFF, CV_CAP_PROP_DC1394_MODE_MANUAL,
                      CV_CAP_PROP_DC1394_MODE_AUTO, CV_CAP_PROP_DC1394_MODE_ONE_PUSH_AUTO,
@@ -29,7 +29,8 @@ int getPropId(std::string propId) {
                      CV_CAP_PROP_ISO_SPEED, CV_CAP_PROP_MAX_DC1394, CV_CAP_PROP_BACKLIGHT,
                      CV_CAP_PROP_PAN, CV_CAP_PROP_TILT, CV_CAP_PROP_ROLL, CV_CAP_PROP_IRIS,
                      CV_CAP_PROP_SETTINGS, CV_CAP_PROP_BUFFERSIZE, CV_CAP_PROP_AUTOFOCUS,
-                     CV_CAP_PROP_SAR_NUM, CV_CAP_PROP_SAR_DEN};
+                     CV_CAP_PROP_SAR_NUM, CV_CAP_PROP_SAR_DEN, cv::VIDEOWRITER_PROP_QUALITY,
+                     cv::VIDEOWRITER_PROP_FRAMEBYTES, cv::VIDEOWRITER_PROP_NSTRIPES};
 
   std::string enum_strings[] = {"DC1394_OFF", "DC1394_MODE_MANUAL", "DC1394_MODE_AUTO",
                                 "DC1394_MODE_ONE_PUSH_AUTO", "POS_MSEC", "POS_FRAMES",
@@ -42,7 +43,7 @@ int getPropId(std::string propId) {
                                 "WHITE_BALANCE_RED_V", "ZOOM", "FOCUS", "GUID",
                                 "ISO_SPEED", "MAX_DC1394", "BACKLIGHT", "PAN", "TILT",
                                 "ROLL", "IRIS", "SETTINGS", "BUFFERSIZE", "AUTOFOCUS",
-                                "SAR_NUM", "SAR_DEN"};
+                                "SAR_NUM", "SAR_DEN", "QUALITY", "FRAMEBYTES", "NSTRIPES"};
 
   for(int i = 0; i < numPropId; i++) {
     if(propId == enum_strings[i]) return enum_ints[i];
@@ -101,4 +102,26 @@ int str2type(std::string str) {
   }
 
   throw std::range_error("Unknown image type.");
+}
+
+int getAPIId(std::string APIId) {
+  int numAPIId = 30;
+
+  int enum_ints[] = {0, 200, 200, 200, 300, 300, 300, 300, 300, 500, 600, 700,
+                     800, 900, 910, 1100, 1200, 1300, 1400, 1410, 1500,
+                     1600, 1610, 1700, 1800, 1900, 2000, 2100, 2200, 2300};
+
+  std::string enum_strings[] = {"ANY", "VFW", "V4L", "V4L2", "FIREWIRE", "FIREWARE",
+                                "IEEE1394", "DC1394", "CMU1394", "QT", "UNICAP",
+                                "DSHOW", "PVAPI", "OPENNI", "OPENNI_ASUS",
+                                "XIAPI", "AVFOUNDATION", "GIGANETIX", "MSMF", "WINRT",
+                                "INTELPERC", "OPENNI2", "OPENNI2_ASUS", "GPHOTO2",
+                                "GSTREAMER", "FFMPEG", "IMAGES", "ARAVIS",
+                                "OPENCV_MJPEG", "INTEL_MFX"};
+
+  for(int i = 0; i < numAPIId; i++) {
+    if(APIId == enum_strings[i]) return enum_ints[i];
+  }
+
+  throw std::range_error("Unknown property.");
 }

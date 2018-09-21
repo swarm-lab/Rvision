@@ -5,7 +5,7 @@
 \alias{Stream-class}
 \alias{Stream}
 \alias{Rcpp_Stream}
-\title{An S4 class containing an OpenCV stream}
+\title{An S4 Class Containing an OpenCV Stream}
 \format{An object of class \code{C++Class} of length 1.}
 \usage{
 Stream

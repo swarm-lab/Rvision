@@ -5,4 +5,4 @@ LICENSE
 scripts
 ^appveyor\.yml$
 ^\.travis\.yml$
-vignettes/rsconnect/
+vignettes/old

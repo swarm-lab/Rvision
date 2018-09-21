@@ -42,7 +42,7 @@ RCPP_MODULE(class_Video) {
   class_<Video>("Video")
 
   .constructor()
-  .constructor<std::string>()
+  .constructor<std::string, std::string>()
 
   .method("open", &Video::open)
   .method("isOpened", &Video::isOpened)
@@ -68,7 +68,7 @@ RCPP_MODULE(class_Stream) {
   class_<Stream>("Stream")
 
   .constructor()
-  .constructor<int>()
+  .constructor<int, std::string>()
 
   .method("open", &Stream::open)
   .method("isOpened", &Stream::isOpened)
@@ -79,6 +79,24 @@ RCPP_MODULE(class_Stream) {
   .method("nrow", &Stream::nrow)
   .method("ncol", &Stream::ncol)
   .method("readNext", &Stream::readNext)
+  ;
+}
+
+#include "VideoWriter.h"
+RCPP_EXPOSED_CLASS(VideoWriter);
+RCPP_MODULE(class_VideoWriter) {
+
+  class_<VideoWriter>("VideoWriter")
+
+  .constructor()
+  .constructor<std::string, std::string, double, int, int, bool, std::string>()
+
+  .method("open", &VideoWriter::open)
+  .method("isOpened", &VideoWriter::isOpened)
+  .method("release", &VideoWriter::release)
+  .method("get", &VideoWriter::get)
+  .method("set", &VideoWriter::set)
+  .method("write", &VideoWriter::write)
   ;
 }
 
@@ -196,19 +214,21 @@ RCPP_MODULE(methods_Display) {
 
 #include "draw.h"
 RCPP_MODULE(methods_Draw) {
-  function("_drawRectangle", &_drawRectangle, List::create(_["image"], _["pt1_x"],
+  function("_drawRectangles", &_drawRectangles, List::create(_["image"], _["pt1_x"],
     _["pt1_y"], _["pt2_x"], _["pt2_y"], _["color"], _["thickness"]), "");
-  function("_drawCircle", &_drawCircle, List::create(_["image"], _["x"], _["y"],
+  function("_drawCircles", &_drawCircles, List::create(_["image"], _["x"], _["y"],
     _["radius"], _["color"], _["thickness"]), "");
-  function("_drawEllipse", &_drawEllipse, List::create(_["image"], _["x"], _["y"],
+  function("_drawEllipses", &_drawEllipses, List::create(_["image"], _["x"], _["y"],
     _["axis1"], _["axis2"], _["angle"], _["start_angle"], _["end_angle"],
     _["color"], _["thickness"]), "");
-  function("_drawLine", &_drawLine, List::create(_["image"], _["pt1_x"], _["pt1_y"],
+  function("_drawLines", &_drawLines, List::create(_["image"], _["pt1_x"], _["pt1_y"],
     _["pt2_x"], _["pt2_y"], _["color"], _["thickness"]), "");
-  function("_drawArrow", &_drawArrow, List::create(_["image"], _["pt1_x"], _["pt1_y"],
+  function("_drawArrows", &_drawArrows, List::create(_["image"], _["pt1_x"], _["pt1_y"],
     _["pt2_x"], _["pt2_y"], _["tip_length"], _["color"], _["thickness"]), "");
-  function("_drawText", &_drawText, List::create(_["image"], _["text"], _["x"], _["y"],
+  function("_drawTexts", &_drawTexts, List::create(_["image"], _["text"], _["x"], _["y"],
     _["font_face"], _["font_scale"], _["color"], _["thickness"], _["bl_orig"]), "");
+  function("_getTextSize", &_getTextSize, List::create(_["text"], _["font_face"],
+    _["font_scale"], _["thickness"]), "");
 }
 
 #include "geometry.h"

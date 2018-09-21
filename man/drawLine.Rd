@@ -2,37 +2,39 @@
 % Please edit documentation in R/draw.R
 \name{drawLine}
 \alias{drawLine}
-\title{Draw a Line on an \code{\link{Image}}}
+\title{Draw Lines on an \code{\link{Image}}}
 \usage{
-drawLine(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness = 1)
+drawLine(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red",
+  thickness = 1)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{pt1_x}{A numeric value representing the x coordinate of the first point
-of the line.}
+\item{pt1_x}{A numeric value or vector representing the x coordinates of the
+first end of each line.}
 
-\item{pt1_y}{A numeric value representing the y coordinate of the first point
-of the line.}
+\item{pt1_y}{A numeric value or vector representing the y coordinates of the
+first end of each line.}
 
-\item{pt2_x}{A numeric value representing the x coordinate of the second point
-of the line.}
+\item{pt2_x}{A numeric value or vector representing the x coordinates of the
+second end of each line.}
 
-\item{pt2_y}{A numeric value representing the y coordinate of the second point
-of the line.}
+\item{pt2_y}{A numeric value or vector representing the y coordinates of the
+second end of each line.}
 
-\item{color}{Any kind of R color specification compatible with
-\code{\link{col2rgb}} representing the color of the line (default: "red").}
+\item{color}{A value or vector of any kind of R color specification compatible
+with \code{\link{col2rgb}} representing the color of each line (default:
+"red").}
 
-\item{thickness}{A numeric value representing the thickness in pixels of the
-line (default: 1).}
+\item{thickness}{A numeric value or vector representing the thickness in
+pixels of each line (default: 1).}
 }
 \value{
 This function does not return anything. It modifies \code{image} in
  place.
 }
 \description{
-\code{drawLine} draws a line over an \code{\link{Image}} object.
+\code{drawLine} draws lines over an \code{\link{Image}} object.
  This operation is destructive: it changes irreversibly the \code{\link{Image}}
  object and cannot be undone.
 }

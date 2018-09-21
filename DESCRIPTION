@@ -1,7 +1,7 @@
 Package: Rvision
 Type: Package
 Title: Basic Computer Vision Library
-Version: 0.2.5
+Version: 0.3
 Authors@R: c(
       person("Simon", "Garnier", email = "garnier@njit.edu", role = c("aut", "cre")),
       person("Muschelli", "John", email = "muschellij2@gmail.com", role = c("ctb", "cph"))
@@ -16,20 +16,22 @@ NeedsCompilation: yes
 Imports:
     Rcpp (>= 0.12.5),
     RcppArmadillo (>= 0.8.300),
-    ROpenCVLite (>= 0.1.34),
+    ROpenCVLite (>= 0.1.34.1),
     methods,
     pbapply,
     stats,
     graphics
 LinkingTo: Rcpp, RcppArmadillo
-RcppModules: class_Image, class_Video, class_Stream, methods_Arithmetic,
-    methods_Statistics, methods_Comparisons, methods_Logical, methods_OpticalFlow,
-    methods_Blob, methods_Morphology, methods_Filters, methods_Display, 
-    methods_Draw, methods_Geometry
+RcppModules: class_Image, class_Video, class_Stream, class_VideoWriter, 
+    methods_Arithmetic, methods_Statistics, methods_Comparisons, methods_Logical, 
+    methods_OpticalFlow, methods_Blob, methods_Morphology, methods_Filters, 
+    methods_Display, methods_Draw, methods_Geometry
 Remotes: swarm-lab/ROpenCVLite
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.0
 Encoding: UTF-8
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://swarm-lab.github.io/Rvision/, https://github.com/swarm-lab/Rvision
+BugReports: https://github.com/swarm-lab/Rvision/issues

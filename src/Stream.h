@@ -1,8 +1,8 @@
 class Stream {
 public:
   Stream();
-  Stream(int index);
-  bool open(int index);
+  Stream(int index, std::string api);
+  bool open(int index, std::string api);
   bool isOpened();
   void release();
   Image readNext();
@@ -19,18 +19,14 @@ Stream::Stream() {
 
 }
 
-Stream::Stream(int index) {
-  this->stream.open(index);
-
-  if (!this->stream.isOpened()) {
+Stream::Stream(int index, std::string api) {
+  if (!this->stream.open(index, getAPIId(api))) {
     throw std::range_error("Could not open the stream.");
   }
 }
 
-bool Stream::open(int index) {
-  this->stream.open(index);
-
-  if (!this->stream.isOpened()) {
+bool Stream::open(int index, std::string api) {
+  if (!this->stream.open(index, getAPIId(api))) {
     throw std::range_error("Could not open the stream.");
   } else {
     return true;

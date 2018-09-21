@@ -1,0 +1,206 @@
+---
+title: "2 - Input/output operations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pkgdown}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(Rvision)
+```
+
+__This page describes how to read and write videos and images with 
+[`Rvision`](https://github.com/swarm-lab/Rvision).__ 
+
+---
+
++ [2.1 - Reading ](#reading)
+    + [2.1.1 - Videos](#videos)
+    + [2.1.2 - Camera streams](#camera-streams)
+    + [2.1.3 - Images](#images)
+        + [2.1.3.1 - From files](#from-files)
+        + [2.1.3.2 - From videos](#from-videos)
+        + [2.1.3.3 - From streams](#from-camera-streams)
++ [2.2 - Writing](#writing)
+    + [2.2.1 - Videos](#videos-1)
+    + [2.2.2 - Images](#images-1)
+
+---
+
+## 2.1 - Reading
+
+### 2.1.1 - Videos
+
+You can create a `Video` object from a video file as follows: 
+
+```{r}
+path_to_video <- system.file("sample_vid", "Balloon.mp4", package = "Rvision")
+my_video <- video(filename = path_to_video)
+```
+
+`Video` objects can be released from memory as follows: 
+
+```{r}
+release(my_video)
+```
+
+Note that `Video` objects are wrappers around [`OpenCV`](http://opencv.org/)
+[`VideoCapture`](https://docs.opencv.org/3.4.1/d8/dfe/classcv_1_1VideoCapture.html)
+objects. They will not persist between [`R`](https://cran.r-project.org) sessions. 
+
+### 2.1.2 - Camera streams
+
+You can create a `Stream` object from a camera stream as follows: 
+
+```{r}
+my_stream <- stream(index = 0)
+```
+
+The index argument takes an integer number corresponding to the position of the 
+camera in the list of video capturing devices available on your computer. 0 
+corresponds to the default camera, which is usually the embedded webcam on most 
+computers. Note that the order of the list of video capturing devices might 
+change after each computer restart. 
+
+`Stream` objects can be released from memory as follows: 
+
+```{r}
+release(my_stream)
+```
+
+Note that `Stream` objects are wrappers around [`OpenCV`](http://opencv.org/)
+[`VideoCapture`](https://docs.opencv.org/3.4.1/d8/dfe/classcv_1_1VideoCapture.html)
+objects. They will not persist between [`R`](https://cran.r-project.org) sessions. 
+
+### 2.1.3 - Images
+
+There are three ways to create `Image` objects: from files, from `Video` objects,
+and from `Stream` objects. 
+
+Note that `Image` objects are wrappers around [`OpenCV`](http://opencv.org/)
+[`Mat`](https://docs.opencv.org/3.4.1/d3/d63/classcv_1_1Mat.html) objects. They 
+will not persist between [`R`](https://cran.r-project.org) sessions.
+
+#### 2.1.3.1 - From files
+
+You can create an `Image` object from an image file as follows: 
+
+```{r}
+path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+my_image <- image(filename = path_to_image)
+```
+
+#### 2.1.3.2 - From videos
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+path_to_video <- system.file("sample_vid", "Balloon.mp4", package = "Rvision")
+my_video <- video(filename = path_to_video)
+```
+
+You can create an `Image` object from the next available frame of a `Video` 
+object as follows: 
+
+```{r}
+my_image <- readNext(my_video)
+```
+
+You can create an `Image` object from any arbitrary frame of a `Video` object as 
+follows (here frame number 100):
+
+```{r}
+my_image <- readFrame(my_video, 100)
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+release(my_video)
+```
+
+#### 2.1.3.3 - From camera streams
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+my_stream <- stream(index = 0)
+```
+
+You can create an `Image` object from the next available frame of a `Stream` 
+object as follows: 
+
+```{r}
+my_image <- readNext(my_stream)
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+release(my_stream)
+```
+
+---
+
+## 2.2 - Writing
+
+### 2.2.1 - Videos
+
+Videos can be written to the disk using a `VideoWriter` object. 
+
+When creating a `VideoWriter` object, you need to specify the codec of the video, 
+its framerate, its height and its width. For instance, we will here create a 
+`VideoWriter` object that will save to a temporary [`mp4`](https://en.wikipedia.org/wiki/MPEG-4_Part_14) 
+video file using the [`x264`](https://www.videolan.org/developers/x264.html) 
+codec at 30fps. 
+
+```{r}
+path_to_video <- paste0(tempfile(), ".mp4")
+my_writer <- videoWriter(path_to_video, fourcc = "x264", fps = 30, height = 720, width = 1280)
+```
+
+Once a `VideoWriter` object has been created, you can write individual frames to
+it. For instance, we will here capture 30 frames from the default webcam and write
+them to the video file. 
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+my_stream <- stream(index = 0)
+```
+
+```{r}
+for (i in seq_len(30)) {
+  writeFrame(my_writer, readNext(my_stream))
+}
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+release(my_stream)
+```
+
+`VideoWriter` objects can be released from memory as follows: 
+
+```{r}
+release(my_writer)
+```
+
+Note that `VideoWriter` objects are wrappers around [`OpenCV`](http://opencv.org/)
+[`VideoWriter`](https://docs.opencv.org/3.4.1/dd/d9e/classcv_1_1VideoWriter.html)
+objects. They will not persist between [`R`](https://cran.r-project.org) sessions.
+
+### 2.2.2 - Images
+
+Writing an image to a file is straightforward using the `write.Image` function.
+
+[`Rvision`](https://github.com/swarm-lab/Rvision) will guess the format of the 
+image file from the file extension. For instance, we will here capture 1 frame 
+from the default webcam and write it to a temporary png image file. 
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+my_stream <- stream(index = 0)
+```
+
+```{r}
+path_to_image <- paste0(tempfile(), ".png")
+write.Image(readNext(my_stream), path_to_image)
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+release(my_stream)
+```
+
+
+

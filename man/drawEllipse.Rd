@@ -2,7 +2,7 @@
 % Please edit documentation in R/draw.R
 \name{drawEllipse}
 \alias{drawEllipse}
-\title{Draw an Ellipse on an \code{\link{Image}}}
+\title{Draw Ellipses on an \code{\link{Image}}}
 \usage{
 drawEllipse(image, x, y, axis1, axis2, angle, start_angle = 0,
   end_angle = 360, color = "red", thickness = 1)
@@ -10,40 +10,41 @@ drawEllipse(image, x, y, axis1, axis2, angle, start_angle = 0,
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{x}{A numeric value representing the x coordinate of the center of the
-ellipse.}
+\item{x}{A numeric value or vector representing the x coordinates of the
+centers of each ellipse}
 
-\item{y}{A numeric value representing the y coordinate of the center of the
-ellipse.}
+\item{y}{A numeric value or vector representing the y coordinates of the
+centers of each ellipse}
 
-\item{axis1}{A numeric value representing the half-length of the first axis
-of the ellipse.}
+\item{axis1}{A numeric value or vector representing the half-length of the
+first axis of each ellipse.}
 
-\item{axis2}{A numeric value representing the half-length of the second axis
-of the ellipse.}
+\item{axis2}{A numeric value or vector representing the half-length of the
+second axis of each ellipse.}
 
-\item{angle}{A numeric value representing the angle in degrees between
-\code{axis1} and the horizontal.}
+\item{angle}{A numeric value or vector representing the angle in degrees
+between \code{axis1} and the horizontal.}
 
-\item{start_angle}{A numeric value representing the start angle in degrees of
-the elliptic arc (default: 0).}
+\item{start_angle}{A numeric value or vector representing the start angle in
+degrees of each elliptic arc (default: 0).}
 
-\item{end_angle}{A numeric value representing the end angle in degrees of
-the elliptic arc (default: 360).}
+\item{end_angle}{A numeric value or vector representing the end angle in
+degrees of each elliptic arc (default: 360).}
 
-\item{color}{Any kind of R color specification compatible with
-\code{\link{col2rgb}} representing the color of the rectangle outline
+\item{color}{A value or vector of any kind of R color specification compatible
+with \code{\link{col2rgb}} representing the color of each ellipse's outline
 (default: "red").}
 
-\item{thickness}{A numeric value representing the thickness in pixels of the
-rectangle outline (default: 1). If negative, then a filled ellipse is drawn.}
+\item{thickness}{A numeric value or vector representing the thickness in
+pixels of each ellipse's outline (default: 1). If negative, then a filled
+ellipse is drawn.}
 }
 \value{
 This function does not return anything. It modifies \code{image} in
  place.
 }
 \description{
-\code{drawEllipse} draws an ellipse (or part of) over an
+\code{drawEllipse} draws ellipses (or part of) over an
  \code{\link{Image}} object. This operation is destructive: it changes
  irreversibly the \code{\link{Image}} object and cannot be undone.
 }

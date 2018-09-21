@@ -1,83 +1,47 @@
-# Rvision
+# Rvision - A computer vision library for R
 
-`swarm-lab` badges:
-[![Travis build status](https://travis-ci.org/swarm-lab/Rvision.svg?branch=master)](https://travis-ci.org/swarm-lab/Rvision)
+[![Travis-CI Build Status](https://travis-ci.org/swarm-lab/Rvision.svg?branch=master)](https://travis-ci.org/swarm-lab/Rvision)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/swarm-lab/Rvision?branch=master&svg=true)](https://ci.appveyor.com/project/swarm-lab/Rvision)
 
-`muschellij2` badges:
-[![Travis build status](https://travis-ci.org/muschellij2/Rvision.svg?branch=master)](https://travis-ci.org/muschellij2/Rvision)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/muschellij2/Rvision?branch=master&svg=true)](https://ci.appveyor.com/project/muschellij2/Rvision)
+---
 
+## Description
 
-**Not ready for production. Try at your own risks.**
+[`Rvision`](https://github.com/swarm-lab/Rvision) is a - small but growing - 
+computer vision library for [`R`](https://cran.r-project.org). It is based on 
+the powerful [`OpenCV`](http://opencv.org/) library for C/C++, the state-of-the-art
+for computer vision in the open source world. 
+
+The ultimate goal of [`Rvision`](https://github.com/swarm-lab/Rvision) is to 
+provide [`R`](https://cran.r-project.org) users with all the necessary functions 
+to read and manipulate images, videos and camera streams, with an emphasis on 
+speed (thanks to [`OpenCV`](http://opencv.org/)). In this respect, it is different
+from all the other image manipulations packages for [`R`](https://cran.r-project.org)
+that either can not quickly and directly access frames from videos or camera 
+streams or are limited in their processing speed and/or volume. 
 
 ---
 
-+ [1 - Package description](#1---package-description)
-+ [2 - Package installation](#2---package-installation)
-  + [2.1 - Before installing ](#21---Before-installing )
-  + [2.2 - Installing `Rvision`](#22---installing-rvision)
-+ [3. FAQ](#3---faq)
+## Quick start guides 
 
----
++ [1 - Installation instructions](https://swarm-lab.github.io/Rvision/articles/install.html)
++ [2 - Input/output operations](https://swarm-lab.github.io/Rvision/articles/io.html)
++ 3 - Basic operations [TODO]
++ 4 - Advanced operations on videos [TODO]
++ 5 - Advanced operations on streams [TODO]
++ 6 - Advanced operations on images [TODO]
+    + 6.1 - Drawing operations [TODO]
+    + 6.2 - Arithmetic operations [TODO]
+    + 6.3 - Morphological operations [TODO]
+    + 6.4 - Filtering operations [TODO]
 
-## 1 - Package description
+--- 
 
-This package uses the [`OpenCV` library](http://opencv.org/) to provide R users 
-with functions to read and manipulate video and image files, as well as camera 
-streams.
+## FAQ
 
-Read the [FAQ](#3---faq) below for more info about the what, why, and how of 
-`Rvision`.
+### Can I take selfies with my webcam using [`Rvision`](https://github.com/swarm-lab/Rvision)?
 
----
-
-## 2 - Package installation
-
-### 2.1 - Before installing 
-
-Before installing `Rvision`, you will need to install the latest version of the 
-`devtools` package in `R`.You can install `devtools` as follows: 
-
-```r
-install.package("devtools")
-```
-
-### 2.2 - Installing `Rvision`
-
-You can install `Rvision` as follows:
-
-```r
-devtools::install_github("swarm-lab/Rvision")
-```
-
-`Rvision` depends on `ROpenCVLite` to access `OpenCV`'s functionalities. If not
-already installed, `ROpenCVLite` will be installed first by the above command 
-line. This may take some time as it will download, compile and install `OpenCV` 
-for you (compilation time will depend on your computer). I suggest going out for
-a cup of tea or coffee while `ROpenCVLite` is installing ;-)
-
----
-
-## 3 - FAQ
-
-### Can I take pictures of my cat using `Rvision`? 
-
-Heck yeah! You can AND you should! You can even take pictures of your dog if 
-you are that kind of degenerate person :-)
-
-After placing your favorite pet in front of the webcam, just do:
-
-```r
-my_stream <- stream(0)   # 0 will start your default webcam in general. 
-my_pet_pic <- readNext(my_stream)
-plot(my_pet_pic)
-release(my_stream)
-```
-
-### Can I take selfies with my webcam using `Rvision`?
-
-You certainly can, but you should ask yourself whether you should...
+You certainly can, but ask yourself first whether you should...
 
 ```r
 my_stream <- stream(0)   # 0 will start your default webcam in general. 
@@ -88,5 +52,3 @@ release(my_stream)
 
 Be careful, this will trigger the explosion of your camera if it detects that 
 you are making a duck face ;-)
-
----

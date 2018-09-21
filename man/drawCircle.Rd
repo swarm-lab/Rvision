@@ -2,34 +2,35 @@
 % Please edit documentation in R/draw.R
 \name{drawCircle}
 \alias{drawCircle}
-\title{Draw a Circle on an \code{\link{Image}}}
+\title{Draw Circles on an \code{\link{Image}}}
 \usage{
 drawCircle(image, x, y, radius, color = "red", thickness = 1)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{x}{A numeric value representing the x coordinate of the center of the
-circle.}
+\item{x}{A numeric value or vector representing the x coordinates of the
+centers of each circle.}
 
-\item{y}{A numeric value representing the y coordinate of the center of the
-circle.}
+\item{y}{A numeric value or vector representing the y coordinates of the
+centers of each circle.}
 
-\item{radius}{A numeric value representing the radius of the circle.}
+\item{radius}{A numeric value or vector representing the radii of each circle.}
 
-\item{color}{Any kind of R color specification compatible with
-\code{\link{col2rgb}} representing the color of the circle outline
+\item{color}{A value or vector of any kind of R color specification compatible
+with \code{\link{col2rgb}} representing the color of each circle's outline
 (default: "red").}
 
-\item{thickness}{A numeric value representing the thickness in pixels of the
-rectangle outline (default: 1). If negative, then a filled circle is drawn.}
+\item{thickness}{A numeric value or vector representing the thickness in
+pixels of each circle's outline (default: 1). If negative, then a filled
+rectangle is drawn.}
 }
 \value{
 This function does not return anything. It modifies \code{image} in
  place.
 }
 \description{
-\code{drawCirlc} draws a circle over an \code{\link{Image}}
+\code{drawCirlc} draws circles over an \code{\link{Image}}
  object. This operation is destructive: it changes irreversibly the
  \code{\link{Image}} object and cannot be undone.
 }

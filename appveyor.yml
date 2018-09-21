@@ -29,6 +29,11 @@ environment:
     USE_RTOOLS: yes
     R_CHECK_INSTALL_ARGS: --install-args=--build --no-multiarch
 
+  matrix:
+  - R_VERSION: stable
+    RTOOLS_VERSION: 34
+    CRAN: http://cran.rstudio.com
+
 deploy:
   provider: GitHub
   description: Windows Binary
