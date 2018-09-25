@@ -376,3 +376,59 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
 
   `_bilateralFilter`(image, d, sigma_color, sigma_space)
 }
+
+
+#' @title Adaptive Thresholding
+#'
+#' @description \code{adaptiveThreshold} transforms a grayscale image to a
+#'  binary image using an adaptive threshold.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param max_value Non-zero numerical value assigned to the pixels above the
+#'  adaptive threshold (default: 255).
+#'
+#' @param method The name of the adaptive thresholding algorithm to use. It can
+#'  be either 'mean' - mean of the block_size * block_size neighborhood - or
+#'  'gaussian' - Gaussian weighted sum of the block_size * block_size
+#'  neighborhood (default: 'mean').
+#'
+#' @param threshold_type The name of the threshold type to use. It can be either
+#'  'binary' or 'inverse' (default: 'inverse').
+#'
+#' @param block_size Size of a pixel neighborhood that is used to calculate a
+#'  threshold value for the pixel (default: 31).
+#'
+#' @param C Constant subtracted from the mean or weighted mean. Normally, it is
+#'  positive but may be zero or negative as well (default: 25).
+#'
+#' @return image An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' # TODO
+#' @export
+adaptiveThreshold <- function(image, max_value = 255, method = "mean",
+                              threshold_type = "inverse", block_size = 31, C = 25) {
+  if (!isImage(image))
+    stop("'image' must be an Image object.")
+
+  if (nchan(image) != 1 || bitdepth(image) != "8U")
+    stop("'image' must be an 8-bit (8U) single-channel Image object.")
+
+  if (max_value <= 0)
+    stop("'max_value' must be a positive, non-zero value.")
+
+  if (!(method %in% c("mean", "gaussian")))
+    stop("'method' must be either mean or gaussian")
+
+  if (!(threshold_type %in% c("binary", "inverse")))
+    stop("'threshold_type' must be either binary or inverse.")
+
+  `_adaptiveThreshold`(image, max_value, if (method == "mean") 0 else 1,
+                       if (threshold_type == "binary") 0 else 1,
+                       block_size, C)
+}

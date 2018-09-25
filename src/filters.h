@@ -96,3 +96,11 @@ Image _bilateralFilter(Image image, int d, double sigma_color, double sigma_spac
   cv::bilateralFilter(image.image, out, d, sigma_color, sigma_space);
   return Image(out);
 }
+
+Image _adaptiveThreshold(Image image, double max_value, int method, int threshold_type, int block_size, double C) {
+  cv::Mat out;
+
+  cv::adaptiveThreshold(image.image, out, max_value, method, threshold_type, block_size, C);
+  return Image(out);
+}
+
