@@ -8,7 +8,7 @@ adaptiveThreshold(image, max_value = 255, method = "mean",
   threshold_type = "inverse", block_size = 31, C = 25)
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{image}{An an 8-bit (8U) single-channel \code{\link{Image}} object.}
 
 \item{max_value}{Non-zero numerical value assigned to the pixels above the
 adaptive threshold (default: 255).}
@@ -28,7 +28,7 @@ threshold value for the pixel (default: 31).}
 positive but may be zero or negative as well (default: 25).}
 }
 \value{
-image An \code{\link{Image}} object.
+An \code{\link{Image}} object.
 }
 \description{
 \code{adaptiveThreshold} transforms a grayscale image to a

@@ -238,3 +238,9 @@ RCPP_MODULE(methods_Geometry) {
   function("_resize", &_resize, List::create(_["image"], _["height"], _["width"],
     _["fx"], _["fy"], _["interpolation"]), "");
 }
+
+#include "shape.h"
+RCPP_MODULE(methods_Shape) {
+  function("_findContours", &_findContours, List::create(_["image"], _["mode"],
+    _["method"], _["offset"]), "");
+}

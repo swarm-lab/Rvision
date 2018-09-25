@@ -383,7 +383,7 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
 #' @description \code{adaptiveThreshold} transforms a grayscale image to a
 #'  binary image using an adaptive threshold.
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param image An an 8-bit (8U) single-channel \code{\link{Image}} object.
 #'
 #' @param max_value Non-zero numerical value assigned to the pixels above the
 #'  adaptive threshold (default: 255).
@@ -402,7 +402,7 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
 #' @param C Constant subtracted from the mean or weighted mean. Normally, it is
 #'  positive but may be zero or negative as well (default: 25).
 #'
-#' @return image An \code{\link{Image}} object.
+#' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -423,10 +423,10 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
     stop("'max_value' must be a positive, non-zero value.")
 
   if (!(method %in% c("mean", "gaussian")))
-    stop("'method' must be either mean or gaussian")
+    stop("'method' must be either 'mean' or 'gaussian'.")
 
   if (!(threshold_type %in% c("binary", "inverse")))
-    stop("'threshold_type' must be either binary or inverse.")
+    stop("'threshold_type' must be either 'binary' or 'inverse'.")
 
   `_adaptiveThreshold`(image, max_value, if (method == "mean") 0 else 1,
                        if (threshold_type == "binary") 0 else 1,

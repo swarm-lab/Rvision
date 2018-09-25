@@ -23,6 +23,7 @@ Rcpp::loadModule("methods_Filters", TRUE)
 Rcpp::loadModule("methods_Display", TRUE)
 Rcpp::loadModule("methods_Draw", TRUE)
 Rcpp::loadModule("methods_Geometry", TRUE)
+Rcpp::loadModule("methods_Shape", TRUE)
 
 ### Define generic arithmetic methods ###
 methods::evalqOnLoad({
