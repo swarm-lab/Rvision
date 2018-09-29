@@ -383,8 +383,9 @@ void Image::changeColorSpace(std::string colorSpace) {
 }
 
 Image cloneImage(Image image) {
-  Image out = Image(image.image);
-  return(out);
+  cv::Mat copy;
+  image.image.copyTo(copy);
+  return Image(copy);
 }
 
 Rcpp::List split(Image image) {
