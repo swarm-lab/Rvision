@@ -67,7 +67,8 @@
 #'  Image Processing 30, 32–46. doi:10.1016/0734-189X(85)90016-7.
 #'
 #'  Teh, C.-H., and Chin, R. T. (1989). On the detection of dominant points on
-#'  digital curves. IEEE Trans. Pattern Anal. Mach. Intell. 11, 859–872. doi:10.1109/34.31447.
+#'  digital curves. IEEE Trans. Pattern Anal. Mach. Intell. 11, 859–872.
+#'  doi:10.1109/34.31447.
 #'
 #' @seealso \code{\link{Image}}
 #'

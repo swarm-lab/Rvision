@@ -80,3 +80,22 @@ Rcpp::NumericVector _getTextSize(std::string text, int font_face, double font_sc
   return(Rcpp::NumericVector::create(text_size.height, text_size.width));
 }
 
+void _fillPoly(Image image, Rcpp::IntegerMatrix polygon, Rcpp::IntegerVector color) {
+  std::vector<cv::Point> poly;
+  std::vector<std::vector<cv::Point> > polys;
+
+  for (int i = 0; i < polygon.nrow(); i++) {
+    poly.push_back(cv::Point(polygon(i, 0), polygon(i, 1)));
+  }
+
+  polys.push_back(poly);
+
+  cv::fillPoly(image.image, polys, cv::Scalar(color(0), color(1), color(2)));
+}
+
+Image _inpaint(Image image, Image mask, double radius, int method) {
+  cv::Mat out;
+  cv::inpaint(image.image, mask.image, out, radius, method);
+
+  return Image(out);
+}

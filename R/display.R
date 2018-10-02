@@ -95,3 +95,125 @@ destroyDisplay <- function(window_name = "Display") {
 destroyAllDisplays <- function() {
   invisible(`_destroyAllDisplays`())
 }
+
+
+#' @title Detect Mouse Click on Image Display
+#'
+#' @description \code{click} display an image in a new or existing display
+#'  window and waits for a mouse click on the display window to be detected.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param scale The scaling of the display relative to the image size (default: 1).
+#'
+#' @param window_name A character string representing the name of the display
+#'  window (default: "Display").
+#'
+#' @return A data frame with the following 3 columns:
+#'  \itemize{
+#'   \item{x: }{the x coordinate of the mouse click.}
+#'   \item{y: }{the y coordinate of the mouse click.}
+#'   \item{button: }{the mouse button that was pressed (0: left button; 1: right
+#'    button.)}
+#'  }
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{newDisplay}}, \code{\link{display}}
+#'
+#' @examples
+#' # TODO
+#' @export
+click <- function(image, scale = 1, window_name = "Display") {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
+  display(image, window_name = window_name, delay = 10,
+          height = nrow(image) * scale, width = ncol(image) * scale)
+
+  out <- `_click`(window_name)
+  out$y <- -out$y / scale + nrow(image)
+  out$x <- (out$x / scale) + 1
+  out
+}
+
+
+#' @title Select a Region of Interest in an Image
+#'
+#' @description \code{selectROI} allows the user to select a region of interest
+#'  (ROI) in an image. An ROI is a polygonal region selected by clicking on the
+#'  locations of the vertices of the polygon.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param scale The scaling of the display relative to the image size (default: 1).
+#'
+#' @param window_name A character string representing the name of the display
+#'  window (default: "Display").
+#'
+#' @param return_mask Should the function return a mask of the ROI. The mask is
+#'  an 8-bit single-channel image with the pixels inside the ROI painted white
+#'  and the pixels outside the ROI painted black (default: TRUE).
+#'
+#' @return If \code{return_mask == FALSE}, a data frame with the following two
+#'  columns:
+#'  \itemize{
+#'   \item{x: }{the x coordinates of the ROI polygon.}
+#'   \item{y: }{the y coordinates of the ROI polygon.}
+#'  }
+#'  If \code{return_mask == TRUE}, a list containing the data frame containing
+#'  the coordinates of the ROIand an 8-bit single-channel image corresponding to
+#'  the mask of the ROI.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{newDisplay}}, \code{\link{display}},
+#'  \code{\link{click}}
+#'
+#' @examples
+#' # TODO
+#' @export
+selectROI <- function(image, window_name = "Display", scale = 1, return_mask = TRUE) {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
+  image_copy <- cloneImage(image)
+  ROI <- data.frame()
+  done <- FALSE
+
+  message("Use left click to draw the ROI. Use right click to close it and
+          return the result.")
+
+  r <- 0.005 * min(nrow(image_copy), ncol(image_copy))
+  l <- r / 2
+
+  while (!done) {
+    ROI <- rbind(ROI, click(image_copy, scale = scale, window_name = window_name))
+
+    drawCircle(image_copy, x = ROI$x[nrow(ROI)], y = ROI$y[nrow(ROI)],
+               radius = r, thickness = -1)
+
+    if (nrow(ROI) > 1) {
+      drawLine(image_copy, pt1_x = ROI$x[nrow(ROI)], pt1_y = ROI$y[nrow(ROI)],
+               pt2_x = ROI$x[nrow(ROI) - 1], pt2_y = ROI$y[nrow(ROI) - 1],
+               thickness = l)
+    }
+
+    if (ROI$button[nrow(ROI)] == 1) {
+      drawLine(image_copy, pt1_x = ROI$x[nrow(ROI)], pt1_y = ROI$y[nrow(ROI)],
+               pt2_x = ROI$x[1], pt2_y = ROI$y[1],
+               thickness = l)
+      display(image_copy, window_name = window_name, delay = 10,
+              height = nrow(image_copy) * scale, width = ncol(image_copy) * scale)
+      done <- TRUE
+    }
+  }
+
+  if (return_mask) {
+    mask <- image(array(0, dim = c(nrow(image_copy), ncol(image_copy), 1)))
+    fillPoly(mask, as.matrix(ROI[c("x", "y")]), "white")
+    list(ROI = ROI[c("x", "y")], mask = mask)
+  } else {
+    ROI[c("x", "y")]
+  }
+}

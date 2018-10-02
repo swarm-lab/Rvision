@@ -30,3 +30,60 @@ void _destroyAllDisplays() {
   cv::destroyAllWindows();
   cvWaitKey(1);
 }
+
+Rcpp::DataFrame _selectBoundingBoxes(Image image, std::string window_name, bool crosshair) {
+  std::vector< cv::Rect > ROIs;
+
+  cv::selectROIs(window_name, image.image, ROIs, crosshair);
+
+  Rcpp::NumericVector left(ROIs.size());
+  Rcpp::NumericVector top(ROIs.size());
+  Rcpp::NumericVector width(ROIs.size());
+  Rcpp::NumericVector height(ROIs.size());
+
+  for (int i = 0; i < ROIs.size(); i++) {
+    left(i) = ROIs[i].x;
+    top(i) = ROIs[i].y;
+    width(i) = ROIs[i].width;
+    height(i) = ROIs[i].height;
+  }
+
+  return Rcpp::DataFrame::create(Rcpp::Named("left") = left,
+                                 Rcpp::Named("top") = top,
+                                 Rcpp::Named("width") = width,
+                                 Rcpp::Named("height") = height);
+}
+
+struct ClickData {
+  int x;
+  int y;
+  int button;
+};
+
+void onMouse(int event, int x, int y, int flags, void* data) {
+  ClickData* p = (ClickData*) data;
+
+  if  (event == cv::EVENT_LBUTTONDOWN) {
+    p->x = x;
+    p->y = y;
+    p->button = 0;
+  } else if (event == cv::EVENT_RBUTTONDOWN) {
+    p->x = x;
+    p->y = y;
+    p->button = 1;
+  }
+}
+
+Rcpp::DataFrame _click(std::string window_name) {
+  ClickData d;
+  d.button = -1;
+  cv::setMouseCallback(window_name, onMouse, &d);
+
+  while (d.button == -1) {
+    cv::waitKey(10);
+  }
+  return Rcpp::DataFrame::create(Rcpp::Named("x") = d.x,
+                                 Rcpp::Named("y") = d.y,
+                                 Rcpp::Named("button") = d.button);
+}
+

@@ -212,6 +212,9 @@ RCPP_MODULE(methods_Display) {
     _["delay"], _["height"], _["width"]), "");
   function("_destroyDisplay", &_destroyDisplay, List::create(_["window_name"]), "");
   function("_destroyAllDisplays", &_destroyAllDisplays, "", "");
+  function("_selectBoundingBoxes", &_selectBoundingBoxes, List::create(_["image"],
+    _["window_name"], _["crosshair"]), "");
+  function("_click", &_click, List::create(_["window_name"]), "");
 }
 
 #include "draw.h"
@@ -231,6 +234,10 @@ RCPP_MODULE(methods_Draw) {
     _["font_face"], _["font_scale"], _["color"], _["thickness"], _["bl_orig"]), "");
   function("_getTextSize", &_getTextSize, List::create(_["text"], _["font_face"],
     _["font_scale"], _["thickness"]), "");
+  function("_fillPoly", &_fillPoly, List::create(_["image"], _["polygon"],
+    _["color"]), "");
+  function("_inpaint", &_inpaint, List::create(_["image"], _["mask"], _["radius"],
+    _["method"]), "");
 }
 
 #include "geometry.h"

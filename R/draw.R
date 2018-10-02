@@ -392,4 +392,87 @@ getTextSize <- function(text, font_face = "simplex", font_scale = 1,
 }
 
 
+#' @title Fill Polygon with Color in Image
+#'
+#' @description \code{fillPolygon} fills all the pixels of an image withing a
+#'  given polygon with a given color.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param polygon An m x 2 matrix (or an object that can be converted to an
+#'  m x 2 matrix), with the first column containing the x coordinates of the
+#'  polygon and the second column containing the y coordinates of the polygon.
+#'
+#' @param color A value or vector of any kind of R color specification compatible
+#'  with \code{\link{col2rgb}} representing the color to fill the polygon with
+#'  (default: "white").
+#'
+#' @return This function does not return anything. It modifies \code{image} in
+#'  place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{selectROI}}
+#'
+#' @examples
+#' # TODO
+#' @export
+fillPoly <- function(image, polygon, color = "white") {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
 
+  polygon <- as.matrix(polygon)
+  polygon[, 1] <- polygon[, 1] - 1
+  polygon[, 2] <- -polygon[, 2] + nrow(image)
+
+  `_fillPoly`(image, polygon, col2rgb(color))
+}
+
+
+#' @title Reconstruct Image Region from Region Neighborhood
+#'
+#' @description \code{inpaint} reconstructs the selected image area from the
+#'  pixel near the area boundary. The function may be used to remove dust and
+#'  scratches from a scanned photo, or to remove undesirable objects from still
+#'  images or videos.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param mask An 8-bit single-channel \code{\link{Image}} object. The region to
+#'  be reconstructed should be white.
+#'
+#' @param radius Radius of the circular neighborhood of each point inpainted
+#'  that is considered by the algorithm (default: 5).
+#'
+#' @param method The inpainting method to be used. It can only be one of the
+#'  following:
+#'  \itemize{
+#'    \item{"NS": }{Navier-Stokes based method (the default).}
+#'    \item{"Telea": }{Alexandru Telea's method.}
+#'  }
+#'
+#' @return An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @references Telea, A. (2004). An image inpainting technique based on the fast
+#'  marching method. Journal of graphics tools. doi: 10.1080/10867651.2004.10487596.
+#'
+#' @seealso \code{\link{Image}}, \code{\link{selectROI}}
+#'
+#' @examples
+#' # TODO
+#' @export
+inpaint <- function(image, mask, radius = 5, method = "NS") {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
+  if (!isImage(mask))
+    stop("mask is not an 'Image' object.")
+
+  `_inpaint`(image, mask, radius, switch(method,
+    "NS" = 0,
+    "Telea" = 1,
+    stop("This is not a valid method.")
+  ))
+}
