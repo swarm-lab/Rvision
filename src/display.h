@@ -6,12 +6,14 @@ void _newDisplay(std::string window_name, int height, int width) {
 }
 
 void _display(Image image, std::string window_name, int delay, int height, int width) {
-  cv::Mat screen = image.image;
-  if ((screen.rows != height) || (screen.cols != width)) {
+  if ((image.image.rows != height) || (image.image.cols != width)) {
+    cv::Mat screen;
+    image.image.copyTo(screen);
     cv::resize(screen, screen, cv::Size(width, height));
+    cv::imshow(window_name, screen);
+  } else {
+    cv::imshow(window_name, image.image);
   }
-
-  cv::imshow(window_name, screen);
 
   cv::Rect window = cv::getWindowImageRect(window_name);
   if ((window.height != height) || (window.width != width)) {
