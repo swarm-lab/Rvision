@@ -147,6 +147,7 @@ RCPP_MODULE(methods_Logical) {
   function("_and", &_and, List::create(_["image1"], _["image2"]), "");
   function("_or", &_or, List::create(_["image1"], _["image2"]), "");
   function("_not", &_not, List::create(_["image"]), "");
+  function("_findNonZero", &_findNonZero, List::create(_["image"]), "");
 }
 
 #include "opticalFlow.h"
@@ -250,4 +251,6 @@ RCPP_MODULE(methods_Geometry) {
 RCPP_MODULE(methods_Shape) {
   function("_findContours", &_findContours, List::create(_["image"], _["mode"],
     _["method"], _["offset"]), "");
+  function("_connectedComponents", &_connectedComponents, List::create(_["image"],
+    _["connectivity"]), "");
 }

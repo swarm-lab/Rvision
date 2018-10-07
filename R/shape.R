@@ -3,7 +3,7 @@
 #' @description \code{findContours} retrieves contours from a binary image using
 #'  the algorithm by Suzuki & Be (1985).
 #'
-#' @param image An an 8-bit (8U) single-channel \code{\link{Image}} object.
+#' @param image An 8-bit (8U) single-channel \code{\link{Image}} object.
 #'
 #' @param mode Mode of the contour retrieval algorithm. It can take the following
 #'  values:
@@ -105,4 +105,65 @@ findContours <- function(image, mode = "external", method = "simple", offset = c
                                   "kcos" = 4,
                                   stop("This is not a valid method.")),
                   offset)
+}
+
+#' @title Find Connected Components in a binary Image
+#'
+#' @description \code{connectedComponents} computes the connected components
+#'  (i.e. areas of contiguous non-zero pixels) of a binary image.
+#'
+#' @param image An an 8-bit (8U) single-channel \code{\link{Image}} object.
+#'
+#' @param connectivity The connetivity neighborhood to decide whether 2 pixels
+#'  are contiguous. This parameter can take two values:
+#'  \itemize{
+#'   \item{4: }{the neighborhood of a pixel are the four pixels located above
+#'    (north), below (south), to the left (west) and right (east) of the pixel.}
+#'   \item{8 (the default): }{the neighborhood of a pixel includes the four
+#'    4-neighbors and the four pixels along the diagonal directions (northeast,
+#'    northwest, southeast, and southwest).}
+#'  }
+#'
+#' @param return_table A logical indicating whether a dataframe of the x-y
+#'  coordinates of the connected components should be returned (default: TRUE).
+#'
+#' @return A list with 2 (or 3) items:
+#'  \itemize{
+#'   \item{n: }{the number of connected components in the image.}
+#'   \item{labels: }{a 16-bit (16U) single-channel  image in which each pixel of
+#'    each connected component is represented by the identity number of the
+#'    component, and the background pixels by zero.}
+#'   \item{table (if `return_table = TRUE`): }{a dataframe with 3 columns
+#'    representing the identity of the connected components (id), and the x-y
+#'    coordinates of the pixels they are composed of. }
+#'  }
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' # TODO
+#' @export
+connectedComponents <- function(image, connectivity = 8, return_table = TRUE) {
+  if (!isImage(image))
+    stop("'image' must be an Image object.")
+
+  if (nchan(image) != 1 || bitdepth(image) != "8U")
+    stop("'image' must be an 8-bit (8U) single-channel Image object.")
+
+  if (!(connectivity %in% c(4, 8)))
+    stop("'connectivity' must be either 4 or 8.")
+
+  out <- `_connectedComponents`(image, connectivity)
+
+  if (return_table) {
+    out$table <- do.call(rbind, lapply(1:out$n, extractComponent, image = out$labels))
+  }
+
+  out
+}
+
+extractComponent <- function(id, image) {
+  data.frame(id = id, findNonZero(image == id))
 }

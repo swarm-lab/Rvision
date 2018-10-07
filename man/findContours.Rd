@@ -8,7 +8,7 @@ findContours(image, mode = "external", method = "simple",
   offset = c(0, 0))
 }
 \arguments{
-\item{image}{An an 8-bit (8U) single-channel \code{\link{Image}} object.}
+\item{image}{An 8-bit (8U) single-channel \code{\link{Image}} object.}
 
 \item{mode}{Mode of the contour retrieval algorithm. It can take the following
 values:

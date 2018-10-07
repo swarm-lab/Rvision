@@ -46,4 +46,10 @@ Rcpp::List _findContours(Image image, int mode, int method, Rcpp::NumericVector 
                             Rcpp::Named("hierarchy") = hierarchy_df);
 }
 
+Rcpp::List _connectedComponents(Image image, int connectivity) {
+  cv::Mat labels;
+  int n = cv::connectedComponents(image.image, labels, connectivity);
 
+  return Rcpp::List::create(Rcpp::Named("n") = n - 1,
+                            Rcpp::Named("labels") = Image(labels));
+}

@@ -15,3 +15,19 @@ Image _not(Image image) {
   cv::bitwise_not(image.image, out);
   return Image(out);
 }
+
+Rcpp::DataFrame _findNonZero(Image image) {
+  std::vector<cv::Point> locs;
+  cv::findNonZero(image.image, locs);
+
+  Rcpp::NumericVector x(locs.size());
+  Rcpp::NumericVector y(locs.size());
+
+  for (int i = 0; i < locs.size(); i++) {
+    x(i) = locs[i].x;
+    y(i) = locs[i].y;
+  }
+
+  return Rcpp::DataFrame::create(Rcpp::Named("x") = x,
+                                 Rcpp::Named("y") = y);
+}
