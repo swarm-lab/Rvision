@@ -158,7 +158,11 @@ connectedComponents <- function(image, connectivity = 8, return_table = TRUE) {
   out <- `_connectedComponents`(image, connectivity)
 
   if (return_table) {
-    out$table <- do.call(rbind, lapply(1:out$n, extractComponent, image = out$labels))
+    if (out$n > 0) {
+      out$table <- do.call(rbind, lapply(1:out$n, extractComponent, image = out$labels))
+    } else {
+      out$table <- data.frame(id = numeric(), x = numeric(), y = numeric())
+    }
   }
 
   out
