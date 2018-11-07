@@ -1,13 +1,12 @@
 language: R
 sudo: false
 cache: packages
-
 os:
-  - linux
-  - osx
+- linux
+- osx
 after_success: if [ "$TRAVIS_OS_NAME" == "linux" ]; then Rscript -e 'covr::coveralls(type
   = "all")'; fi
-warnings_are_errors: yes
+warnings_are_errors: true
 before_deploy: if [ "$TRAVIS_OS_NAME" == "osx" ]; then rm -f *.tar.gz; fi
-r_build_args: --no-build-vignettes
-r_check_args: --as-cran --ignore-vignettes --no-examples --install-args=--build
+r_build_args: "--no-build-vignettes"
+r_check_args: "--as-cran --ignore-vignettes --no-examples --install-args=--build"

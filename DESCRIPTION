@@ -26,7 +26,7 @@ RcppModules: class_Image, class_Video, class_Stream, class_VideoWriter,
     methods_Arithmetic, methods_Statistics, methods_Comparisons, methods_Logical, 
     methods_OpticalFlow, methods_Blob, methods_Morphology, methods_Filters, 
     methods_Display, methods_Draw, methods_Geometry, methods_Shape 
-Remotes: swarm-lab/ROpenCVLite
+Remotes: github::swarm-lab/ROpenCVLite
 RoxygenNote: 6.1.0
 Encoding: UTF-8
 Suggests: 
