@@ -5,3 +5,6 @@ template:
 authors:
   Simon Garnier:
     href: http://www.theswarmlab.coms
+
+development:
+  mode: unreleased
