@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make a copy of an Image object — cloneImage • Rvision</title>
+<title>Detect Mouse Click on Image Display — click • Rvision</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,16 +30,10 @@
 
 
 
-<meta property="og:title" content="Make a copy of an Image object — cloneImage" />
+<meta property="og:title" content="Detect Mouse Click on Image Display — click" />
 
-<meta property="og:description" content="Image objects are pointers toward C++ objects
- stored in memory. When copying an Image object using an
- assignment operator, this creates a copy of the pointer, but not a copy of
- the C++ object. Any operation on the copied Image object will
- therefore result in a modification of the orginal Image object.
- This function duplicates the original Image object instead,
- allowing safe operations on it while maintaining the integrity of the
- original Image object." />
+<meta property="og:description" content="click display an image in a new or existing display
+ window and waits for a mouse click on the display window to be detected." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,25 +116,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make a copy of an Image object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/ImageClass.R'><code>R/ImageClass.R</code></a></small>
-    <div class="hidden name"><code>cloneImage.Rd</code></div>
+    <h1>Detect Mouse Click on Image Display</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/display.R'><code>R/display.R</code></a></small>
+    <div class="hidden name"><code>click.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code><a href='Image-class.html'>Image</a></code> objects are pointers toward C++ objects
- stored in memory. When copying an <code><a href='Image-class.html'>Image</a></code> object using an
- assignment operator, this creates a copy of the pointer, but not a copy of
- the C++ object. Any operation on the copied <code><a href='Image-class.html'>Image</a></code> object will
- therefore result in a modification of the orginal <code><a href='Image-class.html'>Image</a></code> object.
- This function duplicates the original <code><a href='Image-class.html'>Image</a></code> object instead,
- allowing safe operations on it while maintaining the integrity of the
- original <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p><code>click</code> display an image in a new or existing display
+ window and waits for a mouse click on the display window to be detected.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cloneImage</span>(<span class='no'>image</span>)</pre>
+    <pre class="usage"><span class='fu'>click</span>(<span class='no'>image</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>window_name</span> <span class='kw'>=</span> <span class='st'>"Display"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,15 +137,30 @@
       <th>image</th>
       <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
     </tr>
+    <tr>
+      <th>scale</th>
+      <td><p>The scaling of the display relative to the image size (default: 1).</p></td>
+    </tr>
+    <tr>
+      <th>window_name</th>
+      <td><p>A character string representing the name of the display
+window (default: "Display").</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p>A data frame with the following 3 columns:</p><ul>
+<li><p>x: the x coordinate of the mouse click.</p></li>
+<li><p>y: the y coordinate of the mouse click.</p></li>
+<li><p>button: the mouse button that was pressed (0: left button; 1: right
+   button.)</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
+    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='newDisplay.html'>newDisplay</a></code>, <code><a href='display.html'>display</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

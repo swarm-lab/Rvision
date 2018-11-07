@@ -35,7 +35,7 @@ need to install the latest version of the [`devtools`](https://CRAN.R-project.or
 package. You can install [`devtools`](https://CRAN.R-project.org/package=devtools) 
 from [`CRAN`](https://cran.r-project.org) as follows: 
 
-```{r, message=FALSE}
+```{r, message=FALSE, eval=FALSE}
 if (!require(devtools))
   install.packages("devtools")
 ```
@@ -63,7 +63,7 @@ system is missing one of the external dependencies required to compile
 
 You can install [`Rvision`](https://github.com/swarm-lab/Rvision) as follows:
 
-```{r, message=FALSE}
+```{r, message=FALSE, eval=FALSE}
 devtools::install_github("swarm-lab/Rvision")
 ```
 
@@ -71,6 +71,6 @@ devtools::install_github("swarm-lab/Rvision")
 
 ## 1.3 - Loading Rvision
 
-```{r, message=FALSE}
+```{r, message=FALSE, eval=FALSE}
 library(Rvision)
 ```

@@ -1,6 +1,6 @@
 pandoc: 1.19.2.1
-pkgdown: 0.1.0.9000
-pkgdown_sha: e937c92cffd8afb0c98c67ff1a5450fe6419f09b
+pkgdown: 1.1.0
+pkgdown_sha: ~
 articles:
   _Rvision-vignette: old/_Rvision-vignette.html
   z1_install: z1_install.html

@@ -69,7 +69,7 @@ abline(v = 570, col = "red", lwd = 5)
 
 ### 3.2.2 - Method incompatible with base R
 
-```{r, message=FALSE}
+```{r, message=FALSE, eval=FALSE}
 path_to_video <- system.file("sample_vid", "Balloon.mp4", package = "Rvision")
 my_video <- video(filename = path_to_video)
 

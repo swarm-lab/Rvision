@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make a copy of an Image object — cloneImage • Rvision</title>
+<title>Adaptive Thresholding — adaptiveThreshold • Rvision</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,16 +30,10 @@
 
 
 
-<meta property="og:title" content="Make a copy of an Image object — cloneImage" />
+<meta property="og:title" content="Adaptive Thresholding — adaptiveThreshold" />
 
-<meta property="og:description" content="Image objects are pointers toward C++ objects
- stored in memory. When copying an Image object using an
- assignment operator, this creates a copy of the pointer, but not a copy of
- the C++ object. Any operation on the copied Image object will
- therefore result in a modification of the orginal Image object.
- This function duplicates the original Image object instead,
- allowing safe operations on it while maintaining the integrity of the
- original Image object." />
+<meta property="og:description" content="adaptiveThreshold transforms a grayscale image to a
+ binary image using an adaptive threshold." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,32 +116,54 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make a copy of an Image object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/ImageClass.R'><code>R/ImageClass.R</code></a></small>
-    <div class="hidden name"><code>cloneImage.Rd</code></div>
+    <h1>Adaptive Thresholding</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/filters.R'><code>R/filters.R</code></a></small>
+    <div class="hidden name"><code>adaptiveThreshold.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code><a href='Image-class.html'>Image</a></code> objects are pointers toward C++ objects
- stored in memory. When copying an <code><a href='Image-class.html'>Image</a></code> object using an
- assignment operator, this creates a copy of the pointer, but not a copy of
- the C++ object. Any operation on the copied <code><a href='Image-class.html'>Image</a></code> object will
- therefore result in a modification of the orginal <code><a href='Image-class.html'>Image</a></code> object.
- This function duplicates the original <code><a href='Image-class.html'>Image</a></code> object instead,
- allowing safe operations on it while maintaining the integrity of the
- original <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p><code>adaptiveThreshold</code> transforms a grayscale image to a
+ binary image using an adaptive threshold.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cloneImage</span>(<span class='no'>image</span>)</pre>
+    <pre class="usage"><span class='fu'>adaptiveThreshold</span>(<span class='no'>image</span>, <span class='kw'>max_value</span> <span class='kw'>=</span> <span class='fl'>255</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+  <span class='kw'>threshold_type</span> <span class='kw'>=</span> <span class='st'>"inverse"</span>, <span class='kw'>block_size</span> <span class='kw'>=</span> <span class='fl'>31</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='fl'>25</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>image</th>
-      <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
+      <td><p>An an 8-bit (8U) single-channel <code><a href='Image-class.html'>Image</a></code> object.</p></td>
+    </tr>
+    <tr>
+      <th>max_value</th>
+      <td><p>Non-zero numerical value assigned to the pixels above the
+adaptive threshold (default: 255).</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>The name of the adaptive thresholding algorithm to use. It can
+be either 'mean' - mean of the block_size * block_size neighborhood - or
+'gaussian' - Gaussian weighted sum of the block_size * block_size
+neighborhood (default: 'mean').</p></td>
+    </tr>
+    <tr>
+      <th>threshold_type</th>
+      <td><p>The name of the threshold type to use. It can be either
+'binary' or 'inverse' (default: 'inverse').</p></td>
+    </tr>
+    <tr>
+      <th>block_size</th>
+      <td><p>Size of a pixel neighborhood that is used to calculate a
+threshold value for the pixel (default: 31).</p></td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td><p>Constant subtracted from the mean or weighted mean. Normally, it is
+positive but may be zero or negative as well (default: 25).</p></td>
     </tr>
     </table>
     

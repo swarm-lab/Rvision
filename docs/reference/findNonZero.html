@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make a copy of an Image object — cloneImage • Rvision</title>
+<title>Find Non-Zero Pixels in an Image — findNonZero • Rvision</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,16 +30,10 @@
 
 
 
-<meta property="og:title" content="Make a copy of an Image object — cloneImage" />
+<meta property="og:title" content="Find Non-Zero Pixels in an Image — findNonZero" />
 
-<meta property="og:description" content="Image objects are pointers toward C++ objects
- stored in memory. When copying an Image object using an
- assignment operator, this creates a copy of the pointer, but not a copy of
- the C++ object. Any operation on the copied Image object will
- therefore result in a modification of the orginal Image object.
- This function duplicates the original Image object instead,
- allowing safe operations on it while maintaining the integrity of the
- original Image object." />
+<meta property="og:description" content="findNonZero retrieves the locations of all non-zero
+ pixels in an image." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,38 +116,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make a copy of an Image object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/ImageClass.R'><code>R/ImageClass.R</code></a></small>
-    <div class="hidden name"><code>cloneImage.Rd</code></div>
+    <h1>Find Non-Zero Pixels in an Image</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/logical.R'><code>R/logical.R</code></a></small>
+    <div class="hidden name"><code>findNonZero.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code><a href='Image-class.html'>Image</a></code> objects are pointers toward C++ objects
- stored in memory. When copying an <code><a href='Image-class.html'>Image</a></code> object using an
- assignment operator, this creates a copy of the pointer, but not a copy of
- the C++ object. Any operation on the copied <code><a href='Image-class.html'>Image</a></code> object will
- therefore result in a modification of the orginal <code><a href='Image-class.html'>Image</a></code> object.
- This function duplicates the original <code><a href='Image-class.html'>Image</a></code> object instead,
- allowing safe operations on it while maintaining the integrity of the
- original <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p><code>findNonZero</code> retrieves the locations of all non-zero
+ pixels in an image.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cloneImage</span>(<span class='no'>image</span>)</pre>
+    <pre class="usage"><span class='fu'>findNonZero</span>(<span class='no'>image</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>image</th>
-      <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
+      <td><p>An an 8-bit (8U) single-channel <code><a href='Image-class.html'>Image</a></code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p>A data frame with two columns, corresponding to the x (columns) and
+ y (rows) coordinates of the non-zero pixels.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make a copy of an Image object — cloneImage • Rvision</title>
+<title>Fill Polygon with Color in Image — fillPoly • Rvision</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,16 +30,10 @@
 
 
 
-<meta property="og:title" content="Make a copy of an Image object — cloneImage" />
+<meta property="og:title" content="Fill Polygon with Color in Image — fillPoly" />
 
-<meta property="og:description" content="Image objects are pointers toward C++ objects
- stored in memory. When copying an Image object using an
- assignment operator, this creates a copy of the pointer, but not a copy of
- the C++ object. Any operation on the copied Image object will
- therefore result in a modification of the orginal Image object.
- This function duplicates the original Image object instead,
- allowing safe operations on it while maintaining the integrity of the
- original Image object." />
+<meta property="og:description" content="fillPolygon fills all the pixels of an image withing a
+ given polygon with a given color." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,25 +116,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make a copy of an Image object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/ImageClass.R'><code>R/ImageClass.R</code></a></small>
-    <div class="hidden name"><code>cloneImage.Rd</code></div>
+    <h1>Fill Polygon with Color in Image</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/draw.R'><code>R/draw.R</code></a></small>
+    <div class="hidden name"><code>fillPoly.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code><a href='Image-class.html'>Image</a></code> objects are pointers toward C++ objects
- stored in memory. When copying an <code><a href='Image-class.html'>Image</a></code> object using an
- assignment operator, this creates a copy of the pointer, but not a copy of
- the C++ object. Any operation on the copied <code><a href='Image-class.html'>Image</a></code> object will
- therefore result in a modification of the orginal <code><a href='Image-class.html'>Image</a></code> object.
- This function duplicates the original <code><a href='Image-class.html'>Image</a></code> object instead,
- allowing safe operations on it while maintaining the integrity of the
- original <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p><code>fillPolygon</code> fills all the pixels of an image withing a
+ given polygon with a given color.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cloneImage</span>(<span class='no'>image</span>)</pre>
+    <pre class="usage"><span class='fu'>fillPoly</span>(<span class='no'>image</span>, <span class='no'>polygon</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"white"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,15 +137,28 @@
       <th>image</th>
       <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
     </tr>
+    <tr>
+      <th>polygon</th>
+      <td><p>An m x 2 matrix (or an object that can be converted to an
+m x 2 matrix), with the first column containing the x coordinates of the
+polygon and the second column containing the y coordinates of the polygon.</p></td>
+    </tr>
+    <tr>
+      <th>color</th>
+      <td><p>A value or vector of any kind of R color specification compatible
+with <code>col2rgb</code> representing the color to fill the polygon with
+(default: "white").</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p>This function does not return anything. It modifies <code>image</code> in
+ place.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
+    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='selectROI.html'>selectROI</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

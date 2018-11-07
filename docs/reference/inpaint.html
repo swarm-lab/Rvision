@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make a copy of an Image object — cloneImage • Rvision</title>
+<title>Reconstruct Image Region from Region Neighborhood — inpaint • Rvision</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,16 +30,12 @@
 
 
 
-<meta property="og:title" content="Make a copy of an Image object — cloneImage" />
+<meta property="og:title" content="Reconstruct Image Region from Region Neighborhood — inpaint" />
 
-<meta property="og:description" content="Image objects are pointers toward C++ objects
- stored in memory. When copying an Image object using an
- assignment operator, this creates a copy of the pointer, but not a copy of
- the C++ object. Any operation on the copied Image object will
- therefore result in a modification of the orginal Image object.
- This function duplicates the original Image object instead,
- allowing safe operations on it while maintaining the integrity of the
- original Image object." />
+<meta property="og:description" content="inpaint reconstructs the selected image area from the
+ pixel near the area boundary. The function may be used to remove dust and
+ scratches from a scanned photo, or to remove undesirable objects from still
+ images or videos." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,25 +118,21 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make a copy of an Image object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/ImageClass.R'><code>R/ImageClass.R</code></a></small>
-    <div class="hidden name"><code>cloneImage.Rd</code></div>
+    <h1>Reconstruct Image Region from Region Neighborhood</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/draw.R'><code>R/draw.R</code></a></small>
+    <div class="hidden name"><code>inpaint.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code><a href='Image-class.html'>Image</a></code> objects are pointers toward C++ objects
- stored in memory. When copying an <code><a href='Image-class.html'>Image</a></code> object using an
- assignment operator, this creates a copy of the pointer, but not a copy of
- the C++ object. Any operation on the copied <code><a href='Image-class.html'>Image</a></code> object will
- therefore result in a modification of the orginal <code><a href='Image-class.html'>Image</a></code> object.
- This function duplicates the original <code><a href='Image-class.html'>Image</a></code> object instead,
- allowing safe operations on it while maintaining the integrity of the
- original <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p><code>inpaint</code> reconstructs the selected image area from the
+ pixel near the area boundary. The function may be used to remove dust and
+ scratches from a scanned photo, or to remove undesirable objects from still
+ images or videos.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cloneImage</span>(<span class='no'>image</span>)</pre>
+    <pre class="usage"><span class='fu'>inpaint</span>(<span class='no'>image</span>, <span class='no'>mask</span>, <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"NS"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,15 +141,38 @@
       <th>image</th>
       <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
     </tr>
+    <tr>
+      <th>mask</th>
+      <td><p>An 8-bit single-channel <code><a href='Image-class.html'>Image</a></code> object. The region to
+be reconstructed should be white.</p></td>
+    </tr>
+    <tr>
+      <th>radius</th>
+      <td><p>Radius of the circular neighborhood of each point inpainted
+that is considered by the algorithm (default: 5).</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>The inpainting method to be used. It can only be one of the
+following:</p><ul>
+<li><p>"NS": Navier-Stokes based method (the default).</p></li>
+<li><p>"Telea": Alexandru Telea's method.</p></li>
+</ul></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
     
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Telea, A. (2004). An image inpainting technique based on the fast
+ marching method. Journal of graphics tools. doi: 10.1080/10867651.2004.10487596.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
+    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='selectROI.html'>selectROI</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -170,6 +185,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#references">References</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

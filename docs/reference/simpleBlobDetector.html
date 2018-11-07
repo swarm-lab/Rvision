@@ -21,10 +21,15 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Simple Blob Detector — simpleBlobDetector" />
 
 <meta property="og:description" content="simpleBlobDetector implements a simple algorithm for
@@ -32,6 +37,7 @@
  image that differs in properties (e.g. brightness, color) from surrounding
  regions." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -58,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.1</span>
       </span>
     </div>
 
@@ -101,6 +107,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -108,26 +115,30 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Simple Blob Detector</h1>
-    <small>Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/blob.R'><code>R/blob.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/blob.R'><code>R/blob.R</code></a></small>
+    <div class="hidden name"><code>simpleBlobDetector.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>simpleBlobDetector</code> implements a simple algorithm for
  extracting blobs an <code><a href='Image-class.html'>Image</a></code> object. A blob is a region in an
  image that differs in properties (e.g. brightness, color) from surrounding
  regions.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>simpleBlobDetector</span>(<span class='no'>image</span>, <span class='kw'>min_threshold</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>max_threshold</span> <span class='kw'>=</span> <span class='fl'>220</span>,
-  <span class='kw'>threshold_step</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>min_repeatability</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>min_dist_between_blobs</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>filter_by_area</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>min_area</span> <span class='kw'>=</span> <span class='fl'>25</span>, <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>5000</span>,
-  <span class='kw'>filter_by_color</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>blob_color</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>filter_by_circularity</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>min_circularity</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>max_circularity</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='kw'>filter_by_convexity</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>min_convexity</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>max_convexity</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
+  <span class='kw'>threshold_step</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>min_repeatability</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>min_dist_between_blobs</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>filter_by_area</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>min_area</span> <span class='kw'>=</span> <span class='fl'>25</span>,
+  <span class='kw'>max_area</span> <span class='kw'>=</span> <span class='fl'>5000</span>, <span class='kw'>filter_by_color</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>blob_color</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>filter_by_circularity</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>min_circularity</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+  <span class='kw'>max_circularity</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>filter_by_convexity</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>min_convexity</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>max_convexity</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
   <span class='kw'>filter_by_inertia</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>min_inertia_ratio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
   <span class='kw'>max_inertia_ratio</span> <span class='kw'>=</span> <span class='fl'>Inf</span>)</pre>
     
@@ -270,7 +281,7 @@ discarded. (default: Inf).</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='Image-class.html'>Image</a></code>, <code><a href='isBlob.html'>isBlob</a></code></p>
+    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='isBlob.html'>isBlob</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -309,6 +320,8 @@ Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>
