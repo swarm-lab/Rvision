@@ -1,3 +1,5 @@
+url: https://swarm-lab.github.io/ROpenCVLite/
+
 template:
   params:
     bootswatch: yeti
