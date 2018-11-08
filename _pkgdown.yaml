@@ -3,6 +3,9 @@ url: https://swarm-lab.github.io/ROpenCVLite/
 template:
   params:
     bootswatch: yeti
+    docsearch:
+      api_key: 3a2946bbe34c635ad2e2aae74a83374b
+      index_name: swarm-lab-rvision
 
 authors:
   Simon Garnier:
