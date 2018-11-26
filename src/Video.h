@@ -16,10 +16,11 @@ public:
 
 private:
   cv::VideoCapture video;
+  int nf;
 };
 
 Video::Video() {
-
+  this->nf = -1;
 }
 
 Video::Video(std::string inputFile, std::string api) {
@@ -28,6 +29,8 @@ Video::Video(std::string inputFile, std::string api) {
 
   if (!this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)), getAPIId(api))) {
     throw std::range_error("Could not open the video.");
+  } else {
+    this->nf = -1;
   }
 }
 
@@ -38,6 +41,7 @@ bool Video::open(std::string inputFile, std::string api) {
   if (!this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)), getAPIId(api))) {
     throw std::range_error("Could not open the video.");
   } else {
+    this->nf = -1;
     return true;
   }
 }
@@ -73,7 +77,41 @@ int Video::ncol() {
 }
 
 int Video::nframes() {
-  return this->video.get(cv::CAP_PROP_FRAME_COUNT);
+  cv::Mat tmpFrame;
+  int tmp;
+
+  if (this->nf == -1) {
+    tmp = this->video.get(cv::CAP_PROP_FRAME_COUNT);
+
+    if (tmp > 0) {
+      this->nf = tmp;
+      this->video.set(cv::CAP_PROP_POS_FRAMES, this->nf);
+      this->video >> tmpFrame;
+
+      while(tmpFrame.empty()) {
+        this->nf = this->nf - 10;
+        this->video.set(cv::CAP_PROP_POS_FRAMES, this->nf);
+        this->video >> tmpFrame;
+      }
+
+      while(!tmpFrame.empty()) {
+        this->nf += 1;
+        this->video >> tmpFrame;
+      }
+    } else {
+      this->nf = 0;
+      this->video.set(cv::CAP_PROP_POS_FRAMES, 0);
+      this->video >> tmpFrame;
+
+      while(!tmpFrame.empty()) {
+        this->nf += 1;
+        this->video >> tmpFrame;
+      }
+    }
+  }
+
+  return this->nf;
+  // return this->video.get(cv::CAP_PROP_FRAME_COUNT);
 }
 
 int Video::frame() {
