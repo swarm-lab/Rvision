@@ -6,3 +6,6 @@ scripts
 ^appveyor\.yml$
 ^\.travis\.yml$
 vignettes/old
+_pkgdown.yaml
+docs
+index.Rmd
