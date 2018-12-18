@@ -7,3 +7,4 @@ src/*.so
 src/*.dll
 scripts
 vignettes/old
+src/.DS_Store
