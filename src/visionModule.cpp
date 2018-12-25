@@ -17,6 +17,8 @@ RCPP_MODULE(class_Image) {
 
   .method("open", &Image::open)
   .method("write", &Image::write)
+  .method("get", &Image::get)
+  .method("set", &Image::set)
   .method("loadArray", &Image::loadArray)
   .method("toR", &Image::toR)
   .method("dim", &Image::dim)
@@ -29,10 +31,12 @@ RCPP_MODULE(class_Image) {
   .method("changeColorSpace", &Image::changeColorSpace)
   ;
 
-  function("cloneImage", &cloneImage, List::create(_["image"]), "");
-  function("split", &split, List::create(_["image"]), "");
-  function("merge", &merge, List::create(_["channels"]), "");
-  function("readMulti", &readMulti, List::create(_["file"]), "");
+  function("_cloneImage", &_cloneImage, List::create(_["image"]), "");
+  function("_split", &_split, List::create(_["image"]), "");
+  function("_merge", &_merge, List::create(_["channels"]), "");
+  function("_readMulti", &_readMulti, List::create(_["file"]), "");
+  function("_subimage", &_subimage, List::create(_["image"], _["row"],
+           _["col"], _["width"], _["height"]), "");
 }
 
 #include "Video.h"

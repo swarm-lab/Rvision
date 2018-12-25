@@ -4,10 +4,10 @@
 \alias{readMulti}
 \title{Read a Multi-Page Image}
 \usage{
-readMulti(file)
+readMulti(x)
 }
 \arguments{
-\item{file}{A character string naming the path to a multi-page image file.}
+\item{x}{A character string naming the path to a multi-page image file.}
 }
 \value{
 A list of \code{\link{Image}} objects.
@@ -21,4 +21,7 @@ A list of \code{\link{Image}} objects.
 }
 \seealso{
 \code{\link{Image}}
+}
+\author{
+Simon Garnier, \email{garnier@njit.edu}
 }

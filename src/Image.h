@@ -2,11 +2,13 @@ class Image {
 public:
   Image();
   Image(std::string inputFile);
-  Image(cv::Mat InputImage);
+  Image(cv::Mat inputImage);
   Image(arma::cube inputArray);
   cv::Mat image;
   bool open(std::string inputFile);
   bool write(std::string outputFile);
+  Rcpp::NumericMatrix get(Rcpp::IntegerVector row, Rcpp::IntegerVector column);
+  void set(Rcpp::IntegerVector row, Rcpp::IntegerVector column, Rcpp::IntegerMatrix color);
   bool loadCV(cv::Mat inputImage);
   bool loadArray(arma::cube inputArray);
   arma::cube toR();
@@ -18,6 +20,12 @@ public:
 private:
   void init();
   std::string imageSpace, imageDepth;
+  Rcpp::NumericVector _get1(int row, int column);
+  Rcpp::NumericVector _get3(int row, int column);
+  Rcpp::NumericVector _get4(int row, int column);
+  void _set1(int row, int column, Rcpp::IntegerVector val);
+  void _set3(int row, int column, Rcpp::IntegerVector val);
+  void _set4(int row, int column, Rcpp::IntegerVector val);
 };
 
 Image::Image() {
@@ -113,6 +121,93 @@ bool Image::write(std::string outputFile) {
   Rcpp::Function pathExpand = base["path.expand"];
 
   return imwrite(Rcpp::as<std::string>(pathExpand(outputFile)), this->image);
+}
+
+Rcpp::NumericVector Image::_get1(int row, int column) {
+  Rcpp::NumericVector out = Rcpp::NumericVector::create(this->image.at<uint8_t>(column, row));
+  return out;
+}
+
+Rcpp::NumericVector Image::_get3(int row, int column) {
+  Rcpp::NumericVector out(3);
+  cv::Vec3b val = this->image.at<cv::Vec3b>(column, row);
+  for (int i = 0; i < 3; i++) {
+    out(i) = val(i);
+  }
+  return out;
+}
+
+Rcpp::NumericVector Image::_get4(int row, int column) {
+  Rcpp::NumericVector out(4);
+  cv::Vec4b val = this->image.at<cv::Vec4b>(column, row);
+  for (int i = 0; i < 4; i++) {
+    out(i) = val(i);
+  }
+  return out;
+}
+
+Rcpp::NumericMatrix Image::get(Rcpp::IntegerVector row, Rcpp::IntegerVector column) {
+  Rcpp::NumericMatrix out(this->image.channels(), row.length());
+
+  for (int i = 0; i < row.length(); i++) {
+    switch(this->image.channels()) {
+    case 1:
+      out(Rcpp::_, i) = this->_get1(column(i), row(i));
+      break;
+    case 3:
+      out(Rcpp::_, i) = this->_get3(column(i), row(i));
+      break;
+    case 4:
+      out(Rcpp::_, i) = this->_get4(column(i), row(i));
+      break;
+    default:
+      throw std::range_error("Invalid input image dimensions (1, 3, and 4 channels only).");
+    }
+  }
+
+  return out;
+}
+
+void Image::_set1(int row, int column, Rcpp::IntegerVector color) {
+  this->image.at<uint8_t>(column, row) = color(0);
+}
+
+void Image::_set3(int row, int column, Rcpp::IntegerVector color) {
+  cv::Vec3b val;
+
+  for (int i = 0; i < 3; i++) {
+    val(i) = color(i);
+  }
+
+  this->image.at<cv::Vec3b>(column, row) = val;
+}
+
+void Image::_set4(int row, int column, Rcpp::IntegerVector color) {
+  cv::Vec4b val;
+
+  for (int i = 0; i < 4; i++) {
+    val(i) = color(i);
+  }
+
+  this->image.at<cv::Vec4b>(column, row) = val;
+}
+
+void Image::set(Rcpp::IntegerVector row, Rcpp::IntegerVector column, Rcpp::IntegerMatrix color) {
+  for (int i = 0; i < row.length(); i++) {
+    switch(this->image.channels()) {
+    case 1:
+      this->_set1(column(i), row(i), color(Rcpp::_, i));
+      break;
+    case 3:
+      this->_set3(column(i), row(i), color(Rcpp::_, i));
+      break;
+    case 4:
+      this->_set4(column(i), row(i), color(Rcpp::_, i));
+      break;
+    default:
+      throw std::range_error("Invalid input image dimensions (1, 3, and 4 channels only).");
+    }
+  }
 }
 
 bool Image::loadCV(cv::Mat inputImage) {
@@ -382,13 +477,13 @@ void Image::changeColorSpace(std::string colorSpace) {
   this->init();
 }
 
-Image cloneImage(Image image) {
+Image _cloneImage(Image image) {
   cv::Mat copy;
   image.image.copyTo(copy);
   return Image(copy);
 }
 
-Rcpp::List split(Image image) {
+Rcpp::List _split(Image image) {
   Rcpp::List out(image.nchan());
   std::vector<cv::Mat> channels(image.nchan());
 
@@ -401,7 +496,7 @@ Rcpp::List split(Image image) {
   return out;
 }
 
-Image merge(Rcpp::List & channels) {
+Image _merge(Rcpp::List & channels) {
   cv::Mat out;
   std::vector<cv::Mat> tomerge(channels.size());
 
@@ -414,7 +509,7 @@ Image merge(Rcpp::List & channels) {
   return Image(out);
 }
 
-Rcpp::List readMulti(std::string file) {
+Rcpp::List _readMulti(std::string file) {
   std::vector<cv::Mat> mats;
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
@@ -428,4 +523,8 @@ Rcpp::List readMulti(std::string file) {
   }
 
   return out;
+}
+
+Image _subimage(Image image, int row, int col, int width, int height) {
+  return Image(image.image(cv::Rect(col, row, width, height)));
 }

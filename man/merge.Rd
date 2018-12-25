@@ -4,10 +4,10 @@
 \alias{merge}
 \title{Merge Separate Channels into an Image}
 \usage{
-merge(channels)
+merge(x)
 }
 \arguments{
-\item{channels}{A list of single channel (grayscale) \code{\link{Image}} objects.}
+\item{x}{A list of single channel (grayscale) \code{\link{Image}} objects.}
 }
 \value{
 An \code{\link{Image}} object.
@@ -25,4 +25,7 @@ Color images are usually represented by 3 channels (possibly 4) in the
 }
 \seealso{
 \code{\link{split}}, \code{\link{Image}}
+}
+\author{
+Simon Garnier, \email{garnier@njit.edu}
 }

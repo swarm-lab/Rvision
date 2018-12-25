@@ -4,10 +4,10 @@
 \alias{split}
 \title{Split an Image into Separate Channels}
 \usage{
-split(image)
+split(x)
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{x}{An \code{\link{Image}} object.}
 }
 \value{
 A list of single channel (grayscale) \code{\link{Image}} objects.
@@ -25,4 +25,7 @@ Color images are usually represented by 3 channels (possibly 4) in the
 }
 \seealso{
 \code{\link{merge}}, \code{\link{Image}}
+}
+\author{
+Simon Garnier, \email{garnier@njit.edu}
 }

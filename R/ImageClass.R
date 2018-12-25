@@ -325,7 +325,7 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #'  allowing safe operations on it while maintaining the integrity of the
 #'  original \code{\link{Image}} object.
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param x An \code{\link{Image}} object.
 #'
 #' @return An \code{\link{Image}} object.
 #'
@@ -336,7 +336,12 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #' @examples
 #' # TODO
 #' @export
-"cloneImage"
+cloneImage <- function(x) {
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
+  `_cloneImage`(x)
+}
 
 
 #' @title Split an Image into Separate Channels
@@ -344,19 +349,26 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #' @description \code{split} returns a list of grayscale images corresponding to
 #'  each of the channels (green, blue, red, or alpha) of an image.
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param x An \code{\link{Image}} object.
 #'
 #' @return A list of single channel (grayscale) \code{\link{Image}} objects.
 #'
 #' @note Color images are usually represented by 3 channels (possibly 4) in the
 #'  following order: green (1), blue (2), red (3), and possibly alpha (4).
 #'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
 #' @seealso \code{\link{merge}}, \code{\link{Image}}
 #'
 #' @examples
 #' # TODO
 #' @export
-"split"
+split <- function(x) {
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
+  `_split`(x)
+}
 
 
 #' @title Merge Separate Channels into an Image
@@ -364,33 +376,188 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #' @description \code{merge} returns an image from the combination of grayscale
 #'  images corresponding to single channels (green, blue, red, or alpha).
 #'
-#' @param channels A list of single channel (grayscale) \code{\link{Image}} objects.
+#' @param x A list of single channel (grayscale) \code{\link{Image}} objects.
 #'
 #' @return An \code{\link{Image}} object.
 #'
 #' @note Color images are usually represented by 3 channels (possibly 4) in the
 #'  following order: green (1), blue (2), red (3), and possibly alpha (4).
 #'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
 #' @seealso \code{\link{split}}, \code{\link{Image}}
 #'
 #' @examples
 #' # TODO
 #' @export
-"merge"
+merge <- function(x) {
+  if (!is.list(x))
+    stop("This is not a list of grayscale images.")
 
+  if (!all(sapply(x, isImage)))
+    stop("This is not a list of grayscale images.")
+
+  if (!all(apply(sapply(x, dim), 1, function(x) diff(range(x)) < .Machine$double.eps ^ 0.5)))
+    stop("The grayscale images do not have the same dimensions.")
+
+  `_merge`(x)
+}
 
 #' @title Read a Multi-Page Image
 #'
 #' @description \code{readMulti} reads a multi-page image and returns a list of
 #'  \code{\link{Image}} objects, each corresponding to a different page.
 #'
-#' @param file A character string naming the path to a multi-page image file.
+#' @param x A character string naming the path to a multi-page image file.
 #'
 #' @return A list of \code{\link{Image}} objects.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
 #' # TODO
 #' @export
-"readMulti"
+readMulti <- function(x) {
+  if (!file.exists(x))
+    stop("File not found.")
+
+  `_readMulti`(x)
+}
+
+
+#' @title Extract or Replace Parts of an Image
+#'
+#' @description Operators acting on \code{\link{Image}} objects to extract or
+#'  replace parts.
+#'
+#' @aliases [<-.Rcpp_Image
+#'
+#' @usage x[i]
+#' x[i, j]
+#' x[i] <- value
+#' x[i, j] <- value
+#'
+#' @param x An \code{\link{Image}} object.
+#'
+#' @param i,j Indices specifying elements to extract or replace. Indices are
+#'  numeric vectors which values are coerced to integer as by as.integer (and
+#'  hence truncated towards zero).
+#'
+#' @param value Single-, three- or four-values vectors representing the gray
+#'  intensity, RGB or RGBA values (respectively) of the pixels. The vector is
+#'  recycled if it is shorter than the number of pixels to modify times the
+#'  number of channels of the image.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' # TODO
+#' @export
+`[.Rcpp_Image` <- function(x, i, j = NULL) {
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
+  if (is.null(j)) {
+    pixel <- data.frame(row = ((i - 1) %% nrow(x)) + 1,
+                        column = floor((i - 1) / nrow(x)) + 1)
+  } else {
+    pixel <- expand.grid(row = i, column = j)
+  }
+
+  if (any(pixel$row < 1) | any(pixel$row > nrow(x)) |
+      any(pixel$column < 1) | any(pixel$column > ncol(x)))
+    stop("Subscript out of bounds.")
+
+  value <- t(x$get(pixel$row - 1, pixel$column - 1))
+
+  if (is.null(j)) {
+    out <- value
+    rownames(out) <- i
+    colnames(out) <- switch(ncol(out), "I", NA, c("B", "G", "R"),
+                            c("B", "G", "R", "A"), NA)
+    switch(ncol(value),
+           out, NA, out[, 3:1], out[, c(3:1, 4)], NA
+    )
+
+  } else {
+    out <- switch(ncol(value),
+                  matrix(value, nrow = length(i), ncol = length(j),
+                         dimnames = list(i, j)),
+                  NA,
+                  array(value, c(length(i), length(j), 3),
+                        dimnames = list(i, j, c("B", "G", "R"))),
+                  array(value, c(length(i), length(j), 4),
+                        dimnames = list(i, j, c("B", "G", "R", "A"))),
+                  NA)
+
+    switch(ncol(value),
+           out, NA, out[, , 3:1], out[, , c(3:1, 4)], NA
+    )
+  }
+}
+
+
+#' @export
+`[<-.Rcpp_Image` <- function(x, i, j = NULL, value) {
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
+  if (is.null(j)) {
+    pixel <- data.frame(row = ((i - 1) %% nrow(x)) + 1,
+                        column = floor((i - 1) / nrow(x)) + 1)
+  } else {
+    pixel <- expand.grid(row = i, column = j)
+  }
+
+  if (any(pixel$row < 1) | any(pixel$row > nrow(x)) |
+      any(pixel$column < 1) | any(pixel$column > ncol(x)))
+    stop("Subscript out of bounds.")
+
+  color <- matrix(value, nrow = nchan(x), ncol = nrow(pixel))
+  color <- switch(nchan(x),
+                  color, NA, color[3:1, ], out[c(3:1, 4), ], NA
+  )
+
+  x$set(pixel$row - 1, pixel$column - 1, color)
+  x
+}
+
+
+#' @title Extract Subimage
+#'
+#' @description \code{subImage} extracts a portion of an \code{\link{Image}} and
+#'  returns it as an \code{\link{Image}} object.
+#'
+#' @param x An \code{\link{Image}} object.
+#'
+#' @param row The index of the upper row of the subimage.
+#'
+#' @param column The index of the leftmost column of the subimage.
+#'
+#' @param width The width of the subimage.
+#'
+#' @param height The height of the subimage.
+#'
+#' @return An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' # TODO
+#' @export
+subImage <- function(x, row, column, width, height) {
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
+  if ((row < 1) | (column < 1) | ((row + height - 1) > nrow(x)) |
+      ((column + height - 1) > ncol(x)))
+    stop("Subscript out of bounds.")
+
+  `_subimage`(x, row - 1, column - 1, width, height)
+}

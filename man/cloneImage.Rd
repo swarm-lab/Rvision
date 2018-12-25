@@ -4,10 +4,10 @@
 \alias{cloneImage}
 \title{Make a copy of an Image object}
 \usage{
-cloneImage(image)
+cloneImage(x)
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{x}{An \code{\link{Image}} object.}
 }
 \value{
 An \code{\link{Image}} object.
