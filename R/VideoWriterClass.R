@@ -248,21 +248,21 @@ ncol.Rcpp_VideoWriter <- function(x) {
 
 #' @export
 #' @rdname fps
-fps.Rcpp_VideoWriter <- function(x) {
-  if (!isVideoWriter(x))
+fps.Rcpp_VideoWriter <- function(obj) {
+  if (!isVideoWriter(obj))
     stop("This is not a VideoWriter object.")
 
-  x$fps()
+  obj$fps()
 }
 
 
 #' @export
 #' @rdname codec
-codec.Rcpp_VideoWriter <- function(x) {
-  if (!isVideoWriter(x))
+codec.Rcpp_VideoWriter <- function(obj) {
+  if (!isVideoWriter(obj))
     stop("This is not a VideoWriter object.")
 
-  x$codec()
+  obj$codec()
 }
 
 

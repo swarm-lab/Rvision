@@ -198,21 +198,21 @@ frame <- function(x) {
 
 #' @export
 #' @rdname fps
-fps.Rcpp_Video <- function(x) {
-  if (!isVideo(x))
+fps.Rcpp_Video <- function(obj) {
+  if (!isVideo(obj))
     stop("This is not a Video object.")
 
-  x$fps()
+  obj$fps()
 }
 
 
 #' @export
 #' @rdname codec
-codec.Rcpp_Video <- function(x) {
-  if (!isVideo(x))
+codec.Rcpp_Video <- function(obj) {
+  if (!isVideo(obj))
     stop("This is not a Video object.")
 
-  x$codec()
+  obj$codec()
 }
 
 

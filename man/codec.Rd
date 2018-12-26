@@ -6,14 +6,14 @@
 \alias{codec}
 \title{Codec of a Video}
 \usage{
-\method{codec}{Rcpp_Video}(x)
+\method{codec}{Rcpp_Video}(obj)
 
-\method{codec}{Rcpp_VideoWriter}(x)
+\method{codec}{Rcpp_VideoWriter}(obj)
 
-codec(obj, property)
+codec(obj)
 }
 \arguments{
-\item{x}{A \code{\link{Video}} object.}
+\item{obj}{A \code{\link{Video}} object.}
 }
 \value{
 A character string corresponding to the

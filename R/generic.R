@@ -102,7 +102,7 @@ getProp <- function(obj, property) UseMethod("getProp")
 #'
 #' @description Retrieve the codec of a \code{\link{Video}} object.
 #'
-#' @param x A \code{\link{Video}} object.
+#' @param obj A \code{\link{Video}} object.
 #'
 #' @return A character string corresponding to the
 #'  \href{http://www.fourcc.org/codecs.php}{FOURCC} code of the codec.
@@ -114,7 +114,7 @@ getProp <- function(obj, property) UseMethod("getProp")
 #' @examples
 #' # TODO
 #' @export
-codec <- function(obj, property) UseMethod("codec")
+codec <- function(obj) UseMethod("codec")
 
 
 #' @title Framerate of a Video
@@ -122,7 +122,7 @@ codec <- function(obj, property) UseMethod("codec")
 #' @description Retrieve the framerate (in frames per second) of a
 #'  \code{\link{Video}} object.
 #'
-#' @param x A \code{\link{Video}} object.
+#' @param obj A \code{\link{Video}} object.
 #'
 #' @return A numeric value.
 #'
@@ -133,4 +133,4 @@ codec <- function(obj, property) UseMethod("codec")
 #' @examples
 #' # TODO
 #' @export
-fps <- function(obj, property) UseMethod("fps")
+fps <- function(obj) UseMethod("fps")
