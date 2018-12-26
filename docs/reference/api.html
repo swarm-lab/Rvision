@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find Contours in a Binary Image — findContours • Rvision</title>
+<title>API of a Video Writer — api • Rvision</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -36,10 +36,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Find Contours in a Binary Image — findContours" />
+<meta property="og:title" content="API of a Video Writer — api" />
 
-<meta property="og:description" content="findContours retrieves contours from a binary image using
- the algorithm by Suzuki &amp;amp; Be (1985)." />
+<meta property="og:description" content="Retrieve the API of a VideoWriter object." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,101 +129,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find Contours in a Binary Image</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/shape.R'><code>R/shape.R</code></a></small>
-    <div class="hidden name"><code>findContours.Rd</code></div>
+    <h1>API of a Video Writer</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/VideoWriterClass.R'><code>R/VideoWriterClass.R</code></a></small>
+    <div class="hidden name"><code>api.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>findContours</code> retrieves contours from a binary image using
- the algorithm by Suzuki &amp; Be (1985).</p>
+    <p>Retrieve the API of a <code><a href='VideoWriter-class.html'>VideoWriter</a></code> object.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>findContours</span>(<span class='no'>image</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"external"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"simple"</span>,
-  <span class='kw'>offset</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>))</pre>
+    <pre class="usage"><span class='fu'>api</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>image</th>
-      <td><p>An 8-bit (8U) single-channel <code><a href='Image-class.html'>Image</a></code> object.</p></td>
-    </tr>
-    <tr>
-      <th>mode</th>
-      <td><p>Mode of the contour retrieval algorithm. It can take the following
-values:</p><ul>
-<li><p>'external': retrieves only the extreme outer contours (the default).</p></li>
-<li><p>'list': retrieves all of the contours without establishing any
-      hierarchical relationships.</p></li>
-<li><p>'ccomp': retrieves all of the contours and organizes them into a
-      two-level hierarchy. At the top level, there are external boundaries of
-      the components. At the second level, there are boundaries of the holes.
-      If there is another contour inside a hole of a connected component, it
-      is still put at the top level.</p></li>
-<li><p>'tree': retrieves all of the contours and reconstructs a full
-      hierarchy of nested contours.</p></li>
-</ul></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>Method for approximating the contours. It can take the following
-values:</p><ul>
-<li><p>'none': stores absolutely all the contour points.</p></li>
-<li><p>'simple': compresses horizontal, vertical, and diagonal segments
-      and leaves only their end points (the default).</p></li>
-<li><p>'l1': applies one of the flavors of the Teh-Chin chain
-      approximation algorithm (Teh &amp; Chin, 1989).</p></li>
-<li><p>'kcos': applies one of the flavors of the Teh-Chin chain
-      approximation algorithm (Teh &amp; Chin, 1989).</p></li>
-</ul></td>
-    </tr>
-    <tr>
-      <th>offset</th>
-      <td><p>A 2-element vector representing the offset by which every
-contour point should be shifted (default: <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(0, 0)</a></code>). This is useful if
-the contours are extracted from the image ROI but then should be analyzed in
-the whole image context.</p></td>
+      <th>x</th>
+      <td><p>A <code><a href='VideoWriter-class.html'>VideoWriter</a></code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of two data frames:</p><ul>
-<li><p>"contours": a data frame with 3 columns:
-      <ul>
-<li><p>"id": the contour identity (indicates the set of points
-            belonging to the same contour).</p></li>
-<li><p>"x": the x coordinates of the contour points.</p></li>
-<li><p>"y": the y coordinates of the contour points.</p></li>
-</ul></p></li>
-<li><p>"hierarchy": a data frame with 5 columns:
-      <ul>
-<li><p>"id": the contour identity.</p></li>
-<li><p>"after": the identity of the next contour at the same
-            hierarchical level.</p></li>
-<li><p>"before": the identity of the previous contour at the same
-            hierarchical level.</p></li>
-<li><p>"child": the identity of the first child contour.</p></li>
-<li><p>"parent": the identity of the parent contour.</p></li>
-</ul></p></li>
-</ul>
-
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Suzuki, S., and Be, K. (1985). Topological structural analysis of
- digitized binary images by border following. Computer Vision, Graphics, and
- Image Processing 30, 32–46. doi:10.1016/0734-189X(85)90016-7.</p>
-<p>Teh, C.-H., and Chin, R. T. (1989). On the detection of dominant points on
- digital curves. IEEE Trans. Pattern Anal. Mach. Intell. 11, 859–872.
- doi:10.1109/34.31447.</p>
+    <p>A character string corresponding to the API used by the
+ <code><a href='VideoWriter-class.html'>VideoWriter</a></code> object to write the video.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
+    <div class='dont-index'><p><code><a href='VideoWriter-class.html'>VideoWriter</a></code>, <code><a href='videoWriter.html'>videoWriter</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -237,8 +171,6 @@ the whole image context.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#references">References</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

@@ -31,6 +31,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/addWeighted.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/api.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/as.array.Rcpp_Image.html</loc>
   </url>
   <url>
@@ -77,6 +80,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/dim.Rcpp_Video.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/dim.Rcpp_VideoWriter.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/display.html</loc>
@@ -226,6 +232,12 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/stream_dimensions.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/sub-.Rcpp_Image.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/subImage.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/sum.html</loc>
   </url>
   <url>
@@ -241,10 +253,16 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/video_dimensions.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/videowriter_dimensions.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/write.Image.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/writeFrame.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/writerOuput.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//articles/z1_install.html</loc>
