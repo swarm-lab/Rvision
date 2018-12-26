@@ -75,12 +75,32 @@
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 videoWriter <- function(outputFile, fourcc, fps, height, width, isColor = TRUE,
                         api = "ANY") {
   new(VideoWriter, outputFile = outputFile, fourcc = fourcc, fps = fps,
       height = height, width = width, isColor = isColor, api = api)
 }
+
+setMethod("show", "Rcpp_VideoWriter", function(object) {
+  if (!isVideoWriter(object))
+    stop("This is not a VideoWriter object.")
+
+  width <- ncol(object)
+  height <- nrow(object)
+  codec <- codec(object)
+  fps <- fps(object)
+  api <- api(object)
+  output <- writerOuput((object))
+
+  cat("Class: video writer.\n")
+  cat("Dimensions: ", width, "x", height, ".\n", sep = "")
+  cat("Frame rate: ", fps, "fps.\n", sep = "")
+  cat("Codec: ", codec, ".\n", sep = "")
+  cat("API: ", api, ".\n", sep = "")
+  cat("Output file: ", output, "\n", sep = "")
+})
 
 
 #' @title Test for a VideoWriter object
@@ -101,7 +121,7 @@ videoWriter <- function(outputFile, fourcc, fps, height, width, isColor = TRUE,
 #' @export
 #'
 isVideoWriter <- function(object) {
-  inherits(object, "Rcpp_VideoWriter")
+  inherits(object, "Rcpp_VideoWriter") & tryCatch(object$isOpened(), error = function(e) FALSE)
 }
 
 
@@ -169,4 +189,126 @@ getProp.Rcpp_VideoWriter <- function(obj, property) {
     stop("This is not a VideoWriter object.")
 
   obj$get(property)
+}
+
+
+#' @title Dimensions of a Video Writer
+#'
+#' @description Retrieve the dimensions a \code{\link{VideoWriter}} object.
+#'
+#' @param x A \code{\link{VideoWriter}} object.
+#'
+#' @return A vector with 2 values corresponding to the number of rows and columns
+#'  of the video writer (in this order).
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{VideoWriter}}, \code{\link{videoWriter}}
+#'
+#' @examples
+#' # TODO
+#'
+#' @export
+dim.Rcpp_VideoWriter <- function(x) {
+  x$dim()
+}
+
+
+#' @title The Number of Rows/Columns of a Video Writer
+#'
+#' @aliases ncol.Rcpp_VideoWriter
+#'
+#' @description nrow, ncol return the number of rows or columns present in a
+#'  \code{\link{VideoWriter}} object.
+#'
+#' @param x A \code{\link{VideoWriter}} object.
+#'
+#' @return A numeric value.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link[=dim.Rcpp_VideoWriter]{dim}} which returns \emph{all}
+#'  dimensions.
+#'
+#' @examples
+#' # TODO
+#'
+#' @export
+#' @rdname videowriter_dimensions
+nrow.Rcpp_VideoWriter <- function(x) {
+  x$nrow()
+}
+
+#' @rdname videowriter_dimensions
+#' @export
+ncol.Rcpp_VideoWriter <- function(x) {
+  x$ncol()
+}
+
+
+#' @export
+#' @rdname fps
+fps.Rcpp_VideoWriter <- function(x) {
+  if (!isVideoWriter(x))
+    stop("This is not a VideoWriter object.")
+
+  x$fps()
+}
+
+
+#' @export
+#' @rdname codec
+codec.Rcpp_VideoWriter <- function(x) {
+  if (!isVideoWriter(x))
+    stop("This is not a VideoWriter object.")
+
+  x$codec()
+}
+
+
+#' @title API of a Video Writer
+#'
+#' @description Retrieve the API of a \code{\link{VideoWriter}} object.
+#'
+#' @param x A \code{\link{VideoWriter}} object.
+#'
+#' @return A character string corresponding to the API used by the
+#'  \code{\link{VideoWriter}} object to write the video.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{VideoWriter}}, \code{\link{videoWriter}}
+#'
+#' @examples
+#' # TODO
+#' @export
+api <- function(x) {
+  if (!isVideoWriter(x))
+    stop("This is not a VideoWriter object.")
+
+  x$api()
+}
+
+
+#' @title Output File of a Video Writer
+#'
+#' @description Retrieve the output file of a \code{\link{VideoWriter}} object.
+#'
+#' @param x A \code{\link{VideoWriter}} object.
+#'
+#' @return A character string corresponding to the address of the output file on
+#'  the hard drive.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{VideoWriter}}, \code{\link{videoWriter}}
+#'
+#' @examples
+#' # TODO
+#' @export
+writerOuput <- function(x) {
+  if (!isVideoWriter(x))
+    stop("This is not a VideoWriter object.")
+
+  x$output()
 }

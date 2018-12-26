@@ -36,6 +36,7 @@ readNext <- function(obj) UseMethod("readNext")
 #' @export
 release <- function(obj) UseMethod("release")
 
+
 #' @title Set/Get Video Properties
 #'
 #' @description Set or get the values of various properties of the
@@ -95,3 +96,41 @@ setProp <- function(obj, property, value) UseMethod("setProp")
 #' @export
 #' @rdname setProp
 getProp <- function(obj, property) UseMethod("getProp")
+
+
+#' @title Codec of a Video
+#'
+#' @description Retrieve the codec of a \code{\link{Video}} object.
+#'
+#' @param x A \code{\link{Video}} object.
+#'
+#' @return A character string corresponding to the
+#'  \href{http://www.fourcc.org/codecs.php}{FOURCC} code of the codec.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Video}}, \code{\link{video}}
+#'
+#' @examples
+#' # TODO
+#' @export
+codec <- function(obj, property) UseMethod("codec")
+
+
+#' @title Framerate of a Video
+#'
+#' @description Retrieve the framerate (in frames per second) of a
+#'  \code{\link{Video}} object.
+#'
+#' @param x A \code{\link{Video}} object.
+#'
+#' @return A numeric value.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Video}}, \code{\link{video}}
+#'
+#' @examples
+#' # TODO
+#' @export
+fps <- function(obj, property) UseMethod("fps")

@@ -101,6 +101,13 @@ RCPP_MODULE(class_VideoWriter) {
   .method("get", &VideoWriter::get)
   .method("set", &VideoWriter::set)
   .method("write", &VideoWriter::write)
+  .method("nrow", &VideoWriter::nrow)
+  .method("ncol", &VideoWriter::ncol)
+  .method("dim", &VideoWriter::dim)
+  .method("codec", &VideoWriter::codec)
+  .method("api", &VideoWriter::api)
+  .method("output", &VideoWriter::output)
+  .method("fps", &VideoWriter::fps)
   ;
 }
 

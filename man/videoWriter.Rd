@@ -68,6 +68,7 @@ Hereafter is a list of all supported APIs. Note that not all APIs will
 }
 \examples{
 # TODO
+
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

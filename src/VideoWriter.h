@@ -10,9 +10,16 @@ public:
   void write(Image image);
   bool set(std::string propId, double value);
   double get(std::string propId);
+  Rcpp::NumericVector dim();
+  int nrow(), ncol();
+  double fps();
+  std::string codec(), api(), output();
 
 private:
   cv::VideoWriter writer;
+  double my_fps;
+  int my_nrow, my_ncol;
+  std::string my_codec, my_api, my_output;
 };
 
 VideoWriter::VideoWriter() {
@@ -28,6 +35,13 @@ VideoWriter::VideoWriter(std::string outputFile, std::string fourcc, double fps,
                     fps, cv::Size(width, height), isColor)) {
     throw std::range_error("Could not open the output.");
   }
+
+  this->my_nrow = height;
+  this->my_ncol = width;
+  this->my_codec = fourcc;
+  this->my_api = api;
+  this->my_output = outputFile;
+  this->my_fps = fps;
 }
 
 bool VideoWriter::open(std::string outputFile, std::string fourcc, double fps,
@@ -41,6 +55,13 @@ bool VideoWriter::open(std::string outputFile, std::string fourcc, double fps,
   } else {
     return true;
   }
+
+  this->my_nrow = height;
+  this->my_ncol = width;
+  this->my_codec = fourcc;
+  this->my_api = api;
+  this->my_output = outputFile;
+  this->my_fps = fps;
 }
 
 bool VideoWriter::isOpened() {
@@ -61,4 +82,33 @@ double VideoWriter::get(std::string propId) {
 
 void VideoWriter::write(Image image) {
   this->writer << image.image;
+}
+
+int VideoWriter::nrow() {
+  return this->my_nrow;
+}
+
+int VideoWriter::ncol() {
+  return this->my_ncol;
+}
+
+Rcpp::NumericVector VideoWriter::dim() {
+  return Rcpp::NumericVector::create(this->my_nrow,
+                                     this->my_ncol);
+}
+
+std::string VideoWriter::codec() {
+  return this->my_codec;
+}
+
+std::string VideoWriter::api() {
+  return this->my_api;
+}
+
+std::string VideoWriter::output() {
+  return this->my_output;
+}
+
+double VideoWriter::fps() {
+  return this->my_fps;
 }

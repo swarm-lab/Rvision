@@ -97,7 +97,7 @@ setMethod("show", "Rcpp_Stream", function(object) {
 #' @export
 #'
 isStream <- function(object) {
-  inherits(object, "Rcpp_Stream") & (tryCatch(object$ncol(), error = function(e) 0) > 0)
+  inherits(object, "Rcpp_Stream") & tryCatch(object$isOpened(), error = function(e) FALSE)
 }
 
 

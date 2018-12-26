@@ -103,7 +103,7 @@ setMethod("show", "Rcpp_Video", function(object) {
 #'
 #' @export
 isVideo <- function(object) {
-  inherits(object, "Rcpp_Video") & (tryCatch(object$ncol(), error = function(e) 0) > 0)
+  inherits(object, "Rcpp_Video") & tryCatch(object$isOpened(), error = function(e) FALSE)
 }
 
 
@@ -196,23 +196,9 @@ frame <- function(x) {
 }
 
 
-#' @title Framerate of a Video
-#'
-#' @description Retrieve the framerate (in frames per second) of a
-#'  \code{\link{Video}} object.
-#'
-#' @param x A \code{\link{Video}} object.
-#'
-#' @return A numeric value.
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Video}}, \code{\link{video}}
-#'
-#' @examples
-#' # TODO
 #' @export
-fps <- function(x) {
+#' @rdname fps
+fps.Rcpp_Video <- function(x) {
   if (!isVideo(x))
     stop("This is not a Video object.")
 
@@ -220,23 +206,9 @@ fps <- function(x) {
 }
 
 
-#' @title Codec of a Video
-#'
-#' @description Retrieve the codec of a \code{\link{Video}} object.
-#'
-#' @param x A \code{\link{Video}} object.
-#'
-#' @return A character string corresponding to the
-#'  \href{http://www.fourcc.org/codecs.php}{FOURCC} code of the codec.
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Video}}, \code{\link{video}}
-#'
-#' @examples
-#' # TODO
 #' @export
-codec <- function(x) {
+#' @rdname codec
+codec.Rcpp_Video <- function(x) {
   if (!isVideo(x))
     stop("This is not a Video object.")
 
