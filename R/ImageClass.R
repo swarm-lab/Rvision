@@ -45,6 +45,25 @@ image <- function(...) {
   new(Rvision::Image, ...)
 }
 
+setMethod("show", "Rcpp_Image", function(object) {
+  if (!isImage(object))
+    stop("This is not an Image object.")
+
+  width <- ncol(object)
+  height <- nrow(object)
+  type <- switch(colorspace(object),
+                 GRAY = "GRAY",
+                 BGR = "RGB",
+                 BGRA = "RGBA",
+                 NA
+  )
+  depth <- gsub("U", "", bitdepth(object))
+
+  cat("Class: image. \n")
+  cat("Dimensions: ", width, "x", height, ".\n", sep = "")
+  cat("Type: ", type, ", ", depth, "bits.\n", sep = "")
+})
+
 
 #' @title Plot \pkg{Rvision} Images
 #'
@@ -66,6 +85,9 @@ image <- function(...) {
 #' # TODO
 #' @export
 plot.Rcpp_Image <- function(x, ...) {
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
   img <- x$toR()
 
   if (Rvision::bitdepth(x) == "8U") {
@@ -121,7 +143,7 @@ plot.Rcpp_Image <- function(x, ...) {
 #' # TODO
 #' @export
 isImage <- function(object) {
-  inherits(object, "Rcpp_Image")
+  inherits(object, "Rcpp_Image") & (tryCatch(object$ncol(), error = function(e) 0) > 0)
 }
 
 
@@ -432,12 +454,9 @@ readMulti <- function(x) {
 #' @description Operators acting on \code{\link{Image}} objects to extract or
 #'  replace parts.
 #'
-#' @aliases [<-.Rcpp_Image
+#' @aliases [.Rcpp_Image [<-.Rcpp_Image
 #'
-#' @usage x[i]
-#' x[i, j]
-#' x[i] <- value
-#' x[i, j] <- value
+#' @method [ Rcpp_Image
 #'
 #' @param x An \code{\link{Image}} object.
 #'
@@ -501,6 +520,9 @@ readMulti <- function(x) {
 }
 
 
+#' @title Extract or Replace Parts of an Image
+#' @rdname sub-.Rcpp_Image
+#' @method [<- Rcpp_Image
 #' @export
 `[<-.Rcpp_Image` <- function(x, i, j = NULL, value) {
   if (!isImage(x))
@@ -519,7 +541,7 @@ readMulti <- function(x) {
 
   color <- matrix(value, nrow = nchan(x), ncol = nrow(pixel))
   color <- switch(nchan(x),
-                  color, NA, color[3:1, ], out[c(3:1, 4), ], NA
+                  color, NA, color[3:1, ], color[c(3:1, 4), ], NA
   )
 
   x$set(pixel$row - 1, pixel$column - 1, color)
