@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract Subimage — subImage • Rvision</title>
+<title>Template Matching — matchTemplate • Rvision</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -36,10 +36,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Extract Subimage — subImage" />
+<meta property="og:title" content="Template Matching — matchTemplate" />
 
-<meta property="og:description" content="subImage extracts a portion of an Image and
- returns it as an Image object." />
+<meta property="og:description" content="matchTemplate compares a template against overlapping
+ image regions using the specified method. After the function finishes
+ the comparison, the best matches can be found as global minimums (when
+ methods &quot;SQDIFF&quot; or &quot;SQDIFF_NORMED&quot; were used) or maximums (when methods
+ &quot;CCORR&quot;, &quot;CCORR_NORMED&quot;, &quot;CCOEFF&quot; or &quot;CCOEF_NORMED&quot; were used) using the
+ minMaxLoc function." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,19 +134,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract Subimage</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/ImageClass.R'><code>R/ImageClass.R</code></a></small>
-    <div class="hidden name"><code>subImage.Rd</code></div>
+    <h1>Template Matching</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/comparisons.R'><code>R/comparisons.R</code></a></small>
+    <div class="hidden name"><code>matchTemplate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>subImage</code> extracts a portion of an <code><a href='Image-class.html'>Image</a></code> and
- returns it as an <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p><code>matchTemplate</code> compares a template against overlapping
+ image regions using the specified <code>method</code>. After the function finishes
+ the comparison, the best matches can be found as global minimums (when
+ methods "SQDIFF" or "SQDIFF_NORMED" were used) or maximums (when methods
+ "CCORR", "CCORR_NORMED", "CCOEFF" or "CCOEF_NORMED" were used) using the
+ <code><a href='minMaxLoc.html'>minMaxLoc</a></code> function.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>subImage</span>(<span class='no'>image</span>, <span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>width</span>, <span class='no'>height</span>)</pre>
+    <pre class="usage"><span class='fu'>matchTemplate</span>(<span class='no'>image</span>, <span class='no'>template</span>, <span class='no'>method</span>, <span class='kw'>mask</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,27 +160,33 @@
       <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
     </tr>
     <tr>
-      <th>x, y</th>
-      <td><p>The coordinates of the bottom-left corner of the subimage within
-the original image.</p></td>
+      <th>template</th>
+      <td><p>An <code><a href='Image-class.html'>Image</a></code> object of the same type as <code>image</code>.
+<code>template</code> cannot be larger than <code>image</code>.</p></td>
     </tr>
     <tr>
-      <th>width</th>
-      <td><p>The width of the subimage.</p></td>
+      <th>method</th>
+      <td><p>A string indicating the comparison method to use. It can be any
+of the following (see <a href='https://bit.ly/2RjELvJ'>https://bit.ly/2RjELvJ</a> for a full description of each
+comparison method):</p><ul>
+<li><p>"SQDIFF"</p></li>
+<li><p>"SQDIFF_NORMED"</p></li>
+<li><p>"CCORR"</p></li>
+<li><p>"CCORR_NORMED"</p></li>
+<li><p>"CCOEFF"</p></li>
+<li><p>"CCOEFF_NORMED"</p></li>
+</ul></td>
     </tr>
     <tr>
-      <th>height</th>
-      <td><p>The height of the subimage.</p></td>
+      <th>mask</th>
+      <td><p>An <code><a href='Image-class.html'>Image</a></code> object of the same type and dimensions as
+<code>template</code> (default: NULL).</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
+    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='minMaxLoc.html'>minMaxLoc</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -185,8 +199,6 @@ the original image.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

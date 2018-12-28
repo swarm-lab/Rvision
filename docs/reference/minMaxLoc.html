@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract Subimage — subImage • Rvision</title>
+<title>Coordinates of the Maxima and Minima of an Image — minMaxLoc • Rvision</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -36,10 +36,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Extract Subimage — subImage" />
+<meta property="og:title" content="Coordinates of the Maxima and Minima of an Image — minMaxLoc" />
 
-<meta property="og:description" content="subImage extracts a portion of an Image and
- returns it as an Image object." />
+<meta property="og:description" content="minMaxLoc returns the maximum and minimum pixel values of
+ an Image object, as well as their coordinates in the image. If
+ the Image object has more than one channel, it returns the
+ values for each channel." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,49 +132,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract Subimage</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/ImageClass.R'><code>R/ImageClass.R</code></a></small>
-    <div class="hidden name"><code>subImage.Rd</code></div>
+    <h1>Coordinates of the Maxima and Minima of an Image</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/statistics.R'><code>R/statistics.R</code></a></small>
+    <div class="hidden name"><code>minMaxLoc.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>subImage</code> extracts a portion of an <code><a href='Image-class.html'>Image</a></code> and
- returns it as an <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p><code>minMaxLoc</code> returns the maximum and minimum pixel values of
+ an <code><a href='Image-class.html'>Image</a></code> object, as well as their coordinates in the image. If
+ the <code><a href='Image-class.html'>Image</a></code> object has more than one channel, it returns the
+ values for each channel.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>subImage</span>(<span class='no'>image</span>, <span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>width</span>, <span class='no'>height</span>)</pre>
+    <pre class="usage"><span class='fu'>minMaxLoc</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>image</th>
+      <th>x</th>
       <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
-    </tr>
-    <tr>
-      <th>x, y</th>
-      <td><p>The coordinates of the bottom-left corner of the subimage within
-the original image.</p></td>
-    </tr>
-    <tr>
-      <th>width</th>
-      <td><p>The width of the subimage.</p></td>
-    </tr>
-    <tr>
-      <th>height</th>
-      <td><p>The height of the subimage.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p>A matrix (or a list of matrices for multi-channels images).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
+    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='min.Rcpp_Image.html'>min.Rcpp_Image</a></code>, <code><a href='min.Rcpp_Image.html'>max.Rcpp_Image</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

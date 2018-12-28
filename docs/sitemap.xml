@@ -157,6 +157,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/laplacian.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/matchTemplate.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/mean.html</loc>
   </url>
   <url>
@@ -164,6 +167,12 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/merge.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/min.Rcpp_Image.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/minMaxLoc.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/morph.html</loc>
