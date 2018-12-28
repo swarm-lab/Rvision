@@ -20,7 +20,8 @@ A matrix or array of the same dimensions as the \code{\link{Image}}
 Attempts to turn its argument into a matrix or an array.
 }
 \examples{
-# TODO\\
+# TODO
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{matrix}}, \code{\link{array}}

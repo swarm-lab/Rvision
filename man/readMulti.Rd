@@ -18,6 +18,7 @@ A list of \code{\link{Image}} objects.
 }
 \examples{
 # TODO
+
 }
 \seealso{
 \code{\link{Image}}

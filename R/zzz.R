@@ -114,8 +114,6 @@ setGeneric("mean", function(x, ..., na.rm = FALSE) standardGeneric("mean"),
 
 ### Define generic statistics methods ###
 methods::evalqOnLoad({
-
-
   setMethod("sum", "list",
             function(x, ...) {
               test <- sapply(x, function(x) class(x) == "Rcpp_Image")
@@ -138,7 +136,6 @@ methods::evalqOnLoad({
 
 ### Define generic comparison methods ###
 methods::evalqOnLoad({
-
   #' @aliases Comparison,Rcpp_Image,Rcpp_Image-method
   #' @aliases Comparison,Rcpp_Image,numeric-method
   #' @aliases Comparison,numeric,Rcpp_Image-method

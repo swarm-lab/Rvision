@@ -4,14 +4,13 @@
 \alias{subImage}
 \title{Extract Subimage}
 \usage{
-subImage(x, row, column, width, height)
+subImage(image, x, y, width, height)
 }
 \arguments{
-\item{x}{An \code{\link{Image}} object.}
+\item{image}{An \code{\link{Image}} object.}
 
-\item{row}{The index of the upper row of the subimage.}
-
-\item{column}{The index of the leftmost column of the subimage.}
+\item{x, y}{The coordinates of the bottom-left corner of the subimage within
+the original image.}
 
 \item{width}{The width of the subimage.}
 
@@ -26,6 +25,7 @@ An \code{\link{Image}} object.
 }
 \examples{
 # TODO
+
 }
 \seealso{
 \code{\link{Image}}

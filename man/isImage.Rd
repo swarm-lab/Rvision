@@ -18,6 +18,7 @@ Tests whether the object is of class \code{\link{Image}}
 }
 \examples{
 # TODO
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{image}}

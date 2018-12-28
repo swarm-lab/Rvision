@@ -27,6 +27,7 @@ Operators acting on \code{\link{Image}} objects to extract or
 }
 \examples{
 # TODO
+
 }
 \seealso{
 \code{\link{Image}}

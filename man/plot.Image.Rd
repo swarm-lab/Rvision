@@ -17,6 +17,7 @@ Plotting method for objects inheriting from class \code{\link{Image}}.
 }
 \examples{
 # TODO
+
 }
 \seealso{
 \code{\link{Image}}

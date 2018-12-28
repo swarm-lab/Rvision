@@ -22,6 +22,7 @@ Color images are usually represented by 3 channels (possibly 4) in the
 }
 \examples{
 # TODO
+
 }
 \seealso{
 \code{\link{split}}, \code{\link{Image}}
