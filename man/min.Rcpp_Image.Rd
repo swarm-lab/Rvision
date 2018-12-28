@@ -5,8 +5,9 @@
 \alias{max.Rcpp_Image}
 \title{Maxima and Minima of an Image}
 \usage{
-min.Rcpp_Image(x)
-max.Rcpp_Image(x)
+\method{min}{Rcpp_Image}(x, ...)
+
+\method{max}{Rcpp_Image}(x, ...)
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object.}

@@ -10,9 +10,6 @@
 #'  \code{\link{Image}} object. If the \code{\link{Image}} object has more than
 #'  one channel, it returns the maximum and minimum of each channel.
 #'
-#' @usage min.Rcpp_Image(x)
-#' max.Rcpp_Image(x)
-#'
 #' @param x An \code{\link{Image}} object.
 #'
 #' @param ... Unused at the moment.
@@ -44,6 +41,7 @@ min.Rcpp_Image <- function(x, ...) {
 }
 
 
+#' @rdname min.Rcpp_Image
 #' @export
 max.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
