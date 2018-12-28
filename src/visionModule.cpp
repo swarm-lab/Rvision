@@ -35,8 +35,8 @@ RCPP_MODULE(class_Image) {
   function("_split", &_split, List::create(_["image"]), "");
   function("_merge", &_merge, List::create(_["channels"]), "");
   function("_readMulti", &_readMulti, List::create(_["file"]), "");
-  function("_subimage", &_subimage, List::create(_["image"], _["row"],
-           _["col"], _["width"], _["height"]), "");
+  function("_subimage", &_subimage, List::create(_["image"], _["x"], _["y"],
+    _["width"], _["height"]), "");
 }
 
 #include "Video.h"
@@ -133,6 +133,9 @@ RCPP_MODULE(methods_Statistics) {
 
   function("_sum", &_sum, List::create(_["images"]), "");
   function("_mean", &_mean, List::create(_["images"]), "");
+  function("_min", &_min, List::create(_["image"]), "");
+  function("_max", &_max, List::create(_["image"]), "");
+  function("_minMaxLoc", &_minMaxLoc, List::create(_["image"]), "");
 }
 
 #include "comparisons.h"
@@ -150,6 +153,10 @@ RCPP_MODULE(methods_Comparisons) {
   function("_difScalar", &_difScalar, List::create(_["image"], _["value"]), "");
   function("_seqScalar", &_seqScalar, List::create(_["image"], _["value"]), "");
   function("_ieqScalar", &_ieqScalar, List::create(_["image"], _["value"]), "");
+  function("_matchTemplate", &_matchTemplate, List::create(_["image"], _["templ"],
+    _["method"], _["mask"]), "");
+  function("_matchTemplateNoMask", &_matchTemplateNoMask, List::create(_["image"],
+    _["templ"], _["method"]), "");
 }
 
 #include "logical.h"

@@ -14,14 +14,15 @@ A list of single channel (grayscale) \code{\link{Image}} objects.
 }
 \description{
 \code{split} returns a list of grayscale images corresponding to
- each of the channels (green, blue, red, or alpha) of an image.
+ each of the channels (blue, green, red, or alpha) of an image.
 }
 \note{
 Color images are usually represented by 3 channels (possibly 4) in the
- following order: green (1), blue (2), red (3), and possibly alpha (4).
+ following order: blue (1), green (2), red (3), and possibly alpha (4).
 }
 \examples{
 # TODO
+
 }
 \seealso{
 \code{\link{merge}}, \code{\link{Image}}

@@ -34,3 +34,31 @@ Image _mean(Rcpp::List images) {
 
   return Image(out);
 }
+
+Rcpp::NumericMatrix _minMaxLoc(Image image) {
+  double minVal, maxVal;
+  cv::Point minLoc, maxLoc;
+  Rcpp::NumericMatrix out(2, 3);
+  cv::minMaxLoc(image.image, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat());
+  out(0, 0) = minVal;
+  out(1, 0) = maxVal;
+  out(0, 1) = minLoc.x + 1;
+  out(1, 1) = maxLoc.x + 1;
+  out(0, 2) = -minLoc.y + image.nrow();
+  out(1, 2) = -maxLoc.y + image.nrow();
+
+  Rcpp::rownames(out) = Rcpp::CharacterVector::create("min", "max");
+  Rcpp::colnames(out) = Rcpp::CharacterVector::create("val", "x", "y");
+
+  return out;
+}
+
+double _min(Image image) {
+  Rcpp::NumericMatrix minMax = _minMaxLoc(image);
+  return minMax(0, 0);
+}
+
+double _max(Image image) {
+  Rcpp::NumericMatrix minMax = _minMaxLoc(image);
+  return minMax(1, 0);
+}

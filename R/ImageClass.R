@@ -40,6 +40,7 @@
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 image <- function(...) {
   new(Rvision::Image, ...)
@@ -83,6 +84,7 @@ setMethod("show", "Rcpp_Image", function(object) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 plot.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
@@ -141,6 +143,7 @@ plot.Rcpp_Image <- function(x, ...) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 isImage <- function(object) {
   inherits(object, "Rcpp_Image") & (tryCatch(object$ncol(), error = function(e) 0) > 0)
@@ -167,6 +170,7 @@ isImage <- function(object) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 write.Image <- function(x, file) {
   if (!isImage(x))
@@ -195,6 +199,7 @@ write.Image <- function(x, file) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 dim.Rcpp_Image <- function(x) {
   x$dim()
@@ -223,13 +228,20 @@ dim.Rcpp_Image <- function(x) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 nrow.Rcpp_Image <- function(x) {
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
   x$nrow()
 }
 
 #' @export
 ncol.Rcpp_Image <- function(x) {
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
   x$ncol()
 }
 
@@ -263,6 +275,7 @@ nchan <- function(x) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 bitdepth <- function(x) {
   if (!isImage(x))
@@ -294,6 +307,7 @@ bitdepth <- function(x) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 colorspace <- function(x) {
   if (!isImage(x))
@@ -321,7 +335,8 @@ colorspace <- function(x) {
 #' @seealso \code{\link{Image}}, \code{\link{matrix}}, \code{\link{array}}
 #'
 #' @examples
-#' # TODO\
+#' # TODO
+#'
 #' @export
 as.array.Rcpp_Image <- function(x, ...) {
   x$toR()
@@ -357,6 +372,7 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 cloneImage <- function(x) {
   if (!isImage(x))
@@ -369,14 +385,14 @@ cloneImage <- function(x) {
 #' @title Split an Image into Separate Channels
 #'
 #' @description \code{split} returns a list of grayscale images corresponding to
-#'  each of the channels (green, blue, red, or alpha) of an image.
+#'  each of the channels (blue, green, red, or alpha) of an image.
 #'
 #' @param x An \code{\link{Image}} object.
 #'
 #' @return A list of single channel (grayscale) \code{\link{Image}} objects.
 #'
 #' @note Color images are usually represented by 3 channels (possibly 4) in the
-#'  following order: green (1), blue (2), red (3), and possibly alpha (4).
+#'  following order: blue (1), green (2), red (3), and possibly alpha (4).
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -384,12 +400,18 @@ cloneImage <- function(x) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 split <- function(x) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  `_split`(x)
+  out <- `_split`(x)
+
+  names(out) <- switch(nchan(x),
+                       "I", NA, c("B", "G", "R"), c("B", "G", "R", "A"), NA)
+
+  out
 }
 
 
@@ -411,6 +433,7 @@ split <- function(x) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 merge <- function(x) {
   if (!is.list(x))
@@ -440,6 +463,7 @@ merge <- function(x) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 readMulti <- function(x) {
   if (!file.exists(x))
@@ -475,6 +499,7 @@ readMulti <- function(x) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 `[.Rcpp_Image` <- function(x, i, j = NULL) {
   if (!isImage(x))
@@ -554,11 +579,10 @@ readMulti <- function(x) {
 #' @description \code{subImage} extracts a portion of an \code{\link{Image}} and
 #'  returns it as an \code{\link{Image}} object.
 #'
-#' @param x An \code{\link{Image}} object.
+#' @param image An \code{\link{Image}} object.
 #'
-#' @param row The index of the upper row of the subimage.
-#'
-#' @param column The index of the leftmost column of the subimage.
+#' @param x,y The coordinates of the bottom-left corner of the subimage within
+#'  the original image.
 #'
 #' @param width The width of the subimage.
 #'
@@ -572,14 +596,15 @@ readMulti <- function(x) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
-subImage <- function(x, row, column, width, height) {
-  if (!isImage(x))
+subImage <- function(image, x, y, width, height) {
+  if (!isImage(image))
     stop("This is not an Image object.")
 
-  if ((row < 1) | (column < 1) | ((row + height - 1) > nrow(x)) |
-      ((column + height - 1) > ncol(x)))
+  if ((y < 1) | (x < 1) | ((y + height - 1) > nrow(image)) |
+      ((x + width - 1) > ncol(image)))
     stop("Subscript out of bounds.")
 
-  `_subimage`(x, row - 1, column - 1, width, height)
+  `_subimage`(image, x, y, width, height)
 }
