@@ -124,25 +124,54 @@ bool Image::write(std::string outputFile) {
 }
 
 Rcpp::NumericVector Image::_get1(int row, int column) {
-  Rcpp::NumericVector out = Rcpp::NumericVector::create(this->image.at<uint8_t>(column, row));
+  Rcpp::NumericVector out;
+
+  if (this->depth() == "16U") {
+    out = Rcpp::NumericVector::create(this->image.at<uint16_t>(row, column));
+  } else {
+    out = Rcpp::NumericVector::create(this->image.at<uint8_t>(row, column));
+  }
+
   return out;
 }
 
 Rcpp::NumericVector Image::_get3(int row, int column) {
   Rcpp::NumericVector out(3);
-  cv::Vec3b val = this->image.at<cv::Vec3b>(column, row);
-  for (int i = 0; i < 3; i++) {
-    out(i) = val(i);
+  cv::Vec3b valb;
+  cv::Vec3s vals;
+
+  if (this->depth() == "16U") {
+    vals = this->image.at<cv::Vec3s>(row, column);
+    for (int i = 0; i < 3; i++) {
+      out(i) = vals(i);
+    }
+  } else {
+    valb = this->image.at<cv::Vec3b>(row, column);
+    for (int i = 0; i < 3; i++) {
+      out(i) = valb(i);
+    }
   }
+
   return out;
 }
 
 Rcpp::NumericVector Image::_get4(int row, int column) {
   Rcpp::NumericVector out(4);
-  cv::Vec4b val = this->image.at<cv::Vec4b>(column, row);
-  for (int i = 0; i < 4; i++) {
-    out(i) = val(i);
+  cv::Vec4b valb;
+  cv::Vec4s vals;
+
+  if (this->depth() == "16U") {
+    vals = this->image.at<cv::Vec4s>(row, column);
+    for (int i = 0; i < 4; i++) {
+      out(i) = vals(i);
+    }
+  } else {
+    valb = this->image.at<cv::Vec4b>(row, column);
+    for (int i = 0; i < 4; i++) {
+      out(i) = valb(i);
+    }
   }
+
   return out;
 }
 
@@ -152,13 +181,13 @@ Rcpp::NumericMatrix Image::get(Rcpp::IntegerVector row, Rcpp::IntegerVector colu
   for (int i = 0; i < row.length(); i++) {
     switch(this->image.channels()) {
     case 1:
-      out(Rcpp::_, i) = this->_get1(column(i), row(i));
+      out(Rcpp::_, i) = this->_get1(row(i), column(i));
       break;
     case 3:
-      out(Rcpp::_, i) = this->_get3(column(i), row(i));
+      out(Rcpp::_, i) = this->_get3(row(i), column(i));
       break;
     case 4:
-      out(Rcpp::_, i) = this->_get4(column(i), row(i));
+      out(Rcpp::_, i) = this->_get4(row(i), column(i));
       break;
     default:
       throw std::range_error("Invalid input image dimensions (1, 3, and 4 channels only).");
@@ -169,40 +198,58 @@ Rcpp::NumericMatrix Image::get(Rcpp::IntegerVector row, Rcpp::IntegerVector colu
 }
 
 void Image::_set1(int row, int column, Rcpp::IntegerVector color) {
-  this->image.at<uint8_t>(column, row) = color(0);
+  if (this->depth() == "16U") {
+    this->image.at<uint16_t>(row, column) = color(0);
+  } else {
+    this->image.at<uint8_t>(row, column) = color(0);
+  }
 }
 
 void Image::_set3(int row, int column, Rcpp::IntegerVector color) {
-  cv::Vec3b val;
+  cv::Vec3b valb;
+  cv::Vec3s vals;
 
-  for (int i = 0; i < 3; i++) {
-    val(i) = color(i);
+  if (this->depth() == "16U") {
+    for (int i = 0; i < 3; i++) {
+      vals(i) = color(i);
+    }
+    this->image.at<cv::Vec3s>(row, column) = vals;
+  } else {
+    for (int i = 0; i < 3; i++) {
+      valb(i) = color(i);
+    }
+    this->image.at<cv::Vec3b>(row, column) = valb;
   }
-
-  this->image.at<cv::Vec3b>(column, row) = val;
 }
 
 void Image::_set4(int row, int column, Rcpp::IntegerVector color) {
-  cv::Vec4b val;
+  cv::Vec4b valb;
+  cv::Vec4s vals;
 
-  for (int i = 0; i < 4; i++) {
-    val(i) = color(i);
+  if (this->depth() == "16U") {
+    for (int i = 0; i < 4; i++) {
+      vals(i) = color(i);
+    }
+    this->image.at<cv::Vec4s>(row, column) = vals;
+  } else {
+    for (int i = 0; i < 4; i++) {
+      valb(i) = color(i);
+    }
+    this->image.at<cv::Vec4b>(row, column) = valb;
   }
-
-  this->image.at<cv::Vec4b>(column, row) = val;
 }
 
 void Image::set(Rcpp::IntegerVector row, Rcpp::IntegerVector column, Rcpp::IntegerMatrix color) {
   for (int i = 0; i < row.length(); i++) {
     switch(this->image.channels()) {
     case 1:
-      this->_set1(column(i), row(i), color(Rcpp::_, i));
+      this->_set1(row(i), column(i), color(Rcpp::_, i));
       break;
     case 3:
-      this->_set3(column(i), row(i), color(Rcpp::_, i));
+      this->_set3(row(i), column(i), color(Rcpp::_, i));
       break;
     case 4:
-      this->_set4(column(i), row(i), color(Rcpp::_, i));
+      this->_set4(row(i), column(i), color(Rcpp::_, i));
       break;
     default:
       throw std::range_error("Invalid input image dimensions (1, 3, and 4 channels only).");

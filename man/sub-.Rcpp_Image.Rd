@@ -5,9 +5,9 @@
 \alias{[<-.Rcpp_Image}
 \title{Extract or Replace Parts of an Image}
 \usage{
-\method{[}{Rcpp_Image}(x, i, j = NULL)
+\method{[}{Rcpp_Image}(x, i = NULL, j = NULL)
 
-\method{[}{Rcpp_Image}(x, i, j = NULL) <- value
+\method{[}{Rcpp_Image}(x, i = NULL, j = NULL) <- value
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object.}

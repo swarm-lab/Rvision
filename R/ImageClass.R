@@ -501,14 +501,25 @@ readMulti <- function(x) {
 #' # TODO
 #'
 #' @export
-`[.Rcpp_Image` <- function(x, i, j = NULL) {
+`[.Rcpp_Image` <- function(x, i = NULL, j = NULL) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  if (is.null(j)) {
-    pixel <- data.frame(row = ((i - 1) %% nrow(x)) + 1,
-                        column = floor((i - 1) / nrow(x)) + 1)
+  if (nargs() == 2) {
+    if (missing(i)) {
+      i <- 1:ncol(x)
+      j <- 1:ncol(x)
+      pixel <- expand.grid(row = i, column = j)
+    } else {
+      pixel <- data.frame(row = ((i - 1) %% nrow(x)) + 1, column = floor((i - 1) / nrow(x)) + 1)
+    }
   } else {
+    if (missing(j))
+      j <- 1:ncol(x)
+
+    if (missing(i))
+      i <- 1:nrow(x)
+
     pixel <- expand.grid(row = i, column = j)
   }
 
@@ -549,14 +560,25 @@ readMulti <- function(x) {
 #' @rdname sub-.Rcpp_Image
 #' @method [<- Rcpp_Image
 #' @export
-`[<-.Rcpp_Image` <- function(x, i, j = NULL, value) {
+`[<-.Rcpp_Image` <- function(x, i = NULL, j = NULL, value) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  if (is.null(j)) {
-    pixel <- data.frame(row = ((i - 1) %% nrow(x)) + 1,
-                        column = floor((i - 1) / nrow(x)) + 1)
+  if (nargs() == 3) {
+    if (missing(i)) {
+      i <- 1:ncol(x)
+      j <- 1:ncol(x)
+      pixel <- expand.grid(row = i, column = j)
+    } else {
+      pixel <- data.frame(row = ((i - 1) %% nrow(x)) + 1, column = floor((i - 1) / nrow(x)) + 1)
+    }
   } else {
+    if (missing(j))
+      j <- 1:ncol(x)
+
+    if (missing(i))
+      i <- 1:nrow(x)
+
     pixel <- expand.grid(row = i, column = j)
   }
 

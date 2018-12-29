@@ -78,11 +78,3 @@ matchTemplate <- function(image, template, method, mask = NULL) {
                      ), mask)
   }
 }
-
-
-# cv::TM_SQDIFF = 0, min, mask
-# cv::TM_SQDIFF_NORMED = 1, min
-# cv::TM_CCORR = 2, max
-# cv::TM_CCORR_NORMED = 3, max, mask
-# cv::TM_CCOEFF = 4, max
-# cv::TM_CCOEFF_NORMED = 5, max
