@@ -17,7 +17,7 @@ numeric vectors which values are coerced to integer as by as.integer (and
 hence truncated towards zero).}
 
 \item{value}{Single-, three- or four-values vectors representing the gray
-intensity, RGB or RGBA values (respectively) of the pixels. The vector is
+intensity, BGR or BGRA values (respectively) of the pixels. The vector is
 recycled if it is shorter than the number of pixels to modify times the
 number of channels of the image.}
 }

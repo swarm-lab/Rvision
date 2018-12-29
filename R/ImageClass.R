@@ -489,7 +489,7 @@ readMulti <- function(x) {
 #'  hence truncated towards zero).
 #'
 #' @param value Single-, three- or four-values vectors representing the gray
-#'  intensity, RGB or RGBA values (respectively) of the pixels. The vector is
+#'  intensity, BGR or BGRA values (respectively) of the pixels. The vector is
 #'  recycled if it is shorter than the number of pixels to modify times the
 #'  number of channels of the image.
 #'
@@ -587,9 +587,6 @@ readMulti <- function(x) {
     stop("Subscript out of bounds.")
 
   color <- matrix(value, nrow = nchan(x), ncol = nrow(pixel))
-  color <- switch(nchan(x),
-                  color, NA, color[3:1, ], color[c(3:1, 4), ], NA
-  )
 
   x$set(pixel$row - 1, pixel$column - 1, color)
   x
