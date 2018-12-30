@@ -30,7 +30,7 @@ Operators acting on \code{\link{Image}} objects to extract or
 
 }
 \seealso{
-\code{\link{Image}}
+\code{\link{Image}}, \code{\link{col2bgr}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

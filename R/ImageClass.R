@@ -495,7 +495,7 @@ readMulti <- function(x) {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}
+#' @seealso \code{\link{Image}}, \code{\link{col2bgr}}
 #'
 #' @examples
 #' # TODO
@@ -538,15 +538,11 @@ readMulti <- function(x) {
 
   value <- t(x$get(pixel$row - 1, pixel$column - 1))
 
-  if (is.null(j)) {
+  if (missing(j)) {
     out <- value
     rownames(out) <- i
     colnames(out) <- switch(ncol(out), "I", NA, c("B", "G", "R"),
                             c("B", "G", "R", "A"), NA)
-    switch(ncol(value),
-           out, NA, out[, 3:1], out[, c(3:1, 4)], NA
-    )
-
   } else {
     out <- switch(ncol(value),
                   matrix(value, nrow = length(i), ncol = length(j),
@@ -557,11 +553,9 @@ readMulti <- function(x) {
                   array(value, c(length(i), length(j), 4),
                         dimnames = list(i, j, c("B", "G", "R", "A"))),
                   NA)
-
-    switch(ncol(value),
-           out, NA, out[, , 3:1], out[, , c(3:1, 4)], NA
-    )
   }
+
+  out
 }
 
 
