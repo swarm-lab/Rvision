@@ -306,6 +306,8 @@ colorspace <- function(x) {
 #'
 #' @param x An \code{\link{Image}} object.
 #'
+#' @param ... Ignored.
+#'
 #' @return A matrix or array of the same dimensions as the \code{\link{Image}}
 #'  object.
 #'
@@ -317,7 +319,7 @@ colorspace <- function(x) {
 #' # TODO
 #'
 #' @export
-as.array.Rcpp_Image <- function(x) {
+as.array.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
@@ -325,7 +327,7 @@ as.array.Rcpp_Image <- function(x) {
 }
 
 #' @export
-as.matrix.Rcpp_Image <- function(x) {
+as.matrix.Rcpp_Image <- function(x, ...) {
   if (nchan(x) == 1)
     x$toR()[, , 1]
   else
@@ -469,7 +471,7 @@ readMulti <- function(x) {
 #' @param i,j Indices specifying elements to extract or replace. Indices are
 #'  numeric vectors which values are coerced to integer as by
 #'  \code{\link{as.integer}} (and hence truncated towards zero) or logical
-#'  vectors which values are coerced to indices as by \code{\link{which}}.
+#'  vectors which are recycled if necessary to match the dimensions of the image.
 #'
 #' @param value Single-, three- or four-values vectors representing the gray
 #'  intensity, BGR or BGRA values (respectively) of the pixels. The vector is
@@ -548,6 +550,8 @@ readMulti <- function(x) {
 #' @method [<- Rcpp_Image
 #' @export
 `[<-.Rcpp_Image` <- function(x, i = NULL, j = NULL, value) {
+  # WARNING: might not be similar to [
+
   if (!isImage(x))
     stop("This is not an Image object.")
 
@@ -558,7 +562,7 @@ readMulti <- function(x) {
       pixel <- expand.grid(row = i, column = j)
     } else {
       if (is.logical(i))
-        i <- which(i)
+        i <- which(rep_len(i, nrow(x) * ncol(x)))
 
       pixel <- data.frame(row = ((i - 1) %% nrow(x)) + 1, column = floor((i - 1) / nrow(x)) + 1)
     }
@@ -570,10 +574,10 @@ readMulti <- function(x) {
       i <- 1:nrow(x)
 
     if (is.logical(i))
-      i <- which(i)
+      i <- which(rep_len(i, nrow(x)))
 
     if (is.logical(j))
-      j <- which(j)
+      j <- which(rep_len(j, ncol(x)))
 
     pixel <- expand.grid(row = i, column = j)
   }

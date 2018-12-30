@@ -5,10 +5,12 @@
 \alias{as.matrix.Rcpp_Image}
 \title{Convert Image to Array or Matrix}
 \usage{
-\method{as.array}{Rcpp_Image}(x)
+\method{as.array}{Rcpp_Image}(x, ...)
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object.}
+
+\item{...}{Ignored.}
 }
 \value{
 A matrix or array of the same dimensions as the \code{\link{Image}}
