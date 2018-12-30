@@ -507,10 +507,13 @@ readMulti <- function(x) {
 
   if (nargs() == 2) {
     if (missing(i)) {
-      i <- 1:ncol(x)
+      i <- 1:nrow(x)
       j <- 1:ncol(x)
       pixel <- expand.grid(row = i, column = j)
     } else {
+      if (is.logical(i))
+        i <- which(i)
+
       pixel <- data.frame(row = ((i - 1) %% nrow(x)) + 1, column = floor((i - 1) / nrow(x)) + 1)
     }
   } else {
@@ -519,6 +522,12 @@ readMulti <- function(x) {
 
     if (missing(i))
       i <- 1:nrow(x)
+
+    if (is.logical(i))
+      i <- which(i)
+
+    if (is.logical(j))
+      j <- which(j)
 
     pixel <- expand.grid(row = i, column = j)
   }
@@ -564,12 +573,15 @@ readMulti <- function(x) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  if (nargs() == 3) {
+  if (nargs() == 2) {
     if (missing(i)) {
-      i <- 1:ncol(x)
+      i <- 1:nrow(x)
       j <- 1:ncol(x)
       pixel <- expand.grid(row = i, column = j)
     } else {
+      if (is.logical(i))
+        i <- which(i)
+
       pixel <- data.frame(row = ((i - 1) %% nrow(x)) + 1, column = floor((i - 1) / nrow(x)) + 1)
     }
   } else {
@@ -578,6 +590,12 @@ readMulti <- function(x) {
 
     if (missing(i))
       i <- 1:nrow(x)
+
+    if (is.logical(i))
+      i <- which(i)
+
+    if (is.logical(j))
+      j <- which(j)
 
     pixel <- expand.grid(row = i, column = j)
   }
