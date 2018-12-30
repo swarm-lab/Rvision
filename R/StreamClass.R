@@ -67,17 +67,6 @@ stream <- function(index = 0, api = "ANY") {
   new(Stream, index = index, api = api)
 }
 
-setMethod("show", "Rcpp_Stream", function(object) {
-  if (!isStream(object))
-    stop("This is not a Stream object.")
-
-  width <- ncol(object)
-  height <- nrow(object)
-
-  cat("Class: video stream.\n")
-  cat("Dimensions: ", width, "x", height, ".\n", sep = "")
-})
-
 
 #' @title Test for a Stream object
 #'

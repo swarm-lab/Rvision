@@ -83,25 +83,6 @@ videoWriter <- function(outputFile, fourcc, fps, height, width, isColor = TRUE,
       height = height, width = width, isColor = isColor, api = api)
 }
 
-setMethod("show", "Rcpp_VideoWriter", function(object) {
-  if (!isVideoWriter(object))
-    stop("This is not a VideoWriter object.")
-
-  width <- ncol(object)
-  height <- nrow(object)
-  codec <- codec(object)
-  fps <- fps(object)
-  api <- api(object)
-  output <- writerOuput((object))
-
-  cat("Class: video writer.\n")
-  cat("Dimensions: ", width, "x", height, ".\n", sep = "")
-  cat("Frame rate: ", fps, "fps.\n", sep = "")
-  cat("Codec: ", codec, ".\n", sep = "")
-  cat("API: ", api, ".\n", sep = "")
-  cat("Output file: ", output, "\n", sep = "")
-})
-
 
 #' @title Test for a VideoWriter object
 #'

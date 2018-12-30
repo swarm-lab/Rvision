@@ -25,6 +25,7 @@ Rcpp::loadModule("methods_Draw", TRUE)
 Rcpp::loadModule("methods_Geometry", TRUE)
 Rcpp::loadModule("methods_Shape", TRUE)
 
+
 ### Define generic arithmetic methods ###
 methods::evalqOnLoad({
   #' @aliases Arith,Rcpp_Image,Rcpp_Image-method
@@ -91,6 +92,7 @@ methods::evalqOnLoad({
               `_multiplyScalar`(e2, 1 / e1)
             }, where = .GlobalEnv)
 })
+
 
 #' @title Sum Generic for additional arguments
 #' @description Overloaded Sum to pass additional arguments
@@ -230,8 +232,9 @@ methods::evalqOnLoad({
             }, where = .GlobalEnv)
 })
 
-methods::evalqOnLoad({
 
+### Define generic logical methods ###
+methods::evalqOnLoad({
   setMethod("&", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
               `_and`(e1, e2)
@@ -247,6 +250,77 @@ methods::evalqOnLoad({
               `_not`(x)
             }, where = .GlobalEnv)
 })
+
+
+### Define generic show methods ###
+methods::evalqOnLoad({
+  setMethod("show", "Rcpp_Image", function(object) {
+    if (!isImage(object))
+      stop("This is not an Image object.")
+
+    width <- ncol(object)
+    height <- nrow(object)
+    type <- switch(colorspace(object),
+                   GRAY = "GRAY",
+                   BGR = "RGB",
+                   BGRA = "RGBA",
+                   NA
+    )
+    depth <- gsub("U", "", bitdepth(object))
+
+    cat("Class: image. \n")
+    cat("Dimensions: ", width, "x", height, ".\n", sep = "")
+    cat("Type: ", type, ", ", depth, "bits.\n", sep = "")
+  })
+
+  setMethod("show", "Rcpp_Video", function(object) {
+    if (!isVideo(object))
+      stop("This is not a Video object.")
+
+    width <- ncol(object)
+    height <- nrow(object)
+    codec <- codec(object)
+    fps <- fps(object)
+    nframes <- nframes(object)
+
+    cat("Class: video file. \n")
+    cat("Dimensions: ", width, "x", height, ", ", nframes, " frames.\n", sep = "")
+    cat("Frame rate: ", fps, "fps.\n", sep = "")
+    cat("Codec: ", codec, ".\n", sep = "")
+
+  })
+
+  setMethod("show", "Rcpp_Stream", function(object) {
+    if (!isStream(object))
+      stop("This is not a Stream object.")
+
+    width <- ncol(object)
+    height <- nrow(object)
+
+    cat("Class: video stream.\n")
+    cat("Dimensions: ", width, "x", height, ".\n", sep = "")
+  })
+
+  setMethod("show", "Rcpp_VideoWriter", function(object) {
+    if (!isVideoWriter(object))
+      stop("This is not a VideoWriter object.")
+
+    width <- ncol(object)
+    height <- nrow(object)
+    codec <- codec(object)
+    fps <- fps(object)
+    api <- api(object)
+    output <- writerOuput((object))
+
+    cat("Class: video writer.\n")
+    cat("Dimensions: ", width, "x", height, ".\n", sep = "")
+    cat("Frame rate: ", fps, "fps.\n", sep = "")
+    cat("Codec: ", codec, ".\n", sep = "")
+    cat("API: ", api, ".\n", sep = "")
+    cat("Output file: ", output, "\n", sep = "")
+  })
+})
+
 
 ### Cleanup function ###
 .onUnload <- function(libpath) {

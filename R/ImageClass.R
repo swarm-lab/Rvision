@@ -46,25 +46,6 @@ image <- function(...) {
   new(Rvision::Image, ...)
 }
 
-setMethod("show", "Rcpp_Image", function(object) {
-  if (!isImage(object))
-    stop("This is not an Image object.")
-
-  width <- ncol(object)
-  height <- nrow(object)
-  type <- switch(colorspace(object),
-                 GRAY = "GRAY",
-                 BGR = "RGB",
-                 BGRA = "RGBA",
-                 NA
-  )
-  depth <- gsub("U", "", bitdepth(object))
-
-  cat("Class: image. \n")
-  cat("Dimensions: ", width, "x", height, ".\n", sep = "")
-  cat("Type: ", type, ", ", depth, "bits.\n", sep = "")
-})
-
 
 #' @title Plot \pkg{Rvision} Images
 #'

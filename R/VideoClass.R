@@ -67,23 +67,6 @@ video <- function(filename, api = "ANY") {
   new(Video, filename = filename, api = api)
 }
 
-setMethod("show", "Rcpp_Video", function(object) {
-  if (!isVideo(object))
-    stop("This is not a Video object.")
-
-  width <- ncol(object)
-  height <- nrow(object)
-  codec <- codec(object)
-  fps <- fps(object)
-  nframes <- nframes(object)
-
-  cat("Class: video file. \n")
-  cat("Dimensions: ", width, "x", height, ", ", nframes, " frames.\n", sep = "")
-  cat("Frame rate: ", fps, "fps.\n", sep = "")
-  cat("Codec: ", codec, ".\n", sep = "")
-
-})
-
 
 #' @title Test for a Video object
 #'
