@@ -13,8 +13,9 @@
 \item{x}{An \code{\link{Image}} object.}
 
 \item{i, j}{Indices specifying elements to extract or replace. Indices are
-numeric vectors which values are coerced to integer as by as.integer (and
-hence truncated towards zero).}
+numeric vectors which values are coerced to integer as by
+\code{\link{as.integer}} (and hence truncated towards zero) or logical
+vectors which values are coerced to indices as by \code{\link{which}}.}
 
 \item{value}{Single-, three- or four-values vectors representing the gray
 intensity, BGR or BGRA values (respectively) of the pixels. The vector is

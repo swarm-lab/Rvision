@@ -306,8 +306,6 @@ colorspace <- function(x) {
 #'
 #' @param x An \code{\link{Image}} object.
 #'
-#' @param ... additional arguments to be passed to or from methods.
-#'
 #' @return A matrix or array of the same dimensions as the \code{\link{Image}}
 #'  object.
 #'
@@ -319,12 +317,15 @@ colorspace <- function(x) {
 #' # TODO
 #'
 #' @export
-as.array.Rcpp_Image <- function(x, ...) {
+as.array.Rcpp_Image <- function(x) {
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
   x$toR()
 }
 
 #' @export
-as.matrix.Rcpp_Image <- function(x, ...) {
+as.matrix.Rcpp_Image <- function(x) {
   if (nchan(x) == 1)
     x$toR()[, , 1]
   else
@@ -466,8 +467,9 @@ readMulti <- function(x) {
 #' @param x An \code{\link{Image}} object.
 #'
 #' @param i,j Indices specifying elements to extract or replace. Indices are
-#'  numeric vectors which values are coerced to integer as by as.integer (and
-#'  hence truncated towards zero).
+#'  numeric vectors which values are coerced to integer as by
+#'  \code{\link{as.integer}} (and hence truncated towards zero) or logical
+#'  vectors which values are coerced to indices as by \code{\link{which}}.
 #'
 #' @param value Single-, three- or four-values vectors representing the gray
 #'  intensity, BGR or BGRA values (respectively) of the pixels. The vector is
@@ -490,50 +492,51 @@ readMulti <- function(x) {
     if (missing(i)) {
       i <- 1:nrow(x)
       j <- 1:ncol(x)
-      pixel <- expand.grid(row = i, column = j)
+      out <- as.array(x)
+      dimnames(out) <- switch(dim(out)[3],
+                              list(i, j),
+                              NA,
+                              list(i, j, c("B", "G", "R")),
+                              list(i, j, c("B", "G", "R", "A")),
+                              NA)
+      if (dim(out)[3] == 1)
+        out <- out[, , 1]
     } else {
       if (is.logical(i))
-        i <- which(i)
+        i <- rep_len(i, nrow(x) * ncol(x))
 
-      pixel <- data.frame(row = ((i - 1) %% nrow(x)) + 1, column = floor((i - 1) / nrow(x)) + 1)
+      out <- apply(as.array(x), 3, as.vector)[i, , drop = FALSE]
+      rownames(out) <- if (is.logical(i)) which(i) else i
+      colnames(out) <- switch(ncol(out), "I", NA, c("B", "G", "R"),
+                              c("B", "G", "R", "A"), NA)
     }
   } else {
-    if (missing(j))
-      j <- 1:ncol(x)
-
     if (missing(i))
       i <- 1:nrow(x)
 
+    if (missing(j))
+      j <- 1:ncol(x)
+
     if (is.logical(i))
-      i <- which(i)
+      i <- rep_len(i, nrow(x))
 
     if (is.logical(j))
-      j <- which(j)
+      j <- rep_len(j, ncol(x))
 
-    pixel <- expand.grid(row = i, column = j)
-  }
-
-  if (any(pixel$row < 1) | any(pixel$row > nrow(x)) |
-      any(pixel$column < 1) | any(pixel$column > ncol(x)))
-    stop("Subscript out of bounds.")
-
-  value <- t(x$get(pixel$row - 1, pixel$column - 1))
-
-  if (missing(j)) {
-    out <- value
-    rownames(out) <- i
-    colnames(out) <- switch(ncol(out), "I", NA, c("B", "G", "R"),
-                            c("B", "G", "R", "A"), NA)
-  } else {
-    out <- switch(ncol(value),
-                  matrix(value, nrow = length(i), ncol = length(j),
-                         dimnames = list(i, j)),
-                  NA,
-                  array(value, c(length(i), length(j), 3),
-                        dimnames = list(i, j, c("B", "G", "R"))),
-                  array(value, c(length(i), length(j), 4),
-                        dimnames = list(i, j, c("B", "G", "R", "A"))),
-                  NA)
+    out <- as.array(x)[i, j, , drop = FALSE]
+    dimnames(out) <- switch(dim(out)[3],
+                            list(if (is.logical(i)) which(i) else i,
+                                 if (is.logical(j)) which(j) else j),
+                            NA,
+                            list(if (is.logical(i)) which(i) else i,
+                                 if (is.logical(j)) which(j) else j,
+                                 c("B", "G", "R")),
+                            list(if (is.logical(i)) which(i) else i,
+                                 if (is.logical(j)) which(j) else j,
+                                 c("B", "G", "R", "A")),
+                            NA)
+    if (dim(out)[3] == 1)
+      out <- out[, , 1]
   }
 
   out
