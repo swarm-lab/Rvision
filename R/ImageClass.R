@@ -320,18 +320,12 @@ colorspace <- function(x) {
 #'
 #' @export
 as.array.Rcpp_Image <- function(x, ...) {
-  if (!isImage(x))
-    stop("This is not an Image object.")
-
-  x$toR()
+  x[, drop = FALSE]
 }
 
 #' @export
 as.matrix.Rcpp_Image <- function(x, ...) {
-  if (nchan(x) == 1)
-    x$toR()[, , 1]
-  else
-    x$toR()
+  x[]
 }
 
 
@@ -486,28 +480,28 @@ readMulti <- function(x) {
 #' # TODO
 #'
 #' @export
-`[.Rcpp_Image` <- function(x, i = NULL, j = NULL) {
+`[.Rcpp_Image` <- function(x, i = NULL, j = NULL, ..., drop = TRUE) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  if (nargs() == 2) {
+  if ((nargs() == 2 & missing(drop)) | (nargs() == 3 & !missing(drop))) {
     if (missing(i)) {
       i <- 1:nrow(x)
       j <- 1:ncol(x)
-      out <- as.array(x)
+      out <- x$toR()
       dimnames(out) <- switch(dim(out)[3],
-                              list(i, j),
+                              list(i, j, "I"),
                               NA,
                               list(i, j, c("B", "G", "R")),
                               list(i, j, c("B", "G", "R", "A")),
                               NA)
-      if (dim(out)[3] == 1)
+      if (dim(out)[3] == 1 & drop)
         out <- out[, , 1]
     } else {
       if (is.logical(i))
         i <- rep_len(i, nrow(x) * ncol(x))
 
-      out <- apply(as.array(x), 3, as.vector)[i, , drop = FALSE]
+      out <- apply(x$toR(), 3, as.vector)[i, , drop = FALSE]
       rownames(out) <- if (is.logical(i)) which(i) else i
       colnames(out) <- switch(ncol(out), "I", NA, c("B", "G", "R"),
                               c("B", "G", "R", "A"), NA)
@@ -525,10 +519,11 @@ readMulti <- function(x) {
     if (is.logical(j))
       j <- rep_len(j, ncol(x))
 
-    out <- as.array(x)[i, j, , drop = FALSE]
+    out <- x$toR()[i, j, , drop = FALSE]
     dimnames(out) <- switch(dim(out)[3],
                             list(if (is.logical(i)) which(i) else i,
-                                 if (is.logical(j)) which(j) else j),
+                                 if (is.logical(j)) which(j) else j,
+                                 "I"),
                             NA,
                             list(if (is.logical(i)) which(i) else i,
                                  if (is.logical(j)) which(j) else j,
@@ -537,7 +532,7 @@ readMulti <- function(x) {
                                  if (is.logical(j)) which(j) else j,
                                  c("B", "G", "R", "A")),
                             NA)
-    if (dim(out)[3] == 1)
+    if (dim(out)[3] == 1 & drop)
       out <- out[, , 1]
   }
 

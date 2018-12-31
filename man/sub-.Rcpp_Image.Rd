@@ -5,7 +5,7 @@
 \alias{[<-.Rcpp_Image}
 \title{Extract or Replace Parts of an Image}
 \usage{
-\method{[}{Rcpp_Image}(x, i = NULL, j = NULL)
+\method{[}{Rcpp_Image}(x, i = NULL, j = NULL, ..., drop = TRUE)
 
 \method{[}{Rcpp_Image}(x, i = NULL, j = NULL) <- value
 }
