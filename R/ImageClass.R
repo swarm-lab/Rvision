@@ -71,7 +71,7 @@ plot.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  img <- x$toR()
+  img <- x[nrow(x):1, ]
 
   if (Rvision::bitdepth(x) == "8U") {
     imgMax <- 255
@@ -588,7 +588,7 @@ readMulti <- function(x) {
 
   color <- matrix(value, nrow = nchan(x), ncol = nrow(pixel))
 
-  x$set(pixel$row - 1, pixel$column - 1, color)
+  x$set(pixel$row, pixel$column, color)
   x
 }
 

@@ -243,13 +243,13 @@ void Image::set(Rcpp::IntegerVector row, Rcpp::IntegerVector column, Rcpp::Integ
   for (int i = 0; i < row.length(); i++) {
     switch(this->image.channels()) {
     case 1:
-      this->_set1(row(i), column(i), color(Rcpp::_, i));
+      this->_set1(-row(i) + this->nrow(), column(i) - 1, color(Rcpp::_, i));
       break;
     case 3:
-      this->_set3(row(i), column(i), color(Rcpp::_, i));
+      this->_set3(-row(i) + this->nrow(), column(i) - 1, color(Rcpp::_, i));
       break;
     case 4:
-      this->_set4(row(i), column(i), color(Rcpp::_, i));
+      this->_set4(-row(i) + this->nrow(), column(i) - 1, color(Rcpp::_, i));
       break;
     default:
       throw std::range_error("Invalid input image dimensions (1, 3, and 4 channels only).");
@@ -411,7 +411,7 @@ arma::cube Image::toR() {
     this->image.convertTo(tmp, CV_32F);
     for (int i = 0; i < tmp.rows; i++) {
       for (int j = 0; j < tmp.cols; j++) {
-        outputArray(i, j, 0) = tmp.at<float>(i, j);
+        outputArray(i, j, 0) = tmp.at<float>(-i + tmp.rows - 1, j);
       }
     }
     break;
@@ -420,7 +420,7 @@ arma::cube Image::toR() {
     for (int i = 0; i < tmp.rows; i++) {
       for (int j = 0; j < tmp.cols; j++) {
         for (int k = 0; k < tmp.channels(); k++)
-          outputArray(i, j, k) = tmp.at<cv::Vec2f>(i, j)[k]; // [tmp.channels() - k - 1];
+          outputArray(i, j, k) = tmp.at<cv::Vec2f>(-i + tmp.rows - 1, j)[k]; // [tmp.channels() - k - 1];
       }
     }
     break;
@@ -429,7 +429,7 @@ arma::cube Image::toR() {
     for (int i = 0; i < tmp.rows; i++) {
       for (int j = 0; j < tmp.cols; j++) {
         for (int k = 0; k < tmp.channels(); k++)
-          outputArray(i, j, k) = tmp.at<cv::Vec3f>(i, j)[k]; // [tmp.channels() - k - 1];
+          outputArray(i, j, k) = tmp.at<cv::Vec3f>(-i + tmp.rows - 1, j)[k]; // [tmp.channels() - k - 1];
       }
     }
     break;
@@ -438,7 +438,7 @@ arma::cube Image::toR() {
     for (int i = 0; i < tmp.rows; i++) {
       for (int j = 0; j < tmp.cols; j++) {
         for (int k = 0; k < tmp.channels(); k++)
-          outputArray(i, j, k) = tmp.at<cv::Vec4f>(i, j)[k]; // [tmp.channels() - k - 1];
+          outputArray(i, j, k) = tmp.at<cv::Vec4f>(-i + tmp.rows - 1, j)[k]; // [tmp.channels() - k - 1];
       }
     }
     break;
