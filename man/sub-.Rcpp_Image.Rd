@@ -17,6 +17,11 @@ numeric vectors which values are coerced to integer as by
 \code{\link{as.integer}} (and hence truncated towards zero) or logical
 vectors which are recycled if necessary to match the dimensions of the image.}
 
+\item{...}{Ignored.}
+
+\item{drop}{If \code{TRUE} the result is coerced to the lowest possible
+dimension. This only works for extracting elements, not for the replacement.}
+
 \item{value}{Single-, three- or four-values vectors representing the gray
 intensity, BGR or BGRA values (respectively) of the pixels. The vector is
 recycled if it is shorter than the number of pixels to modify times the

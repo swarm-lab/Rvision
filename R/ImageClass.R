@@ -71,7 +71,7 @@ plot.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  img <- x[nrow(x):1, ]
+  img <- x[nrow(x):1, , drop = FALSE]
 
   if (Rvision::bitdepth(x) == "8U") {
     imgMax <- 255
@@ -466,6 +466,11 @@ readMulti <- function(x) {
 #'  numeric vectors which values are coerced to integer as by
 #'  \code{\link{as.integer}} (and hence truncated towards zero) or logical
 #'  vectors which are recycled if necessary to match the dimensions of the image.
+#'
+#' @param ... Ignored.
+#'
+#' @param drop If \code{TRUE} the result is coerced to the lowest possible
+#'  dimension. This only works for extracting elements, not for the replacement.
 #'
 #' @param value Single-, three- or four-values vectors representing the gray
 #'  intensity, BGR or BGRA values (respectively) of the pixels. The vector is
