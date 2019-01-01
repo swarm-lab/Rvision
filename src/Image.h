@@ -573,5 +573,7 @@ Rcpp::List _readMulti(std::string file) {
 }
 
 Image _subimage(Image image, int x, int y, int width, int height) {
-  return Image(image.image(cv::Rect(x - 1, -(y - 1) + image.nrow() - height, width, height)));
+  cv::Mat out;
+  image.image(cv::Rect(x - 1, -(y - 1) + image.nrow() - height, width, height)).copyTo(out);
+  return Image(out);
 }
