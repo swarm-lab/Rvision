@@ -25,7 +25,8 @@ comparison method):
 }}
 
 \item{mask}{An \code{\link{Image}} object of the same type and dimensions as
-\code{template} (default: NULL).}
+\code{template} (default: NULL). \code{mask} is currently only supported when
+\code{SQDIFF} and \code{CCORR_NORMED} are used.}
 }
 \description{
 \code{matchTemplate} compares a template against overlapping
