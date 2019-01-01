@@ -108,6 +108,8 @@ int Video::nframes() {
         this->video >> tmpFrame;
       }
     }
+
+    this->video.set(cv::CAP_PROP_POS_FRAMES, 0);
   }
 
   return this->nf;
