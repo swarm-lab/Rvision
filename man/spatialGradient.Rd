@@ -4,7 +4,7 @@
 \alias{spatialGradient}
 \title{First Order Derivatives of an Image with the Sobel Operator}
 \usage{
-spatialGradient(image, k_size)
+spatialGradient(image, k_size = 5)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

@@ -22,7 +22,7 @@
 #' @export
 filter2D <- function(image, kernel) {
   if (!isImage(image))
-    stop("'image' must be an Image object.")
+    stop("This is not an Image object.")
 
   if (!is.matrix(kernel))
     stop("'kernel' must be a matrix.")
@@ -60,7 +60,7 @@ filter2D <- function(image, kernel) {
 #' @export
 sepFilter2D <- function(image, kernel_x, kernel_y) {
   if (!isImage(image))
-    stop("'image' must be an Image object.")
+    stop("This is not an Image object.")
 
   `_sepFilter2D`(image, kernel_x, kernel_y)
 }
@@ -95,7 +95,7 @@ sepFilter2D <- function(image, kernel_x, kernel_y) {
 #' @export
 gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y = 1) {
   if (!isImage(image))
-    stop("'image' must be an Image object.")
+    stop("This is not an Image object.")
 
   `_gaussianBlur`(image, k_height, k_width, sigma_x, sigma_y)
 }
@@ -124,7 +124,7 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y 
 #' @export
 boxFilter <- function(image, k_height = 5, k_width = 5) {
   if (!isImage(image))
-    stop("'image' must be an Image object.")
+    stop("This is not an Image object.")
 
   `_boxFilter`(image, k_height, k_width)
 }
@@ -153,7 +153,7 @@ boxFilter <- function(image, k_height = 5, k_width = 5) {
 #' @export
 blur <- function(image, k_height = 5, k_width = 5) {
   if (!isImage(image))
-    stop("'image' must be an Image object.")
+    stop("This is not an Image object.")
 
   `_blur`(image, k_height, k_width)
 }
@@ -180,7 +180,7 @@ blur <- function(image, k_height = 5, k_width = 5) {
 #' @export
 medianBlur <- function(image, k_size = 5) {
   if (!isImage(image))
-    stop("'image' must be an Image object.")
+    stop("This is not an Image object.")
 
   `_medianBlur`(image, k_size)
 }
@@ -212,7 +212,7 @@ medianBlur <- function(image, k_size = 5) {
 #' @export
 sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE) {
   if (!isImage(image))
-    stop("'image' must be an Image object.")
+    stop("This is not an Image object.")
 
   `_sqrBoxFilter`(image, k_height, k_width, normalize)
 }
@@ -242,7 +242,7 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE) {
 #' @export
 scharr <- function(image, dx = 1, dy = 1, scale = 1) {
   if (!isImage(image))
-    stop("'image' must be an Image object.")
+    stop("This is not an Image object.")
 
   `_scharr`(image, dx, dy, scale)
 }
@@ -274,7 +274,7 @@ scharr <- function(image, dx = 1, dy = 1, scale = 1) {
 #' @export
 sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1) {
   if (!isImage(image))
-    stop("'image' must be an Image object.")
+    stop("This is not an Image object.")
 
   `_sobel`(image, dx, dy, k_size, scale)
 }
@@ -302,7 +302,7 @@ sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1) {
 #' @export
 laplacian <- function(image, k_size = 5, scale = 1) {
   if (!isImage(image))
-    stop("'image' must be an Image object.")
+    stop("This is not an Image object.")
 
   `_laplacian`(image, k_size, scale)
 }
@@ -326,7 +326,10 @@ laplacian <- function(image, k_size = 5, scale = 1) {
 #' @examples
 #' # TODO
 #' @export
-spatialGradient <- function(image, k_size) {
+spatialGradient <- function(image, k_size = 5) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
   dx <- sobel(image, dx = 1, dy = 0, k_size)
   dy <- sobel(image, dx = 0, dy = 1, k_size)
   list(dx = dx, dy = dy)
@@ -414,7 +417,7 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
 adaptiveThreshold <- function(image, max_value = 255, method = "mean",
                               threshold_type = "inverse", block_size = 31, C = 25) {
   if (!isImage(image))
-    stop("'image' must be an Image object.")
+    stop("This is not an Image object.")
 
   if (nchan(image) != 1 || bitdepth(image) != "8U")
     stop("'image' must be an 8-bit (8U) single-channel Image object.")
@@ -431,4 +434,29 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
   `_adaptiveThreshold`(image, max_value, if (method == "mean") 0 else 1,
                        if (threshold_type == "binary") 0 else 1,
                        block_size, C)
+}
+
+
+#' @title Invert Colors
+#'
+#' @description \code{invert} returns an image which colors are the linear
+#'  inverse of that of the original image.
+#'
+#' @param An \code{\link{Image}} object.
+#'
+#' @return An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' # TODO
+#'
+#' @export
+invert <- function(image) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  (if (bitdepth(image) == "8U") 255 else 65535) - image
 }
