@@ -17,9 +17,16 @@
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 changeColorSpace <- function(image, colorspace) {
-  out <- Rvision::cloneImage(image)
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
+  if (!(colorspace %in% c("BGR", "BGRA", "GRAY")))
+    stop("colorspace must be one of 'BGR', 'BGRA', or 'GRAY'.")
+
+  out <- cloneImage(image)
   out$changeColorSpace(colorspace)
   out
 }
@@ -43,9 +50,16 @@ changeColorSpace <- function(image, colorspace) {
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
 changeBitDepth <- function(image, bitdepth) {
-  out <- Rvision::cloneImage(image)
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
+  if (!(bitdepth %in% c(8, 16)))
+    stop("bitdepth must be one of 8 or 16.")
+
+  out <- cloneImage(image)
   out$changeBitDepth(bitdepth)
   out
 }

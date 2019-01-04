@@ -21,6 +21,7 @@ This function takes an \code{\link{Image}} object and modifies
 }
 \examples{
 # TODO
+
 }
 \seealso{
 \code{\link{Image}}

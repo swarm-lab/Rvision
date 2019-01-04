@@ -4,16 +4,16 @@
 \alias{addWeighted}
 \title{Weighted Sum of Two Images}
 \usage{
-addWeighted(image1, alpha, image2, beta)
+addWeighted(image1, image2, weight = c(0.5, 0.5))
 }
 \arguments{
 \item{image1}{An \code{\link{Image}} object.}
 
-\item{alpha}{Weight of the first image.}
-
 \item{image2}{An \code{\link{Image}} object.}
 
-\item{beta}{Weight of the second image.}
+\item{weight}{A 2-element vector of the respective weight of each image
+(default: c(0.5, 0.5)). If the two weights do not add up to 1, they will be
+rescaled accordingly.}
 }
 \value{
 An \code{\link{Image}} object.

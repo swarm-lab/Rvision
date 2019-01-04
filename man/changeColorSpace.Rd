@@ -22,6 +22,7 @@ This function takes an \code{\link{Image}} object and converts
 }
 \examples{
 # TODO
+
 }
 \seealso{
 \code{\link{Image}}

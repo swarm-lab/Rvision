@@ -442,7 +442,7 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #' @description \code{invert} returns an image which colors are the linear
 #'  inverse of that of the original image.
 #'
-#' @param An \code{\link{Image}} object.
+#' @param image An \code{\link{Image}} object.
 #'
 #' @return An \code{\link{Image}} object.
 #'
@@ -451,7 +451,9 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+#' my_image <- image(filename = path_to_image)
+#' plot(invert(my_image))
 #'
 #' @export
 invert <- function(image) {

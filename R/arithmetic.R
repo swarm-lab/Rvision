@@ -15,8 +15,14 @@
 #'
 #' @examples
 #' # TODO
+#'
 #' @export
-"absdiff"
+absdiff <- function(image1, image2) {
+  if (!isImage(image1) | !isImage(image2))
+    stop("Both arguments need to be Image object.")
+
+  `_absdiff`(image1, image2)
+}
 
 
 #' @title Weighted Sum of Two Images
@@ -26,11 +32,11 @@
 #'
 #' @param image1 An \code{\link{Image}} object.
 #'
-#' @param alpha Weight of the first image.
-#'
 #' @param image2 An \code{\link{Image}} object.
 #'
-#' @param beta Weight of the second image.
+#' @param weight A 2-element vector of the respective weight of each image
+#'  (default: c(0.5, 0.5)). If the two weights do not add up to 1, they will be
+#'  rescaled accordingly.
 #'
 #' @return An \code{\link{Image}} object.
 #'
@@ -41,7 +47,15 @@
 #' @examples
 #' # TODO
 #' @export
-"addWeighted"
+addWeighted <- function(image1, image2, weight = c(0.5, 0.5)) {
+  if (!isImage(image1) | !isImage(image2))
+    stop("Both arguments need to be Image object.")
+
+  if (length(weight) != 2)
+    stop("Exactly two weigths need to be supplied.")
+
+  `_addWeighted`(image1, weight[1], image2, weight[2])
+}
 
 
 ### Define generic arithmetic methods ###

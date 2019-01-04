@@ -71,13 +71,13 @@ Image _multiplyScalar(Image image, double value) {
   return Image(out);
 }
 
-Image absdiff(Image image1, Image image2) {
+Image _absdiff(Image image1, Image image2) {
   cv::Mat out = _outputMat(image1, image2);
   cv::absdiff(image1.image, image2.image, out);
   return Image(out);
 }
 
-Image addWeighted(Image image1, double alpha, Image image2, double beta) {
+Image _addWeighted(Image image1, double alpha, Image image2, double beta) {
   cv::Mat out = _outputMat(image1, image2);
   alpha = alpha / (alpha + beta);
   beta = 1 - alpha;

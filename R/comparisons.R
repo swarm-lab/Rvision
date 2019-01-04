@@ -1,8 +1,3 @@
-### Define generic comparison methods ###
-
-# See zzz.R
-
-
 #' @title Template Matching
 #'
 #' @description \code{matchTemplate} compares a template against overlapping
@@ -79,3 +74,8 @@ matchTemplate <- function(image, template, method, mask = NULL) {
                      ), mask)
   }
 }
+
+
+### Define generic comparison methods ###
+
+# See zzz.R

@@ -123,8 +123,8 @@ RCPP_MODULE(methods_Arithmetic) {
   function("_multiplyScalar", &_multiplyScalar, List::create(_["image"],
     _["value"]), "");
   function("_divide", &_divide, List::create(_["image1"], _["image2"]), "");
-  function("absdiff", &absdiff, List::create(_["image1"], _["image2"]), "");
-  function("addWeighted", &addWeighted, List::create(_["image1"], _["alpha"],
+  function("_absdiff", &_absdiff, List::create(_["image1"], _["image2"]), "");
+  function("_addWeighted", &_addWeighted, List::create(_["image1"], _["alpha"],
     _["image2"], _["beta"]), "");
 }
 
