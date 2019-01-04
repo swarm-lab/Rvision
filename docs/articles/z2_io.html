@@ -169,13 +169,11 @@ my_image &lt;-<span class="st"> </span><span class="kw"><a href="../reference/im
 <p>You can create an <code>Image</code> object from the next available frame of a <code>Video</code> object as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_image &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readNext.html">readNext</a></span>(my_video)</code></pre></div>
 <p>You can create an <code>Image</code> object from any arbitrary frame of a <code>Video</code> object as follows (here frame number 100):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_image &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readFrame.html">readFrame</a></span>(my_video, <span class="dv">100</span>)</code></pre></div>
 </div>
 <div id="from-camera-streams" class="section level4">
 <h4 class="hasAnchor">
 <a href="#from-camera-streams" class="anchor"></a>2.1.3.3 - From camera streams</h4>
 <p>You can create an <code>Image</code> object from the next available frame of a <code>Stream</code> object as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_image &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readNext.html">readNext</a></span>(my_stream)</code></pre></div>
 <hr>
 </div>
 </div>
@@ -191,9 +189,6 @@ my_image &lt;-<span class="st"> </span><span class="kw"><a href="../reference/im
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path_to_video &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempfile</a></span>(), <span class="st">".mp4"</span>)
 my_writer &lt;-<span class="st"> </span><span class="kw"><a href="../reference/videoWriter.html">videoWriter</a></span>(path_to_video, <span class="dt">fourcc =</span> <span class="st">"x264"</span>, <span class="dt">fps =</span> <span class="dv">30</span>, <span class="dt">height =</span> <span class="dv">720</span>, <span class="dt">width =</span> <span class="dv">1280</span>)</code></pre></div>
 <p>Once a <code>VideoWriter</code> object has been created, you can write individual frames to it. For instance, we will here capture 30 frames from the default webcam and write them to the video file.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq_len</a></span>(<span class="dv">30</span>)) {
-  <span class="kw"><a href="../reference/writeFrame.html">writeFrame</a></span>(my_writer, <span class="kw"><a href="../reference/readNext.html">readNext</a></span>(my_stream))
-}</code></pre></div>
 <p><code>VideoWriter</code> objects can be released from memory as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/release.html">release</a></span>(my_writer)</code></pre></div>
 <p>Note that <code>VideoWriter</code> objects are wrappers around <a href="http://opencv.org/"><code>OpenCV</code></a> <a href="https://docs.opencv.org/3.4.1/dd/d9e/classcv_1_1VideoWriter.html"><code>VideoWriter</code></a> objects. They will not persist between <a href="https://cran.r-project.org"><code>R</code></a> sessions.</p>
@@ -203,8 +198,6 @@ my_writer &lt;-<span class="st"> </span><span class="kw"><a href="../reference/v
 <a href="#images-1" class="anchor"></a>2.2.2 - Images</h3>
 <p>Writing an image to a file is straightforward using the <code>write.Image</code> function.</p>
 <p><a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> will guess the format of the image file from the file extension. For instance, we will here capture 1 frame from the default webcam and write it to a temporary png image file.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path_to_image &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempfile</a></span>(), <span class="st">".png"</span>)
-<span class="kw"><a href="../reference/write.Image.html">write.Image</a></span>(<span class="kw"><a href="../reference/readNext.html">readNext</a></span>(my_stream), path_to_image)</code></pre></div>
 </div>
 </div>
   </div>

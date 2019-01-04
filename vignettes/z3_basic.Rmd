@@ -19,6 +19,7 @@ __This page describes all basic operations on videos and images.__
 + [3.2 - Displaying images](#displaying-images)
     + [3.2.1 - Method compatible with base R](#method-compatible-with-base-R)
     + [3.2.2 - Method incompatible with base R](#method-incompatible-with-base-R)
++ [3.3 - Accessing/replacing parts of an image](#access-replace)
 
 ---
 
@@ -60,6 +61,7 @@ with [`Rvision`](https://github.com/swarm-lab/Rvision) to draw over images
 ```{r, message=FALSE}
 path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
 my_image <- image(filename = path_to_image)
+
 plot(my_image)
 abline(h = 400, col = "red", lwd = 5)
 abline(h = 550, col = "red", lwd = 5)
@@ -90,3 +92,54 @@ destroyDisplay("My display")
 destroyAllDisplays()
 ```
 
+---
+
+## 3.3 - Accessing/replacing parts of an image
+
+You can access parts of an image in the same way you would do it with matrices 
+and arrays in base [`R`](https://cran.r-project.org). 
+
+```{r, message=FALSE, results=FALSE}
+my_image[]          # Entire image
+my_image[1, 1]      # Bottom-right pixel
+my_image[1, ]       # Bottom row of pixels
+my_image[, 1]       # Leftmost column of pixels
+my_image[1:5, 1:5]  # All pixels between the 1st and 5th row and column
+my_image[c(TRUE, FALSE), c(TRUE, FALSE)]  # Every other row and column of pixels
+```
+
+Note that images are not exactly like traditional matrices. Color images have 
+multiple layers, each corresponsing to a dimension in the BGR or BGRA space 
+(Blue, Green, Red, Alpha transparency). Therefore, when accessing a pixel of a
+color image, you will obtain 3 or 4 values in return. Grayscale images, on the 
+other hand, function similarly to regular monolayer matrices in base 
+[`R`](https://cran.r-project.org). 
+
+To replace parts of an image, you can use the `<-` assignment operator. With 
+grayscale images, it works exactly like in base [`R`](https://cran.r-project.org) 
+with matrices. 
+
+```{r, message=FALSE, results=FALSE}
+my_gray_image <- changeColorSpace(my_image, "GRAY")
+my_gray_image[1:250, 1:250] <- 0  # Turn the corresponding pixels to black
+plot(my_gray_image)
+```
+
+With color images however, you will need to supply 3 (for BGR images) or 4 (for 
+BGRA images) values (or any multiple of 3 or 4 respectively). 
+
+```{r, message=FALSE}
+my_image[1:250, 1:250] <- c(0, 0, 255, 255) # Turn the corresponding pixels to red
+plot(my_image)
+```
+
+The utility function `col2bgr` provided by [`Rvision`](https://github.com/swarm-lab/Rvision)
+(not to be confused with `col2rgb` provided by the `grDevices` package and on 
+which `col2bgr` is based) will conveniently convert any of the 
+[`R`](https://cran.r-project.org)-compatible color specifications to color codes
+compatible with [`Rvision`](https://github.com/swarm-lab/Rvision) images. 
+
+```{r, message=FALSE}
+my_image[1:250, 1:250] <- col2bgr("blue", alpha = TRUE) # Turn the corresponding pixels to blue
+plot(my_image)
+```

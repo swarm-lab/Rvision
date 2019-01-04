@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Weighted Sum of Two Images — addWeighted • Rvision</title>
+<title>Invert Colors — invert • Rvision</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -36,10 +36,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Weighted Sum of Two Images — addWeighted" />
+<meta property="og:title" content="Invert Colors — invert" />
 
-<meta property="og:description" content="This function computes the weighted sum of two
- Image objects." />
+<meta property="og:description" content="invert returns an image which colors are the linear
+ inverse of that of the original image." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,36 +130,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Weighted Sum of Two Images</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/arithmetic.R'><code>R/arithmetic.R</code></a></small>
-    <div class="hidden name"><code>addWeighted.Rd</code></div>
+    <h1>Invert Colors</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/filters.R'><code>R/filters.R</code></a></small>
+    <div class="hidden name"><code>invert.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function computes the weighted sum of two
- <code><a href='Image-class.html'>Image</a></code> objects.</p>
+    <p><code>invert</code> returns an image which colors are the linear
+ inverse of that of the original image.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>addWeighted</span>(<span class='no'>image1</span>, <span class='no'>image2</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.5</span>, <span class='fl'>0.5</span>))</pre>
+    <pre class="usage"><span class='fu'>invert</span>(<span class='no'>image</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>image1</th>
+      <th>image</th>
       <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
-    </tr>
-    <tr>
-      <th>image2</th>
-      <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
-    </tr>
-    <tr>
-      <th>weight</th>
-      <td><p>A 2-element vector of the respective weight of each image
-(default: c(0.5, 0.5)). If the two weights do not add up to 1, they will be
-rescaled accordingly.</p></td>
     </tr>
     </table>
     
@@ -173,7 +163,9 @@ rescaled accordingly.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># TODO
+    <pre class="examples"><div class='input'><span class='no'>path_to_image</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"sample_img"</span>, <span class='st'>"bunny.png"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"Rvision"</span>)
+<span class='no'>my_image</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span>(<span class='kw'>filename</span> <span class='kw'>=</span> <span class='no'>path_to_image</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'>invert</span>(<span class='no'>my_image</span>))</div><div class='img'><img src='invert-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

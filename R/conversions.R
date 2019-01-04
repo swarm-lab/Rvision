@@ -20,7 +20,7 @@
 #'
 #' @export
 changeColorSpace <- function(image, colorspace) {
-  if (!isImage(x))
+  if (!isImage(image))
     stop("This is not an Image object.")
 
   if (!(colorspace %in% c("BGR", "BGRA", "GRAY")))
@@ -53,7 +53,7 @@ changeColorSpace <- function(image, colorspace) {
 #'
 #' @export
 changeBitDepth <- function(image, bitdepth) {
-  if (!isImage(x))
+  if (!isImage(image))
     stop("This is not an Image object.")
 
   if (!(bitdepth %in% c(8, 16)))

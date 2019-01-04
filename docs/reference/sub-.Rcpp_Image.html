@@ -143,10 +143,10 @@
     </div>
 
     <pre class="usage"># S3 method for Rcpp_Image
-[(x, i, j = NULL)
+[(x, i = NULL, j = NULL, ..., drop = TRUE)
 
 # S3 method for Rcpp_Image
-[(x, i, j = NULL) <- value</pre>
+[(x, i = NULL, j = NULL) <- value</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,13 +158,23 @@
     <tr>
       <th>i, j</th>
       <td><p>Indices specifying elements to extract or replace. Indices are
-numeric vectors which values are coerced to integer as by as.integer (and
-hence truncated towards zero).</p></td>
+numeric vectors which values are coerced to integer as by
+<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>as.integer</a></code> (and hence truncated towards zero) or logical
+vectors which are recycled if necessary to match the dimensions of the image.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Ignored.</p></td>
+    </tr>
+    <tr>
+      <th>drop</th>
+      <td><p>If <code>TRUE</code> the result is coerced to the lowest possible
+dimension. This only works for extracting elements, not for the replacement.</p></td>
     </tr>
     <tr>
       <th>value</th>
       <td><p>Single-, three- or four-values vectors representing the gray
-intensity, RGB or RGBA values (respectively) of the pixels. The vector is
+intensity, BGR or BGRA values (respectively) of the pixels. The vector is
 recycled if it is shorter than the number of pixels to modify times the
 number of channels of the image.</p></td>
     </tr>
@@ -172,7 +182,7 @@ number of channels of the image.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
+    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='col2bgr.html'>col2bgr</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

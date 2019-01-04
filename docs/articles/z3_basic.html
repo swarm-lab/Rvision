@@ -112,6 +112,7 @@
 <li><a href="#method-incompatible-with-base-R">3.2.2 - Method incompatible with base R</a></li>
 </ul>
 </li>
+<li><a href="#access-replace">3.3 - Accessing/replacing parts of an image</a></li>
 </ul>
 <hr>
 <div id="object-properties" class="section level2">
@@ -210,6 +211,7 @@
 <a href="#method-compatible-with-base-r" class="anchor"></a>3.2.1 - Method compatible with base R</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path_to_image &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, <span class="dt">package =</span> <span class="st">"Rvision"</span>)
 my_image &lt;-<span class="st"> </span><span class="kw"><a href="../reference/image.html">image</a></span>(<span class="dt">filename =</span> path_to_image)
+
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(my_image)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">h =</span> <span class="dv">400</span>, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">lwd =</span> <span class="dv">5</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">h =</span> <span class="dv">550</span>, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">lwd =</span> <span class="dv">5</span>)
@@ -238,7 +240,33 @@ my_video &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vi
 
 <span class="co"># Close all opened displays</span>
 <span class="kw"><a href="../reference/destroyDisplay.html">destroyAllDisplays</a></span>()</code></pre></div>
+<hr>
 </div>
+</div>
+<div id="accessingreplacing-parts-of-an-image" class="section level2">
+<h2 class="hasAnchor">
+<a href="#accessingreplacing-parts-of-an-image" class="anchor"></a>3.3 - Accessing/replacing parts of an image</h2>
+<p>You can access parts of an image in the same way you would do it with matrices and arrays in base <a href="https://cran.r-project.org"><code>R</code></a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_image[]          <span class="co"># Entire image</span>
+my_image[<span class="dv">1</span>, <span class="dv">1</span>]      <span class="co"># Bottom-right pixel</span>
+my_image[<span class="dv">1</span>, ]       <span class="co"># Bottom row of pixels</span>
+my_image[, <span class="dv">1</span>]       <span class="co"># Leftmost column of pixels</span>
+my_image[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]  <span class="co"># All pixels between the 1st and 5th row and column</span>
+my_image[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)]  <span class="co"># Every other row and column of pixels</span></code></pre></div>
+<p>Note that images are not exactly like traditional matrices. Color images have multiple layers, each corresponsing to a dimension in the BGR or BGRA space (Blue, Green, Red, Alpha transparency). Therefore, when accessing a pixel of a color image, you will obtain 3 or 4 values in return. Grayscale images, on the other hand, function similarly to regular monolayer matrices in base <a href="https://cran.r-project.org"><code>R</code></a>.</p>
+<p>To replace parts of an image, you can use the <code>&lt;-</code> assignment operator. With grayscale images, it works exactly like in base <a href="https://cran.r-project.org"><code>R</code></a> with matrices.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_gray_image &lt;-<span class="st"> </span><span class="kw"><a href="../reference/changeColorSpace.html">changeColorSpace</a></span>(my_image, <span class="st">"GRAY"</span>)
+my_gray_image[<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">250</span>] &lt;-<span class="st"> </span><span class="dv">0</span>  <span class="co"># Turn the corresponding pixels to black</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(my_gray_image)</code></pre></div>
+<p><img src="z3_basic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p>With color images however, you will need to supply 3 (for BGR images) or 4 (for BGRA images) values (or any multiple of 3 or 4 respectively).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_image[<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">250</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">255</span>) <span class="co"># Turn the corresponding pixels to red</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(my_image)</code></pre></div>
+<p><img src="z3_basic_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p>The utility function <code>col2bgr</code> provided by <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> (not to be confused with <code>col2rgb</code> provided by the <code>grDevices</code> package and on which <code>col2bgr</code> is based) will conveniently convert any of the <a href="https://cran.r-project.org"><code>R</code></a>-compatible color specifications to color codes compatible with <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> images.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_image[<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">250</span>] &lt;-<span class="st"> </span><span class="kw"><a href="../reference/col2bgr.html">col2bgr</a></span>(<span class="st">"blue"</span>, <span class="dt">alpha =</span> <span class="ot">TRUE</span>) <span class="co"># Turn the corresponding pixels to blue</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(my_image)</code></pre></div>
+<p><img src="z3_basic_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
   </div>
 
@@ -249,6 +277,7 @@ my_video &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vi
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#object-properties">3.1 - Object properties</a></li>
       <li><a href="#displaying-images">3.2 - Displaying images</a></li>
+      <li><a href="#accessingreplacing-parts-of-an-image">3.3 - Accessing/replacing parts of an image</a></li>
       </ul>
 </div>
       </div>

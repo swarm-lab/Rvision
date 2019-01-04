@@ -109,11 +109,9 @@ my_image <- readNext(my_video)
 You can create an `Image` object from any arbitrary frame of a `Video` object as 
 follows (here frame number 100):
 
-```{r, eval=FALSE}
-my_image <- readFrame(my_video, 100)
-```
-
 ```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
+my_image <- readFrame(my_video, 100)
+
 release(my_video)
 ```
 
@@ -126,11 +124,9 @@ my_stream <- stream(index = 0)
 You can create an `Image` object from the next available frame of a `Stream` 
 object as follows: 
 
-```{r, eval=FALSE}
-my_image <- readNext(my_stream)
-```
-
 ```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
+my_image <- readNext(my_stream)
+
 release(my_stream)
 ```
 
@@ -159,15 +155,11 @@ them to the video file.
 
 ```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
 my_stream <- stream(index = 0)
-```
 
-```{r, eval=FALSE}
 for (i in seq_len(30)) {
   writeFrame(my_writer, readNext(my_stream))
 }
-```
 
-```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
 release(my_stream)
 ```
 
@@ -191,16 +183,9 @@ from the default webcam and write it to a temporary png image file.
 
 ```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
 my_stream <- stream(index = 0)
-```
 
-```{r, eval=FALSE}
 path_to_image <- paste0(tempfile(), ".png")
 write.Image(readNext(my_stream), path_to_image)
-```
 
-```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
 release(my_stream)
 ```
-
-
-
