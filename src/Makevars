@@ -1,4 +1,4 @@
 CXX = clang++
 PKG_LIBS = `$(R_HOME)/bin/Rscript -e 'ROpenCVLite::opencvConfig("libs")'`
 PKG_CPPFLAGS = `$(R_HOME)/bin/Rscript -e 'ROpenCVLite::opencvConfig("cflags")'`
-PKG_CXXFLAGS = `$(R_HOME)/bin/Rscript -e 'Rcpp:::CxxFlags()'`
+PKG_CXXFLAGS = `$(R_HOME)/bin/Rscript -e 'Rcpp:::CxxFlags()'` -std=c++11

@@ -25,12 +25,12 @@ void _display(Image image, std::string window_name, int delay, int height, int w
 
 void _destroyDisplay(std::string window_name) {
   cv::destroyWindow(window_name);
-  cvWaitKey(1);
+  cv::waitKey(1);
 }
 
 void _destroyAllDisplays() {
   cv::destroyAllWindows();
-  cvWaitKey(1);
+  cv::waitKey(1);
 }
 
 Rcpp::DataFrame _selectBoundingBoxes(Image image, std::string window_name, bool crosshair) {
