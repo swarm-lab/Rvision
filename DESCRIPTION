@@ -1,7 +1,7 @@
 Package: Rvision
 Type: Package
 Title: Basic Computer Vision Library
-Version: 0.3.3
+Version: 0.3.4
 Authors@R: c(
       person("Simon", "Garnier", email = "garnier@njit.edu", role = c("aut", "cre")),
       person("Muschelli", "John", email = "muschellij2@gmail.com", role = c("ctb", "cph"))
