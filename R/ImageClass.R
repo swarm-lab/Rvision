@@ -71,7 +71,20 @@ plot.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  img <- x[nrow(x):1, , drop = FALSE]
+  args <- list(...)
+  xlim <- args$xlim
+  if (is.null(xlim)) {
+    xlim <- c(1, ncol(x))
+  }
+
+  ylim <- args$ylim
+  if (is.null(ylim)) {
+    ylim <- c(1, nrow(x))
+  }
+
+  # img <- x[nrow(x):1, , drop = FALSE]
+  img <- x[min(nrow(x), ylim[2]):max(1, ylim[1]),
+           max(1, xlim[1]):min(ncol(x), xlim[2]), drop = FALSE]
 
   if (Rvision::bitdepth(x) == "8U") {
     imgMax <- 255
@@ -87,24 +100,13 @@ plot.Rcpp_Image <- function(x, ...) {
     img <- img[, , 1] / imgMax
   }
 
-  args = list(...)
-  xlim = args$xlim
-  if (is.null(xlim)) {
-    xlim <- c(1, ncol(img))
-  }
-
-  ylim = args$ylim
-  if (is.null(ylim)) {
-    ylim <- c(1, nrow(img))
-  }
-
   op <- par(mar = rep(0, 4))
   plot(NA, xlim = xlim, ylim = ylim, asp = 1, xaxt = "n",
        yaxt = "n", ann = FALSE, bty = "n", xaxs = "i", yaxs = "i")
 
   rasterImage(
-    img, xleft = 1, xright = ncol(img),
-    ybottom = 1, ytop = nrow(img), ...)
+    img, xleft = max(1, xlim[1]), xright = min(ncol(img), xlim[2]),
+    ybottom = max(1, ylim[1]), ytop = min(nrow(img), ylim[2]), ...)
   par(op)
 }
 
