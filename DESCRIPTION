@@ -22,6 +22,7 @@ Imports:
     stats,
     graphics
 LinkingTo: Rcpp, RcppArmadillo
+SystemRequirements: C++11
 RcppModules: class_Image, class_Video, class_Stream, class_VideoWriter, 
     methods_Arithmetic, methods_Statistics, methods_Comparisons, methods_Logical, 
     methods_OpticalFlow, methods_Blob, methods_Morphology, methods_Filters, 
