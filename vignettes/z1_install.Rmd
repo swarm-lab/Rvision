@@ -64,7 +64,7 @@ system is missing one of the external dependencies required to compile
 You can install [`Rvision`](https://github.com/swarm-lab/Rvision) as follows:
 
 ```{r, message=FALSE, eval=FALSE}
-devtools::install_github("swarm-lab/Rvision", INSTALL_opts = c("--no-multiarch"))
+devtools::install_github("swarm-lab/Rvision")
 ```
 
 ---
