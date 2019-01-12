@@ -26,7 +26,7 @@ script:
   - PKG_TARBALL=$(ls -1t *.tar.gz | head -n 1)
   - travis_wait 100 R CMD check ${R_CHECK_ARGS} "${PKG_TARBALL}"; CHECK_RET=$? ;
   - echo ${CHECK_RET};
-  - if [[ $CHECK_RET -ne 0 ]]; then echo "R CMD check failed"; check_fail; exit 1; fi
+  # - if [[ $CHECK_RET -ne 0 ]]; then echo "R CMD check failed"; check_fail; exit 1; fi
   - rm -f travis_wait*.log
   - check_fail
   - check_warnings
