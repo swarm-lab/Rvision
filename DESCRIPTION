@@ -7,9 +7,8 @@ Authors@R: c(
       person("Muschelli", "John", email = "muschellij2@gmail.com", role = c("ctb", "cph"))
   )
 Maintainer: Simon Garnier <garnier@njit.edu>
-Description: This package uses the OpenCV library to provide R users with some
-    basic functions to read and manipulate video and image files, as well as
-    camera streams.
+Description: This package uses the OpenCV library to provide R users with methods 
+    to read and manipulate video and image files, as well as camera streams.
 License: GPL-3
 LazyData: TRUE
 NeedsCompilation: yes
