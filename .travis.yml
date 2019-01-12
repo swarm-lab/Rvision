@@ -31,6 +31,7 @@ before_deploy:
   - git config --local user.email "garnier@njit.edu"
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
   - git tag $TRAVIS_TAG
+  - git push -q https://$TAGPERM@github.com/swarm-lab/Rvision --tags
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
       PKG_TARBALL=$(ls -1t *.tgz | head -n 1);
@@ -61,3 +62,7 @@ deploy:
   on:
     repo: swarm-lab/${PACKAGE_NAME}
     tags: true
+
+branches:
+  except:
+  - /^untagged/
