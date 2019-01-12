@@ -9,4 +9,3 @@ vignettes/old
 _pkgdown.yaml
 docs
 index.Rmd
-github_deploy_key.enc
