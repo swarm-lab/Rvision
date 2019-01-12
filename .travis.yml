@@ -1,12 +1,59 @@
 language: R
 sudo: false
+cran: http://cran.rstudio.com
 cache: packages
-os:
-- linux
-- osx
-after_success: if [ "$TRAVIS_OS_NAME" == "linux" ]; then Rscript -e 'covr::coveralls(type
-  = "all")'; fi
 warnings_are_errors: false
-before_deploy: if [ "$TRAVIS_OS_NAME" == "osx" ]; then rm -f *.tar.gz; fi
-r_build_args: "--no-build-vignettes"
-r_check_args: "--as-cran --ignore-vignettes --no-examples --install-args=--build"
+os:
+  - linux
+  - osx
+
+env:
+  global:
+    - R_BUILD_ARGS="--no-manual --no-build-vignettes"
+    - R_CHECK_ARGS="--as-cran --ignore-vignettes --no-examples --install-args=--build"
+    - WARNINGS_ARE_ERRORS=0
+
+before_install:
+  - fname=travis_helpers.sh
+  - wget -O ${fname} http://bit.ly/travis_helpers
+  - cat ${fname}; source ${fname}; rm ${fname}
+  - cat DESCRIPTION
+  - export PACKAGE_NAME=`package_name`
+  - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
+
+script:
+  - travis_wait 100 R CMD build ${R_BUILD_ARGS} .
+  - rm -f travis_wait*.log
+  - PKG_TARBALL=$(ls -1t *.tar.gz | head -n 1)
+  - travis_wait 100 R CMD check ${R_CHECK_ARGS} "${PKG_TARBALL}"; CHECK_RET=$? ;
+  - echo ${CHECK_RET};
+  - if [[ $CHECK_RET -ne 0 ]]; then echo "R CMD check failed"; check_fail; exit 1; fi
+  - rm -f travis_wait*.log
+  - check_fail
+  - check_warnings
+
+after_success:
+  - cat ${RCHECK_DIR}/00install.out
+  - cat ${RCHECK_DIR}/00check.log
+  - |
+
+       $(npm bin)/set-up-ssh --key "$encrypted_XXXXXXXXXXXX_key" \
+                             --iv "$encrypted_XXXXXXXXXXXX_iv" \
+                             --path-encrypted-key "github_deploy_key.enc"
+
+after_failure:
+  - cat ${RCHECK_DIR}/00install.out
+  - cat ${RCHECK_DIR}/00check.log
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: "DB8STUMdlC8l3gcycj2isY6oiQzxY+BwKHY9dnLdamF2ILJPg30k3iGV0SGgg9f8lDB9gye8hxlmHJAgi+2Tyz40pHz5qdf+Rtlu8Ax4JhIuWEn+EYHJ5BRaoq1P0cWLopKoVdCKsjhpgKCIfZNVSxodfq0e4d6OU0djkC5MIVnrZb2zp9eOElBVIagUrv11nVbhShK1RoO7orPxmt40jRv/hz5LQky0i9z2BfE5sHGAgWa0l7PMhOrKUgKMY8ia5/oEtmGJtIlTkp2UpkH2nHXV+zbEUuRnTbjzeTtbppDwvnPOx76q6pTNpr5lwxcuLUqjmntJJ3vWylMQr3hbo/lfsQ+QoMaXnJw+ypZxLjDgAeMGDvNkZ1SJrjtJESG7xO87vsfjC0cmwzsHy5F190I0dky1Oi8jWGCI7zXY8AHXXk3CXDQ1fAJCkDYLvBM9pCkeavXyXikHx3xucJ89Op0VA6nQDw7oifChTkh5QmcMb/rBqXPTGefeHX17ZUDtycHJEK7qXwnjpiQUESFWxNNfRQSlXHybSPQAdCI6BO7uTYXtZf+VSKr4P8eyWt/KtaB8wJVkKTRpqsR3ytR/JbzGBoRfSlufI7R0+9CXmNeY6TRstMvR5lcA8kpNYq4pGH6JrPZNaogySUWZ6GvZ/LxFqjrOn4yuWRv+39x2CQ8="
+  file: "${PACKAGE_NAME}*.t*gz"
+  file_glob: true
+  on:
+    repo: swarm-lab/${PACKAGE_NAME}
+
+before_deploy:
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then rm -f *.tar.gz; fi
