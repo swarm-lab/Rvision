@@ -27,6 +27,10 @@ after_failure:
   - cat ${RCHECK_DIR}/00check.log
 
 before_deploy:
+  - git config --local user.name "sjmgarnier"
+  - git config --local user.email "garnier@njit.edu"
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+  - git tag $TRAVIS_TAG
   - if [ "$TRAVIS_OS_NAME" = "osx" ];
     then
       PKG_TARBALL=$(ls -1t *.tgz | head -n 1);
@@ -56,3 +60,4 @@ deploy:
   file: ${PACKAGE_NAME}*.t*gz
   on:
     repo: swarm-lab/${PACKAGE_NAME}
+    tags: true
