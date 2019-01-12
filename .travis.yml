@@ -7,10 +7,8 @@ os:
   - linux
   - osx
 
-env:
-  global:
-    - R_BUILD_ARGS="--no-manual --no-build-vignettes"
-    - R_CHECK_ARGS="--as-cran --ignore-vignettes --no-examples --install-args=--build"
+r_build_args: "--no-manual --no-build-vignettes"
+r_check_args: "--as-cran --ignore-vignettes --no-examples --install-args=--build"
 
 before_install:
   - fname=travis_helpers.sh
@@ -19,17 +17,6 @@ before_install:
   - cat DESCRIPTION
   - export PACKAGE_NAME=`package_name`
   - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
-
-script:
-  - travis_wait 100 R CMD build ${R_BUILD_ARGS} .
-  - rm -f travis_wait*.log
-  - PKG_TARBALL=$(ls -1t *.tar.gz | head -n 1)
-  - travis_wait 100 R CMD check ${R_CHECK_ARGS} "${PKG_TARBALL}"; CHECK_RET=$? ;
-  - echo ${CHECK_RET};
-  # - if [[ $CHECK_RET -ne 0 ]]; then echo "R CMD check failed"; check_fail; exit 1; fi
-  - rm -f travis_wait*.log
-  - check_fail
-  - check_warnings
 
 after_success:
   - cat ${RCHECK_DIR}/00install.out
