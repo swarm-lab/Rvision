@@ -3,7 +3,8 @@ public:
   Image();
   Image(std::string inputFile);
   Image(cv::Mat inputImage);
-  Image(arma::cube inputArray);
+  Image(arma::Cube<int> inputArray);
+  Image(arma::Cube<double> inputArray);
   cv::Mat image;
   bool open(std::string inputFile);
   bool write(std::string outputFile);
@@ -55,7 +56,54 @@ Image::Image(cv::Mat inputImage) {
   this->init();
 }
 
-Image::Image(arma::cube inputArray) {
+Image::Image(arma::Cube<int> inputArray) {
+  switch(inputArray.n_slices) {
+  case 1:
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC1);
+    break;
+  case 3:
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC3);
+    break;
+  case 4:
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC4);
+    break;
+  default:
+    throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+  }
+
+  if (inputArray.min() < 0 || inputArray.max() > 255) {
+    Rcpp::Rcout << "Note: input array values outside the authorized range of [0;255]. Rescaling was performed." << std::endl;
+    inputArray = 255 * (inputArray - inputArray.min()) / (inputArray.max() - inputArray.min());
+  }
+
+  for (int i = 0; i < inputArray.n_cols; i++) {
+    for (int j = 0; j < inputArray.n_rows; j++) {
+      for (int k = 0; k < inputArray.n_slices; k++) {
+        switch(inputArray.n_slices) {
+        case 1:
+          this->image.at<uint8_t>(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+          break;
+        case 3:
+          this->image.at<cv::Vec3b>(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+          break;
+        case 4:
+          this->image.at<cv::Vec4b>(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+          break;
+        default:
+          throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+        }
+      }
+    }
+  }
+
+  if (!this->image.data) {
+    throw std::range_error("Could not read the input array.");
+  } else {
+    this->init();
+  }
+}
+
+Image::Image(arma::Cube<double> inputArray) {
   switch(inputArray.n_slices) {
   case 1:
     this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC1);

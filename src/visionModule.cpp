@@ -13,7 +13,8 @@ RCPP_MODULE(class_Image) {
 
   .constructor()
   .constructor<std::string>("", &ImageConst1)
-  .constructor<arma::cube>("", &ImageConst2)
+  .constructor<arma::Cube<int> > ("", &ImageConst2)
+  .constructor<arma::Cube<double> > ("", &ImageConst3)
 
   .method("open", &Image::open)
   .method("write", &Image::write)
