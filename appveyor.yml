@@ -52,7 +52,7 @@ deploy:
   provider: GitHub
   description: Windows Binary
   auth_token:
-    secure: mNg768mu+ZqwQbaj7d8sheCSuo7BDks8b1Gf4H1KNAcxO23pVgXvGjiVwx/AWWVSzGIA5mNuv2iaiMv9f9QLvFyOJsSaq/5N+97k/BY+TkY/VNoj8Z0ISjAb2qS6wnC7sJKxlo2TFjrMjy9qSpDuEnxM9Plg4Ey/6jLiUS2s2FEzvsMaBJnOEKcNTC5UJBRWmLKfeF/qqUP/rutL26VdNK4JsbpgJRdBb3Zt7s6Zrr2STLliDGz3tkdp7NKYBl+tmTtl61yOdYYBQZycvwbtSSs6GnPELLeSTpQMMDO76ecSB1pkGO6+Br7omXVEVt9wkUY0p7iNY7JrCQE8M2TCfrxlbjzwGGZr782AWr+IMUleB+msNKQHkgQPcKkJv6/H+9OelO0rRmvERPeGXlYTet2fBNDQZEk1aFg3QV1/r326VUGoBkz+p1Yx4E+4vHJspnMw8Vvr4vmWpEz/S2WwzkkWBHICO4q66SDN3OTlorIhCMQgufnx3RxiM4qhw1vUhBbmzv2ju6putVavNh3y60lohLJjN6OYitC2jZrb6LklfWoymsCZFXMUj6VrfOzB+qIRWxEbaPk3ocvfj4HjV3iHtdjMpDr4zhMDMMQC5nsKxbOny6Xdl4CVxSZBuktF2uNhWlIGeyA+llkiFotY8ILs1eW4kdHjSDYKe/tmntE=
+    secure: h+8/Q2kGkLoaoZ8OEtsplJGXuPFhS/VQbtE66cMJj7J3PeDgNAROVkV7368h3s+b
   draft: no
   prerelease: no
   on:
