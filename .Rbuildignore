@@ -7,6 +7,7 @@ scripts
 ^\.travis\.yml$
 vignettes/old
 _pkgdown.yaml
+pkgdown
 docs
 index.Rmd
 logo.*
