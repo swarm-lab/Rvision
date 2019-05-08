@@ -545,7 +545,7 @@ void Image::changeBitDepth(int depth) {
 }
 
 void Image::changeColorSpace(std::string colorSpace) {
-  if ((colorSpace != "BGR") && (colorSpace != "BGRA") && (colorSpace != "GRAY")) {
+  if ((colorSpace != "BGR") && (colorSpace != "BGRA") && (colorSpace != "GRAY") && (colorSpace != "BayerBG2BGR") && (colorSpace != "BayerGB2BGR") && (colorSpace != "BayerRG2BGR") && (colorSpace != "BayerGR2BGR") ) {
     throw std::range_error("Unknown colorspace.");
   }
 
@@ -561,14 +561,21 @@ void Image::changeColorSpace(std::string colorSpace) {
     } else if (colorSpace == "GRAY") {
       cv::cvtColor(this->image, this->image, cv::COLOR_BGRA2GRAY);
     }
-  } else {
+  } else if (this->imageSpace == "GRAY"){
     if (colorSpace == "BGR") {
       cv::cvtColor(this->image, this->image, cv::COLOR_GRAY2BGR);
-    } else if (colorSpace == "BGR") {
+    } else if (colorSpace == "BGRA") {
       cv::cvtColor(this->image, this->image, cv::COLOR_GRAY2BGRA);
+    } else if (colorSpace == "BayerBG2BGR"){
+      cv::cvtColor(this->image, this->image, cv::COLOR_BayerBG2BGR);
+    } else if (colorSpace == "BayerGB2BGR"){
+      cv::cvtColor(this->image, this->image, cv::COLOR_BayerGB2BGR);
+    } else if (colorSpace == "BayerRG2BGR"){
+      cv::cvtColor(this->image, this->image, cv::COLOR_BayerRG2BGR);
+    } else if (colorSpace == "BayerGR2BGR"){
+      cv::cvtColor(this->image, this->image, cv::COLOR_BayerGR2BGR);
     }
   }
-
   this->init();
 }
 

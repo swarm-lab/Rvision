@@ -7,7 +7,8 @@
 #'
 #' @param colorspace A string corresponding to the colorspace the image should
 #'  be converted to. Options are "BGR" (Blue Green Red image), "BGRA" (BGR image
-#'  with Alpha channel), and "GRAY" (grayscale image).
+#'  with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR","BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".
+#'  with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR","BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".
 #'
 #' @return An \code{\link{Image}} object.
 #'
@@ -23,8 +24,8 @@ changeColorSpace <- function(image, colorspace) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (!(colorspace %in% c("BGR", "BGRA", "GRAY")))
-    stop("colorspace must be one of 'BGR', 'BGRA', or 'GRAY'.")
+  if (!(colorspace %in% c("BGR", "BGRA", "GRAY","BayerBG2BGR","BayerGB2BGR","BayerRG2BGR","BayerGR2BGR")))
+    stop("colorspace must be one of 'BGR', 'BGRA', 'GRAY', 'BayerBG2BGR', 'BayerGB2BGR', 'BayerRG2BGR', 'BayerGR2BGR'.")
 
   out <- cloneImage(image)
   out$changeColorSpace(colorspace)
