@@ -11,7 +11,7 @@ changeColorSpace(image, colorspace)
 
 \item{colorspace}{A string corresponding to the colorspace the image should
 be converted to. Options are "BGR" (Blue Green Red image), "BGRA" (BGR image
-with Alpha channel), and "GRAY" (grayscale image).}
+with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer mosaic to BGR is also possible with "BayerBG2BGR","BayerGB2BGR", "BayerRG2BGR", "BayerGR2BGR".}
 }
 \value{
 An \code{\link{Image}} object.
