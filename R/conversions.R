@@ -7,8 +7,9 @@
 #'
 #' @param colorspace A string corresponding to the colorspace the image should
 #'  be converted to. Options are "BGR" (Blue Green Red image), "BGRA" (BGR image
-#'  with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR","BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".
-#'  with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR","BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".
+#'  with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer
+#'  mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR",
+#'  "BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".
 #'
 #' @return An \code{\link{Image}} object.
 #'
