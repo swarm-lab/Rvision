@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.3.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.3.5</span>
       </span>
     </div>
 
@@ -141,10 +141,10 @@
 <h3 class="hasAnchor">
 <a href="#can-i-take-selfies-with-my-webcam-using-rvision" class="anchor"></a>Can I take selfies with my webcam using <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a>?</h3>
 <p>You certainly can, but ask yourself first whether you should…</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_stream &lt;-<span class="st"> </span><span class="kw"><a href="reference/stream.html">stream</a></span>(<span class="dv">0</span>)   <span class="co"># 0 will start your default webcam in general. </span>
-my_selfie &lt;-<span class="st"> </span><span class="kw"><a href="reference/readNext.html">readNext</a></span>(my_stream)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(my_selfie)
-<span class="kw"><a href="reference/release.html">release</a></span>(my_stream)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">my_stream &lt;-<span class="st"> </span><span class="kw"><a href="reference/stream.html">stream</a></span>(<span class="dv">0</span>)   <span class="co"># 0 will start your default webcam in general. </span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">my_selfie &lt;-<span class="st"> </span><span class="kw"><a href="reference/readNext.html">readNext</a></span>(my_stream)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(my_selfie)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="reference/release.html">release</a></span>(my_stream)</a></code></pre></div>
 <p>Be careful, this will trigger the explosion of your camera if it detects that you are making a duck face ;-)</p>
 </div>
 </div>

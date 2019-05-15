@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.3.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.3.5</span>
       </span>
     </div>
 
@@ -164,7 +164,9 @@
       <th>colorspace</th>
       <td><p>A string corresponding to the colorspace the image should
 be converted to. Options are "BGR" (Blue Green Red image), "BGRA" (BGR image
-with Alpha channel), and "GRAY" (grayscale image).</p></td>
+with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer
+mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR",
+"BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".</p></td>
     </tr>
     </table>
     
