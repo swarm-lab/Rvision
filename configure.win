@@ -2,7 +2,7 @@
 set -x
 set -e
 
-${R_HOME}/bin/Rscript.exe -e 'if (!ROpenCVLite::isOpenCVInstalled()) {
-  message("OpenCV is not installed on this system. It will be installed now.")
+${R_HOME}/bin/Rscript.exe -e "if (!ROpenCVLite::isOpenCVInstalled()) {
+  message('OpenCV is not installed on this system. It will be installed now.')
   ROpenCVLite::installOpenCV(force = TRUE)
-}'
+}"
