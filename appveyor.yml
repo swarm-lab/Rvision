@@ -18,6 +18,7 @@ environment:
     WARNINGS_ARE_ERRORS: 0.0
     USE_RTOOLS: yes
     R_CHECK_INSTALL_ARGS: --install-args=--build
+    R_CHECK_ARGS: --no-manual --as-cran
 
   matrix:
   - R_VERSION: stable
