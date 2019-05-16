@@ -61,7 +61,15 @@ system is missing one of the external dependencies required to compile
 
 ## 1.2 - Installing Rvision
 
-You can install [`Rvision`](https://github.com/swarm-lab/Rvision) as follows:
+You can install the latest tested versio of [`Rvision`](https://github.com/swarm-lab/Rvision) 
+as follows:
+
+```{r, message=FALSE, eval=FALSE}
+devtools::install_github("swarm-lab/Rvision", ref = "v0.3.5")
+```
+
+The latest development version (not necessarily testes) can be installed as 
+follows: 
 
 ```{r, message=FALSE, eval=FALSE}
 devtools::install_github("swarm-lab/Rvision")
