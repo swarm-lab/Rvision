@@ -18,7 +18,7 @@ before_install:
   - export PACKAGE_NAME=`package_name`
   - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
   - Rscript -e 'install.packages("devtools")'
-  - Rscript -e 'remotes::install_github("swarm-lab/ROpenCVLite")'
+  - Rscript -e 'remotes::install_github("swarm-lab/ROpenCVLite", ref = "v0.3.410")'
   - Rscript -e 'ROpenCVLite::installOpenCV(force = TRUE)'
 
 after_success:
