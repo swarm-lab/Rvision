@@ -26,7 +26,7 @@ environment:
     CRAN: http://cran.rstudio.com
 
 build_script:
-  - Rscript -e "install.packages('devtools')"
+  - Rscript -e "install.packages('devtools', repos = 'http://cran.us.r-project.org')"
   - Rscript -e "remotes::install_github('swarm-lab/ROpenCVLite')"
   - Rscript -e "ROpenCVLite::installOpenCV(force = TRUE)"
   - travis-tool.sh install_deps
