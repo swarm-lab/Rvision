@@ -29,6 +29,7 @@ RcppModules: class_Image, class_Video, class_Stream, class_VideoWriter,
     methods_Display, methods_Draw, methods_Geometry, methods_Shape 
 Remotes: github::swarm-lab/ROpenCVLite@v0.3.410
 RoxygenNote: 6.1.1
+Biarch: true
 Encoding: UTF-8
 Suggests: 
     knitr,
