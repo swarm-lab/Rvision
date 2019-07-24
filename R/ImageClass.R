@@ -105,8 +105,8 @@ plot.Rcpp_Image <- function(x, ...) {
        yaxt = "n", ann = FALSE, bty = "n", xaxs = "i", yaxs = "i")
 
   rasterImage(
-    img, xleft = max(1, xlim[1]), xright = min(ncol(img), xlim[2]),
-    ybottom = max(1, ylim[1]), ytop = min(nrow(img), ylim[2]), ...)
+    img, xleft = max(1, xlim[1]), xright = min(ncol(x), xlim[2]),
+    ybottom = max(1, ylim[1]), ytop = min(nrow(x), ylim[2]), ...)
   par(op)
 }
 
