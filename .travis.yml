@@ -17,8 +17,6 @@ before_install:
   - cat DESCRIPTION
   - export PACKAGE_NAME=`package_name`
   - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
-  - Rscript -e 'install.packages("devtools")'
-  - Rscript -e 'remotes::install_github("swarm-lab/ROpenCVLite")'
   - Rscript ci_script.R
 
 after_success:

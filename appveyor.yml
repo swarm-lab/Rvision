@@ -15,7 +15,7 @@ cache:
 # Adapt as necessary starting from here
 environment:
   global:
-    WARNINGS_ARE_ERRORS: 0.0
+    WARNINGS_ARE_ERRORS: 1.0
     USE_RTOOLS: yes
     R_CHECK_INSTALL_ARGS: --install-args=--build
     R_CHECK_ARGS: --no-manual --as-cran
@@ -26,8 +26,6 @@ environment:
     CRAN: http://cran.rstudio.com
 
 build_script:
-  - Rscript -e "install.packages('devtools', repos = 'http://cran.us.r-project.org')"
-  - Rscript -e "remotes::install_github('swarm-lab/ROpenCVLite')"
   - Rscript ci_script.R
   - travis-tool.sh install_deps
 

@@ -1,3 +1,6 @@
+install.packages("devtools", repos = "http://cran.us.r-project.org")
+remotes::install_github("swarm-lab/ROpenCVLite")
+
 pkgPath <- find.package("ROpenCVLite")
 installPath <- gsub("ROpenCVLite", "", pkgPath)
 openCVPath <- paste0(installPath, "opencv")
