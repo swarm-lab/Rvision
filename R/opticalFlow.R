@@ -41,7 +41,13 @@
 #' @seealso \code{\link{plot.OF_array}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' balloon1 <- readFrame(balloon, 1)
+#' balloon2 <- readFrame(balloon, 25)
+#' of <- farneback(balloon1, balloon2)
+#' plot(balloon2)
+#' plot(of, length = 0.05)
+#'
 #' @export
 farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
                       iterations = 3, poly_n = 7, poly_sigma = 1.5) {
@@ -104,7 +110,13 @@ farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
 #' @seealso \code{\link{farneback}}, \code{\link{arrows}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' balloon1 <- readFrame(balloon, 1)
+#' balloon2 <- readFrame(balloon, 25)
+#' of <- farneback(balloon1, balloon2)
+#' plot(balloon2)
+#' plot(of, length = 0.05)
+#'
 #' @export
 plot.OF_array <- function(x, gridsize = c(25, 25), thresh = 0,
                           add = TRUE, arrow.ex = 0.05, xpd = TRUE, ...) {
@@ -119,11 +131,9 @@ plot.OF_array <- function(x, gridsize = c(25, 25), thresh = 0,
 
   locs <- expand.grid(x = floor(seq(1, ncol(x), length.out = gridsize[1])),
                       y = floor(seq(1, nrow(x), length.out = gridsize[2])))
-  x <- locs$x
-  y <- locs$y
 
-  id <- (x - 1) * nrow(x) + y
-  y <- max(y) - y
+  id <- (locs$x - 1) * nrow(x) + locs$y
+  locs$y <- max(locs$y) - locs$y
   u <- x[, , 1][id]
   v <- x[, , 2][id]
 
@@ -142,6 +152,6 @@ plot.OF_array <- function(x, gridsize = c(25, 25), thresh = 0,
   invisible()
   old.xpd <- par()$xpd
   graphics::par(xpd = xpd)
-  graphics::arrows(x[valid], y[valid], x[valid] + u[valid], y[valid] + v[valid], ...)
+  graphics::arrows(locs$x[valid], locs$y[valid], locs$x[valid] + u[valid], locs$y[valid] + v[valid], ...)
   graphics::par(xpd = old.xpd)
 }
