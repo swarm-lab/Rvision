@@ -53,7 +53,11 @@ Hereafter is a list of all supported APIs. Note that not all APIs will
  }
 }
 \examples{
-# TODO
+\dontrun{
+live <- stream(0)
+release(live)
+}
+
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

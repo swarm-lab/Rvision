@@ -35,7 +35,11 @@ An \code{\link{Image}} object.
  binary image using an adaptive threshold.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_gray <- changeColorSpace(balloon, "GRAY")
+balloon_th <- adaptiveThreshold(balloon_gray)
+plot(balloon_th)
+
 }
 \seealso{
 \code{\link{Image}}

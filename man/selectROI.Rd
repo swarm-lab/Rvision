@@ -36,7 +36,11 @@ If \code{return_mask == FALSE}, a data frame with the following two
  locations of the vertices of the polygon.
 }
 \examples{
-# TODO
+\dontrun{
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+selectROI(balloon)
+}
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{newDisplay}}, \code{\link{display}},

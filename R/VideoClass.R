@@ -60,7 +60,8 @@
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' release(balloon)
 #'
 #' @export
 video <- function(filename, api = "ANY") {
@@ -82,7 +83,9 @@ video <- function(filename, api = "ANY") {
 #' @seealso \code{\link{Video}}, \code{\link{video}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' isVideo(balloon)
+#' release(balloon)
 #'
 #' @export
 isVideo <- function(object) {
@@ -104,7 +107,9 @@ isVideo <- function(object) {
 #' @seealso \code{\link{Video}}, \code{\link{video}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' dim(balloon)
+#' release(balloon)
 #'
 #' @export
 dim.Rcpp_Video <- function(x) {
@@ -130,7 +135,12 @@ dim.Rcpp_Video <- function(x) {
 #'  dimensions.
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' nrow(balloon)
+#' ncol(balloon)
+#' nframes(balloon)
+#' release(balloon)
+#'
 #' @export
 #' @rdname video_dimensions
 nrow.Rcpp_Video <- function(x) {
@@ -169,7 +179,10 @@ nframes <- function(x) {
 #' @seealso \code{\link{Video}}, \code{\link{video}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' frame(balloon)
+#' release(balloon)
+#'
 #' @export
 frame <- function(x) {
   if (!isVideo(x))
@@ -233,7 +246,10 @@ release.Rcpp_Video <- function(obj) {
 #' @seealso \code{\link{Video}}, \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' plot(readFrame(balloon, 10))
+#' plot(readNext(balloon))
+#' release(balloon)
 #' @export
 readFrame <- function(x, pos) {
   if (!isVideo(x))

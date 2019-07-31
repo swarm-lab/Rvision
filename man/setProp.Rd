@@ -76,7 +76,11 @@ Setting stream properties depends on a lot of things, mainly your
  }
 }
 \examples{
-# TODO
+balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+getProp(balloon, "FPS")
+setProp(balloon, "POS_FRAMES", 25)
+release(balloon)
+
 }
 \seealso{
 \code{\link{Video}}, \code{\link{video}},

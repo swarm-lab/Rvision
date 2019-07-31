@@ -12,7 +12,7 @@ medianBlur(image, k_size = 5)
 \item{k_size}{The half-size in pixels of the kernel (default: 5).}
 }
 \value{
-image An \code{\link{Image}} object.
+An \code{\link{Image}} object.
 }
 \description{
 \code{medianBlur} smoothes an image using a median filter, i.e.
@@ -20,7 +20,10 @@ image An \code{\link{Image}} object.
  its neighborhood.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_blur <- medianBlur(balloon, 11)
+plot(balloon_blur)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{gaussianBlur}}

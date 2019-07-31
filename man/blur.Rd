@@ -14,7 +14,7 @@ blur(image, k_height = 5, k_width = 5)
 \item{k_width}{The half-width in pixels of the kernel (default: 5).}
 }
 \value{
-image An \code{\link{Image}} object.
+An \code{\link{Image}} object.
 }
 \description{
 \code{blur} convolves the source image with the specified
@@ -22,7 +22,10 @@ image An \code{\link{Image}} object.
  kernel). The result is a blurred version of the source image.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_blur <- blur(balloon, 11, 11)
+plot(balloon_blur)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{boxFilter}}, \code{\link{gaussianBlur}}

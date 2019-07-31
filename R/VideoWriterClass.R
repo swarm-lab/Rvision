@@ -74,7 +74,10 @@
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+#' release(writer)
+#' }
 #'
 #' @export
 videoWriter <- function(outputFile, fourcc, fps, height, width, isColor = TRUE,
@@ -98,7 +101,12 @@ videoWriter <- function(outputFile, fourcc, fps, height, width, isColor = TRUE,
 #' @seealso \code{\link{VideoWriter}}, \code{\link{videoWriter}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+#' isVideoWriter(writer)
+#' release(writer)
+#' }
+#'
 #' @export
 #'
 isVideoWriter <- function(object) {
@@ -140,7 +148,15 @@ release.Rcpp_VideoWriter <- function(obj) {
 #' @seealso \code{\link{VideoWriter}}, \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' live <- stream(0)
+#' writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+#' for (i in 1:250) {
+#'   writeFrame(writer, readNext(live))
+#' }
+#' release(writer)
+#' release(live)
+#' }
 #' @export
 writeFrame <- function(x, frame) {
   if (!isVideoWriter(x))
@@ -187,7 +203,11 @@ getProp.Rcpp_VideoWriter <- function(obj, property) {
 #' @seealso \code{\link{VideoWriter}}, \code{\link{videoWriter}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+#' dim(writer)
+#' release(writer)
+#' }
 #'
 #' @export
 dim.Rcpp_VideoWriter <- function(x) {
@@ -212,7 +232,12 @@ dim.Rcpp_VideoWriter <- function(x) {
 #'  dimensions.
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+#' nrow(writer)
+#' ncol(writer)
+#' release(writer)
+#' }
 #'
 #' @export
 #' @rdname videowriter_dimensions
@@ -261,7 +286,12 @@ codec.Rcpp_VideoWriter <- function(obj) {
 #' @seealso \code{\link{VideoWriter}}, \code{\link{videoWriter}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+#' api(writer)
+#' release(writer)
+#' }
+#'
 #' @export
 api <- function(x) {
   if (!isVideoWriter(x))
@@ -285,7 +315,12 @@ api <- function(x) {
 #' @seealso \code{\link{VideoWriter}}, \code{\link{videoWriter}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+#' writerOuput(writer)
+#' release(writer)
+#' }
+#'
 #' @export
 writerOuput <- function(x) {
   if (!isVideoWriter(x))

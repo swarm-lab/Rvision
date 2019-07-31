@@ -16,14 +16,17 @@ scharr(image, dx = 1, dy = 1, scale = 1)
 \item{scale}{The scale factor for the computed derivative values (default: 1).}
 }
 \value{
-image An \code{\link{Image}} object.
+An \code{\link{Image}} object.
 }
 \description{
 \code{sobel} calculates the derivatives of an image using a
  Scharr operator.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_scharr <- scharr(balloon, 1, 1, 1)
+plot(balloon_scharr)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{sobel}}

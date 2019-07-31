@@ -28,7 +28,12 @@ For color images, the same kernel is applied to each channel of the
  them individually before merging them using the \code{\link{merge}} function.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+k_edge_detection_x <- c(1, 2, 1)
+k_edge_detection_y <- c(1, 0, -1)
+balloon_edge <- sepFilter2D(balloon, k_edge_detection_x, k_edge_detection_y)
+plot(balloon_edge)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{filter2D}}, \code{\link{split}},

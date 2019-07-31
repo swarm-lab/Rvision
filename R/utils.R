@@ -35,7 +35,8 @@
 #' @seealso \code{\link{col2rgb}}, \code{\link{rgb}}, \code{\link{palette}}
 #'
 #' @examples
-#' # TODO
+#' col2bgr("red")
+#' col2bgr(1:10)
 #'
 #' @export
 col2bgr <- function(col, alpha = FALSE) {

@@ -17,7 +17,8 @@ A vector with 3 values corresponding to the number of rows, columns
 Retrieve the dimensions an \code{\link{Image}} object.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+dim(balloon)
 
 }
 \seealso{

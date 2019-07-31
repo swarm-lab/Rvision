@@ -24,7 +24,11 @@ For color images, the same kernel is applied to each channel of the
  them individually before merging them using the \code{\link{merge}} function.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+k_edge_detection <- matrix(c(-1, -1, -1, -1, 8, -1, -1, -1, -1), nrow = 3)
+balloon_edge <- filter2D(balloon, k_edge_detection)
+plot(balloon_edge)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{split}}, \code{\link{merge}}

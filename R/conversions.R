@@ -18,7 +18,8 @@
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' grey_balloon <- changeColorSpace(balloon, "GRAY")
 #'
 #' @export
 changeColorSpace <- function(image, colorspace) {
@@ -51,7 +52,8 @@ changeColorSpace <- function(image, colorspace) {
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_16 <- changeBitDepth(balloon, 16)
 #'
 #' @export
 changeBitDepth <- function(image, bitdepth) {

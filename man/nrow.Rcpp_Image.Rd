@@ -23,7 +23,10 @@ nrow, ncol and nchan return the number of rows, columns or
  channels present in an \code{\link{Image}} object.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+nrow(balloon)
+ncol(balloon)
+nchan(balloon)
 
 }
 \seealso{

@@ -20,7 +20,10 @@ Retrieve the index of the frame to be read next in a
 Frame index starts at 0 (i.e. the first image has index 0).
 }
 \examples{
-# TODO
+balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+frame(balloon)
+release(balloon)
+
 }
 \seealso{
 \code{\link{Video}}, \code{\link{video}}

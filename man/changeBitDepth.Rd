@@ -20,7 +20,8 @@ This function takes an \code{\link{Image}} object and modifies
  its bit depth (e.g. from 16 bits to 8 bits).
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_16 <- changeBitDepth(balloon, 16)
 
 }
 \seealso{

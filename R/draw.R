@@ -19,7 +19,7 @@
 #'  corners opposite to pt1.
 #'
 #' @param color A value or vector of any kind of R color specification compatible
-#'  with \code{\link{col2rgb}} representing the color of each rectangle's outline
+#'  with \code{\link{col2bgr}} representing the color of each rectangle's outline
 #'  (default: "red").
 #'
 #' @param thickness A numeric value or vector representing the thickness in
@@ -34,7 +34,10 @@
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' drawRectangle(balloon, 290, 170, 440, 325, thickness = 3)
+#' plot(balloon)
+#'
 #' @export
 drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness = 1) {
   if (!isImage(image))
@@ -47,7 +50,7 @@ drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thic
   `_drawRectangles`(image,
                     pt1_x - 1, -pt1_y + nrow(image),
                     pt2_x - 1, -pt2_y + nrow(image),
-                    as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+                    as.matrix(col2bgr(rep_len(color, l[1]))),
                     rep_len(thickness, l[1]))
 }
 
@@ -69,7 +72,7 @@ drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thic
 #' @param radius A numeric value or vector representing the radii of each circle.
 #'
 #' @param color A value or vector of any kind of R color specification compatible
-#'  with \code{\link{col2rgb}} representing the color of each circle's outline
+#'  with \code{\link{col2bgr}} representing the color of each circle's outline
 #'  (default: "red").
 #'
 #' @param thickness A numeric value or vector representing the thickness in
@@ -84,7 +87,10 @@ drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thic
 #' @seealso \code{\link{Image}}, \code{\link{drawEllipse}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' drawCircle(balloon, 365, 245, 90, thickness = 3)
+#' plot(balloon)
+#'
 #' @export
 drawCircle <- function(image, x, y, radius, color = "red", thickness = 1) {
   if (!isImage(image))
@@ -96,7 +102,7 @@ drawCircle <- function(image, x, y, radius, color = "red", thickness = 1) {
 
   `_drawCircles`(image, x - 1, -y + nrow(image),
                  rep_len(radius, l[1]),
-                 as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+                 as.matrix(col2bgr(rep_len(color, l[1]))),
                  rep_len(thickness, l[1]))
 }
 
@@ -131,7 +137,7 @@ drawCircle <- function(image, x, y, radius, color = "red", thickness = 1) {
 #'  degrees of each elliptic arc (default: 360).
 #'
 #' @param color A value or vector of any kind of R color specification compatible
-#'  with \code{\link{col2rgb}} representing the color of each ellipse's outline
+#'  with \code{\link{col2bgr}} representing the color of each ellipse's outline
 #'  (default: "red").
 #'
 #' @param thickness A numeric value or vector representing the thickness in
@@ -146,7 +152,10 @@ drawCircle <- function(image, x, y, radius, color = "red", thickness = 1) {
 #' @seealso \code{\link{Image}}, \code{\link{drawCircle}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' drawEllipse(balloon, 365, 245, 120, 90, angle = 45, thickness = 3)
+#' plot(balloon)
+#'
 #' @export
 drawEllipse <- function(image, x, y, axis1, axis2, angle, start_angle = 0,
                         end_angle = 360, color = "red", thickness = 1) {
@@ -163,7 +172,7 @@ drawEllipse <- function(image, x, y, axis1, axis2, angle, start_angle = 0,
                   rep_len(-angle, l[1]),
                   rep_len(start_angle, l[1]),
                   rep_len(end_angle, l[1]),
-                  as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+                  as.matrix(col2bgr(rep_len(color, l[1]))),
                   rep_len(thickness, l[1]))
 }
 
@@ -189,7 +198,7 @@ drawEllipse <- function(image, x, y, axis1, axis2, angle, start_angle = 0,
 #'  second end of each line.
 #'
 #' @param color A value or vector of any kind of R color specification compatible
-#'  with \code{\link{col2rgb}} representing the color of each line (default:
+#'  with \code{\link{col2bgr}} representing the color of each line (default:
 #'  "red").
 #'
 #' @param thickness A numeric value or vector representing the thickness in
@@ -203,7 +212,10 @@ drawEllipse <- function(image, x, y, axis1, axis2, angle, start_angle = 0,
 #' @seealso \code{\link{Image}}, \code{\link{drawArrow}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' drawLine(balloon, 1, 1, ncol(balloon), nrow(balloon), thickness = 3)
+#' plot(balloon)
+#'
 #' @export
 drawLine <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness = 1) {
   if (!isImage(image))
@@ -216,7 +228,7 @@ drawLine <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness
   `_drawLines`(image,
                pt1_x - 1, -pt1_y + nrow(image),
                pt2_x - 1, -pt2_y + nrow(image),
-               as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+               as.matrix(col2bgr(rep_len(color, l[1]))),
                rep_len(thickness, l[1]))
 }
 
@@ -245,7 +257,7 @@ drawLine <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness
 #'  arrow's tip as a fraction of each arrow's length (default: 0.1).
 #'
 #' @param color A value or vector of any kind of R color specification compatible
-#'  with \code{\link{col2rgb}} representing the color of each arrow (default:
+#'  with \code{\link{col2bgr}} representing the color of each arrow (default:
 #'  "red").
 #'
 #' @param thickness A numeric value or vector representing the thickness in
@@ -259,7 +271,10 @@ drawLine <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness
 #' @seealso \code{\link{Image}}, \code{\link{drawLine}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' drawArrow(balloon, 1, 1, ncol(balloon) / 2, nrow(balloon) / 2, thickness = 3)
+#' plot(balloon)
+#'
 #' @export
 drawArrow <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
                       color = "red", thickness = 1) {
@@ -274,7 +289,7 @@ drawArrow <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
                 pt1_x - 1, -pt1_y + nrow(image),
                 pt2_x - 1, -pt2_y + nrow(image),
                 rep_len(tip_length, l[1]),
-                as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+                as.matrix(col2bgr(rep_len(color, l[1]))),
                 rep_len(thickness, l[1]))
 }
 
@@ -305,7 +320,7 @@ drawArrow <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
 #'  (default: FALSE).
 #'
 #' @param color Any kind of R color specification compatible with
-#'  \code{\link{col2rgb}} representing the color of the line (default: "red").
+#'  \code{\link{col2bgr}} representing the color of the line (default: "red").
 #'
 #' @param thickness A numeric value representing the thickness in pixels of the
 #'  line (default: 1).
@@ -322,7 +337,10 @@ drawArrow <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
 #' @seealso \code{\link{Image}}, \code{\link{getTextSize}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' drawText(balloon, "I'm a balloon", 50, 50, thickness = 3)
+#' plot(balloon)
+#'
 #' @export
 drawText <- function(image, text, x, y, font_face = "simplex", font_scale = 1,
                      italic = FALSE, color = "red", thickness = 1, bl_orig = TRUE) {
@@ -347,7 +365,7 @@ drawText <- function(image, text, x, y, font_face = "simplex", font_scale = 1,
                        "complex_small", "script_simplex", "script_complex")
                ) - 1 + rep_len(italic, l[1]) * 16,
                rep_len(font_scale, l[1]),
-               as.matrix(col2rgb(rep_len(color, l[1]))[3:1, ]),
+               as.matrix(col2bgr(rep_len(color, l[1]))),
                rep_len(thickness, l[1]),
                rep_len(!bl_orig, l[1]))
 }
@@ -380,7 +398,8 @@ drawText <- function(image, text, x, y, font_face = "simplex", font_scale = 1,
 #' @seealso \code{\link{Image}}, \code{\link{drawText}}
 #'
 #' @examples
-#' # TODO
+#' getTextSize("I'm a balloon")
+#'
 #' @export
 getTextSize <- function(text, font_face = "simplex", font_scale = 1,
                           italic = FALSE, thickness = 1) {
@@ -404,7 +423,7 @@ getTextSize <- function(text, font_face = "simplex", font_scale = 1,
 #'  polygon and the second column containing the y coordinates of the polygon.
 #'
 #' @param color A value or vector of any kind of R color specification compatible
-#'  with \code{\link{col2rgb}} representing the color to fill the polygon with
+#'  with \code{\link{col2bgr}} representing the color to fill the polygon with
 #'  (default: "white").
 #'
 #' @return This function does not return anything. It modifies \code{image} in
@@ -415,7 +434,11 @@ getTextSize <- function(text, font_face = "simplex", font_scale = 1,
 #' @seealso \code{\link{Image}}, \code{\link{selectROI}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
+#' fillPoly(balloon, poly, color = "red")
+#' plot(balloon)
+#'
 #' @export
 fillPoly <- function(image, polygon, color = "white") {
   if (!isImage(image))
@@ -425,7 +448,7 @@ fillPoly <- function(image, polygon, color = "white") {
   polygon[, 1] <- polygon[, 1] - 1
   polygon[, 2] <- -polygon[, 2] + nrow(image)
 
-  `_fillPoly`(image, polygon, col2rgb(color))
+  `_fillPoly`(image, polygon, col2bgr(color))
 }
 
 
@@ -461,7 +484,14 @@ fillPoly <- function(image, polygon, color = "white") {
 #' @seealso \code{\link{Image}}, \code{\link{selectROI}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' mask <- image(array(0, dim = c(nrow(balloon), ncol(balloon), 3)))
+#' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
+#' fillPoly(mask, poly, color = "white")
+#' mask <- changeColorSpace(mask, "GRAY")
+#' balloon_inpait <- inpaint(balloon, mask)
+#' plot(balloon_inpait)
+#'
 #' @export
 inpaint <- function(image, mask, radius = 5, method = "NS") {
   if (!isImage(image))

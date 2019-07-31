@@ -17,9 +17,9 @@ An \code{\link{Image}} object.
  inverse of that of the original image.
 }
 \examples{
-path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
-my_image <- image(filename = path_to_image)
-plot(invert(my_image))
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_inv <- invert(balloon)
+plot(balloon_inv)
 
 }
 \seealso{

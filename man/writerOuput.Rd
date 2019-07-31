@@ -17,7 +17,12 @@ A character string corresponding to the address of the output file on
 Retrieve the output file of a \code{\link{VideoWriter}} object.
 }
 \examples{
-# TODO
+\dontrun{
+writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+writerOuput(writer)
+release(writer)
+}
+
 }
 \seealso{
 \code{\link{VideoWriter}}, \code{\link{videoWriter}}

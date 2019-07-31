@@ -20,7 +20,12 @@ nrow, ncol return the number of rows or columns present in a
  \code{\link{VideoWriter}} object.
 }
 \examples{
-# TODO
+\dontrun{
+writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+nrow(writer)
+ncol(writer)
+release(writer)
+}
 
 }
 \seealso{

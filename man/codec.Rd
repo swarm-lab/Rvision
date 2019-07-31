@@ -23,7 +23,10 @@ A character string corresponding to the
 Retrieve the codec of a \code{\link{Video}} object.
 }
 \examples{
-# TODO
+balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+codec(balloon)
+release(balloon)
+
 }
 \seealso{
 \code{\link{Video}}, \code{\link{video}}

@@ -71,7 +71,20 @@ A list of two data frames:
  the algorithm by Suzuki & Be (1985).
 }
 \examples{
-# TODO
+dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+dots_gray <- changeColorSpace(dots, "GRAY")
+dots_bin <- dots_gray < 200
+contours <- findContours(dots_bin)
+colors <- rainbow(max(contours$contours$id + 1))
+plot(dots_bin)
+invisible(sapply(
+  base::split(contours$contours, contours$contours$id),
+  function(dat) {
+    dat <- rbind(dat, dat[1, ])
+    lines(y ~ x, data = dat, col = colors[id + 1], lwd = 2)
+  })
+)
+
 }
 \references{
 Suzuki, S., and Be, K. (1985). Topological structural analysis of

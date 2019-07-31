@@ -36,7 +36,13 @@ A larger value of \code{sigma_space} means that farther pixels will
  \code{sigma_space}. Otherwise, \code{d} is proportional to \code{sigma_space}.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_noisy <- balloon + image(array(sample(0:30, nrow(balloon) * ncol(balloon), replace = TRUE),
+                                       dim = c(nrow(balloon), ncol(balloon), 3)))
+plot(balloon_noisy)
+balloon_bilateral <- bilateralFilter(balloon_noisy, 25)
+plot(balloon_bilateral)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{gaussianBlur}}

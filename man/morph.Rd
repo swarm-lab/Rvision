@@ -67,7 +67,10 @@ There are 3 types of predetermined kernel shapes that can be used with
  }
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_eroded <- morph(balloon, "erode")
+plot(balloon_eroded)
+
 }
 \seealso{
 \code{\link{Image}}

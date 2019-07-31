@@ -17,7 +17,12 @@ A logical indicating whether the object is of class
 Tests whether the object is of class \code{\link{Stream}}
 }
 \examples{
-# TODO
+\dontrun{
+live <- stream(0)
+isStream(live)
+release(live)
+}
+
 }
 \seealso{
 \code{\link{Stream}}, \code{\link{stream}}

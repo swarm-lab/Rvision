@@ -60,7 +60,10 @@
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_eroded <- morph(balloon, "erode")
+#' plot(balloon_eroded)
+#'
 #' @export
 morph <- function(image, operation, kernel = NULL, k_shape = "rectangle",
                   k_height = 5, k_width = 5, iterations = 1) {

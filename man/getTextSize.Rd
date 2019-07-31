@@ -31,7 +31,8 @@ A two-element vector corresponding to the height and width of the
  the specified text string, the tight box surrounding it, and the baseline.
 }
 \examples{
-# TODO
+getTextSize("I'm a balloon")
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{drawText}}

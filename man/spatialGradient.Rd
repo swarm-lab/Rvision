@@ -12,14 +12,19 @@ spatialGradient(image, k_size = 5)
 \item{k_size}{The half-size in pixels of the kernel (default: 5).}
 }
 \value{
-image An \code{\link{Image}} object.
+A list containing two \code{\link{Image}} objects, one of for the
+ derivative along the x axis and the other for the derivative along the y axis.
 }
 \description{
 \code{spatialGradient} calculates the first order derivative of
  an image in both x and y using a Sobel operator.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_gradient <- spatialGradient(balloon, 5)
+plot(balloon_gradient$dx)
+plot(balloon_gradient$dy)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{sobel}}

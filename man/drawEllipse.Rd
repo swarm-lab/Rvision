@@ -32,7 +32,7 @@ degrees of each elliptic arc (default: 0).}
 degrees of each elliptic arc (default: 360).}
 
 \item{color}{A value or vector of any kind of R color specification compatible
-with \code{\link{col2rgb}} representing the color of each ellipse's outline
+with \code{\link{col2bgr}} representing the color of each ellipse's outline
 (default: "red").}
 
 \item{thickness}{A numeric value or vector representing the thickness in
@@ -49,7 +49,10 @@ This function does not return anything. It modifies \code{image} in
  irreversibly the \code{\link{Image}} object and cannot be undone.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+drawEllipse(balloon, 365, 245, 120, 90, angle = 45, thickness = 3)
+plot(balloon)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{drawCircle}}

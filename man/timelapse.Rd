@@ -34,7 +34,12 @@ Generates a timelapse sequence from a \code{Stream} object with
  a given duration and interval between images.
 }
 \examples{
-# TODO
+\dontrun{
+live <- stream(0)
+timelapse(live, "./out")
+release(live)
+}
+
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

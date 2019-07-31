@@ -26,7 +26,7 @@ second end of each arrow.}
 arrow's tip as a fraction of each arrow's length (default: 0.1).}
 
 \item{color}{A value or vector of any kind of R color specification compatible
-with \code{\link{col2rgb}} representing the color of each arrow (default:
+with \code{\link{col2bgr}} representing the color of each arrow (default:
 "red").}
 
 \item{thickness}{A numeric value or vector representing the thickness in
@@ -42,7 +42,10 @@ This function does not return anything. It modifies \code{image} in
  it changes irreversibly the \code{\link{Image}} object and cannot be undone.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+drawArrow(balloon, 1, 1, ncol(balloon) / 2, nrow(balloon) / 2, thickness = 3)
+plot(balloon)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{drawLine}}

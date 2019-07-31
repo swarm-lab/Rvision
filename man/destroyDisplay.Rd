@@ -21,7 +21,11 @@ This function does not return anything.
  \code{\link{Image}} display window.
 }
 \examples{
-# TODO
+\dontrun{
+newDisplay("Test display")
+destroyDisplay("Test display")
+destroyAllDisplays()
+}
 }
 \seealso{
 \code{\link{Image}}, \code{\link{newDisplay}}, \code{\link{display}}

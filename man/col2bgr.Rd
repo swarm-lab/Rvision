@@ -33,7 +33,8 @@ Values of \code{col} not of one of these types are coerced: real vectors are
 Zero and negative values of \code{col} are an error.
 }
 \examples{
-# TODO
+col2bgr("red")
+col2bgr(1:10)
 
 }
 \seealso{

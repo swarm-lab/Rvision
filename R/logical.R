@@ -13,7 +13,10 @@
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_gray <- changeColorSpace(balloon, "GRAY")
+#' findNonZero(balloon_gray)
+#'
 #' @export
 findNonZero <- function(image) {
   if (!isImage(image))

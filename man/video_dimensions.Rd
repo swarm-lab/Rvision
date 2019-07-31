@@ -23,7 +23,12 @@ nrow, ncol and nframes return the number of rows, columns or
  frames present in a \code{\link{Video}} object.
 }
 \examples{
-# TODO
+balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+nrow(balloon)
+ncol(balloon)
+nframes(balloon)
+release(balloon)
+
 }
 \seealso{
 \code{\link[=dim.Rcpp_Video]{dim}} which returns \emph{all}

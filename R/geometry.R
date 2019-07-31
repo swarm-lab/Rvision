@@ -37,7 +37,10 @@
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_resized <- resize(balloon, fx = 0.2, fy = 0.5)
+#' plot(balloon_resized)
+#'
 #' @export
 resize <- function(image, height = NULL, width = NULL, fx = NULL, fy = NULL, interpolation = "linear") {
   if (!isImage(image))

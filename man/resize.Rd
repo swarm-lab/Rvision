@@ -44,7 +44,10 @@ The following interpolation methods are supported:
  }
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_resized <- resize(balloon, fx = 0.2, fy = 0.5)
+plot(balloon_resized)
+
 }
 \seealso{
 \code{\link{Image}}

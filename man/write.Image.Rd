@@ -23,7 +23,10 @@ The function will guess the format of the output file using the file
  extension provided by the user.
 }
 \examples{
-# TODO
+\dontrun{
+noise <- image(array(sample(0:255, 100 * 100 * 3, replace = TRUE), dim = c(100, 100, 3)))
+write.Image(noise, "noise.png")
+}
 
 }
 \seealso{

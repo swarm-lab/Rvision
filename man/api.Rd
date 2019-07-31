@@ -17,7 +17,12 @@ A character string corresponding to the API used by the
 Retrieve the API of a \code{\link{VideoWriter}} object.
 }
 \examples{
-# TODO
+\dontrun{
+writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+api(writer)
+release(writer)
+}
+
 }
 \seealso{
 \code{\link{VideoWriter}}, \code{\link{videoWriter}}

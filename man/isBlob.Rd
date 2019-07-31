@@ -17,7 +17,12 @@ A logical indicating whether the object is of class
 Tests whether the object is of class \code{blob}.
 }
 \examples{
-# TODO
+dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+blobs <- simpleBlobDetector(invert(dots), min_threshold = 25, max_threshold = 220,
+                            filter_by_area = TRUE, min_area = 200, max_area = Inf,
+                            filter_by_color = FALSE)
+isBlob(blobs)
+
 }
 \seealso{
 \code{\link{simpleBlobDetector}}

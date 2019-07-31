@@ -17,7 +17,9 @@ A logical indicating whether the object is of class
 Tests whether the object is of class \code{\link{Video}}
 }
 \examples{
-# TODO
+balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+isVideo(balloon)
+release(balloon)
 
 }
 \seealso{

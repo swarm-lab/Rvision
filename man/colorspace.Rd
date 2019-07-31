@@ -24,7 +24,8 @@ This function returns the color space of an \code{\link{Image}}
  object, that is the range of colors of an image.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+colorspace(balloon)
 
 }
 \seealso{

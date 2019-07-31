@@ -32,7 +32,14 @@ An \code{\link{Image}} object.
  images or videos.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+mask <- image(array(0, dim = c(nrow(balloon), ncol(balloon), 3)))
+poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
+fillPoly(mask, poly, color = "white")
+mask <- changeColorSpace(mask, "GRAY")
+balloon_inpait <- inpaint(balloon, mask)
+plot(balloon_inpait)
+
 }
 \references{
 Telea, A. (2004). An image inpainting technique based on the fast

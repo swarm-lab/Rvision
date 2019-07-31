@@ -18,14 +18,17 @@ sobel(image, dx = 1, dy = 1, k_size = 5, scale = 1)
 \item{scale}{The scale factor for the computed derivative values (default: 1).}
 }
 \value{
-image An \code{\link{Image}} object.
+An \code{\link{Image}} object.
 }
 \description{
 \code{sobel} calculates the first, second, third, or mixed image
  derivatives of an image using an extended Sobel operator.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_sobel <- sobel(balloon, 1, 1, 5)
+plot(balloon_sobel)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{laplacian}}, \code{\link{scharr}}

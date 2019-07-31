@@ -17,7 +17,7 @@ A list of \code{\link{Image}} objects.
  \code{\link{Image}} objects, each corresponding to a different page.
 }
 \examples{
-# TODO
+balloon <- readMulti(system.file("sample_img/multipage.tif", package = "Rvision"))
 
 }
 \seealso{

@@ -24,7 +24,10 @@ or \code{\link{Stream}} object and returns
  it as an \code{\link{Image}} object.
 }
 \examples{
-# TODO
+balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+plot(readNext(balloon))
+release(balloon)
+
 }
 \seealso{
 \code{\link{Video}}, \code{\link{Stream}},

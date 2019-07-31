@@ -16,7 +16,8 @@
 Plotting method for objects inheriting from class \code{\link{Image}}.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+plot(balloon)
 
 }
 \seealso{

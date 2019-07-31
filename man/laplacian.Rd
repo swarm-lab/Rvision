@@ -14,14 +14,17 @@ laplacian(image, k_size = 5, scale = 1)
 \item{scale}{The scale factor for the computed Laplacian values (default: 1).}
 }
 \value{
-image An \code{\link{Image}} object.
+An \code{\link{Image}} object.
 }
 \description{
 \code{laplacian} calculates the Laplacian of the source image by
  adding up the second x and y derivatives calculated using the Sobel operator.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_laplacian <- laplacian(balloon, 5)
+plot(balloon_laplacian)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{sobel}}

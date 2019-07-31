@@ -18,7 +18,11 @@
 #' @seealso \code{\link{Image}}, \code{\link{split}}, \code{\link{merge}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' k_edge_detection <- matrix(c(-1, -1, -1, -1, 8, -1, -1, -1, -1), nrow = 3)
+#' balloon_edge <- filter2D(balloon, k_edge_detection)
+#' plot(balloon_edge)
+#'
 #' @export
 filter2D <- function(image, kernel) {
   if (!isImage(image))
@@ -56,7 +60,12 @@ filter2D <- function(image, kernel) {
 #'  \code{\link{merge}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' k_edge_detection_x <- c(1, 2, 1)
+#' k_edge_detection_y <- c(1, 0, -1)
+#' balloon_edge <- sepFilter2D(balloon, k_edge_detection_x, k_edge_detection_y)
+#' plot(balloon_edge)
+#'
 #' @export
 sepFilter2D <- function(image, kernel_x, kernel_y) {
   if (!isImage(image))
@@ -84,14 +93,17 @@ sepFilter2D <- function(image, kernel_x, kernel_y) {
 #' @param sigma_y The standard deviation of the kernel along the y axis
 #'  (default: 1).
 #'
-#' @return image An \code{\link{Image}} object.
+#' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}, \code{\link{boxFilter}}, \code{\link{blur}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_blur <- gaussianBlur(balloon, 11, 11, 5, 5)
+#' plot(balloon_blur)
+#'
 #' @export
 gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y = 1) {
   if (!isImage(image))
@@ -113,14 +125,17 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y 
 #'
 #' @param k_width The half-width in pixels of the kernel (default: 5).
 #'
-#' @return image An \code{\link{Image}} object.
+#' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}, \code{\link{blur}}, \code{\link{gaussianBlur}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_blur <- boxFilter(balloon, 11, 11)
+#' plot(balloon_blur)
+#'
 #' @export
 boxFilter <- function(image, k_height = 5, k_width = 5) {
   if (!isImage(image))
@@ -142,14 +157,17 @@ boxFilter <- function(image, k_height = 5, k_width = 5) {
 #'
 #' @param k_width The half-width in pixels of the kernel (default: 5).
 #'
-#' @return image An \code{\link{Image}} object.
+#' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}, \code{\link{boxFilter}}, \code{\link{gaussianBlur}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_blur <- blur(balloon, 11, 11)
+#' plot(balloon_blur)
+#'
 #' @export
 blur <- function(image, k_height = 5, k_width = 5) {
   if (!isImage(image))
@@ -169,14 +187,17 @@ blur <- function(image, k_height = 5, k_width = 5) {
 #'
 #' @param k_size The half-size in pixels of the kernel (default: 5).
 #'
-#' @return image An \code{\link{Image}} object.
+#' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}, \code{\link{gaussianBlur}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_blur <- medianBlur(balloon, 11)
+#' plot(balloon_blur)
+#'
 #' @export
 medianBlur <- function(image, k_size = 5) {
   if (!isImage(image))
@@ -201,14 +222,17 @@ medianBlur <- function(image, k_size = 5) {
 #' @param normalize Whether the kernel is to be normalized by its area (default:
 #'  true).
 #'
-#' @return image An \code{\link{Image}} object.
+#' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}, \code{\link{boxFilter}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_blur <- sqrBoxFilter(balloon, 11, 11)
+#' plot(balloon_blur)
+#'
 #' @export
 sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE) {
   if (!isImage(image))
@@ -231,14 +255,17 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE) {
 #'
 #' @param scale The scale factor for the computed derivative values (default: 1).
 #'
-#' @return image An \code{\link{Image}} object.
+#' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}, \code{\link{sobel}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_scharr <- scharr(balloon, 1, 1, 1)
+#' plot(balloon_scharr)
+#'
 #' @export
 scharr <- function(image, dx = 1, dy = 1, scale = 1) {
   if (!isImage(image))
@@ -263,14 +290,17 @@ scharr <- function(image, dx = 1, dy = 1, scale = 1) {
 #'
 #' @param scale The scale factor for the computed derivative values (default: 1).
 #'
-#' @return image An \code{\link{Image}} object.
+#' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}, \code{\link{laplacian}}, \code{\link{scharr}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_sobel <- sobel(balloon, 1, 1, 5)
+#' plot(balloon_sobel)
+#'
 #' @export
 sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1) {
   if (!isImage(image))
@@ -291,14 +321,17 @@ sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1) {
 #'
 #' @param scale The scale factor for the computed Laplacian values (default: 1).
 #'
-#' @return image An \code{\link{Image}} object.
+#' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}, \code{\link{sobel}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_laplacian <- laplacian(balloon, 5)
+#' plot(balloon_laplacian)
+#'
 #' @export
 laplacian <- function(image, k_size = 5, scale = 1) {
   if (!isImage(image))
@@ -317,14 +350,19 @@ laplacian <- function(image, k_size = 5, scale = 1) {
 #'
 #' @param k_size The half-size in pixels of the kernel (default: 5).
 #'
-#' @return image An \code{\link{Image}} object.
+#' @return A list containing two \code{\link{Image}} objects, one of for the
+#'  derivative along the x axis and the other for the derivative along the y axis.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}, \code{\link{sobel}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_gradient <- spatialGradient(balloon, 5)
+#' plot(balloon_gradient$dx)
+#' plot(balloon_gradient$dy)
+#'
 #' @export
 spatialGradient <- function(image, k_size = 5) {
   if (!isImage(image))
@@ -368,7 +406,13 @@ spatialGradient <- function(image, k_size = 5) {
 #' @seealso \code{\link{Image}}, \code{\link{gaussianBlur}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_noisy <- balloon + image(array(sample(0:30, nrow(balloon) * ncol(balloon), replace = TRUE),
+#'                                        dim = c(nrow(balloon), ncol(balloon), 3)))
+#' plot(balloon_noisy)
+#' balloon_bilateral <- bilateralFilter(balloon_noisy, 25)
+#' plot(balloon_bilateral)
+#'
 #' @export
 bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
   if (!isImage(image))
@@ -412,7 +456,11 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_gray <- changeColorSpace(balloon, "GRAY")
+#' balloon_th <- adaptiveThreshold(balloon_gray)
+#' plot(balloon_th)
+#'
 #' @export
 adaptiveThreshold <- function(image, max_value = 255, method = "mean",
                               threshold_type = "inverse", block_size = 31, C = 25) {
@@ -451,9 +499,9 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
-#' my_image <- image(filename = path_to_image)
-#' plot(invert(my_image))
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_inv <- invert(balloon)
+#' plot(balloon_inv)
 #'
 #' @export
 invert <- function(image) {

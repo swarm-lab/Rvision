@@ -39,7 +39,8 @@
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' noise <- image(array(sample(0:255, 100 * 100 * 3, replace = TRUE), dim = c(100, 100, 3)))
 #'
 #' @export
 image <- function(...) {
@@ -64,7 +65,8 @@ image <- function(...) {
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' plot(balloon)
 #'
 #' @export
 plot.Rcpp_Image <- function(x, ...) {
@@ -125,7 +127,8 @@ plot.Rcpp_Image <- function(x, ...) {
 #' @seealso \code{\link{Image}}, \code{\link{image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' isImage(balloon)
 #'
 #' @export
 isImage <- function(object) {
@@ -152,7 +155,10 @@ isImage <- function(object) {
 #' @seealso \code{\link{Image}}, \code{\link{image}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' noise <- image(array(sample(0:255, 100 * 100 * 3, replace = TRUE), dim = c(100, 100, 3)))
+#' write.Image(noise, "noise.png")
+#' }
 #'
 #' @export
 write.Image <- function(x, file) {
@@ -181,7 +187,8 @@ write.Image <- function(x, file) {
 #' @seealso \code{\link{Image}}, \code{\link{image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' dim(balloon)
 #'
 #' @export
 dim.Rcpp_Image <- function(x) {
@@ -210,7 +217,10 @@ dim.Rcpp_Image <- function(x) {
 #'  dimensions.
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' nrow(balloon)
+#' ncol(balloon)
+#' nchan(balloon)
 #'
 #' @export
 nrow.Rcpp_Image <- function(x) {
@@ -257,7 +267,8 @@ nchan <- function(x) {
 #' @seealso \code{\link{Image}}, \code{\link{colorspace}}.
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' bitdepth(balloon)
 #'
 #' @export
 bitdepth <- function(x) {
@@ -289,7 +300,8 @@ bitdepth <- function(x) {
 #' @seealso \code{\link{Image}}, \code{\link{bitdepth}}.
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' colorspace(balloon)
 #'
 #' @export
 colorspace <- function(x) {
@@ -318,7 +330,8 @@ colorspace <- function(x) {
 #' @seealso \code{\link{Image}}, \code{\link{matrix}}, \code{\link{array}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_mat <- as.matrix(balloon)
 #'
 #' @export
 as.array.Rcpp_Image <- function(x, ...) {
@@ -351,7 +364,8 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_clone <- cloneImage(balloon)
 #'
 #' @export
 cloneImage <- function(x) {
@@ -379,7 +393,8 @@ cloneImage <- function(x) {
 #' @seealso \code{\link{merge}}, \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_chan <- split(balloon)
 #'
 #' @export
 split <- function(x) {
@@ -412,7 +427,9 @@ split <- function(x) {
 #' @seealso \code{\link{split}}, \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_chan <- split(balloon)
+#' balloon_merged <- merge(balloon_chan)
 #'
 #' @export
 merge <- function(x) {
@@ -442,7 +459,7 @@ merge <- function(x) {
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- readMulti(system.file("sample_img/multipage.tif", package = "Rvision"))
 #'
 #' @export
 readMulti <- function(x) {
@@ -484,7 +501,10 @@ readMulti <- function(x) {
 #' @seealso \code{\link{Image}}, \code{\link{col2bgr}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon[1:100, 1:100]
+#' balloon[1:100, 1:100] <- c(0, 0, 255)
+#' plot(balloon)
 #'
 #' @export
 `[.Rcpp_Image` <- function(x, i = NULL, j = NULL, ..., drop = TRUE) {
@@ -616,7 +636,9 @@ readMulti <- function(x) {
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_sub <- subImage(balloon, 290, 170, 150, 150)
+#' plot(balloon_sub)
 #'
 #' @export
 subImage <- function(image, x, y, width, height) {

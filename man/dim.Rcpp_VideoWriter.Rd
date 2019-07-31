@@ -17,7 +17,11 @@ A vector with 2 values corresponding to the number of rows and columns
 Retrieve the dimensions a \code{\link{VideoWriter}} object.
 }
 \examples{
-# TODO
+\dontrun{
+writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+dim(writer)
+release(writer)
+}
 
 }
 \seealso{

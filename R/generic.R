@@ -14,7 +14,10 @@
 #' \code{\link{Image}}, \code{\link{readFrame}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' plot(readNext(balloon))
+#' release(balloon)
+#'
 #' @export
 readNext <- function(obj) UseMethod("readNext")
 
@@ -32,7 +35,9 @@ readNext <- function(obj) UseMethod("readNext")
 #' @seealso \code{\link{Stream}}, \code{\link{stream}}, \code{\link{Video}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' release(balloon)
+#'
 #' @export
 release <- function(obj) UseMethod("release")
 
@@ -88,7 +93,11 @@ release <- function(obj) UseMethod("release")
 #' \code{\link{Stream}}, \code{\link{stream}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' getProp(balloon, "FPS")
+#' setProp(balloon, "POS_FRAMES", 25)
+#' release(balloon)
+#'
 #' @export
 setProp <- function(obj, property, value) UseMethod("setProp")
 
@@ -112,7 +121,10 @@ getProp <- function(obj, property) UseMethod("getProp")
 #' @seealso \code{\link{Video}}, \code{\link{video}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' codec(balloon)
+#' release(balloon)
+#'
 #' @export
 codec <- function(obj) UseMethod("codec")
 
@@ -131,6 +143,9 @@ codec <- function(obj) UseMethod("codec")
 #' @seealso \code{\link{Video}}, \code{\link{video}}
 #'
 #' @examples
-#' # TODO
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' fps(balloon)
+#' release(balloon)
+#'
 #' @export
 fps <- function(obj) UseMethod("fps")

@@ -22,7 +22,9 @@
 #' @seealso \code{\link{Image}}, \code{\link{minMaxLoc}}.
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' min(balloon)
+#' max(balloon)
 #'
 #' @export
 min.Rcpp_Image <- function(x, ...) {
@@ -75,7 +77,8 @@ max.Rcpp_Image <- function(x, ...) {
 #' @seealso \code{\link{Image}}, \code{\link{min.Rcpp_Image}}, \code{\link{max.Rcpp_Image}}.
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' minMaxLoc(balloon)
 #'
 #' @export
 minMaxLoc <- function(x) {

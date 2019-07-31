@@ -61,7 +61,11 @@
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' live <- stream(0)
+#' release(live)
+#' }
+#'
 #' @export
 stream <- function(index = 0, api = "ANY") {
   new(Stream, index = index, api = api)
@@ -82,9 +86,13 @@ stream <- function(index = 0, api = "ANY") {
 #' @seealso \code{\link{Stream}}, \code{\link{stream}}
 #'
 #' @examples
-#' # TODO
-#' @export
+#' \dontrun{
+#' live <- stream(0)
+#' isStream(live)
+#' release(live)
+#' }
 #'
+#' @export
 isStream <- function(object) {
   inherits(object, "Rcpp_Stream") & tryCatch(object$isOpened(), error = function(e) FALSE)
 }
@@ -104,7 +112,11 @@ isStream <- function(object) {
 #' @seealso \code{\link{Stream}}, \code{\link{stream}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' live <- stream(0)
+#' sim(live)
+#' release(live)
+#' }
 #'
 #' @export
 dim.Rcpp_Stream <- function(x) {
@@ -129,7 +141,13 @@ dim.Rcpp_Stream <- function(x) {
 #'  dimensions.
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' live <- stream(0)
+#' nrow(live)
+#' ncol(live)
+#' release(live)
+#' }
+#'
 #' @export
 #' @rdname stream_dimensions
 nrow.Rcpp_Stream <- function(x) {
@@ -219,7 +237,12 @@ getProp.Rcpp_Stream <- function(obj, property) {
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' live <- stream(0)
+#' timelapse(live, "./out")
+#' release(live)
+#' }
+#'
 #' @export
 timelapse <- function(obj, outputFolder, interval = 1, duration = Inf,
                       format = "png") {

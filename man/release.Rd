@@ -27,7 +27,9 @@ If successful, the \code{\link{Stream}} or
 Close a \code{\link{Stream}} or \code{\link{Video}} object.
 }
 \examples{
-# TODO
+balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+release(balloon)
+
 }
 \seealso{
 \code{\link{Stream}}, \code{\link{stream}}, \code{\link{Video}}

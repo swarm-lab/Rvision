@@ -21,7 +21,8 @@ Color images are usually represented by 3 channels (possibly 4) in the
  following order: blue (1), green (2), red (3), and possibly alpha (4).
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_chan <- split(balloon)
 
 }
 \seealso{

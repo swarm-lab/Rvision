@@ -14,7 +14,7 @@ m x 2 matrix), with the first column containing the x coordinates of the
 polygon and the second column containing the y coordinates of the polygon.}
 
 \item{color}{A value or vector of any kind of R color specification compatible
-with \code{\link{col2rgb}} representing the color to fill the polygon with
+with \code{\link{col2bgr}} representing the color to fill the polygon with
 (default: "white").}
 }
 \value{
@@ -26,7 +26,11 @@ This function does not return anything. It modifies \code{image} in
  given polygon with a given color.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
+fillPoly(balloon, poly, color = "red")
+plot(balloon)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{selectROI}}

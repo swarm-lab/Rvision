@@ -67,7 +67,10 @@ Hereafter is a list of all supported APIs. Note that not all APIs will
  }
 }
 \examples{
-# TODO
+\dontrun{
+writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+release(writer)
+}
 
 }
 \author{

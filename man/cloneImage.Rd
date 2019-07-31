@@ -23,7 +23,8 @@ An \code{\link{Image}} object.
  original \code{\link{Image}} object.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_clone <- cloneImage(balloon)
 
 }
 \seealso{

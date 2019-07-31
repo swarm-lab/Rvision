@@ -18,7 +18,10 @@ A data frame with two columns, corresponding to the x (columns) and
  pixels in an image.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_gray <- changeColorSpace(balloon, "GRAY")
+findNonZero(balloon_gray)
+
 }
 \seealso{
 \code{\link{Image}}

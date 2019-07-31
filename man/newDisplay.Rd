@@ -24,7 +24,10 @@ This function does not return anything.
  objects.
 }
 \examples{
-# TODO
+\dontrun{
+newDisplay()
+}
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{display}}, \code{\link{destroyDisplay}}

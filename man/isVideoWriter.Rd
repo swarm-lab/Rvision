@@ -17,7 +17,12 @@ A logical indicating whether the object is of class
 Tests whether the object is of class \code{\link{VideoWriter}}
 }
 \examples{
-# TODO
+\dontrun{
+writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+isVideoWriter(writer)
+release(writer)
+}
+
 }
 \seealso{
 \code{\link{VideoWriter}}, \code{\link{videoWriter}}

@@ -17,7 +17,11 @@ A vector with 2 values corresponding to the number of rows and columns
 Retrieve the dimensions a \code{\link{Stream}} object.
 }
 \examples{
-# TODO
+\dontrun{
+live <- stream(0)
+sim(live)
+release(live)
+}
 
 }
 \seealso{

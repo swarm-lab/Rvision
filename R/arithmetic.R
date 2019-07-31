@@ -14,7 +14,9 @@
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
+#' plot(absdiff(balloon1, balloon2))
 #'
 #' @export
 absdiff <- function(image1, image2) {
@@ -45,7 +47,10 @@ absdiff <- function(image1, image2) {
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
+#' plot(addWeighted(balloon1, balloon2))
+#'
 #' @export
 addWeighted <- function(image1, image2, weight = c(0.5, 0.5)) {
   if (!isImage(image1) | !isImage(image2))

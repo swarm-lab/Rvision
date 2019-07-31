@@ -28,7 +28,11 @@ A data frame with the following 3 columns:
  window and waits for a mouse click on the display window to be detected.
 }
 \examples{
-# TODO
+\dontrun{
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+click(balloon)
+}
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{newDisplay}}, \code{\link{display}}

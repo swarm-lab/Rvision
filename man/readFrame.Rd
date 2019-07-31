@@ -19,7 +19,10 @@ Read a specific frame of a \code{\link{Video}} object and
  returns it as an \code{\link{Image}} object.
 }
 \examples{
-# TODO
+balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+plot(readFrame(balloon, 10))
+plot(readNext(balloon))
+release(balloon)
 }
 \seealso{
 \code{\link{Video}}, \code{\link{Image}}

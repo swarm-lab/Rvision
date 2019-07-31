@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.3.5</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.3.6</span>
       </span>
     </div>
 
@@ -198,7 +198,11 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># TODO
+    <pre class="examples"><div class='input'><span class='no'>balloon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"sample_img/balloon1.png"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"Rvision"</span>))
+<span class='no'>balloon_noisy</span> <span class='kw'>&lt;-</span> <span class='no'>balloon</span> + <span class='fu'><a href='image.html'>image</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/array'>array</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>0</span>:<span class='fl'>30</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>balloon</span>) * <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>balloon</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+                                       <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>balloon</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>balloon</span>), <span class='fl'>3</span>)))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>balloon_noisy</span>)</div><div class='img'><img src='bilateralFilter-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>balloon_bilateral</span> <span class='kw'>&lt;-</span> <span class='fu'>bilateralFilter</span>(<span class='no'>balloon_noisy</span>, <span class='fl'>25</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>balloon_bilateral</span>)</div><div class='img'><img src='bilateralFilter-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

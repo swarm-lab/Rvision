@@ -28,7 +28,7 @@ font-specific base size is multiplied (default: 1).}
 (default: FALSE).}
 
 \item{color}{Any kind of R color specification compatible with
-\code{\link{col2rgb}} representing the color of the line (default: "red").}
+\code{\link{col2bgr}} representing the color of the line (default: "red").}
 
 \item{thickness}{A numeric value representing the thickness in pixels of the
 line (default: 1).}
@@ -47,7 +47,10 @@ This function does not return anything. It modifies \code{image} in
  object and cannot be undone.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+drawText(balloon, "I'm a balloon", 50, 50, thickness = 3)
+plot(balloon)
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{getTextSize}}

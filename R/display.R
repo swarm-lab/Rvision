@@ -19,7 +19,10 @@
 #' @seealso \code{\link{Image}}, \code{\link{display}}, \code{\link{destroyDisplay}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' newDisplay()
+#' }
+#'
 #' @export
 newDisplay <- function(window_name = "Display", height = 480, width = 640) {
   invisible(`_newDisplay`(window_name, height, width))
@@ -56,7 +59,11 @@ newDisplay <- function(window_name = "Display", height = 480, width = 640) {
 #'  \code{\link{plot.Image}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' display(balloon, height = nrow(balloon), width = ncol(balloon))
+#' }
+#'
 #' @export
 display <- function(image, window_name = "Display", delay = 25, height = 480, width = 640) {
   invisible(`_display`(image, window_name, delay, height, width))
@@ -84,7 +91,11 @@ display <- function(image, window_name = "Display", delay = 25, height = 480, wi
 #' @seealso \code{\link{Image}}, \code{\link{newDisplay}}, \code{\link{display}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' newDisplay("Test display")
+#' destroyDisplay("Test display")
+#' destroyAllDisplays()
+#' }
 #' @export
 destroyDisplay <- function(window_name = "Display") {
   invisible(`_destroyDisplay`(window_name))
@@ -122,7 +133,11 @@ destroyAllDisplays <- function() {
 #' @seealso \code{\link{Image}}, \code{\link{newDisplay}}, \code{\link{display}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' click(balloon)
+#' }
+#'
 #' @export
 click <- function(image, scale = 1, window_name = "Display") {
   if (!isImage(image))
@@ -171,7 +186,11 @@ click <- function(image, scale = 1, window_name = "Display") {
 #'  \code{\link{click}}
 #'
 #' @examples
-#' # TODO
+#' \dontrun{
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' selectROI(balloon)
+#' }
+#'
 #' @export
 selectROI <- function(image, window_name = "Display", scale = 1, return_mask = TRUE) {
   if (!isImage(image))

@@ -25,7 +25,8 @@ Function for creating \code{\link{Image}} objects from arrays
  using the following functions: \code{\link{video}}, \code{\link{stream}}.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+noise <- image(array(sample(0:255, 100 * 100 * 3, replace = TRUE), dim = c(100, 100, 3)))
 
 }
 \seealso{

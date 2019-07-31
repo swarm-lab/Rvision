@@ -28,12 +28,20 @@
 #'  \code{template} (default: NULL). \code{mask} is currently only supported when
 #'  \code{SQDIFF} and \code{CCORR_NORMED} are used.
 #'
+#' @return A 16-bit grayscale \code{\link{Image}} object of the same dimensions
+#'  as \code{image}.
+#'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}, \code{\link{minMaxLoc}}.
 #'
 #' @examples
-#' # TODO
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' sub <- subImage(balloon, 290, 170, 150, 150)
+#' match <- matchTemplate(balloon, sub, method = "SQDIFF")
+#' mm <- minMaxLoc(match)
+#' plot(balloon)
+#' points(mm[1, 2], mm[1, 3], col = "red", pch = 20, cex = 5)
 #'
 #' @export
 matchTemplate <- function(image, template, method, mask = NULL) {

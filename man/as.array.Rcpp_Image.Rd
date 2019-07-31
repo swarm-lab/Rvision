@@ -20,7 +20,8 @@ A matrix or array of the same dimensions as the \code{\link{Image}}
 Attempts to turn its argument into a matrix or an array.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_mat <- as.matrix(balloon)
 
 }
 \seealso{

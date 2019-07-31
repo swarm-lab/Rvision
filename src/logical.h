@@ -29,5 +29,5 @@ Rcpp::DataFrame _findNonZero(Image image) {
   }
 
   return Rcpp::DataFrame::create(Rcpp::Named("x") = x,
-                                 Rcpp::Named("y") = y);
+                                 Rcpp::Named("y") = -y + image.nrow());
 }

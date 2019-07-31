@@ -24,7 +24,9 @@ Returns the maximum and minimum pixel values of an
  one channel, it returns the maximum and minimum of each channel.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+min(balloon)
+max(balloon)
 
 }
 \seealso{

@@ -33,7 +33,11 @@ This function does not return anything.
  combination with base R plotting utilities.
 }
 \examples{
-# TODO
+\dontrun{
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+display(balloon, height = nrow(balloon), width = ncol(balloon))
+}
+
 }
 \seealso{
 \code{\link{Image}}, \code{\link{newDisplay}}, \code{\link{destroyDisplay}},

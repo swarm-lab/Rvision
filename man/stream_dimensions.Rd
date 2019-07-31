@@ -20,7 +20,13 @@ A numeric value.
  present in a \code{\link{Stream}} object.
 }
 \examples{
-# TODO
+\dontrun{
+live <- stream(0)
+nrow(live)
+ncol(live)
+release(live)
+}
+
 }
 \seealso{
 \code{\link[=dim.Rcpp_Stream]{dim}} which returns \emph{all}

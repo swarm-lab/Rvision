@@ -17,7 +17,9 @@ A vector with 3 values corresponding to the number of rows, columns
 Retrieve the dimensions a \code{\link{Video}} object.
 }
 \examples{
-# TODO
+balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+dim(balloon)
+release(balloon)
 
 }
 \seealso{

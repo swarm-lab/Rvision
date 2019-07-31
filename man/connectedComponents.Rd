@@ -39,7 +39,15 @@ A list with 2 (or 3) items:
  (i.e. areas of contiguous non-zero pixels) of a binary image.
 }
 \examples{
-# TODO
+dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+dots_gray <- changeColorSpace(dots, "GRAY")
+dots_bin <- dots_gray < 200
+cc <- connectedComponents(dots_bin)
+cc_mat <- as.matrix(cc$labels)
+colors <- c("black", rainbow(cc$n))
+cc_img <- image(array(t(col2bgr(colors[cc_mat + 1])), dim = dim(dots)))
+plot(cc_img)
+
 }
 \seealso{
 \code{\link{Image}}

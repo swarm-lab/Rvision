@@ -17,7 +17,8 @@ A logical indicating whether the object is of class
 Tests whether the object is of class \code{\link{Image}}
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+isImage(balloon)
 
 }
 \seealso{

@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.3.5</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.3.6</span>
       </span>
     </div>
 
@@ -194,14 +194,22 @@ comparison method):</p><ul>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A 16-bit grayscale <code><a href='Image-class.html'>Image</a></code> object of the same dimensions
+ as <code>image</code>.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='minMaxLoc.html'>minMaxLoc</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># TODO
-
+    <pre class="examples"><div class='input'><span class='no'>balloon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"sample_img/balloon1.png"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"Rvision"</span>))
+<span class='no'>sub</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='subImage.html'>subImage</a></span>(<span class='no'>balloon</span>, <span class='fl'>290</span>, <span class='fl'>170</span>, <span class='fl'>150</span>, <span class='fl'>150</span>)
+<span class='no'>match</span> <span class='kw'>&lt;-</span> <span class='fu'>matchTemplate</span>(<span class='no'>balloon</span>, <span class='no'>sub</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SQDIFF"</span>)
+<span class='no'>mm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='minMaxLoc.html'>minMaxLoc</a></span>(<span class='no'>match</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>balloon</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/points'>points</a></span>(<span class='no'>mm</span>[<span class='fl'>1</span>, <span class='fl'>2</span>], <span class='no'>mm</span>[<span class='fl'>1</span>, <span class='fl'>3</span>], <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='matchTemplate-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -209,6 +217,8 @@ comparison method):</p><ul>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

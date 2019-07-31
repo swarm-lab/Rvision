@@ -23,7 +23,8 @@ This function takes an \code{\link{Image}} object and converts
  it to another colorspace (e.g BGR to grayscale).
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+grey_balloon <- changeColorSpace(balloon, "GRAY")
 
 }
 \seealso{

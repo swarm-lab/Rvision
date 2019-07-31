@@ -19,7 +19,9 @@ This function computes the absolute difference between two
  \code{\link{Image}} objects.
 }
 \examples{
-# TODO
+balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
+plot(absdiff(balloon1, balloon2))
 
 }
 \seealso{

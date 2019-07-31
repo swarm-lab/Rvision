@@ -73,7 +73,20 @@
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_gray <- changeColorSpace(dots, "GRAY")
+#' dots_bin <- dots_gray < 200
+#' contours <- findContours(dots_bin)
+#' colors <- rainbow(max(contours$contours$id + 1))
+#' plot(dots_bin)
+#' invisible(sapply(
+#'   base::split(contours$contours, contours$contours$id),
+#'   function(dat) {
+#'     dat <- rbind(dat, dat[1, ])
+#'     lines(y ~ x, data = dat, col = colors[id + 1], lwd = 2)
+#'   })
+#' )
+#'
 #' @export
 findContours <- function(image, mode = "external", method = "simple", offset = c(0, 0)) {
   if (!isImage(image))
@@ -143,7 +156,15 @@ findContours <- function(image, mode = "external", method = "simple", offset = c
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' # TODO
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_gray <- changeColorSpace(dots, "GRAY")
+#' dots_bin <- dots_gray < 200
+#' cc <- connectedComponents(dots_bin)
+#' cc_mat <- as.matrix(cc$labels)
+#' colors <- c("black", rainbow(cc$n))
+#' cc_img <- image(array(t(col2bgr(colors[cc_mat + 1])), dim = dim(dots)))
+#' plot(cc_img)
+#'
 #' @export
 connectedComponents <- function(image, connectivity = 8, return_table = TRUE) {
   if (!isImage(image))

@@ -19,7 +19,15 @@ Write an \code{\link{Image}} object to an output video using a
  \code{\link{VideoWriter}} object.
 }
 \examples{
-# TODO
+\dontrun{
+live <- stream(0)
+writer <- videoWriter("test.mp4", "H264", 25, 1080, 1920)
+for (i in 1:250) {
+  writeFrame(writer, readNext(live))
+}
+release(writer)
+release(live)
+}
 }
 \seealso{
 \code{\link{VideoWriter}}, \code{\link{Image}}

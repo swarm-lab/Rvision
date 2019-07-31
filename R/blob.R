@@ -99,7 +99,13 @@
 #' @seealso \code{\link{Image}}, \code{\link{isBlob}}
 #'
 #' @examples
-#' # TODO
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' blobs <- simpleBlobDetector(invert(dots), min_threshold = 25, max_threshold = 220,
+#'                             filter_by_area = TRUE, min_area = 200, max_area = Inf,
+#'                             filter_by_color = FALSE)
+#' plot(dots)
+#' plot(blobs, pch = 20)
+#'
 #' @export
 simpleBlobDetector <- function(image, min_threshold = 50, max_threshold = 220,
                                threshold_step = 10, min_repeatability = 2,
@@ -141,7 +147,12 @@ simpleBlobDetector <- function(image, min_threshold = 50, max_threshold = 220,
 #' @seealso \code{\link{simpleBlobDetector}}
 #'
 #' @examples
-#' # TODO
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' blobs <- simpleBlobDetector(invert(dots), min_threshold = 25, max_threshold = 220,
+#'                             filter_by_area = TRUE, min_area = 200, max_area = Inf,
+#'                             filter_by_color = FALSE)
+#' isBlob(blobs)
+#'
 #' @export
 isBlob <- function(object) {
   inherits(object, "blob")
@@ -165,7 +176,13 @@ isBlob <- function(object) {
 #' @seealso \code{\link{isBlob}}, \code{\link{simpleBlobDetector}}
 #'
 #' @examples
-#' # TODO
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' blobs <- simpleBlobDetector(invert(dots), min_threshold = 25, max_threshold = 220,
+#'                             filter_by_area = TRUE, min_area = 200, max_area = Inf,
+#'                             filter_by_color = FALSE)
+#' plot(dots)
+#' plot(blobs, pch = 20)
+#'
 #' @export
 plot.blob <- function(x, col = "red", asp = 1, ...) {
   if (!isBlob(x))
@@ -179,8 +196,3 @@ plot.blob <- function(x, col = "red", asp = 1, ...) {
 
   symbols(x$x, x$y, squares = x$size, add = TRUE, inches = FALSE, fg = col, ...)
 }
-
-
-
-
-

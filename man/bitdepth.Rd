@@ -23,7 +23,8 @@ This function returns the bit depth of an \code{\link{Image}}
  channel of each pixel in an image.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+bitdepth(balloon)
 
 }
 \seealso{

@@ -32,7 +32,10 @@ Operators acting on \code{\link{Image}} objects to extract or
  replace parts.
 }
 \examples{
-# TODO
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon[1:100, 1:100]
+balloon[1:100, 1:100] <- c(0, 0, 255)
+plot(balloon)
 
 }
 \seealso{
