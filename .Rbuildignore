@@ -11,3 +11,4 @@ pkgdown
 docs
 index.Rmd
 logo.*
+ci_script
