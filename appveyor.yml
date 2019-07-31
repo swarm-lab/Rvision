@@ -8,6 +8,9 @@ init:
 install:
   ps: Bootstrap
 
+cache:
+  - C:\RLibrary
+
 # Adapt as necessary starting from here
 environment:
   global:
@@ -20,6 +23,7 @@ environment:
   matrix:
   - R_VERSION: stable
     RTOOLS_VERSION: 35
+    GCC_PATH: mingw_32
     CRAN: http://cran.rstudio.com
 
 build_script:
