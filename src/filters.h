@@ -18,11 +18,11 @@ Image _sepFilter2D(Image image, Rcpp::NumericVector kernel_x, Rcpp::NumericVecto
   cv::Mat k_y(kernel_y.length(), 1, CV_32F);
 
   for (int i = 0; i < kernel_x.length(); i++) {
-    k_x.at<float>(i, 1) = kernel_x[i];
+    k_x.at<float>(i, 0) = kernel_x[i];
   }
 
   for (int i = 0; i < kernel_y.length(); i++) {
-    k_y.at<float>(i, 1) = kernel_y[i];
+    k_y.at<float>(i, 0) = kernel_y[i];
   }
 
   cv::sepFilter2D(image.image, out, -1, k_x, k_y);
