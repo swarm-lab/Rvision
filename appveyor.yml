@@ -23,7 +23,6 @@ environment:
   matrix:
   - R_VERSION: stable
     RTOOLS_VERSION: 35
-    GCC_PATH: mingw_64
     CRAN: http://cran.rstudio.com
 
 build_script:
