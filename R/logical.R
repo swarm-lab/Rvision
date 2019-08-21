@@ -27,7 +27,6 @@ findNonZero <- function(image) {
 
   df <- `_findNonZero`(image)
   df$x <- df$x + 1
-  # df$y <- -df$y + nrow(image)
-  df$y <- df$y + 1
+  df$y <- -df$y + nrow(image)
   df
 }
