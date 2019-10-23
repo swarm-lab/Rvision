@@ -16,7 +16,7 @@ NeedsCompilation: yes
 Imports:
     Rcpp (>= 1.0.1),
     RcppArmadillo (>= 0.9.400),
-    ROpenCVLite (>= 0.3.410),
+    ROpenCVLite (>= 0.3.411),
     methods,
     pbapply,
     stats,
