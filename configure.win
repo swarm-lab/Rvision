@@ -2,4 +2,4 @@
 set -x
 set -e
 
-${R_HOME}/bin/Rscript -e "if (!ROpenCVLite::isOpenCVInstalled()) { cat('------------------ OPENCV NOT FOUND --------------------\n') ; cat('\n') ; cat('OpenCV was not found in your library. Please install OpenCV as follows:') ; cat('\n') ; cat('\n') ; cat('ROpenCVLite::installOpenCV()\n') ; cat('\n') ; cat('--------------------------------------------------------\n') ; cat('\n') ; stop('OpenCV not found.') }"
+${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe -e "if (!ROpenCVLite::isOpenCVInstalled(allow_batch = TRUE)) { cat('------------------ OPENCV NOT FOUND --------------------\n') ; cat('\n') ; cat('OpenCV was not found in your library. Please install OpenCV as follows:') ; cat('\n') ; cat('\n') ; cat('ROpenCVLite::installOpenCV()\n') ; cat('\n') ; cat('--------------------------------------------------------\n') ; cat('\n') ; stop('OpenCV not found.') }"
