@@ -4,8 +4,7 @@
 \alias{findContours}
 \title{Find Contours in a Binary Image}
 \usage{
-findContours(image, mode = "external", method = "simple",
-  offset = c(0, 0))
+findContours(image, mode = "external", method = "simple", offset = c(0, 0))
 }
 \arguments{
 \item{image}{An 8-bit (8U) single-channel \code{\link{Image}} object.}

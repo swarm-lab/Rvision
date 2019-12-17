@@ -627,8 +627,14 @@ Rcpp::List _readMulti(std::string file) {
   return out;
 }
 
-Image _subimage(Image image, int x, int y, int width, int height) {
+Image _subimage(Image &image, int x, int y, int width, int height) {
   cv::Mat out;
   image.image(cv::Rect(x - 1, -(y - 1) + image.nrow() - height, width, height)).copyTo(out);
+  return Image(out);
+}
+
+Image _copyMakeBorder(Image &image, int top, int bottom, int left, int right, int borderType, Rcpp::IntegerVector borderColor) {
+  cv::Mat out;
+  cv::copyMakeBorder(image.image, out, top, bottom, left, right, borderType, col2Scalar(borderColor));
   return Image(out);
 }

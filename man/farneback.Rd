@@ -4,8 +4,16 @@
 \alias{farneback}
 \title{Optical Flow Using Farneback's Algorithm}
 \usage{
-farneback(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
-  iterations = 3, poly_n = 7, poly_sigma = 1.5)
+farneback(
+  image1,
+  image2,
+  pyr_scale = 0.5,
+  levels = 3,
+  winsize = 43,
+  iterations = 3,
+  poly_n = 7,
+  poly_sigma = 1.5
+)
 }
 \arguments{
 \item{image1}{An \code{\link{Image}} object.}

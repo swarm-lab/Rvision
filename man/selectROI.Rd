@@ -4,8 +4,7 @@
 \alias{selectROI}
 \title{Select a Region of Interest in an Image}
 \usage{
-selectROI(image, window_name = "Display", scale = 1,
-  return_mask = TRUE)
+selectROI(image, window_name = "Display", scale = 1, return_mask = TRUE)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

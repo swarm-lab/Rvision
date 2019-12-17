@@ -23,6 +23,7 @@ RcppExport SEXP _rcpp_module_boot_methods_Display();
 RcppExport SEXP _rcpp_module_boot_methods_Draw();
 RcppExport SEXP _rcpp_module_boot_methods_Geometry();
 RcppExport SEXP _rcpp_module_boot_methods_Shape();
+RcppExport SEXP _rcpp_module_boot_methods_Transform();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_class_Image", (DL_FUNC) &_rcpp_module_boot_class_Image, 0},
@@ -41,6 +42,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_methods_Draw", (DL_FUNC) &_rcpp_module_boot_methods_Draw, 0},
     {"_rcpp_module_boot_methods_Geometry", (DL_FUNC) &_rcpp_module_boot_methods_Geometry, 0},
     {"_rcpp_module_boot_methods_Shape", (DL_FUNC) &_rcpp_module_boot_methods_Shape, 0},
+    {"_rcpp_module_boot_methods_Transform", (DL_FUNC) &_rcpp_module_boot_methods_Transform, 0},
     {NULL, NULL, 0}
 };
 

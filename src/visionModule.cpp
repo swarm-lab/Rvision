@@ -4,6 +4,7 @@ using namespace Rcpp;
 
 #include "opencv2/opencv.hpp"
 #include "utils.h"
+#include "opencvarma.h"
 
 #include "Image.h"
 RCPP_EXPOSED_CLASS(Image);
@@ -38,6 +39,8 @@ RCPP_MODULE(class_Image) {
   function("_readMulti", &_readMulti, List::create(_["file"]), "");
   function("_subimage", &_subimage, List::create(_["image"], _["x"], _["y"],
     _["width"], _["height"]), "");
+  function("_copyMakeBorder", &_copyMakeBorder, List::create(_["image"], _["top"],
+    _["bottom"], _["left"], _["right"], _["borderType"], _["borderValue"]), "");
 }
 
 #include "Video.h"
@@ -272,4 +275,17 @@ RCPP_MODULE(methods_Shape) {
     _["method"], _["offset"]), "");
   function("_connectedComponents", &_connectedComponents, List::create(_["image"],
     _["connectivity"]), "");
+}
+
+#include "transform.h"
+RCPP_MODULE(methods_Transform) {
+  function("_findTransformECC", &_findTransformECC, List::create(_["image1"], _["image2"],
+    _["motionType"], _["count"], _["eps"], _["gaussFiltSize"]), "");
+  function("_computeECC", &_computeECC, List::create(_["image1"], _["image2"]), "");
+  function("_getRotationMatrix2D", &_getRotationMatrix2D, List::create(_["center"],
+    _["angle"], _["scale"]), "");
+  function("_warpAffine", &_warpAffine, List::create(_["image"], _["m"], _["outputSize"],
+    _["interpMode"], _["borderType"], _["borderColor"]), "");
+  function("_warpPerspective", &_warpPerspective, List::create(_["image"], _["m"], _["outputSize"],
+    _["interpMode"], _["borderType"], _["borderColor"]), "");
 }

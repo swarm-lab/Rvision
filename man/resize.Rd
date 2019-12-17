@@ -4,8 +4,14 @@
 \alias{resize}
 \title{Resize an \code{\link{Image}}}
 \usage{
-resize(image, height = NULL, width = NULL, fx = NULL, fy = NULL,
-  interpolation = "linear")
+resize(
+  image,
+  height = NULL,
+  width = NULL,
+  fx = NULL,
+  fy = NULL,
+  interpolation = "linear"
+)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

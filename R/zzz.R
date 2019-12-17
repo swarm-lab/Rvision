@@ -24,6 +24,7 @@ Rcpp::loadModule("methods_Display", TRUE)
 Rcpp::loadModule("methods_Draw", TRUE)
 Rcpp::loadModule("methods_Geometry", TRUE)
 Rcpp::loadModule("methods_Shape", TRUE)
+Rcpp::loadModule("methods_Transform", TRUE)
 
 
 ### Define generic arithmetic methods ###

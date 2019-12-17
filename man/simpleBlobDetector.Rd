@@ -4,15 +4,28 @@
 \alias{simpleBlobDetector}
 \title{Simple Blob Detector}
 \usage{
-simpleBlobDetector(image, min_threshold = 50, max_threshold = 220,
-  threshold_step = 10, min_repeatability = 2,
-  min_dist_between_blobs = 10, filter_by_area = TRUE, min_area = 25,
-  max_area = 5000, filter_by_color = TRUE, blob_color = 0,
-  filter_by_circularity = FALSE, min_circularity = 0.8,
-  max_circularity = Inf, filter_by_convexity = TRUE,
-  min_convexity = 0.95, max_convexity = Inf,
-  filter_by_inertia = TRUE, min_inertia_ratio = 0.1,
-  max_inertia_ratio = Inf)
+simpleBlobDetector(
+  image,
+  min_threshold = 50,
+  max_threshold = 220,
+  threshold_step = 10,
+  min_repeatability = 2,
+  min_dist_between_blobs = 10,
+  filter_by_area = TRUE,
+  min_area = 25,
+  max_area = 5000,
+  filter_by_color = TRUE,
+  blob_color = 0,
+  filter_by_circularity = FALSE,
+  min_circularity = 0.8,
+  max_circularity = Inf,
+  filter_by_convexity = TRUE,
+  min_convexity = 0.95,
+  max_convexity = Inf,
+  filter_by_inertia = TRUE,
+  min_inertia_ratio = 0.1,
+  max_inertia_ratio = Inf
+)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

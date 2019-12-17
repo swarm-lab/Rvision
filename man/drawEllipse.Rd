@@ -4,8 +4,18 @@
 \alias{drawEllipse}
 \title{Draw Ellipses on an \code{\link{Image}}}
 \usage{
-drawEllipse(image, x, y, axis1, axis2, angle, start_angle = 0,
-  end_angle = 360, color = "red", thickness = 1)
+drawEllipse(
+  image,
+  x,
+  y,
+  axis1,
+  axis2,
+  angle,
+  start_angle = 0,
+  end_angle = 360,
+  color = "red",
+  thickness = 1
+)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

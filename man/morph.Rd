@@ -4,8 +4,15 @@
 \alias{morph}
 \title{Morphological Operations}
 \usage{
-morph(image, operation, kernel = NULL, k_shape = "rectangle",
-  k_height = 5, k_width = 5, iterations = 1)
+morph(
+  image,
+  operation,
+  kernel = NULL,
+  k_shape = "rectangle",
+  k_height = 5,
+  k_width = 5,
+  iterations = 1
+)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

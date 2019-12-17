@@ -4,8 +4,15 @@
 \alias{videoWriter}
 \title{Create an object of class \code{VideoWriter}}
 \usage{
-videoWriter(outputFile, fourcc, fps, height, width, isColor = TRUE,
-  api = "ANY")
+videoWriter(
+  outputFile,
+  fourcc,
+  fps,
+  height,
+  width,
+  isColor = TRUE,
+  api = "ANY"
+)
 }
 \arguments{
 \item{outputFile}{An character string corresponding to the path to an output

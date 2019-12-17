@@ -4,8 +4,16 @@
 \alias{drawArrow}
 \title{Draw Arrows on an \code{\link{Image}}}
 \usage{
-drawArrow(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
-  color = "red", thickness = 1)
+drawArrow(
+  image,
+  pt1_x,
+  pt1_y,
+  pt2_x,
+  pt2_y,
+  tip_length = 0.1,
+  color = "red",
+  thickness = 1
+)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

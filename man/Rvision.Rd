@@ -3,7 +3,6 @@
 \docType{package}
 \name{Rvision}
 \alias{Rvision}
-\alias{Rvision-package}
 \title{Rvision: A basic (for now) computer vision library for R.}
 \description{
 The \code{Rvision} package uses the OpenCV library to provide R users with

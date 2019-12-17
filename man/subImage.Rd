@@ -4,7 +4,7 @@
 \alias{subImage}
 \title{Extract Subimage}
 \usage{
-subImage(image, x, y, width, height)
+subImage(image, x, y, width, height, border = TRUE, ...)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -15,6 +15,15 @@ the original image.}
 \item{width}{The width of the subimage.}
 
 \item{height}{The height of the subimage.}
+
+\item{border}{If the subimage extends beyond the boundaries of the source
+image and \code{border = TRUE} (the default), a border is created to account
+for the missing pixels.}
+
+\item{...}{Additional parameters to be passed to \code{\link{border}} if the
+the subimage extends beyond the boundaries of the source image and
+\code{border = TRUE}. These parameters control for the type and color of the
+border.}
 }
 \value{
 An \code{\link{Image}} object.

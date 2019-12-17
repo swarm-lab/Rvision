@@ -4,8 +4,13 @@
 \alias{getTextSize}
 \title{Calculate the Height and Width of a Text String}
 \usage{
-getTextSize(text, font_face = "simplex", font_scale = 1,
-  italic = FALSE, thickness = 1)
+getTextSize(
+  text,
+  font_face = "simplex",
+  font_scale = 1,
+  italic = FALSE,
+  thickness = 1
+)
 }
 \arguments{
 \item{text}{A character string representing the text to be drawn.}

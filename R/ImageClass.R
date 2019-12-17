@@ -615,6 +615,50 @@ readMulti <- function(x) {
 }
 
 
+#' @title Add Border to Image
+#'
+#' @description \code{border} adds a border to an image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param top,bottom,left,right The width in pixels of the border on each side
+#'  of the image. By default, \code{bottom}, \code{left} and \code{right} are
+#'  set to the same value as \code{top}.
+#'
+#' @param border_type A character string indicating the extrapolation method to
+#'  use when filling empty pixels created during the transformation. It can be
+#'  any of the following:
+#'  \itemize{
+#'   \item{"constant" (the default):}{\code{iiiiii|abcdefgh|iiiiii} with \code{i}
+#'    specified by \code{border_value}.}
+#'   \item{"replicate":}{\code{aaaaaa|abcdefgh|hhhhhh}.}
+#'   \item{"reflect":}{\code{fedcba|abcdefgh|hgfedc}.}
+#'   \item{"wrap":}{\code{cdefgh|abcdefgh|abcdef}.}
+#'   \item{"reflect_101":}{\code{gfedcb|abcdefgh|gfedcb}.}
+#'   \item{"transparent":}{\code{uvwxyz|abcdefgh|ijklmn}.}
+#'  }
+#'
+#' @param border_color A value or vector of any kind of R color specification
+#'  compatible with \code{\link{col2bgr}} representing the color of the border
+#'  (default: "black").
+#'
+#' @export
+border <- function(image, top, bottom = top, left = top, right = top,
+                   border_type = "constant", border_color = "black") {
+  if (!isImage(image))
+    stop("image is not an Image object.")
+
+  border_types <- c("constant", "replicate", "reflect", "wrap", "reflect_101", "transparent")
+  border_vals <- 0:5
+  if (!(border_type %in% border_types))
+    stop("This is not a valid border type.")
+
+  `_copyMakeBorder`(image, top, bottom, left, right,
+                    border_vals[border_type == border_types],
+                    col2bgr(border_color))
+}
+
+
 #' @title Extract Subimage
 #'
 #' @description \code{subImage} extracts a portion of an \code{\link{Image}} and
@@ -629,6 +673,15 @@ readMulti <- function(x) {
 #'
 #' @param height The height of the subimage.
 #'
+#' @param border If the subimage extends beyond the boundaries of the source
+#'  image and \code{border = TRUE} (the default), a border is created to account
+#'  for the missing pixels.
+#'
+#' @param ... Additional parameters to be passed to \code{\link{border}} if the
+#'  the subimage extends beyond the boundaries of the source image and
+#'  \code{border = TRUE}. These parameters control for the type and color of the
+#'  border.
+#'
 #' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -641,13 +694,34 @@ readMulti <- function(x) {
 #' plot(balloon_sub)
 #'
 #' @export
-subImage <- function(image, x, y, width, height) {
+subImage <- function(image, x, y, width, height, border = TRUE, ...) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if ((y < 1) | (x < 1) | ((y + height - 1) > nrow(image)) |
-      ((x + width - 1) > ncol(image)))
-    stop("Subscript out of bounds.")
+  x_check <- x + width - 1
+  y_check <- y + height - 1
 
-  `_subimage`(image, x, y, width, height)
+  if ((y < 1) | (x < 1) | (y_check > nrow(image)) | (x_check > ncol(image))) {
+    x_top <- min(x_check, ncol(image))
+    y_top <- min(y_check, nrow(image))
+    x_bottom <- max(x, 1)
+    y_bottom <- max(y, 1)
+
+    if ((x_bottom > ncol(image)) | (y_bottom > nrow(image)) | (x_top < 1) | (y_top < 1))
+      stop("Subscript out of bound.")
+
+    sub <- `_subimage`(image, x_bottom, y_bottom,
+                       x_top - x_bottom + 1,
+                       y_top - y_bottom + 1)
+
+    if (border) {
+      border(sub, top = y_check - y_top, bottom = y_bottom - y,
+             left = x_bottom - x, right = x_check - x_top, ...)
+    } else {
+      sub
+    }
+  } else {
+    `_subimage`(image, x, y, width, height)
+  }
 }
+

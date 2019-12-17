@@ -4,8 +4,7 @@
 \alias{gaussianBlur}
 \title{Blurs an Image Using a Gaussian Filter}
 \usage{
-gaussianBlur(image, k_height = 5, k_width = 5, sigma_x = 1,
-  sigma_y = 1)
+gaussianBlur(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y = 1)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

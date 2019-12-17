@@ -13,8 +13,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="3 - Basic operations">
@@ -47,7 +48,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -76,12 +77,12 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/swarm-lab/Rvision">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
-<form class="navbar-form navbar-right" role="search">
+<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
@@ -95,6 +96,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -211,42 +213,42 @@
 <div id="displaying-images" class="section level2">
 <h2 class="hasAnchor">
 <a href="#displaying-images" class="anchor"></a>3.2 - Displaying images</h2>
-<p>There are two methods for displaying images. The first method offers full compatibility with base <a href="https://cran.r-project.org"><code>R</code></a> plotting methods, which allows for drawing non-destructively over an image using <code><a href="https://www.rdocumentation.org/packages/graphics/topics/lines">graphics::lines()</a></code>, <code>garaphics::points()</code>, etc. This method is however is however rather slow and therefore not suitable for applications requiring quick refresh rates between successive images (e.g. when playing a video).</p>
+<p>There are two methods for displaying images. The first method offers full compatibility with base <a href="https://cran.r-project.org"><code>R</code></a> plotting methods, which allows for drawing non-destructively over an image using <code><a href="https://rdrr.io/r/graphics/lines.html">graphics::lines()</a></code>, <code>garaphics::points()</code>, etc. This method is however is however rather slow and therefore not suitable for applications requiring quick refresh rates between successive images (e.g. when playing a video).</p>
 <p>The second method uses <a href="http://opencv.org/"><code>OpenCV</code></a>’s capabilities to display images at high frame rates, making it suitable to play videos for instance. It is however incompatible with base <a href="https://cran.r-project.org"><code>R</code></a> plotting functions. However you can use the <a href="../drawing.html">drawing functions</a> provided with <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> to draw over images - destructively this time - before displaying them.</p>
 <div id="method-compatible-with-base-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#method-compatible-with-base-r" class="anchor"></a>3.2.1 - Method compatible with base R</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">path_to_image &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, <span class="dt">package =</span> <span class="st">"Rvision"</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">my_image &lt;-<span class="st"> </span><span class="kw"><a href="../reference/image.html">image</a></span>(<span class="dt">filename =</span> path_to_image)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(my_image)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">h =</span> <span class="dv">400</span>, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">lwd =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">h =</span> <span class="dv">550</span>, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">lwd =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">v =</span> <span class="dv">430</span>, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">lwd =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/abline">abline</a></span>(<span class="dt">v =</span> <span class="dv">570</span>, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">lwd =</span> <span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">path_to_image &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, <span class="dt">package =</span> <span class="st">"Rvision"</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2">my_image &lt;-<span class="st"> </span><span class="kw"><a href="../reference/image.html">image</a></span>(<span class="dt">filename =</span> path_to_image)</a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(my_image)</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">h =</span> <span class="dv">400</span>, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">lwd =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">h =</span> <span class="dv">550</span>, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">lwd =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">v =</span> <span class="dv">430</span>, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">lwd =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="dt">v =</span> <span class="dv">570</span>, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">lwd =</span> <span class="dv">5</span>)</a></code></pre></div>
 <p><img src="z3_basic_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
 <div id="method-incompatible-with-base-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#method-incompatible-with-base-r" class="anchor"></a>3.2.2 - Method incompatible with base R</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">path_to_video &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, <span class="dt">package =</span> <span class="st">"Rvision"</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">my_video &lt;-<span class="st"> </span><span class="kw"><a href="../reference/video.html">video</a></span>(<span class="dt">filename =</span> path_to_video)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># Create an empty display window (note: it can hide behind other windows)</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="../reference/newDisplay.html">newDisplay</a></span>(<span class="st">"My display"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(my_video) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(my_video) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>) </a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># Display images (note: it creates the display window if it doesn't exist yet)</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co"># The 3rd argument ('delay') is the minimum time in ms during which the image </span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co"># should be displayed before it can be replaced</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">25</span>) {</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">  <span class="kw"><a href="../reference/display.html">display</a></span>(<span class="kw"><a href="../reference/readNext.html">readNext</a></span>(my_video), <span class="st">"My display"</span>, <span class="dv">25</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(my_video) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(my_video) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">}</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co"># Close display</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="kw"><a href="../reference/destroyDisplay.html">destroyDisplay</a></span>(<span class="st">"My display"</span>)</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co"># Close all opened displays</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../reference/destroyDisplay.html">destroyAllDisplays</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">path_to_video &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, <span class="dt">package =</span> <span class="st">"Rvision"</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2">my_video &lt;-<span class="st"> </span><span class="kw"><a href="../reference/video.html">video</a></span>(<span class="dt">filename =</span> path_to_video)</a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co"># Create an empty display window (note: it can hide behind other windows)</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw"><a href="../reference/newDisplay.html">newDisplay</a></span>(<span class="st">"My display"</span>, <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(my_video) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(my_video) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>) </a>
+<a class="sourceLine" id="cb2-6" title="6"></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co"># Display images (note: it creates the display window if it doesn't exist yet)</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co"># The 3rd argument ('delay') is the minimum time in ms during which the image </span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co"># should be displayed before it can be replaced</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">25</span>) {</a>
+<a class="sourceLine" id="cb2-11" title="11">  <span class="kw"><a href="../reference/display.html">display</a></span>(<span class="kw"><a href="../reference/readNext.html">readNext</a></span>(my_video), <span class="st">"My display"</span>, <span class="dv">25</span>, <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(my_video) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(my_video) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-12" title="12">}</a>
+<a class="sourceLine" id="cb2-13" title="13"></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co"># Close display</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="kw"><a href="../reference/destroyDisplay.html">destroyDisplay</a></span>(<span class="st">"My display"</span>)</a>
+<a class="sourceLine" id="cb2-16" title="16"></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co"># Close all opened displays</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="kw"><a href="../reference/destroyDisplay.html">destroyAllDisplays</a></span>()</a></code></pre></div>
 <hr>
 </div>
 </div>
@@ -254,30 +256,31 @@
 <h2 class="hasAnchor">
 <a href="#accessingreplacing-parts-of-an-image" class="anchor"></a>3.3 - Accessing/replacing parts of an image</h2>
 <p>You can access parts of an image in the same way you would do it with matrices and arrays in base <a href="https://cran.r-project.org"><code>R</code></a>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">my_image[]          <span class="co"># Entire image</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">my_image[<span class="dv">1</span>, <span class="dv">1</span>]      <span class="co"># Bottom-right pixel</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">my_image[<span class="dv">1</span>, ]       <span class="co"># Bottom row of pixels</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">my_image[, <span class="dv">1</span>]       <span class="co"># Leftmost column of pixels</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">my_image[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]  <span class="co"># All pixels between the 1st and 5th row and column</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">my_image[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)]  <span class="co"># Every other row and column of pixels</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">my_image[]          <span class="co"># Entire image</span></a>
+<a class="sourceLine" id="cb3-2" title="2">my_image[<span class="dv">1</span>, <span class="dv">1</span>]      <span class="co"># Bottom-right pixel</span></a>
+<a class="sourceLine" id="cb3-3" title="3">my_image[<span class="dv">1</span>, ]       <span class="co"># Bottom row of pixels</span></a>
+<a class="sourceLine" id="cb3-4" title="4">my_image[, <span class="dv">1</span>]       <span class="co"># Leftmost column of pixels</span></a>
+<a class="sourceLine" id="cb3-5" title="5">my_image[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]  <span class="co"># All pixels between the 1st and 5th row and column</span></a>
+<a class="sourceLine" id="cb3-6" title="6">my_image[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>), <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)]  <span class="co"># Every other row and column of pixels</span></a></code></pre></div>
 <p>Note that images are not exactly like traditional matrices. Color images have multiple layers, each corresponsing to a dimension in the BGR or BGRA space (Blue, Green, Red, Alpha transparency). Therefore, when accessing a pixel of a color image, you will obtain 3 or 4 values in return. Grayscale images, on the other hand, function similarly to regular monolayer matrices in base <a href="https://cran.r-project.org"><code>R</code></a>.</p>
 <p>To replace parts of an image, you can use the <code>&lt;-</code> assignment operator. With grayscale images, it works exactly like in base <a href="https://cran.r-project.org"><code>R</code></a> with matrices.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">my_gray_image &lt;-<span class="st"> </span><span class="kw"><a href="../reference/changeColorSpace.html">changeColorSpace</a></span>(my_image, <span class="st">"GRAY"</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">my_gray_image[<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">250</span>] &lt;-<span class="st"> </span><span class="dv">0</span>  <span class="co"># Turn the corresponding pixels to black</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(my_gray_image)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">my_gray_image &lt;-<span class="st"> </span><span class="kw"><a href="../reference/changeColorSpace.html">changeColorSpace</a></span>(my_image, <span class="st">"GRAY"</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2">my_gray_image[<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">250</span>] &lt;-<span class="st"> </span><span class="dv">0</span>  <span class="co"># Turn the corresponding pixels to black</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(my_gray_image)</a></code></pre></div>
 <p><img src="z3_basic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>With color images however, you will need to supply 3 (for BGR images) or 4 (for BGRA images) values (or any multiple of 3 or 4 respectively).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">my_image[<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">250</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">255</span>) <span class="co"># Turn the corresponding pixels to red</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(my_image)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">my_image[<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">250</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">255</span>) <span class="co"># Turn the corresponding pixels to red</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(my_image)</a></code></pre></div>
 <p><img src="z3_basic_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>The utility function <code>col2bgr</code> provided by <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> (not to be confused with <code>col2rgb</code> provided by the <code>grDevices</code> package and on which <code>col2bgr</code> is based) will conveniently convert any of the <a href="https://cran.r-project.org"><code>R</code></a>-compatible color specifications to color codes compatible with <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> images.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">my_image[<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">250</span>] &lt;-<span class="st"> </span><span class="kw"><a href="../reference/col2bgr.html">col2bgr</a></span>(<span class="st">"blue"</span>, <span class="dt">alpha =</span> <span class="ot">TRUE</span>) <span class="co"># Turn the corresponding pixels to blue</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(my_image)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">my_image[<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">250</span>] &lt;-<span class="st"> </span><span class="kw"><a href="../reference/col2bgr.html">col2bgr</a></span>(<span class="st">"blue"</span>, <span class="dt">alpha =</span> <span class="ot">TRUE</span>) <span class="co"># Turn the corresponding pixels to blue</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(my_image)</a></code></pre></div>
 <p><img src="z3_basic_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -292,13 +295,15 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by <a href="http://www.theswarmlab.com">Simon Garnier</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 

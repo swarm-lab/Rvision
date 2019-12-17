@@ -4,8 +4,18 @@
 \alias{drawText}
 \title{Draw Text on an \code{\link{Image}}}
 \usage{
-drawText(image, text, x, y, font_face = "simplex", font_scale = 1,
-  italic = FALSE, color = "red", thickness = 1, bl_orig = TRUE)
+drawText(
+  image,
+  text,
+  x,
+  y,
+  font_face = "simplex",
+  font_scale = 1,
+  italic = FALSE,
+  color = "red",
+  thickness = 1,
+  bl_orig = TRUE
+)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

@@ -131,3 +131,13 @@ int getAPIId(std::string APIId) {
 
   throw std::range_error("Unknown property.");
 }
+
+cv::Scalar col2Scalar(IntegerVector col) {
+  cv::Scalar out(0, 0, 0, 0);
+
+  for (int i = 0; i < col.size(); i++) {
+    out[i] = col(i);
+  }
+
+  return out;
+}

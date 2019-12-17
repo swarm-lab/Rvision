@@ -4,8 +4,7 @@
 \alias{drawRectangle}
 \title{Draw Rectangles on an \code{\link{Image}}}
 \usage{
-drawRectangle(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red",
-  thickness = 1)
+drawRectangle(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness = 1)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

@@ -4,8 +4,14 @@
 \alias{adaptiveThreshold}
 \title{Adaptive Thresholding}
 \usage{
-adaptiveThreshold(image, max_value = 255, method = "mean",
-  threshold_type = "inverse", block_size = 31, C = 25)
+adaptiveThreshold(
+  image,
+  max_value = 255,
+  method = "mean",
+  threshold_type = "inverse",
+  block_size = 31,
+  C = 25
+)
 }
 \arguments{
 \item{image}{An an 8-bit (8U) single-channel \code{\link{Image}} object.}
