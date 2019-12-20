@@ -11,9 +11,6 @@ r_build_args: "--no-manual --no-build-vignettes"
 r_check_args: "--as-cran --ignore-vignettes --no-examples --install-args=--build"
 
 before_install:
-  - fname=travis_helpers.sh
-  - wget -O ${fname} http://bit.ly/travis_helpers
-  - cat ${fname}; source ${fname}; rm ${fname}
   - cat DESCRIPTION
   - export PACKAGE_NAME=`package_name`
   - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
