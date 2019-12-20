@@ -24,6 +24,7 @@ environment:
   - R_VERSION: stable
     RTOOLS_VERSION: 35
     CRAN: http://cran.rstudio.com
+    PKGTYPE: both
 
 build_script:
   - travis-tool.sh install_deps
