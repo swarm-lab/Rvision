@@ -17,7 +17,6 @@ before_install:
   - cat DESCRIPTION
   - export PACKAGE_NAME=`package_name`
   - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
-  - Rscript ci_script.R
 
 after_success:
   - cat ${RCHECK_DIR}/00install.out

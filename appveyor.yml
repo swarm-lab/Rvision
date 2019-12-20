@@ -26,7 +26,6 @@ environment:
     CRAN: http://cran.rstudio.com
 
 build_script:
-  - Rscript ci_script.R
   - travis-tool.sh install_deps
 
 test_script:
