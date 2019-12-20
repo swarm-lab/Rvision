@@ -46,8 +46,10 @@ A 2x3 or 3x3 (if \code{warp_mode = "homography"}) matrix.
  two images in terms of the Enhanced Correlation Coefficient criterion.
 }
 \examples{
-balloon1 <- changeColorSpace(image(system.file("sample_img/balloon1.png", package = "Rvision")), "GRAY")
-balloon2 <- changeColorSpace(image(system.file("sample_img/balloon2.png", package = "Rvision")), "GRAY")
+file1 <- system.file("sample_img/balloon1.png", package = "Rvision")
+file2 <- system.file("sample_img/balloon2.png", package = "Rvision")
+balloon1 <- changeColorSpace(image(file1), "GRAY")
+balloon2 <- changeColorSpace(image(file2), "GRAY")
 findTransformECC(balloon1, balloon2)
 
 }

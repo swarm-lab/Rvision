@@ -19,8 +19,10 @@
 #'  Pattern Anal. Mach. Intell. 30, 1858–1865. doi:10.1109/TPAMI.2008.113.
 #'
 #' @examples
-#' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-#' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
+#' file1 <- system.file("sample_img/balloon1.png", package = "Rvision")
+#' file2 <- system.file("sample_img/balloon2.png", package = "Rvision")
+#' balloon1 <- changeColorSpace(image(file1), "GRAY")
+#' balloon2 <- changeColorSpace(image(file2), "GRAY")
 #' computeECC(balloon1, balloon2)
 #'
 #' @export
@@ -83,8 +85,10 @@ computeECC <- function(template, image) {
 #'  Pattern Anal. Mach. Intell. 30, 1858–1865. doi:10.1109/TPAMI.2008.113.
 #'
 #' @examples
-#' balloon1 <- changeColorSpace(image(system.file("sample_img/balloon1.png", package = "Rvision")), "GRAY")
-#' balloon2 <- changeColorSpace(image(system.file("sample_img/balloon2.png", package = "Rvision")), "GRAY")
+#' file1 <- system.file("sample_img/balloon1.png", package = "Rvision")
+#' file2 <- system.file("sample_img/balloon2.png", package = "Rvision")
+#' balloon1 <- changeColorSpace(image(file1), "GRAY")
+#' balloon2 <- changeColorSpace(image(file2), "GRAY")
 #' findTransformECC(balloon1, balloon2)
 #'
 #' @export
@@ -236,8 +240,10 @@ rotateScale <- function(image, center = (dim(image)[1:2] - 1) / 2, angle = 90, s
 #' @seealso \code{\link{warpPerspective}}, \code{\link{findTransformECC}}
 #'
 #' @examples
-#' balloon1 <- changeColorSpace(image(system.file("sample_img/balloon1.png", package = "Rvision")), "GRAY")
-#' balloon2 <- changeColorSpace(image(system.file("sample_img/balloon2.png", package = "Rvision")), "GRAY")
+#' file1 <- system.file("sample_img/balloon1.png", package = "Rvision")
+#' file2 <- system.file("sample_img/balloon2.png", package = "Rvision")
+#' balloon1 <- changeColorSpace(image(file1), "GRAY")
+#' balloon2 <- changeColorSpace(image(file2), "GRAY")
 #' ecc <- findTransformECC(balloon1, balloon2)
 #' balloon2_transformed <- warpAffine(balloon2, ecc)
 #'
@@ -326,8 +332,10 @@ warpAffine <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #' @seealso \code{\link{warpPerspective}}, \code{\link{findTransformECC}}
 #'
 #' @examples
-#' balloon1 <- changeColorSpace(image(system.file("sample_img/balloon1.png", package = "Rvision")), "GRAY")
-#' balloon2 <- changeColorSpace(image(system.file("sample_img/balloon2.png", package = "Rvision")), "GRAY")
+#' file1 <- system.file("sample_img/balloon1.png", package = "Rvision")
+#' file2 <- system.file("sample_img/balloon2.png", package = "Rvision")
+#' balloon1 <- changeColorSpace(image(file1), "GRAY")
+#' balloon2 <- changeColorSpace(image(file2), "GRAY")
 #' ecc <- findTransformECC(balloon1, balloon2)
 #' balloon2_transformed <- warpAffine(balloon2, ecc)
 #'

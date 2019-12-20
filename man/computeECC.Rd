@@ -20,8 +20,10 @@ A numerical value.
  (ECC) value between two images.
 }
 \examples{
-balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
+file1 <- system.file("sample_img/balloon1.png", package = "Rvision")
+file2 <- system.file("sample_img/balloon2.png", package = "Rvision")
+balloon1 <- changeColorSpace(image(file1), "GRAY")
+balloon2 <- changeColorSpace(image(file2), "GRAY")
 computeECC(balloon1, balloon2)
 
 }
