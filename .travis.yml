@@ -16,7 +16,7 @@ before_install:
   - export RCHECK_DIR=${PACKAGE_NAME}.Rcheck
 
 install:
-  - R -e "install.packages('ROpenCVLite')"
+  - R -e "devtools::install_deps(dep = TRUE)"
   - R -e "if (!ROpenCVLite::isOpenCVInstalled()) ROpenCVLite::installOpenCV(batch = TRUE)"
   - R -e "if (unlist(strsplit(as.character(utils::packageVersion('ROpenCVLite')), '[.]'))[3] != gsub('[^0-9]', '', ROpenCVLite::opencvVersion())) ROpenCVLite::installOpenCV(batch = TRUE)"
 
