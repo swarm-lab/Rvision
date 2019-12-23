@@ -47,6 +47,8 @@ environment:
 
 build_script:
   - travis-tool.sh install_deps
+  - R -e "if (!ROpenCVLite::isOpenCVInstalled()) ROpenCVLite::installOpenCV(batch = TRUE)"
+  - R -e "if (unlist(strsplit(as.character(utils::packageVersion('ROpenCVLite')), '[.]'))[3] != gsub('[^0-9]', '', ROpenCVLite::opencvVersion())) ROpenCVLite::installOpenCV(batch = TRUE)"
 
 test_script:
   - travis-tool.sh run_tests
