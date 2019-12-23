@@ -18,7 +18,7 @@ environment:
     R_REMOTES_STANDALONE: yes
     USE_RTOOLS: yes
     R_CHECK_INSTALL_ARGS: --install-args=--build
-    R_CHECK_ARGS: --no-manual --as-cran
+    R_CHECK_ARGS: --as-cran --no-multiarch
 
   matrix:
   - R_VERSION: stable
