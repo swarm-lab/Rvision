@@ -24,24 +24,14 @@ environment:
   - R_VERSION: stable
     RTOOLS_VERSION: 35
     R_ARCH: x64
+    GCC_PATH: mingw_64
     CRAN: http://cran.rstudio.com
     PKGTYPE: both
 
   - R_VERSION: stable
     RTOOLS_VERSION: 35
     R_ARCH: i386
-    CRAN: http://cran.rstudio.com
-    PKGTYPE: both
-
-  - R_VERSION: stable
-    RTOOLS_VERSION: 34
-    R_ARCH: x64
-    CRAN: http://cran.rstudio.com
-    PKGTYPE: both
-
-  - R_VERSION: stable
-    RTOOLS_VERSION: 34
-    R_ARCH: i386
+    GCC_PATH: mingw_32
     CRAN: http://cran.rstudio.com
     PKGTYPE: both
 
