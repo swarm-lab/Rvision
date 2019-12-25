@@ -43,7 +43,7 @@ Rcpp::DataFrame _selectBoundingBoxes(Image image, std::string window_name, bool 
   Rcpp::NumericVector width(ROIs.size());
   Rcpp::NumericVector height(ROIs.size());
 
-  for (int i = 0; i < ROIs.size(); i++) {
+  for (uint i = 0; i < ROIs.size(); i++) {
     left(i) = ROIs[i].x;
     top(i) = ROIs[i].y;
     width(i) = ROIs[i].width;

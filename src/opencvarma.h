@@ -27,8 +27,8 @@ template <typename T>
 void arma2cv(arma::Mat<T>& armaMat, cv::Mat& cvMat) {
   cvMat.create(armaMat.n_rows, armaMat.n_cols, cvType<T>(1));
 
-    for (int j = 0; j < armaMat.n_cols; j++)
-      for (int i = 0; i < armaMat.n_rows; i++)
+    for (uint j = 0; j < armaMat.n_cols; j++)
+      for (uint i = 0; i < armaMat.n_rows; i++)
         cvMat.at<T>(i, j) = armaMat(i,j);
 }
 

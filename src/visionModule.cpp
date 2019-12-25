@@ -7,7 +7,7 @@ using namespace Rcpp;
 #include "opencvarma.h"
 
 #include "Image.h"
-RCPP_EXPOSED_CLASS(Image);
+RCPP_EXPOSED_CLASS(Image)
 RCPP_MODULE(class_Image) {
 
   class_<Image>("Image")
@@ -44,7 +44,7 @@ RCPP_MODULE(class_Image) {
 }
 
 #include "Video.h"
-RCPP_EXPOSED_CLASS(Video);
+RCPP_EXPOSED_CLASS(Video)
 RCPP_MODULE(class_Video) {
 
   class_<Video>("Video")
@@ -70,7 +70,7 @@ RCPP_MODULE(class_Video) {
 }
 
 #include "Stream.h"
-RCPP_EXPOSED_CLASS(Stream);
+RCPP_EXPOSED_CLASS(Stream)
 RCPP_MODULE(class_Stream) {
 
   class_<Stream>("Stream")
@@ -91,7 +91,7 @@ RCPP_MODULE(class_Stream) {
 }
 
 #include "VideoWriter.h"
-RCPP_EXPOSED_CLASS(VideoWriter);
+RCPP_EXPOSED_CLASS(VideoWriter)
 RCPP_MODULE(class_VideoWriter) {
 
   class_<VideoWriter>("VideoWriter")

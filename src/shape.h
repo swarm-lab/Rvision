@@ -5,7 +5,7 @@ Rcpp::List _findContours(Image image, int mode, int method, Rcpp::NumericVector 
   cv::findContours(image.image, contours, hierarchy, mode, method, cv::Point(offset(0), offset(1)));
 
   int size = 0;
-  for (int i = 0; i < contours.size(); i++) {
+  for (uint i = 0; i < contours.size(); i++) {
     size += contours[i].size();
   }
 
@@ -18,8 +18,8 @@ Rcpp::List _findContours(Image image, int mode, int method, Rcpp::NumericVector 
   Rcpp::IntegerVector child(contours.size());
   Rcpp::IntegerVector parent(contours.size());
   int counter = 0;
-  for (int i = 0; i < contours.size(); i++) {
-    for (int j = 0; j < contours[i].size(); j++) {
+  for (uint i = 0; i < contours.size(); i++) {
+    for (uint j = 0; j < contours[i].size(); j++) {
       id(counter) = i;
       x(counter) = contours[i][j].x;
       y(counter) = contours[i][j].y;

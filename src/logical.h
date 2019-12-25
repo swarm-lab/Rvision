@@ -23,7 +23,7 @@ Rcpp::DataFrame _findNonZero(Image image) {
   Rcpp::NumericVector x(locs.size());
   Rcpp::NumericVector y(locs.size());
 
-  for (int i = 0; i < locs.size(); i++) {
+  for (uint i = 0; i < locs.size(); i++) {
     x(i) = locs[i].x;
     y(i) = locs[i].y;
   }

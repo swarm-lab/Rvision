@@ -76,9 +76,9 @@ Image::Image(arma::Cube<int> inputArray) {
     inputArray = 255 * (inputArray - inputArray.min()) / (inputArray.max() - inputArray.min());
   }
 
-  for (int i = 0; i < inputArray.n_cols; i++) {
-    for (int j = 0; j < inputArray.n_rows; j++) {
-      for (int k = 0; k < inputArray.n_slices; k++) {
+  for (uint i = 0; i < inputArray.n_cols; i++) {
+    for (uint j = 0; j < inputArray.n_rows; j++) {
+      for (uint k = 0; k < inputArray.n_slices; k++) {
         switch(inputArray.n_slices) {
         case 1:
           this->image.at<uint8_t>(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
@@ -123,9 +123,9 @@ Image::Image(arma::Cube<double> inputArray) {
     inputArray = 255 * (inputArray - inputArray.min()) / (inputArray.max() - inputArray.min());
   }
 
-  for (int i = 0; i < inputArray.n_cols; i++) {
-    for (int j = 0; j < inputArray.n_rows; j++) {
-      for (int k = 0; k < inputArray.n_slices; k++) {
+  for (uint i = 0; i < inputArray.n_cols; i++) {
+    for (uint j = 0; j < inputArray.n_rows; j++) {
+      for (uint k = 0; k < inputArray.n_slices; k++) {
         switch(inputArray.n_slices) {
         case 1:
           this->image.at<uint8_t>(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
@@ -336,9 +336,9 @@ bool Image::loadArray(arma::cube inputArray) {
     inputArray = 255 * (inputArray - inputArray.min()) / (inputArray.max() - inputArray.min());
   }
 
-  for (int i = 0; i < inputArray.n_cols; i++) {
-    for (int j = 0; j < inputArray.n_rows; j++) {
-      for (int k = 0; k < inputArray.n_slices; k++) {
+  for (uint i = 0; i < inputArray.n_cols; i++) {
+    for (uint j = 0; j < inputArray.n_rows; j++) {
+      for (uint k = 0; k < inputArray.n_slices; k++) {
         switch(inputArray.n_slices) {
         case 1:
           this->image.at<uint8_t>(j, i) = (int) inputArray(j, i, k);
