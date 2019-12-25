@@ -37,6 +37,8 @@ build_script:
   - R -e "if (unlist(strsplit(as.character(utils::packageVersion('ROpenCVLite')), '[.]'))[3] != gsub('[^0-9]', '', ROpenCVLite::opencvVersion())) ROpenCVLite::installOpenCV(batch = TRUE)"
 
 test_script:
+  - choco install dependencywalker -y --allow-empty-checksums
+  - depends.exe /f:1 /c /oc:C:/projects/rvision/Rvision.Rcheck/00LOCK-Rvision/00new/Rvision/libs/x64/depends.txt C:/projects/rvision/Rvision.Rcheck/00LOCK-Rvision/00new/Rvision/libs/x64/Rvision.dll
   - travis-tool.sh run_tests
 
 on_failure:
