@@ -38,10 +38,10 @@ build_script:
 
 test_script:
   - travis-tool.sh run_tests
-  - choco install dependencywalker -y --allow-empty-checksums
-  - depends.exe /f:1 /c /oc:C:/projects/rvision/Rvision.Rcheck/depends.txt C:/projects/rvision/Rvision.Rcheck/00_pkg_src/Rvision/src/Rvision.dll
 
 on_failure:
+  - choco install dependencywalker -y --allow-empty-checksums
+  - depends.exe /f:1 /c /oc:C:/projects/rvision/Rvision.Rcheck/depends.txt C:/projects/rvision/Rvision.Rcheck/00_pkg_src/Rvision/src/Rvision.dll
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
