@@ -19,6 +19,7 @@ environment:
     USE_RTOOLS: yes
     R_CHECK_INSTALL_ARGS: --install-args=--build
     R_CHECK_ARGS: --as-cran --no-multiarch
+    APPVEYOR_SAVE_CACHE_ON_ERROR: true
 
   matrix:
   - R_VERSION: stable
