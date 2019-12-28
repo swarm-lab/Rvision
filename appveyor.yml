@@ -37,6 +37,9 @@ build_script:
   - R -e "if (unlist(strsplit(as.character(utils::packageVersion('ROpenCVLite')), '[.]'))[3] != gsub('[^0-9]', '', ROpenCVLite::opencvVersion())) ROpenCVLite::installOpenCV(batch = TRUE)"
 
 test_script:
+  - R -e "ROpenCVLite::opencvConfig('libs', arch = Sys.getenv('R_ARCH'))"
+  - R -e "ROpenCVLite::opencvConfig('cflags', arch = Sys.getenv('R_ARCH'))"
+  - R -e "ROpenCVLite::opencvVersion()"
   - travis-tool.sh run_tests
 
 on_failure:
