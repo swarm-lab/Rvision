@@ -44,7 +44,7 @@ on_failure:
   - Rscript -e "ROpenCVLite::opencvConfig('libs', arch = Sys.getenv('R_ARCH'))"
   - Rscript -e "ROpenCVLite::opencvConfig('cflags', arch = Sys.getenv('R_ARCH'))"
   - Rscript -e "ROpenCVLite::opencvVersion()"
-  - Rscript -e "remotes::install_github('swarm-lab/Rvision')""
+  - Rscript -e "remotes::install_github('swarm-lab/Rvision')"
   - ls c:\RLibrary\opencv\x64\mingw\lib
   - ls c:\RLibrary\opencv\x64\mingw\bin
   - choco install dependencywalker -y --allow-empty-checksums
