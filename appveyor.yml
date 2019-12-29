@@ -19,7 +19,7 @@ environment:
     USE_RTOOLS: yes
     R_CHECK_INSTALL_ARGS: --install-args=--build
     R_CHECK_ARGS: --as-cran --no-multiarch
-    APPVEYOR_SAVE_CACHE_ON_ERROR: true
+    APPVEYOR_SAVE_CACHE_ON_ERROR: false
 
   matrix:
   - R_VERSION: stable
@@ -44,7 +44,9 @@ on_failure:
   - Rscript -e "ROpenCVLite::opencvConfig('libs', arch = Sys.getenv('R_ARCH'))"
   - Rscript -e "ROpenCVLite::opencvConfig('cflags', arch = Sys.getenv('R_ARCH'))"
   - Rscript -e "ROpenCVLite::opencvVersion()"
+  - Rscript -e "remotes::install_github('swarm-lab/Rvision')""
   - ls c:\RLibrary\opencv\x64\mingw\lib
+  - ls c:\RLibrary\opencv\x64\mingw\bin
   - choco install dependencywalker -y --allow-empty-checksums
   - depends.exe /f:1 /c /oc:C:/projects/rvision/Rvision.Rcheck/depends.txt C:/projects/rvision/Rvision.Rcheck/00_pkg_src/Rvision/src/Rvision.dll
   - 7z a failure.zip *.Rcheck\*
