@@ -34,22 +34,15 @@ environment:
 
 build_script:
   - travis-tool.sh install_deps
-  - R -e "if (!ROpenCVLite::isOpenCVInstalled()) ROpenCVLite::installOpenCV(batch = TRUE)"
-  - R -e "if (unlist(strsplit(as.character(utils::packageVersion('ROpenCVLite')), '[.]'))[3] != gsub('[^0-9]', '', ROpenCVLite::opencvVersion())) ROpenCVLite::installOpenCV(batch = TRUE)"
+  - Rscript -e "if (!ROpenCVLite::isOpenCVInstalled()) ROpenCVLite::installOpenCV(batch = TRUE)"
+  - Rscript -e "if (unlist(strsplit(as.character(utils::packageVersion('ROpenCVLite')), '[.]'))[3] != gsub('[^0-9]', '', ROpenCVLite::opencvVersion())) ROpenCVLite::installOpenCV(batch = TRUE)"
 
 test_script:
   - travis-tool.sh run_tests
 
 on_failure:
-  - Rscript -e "ROpenCVLite::opencvConfig('libs', arch = Sys.getenv('R_ARCH'))"
-  - Rscript -e "ROpenCVLite::opencvConfig('cflags', arch = Sys.getenv('R_ARCH'))"
-  - Rscript -e "ROpenCVLite::opencvVersion()"
-  - Rscript -e "remotes::install_github('swarm-lab/Rvision')"
-  - Rscript -e "library(Rvision)"
-  - ls c:\RLibrary\opencv\x64\mingw\lib
-  - ls c:\RLibrary\opencv\x64\mingw\bin
-  - choco install dependencywalker -y --allow-empty-checksums
-  - depends.exe /f:1 /c /oc:C:/projects/rvision/Rvision.Rcheck/depends.txt C:/projects/rvision/Rvision.Rcheck/00_pkg_src/Rvision/src/Rvision.dll
+  # - choco install dependencywalker -y --allow-empty-checksums
+  # - depends.exe /f:1 /c /oc:C:/projects/rvision/Rvision.Rcheck/depends.txt C:/projects/rvision/Rvision.Rcheck/00_pkg_src/Rvision/src/Rvision.dll
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
