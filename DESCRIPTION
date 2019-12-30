@@ -29,6 +29,7 @@ RcppModules: class_Image, class_Video, class_Stream, class_VideoWriter,
     methods_Display, methods_Draw, methods_Geometry, methods_Shape, methods_Transform 
 RoxygenNote: 7.0.2
 Biarch: true
+StagedInstall: false
 Encoding: UTF-8
 Suggests: 
     knitr,
