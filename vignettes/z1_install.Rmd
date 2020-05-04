@@ -54,8 +54,7 @@ installed (compilation time will depend on your computer).
 
 Note that you can skip this step and [`Rvision`](https://github.com/swarm-lab/Rvision)
 will attempt to install it in the next step. However it might fail if your 
-system is missing one of the external dependencies required to compile  
-[`OpenCV`](https://opencv.org). 
+system is missing one of the external dependencies required to compile [`OpenCV`](https://opencv.org). 
 
 ---
 
