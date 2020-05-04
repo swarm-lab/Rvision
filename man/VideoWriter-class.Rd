@@ -6,7 +6,9 @@
 \alias{VideoWriter}
 \alias{Rcpp_VideoWriter}
 \title{An S4 Class Containing an OpenCV Video Writer}
-\format{An object of class \code{C++Class} of length 1.}
+\format{
+An object of class \code{C++Class} of length 1.
+}
 \usage{
 VideoWriter
 }

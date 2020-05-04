@@ -4,6 +4,24 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//index.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Image-class.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Rvision.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/RvisionAck.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Stream-class.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Video-class.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/VideoWriter-class.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/absdiff.html</loc>
   </url>
   <url>
@@ -130,9 +148,6 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/getTextSize.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Image-class.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/image.html</loc>
   </url>
   <url>
@@ -187,13 +202,13 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/nrow.Rcpp_Image.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plot.blob.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plot.Image.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plot.OF_array.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plot.blob.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/readFrame.html</loc>
@@ -212,12 +227,6 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/rotateScale.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Rvision.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/RvisionAck.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/scharr.html</loc>
@@ -247,9 +256,6 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/sqrBoxFilter.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Stream-class.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/stream.html</loc>
   </url>
   <url>
@@ -268,22 +274,16 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/timelapse.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Video-class.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/video.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/VideoWriter-class.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/videoWriter.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/videowriter_dimensions.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/video_dimensions.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/video_dimensions.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/videowriter_dimensions.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/warpAffine.html</loc>

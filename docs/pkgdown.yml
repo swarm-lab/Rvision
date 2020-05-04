@@ -1,11 +1,12 @@
-pandoc: 2.7.2
-pkgdown: 1.4.1
+pandoc: 2.3.1
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   _Rvision-vignette: old/_Rvision-vignette.html
   z1_install: z1_install.html
   z2_io: z2_io.html
   z3_basic: z3_basic.html
+last_built: 2020-05-04T01:23Z
 urls:
   reference: https://swarm-lab.github.io/ROpenCVLite//reference
   article: https://swarm-lab.github.io/ROpenCVLite//articles
