@@ -4,13 +4,15 @@
 \alias{changeBitDepth}
 \title{Convert image bit depth}
 \usage{
-changeBitDepth(image, bitdepth)
+changeBitDepth(image, bitdepth, scale = 1)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
 \item{bitdepth}{A scalar corresponding to the colorspace the image should
 be converted to. Options are 8 and 16, for 8 and 16 bits respectively.}
+
+\item{scale}{A scaling factor (default: 1).}
 }
 \value{
 An \code{\link{Image}} object.

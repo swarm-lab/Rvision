@@ -45,6 +45,8 @@ changeColorSpace <- function(image, colorspace) {
 #' @param bitdepth A scalar corresponding to the colorspace the image should
 #'  be converted to. Options are 8 and 16, for 8 and 16 bits respectively.
 #'
+#' @param scale A scaling factor (default: 1).
+#'
 #' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -56,14 +58,19 @@ changeColorSpace <- function(image, colorspace) {
 #' balloon_16 <- changeBitDepth(balloon, 16)
 #'
 #' @export
-changeBitDepth <- function(image, bitdepth) {
+changeBitDepth <- function(image, bitdepth, scale = 1) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (!(bitdepth %in% c(8, 16)))
-    stop("bitdepth must be one of 8 or 16.")
-
   out <- cloneImage(image)
-  out$changeBitDepth(bitdepth)
+  out$changeBitDepth(switch(bitdepth,
+                            "8U" = 0,
+                            "8S" = 1,
+                            "16U" = 2,
+                            "16S" = 3,
+                            "32S" = 4,
+                            "32F" = 5,
+                            stop("Invalid bit depth.")),
+                     scale)
   out
 }

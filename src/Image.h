@@ -16,7 +16,7 @@ public:
   Rcpp::NumericVector dim();
   int nrow(), ncol(), nchan();
   std::string depth(), space();
-  void changeBitDepth(int depth), changeColorSpace(std::string colorSpace);
+  void changeBitDepth(int depth, double scale), changeColorSpace(std::string colorSpace);
 
 private:
   void init();
@@ -389,7 +389,30 @@ std::string Image::space() {
 }
 
 void Image::init() {
-  if (this->image.depth() == 0) {
+  switch(this->image.depth()) {
+  case 0:
+    this->imageDepth = "8U";
+    break;
+  case 1:
+    this->imageDepth = "8S";
+    break;
+  case 2:
+    this->imageDepth = "16U";
+    break;
+  case 3:
+    this->imageDepth = "16S";
+    break;
+  case 4:
+    this->imageDepth = "32S";
+    break;
+  case 5:
+    this->imageDepth = "32F";
+    break;
+  default:
+    throw std::range_error("Invalid bit depth.");
+  }
+
+  /* if (this->image.depth() == 0) {
     this->imageDepth = "8U";
   } else if (this->image.depth() == 1) {
     switch(this->nchan()) {
@@ -429,7 +452,7 @@ void Image::init() {
       throw std::range_error("Invalid number of channels.");
     }
     this->imageDepth = "16U";
-  }
+  } */
 
   switch(this->nchan()) {
   case 1:
@@ -498,8 +521,8 @@ arma::cube Image::toR() {
   return outputArray;
 }
 
-void Image::changeBitDepth(int depth) {
-  if (depth == 8) {
+void Image::changeBitDepth(int depth, double scale) {
+  /* if (depth == 8) {
     if (this->imageDepth == "16U") {
       switch(this->nchan()) {
       case 1:
@@ -539,7 +562,9 @@ void Image::changeBitDepth(int depth) {
     }
   } else {
     throw std::range_error("Invalid bit depth.");
-  }
+  }*/
+
+  this->image.convertTo(this->image, depth, scale);
 
   this->init();
 }

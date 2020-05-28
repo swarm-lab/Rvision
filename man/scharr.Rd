@@ -19,7 +19,7 @@ scharr(image, dx = 1, dy = 1, scale = 1)
 An \code{\link{Image}} object.
 }
 \description{
-\code{sobel} calculates the derivatives of an image using a
+\code{scharr} calculates the derivatives of an image using a
  Scharr operator.
 }
 \examples{

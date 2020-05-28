@@ -244,7 +244,7 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE) {
 
 #' @title Calculates an Image Derivatives Using a Scharr Operator
 #'
-#' @description \code{sobel} calculates the derivatives of an image using a
+#' @description \code{scharr} calculates the derivatives of an image using a
 #'  Scharr operator.
 #'
 #' @param image An \code{\link{Image}} object.
