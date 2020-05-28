@@ -48,7 +48,11 @@ Image _warpPerspective(Image image, arma::fmat m, IntegerVector outputSize, int 
   return Image(out);
 }
 
-
+Image _distanceTransform(Image image, int distanceType, int maskSize) {
+  cv::Mat out;
+  cv::distanceTransform(image.image, out, distanceType, maskSize, 5);
+  return Image(out);
+}
 
 
 

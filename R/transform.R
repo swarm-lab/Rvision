@@ -366,6 +366,73 @@ warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
     stop("inverse_map must be a logical.")
 
   `_warpPerspective`(image, warp_matrix, output_size[2:1],
-                interp_vals[interp_modes == interp_mode] + inverse_map * 16,
-                border_vals[border_type == border_types], col2bgr(border_color))
+                     interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+                     border_vals[border_type == border_types], col2bgr(border_color))
+}
+
+
+#' @title Distance Transform
+#'
+#' @description \code{distanceTransform} calculates the distance to the closest
+#'  zero pixel for each pixel of the source image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param distance_type A character string indicating the type of distance
+#'  to be calculated. It can be any of the following:
+#'  \itemize{
+#'   \item{"L1" (the default):}{\code{distance = |x1-x2| + |y1-y2|}.}
+#'   \item{"L2":}{the simple euclidean distance.}
+#'   \item{"C":}{\code{distance = max(|x1-x2|,|y1-y2|)}.}
+#'   \item{"L12":}{L1-L2 metric. \code{distance = 2(sqrt(1+x*x/2) - 1))}.}
+#'   \item{"FAIR":}{\code{distance = c^2(|x|/c-log(1+|x|/c)), c = 1.3998}.}
+#'   \item{"WELSCH":}{\code{distance = c^2/2(1-exp(-(x/c)^2)), c = 2.9846}.}
+#'   \item{"HUBER":}{\code{distance = |x|<c ? x^2/2 : c(|x|-c/2), c=1.345}.}
+#'  }
+#'
+#' @param mask_size A numeric value indicating the size of the distance
+#'  transform mask. It can be any of the following:
+#'  \itemize{
+#'   \item{0:}{used only to indicate the Felzenszwalb algorithm when
+#'    \code{distance_type = "L2"}.}
+#'   \item{3 (the default):}{3x3 mask.}
+#'   \item{5:}{5x5 mask.}
+#'  }
+#'
+#' @return An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @examples
+#' file <- system.file("sample_img/balloon1.png", package = "Rvision")
+#' balloon <- changeColorSpace(image(file), "GRAY")
+#' bin <- balloon < 200
+#' dst <- distanceTransform(bin)
+#' plot(dst * round(65536 / 255))
+#'
+#' @export
+distanceTransform <- function(image, distance_type = "L1", mask_size = 3) {
+  if (!isImage(image))
+    stop("image is not an Image object.")
+
+  if (colorspace(image) != "GRAY")
+    stop("image should be a grayscale object.")
+
+  if (min(image) > 0)
+    stop("There are no zero pixel in this image.")
+
+  if (!(mask_size %in% c(0, 3, 5)))
+    stop("This is not a valid mask size. 'mask_size' must be one of 0, 3, or 5.")
+
+  `_distanceTransform`(image,
+                       switch(distance_type,
+                              "L1" = 1,
+                              "L2" = 2,
+                              "C" = 3,
+                              "L12" = 4,
+                              "FAIR" = 5,
+                              "WELSCH" = 6,
+                              "HUBER" = 7,
+                              stop("This is not a valid distance type. 'distance_type' must be one of 'L1', 'L2', 'C', 'L12', 'FAIR', 'WELSCH', or 'HUBER'.")),
+                       mask_size)
 }

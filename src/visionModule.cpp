@@ -288,4 +288,6 @@ RCPP_MODULE(methods_Transform) {
     _["interpMode"], _["borderType"], _["borderColor"]), "");
   function("_warpPerspective", &_warpPerspective, List::create(_["image"], _["m"], _["outputSize"],
     _["interpMode"], _["borderType"], _["borderColor"]), "");
+  function("_distanceTransform", &_distanceTransform, List::create(_["image"],
+    _["distanceType"], _["maskSize"]), "");
 }
