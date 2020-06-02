@@ -107,9 +107,9 @@ plot.Rcpp_Image <- function(x, ...) {
   # }
 
   if (Rvision::colorspace(x) == "BGR" | Rvision::colorspace(x) == "BGRA") {
-    img <- (img[, , 3:1] - imgRange[1]) / imgRange[2]
+    img <- (img[, , 3:1] - imgRange[1]) / diff(imgRange)
   } else if (Rvision::colorspace(x) == "GRAY") {
-    img <- (img[, , 1] - imgRange[1]) / imgRange[2]
+    img <- (img[, , 1] - imgRange[1]) / diff(imgRange)
   }
 
   op <- par(mar = rep(0, 4))

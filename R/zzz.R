@@ -271,7 +271,7 @@ methods::evalqOnLoad({
 
     cat("Class: image. \n")
     cat("Dimensions: ", width, "x", height, ".\n", sep = "")
-    cat("Type: ", type, ", ", depth, "bits.\n", sep = "")
+    cat("Type: ", type, ", ", depth, ".\n", sep = "")
   })
 
   setMethod("show", "Rcpp_Video", function(object) {
