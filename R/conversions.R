@@ -43,7 +43,8 @@ changeColorSpace <- function(image, colorspace) {
 #' @param image An \code{\link{Image}} object.
 #'
 #' @param bitdepth A scalar corresponding to the colorspace the image should
-#'  be converted to. Options are 8 and 16, for 8 and 16 bits respectively.
+#'  be converted to. Options are "8U", "8S", "16U", "16S", "32S", and "32F"
+#'  respectively.
 #'
 #' @param scale A scaling factor (default: 1).
 #'

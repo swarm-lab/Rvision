@@ -180,7 +180,8 @@ connectedComponents <- function(image, connectivity = 8, return_table = TRUE) {
 
   if (return_table) {
     if (out$n > 0) {
-      out$table <- do.call(rbind, lapply(1:out$n, extractComponent, image = out$labels))
+      out$table <- .extractComponent(out$labels)
+      # out$table <- do.call(rbind, lapply(1:out$n, extractComponent, image = out$labels))
     } else {
       out$table <- data.frame(id = numeric(), x = numeric(), y = numeric())
     }
@@ -189,6 +190,10 @@ connectedComponents <- function(image, connectivity = 8, return_table = TRUE) {
   out
 }
 
-extractComponent <- function(id, image) {
-  data.frame(id = id, findNonZero(image == id))
+.extractComponent <- function(image) {
+  image_mat <- as.matrix(image)
+  idx <- image_mat > 0
+  positions <- arrayInd(which(idx), dim(image_mat))
+  labels <- image_mat[idx]
+  data.frame(id = labels, x = positions[, 2], y = positions[, 1])
 }
