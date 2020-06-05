@@ -84,17 +84,29 @@ plot.Rcpp_Image <- function(x, ...) {
     ylim <- c(1, nrow(x))
   }
 
+  if (bitdepth(x) == "8S") {
+    x <- changeBitDepth(x, "8U")
+  }
+
+  if (bitdepth(x) == "16S") {
+    x <- changeBitDepth(x, "16U")
+  }
+
+  if (bitdepth(x) == "32S") {
+    x <- changeBitDepth(x, "32F")
+  }
+
   imgRange <- switch (bitdepth(x),
     "8U" = c(0, 255),
-    "8S" = c(-128, 127),
+    # "8S" = c(-128, 127),
     "16U" = c(0, 65535),
-    "16S" = c(-32768, 32767),
-    "32S" = c(-2147483648, 2147483647),
+    # "16S" = c(-32768, 32767),
+    # "32S" = c(-2147483648, 2147483647),
     "32F" = c(min(x), max(x)),
     stop("Invalid bit depth.")
   )
 
-  if (Rvision::colorspace(x) == "GRAY") {
+  if (colorspace(x) == "GRAY") {
     x <- changeColorSpace(x, "BGR")
   }
 
