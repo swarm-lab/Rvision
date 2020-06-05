@@ -84,10 +84,6 @@ plot.Rcpp_Image <- function(x, ...) {
     ylim <- c(1, nrow(x))
   }
 
-  # img <- x[nrow(x):1, , drop = FALSE]
-  img <- x[min(nrow(x), ylim[2]):max(1, ylim[1]),
-           max(1, xlim[1]):min(ncol(x), xlim[2]), drop = FALSE]
-
   imgRange <- switch (bitdepth(x),
     "8U" = c(0, 255),
     "8S" = c(-128, 127),
@@ -98,19 +94,13 @@ plot.Rcpp_Image <- function(x, ...) {
     stop("Invalid bit depth.")
   )
 
-  # if (Rvision::bitdepth(x) == "8U") {
-  #   imgMax <- 255
-  # } else if (Rvision::bitdepth(x) == "16U") {
-  #   imgMax <- 65535
-  # } else {
-  #   stop("Invalid image depth.")
-  # }
-
-  if (Rvision::colorspace(x) == "BGR" | Rvision::colorspace(x) == "BGRA") {
-    img <- (img[, , 3:1] - imgRange[1]) / diff(imgRange)
-  } else if (Rvision::colorspace(x) == "GRAY") {
-    img <- (img[, , 1] - imgRange[1]) / diff(imgRange)
+  if (Rvision::colorspace(x) == "GRAY") {
+    x <- changeColorSpace(x, "BGR")
   }
+
+  img <- x[min(nrow(x), ylim[2]):max(1, ylim[1]),
+           max(1, xlim[1]):min(ncol(x), xlim[2]), drop = FALSE]
+  img <- (img - imgRange[1]) / diff(imgRange)
 
   op <- par(mar = rep(0, 4))
   plot(NA, xlim = xlim, ylim = ylim, asp = 1, xaxt = "n",
