@@ -197,3 +197,18 @@ connectedComponents <- function(image, connectivity = 8, return_table = TRUE) {
   labels <- image_mat[idx]
   data.frame(id = labels, x = positions[, 2], y = positions[, 1])
 }
+
+
+#' @export
+watershed <- function(image, markers) {
+  if (!isImage(image) | !isImage(markers))
+    stop("'image' must be an Image object.")
+
+  if (bitdepth(image) != "8U" | colorspace(image) != "BGR")
+    stop("'image' must be a 8U BGR Image object.")
+
+  if (bitdepth(markers) != "32S" | colorspace(markers) != "GRAY")
+    stop("'markers' must be a 32S GRAY Image object.")
+
+  `_watershed`(image, markers)
+}

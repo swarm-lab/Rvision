@@ -275,6 +275,7 @@ RCPP_MODULE(methods_Shape) {
     _["method"], _["offset"]), "");
   function("_connectedComponents", &_connectedComponents, List::create(_["image"],
     _["connectivity"]), "");
+  function("_watershed", &_watershed, List::create(_["image"], _["markers"]), "");
 }
 
 #include "transform.h"

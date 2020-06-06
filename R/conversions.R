@@ -63,15 +63,16 @@ changeBitDepth <- function(image, bitdepth, scale = 1) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
+  bitdepth <- switch(bitdepth,
+                     "8U" = 0L,
+                     "8S" = 1L,
+                     "16U" = 2L,
+                     "16S" = 3L,
+                     "32S" = 4L,
+                     "32F" = 5L,
+                     stop("Invalid bit depth."))
+
   out <- cloneImage(image)
-  out$changeBitDepth(switch(bitdepth,
-                            "8U" = 0,
-                            "8S" = 1,
-                            "16U" = 2,
-                            "16S" = 3,
-                            "32S" = 4,
-                            "32F" = 5,
-                            stop("Invalid bit depth.")),
-                     scale)
+  out$changeBitDepth(bitdepth, scale)
   out
 }

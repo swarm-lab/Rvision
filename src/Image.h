@@ -174,10 +174,20 @@ bool Image::write(std::string outputFile) {
 Rcpp::NumericVector Image::_get1(int row, int column) {
   Rcpp::NumericVector out;
 
-  if (this->depth() == "16U") {
-    out = Rcpp::NumericVector::create(this->image.at<uint16_t>(row, column));
-  } else {
+  if (this->depth() == "8U") {
     out = Rcpp::NumericVector::create(this->image.at<uint8_t>(row, column));
+  } else if (this->depth() == "8S") {
+    out = Rcpp::NumericVector::create(this->image.at<int8_t>(row, column));
+  } else if (this->depth() == "16U") {
+    out = Rcpp::NumericVector::create(this->image.at<uint16_t>(row, column));
+  } else if (this->depth() == "16S") {
+    out = Rcpp::NumericVector::create(this->image.at<int16_t>(row, column));
+  } else if (this->depth() == "32F") {
+    out = Rcpp::NumericVector::create(this->image.at<float_t>(row, column));
+  } else if (this->depth() == "32S") {
+    out = Rcpp::NumericVector::create(this->image.at<float_t>(row, column));
+  } else {
+    throw std::range_error("Invalid bitdepth.");
   }
 
   return out;
@@ -185,19 +195,45 @@ Rcpp::NumericVector Image::_get1(int row, int column) {
 
 Rcpp::NumericVector Image::_get3(int row, int column) {
   Rcpp::NumericVector out(3);
-  cv::Vec3b valb;
-  cv::Vec3s vals;
+  cv::Vec<uint8_t, 3> val8u;
+  cv::Vec<int8_t, 3> val8s;
+  cv::Vec<uint16_t, 3> val16u;
+  cv::Vec<int16_t, 3> val16s;
+  cv::Vec<float_t, 3> val32f;
+  cv::Vec<float_t, 3> val32s;
 
-  if (this->depth() == "16U") {
-    vals = this->image.at<cv::Vec3s>(row, column);
+  if (this->depth() == "8U") {
+    val8u = this->image.at< cv::Vec<uint8_t, 3> >(row, column);
     for (int i = 0; i < 3; i++) {
-      out(i) = vals(i);
+      out(i) = val8u(i);
+    }
+  } else if (this->depth() == "8S") {
+    val8s = this->image.at< cv::Vec<int8_t, 3> >(row, column);
+    for (int i = 0; i < 3; i++) {
+      out(i) = val8s(i);
+    }
+  } else if (this->depth() == "16U") {
+    val16u = this->image.at< cv::Vec<uint16_t, 3> >(row, column);
+    for (int i = 0; i < 3; i++) {
+      out(i) = val16u(i);
+    }
+  } else if (this->depth() == "16S") {
+    val16s = this->image.at< cv::Vec<int16_t, 3> >(row, column);
+    for (int i = 0; i < 3; i++) {
+      out(i) = val16s(i);
+    }
+  } else if (this->depth() == "32F") {
+    val32f = this->image.at< cv::Vec<float_t, 3> >(row, column);
+    for (int i = 0; i < 3; i++) {
+      out(i) = val32f(i);
+    }
+  } else if (this->depth() == "32S") {
+    val32s = this->image.at< cv::Vec<float_t, 3> >(row, column);
+    for (int i = 0; i < 3; i++) {
+      out(i) = val32s(i);
     }
   } else {
-    valb = this->image.at<cv::Vec3b>(row, column);
-    for (int i = 0; i < 3; i++) {
-      out(i) = valb(i);
-    }
+    throw std::range_error("Invalid bitdepth.");
   }
 
   return out;
@@ -205,19 +241,45 @@ Rcpp::NumericVector Image::_get3(int row, int column) {
 
 Rcpp::NumericVector Image::_get4(int row, int column) {
   Rcpp::NumericVector out(4);
-  cv::Vec4b valb;
-  cv::Vec4s vals;
+  cv::Vec<uint8_t, 4> val8u;
+  cv::Vec<int8_t, 4> val8s;
+  cv::Vec<uint16_t, 4> val16u;
+  cv::Vec<int16_t, 4> val16s;
+  cv::Vec<float_t, 4> val32f;
+  cv::Vec<float_t, 4> val32s;
 
-  if (this->depth() == "16U") {
-    vals = this->image.at<cv::Vec4s>(row, column);
+  if (this->depth() == "8U") {
+    val8u = this->image.at< cv::Vec<uint8_t, 4> >(row, column);
     for (int i = 0; i < 4; i++) {
-      out(i) = vals(i);
+      out(i) = val8u(i);
+    }
+  } else if (this->depth() == "8S") {
+    val8s = this->image.at< cv::Vec<int8_t, 4> >(row, column);
+    for (int i = 0; i < 4; i++) {
+      out(i) = val8s(i);
+    }
+  } else if (this->depth() == "16U") {
+    val16u = this->image.at< cv::Vec<uint16_t, 4> >(row, column);
+    for (int i = 0; i < 4; i++) {
+      out(i) = val16u(i);
+    }
+  } else if (this->depth() == "16S") {
+    val16s = this->image.at< cv::Vec<int16_t, 4> >(row, column);
+    for (int i = 0; i < 4; i++) {
+      out(i) = val16s(i);
+    }
+  } else if (this->depth() == "32F") {
+    val32f = this->image.at< cv::Vec<float_t, 4> >(row, column);
+    for (int i = 0; i < 4; i++) {
+      out(i) = val32f(i);
+    }
+  } else if (this->depth() == "32S") {
+    val32s = this->image.at< cv::Vec<float_t, 4> >(row, column);
+    for (int i = 0; i < 4; i++) {
+      out(i) = val32s(i);
     }
   } else {
-    valb = this->image.at<cv::Vec4b>(row, column);
-    for (int i = 0; i < 4; i++) {
-      out(i) = valb(i);
-    }
+    throw std::range_error("Invalid bitdepth.");
   }
 
   return out;
@@ -246,44 +308,106 @@ Rcpp::NumericMatrix Image::get(Rcpp::IntegerVector row, Rcpp::IntegerVector colu
 }
 
 void Image::_set1(int row, int column, Rcpp::IntegerVector color) {
-  if (this->depth() == "16U") {
-    this->image.at<uint16_t>(row, column) = color(0);
-  } else {
+  if (this->depth() == "8U") {
     this->image.at<uint8_t>(row, column) = color(0);
+  } else if (this->depth() == "8S") {
+    this->image.at<int8_t>(row, column) = color(0);
+  } else if (this->depth() == "16U") {
+    this->image.at<uint16_t>(row, column) = color(0);
+  } else if (this->depth() == "16S") {
+    this->image.at<int16_t>(row, column) = color(0);
+  } else if (this->depth() == "32F") {
+    this->image.at<float_t>(row, column) = color(0);
+  } else if (this->depth() == "32S") {
+    this->image.at<float_t>(row, column) = color(0);
+  } else {
+    throw std::range_error("Invalid bitdepth.");
   }
 }
 
 void Image::_set3(int row, int column, Rcpp::IntegerVector color) {
-  cv::Vec3b valb;
-  cv::Vec3s vals;
+  cv::Vec<uint8_t, 3> val8u;
+  cv::Vec<int8_t, 3> val8s;
+  cv::Vec<uint16_t, 3> val16u;
+  cv::Vec<int16_t, 3> val16s;
+  cv::Vec<float_t, 3> val32f;
+  cv::Vec<float_t, 3> val32s;
 
-  if (this->depth() == "16U") {
+  if (this->depth() == "8U") {
     for (int i = 0; i < 3; i++) {
-      vals(i) = color(i);
+      val8u(i) = color(i);
     }
-    this->image.at<cv::Vec3s>(row, column) = vals;
+    this->image.at< cv::Vec<uint8_t, 3> >(row, column) = val8u;
+  } else if (this->depth() == "8S") {
+    for (int i = 0; i < 3; i++) {
+      val8s(i) = color(i);
+    }
+    this->image.at< cv::Vec<int8_t, 3> >(row, column) = val8s;
+  } else if (this->depth() == "16U") {
+    for (int i = 0; i < 3; i++) {
+      val16u(i) = color(i);
+    }
+    this->image.at< cv::Vec<uint16_t, 3> >(row, column) = val16u;
+  } else if (this->depth() == "16S") {
+    for (int i = 0; i < 3; i++) {
+      val16s(i) = color(i);
+    }
+    this->image.at< cv::Vec<int16_t, 3> >(row, column) = val16s;
+  } else if (this->depth() == "32F") {
+    for (int i = 0; i < 3; i++) {
+      val32f(i) = color(i);
+    }
+    this->image.at< cv::Vec<float_t, 3> >(row, column) = val32f;
+  } else if (this->depth() == "32S") {
+    for (int i = 0; i < 3; i++) {
+      val32s(i) = color(i);
+    }
+    this->image.at< cv::Vec<float_t, 3> >(row, column) = val32s;
   } else {
-    for (int i = 0; i < 3; i++) {
-      valb(i) = color(i);
-    }
-    this->image.at<cv::Vec3b>(row, column) = valb;
+    throw std::range_error("Invalid bitdepth.");
   }
 }
 
 void Image::_set4(int row, int column, Rcpp::IntegerVector color) {
-  cv::Vec4b valb;
-  cv::Vec4s vals;
+  cv::Vec<uint8_t, 4> val8u;
+  cv::Vec<int8_t, 4> val8s;
+  cv::Vec<uint16_t, 4> val16u;
+  cv::Vec<int16_t, 4> val16s;
+  cv::Vec<float_t, 4> val32f;
+  cv::Vec<float_t, 4> val32s;
 
-  if (this->depth() == "16U") {
+  if (this->depth() == "8U") {
     for (int i = 0; i < 4; i++) {
-      vals(i) = color(i);
+      val8u(i) = color(i);
     }
-    this->image.at<cv::Vec4s>(row, column) = vals;
+    this->image.at< cv::Vec<uint8_t, 4> >(row, column) = val8u;
+  } else if (this->depth() == "8S") {
+    for (int i = 0; i < 4; i++) {
+      val8s(i) = color(i);
+    }
+    this->image.at< cv::Vec<int8_t, 4> >(row, column) = val8s;
+  } else if (this->depth() == "16U") {
+    for (int i = 0; i < 4; i++) {
+      val16u(i) = color(i);
+    }
+    this->image.at< cv::Vec<uint16_t, 4> >(row, column) = val16u;
+  } else if (this->depth() == "16S") {
+    for (int i = 0; i < 4; i++) {
+      val16s(i) = color(i);
+    }
+    this->image.at< cv::Vec<int16_t, 4> >(row, column) = val16s;
+  } else if (this->depth() == "32F") {
+    for (int i = 0; i < 4; i++) {
+      val32f(i) = color(i);
+    }
+    this->image.at< cv::Vec<float_t, 4> >(row, column) = val32f;
+  } else if (this->depth() == "32S") {
+    for (int i = 0; i < 4; i++) {
+      val32s(i) = color(i);
+    }
+    this->image.at< cv::Vec<float_t, 4> >(row, column) = val32s;
   } else {
-    for (int i = 0; i < 4; i++) {
-      valb(i) = color(i);
-    }
-    this->image.at<cv::Vec4b>(row, column) = valb;
+    throw std::range_error("Invalid bitdepth.");
   }
 }
 
