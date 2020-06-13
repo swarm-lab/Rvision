@@ -114,6 +114,12 @@ plot.Rcpp_Image <- function(x, ...) {
            max(1, xlim[1]):min(ncol(x), xlim[2]), drop = FALSE]
   img <- (img - imgRange[1]) / diff(imgRange)
 
+  if (dim(img)[3] == 4) {
+    img <- img[, , c(3:1, 4)]
+  } else {
+    img <- img[, , 3:1]
+  }
+
   op <- par(mar = rep(0, 4))
   plot(NA, xlim = xlim, ylim = ylim, asp = 1, xaxt = "n",
        yaxt = "n", ann = FALSE, bty = "n", xaxs = "i", yaxs = "i")
