@@ -8,7 +8,7 @@ Image _filter2D(Image image, Rcpp::NumericMatrix kernel) {
     }
   }
 
-  cv::filter2D(image.image, out, -1, k, cv::Point(-1, -1));
+  cv::filter2D(image.image, out, CV_32F, k, cv::Point(-1, -1));
   return Image(out);
 }
 
@@ -25,7 +25,7 @@ Image _sepFilter2D(Image image, Rcpp::NumericVector kernel_x, Rcpp::NumericVecto
     k_y.at<float>(i, 0) = kernel_y[i];
   }
 
-  cv::sepFilter2D(image.image, out, -1, k_x, k_y);
+  cv::sepFilter2D(image.image, out, CV_32F, k_x, k_y);
   return Image(out);
 }
 
@@ -41,7 +41,7 @@ Image _gaussianBlur(Image image, int k_height, int k_width,
 Image _boxFilter(Image image, int k_height, int k_width) {
   cv::Mat out;
 
-  cv::boxFilter(image.image, out, -1, cv::Size(2 * k_width + 1, 2 * k_height + 1),
+  cv::boxFilter(image.image, out, CV_32F, cv::Size(2 * k_width + 1, 2 * k_height + 1),
                 cv::Point(-1, -1));
   return Image(out);
 }
@@ -64,7 +64,7 @@ Image _medianBlur(Image image, int k_size) {
 Image _sqrBoxFilter(Image image, int k_height, int k_width, bool normalize) {
   cv::Mat out;
 
-  cv::sqrBoxFilter(image.image, out, -1, cv::Size(2 * k_width + 1, 2 * k_height + 1),
+  cv::sqrBoxFilter(image.image, out, CV_32F, cv::Size(2 * k_width + 1, 2 * k_height + 1),
                    cv::Point(-1, -1), normalize);
   return Image(out);
 }
@@ -72,21 +72,21 @@ Image _sqrBoxFilter(Image image, int k_height, int k_width, bool normalize) {
 Image _scharr(Image image, int dx, int dy, double scale) {
   cv::Mat out;
 
-  cv::Sobel(image.image, out, -1, dx, dy, scale);
+  cv::Sobel(image.image, out, CV_32F, dx, dy, scale);
   return Image(out);
 }
 
 Image _sobel(Image image, int dx, int dy, int k_size, double scale) {
   cv::Mat out;
 
-  cv::Sobel(image.image, out, -1, dx, dy, 2 * k_size + 1, scale);
+  cv::Sobel(image.image, out, CV_32F, dx, dy, 2 * k_size + 1, scale);
   return Image(out);
 }
 
 Image _laplacian(Image image, int k_size, double scale) {
   cv::Mat out;
 
-  cv::Laplacian(image.image, out, -1, 2 * k_size + 1, scale);
+  cv::Laplacian(image.image, out, CV_32F, 2 * k_size + 1, scale);
   return Image(out);
 }
 
