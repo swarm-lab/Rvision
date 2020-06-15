@@ -57,42 +57,223 @@ Image::Image(cv::Mat inputImage) {
 }
 
 Image::Image(arma::Cube<int> inputArray) {
-  switch(inputArray.n_slices) {
-  case 1:
-    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC1);
-    break;
-  case 3:
-    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC3);
-    break;
-  case 4:
-    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC4);
-    break;
-  default:
-    throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
-  }
+  if (inputArray.min() >= 0 && inputArray.max() < 256) {
+    switch(inputArray.n_slices) {
+    case 1:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC1);
+      break;
+    case 3:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC3);
+      break;
+    case 4:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC4);
+      break;
+    default:
+      throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+    }
 
-  if (inputArray.min() < 0 || inputArray.max() > 255) {
-    Rcpp::Rcout << "Note: input array values outside the authorized range of [0;255]. Rescaling was performed." << std::endl;
-    inputArray = 255 * (inputArray - inputArray.min()) / (inputArray.max() - inputArray.min());
-  }
-
-  for (uint i = 0; i < inputArray.n_cols; i++) {
-    for (uint j = 0; j < inputArray.n_rows; j++) {
-      for (uint k = 0; k < inputArray.n_slices; k++) {
-        switch(inputArray.n_slices) {
-        case 1:
-          this->image.at<uint8_t>(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
-          break;
-        case 3:
-          this->image.at<cv::Vec3b>(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
-          break;
-        case 4:
-          this->image.at<cv::Vec4b>(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
-          break;
-        default:
-          throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+    for (uint i = 0; i < inputArray.n_cols; i++) {
+      for (uint j = 0; j < inputArray.n_rows; j++) {
+        for (uint k = 0; k < inputArray.n_slices; k++) {
+          switch(inputArray.n_slices) {
+          case 1:
+            this->image.at< uint8_t >(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          case 3:
+            this->image.at< cv::Vec<uint8_t, 3> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          case 4:
+            this->image.at< cv::Vec<uint8_t, 4> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          default:
+            throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+          }
         }
       }
+    }
+
+  } else if (inputArray.min() >= -128 && inputArray.max() < 128) {
+    switch(inputArray.n_slices) {
+    case 1:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8SC1);
+      break;
+    case 3:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8SC3);
+      break;
+    case 4:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8SC4);
+      break;
+    default:
+      throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+    }
+
+    for (uint i = 0; i < inputArray.n_cols; i++) {
+      for (uint j = 0; j < inputArray.n_rows; j++) {
+        for (uint k = 0; k < inputArray.n_slices; k++) {
+          switch(inputArray.n_slices) {
+          case 1:
+            this->image.at< int8_t >(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          case 3:
+            this->image.at< cv::Vec<int8_t, 3> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          case 4:
+            this->image.at< cv::Vec<int8_t, 4> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          default:
+            throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+          }
+        }
+      }
+    }
+
+  } else if (inputArray.min() >= 0 && inputArray.max() < 65536) {
+    switch(inputArray.n_slices) {
+    case 1:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16UC1);
+      break;
+    case 3:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16UC3);
+      break;
+    case 4:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16UC4);
+      break;
+    default:
+      throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+    }
+
+    for (uint i = 0; i < inputArray.n_cols; i++) {
+      for (uint j = 0; j < inputArray.n_rows; j++) {
+        for (uint k = 0; k < inputArray.n_slices; k++) {
+          switch(inputArray.n_slices) {
+          case 1:
+            this->image.at< uint16_t >(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          case 3:
+            this->image.at< cv::Vec<uint16_t, 3> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          case 4:
+            this->image.at< cv::Vec<uint16_t, 4> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          default:
+            throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+          }
+        }
+      }
+    }
+
+  } else if (inputArray.min() >= -32768 && inputArray.max() < 32767) {
+    switch(inputArray.n_slices) {
+    case 1:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16SC1);
+      break;
+    case 3:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16SC3);
+      break;
+    case 4:
+      this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16SC4);
+      break;
+    default:
+      throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+    }
+
+    for (uint i = 0; i < inputArray.n_cols; i++) {
+      for (uint j = 0; j < inputArray.n_rows; j++) {
+        for (uint k = 0; k < inputArray.n_slices; k++) {
+          switch(inputArray.n_slices) {
+          case 1:
+            this->image.at< int16_t >(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          case 3:
+            this->image.at< cv::Vec<int16_t, 3> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          case 4:
+            this->image.at< cv::Vec<int16_t, 4> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+            break;
+          default:
+            throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+          }
+        }
+      }
+    }
+
+  } else {
+    if (inputArray.min() < 0) {
+      Rcpp::Rcout << "Note: input array values outside the authorized range. Rescaling was performed between -32768 and 32767." << std::endl;
+      inputArray = 65535 * (inputArray - inputArray.min()) / (inputArray.max() - inputArray.min()) - 32768;
+
+      switch(inputArray.n_slices) {
+      case 1:
+        this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16SC1);
+        break;
+      case 3:
+        this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16SC3);
+        break;
+      case 4:
+        this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16SC4);
+        break;
+      default:
+        throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+      }
+
+      for (uint i = 0; i < inputArray.n_cols; i++) {
+        for (uint j = 0; j < inputArray.n_rows; j++) {
+          for (uint k = 0; k < inputArray.n_slices; k++) {
+            switch(inputArray.n_slices) {
+            case 1:
+              this->image.at< int16_t >(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+              break;
+            case 3:
+              this->image.at< cv::Vec<int16_t, 3> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+              break;
+            case 4:
+              this->image.at< cv::Vec<int16_t, 4> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+              break;
+            default:
+              throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+            }
+          }
+        }
+      }
+
+    } else {
+      Rcpp::Rcout << "Note: input array values outside the authorized range. Rescaling was performed between 0 and 65535." << std::endl;
+      inputArray = 65535 * (inputArray - inputArray.min()) / (inputArray.max() - inputArray.min());
+
+      switch(inputArray.n_slices) {
+      case 1:
+        this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16UC1);
+        break;
+      case 3:
+        this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16UC3);
+        break;
+      case 4:
+        this->image.create(inputArray.n_rows, inputArray.n_cols, CV_16UC4);
+        break;
+      default:
+        throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+      }
+
+      for (uint i = 0; i < inputArray.n_cols; i++) {
+        for (uint j = 0; j < inputArray.n_rows; j++) {
+          for (uint k = 0; k < inputArray.n_slices; k++) {
+            switch(inputArray.n_slices) {
+            case 1:
+              this->image.at< uint16_t >(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+              break;
+            case 3:
+              this->image.at< cv::Vec<uint16_t, 3> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+              break;
+            case 4:
+              this->image.at< cv::Vec<uint16_t, 4> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+              break;
+            default:
+              throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
+            }
+          }
+        }
+      }
+
     }
   }
 
@@ -106,35 +287,35 @@ Image::Image(arma::Cube<int> inputArray) {
 Image::Image(arma::Cube<double> inputArray) {
   switch(inputArray.n_slices) {
   case 1:
-    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC1);
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_32FC1);
     break;
   case 3:
-    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC3);
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_32FC3);
     break;
   case 4:
-    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_8UC4);
+    this->image.create(inputArray.n_rows, inputArray.n_cols, CV_32FC4);
     break;
   default:
     throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
   }
 
-  if (inputArray.min() < 0 || inputArray.max() > 255) {
+  /* if (inputArray.min() < 0 || inputArray.max() > 255) {
     Rcpp::Rcout << "Note: input array values outside the authorized range of [0;255]. Rescaling was performed." << std::endl;
     inputArray = 255 * (inputArray - inputArray.min()) / (inputArray.max() - inputArray.min());
-  }
+  } */
 
   for (uint i = 0; i < inputArray.n_cols; i++) {
     for (uint j = 0; j < inputArray.n_rows; j++) {
       for (uint k = 0; k < inputArray.n_slices; k++) {
         switch(inputArray.n_slices) {
         case 1:
-          this->image.at<uint8_t>(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+          this->image.at<float_t>(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
           break;
         case 3:
-          this->image.at<cv::Vec3b>(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+          this->image.at< cv::Vec<float_t, 3> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
           break;
         case 4:
-          this->image.at<cv::Vec4b>(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+          this->image.at< cv::Vec<float_t, 4> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
           break;
         default:
           throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
