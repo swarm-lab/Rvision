@@ -229,7 +229,9 @@ selectROI <- function(image, window_name = "Display", scale = 1, return_mask = T
   }
 
   if (return_mask) {
-    mask <- image(array(0, dim = c(nrow(image_copy), ncol(image_copy), 1)))
+    zeros <- array(0, dim = c(nrow(image_copy), ncol(image_copy), 1))
+    mode(zeros) <- "integer"
+    mask <- image(zeros)
     fillPoly(mask, as.matrix(ROI[c("x", "y")]), "white")
     list(ROI = ROI[c("x", "y")], mask = mask)
   } else {
