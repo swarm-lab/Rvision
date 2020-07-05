@@ -110,9 +110,16 @@ plot.Rcpp_Image <- function(x, ...) {
     x <- changeColorSpace(x, "BGR")
   }
 
+  d <- diff(imgRange)
+  if (d == 0) {
+    imgRange <- c(0, 255)
+    d <- 255
+  }
+
   img <- x[min(nrow(x), ylim[2]):max(1, ylim[1]),
            max(1, xlim[1]):min(ncol(x), xlim[2]), drop = FALSE]
-  img <- (img - imgRange[1]) / diff(imgRange)
+
+  img <- (img - imgRange[1]) / d
 
   if (dim(img)[3] == 4) {
     img <- img[, , c(3:1, 4)]
