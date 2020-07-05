@@ -102,7 +102,7 @@ plot.Rcpp_Image <- function(x, ...) {
     "16U" = c(0, 65535),
     # "16S" = c(-32768, 32767),
     # "32S" = c(-2147483648, 2147483647),
-    "32F" = c(min(x), max(x)),
+    "32F" = range(range(x)),
     stop("Invalid bit depth.")
   )
 
