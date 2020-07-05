@@ -187,8 +187,7 @@ respectively.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>balloon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"sample_img/balloon1.png"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"Rvision"</span>))
-<span class='no'>balloon_16</span> <span class='kw'>&lt;-</span> <span class='fu'>changeBitDepth</span>(<span class='no'>balloon</span>, <span class='fl'>16</span>)</div><div class='output co'>#&gt; <span class='error'>Error in out$changeBitDepth(bitdepth, scale): Expecting a single value: [extent=0].</span></div><div class='input'>
-</div></pre>
+<span class='no'>balloon_16</span> <span class='kw'>&lt;-</span> <span class='fu'>changeBitDepth</span>(<span class='no'>balloon</span>, <span class='st'>"16U"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

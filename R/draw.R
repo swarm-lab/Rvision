@@ -485,7 +485,7 @@ fillPoly <- function(image, polygon, color = "white") {
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-#' mask <- image(array(0, dim = c(nrow(balloon), ncol(balloon), 3)))
+#' mask <- image(array(0L, dim = c(nrow(balloon), ncol(balloon), 3)))
 #' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 #' fillPoly(mask, poly, color = "white")
 #' mask <- changeColorSpace(mask, "GRAY")
@@ -499,6 +499,9 @@ inpaint <- function(image, mask, radius = 5, method = "NS") {
 
   if (!isImage(mask))
     stop("mask is not an 'Image' object.")
+
+  if (bitdepth(mask) != "8U")
+    stop("mask is not an 8-bit single-channel (8U).")
 
   `_inpaint`(image, mask, radius, switch(method,
     "NS" = 0,

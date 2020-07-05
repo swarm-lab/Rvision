@@ -56,7 +56,7 @@ changeColorSpace <- function(image, colorspace) {
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-#' balloon_16 <- changeBitDepth(balloon, 16)
+#' balloon_16 <- changeBitDepth(balloon, "16U")
 #'
 #' @export
 changeBitDepth <- function(image, bitdepth, scale = 1) {

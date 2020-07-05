@@ -24,7 +24,7 @@ This function takes an \code{\link{Image}} object and modifies
 }
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-balloon_16 <- changeBitDepth(balloon, 16)
+balloon_16 <- changeBitDepth(balloon, "16U")
 
 }
 \seealso{
