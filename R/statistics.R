@@ -4,7 +4,7 @@
 
 #' @title Maxima and Minima of an Image
 #'
-#' @aliases max.Rcpp_Image
+#' @aliases max.Rcpp_Image range.Rcpp_Image
 #'
 #' @description Returns the maximum and minimum pixel values of an
 #'  \code{\link{Image}} object. If the \code{\link{Image}} object has more than
@@ -14,8 +14,8 @@
 #'
 #' @param ... Unused at the moment.
 #'
-#' @return A numeric value for single-channel images; a matrix for multi-channels
-#'  images.
+#' @return \code{min} and \code{max} return a matrix with 1 row and \code{nchan(x)}
+#'  columns. \code{range} returns a matrix with 2 rows and \code{nchan(x)} columns.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -32,12 +32,12 @@ min.Rcpp_Image <- function(x, ...) {
     stop("This is not an Image object.")
 
   switch (nchan(x),
-          `_min`(x),
+          matrix(`_min`(x), nrow = 1, ncol = 1, dimnames = list(c("min"), c("GRAY"))),
           NA,
           matrix(sapply(split(x), `_min`), nrow = 1, ncol = 3,
-                 dimnames = list(c("val"), c("B", "G", "R"))),
+                 dimnames = list(c("min"), c("B", "G", "R"))),
           matrix(sapply(split(x), `_min`), nrow = 1, ncol = 4,
-                 dimnames = list(c("val"), c("B", "G", "R", "A"))),
+                 dimnames = list(c("min"), c("B", "G", "R", "A"))),
           NA
   )
 }
@@ -50,14 +50,21 @@ max.Rcpp_Image <- function(x, ...) {
     stop("This is not an Image object.")
 
   switch(nchan(x),
-         `_max`(x),
+         matrix(`_max`(x), nrow = 1, ncol = 1, dimnames = list(c("max"), c("GRAY"))),
          NA,
          matrix(sapply(split(x), `_max`), nrow = 1, ncol = 3,
-                dimnames = list(c("val"), c("B", "G", "R"))),
+                dimnames = list(c("max"), c("B", "G", "R"))),
          matrix(sapply(split(x), `_max`), nrow = 1, ncol = 4,
-                dimnames = list(c("val"), c("B", "G", "R", "A"))),
+                dimnames = list(c("max"), c("B", "G", "R", "A"))),
          NA
   )
+}
+
+
+#' @rdname min.Rcpp_Image
+#' @export
+range.Rcpp_Image <- function(x, ...) {
+  rbind(min(x), max(x))
 }
 
 

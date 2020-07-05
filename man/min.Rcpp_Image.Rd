@@ -3,11 +3,14 @@
 \name{min.Rcpp_Image}
 \alias{min.Rcpp_Image}
 \alias{max.Rcpp_Image}
+\alias{range.Rcpp_Image}
 \title{Maxima and Minima of an Image}
 \usage{
 \method{min}{Rcpp_Image}(x, ...)
 
 \method{max}{Rcpp_Image}(x, ...)
+
+\method{range}{Rcpp_Image}(x, ...)
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object.}
@@ -15,8 +18,8 @@
 \item{...}{Unused at the moment.}
 }
 \value{
-A numeric value for single-channel images; a matrix for multi-channels
- images.
+\code{min} and \code{max} return a matrix with 1 row and \code{nchan(x)}
+ columns. \code{range} returns a matrix with 2 rows and \code{nchan(x)} columns.
 }
 \description{
 Returns the maximum and minimum pixel values of an
