@@ -48,10 +48,27 @@ Rcpp::List _findContours(Image image, int mode, int method, Rcpp::NumericVector 
 
 Rcpp::List _connectedComponents(Image image, int connectivity) {
   cv::Mat labels;
-  int n = cv::connectedComponents(image.image, labels, connectivity);
+  int n = cv::connectedComponents(image.image, labels, connectivity, CV_16U);
+
+  std::vector<cv::Point> locs;
+  cv::findNonZero(labels > 0, locs);
+
+  Rcpp::NumericVector x(locs.size());
+  Rcpp::NumericVector y(locs.size());
+  Rcpp::NumericVector id(locs.size());
+
+  for (uint i = 0; i < locs.size(); i++) {
+    x(i) = locs[i].x + 1;
+    y(i) = -locs[i].y + image.image.rows;
+    id(i) = labels.at< uint16_t >(locs[i]);
+  }
 
   return Rcpp::List::create(Rcpp::Named("n") = n - 1,
-                            Rcpp::Named("labels") = Image(labels));
+                            Rcpp::Named("labels") = Image(labels),
+                            Rcpp::Named("table") = Rcpp::DataFrame::create(
+                              Rcpp::Named("id") = id,
+                              Rcpp::Named("x") = x,
+                              Rcpp::Named("y") = y));
 }
 
 Image _watershed(Image image, Image markers) {

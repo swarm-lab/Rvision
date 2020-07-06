@@ -4,7 +4,7 @@
 \alias{connectedComponents}
 \title{Find Connected Components in a binary Image}
 \usage{
-connectedComponents(image, connectivity = 8, return_table = TRUE)
+connectedComponents(image, connectivity = 8)
 }
 \arguments{
 \item{image}{An an 8-bit (8U) single-channel \code{\link{Image}} object.}
@@ -18,9 +18,6 @@ are contiguous. This parameter can take two values:
   4-neighbors and the four pixels along the diagonal directions (northeast,
   northwest, southeast, and southwest).}
 }}
-
-\item{return_table}{A logical indicating whether a dataframe of the x-y
-coordinates of the connected components should be returned (default: TRUE).}
 }
 \value{
 A list with 2 (or 3) items:

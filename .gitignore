@@ -10,3 +10,5 @@ scripts
 vignettes/old
 src/.DS_Store
 .DS_Store
+tmp.def
+*.insyncdl

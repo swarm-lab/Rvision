@@ -137,9 +137,6 @@ findContours <- function(image, mode = "external", method = "simple", offset = c
 #'    northwest, southeast, and southwest).}
 #'  }
 #'
-#' @param return_table A logical indicating whether a dataframe of the x-y
-#'  coordinates of the connected components should be returned (default: TRUE).
-#'
 #' @return A list with 2 (or 3) items:
 #'  \itemize{
 #'   \item{n: }{the number of connected components in the image.}
@@ -166,7 +163,7 @@ findContours <- function(image, mode = "external", method = "simple", offset = c
 #' plot(cc_img)
 #'
 #' @export
-connectedComponents <- function(image, connectivity = 8, return_table = TRUE) {
+connectedComponents <- function(image, connectivity = 8) {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
@@ -176,27 +173,25 @@ connectedComponents <- function(image, connectivity = 8, return_table = TRUE) {
   if (!(connectivity %in% c(4, 8)))
     stop("'connectivity' must be either 4 or 8.")
 
-  out <- `_connectedComponents`(image, connectivity)
+  `_connectedComponents`(image, connectivity)
 
-  if (return_table) {
-    if (out$n > 0) {
-      out$table <- .extractComponent(out$labels)
-      # out$table <- do.call(rbind, lapply(1:out$n, extractComponent, image = out$labels))
-    } else {
-      out$table <- data.frame(id = numeric(), x = numeric(), y = numeric())
-    }
-  }
-
-  out
+  # if (return_table) {
+  #   if (out$n > 0) {
+  #     out$table <- .extractComponent(out$labels)
+  #     # out$table <- do.call(rbind, lapply(1:out$n, extractComponent, image = out$labels))
+  #   } else {
+  #     out$table <- data.frame(id = numeric(), x = numeric(), y = numeric())
+  #   }
+  # }
 }
 
-.extractComponent <- function(image) {
-  image_mat <- as.matrix(image)
-  idx <- image_mat > 0
-  positions <- arrayInd(which(idx), dim(image_mat))
-  labels <- image_mat[idx]
-  data.frame(id = labels, x = positions[, 2], y = positions[, 1])
-}
+# .extractComponent <- function(image) {
+#   image_mat <- as.matrix(image)
+#   idx <- image_mat > 0
+#   positions <- arrayInd(which(idx), dim(image_mat))
+#   labels <- image_mat[idx]
+#   data.frame(id = labels, x = positions[, 2], y = positions[, 1])
+# }
 
 
 #' @export
