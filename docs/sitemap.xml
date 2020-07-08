@@ -145,6 +145,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/gaussianBlur.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/getPerspectiveTransform.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/getRotationMatrix2D.html</loc>
   </url>
   <url>

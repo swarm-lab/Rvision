@@ -40,6 +40,18 @@ Image _warpAffine(Image image, arma::fmat m, IntegerVector outputSize, int inter
   return Image(out);
 }
 
+arma::mat _getPerspectiveTransform(arma::fmat from, arma::fmat to) {
+  arma::mat out;
+  cv::Mat from_p, to_p;
+
+  arma2cv(from, from_p);
+  arma2cv(to, to_p);
+
+  cv::Mat perspMatrix = getPerspectiveTransform(from_p, to_p);
+  cv2arma(perspMatrix, out);
+  return out;
+}
+
 Image _warpPerspective(Image image, arma::fmat m, IntegerVector outputSize, int interpMode, int borderType, Rcpp::IntegerVector borderColor) {
   cv::Mat out;
   cv::Mat warpMatrix;
