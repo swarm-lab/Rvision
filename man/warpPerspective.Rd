@@ -6,10 +6,10 @@
 \usage{
 warpPerspective(
   image,
-  warp_matrix,
+  from,
+  to,
   output_size = dim(image)[1:2],
   interp_mode = "linear",
-  inverse_map = TRUE,
   border_type = "constant",
   border_color = "black"
 )
@@ -17,7 +17,12 @@ warpPerspective(
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{warp_matrix}{A 3x3 numeric matrix.}
+\item{from}{A 4x2 matrix indicating the location (x, y) of 4 points in the
+source image.}
+
+\item{to}{A 4x2 matrix indicating the location (x, y) of 4 points in the
+destination image. The order of the points must correspond to the order in
+\code{from}.}
 
 \item{output_size}{A 2-elements vector indicating the number of rows and
 columns of the output image (defaults to the dimensions of \code{image}).}
@@ -35,9 +40,6 @@ any of the following:
  \item{"lanczos4":}{Lanczos interpolation over 8x8 neighborhood.}
  \item{"linear_exact":}{bit exact bilinear interpolation.}
 }}
-
-\item{inverse_map}{A logical. TRUE if \code{warp_matrix} represents an inverse
-transformation. If FALSE, \code{warp_matrix} will be inverted.}
 
 \item{border_type}{A character string indicating the extrapolation method to
 use when filling empty pixels created during the transformation. It can be

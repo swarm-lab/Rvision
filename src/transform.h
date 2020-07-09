@@ -42,21 +42,42 @@ Image _warpAffine(Image image, arma::fmat m, IntegerVector outputSize, int inter
 
 arma::mat _getPerspectiveTransform(arma::fmat from, arma::fmat to) {
   arma::mat out;
-  cv::Mat from_p, to_p;
 
-  arma2cv(from, from_p);
-  arma2cv(to, to_p);
+  cv::Point2f from_p[] = {
+    cv::Point2f(from(0, 0), from(0, 1)),
+    cv::Point2f(from(1, 0), from(1, 1)),
+    cv::Point2f(from(2, 0), from(2, 1)),
+    cv::Point2f(from(3, 0), from(3, 1)) };
+
+  cv::Point2f to_p[] = {
+    cv::Point2f(to(0, 0), to(0, 1)),
+    cv::Point2f(to(1, 0), to(1, 1)),
+    cv::Point2f(to(2, 0), to(2, 1)),
+    cv::Point2f(to(3, 0), to(3, 1)) };
 
   cv::Mat perspMatrix = getPerspectiveTransform(from_p, to_p);
   cv2arma(perspMatrix, out);
   return out;
 }
 
-Image _warpPerspective(Image image, arma::fmat m, IntegerVector outputSize, int interpMode, int borderType, Rcpp::IntegerVector borderColor) {
+Image _warpPerspective(Image image, arma::fmat from, arma::fmat to, IntegerVector outputSize, int interpMode, int borderType, Rcpp::IntegerVector borderColor) {
   cv::Mat out;
-  cv::Mat warpMatrix;
-  arma2cv(m, warpMatrix);
-  cv::warpPerspective(image.image, out, warpMatrix, cv::Size(outputSize(0), outputSize(1)), interpMode, borderType, col2Scalar(borderColor));
+
+  cv::Point2f from_p[] = {
+    cv::Point2f(from(0, 0), from(0, 1)),
+    cv::Point2f(from(1, 0), from(1, 1)),
+    cv::Point2f(from(2, 0), from(2, 1)),
+    cv::Point2f(from(3, 0), from(3, 1)) };
+
+  cv::Point2f to_p[] = {
+    cv::Point2f(to(0, 0), to(0, 1)),
+    cv::Point2f(to(1, 0), to(1, 1)),
+    cv::Point2f(to(2, 0), to(2, 1)),
+    cv::Point2f(to(3, 0), to(3, 1)) };
+
+  cv::Mat perspMatrix = getPerspectiveTransform(from_p, to_p);
+
+  cv::warpPerspective(image.image, out, perspMatrix, cv::Size(outputSize(0), outputSize(1)), interpMode, borderType, col2Scalar(borderColor));
   return Image(out);
 }
 

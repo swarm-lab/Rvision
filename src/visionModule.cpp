@@ -289,8 +289,8 @@ RCPP_MODULE(methods_Transform) {
            List::create(_["from"], _["to"]), "");
   function("_warpAffine", &_warpAffine, List::create(_["image"], _["m"], _["outputSize"],
     _["interpMode"], _["borderType"], _["borderColor"]), "");
-  function("_warpPerspective", &_warpPerspective, List::create(_["image"], _["m"], _["outputSize"],
-    _["interpMode"], _["borderType"], _["borderColor"]), "");
+  function("_warpPerspective", &_warpPerspective, List::create(_["image"], _["from"],
+    _["to"], _["outputSize"], _["interpMode"], _["borderType"], _["borderColor"]), "");
   function("_distanceTransform", &_distanceTransform, List::create(_["image"],
     _["distanceType"], _["maskSize"]), "");
 }

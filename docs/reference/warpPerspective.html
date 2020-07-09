@@ -159,10 +159,10 @@
 
     <pre class="usage"><span class='fu'>warpPerspective</span>(
   <span class='no'>image</span>,
-  <span class='no'>warp_matrix</span>,
+  <span class='no'>from</span>,
+  <span class='no'>to</span>,
   <span class='kw'>output_size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>image</span>)[<span class='fl'>1</span>:<span class='fl'>2</span>],
   <span class='kw'>interp_mode</span> <span class='kw'>=</span> <span class='st'>"linear"</span>,
-  <span class='kw'>inverse_map</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>border_type</span> <span class='kw'>=</span> <span class='st'>"constant"</span>,
   <span class='kw'>border_color</span> <span class='kw'>=</span> <span class='st'>"black"</span>
 )</pre>
@@ -175,8 +175,15 @@
       <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
     </tr>
     <tr>
-      <th>warp_matrix</th>
-      <td><p>A 3x3 numeric matrix.</p></td>
+      <th>from</th>
+      <td><p>A 4x2 matrix indicating the location (x, y) of 4 points in the
+source image.</p></td>
+    </tr>
+    <tr>
+      <th>to</th>
+      <td><p>A 4x2 matrix indicating the location (x, y) of 4 points in the
+destination image. The order of the points must correspond to the order in
+<code>from</code>.</p></td>
     </tr>
     <tr>
       <th>output_size</th>
@@ -197,11 +204,6 @@ any of the following:</p><ul>
 <li><p>"lanczos4":Lanczos interpolation over 8x8 neighborhood.</p></li>
 <li><p>"linear_exact":bit exact bilinear interpolation.</p></li>
 </ul></td>
-    </tr>
-    <tr>
-      <th>inverse_map</th>
-      <td><p>A logical. TRUE if <code>warp_matrix</code> represents an inverse
-transformation. If FALSE, <code>warp_matrix</code> will be inverted.</p></td>
     </tr>
     <tr>
       <th>border_type</th>

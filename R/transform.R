@@ -122,7 +122,7 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
 #' @description \code{getRotationMatrix2D} computes the affine matrix for the
 #'  rotation of a 2D image.
 #'
-#' @param center A 2-elements vector indicating the location (row, column) of
+#' @param center A 2-elements vector indicating the location (x, y) of
 #'  the center of the rotation in the source image.
 #'
 #' @param angle A numeric value indicating the rotation angle in degrees
@@ -139,13 +139,13 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
 #' @examples
 #' getRotationMatrix2D(c(50, 50), 45, 1)
 #'
-#' @export
-getRotationMatrix2D <- function(center, angle = 90, scale = 1) {
-  if (length(center) != 2)
-    stop("center must be a numeric vector of length 2.")
-
-  `_getRotationMatrix2D`(center[2:1], angle, scale)
-}
+# #' @export
+# getRotationMatrix2D <- function(center, angle = 90, scale = 1) {
+#   if (length(center) != 2)
+#     stop("center must be a numeric vector of length 2.")
+#
+#   `_getRotationMatrix2D`(center, angle, scale)
+# }
 
 
 #' @title Perspective Transform
@@ -171,19 +171,19 @@ getRotationMatrix2D <- function(center, angle = 90, scale = 1) {
 #' to <- matrix(c(1, 1, 1, 5, 5, 5, 5, 1), nrow = 4, byrow = TRUE)
 #' getPerspectiveTransform(from, to)
 #'
-#' @export
-getPerspectiveTransform <- function(from, to) {
-  if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
-    stop("from and to must be 4x2 matrices.")
-
-  `_getPerspectiveTransform`(from, to)
-}
+# #' @export
+# getPerspectiveTransform <- function(from, to) {
+#   if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
+#     stop("from and to must be 4x2 matrices.")
+#
+#   `_getPerspectiveTransform`(from, to)
+# }
 
 
 #' @title Image Rotation and Scaling
 #'
-#' @description \code{rotateScale} rotates and scales an image using the
-#'  \code{\link{warpAffine}} function.
+#' @description \code{rotateScale} rotates (clockwise) and scales an image using
+#'  the \code{\link{warpAffine}} function.
 #'
 #' @param image An \code{\link{Image}} object.
 #'
@@ -208,14 +208,17 @@ getPerspectiveTransform <- function(from, to) {
 #' getRotationMatrix2D(c(50, 50), 45, 1)
 #'
 #' @export
-rotateScale <- function(image, center = (dim(image)[1:2] - 1) / 2, angle = 90, scale = 1, ...) {
+rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, scale = 1, ...) {
   if (!isImage(image))
     stop("image is not an Image object.")
 
   if (length(center) != 2)
     stop("center must be a numeric vector of length 2.")
 
-  m <- `_getRotationMatrix2D`(center[2:1], angle, scale)
+  center[1] <- center[1] - 1
+  center[2] <- -center[2] + nrow(image)
+
+  m <- `_getRotationMatrix2D`(center, angle, scale)
   warpAffine(image, m, ...)
 }
 
@@ -318,7 +321,12 @@ warpAffine <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param warp_matrix A 3x3 numeric matrix.
+#' @param from A 4x2 matrix indicating the location (x, y) of 4 points in the
+#'  source image.
+#'
+#' @param to A 4x2 matrix indicating the location (x, y) of 4 points in the
+#'  destination image. The order of the points must correspond to the order in
+#'  \code{from}.
 #'
 #' @param output_size A 2-elements vector indicating the number of rows and
 #'  columns of the output image (defaults to the dimensions of \code{image}).
@@ -336,9 +344,6 @@ warpAffine <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #'   \item{"lanczos4":}{Lanczos interpolation over 8x8 neighborhood.}
 #'   \item{"linear_exact":}{bit exact bilinear interpolation.}
 #'  }
-#'
-#' @param inverse_map A logical. TRUE if \code{warp_matrix} represents an inverse
-#'  transformation. If FALSE, \code{warp_matrix} will be inverted.
 #'
 #' @param border_type A character string indicating the extrapolation method to
 #'  use when filling empty pixels created during the transformation. It can be
@@ -372,14 +377,14 @@ warpAffine <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #' balloon2_transformed <- warpAffine(balloon2, ecc)
 #'
 #' @export
-warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
-                            interp_mode = "linear", inverse_map = TRUE,
+warpPerspective <- function(image, from, to, output_size = dim(image)[1:2],
+                            interp_mode = "linear",
                             border_type = "constant", border_color = "black") {
   if (!isImage(image))
     stop("image is not an Image object.")
 
-  if (!all(dim(warp_matrix) == c(3, 3)))
-    stop("warp_matrix should have exactly 2 rows and 3 columns.")
+  if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
+    stop("from and to must be 4x2 matrices.")
 
   if (length(output_size) != 2 | !is.numeric(output_size))
     stop("output_size should be a numeric vector of length 2.")
@@ -394,11 +399,14 @@ warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
   if (!(border_type %in% border_types))
     stop("This is not a valid border type.")
 
-  if (!is.logical(inverse_map))
-    stop("inverse_map must be a logical.")
+  from[, 1] <- from[, 1] - 1
+  from[, 2] <- -from[, 2] + nrow(image)
 
-  `_warpPerspective`(image, warp_matrix, output_size[2:1],
-                     interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+  to[, 1] <- to[, 1] - 1
+  to[, 2] <- -to[, 2] + nrow(image) - (nrow(image) - output_size[1])
+
+  `_warpPerspective`(image, from, to, output_size[2:1],
+                     interp_vals[interp_modes == interp_mode],
                      border_vals[border_type == border_types], col2bgr(border_color))
 }
 
