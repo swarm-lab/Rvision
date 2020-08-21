@@ -104,3 +104,10 @@ Image _adaptiveThreshold(Image image, double max_value, int method, int threshol
   return Image(out);
 }
 
+Image _Canny(Image image, double threshold1, double threshold2) {
+  cv::Mat out;
+
+  cv::Canny(image.image, out, threshold1, threshold2);
+  return Image(out);
+}
+

@@ -510,3 +510,45 @@ invert <- function(image) {
 
   (if (bitdepth(image) == "8U") 255 else 65535) - image
 }
+
+#' @title Canny Filter
+#'
+#' @description \code{Canny} Finds edges in an image using the Canny86 algorithm
+#'
+#' @param image An an 8-bit (8U) single-channel \code{\link{Image}} object.
+#'
+#' @param threshold1 The first hysteresis threshold (default: 0)
+#'
+#' @param threshold2 The second hysteresis threshold (default: 255)
+#'
+#' @return An output array object like the input \code{\link{Image}} with edges.
+#'
+#' @author Wesley Honeycutt, \email{honeycutt@@ou.edu}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_can <- Canny(balloon, 85, 170)
+#' plot(balloon_can)
+#'
+#' @export
+Canny <- function(image, threshold1 = 0, threshold2 = 255) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  if (nchan(image) != 1 || bitdepth(image) != "8U")
+    stop("'image' must be an 8-bit (8U) single-channel Image object.")
+
+  if (threshold1 <= 0)
+    stop("'threshold1' must be a positive, non-zero value.")
+
+  if (threshold2 <= 0)
+    stop("'threshold2' must be a positive, non-zero value.")
+
+  if (threshold1 > 255)
+    stop("'threshold1' must be less than 255.")
+
+  if (threshold2 > 255)
+    stop("'threshold2' must be less than 255.")
+
+  `_Canny`(image, threshold1, threshold2)
+}
