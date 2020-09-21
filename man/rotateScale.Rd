@@ -2,7 +2,7 @@
 % Please edit documentation in R/transform.R
 \name{rotateScale}
 \alias{rotateScale}
-\title{Affine Matrix of 2D Rotation}
+\title{Image Rotation and Scaling}
 \usage{
 rotateScale(
   image,
@@ -25,52 +25,22 @@ the image.}
 \item{scale}{A numeric value indicating an isotropic scale factor (default: 1).}
 
 \item{...}{Additional parameters for the \code{\link{warpAffine}} function.}
-
-\item{from}{A 4x2 matrix indicating the location (x, y) of 4 points in the
-source image.}
-
-\item{to}{A 4x2 matrix indicating the location (x, y) of 4 points in the
-destination image. The order of the points must correspond to the order in
-\code{from}.}
 }
 \value{
-A 2x3 matrix.
-
-A 3x3 matrix.
-
 An \code{\link{Image}} object.
 }
 \description{
-\code{getRotationMatrix2D} computes the affine matrix for the
- rotation of a 2D image.
-
-\code{getPerspectiveTransform} computes the matrix of a perspective
- transform from 4 pairs of corresponding points.
-
 \code{rotateScale} rotates (clockwise) and scales an image using
  the \code{\link{warpAffine}} function.
 }
 \examples{
-getRotationMatrix2D(c(50, 50), 45, 1)
-
-from <- matrix(c(1, 1, 2, 5, 6, 5, 5, 1), nrow = 4, byrow = TRUE)
-to <- matrix(c(1, 1, 1, 5, 5, 5, 5, 1), nrow = 4, byrow = TRUE)
-getPerspectiveTransform(from, to)
-
-getRotationMatrix2D(c(50, 50), 45, 1)
+img <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+img_rotated <- rotateScale(img, c(50, 50), 45, 1)
 
 }
 \seealso{
-\code{\link{rotateScale}}
-
-\code{\link{warpPerspective}}
-
-\code{\link{getRotationMatrix2D}}, \code{\link{warpAffine}}
+\code{\link{warpAffine}}
 }
 \author{
-Simon Garnier, \email{garnier@njit.edu}
-
-Simon Garnier, \email{garnier@njit.edu}
-
 Simon Garnier, \email{garnier@njit.edu}
 }

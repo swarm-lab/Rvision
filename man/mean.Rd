@@ -2,17 +2,26 @@
 % Please edit documentation in R/zzz.R
 \name{mean}
 \alias{mean}
-\title{Mean Generic for additional arguments}
+\title{Mean Generic for Image Lists}
 \usage{
 mean(x, ..., na.rm = FALSE)
 }
 \arguments{
-\item{x}{is an object of class \code{Rcpp_Image}.}
+\item{x}{An \code{\link{Image}} object or a list of \code{\link{Image}}
+objects.}
 
-\item{...}{further arguments passed to summary methods}
+\item{...}{further arguments passed to summary methods
 
-\item{na.rm}{logical: should missing values be removed?}
+#' @examples
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+mean(balloon)
+mask <- changeColorSpace(balloon, "GRAY") > 100
+mean(balloon, mask)}
+
+\item{mask}{If \code{x} is a n \code{\link{Image}} object, another
+\code{\link{Image}} object with 1 channel ("GRAY") and with bit depth "8U".}
 }
 \description{
-Overloaded Mean to pass additional arguments
+Overloaded \code{\link[base]{mean}} to handle \code{\link{Image}}
+ objects.
 }

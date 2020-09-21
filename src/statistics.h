@@ -1,4 +1,4 @@
-Image _sum(Rcpp::List images) {
+Image _sumList(Rcpp::List images) {
   cv::Mat out;
 
   switch(as<Image>(images[0]).image.channels()) {
@@ -26,13 +26,41 @@ Image _sum(Rcpp::List images) {
   return Image(out);
 }
 
-Image _mean(Rcpp::List images) {
+Rcpp::NumericMatrix _sumPx(Image image) {
+  cv::Scalar sum = cv::sum(image.image);
+  Rcpp::NumericMatrix out(1, 4);
+
+  for (int i = 0; i < 4; i++) {
+    out(1, i) = sum[i];
+  }
+
+  Rcpp::rownames(out) = Rcpp::CharacterVector::create("sum");
+  Rcpp::colnames(out) = Rcpp::CharacterVector::create("A", "B", "G", "R");
+
+  return out;
+}
+
+Image _meanList(Rcpp::List images) {
   cv::Mat out;
-  Image sum = _sum(images);
+  Image sum = _sumList(images);
 
   sum.image.convertTo(out, as<Image>(images[0]).image.type(), 1.0 / images.size(), 0);
 
   return Image(out);
+}
+
+Rcpp::NumericMatrix _meanPx(Image image, Image mask) {
+  cv::Scalar mean = cv::mean(image.image, mask.image);
+  Rcpp::NumericMatrix out(1, 4);
+
+  for (int i = 0; i < 4; i++) {
+    out(1, i) = mean[i];
+  }
+
+  Rcpp::rownames(out) = Rcpp::CharacterVector::create("mean");
+  Rcpp::colnames(out) = Rcpp::CharacterVector::create("A", "B", "G", "R");
+
+  return out;
 }
 
 Rcpp::NumericMatrix _minMaxLoc(Image image) {

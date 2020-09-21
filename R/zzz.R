@@ -95,21 +95,45 @@ methods::evalqOnLoad({
 })
 
 
-#' @title Sum Generic for additional arguments
-#' @description Overloaded Sum to pass additional arguments
-#' @param x is an object of class \code{Rcpp_Image}.
-#' @param ... further arguments passed to summary methods
-#' @param na.rm logical: should missing values be removed?
+#' @title Sum Generic for Image objects
+#'
+#' @description Overloaded \code{\link[base]{sum}} to handle \code{\link{Image}}
+#'  objects.
+#'
+#' @param x An \code{\link{Image}} object or a list of \code{\link{Image}}
+#'  objects.
+#'
+#' @param ... Further arguments passed to summary methods.
+#'
+#' #' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' sum(balloon)
+#'
 #' @export
 setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),
            useAsDefault = function(x, ..., na.rm = FALSE) base::sum(x, ..., na.rm = na.rm),
            group = "Summary")
 
-#' @title Mean Generic for additional arguments
-#' @description Overloaded Mean to pass additional arguments
-#' @param x is an object of class \code{Rcpp_Image}.
+
+#' @title Mean Generic for Image Lists
+#'
+#' @description Overloaded \code{\link[base]{mean}} to handle \code{\link{Image}}
+#'  objects.
+#'
+#' @param x An \code{\link{Image}} object or a list of \code{\link{Image}}
+#'  objects.
+#'
+#' @param mask If \code{x} is a n \code{\link{Image}} object, another
+#'  \code{\link{Image}} object with 1 channel ("GRAY") and with bit depth "8U".
+#'
 #' @param ... further arguments passed to summary methods
-#' @param na.rm logical: should missing values be removed?
+#'
+#' #' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' mean(balloon)
+#' mask <- changeColorSpace(balloon, "GRAY") > 100
+#' mean(balloon, mask)
+#'
 #' @export
 setGeneric("mean", function(x, ..., na.rm = FALSE) standardGeneric("mean"),
            useAsDefault = function(x, ..., na.rm = FALSE) base::mean(x, ..., na.rm = na.rm),
@@ -121,7 +145,7 @@ methods::evalqOnLoad({
             function(x, ...) {
               test <- sapply(x, function(x) class(x) == "Rcpp_Image")
               if (all(test))
-                `_sum`(x)
+                `_sumList`(x)
               else
                 sum(x, ...)
             })
@@ -130,7 +154,7 @@ methods::evalqOnLoad({
             function(x, ...) {
               test <- sapply(x, function(x) class(x) == "Rcpp_Image")
               if (all(test))
-                `_mean`(x)
+                `_meanList`(x)
               else
                 mean(x, ...)
             })

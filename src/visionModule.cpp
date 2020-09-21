@@ -135,8 +135,10 @@ RCPP_MODULE(methods_Arithmetic) {
 #include "statistics.h"
 RCPP_MODULE(methods_Statistics) {
 
-  function("_sum", &_sum, List::create(_["images"]), "");
-  function("_mean", &_mean, List::create(_["images"]), "");
+  function("_sumList", &_sumList, List::create(_["images"]), "");
+  function("_sumPx", &_sumPx, List::create(_["image"]), "");
+  function("_meanList", &_meanList, List::create(_["images"]), "");
+  function("_meanPx", &_meanPx, List::create(_["image"], _["mask"]), "");
   function("_min", &_min, List::create(_["image"]), "");
   function("_max", &_max, List::create(_["image"]), "");
   function("_minMaxLoc", &_minMaxLoc, List::create(_["image"]), "");

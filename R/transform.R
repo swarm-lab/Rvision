@@ -117,29 +117,29 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
 }
 
 
-#' @title Affine Matrix of 2D Rotation
-#'
-#' @description \code{getRotationMatrix2D} computes the affine matrix for the
-#'  rotation of a 2D image.
-#'
-#' @param center A 2-elements vector indicating the location (x, y) of
-#'  the center of the rotation in the source image.
-#'
-#' @param angle A numeric value indicating the rotation angle in degrees
-#'  (default: 90).
-#'
-#' @param scale A numeric value indicating an isotropic scale factor (default: 1).
-#'
-#' @return A 2x3 matrix.
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{rotateScale}}
-#'
-#' @examples
-#' getRotationMatrix2D(c(50, 50), 45, 1)
-#'
-# #' @export
+# #' @title Affine Matrix of 2D Rotation
+# #'
+# #' @description \code{getRotationMatrix2D} computes the affine matrix for the
+# #'  rotation of a 2D image.
+# #'
+# #' @param center A 2-elements vector indicating the location (x, y) of
+# #'  the center of the rotation in the source image.
+# #'
+# #' @param angle A numeric value indicating the rotation angle in degrees
+# #'  (default: 90).
+# #'
+# #' @param scale A numeric value indicating an isotropic scale factor (default: 1).
+# #'
+# #' @return A 2x3 matrix.
+# #'
+# #' @author Simon Garnier, \email{garnier@@njit.edu}
+# #'
+# #' @seealso \code{\link{rotateScale}}
+# #'
+# #' @examples
+# #' getRotationMatrix2D(c(50, 50), 45, 1)
+# #'
+# # #' @export
 # getRotationMatrix2D <- function(center, angle = 90, scale = 1) {
 #   if (length(center) != 2)
 #     stop("center must be a numeric vector of length 2.")
@@ -148,29 +148,29 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
 # }
 
 
-#' @title Perspective Transform
-#'
-#' @description \code{getPerspectiveTransform} computes the matrix of a perspective
-#'  transform from 4 pairs of corresponding points.
-#'
-#' @param from A 4x2 matrix indicating the location (x, y) of 4 points in the
-#'  source image.
-#'
-#' @param to A 4x2 matrix indicating the location (x, y) of 4 points in the
-#'  destination image. The order of the points must correspond to the order in
-#'  \code{from}.
-#'
-#' @return A 3x3 matrix.
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{warpPerspective}}
-#'
-#' @examples
-#' from <- matrix(c(1, 1, 2, 5, 6, 5, 5, 1), nrow = 4, byrow = TRUE)
-#' to <- matrix(c(1, 1, 1, 5, 5, 5, 5, 1), nrow = 4, byrow = TRUE)
-#' getPerspectiveTransform(from, to)
-#'
+# #' @title Perspective Transform
+# #'
+# #' @description \code{getPerspectiveTransform} computes the matrix of a perspective
+# #'  transform from 4 pairs of corresponding points.
+# #'
+# #' @param from A 4x2 matrix indicating the location (x, y) of 4 points in the
+# #'  source image.
+# #'
+# #' @param to A 4x2 matrix indicating the location (x, y) of 4 points in the
+# #'  destination image. The order of the points must correspond to the order in
+# #'  \code{from}.
+# #'
+# #' @return A 3x3 matrix.
+# #'
+# #' @author Simon Garnier, \email{garnier@@njit.edu}
+# #'
+# #' @seealso \code{\link{warpPerspective}}
+# #'
+# #' @examples
+# #' from <- matrix(c(1, 1, 2, 5, 6, 5, 5, 1), nrow = 4, byrow = TRUE)
+# #' to <- matrix(c(1, 1, 1, 5, 5, 5, 5, 1), nrow = 4, byrow = TRUE)
+# #' getPerspectiveTransform(from, to)
+# #'
 # #' @export
 # getPerspectiveTransform <- function(from, to) {
 #   if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
@@ -202,10 +202,11 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{getRotationMatrix2D}}, \code{\link{warpAffine}}
+#' @seealso \code{\link{warpAffine}}
 #'
 #' @examples
-#' getRotationMatrix2D(c(50, 50), 45, 1)
+#' img <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' img_rotated <- rotateScale(img, c(50, 50), 45, 1)
 #'
 #' @export
 rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, scale = 1, ...) {

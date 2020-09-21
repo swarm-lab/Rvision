@@ -2,17 +2,21 @@
 % Please edit documentation in R/zzz.R
 \name{sum}
 \alias{sum}
-\title{Sum Generic for additional arguments}
+\title{Sum Generic for Image objects}
 \usage{
 sum(x, ..., na.rm = FALSE)
 }
 \arguments{
-\item{x}{is an object of class \code{Rcpp_Image}.}
+\item{x}{An \code{\link{Image}} object or a list of \code{\link{Image}}
+objects.}
 
-\item{...}{further arguments passed to summary methods}
+\item{...}{Further arguments passed to summary methods.
 
-\item{na.rm}{logical: should missing values be removed?}
+#' @examples
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+sum(balloon)}
 }
 \description{
-Overloaded Sum to pass additional arguments
+Overloaded \code{\link[base]{sum}} to handle \code{\link{Image}}
+ objects.
 }

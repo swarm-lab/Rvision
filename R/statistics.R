@@ -68,6 +68,51 @@ range.Rcpp_Image <- function(x, ...) {
 }
 
 
+#' @export
+mean.Rcpp_Image <- function(x, mask = NULL, ...) {
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
+  if (isImage(mask)) {
+    if (colorspace(mask) != "GRAY")
+      stop("mask is not a grayscale Image object.")
+
+    if (bitdepth(mask) != "8U")
+      stop("mask is not a 8U Image object.")
+
+    avg <- `_meanPx`(x, mask)
+  } else {
+    avg <- `_meanPx`(x, image(array(255L, dim = c(nrow(x), ncol(x), 1))))
+  }
+
+  switch(nchan(x),
+         matrix(avg[1, 2], nrow = 1, ncol = 1, dimnames = list(c("mean"), c("GRAY"))),
+         NA,
+         matrix(avg[1, 2:4], nrow = 1, ncol = 3,
+                dimnames = list(c("mean"), c("B", "G", "R"))),
+         avg[1, c(2:4, 1)],
+         NA
+  )
+}
+
+#' @export
+sum.Rcpp_Image <- function(x, ...) {
+  if (!isImage(x))
+    stop("This is not an Image object.")
+
+  sum <- `_sumPx`(x)
+
+  switch(nchan(x),
+         matrix(sum[1, 2], nrow = 1, ncol = 1, dimnames = list(c("sum"), c("GRAY"))),
+         NA,
+         matrix(sum[1, 2:4], nrow = 1, ncol = 3,
+                dimnames = list(c("sum"), c("B", "G", "R"))),
+         sum[1, c(2:4, 1)],
+         NA
+  )
+}
+
+
 #' @title Coordinates of the Maxima and Minima of an Image
 #'
 #' @description \code{minMaxLoc} returns the maximum and minimum pixel values of
