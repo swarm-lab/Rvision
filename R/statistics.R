@@ -69,7 +69,7 @@ range.Rcpp_Image <- function(x, ...) {
 
 
 #' @export
-mean.Rcpp_Image <- function(x, mask = NULL, ...) {
+mean.Rcpp_Image <- function(x, ..., mask = NA) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
@@ -110,6 +110,16 @@ sum.Rcpp_Image <- function(x, ...) {
          sum[1, c(2:4, 1)],
          NA
   )
+}
+
+
+#' @export
+mean.list <- function(x, ...) {
+  test <- sapply(x, function(x) class(x) == "Rcpp_Image")
+  if (all(test))
+    `_meanList`(x)
+  else
+    base::mean(x, ...)
 }
 
 

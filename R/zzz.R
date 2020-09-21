@@ -115,30 +115,6 @@ setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),
            group = "Summary")
 
 
-#' @title Mean Generic for Image Lists
-#'
-#' @description Overloaded \code{\link[base]{mean}} to handle \code{\link{Image}}
-#'  objects.
-#'
-#' @param x An \code{\link{Image}} object or a list of \code{\link{Image}}
-#'  objects.
-#'
-#' @param mask If \code{x} is a n \code{\link{Image}} object, another
-#'  \code{\link{Image}} object with 1 channel ("GRAY") and with bit depth "8U".
-#'
-#' @param ... further arguments passed to summary methods
-#'
-#' #' @examples
-#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-#' mean(balloon)
-#' mask <- changeColorSpace(balloon, "GRAY") > 100
-#' mean(balloon, mask)
-#'
-#' @export
-setGeneric("mean", function(x, ..., na.rm = FALSE) standardGeneric("mean"),
-           useAsDefault = function(x, ..., na.rm = FALSE) base::mean(x, ..., na.rm = na.rm),
-           group = "Summary")
-
 ### Define generic statistics methods ###
 methods::evalqOnLoad({
   setMethod("sum", "list",
@@ -147,16 +123,7 @@ methods::evalqOnLoad({
               if (all(test))
                 `_sumList`(x)
               else
-                sum(x, ...)
-            })
-
-  setMethod("mean", "list",
-            function(x, ...) {
-              test <- sapply(x, function(x) class(x) == "Rcpp_Image")
-              if (all(test))
-                `_meanList`(x)
-              else
-                mean(x, ...)
+                base::sum(x, ...)
             })
 })
 
