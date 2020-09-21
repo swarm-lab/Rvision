@@ -27,11 +27,11 @@ Image _sumList(Rcpp::List images) {
 }
 
 Rcpp::NumericMatrix _sumPx(Image image) {
-  cv::Scalar sum = cv::sum(image.image);
+  cv::Scalar tot = cv::sum(image.image);
   Rcpp::NumericMatrix out(1, 4);
 
   for (int i = 0; i < 4; i++) {
-    out(1, i) = sum[i];
+    out(0, i) = tot[i];
   }
 
   Rcpp::rownames(out) = Rcpp::CharacterVector::create("sum");
@@ -50,11 +50,11 @@ Image _meanList(Rcpp::List images) {
 }
 
 Rcpp::NumericMatrix _meanPx(Image image, Image mask) {
-  cv::Scalar mean = cv::mean(image.image, mask.image);
+  cv::Scalar avg = cv::mean(image.image, mask.image);
   Rcpp::NumericMatrix out(1, 4);
 
   for (int i = 0; i < 4; i++) {
-    out(1, i) = mean[i];
+    out(0, i) = avg[i];
   }
 
   Rcpp::rownames(out) = Rcpp::CharacterVector::create("mean");
