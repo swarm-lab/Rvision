@@ -35,7 +35,7 @@ Rcpp::NumericMatrix _sumPx(Image image) {
   }
 
   Rcpp::rownames(out) = Rcpp::CharacterVector::create("sum");
-  Rcpp::colnames(out) = Rcpp::CharacterVector::create("A", "B", "G", "R");
+  Rcpp::colnames(out) = Rcpp::CharacterVector::create("B", "G", "R", "A");
 
   return out;
 }
@@ -58,7 +58,7 @@ Rcpp::NumericMatrix _meanPx(Image image, Image mask) {
   }
 
   Rcpp::rownames(out) = Rcpp::CharacterVector::create("mean");
-  Rcpp::colnames(out) = Rcpp::CharacterVector::create("A", "B", "G", "R");
+  Rcpp::colnames(out) = Rcpp::CharacterVector::create("B", "G", "R", "A");
 
   return out;
 }

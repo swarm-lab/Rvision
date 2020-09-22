@@ -86,11 +86,10 @@ mean.Rcpp_Image <- function(x, ..., mask = NA) {
   }
 
   switch(nchan(x),
-         matrix(avg[1, 2], nrow = 1, ncol = 1, dimnames = list(c("mean"), c("GRAY"))),
+         matrix(avg[1, 1], nrow = 1, ncol = 1, dimnames = list(c("mean"), c("GRAY"))),
          NA,
-         matrix(avg[1, 2:4], nrow = 1, ncol = 3,
-                dimnames = list(c("mean"), c("B", "G", "R"))),
-         avg[1, c(2:4, 1)],
+         avg[, 1:3],
+         avg,
          NA
   )
 }
@@ -103,11 +102,10 @@ sum.Rcpp_Image <- function(x, ...) {
   sum <- `_sumPx`(x)
 
   switch(nchan(x),
-         matrix(sum[1, 2], nrow = 1, ncol = 1, dimnames = list(c("sum"), c("GRAY"))),
+         matrix(sum[1, 1], nrow = 1, ncol = 1, dimnames = list(c("sum"), c("GRAY"))),
          NA,
-         matrix(sum[1, 2:4], nrow = 1, ncol = 3,
-                dimnames = list(c("sum"), c("B", "G", "R"))),
-         sum[1, c(2:4, 1)],
+         sum[, 1:3],
+         sum,
          NA
   )
 }
