@@ -26,6 +26,15 @@ Image _sumList(Rcpp::List images) {
   return Image(out);
 }
 
+Image _meanList(Rcpp::List images) {
+  cv::Mat out;
+  Image sum = _sumList(images);
+
+  sum.image.convertTo(out, as<Image>(images[0]).image.type(), 1.0 / images.size(), 0);
+
+  return Image(out);
+}
+
 Rcpp::NumericMatrix _sumPx(Image image) {
   cv::Scalar tot = cv::sum(image.image);
   Rcpp::NumericMatrix out(1, 4);
@@ -38,15 +47,6 @@ Rcpp::NumericMatrix _sumPx(Image image) {
   Rcpp::colnames(out) = Rcpp::CharacterVector::create("B", "G", "R", "A");
 
   return out;
-}
-
-Image _meanList(Rcpp::List images) {
-  cv::Mat out;
-  Image sum = _sumList(images);
-
-  sum.image.convertTo(out, as<Image>(images[0]).image.type(), 1.0 / images.size(), 0);
-
-  return Image(out);
 }
 
 Rcpp::NumericMatrix _meanPx(Image image, Image mask) {

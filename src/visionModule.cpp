@@ -278,6 +278,9 @@ RCPP_MODULE(methods_Shape) {
   function("_connectedComponents", &_connectedComponents, List::create(_["image"],
     _["connectivity"]), "");
   function("_watershed", &_watershed, List::create(_["image"], _["markers"]), "");
+  function("_fitEllipse", &_fitEllipse, List::create(_["points"]), "");
+  function("_fitEllipseAMS", &_fitEllipseAMS, List::create(_["points"]), "");
+  function("_fitEllipseDirect", &_fitEllipseDirect, List::create(_["points"]), "");
 }
 
 #include "transform.h"

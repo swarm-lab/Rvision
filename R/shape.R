@@ -207,3 +207,19 @@ watershed <- function(image, markers) {
 
   `_watershed`(image, markers)
 }
+
+
+#' @export
+fitEllipse <- function(x, y, method = "original") {
+  if (!is.vector(x) | !is.vector(y))
+    stop("x and y must be vectors.")
+
+  if (length(x) != length(y))
+    stop("x and y must have the same length.")
+
+  switch(method,
+         "original" = `_fitEllipse`(cbind(x, y)),
+         "ams" = `_fitEllipseAMS`(cbind(x, y)),
+         "direct" = `_fitEllipseDirect`(cbind(x, y)),
+         stop("Invalid method."))
+}

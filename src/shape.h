@@ -77,3 +77,39 @@ Image _watershed(Image image, Image markers) {
   cv::watershed(image.image, out);
   return Image(out);
 }
+
+Rcpp::List _fitEllipse(arma::fmat points) {
+  cv::Mat cvpoints;
+  arma2cv(points, cvpoints);
+  cv::RotatedRect box;
+  box = cv::fitEllipse(cvpoints);
+
+  return Rcpp::List::create(Rcpp::Named("angle") = box.angle,
+                            Rcpp::Named("height") = box.size.height,
+                            Rcpp::Named("width") = box.size.height,
+                            Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
+}
+
+Rcpp::List _fitEllipseAMS(arma::fmat points) {
+  cv::Mat cvpoints;
+  arma2cv(points, cvpoints);
+  cv::RotatedRect box;
+  box = cv::fitEllipseAMS(cvpoints);
+
+  return Rcpp::List::create(Rcpp::Named("angle") = box.angle,
+                            Rcpp::Named("height") = box.size.height,
+                            Rcpp::Named("width") = box.size.height,
+                            Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
+}
+
+Rcpp::List _fitEllipseDirect(arma::fmat points) {
+  cv::Mat cvpoints;
+  arma2cv(points, cvpoints);
+  cv::RotatedRect box;
+  box = cv::fitEllipseDirect(cvpoints);
+
+  return Rcpp::List::create(Rcpp::Named("angle") = box.angle,
+                            Rcpp::Named("height") = box.size.height,
+                            Rcpp::Named("width") = box.size.height,
+                            Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
+}
