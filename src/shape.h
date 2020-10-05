@@ -86,7 +86,7 @@ Rcpp::List _fitEllipse(arma::fmat points) {
 
   return Rcpp::List::create(Rcpp::Named("angle") = box.angle,
                             Rcpp::Named("height") = box.size.height,
-                            Rcpp::Named("width") = box.size.height,
+                            Rcpp::Named("width") = box.size.width,
                             Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
 }
 
@@ -98,7 +98,7 @@ Rcpp::List _fitEllipseAMS(arma::fmat points) {
 
   return Rcpp::List::create(Rcpp::Named("angle") = box.angle,
                             Rcpp::Named("height") = box.size.height,
-                            Rcpp::Named("width") = box.size.height,
+                            Rcpp::Named("width") = box.size.width,
                             Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
 }
 
@@ -110,6 +110,6 @@ Rcpp::List _fitEllipseDirect(arma::fmat points) {
 
   return Rcpp::List::create(Rcpp::Named("angle") = box.angle,
                             Rcpp::Named("height") = box.size.height,
-                            Rcpp::Named("width") = box.size.height,
+                            Rcpp::Named("width") = box.size.width,
                             Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
 }
