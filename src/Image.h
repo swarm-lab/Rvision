@@ -309,13 +309,13 @@ Image::Image(arma::Cube<double> inputArray) {
       for (uint k = 0; k < inputArray.n_slices; k++) {
         switch(inputArray.n_slices) {
         case 1:
-          this->image.at<float_t>(j, i) = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+          this->image.at<float_t>(j, i) = inputArray(-j + inputArray.n_rows - 1, i, k);
           break;
         case 3:
-          this->image.at< cv::Vec<float_t, 3> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+          this->image.at< cv::Vec<float_t, 3> >(j, i)[k] = inputArray(-j + inputArray.n_rows - 1, i, k);
           break;
         case 4:
-          this->image.at< cv::Vec<float_t, 4> >(j, i)[k] = (int) inputArray(-j + inputArray.n_rows - 1, i, k);
+          this->image.at< cv::Vec<float_t, 4> >(j, i)[k] = inputArray(-j + inputArray.n_rows - 1, i, k);
           break;
         default:
           throw std::range_error("Invalid input array dimensions (1, 3, and 4 slices only).");
