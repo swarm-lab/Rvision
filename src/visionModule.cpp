@@ -113,6 +113,8 @@ RCPP_MODULE(class_VideoWriter) {
   .method("output", &VideoWriter::output)
   .method("fps", &VideoWriter::fps)
   ;
+
+  function("_fourcc", &_fourcc, List::create(_["c1"], _["c2"], _["c3"], _["c4"]), "");
 }
 
 #include "arithmetic.h"

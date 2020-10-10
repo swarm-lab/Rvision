@@ -328,3 +328,17 @@ writerOuput <- function(x) {
 
   x$output()
 }
+
+
+#' @export
+fourcc <- function(x) {
+  if (!is.character(x))
+    stop("x must be a character string of length 4.")
+
+  if  (nchar(x) != 4)
+    stop("x must be a character string of length 4.")
+
+  str <- strsplit(x, "")[[1]]
+
+  `_fourcc`(str[1], str[2], str[3], str[4])
+}
