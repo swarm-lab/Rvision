@@ -78,7 +78,7 @@ computeECC <- function(template, image) {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{computeECC}}
+#' @seealso \code{\link{computeECC}}, \code{\link{findTransformORB}}
 #'
 #' @references Evangelidis, G. D., and Psarakis, E. Z. (2008). Parametric image
 #'  alignment using enhanced correlation coefficient maximization. IEEE Trans.
@@ -117,6 +117,74 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
 }
 
 
+#' @title ORB-based Geometric Transform
+#'
+#' @description \code{findTransformORB} computes the geometric transform between
+#'  two images in terms of the ORB feature detector.
+#'
+#' @param template A grayscale \code{\link{Image}} object.
+#'
+#' @param image A grayscale \code{\link{Image}} object of the same dimensions as
+#'  \code{template}.
+#'
+#' @param max_features The maximum number of features to extract (default: 500).
+#'
+#' @param descriptor_matcher A character string indicating the type of the
+#'  descriptor matcher to use. It can be one of the followings: "BruteForce",
+#'  "BruteForce-L1", "BruteForce-Hamming" (the default), or
+#'  "BruteForce-Hamming(2)".
+#'
+#' @param match_frac The fraction of top matches to keep (default: 0.15).
+#'
+#' @param homography_method A character string indicating the method used to
+#'  compute a homography matrix. It can be one of the followings: "LS"
+#'  (least-square), "RANSAC" (RANSAC-based robust method; the default), "LMEDS"
+#'  (Least-Median robust method), or "RHO" (PROSAC-based robust method).
+#'
+#' @return A 3x3 matrix.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{findTransformECC}}
+#'
+#' @references Evangelidis, G. D., and Psarakis, E. Z. (2008). Parametric image
+#'  alignment using enhanced correlation coefficient maximization. IEEE Trans.
+#'  Pattern Anal. Mach. Intell. 30, 1858–1865. doi:10.1109/TPAMI.2008.113.
+#'
+#' @examples
+#' file1 <- system.file("sample_img/balloon1.png", package = "Rvision")
+#' file2 <- system.file("sample_img/balloon2.png", package = "Rvision")
+#' balloon1 <- changeColorSpace(image(file1), "GRAY")
+#' balloon2 <- changeColorSpace(image(file2), "GRAY")
+#' findTransformORB(balloon1, balloon2)
+#'
+#' @export
+findTransformORB <- function(template, image, max_features = 500,
+                             descriptor_matcher = "BruteForce-Hamming",
+                             match_frac = 0.15, homography_method = "RANSAC") {
+  if (!isImage(template))
+    stop("template is not an Image object.")
+
+  if (!isImage(image))
+    stop("image is not an Image object.")
+
+  if (colorspace(template) != "GRAY" | colorspace(image) != "GRAY")
+    stop("template and image must be grayscale images.")
+
+  if (!all(dim(template) == dim(image)))
+    stop("template and image must have the same dimensions.")
+
+  `_findTransformORB`(template, image, max_features, descriptor_matcher,
+                      match_frac, switch(homography_method,
+                             "LS" = 0,
+                             "RANSAC" = 4,
+                             "LMEDS" = 8,
+                             "RHO" = 16,
+                             stop("This is not a valid method. 'homography_method'
+                                  must be one of 'LS', 'RANSAC', 'LMEDS', or 'RHO'.")))
+}
+
+
 # #' @title Affine Matrix of 2D Rotation
 # #'
 # #' @description \code{getRotationMatrix2D} computes the affine matrix for the
@@ -148,36 +216,36 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
 # }
 
 
-# #' @title Perspective Transform
-# #'
-# #' @description \code{getPerspectiveTransform} computes the matrix of a perspective
-# #'  transform from 4 pairs of corresponding points.
-# #'
-# #' @param from A 4x2 matrix indicating the location (x, y) of 4 points in the
-# #'  source image.
-# #'
-# #' @param to A 4x2 matrix indicating the location (x, y) of 4 points in the
-# #'  destination image. The order of the points must correspond to the order in
-# #'  \code{from}.
-# #'
-# #' @return A 3x3 matrix.
-# #'
-# #' @author Simon Garnier, \email{garnier@@njit.edu}
-# #'
-# #' @seealso \code{\link{warpPerspective}}
-# #'
-# #' @examples
-# #' from <- matrix(c(1, 1, 2, 5, 6, 5, 5, 1), nrow = 4, byrow = TRUE)
-# #' to <- matrix(c(1, 1, 1, 5, 5, 5, 5, 1), nrow = 4, byrow = TRUE)
-# #' getPerspectiveTransform(from, to)
-# #'
-# #' @export
-# getPerspectiveTransform <- function(from, to) {
-#   if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
-#     stop("from and to must be 4x2 matrices.")
-#
-#   `_getPerspectiveTransform`(from, to)
-# }
+#' @title Perspective Transform
+#'
+#' @description \code{getPerspectiveTransform} computes the matrix of a perspective
+#'  transform from 4 pairs of corresponding points.
+#'
+#' @param from A 4x2 matrix indicating the location (x, y) of 4 points in the
+#'  source image.
+#'
+#' @param to A 4x2 matrix indicating the location (x, y) of 4 points in the
+#'  destination image. The order of the points must correspond to the order in
+#'  \code{from}.
+#'
+#' @return A 3x3 matrix.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{warpPerspective}}
+#'
+#' @examples
+#' from <- matrix(c(1, 1, 2, 5, 6, 5, 5, 1), nrow = 4, byrow = TRUE)
+#' to <- matrix(c(1, 1, 1, 5, 5, 5, 5, 1), nrow = 4, byrow = TRUE)
+#' getPerspectiveTransform(from, to)
+#'
+#' @export
+getPerspectiveTransform <- function(from, to) {
+  if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
+    stop("from and to must be 4x2 matrices.")
+
+  `_getPerspectiveTransform`(from, to)
+}
 
 
 #' @title Image Rotation and Scaling
@@ -322,12 +390,7 @@ warpAffine <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param from A 4x2 matrix indicating the location (x, y) of 4 points in the
-#'  source image.
-#'
-#' @param to A 4x2 matrix indicating the location (x, y) of 4 points in the
-#'  destination image. The order of the points must correspond to the order in
-#'  \code{from}.
+#' @param warp_matrix A 3x3 numeric matrix.
 #'
 #' @param output_size A 2-elements vector indicating the number of rows and
 #'  columns of the output image (defaults to the dimensions of \code{image}).
@@ -345,6 +408,9 @@ warpAffine <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #'   \item{"lanczos4":}{Lanczos interpolation over 8x8 neighborhood.}
 #'   \item{"linear_exact":}{bit exact bilinear interpolation.}
 #'  }
+#'
+#' @param inverse_map A logical. TRUE if \code{warp_matrix} represents an inverse
+#'  transformation. If FALSE, \code{warp_matrix} will be inverted.
 #'
 #' @param border_type A character string indicating the extrapolation method to
 #'  use when filling empty pixels created during the transformation. It can be
@@ -378,14 +444,14 @@ warpAffine <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #' balloon2_transformed <- warpAffine(balloon2, ecc)
 #'
 #' @export
-warpPerspective <- function(image, from, to, output_size = dim(image)[1:2],
-                            interp_mode = "linear",
+warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
+                            interp_mode = "linear", inverse_map = TRUE,
                             border_type = "constant", border_color = "black") {
   if (!isImage(image))
     stop("image is not an Image object.")
 
-  if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
-    stop("from and to must be 4x2 matrices.")
+  if (!all(dim(warp_matrix) == c(3, 3)))
+    stop("warp_matrix should have exactly 3 rows and 3 columns.")
 
   if (length(output_size) != 2 | !is.numeric(output_size))
     stop("output_size should be a numeric vector of length 2.")
@@ -400,15 +466,42 @@ warpPerspective <- function(image, from, to, output_size = dim(image)[1:2],
   if (!(border_type %in% border_types))
     stop("This is not a valid border type.")
 
-  from[, 1] <- from[, 1] - 1
-  from[, 2] <- -from[, 2] + nrow(image)
+  if (!is.logical(inverse_map))
+    stop("inverse_map must be a logical.")
 
-  to[, 1] <- to[, 1] - 1
-  to[, 2] <- -to[, 2] + nrow(image) - (nrow(image) - output_size[1])
-
-  `_warpPerspective`(image, from, to, output_size[2:1],
-                     interp_vals[interp_modes == interp_mode],
+  `_warpPerspective`(image, warp_matrix, output_size[2:1],
+                     interp_vals[interp_modes == interp_mode] + inverse_map * 16,
                      border_vals[border_type == border_types], col2bgr(border_color))
+
+
+  # if (!isImage(image))
+  #   stop("image is not an Image object.")
+  #
+  # if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
+  #   stop("from and to must be 4x2 matrices.")
+  #
+  # if (length(output_size) != 2 | !is.numeric(output_size))
+  #   stop("output_size should be a numeric vector of length 2.")
+  #
+  # interp_modes <- c("nearest", "linear", "cubic", "area", "lanczos4", "linear_exact")
+  # interp_vals <- 0:5
+  # if (!all(interp_mode %in% interp_modes))
+  #   stop("This is not a valid combination of interpolation modes.")
+  #
+  # border_types <- c("constant", "replicate", "reflect", "wrap", "reflect_101", "transparent")
+  # border_vals <- 0:5
+  # if (!(border_type %in% border_types))
+  #   stop("This is not a valid border type.")
+  #
+  # from[, 1] <- from[, 1] - 1
+  # from[, 2] <- -from[, 2] + nrow(image)
+  #
+  # to[, 1] <- to[, 1] - 1
+  # to[, 2] <- -to[, 2] + nrow(image) - (nrow(image) - output_size[1])
+  #
+  # `_warpPerspective`(image, from, to, output_size[2:1],
+  #                    interp_vals[interp_modes == interp_mode],
+  #                    border_vals[border_type == border_types], col2bgr(border_color))
 }
 
 

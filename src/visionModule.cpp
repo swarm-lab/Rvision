@@ -290,14 +290,16 @@ RCPP_MODULE(methods_Transform) {
   function("_findTransformECC", &_findTransformECC, List::create(_["image1"], _["image2"],
     _["motionType"], _["count"], _["eps"], _["gaussFiltSize"]), "");
   function("_computeECC", &_computeECC, List::create(_["image1"], _["image2"]), "");
+  function("_findTransformORB", &_findTransformORB, List::create(_["image1"], _["image2"],
+    _["maxFeatures"], _["descriptorMatcher"], _["matchFrac"], _["homographyMethod"]), "");
   function("_getRotationMatrix2D", &_getRotationMatrix2D, List::create(_["center"],
     _["angle"], _["scale"]), "");
   function("_getPerspectiveTransform", &_getPerspectiveTransform,
            List::create(_["from"], _["to"]), "");
   function("_warpAffine", &_warpAffine, List::create(_["image"], _["m"], _["outputSize"],
     _["interpMode"], _["borderType"], _["borderColor"]), "");
-  function("_warpPerspective", &_warpPerspective, List::create(_["image"], _["from"],
-    _["to"], _["outputSize"], _["interpMode"], _["borderType"], _["borderColor"]), "");
+  function("_warpPerspective", &_warpPerspective, List::create(_["image"], _["m"],
+    _["outputSize"], _["interpMode"], _["borderType"], _["borderColor"]), "");
   function("_distanceTransform", &_distanceTransform, List::create(_["image"],
     _["distanceType"], _["maskSize"]), "");
 }

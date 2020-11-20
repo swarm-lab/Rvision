@@ -25,6 +25,37 @@ arma::fmat _findTransformECC(Image image1, Image image2, int warpMode, int count
   return out;
 }
 
+arma::mat _findTransformORB(Image image1, Image image2, int maxFeatures, String descriptorMatcher, double matchFrac, int homographyMethod) {
+  arma::mat out;
+
+  std::vector<cv::KeyPoint> keypoints1, keypoints2;
+  cv::Mat descriptors1, descriptors2;
+
+  cv::Ptr<cv::Feature2D> orb = cv::ORB::create(maxFeatures);
+  orb->detectAndCompute(image1.image, cv::Mat(), keypoints1, descriptors1);
+  orb->detectAndCompute(image2.image, cv::Mat(), keypoints2, descriptors2);
+
+  std::vector<cv::DMatch> matches;
+  cv::Ptr<cv::DescriptorMatcher> matcher = cv::DescriptorMatcher::create(descriptorMatcher);
+  matcher->match(descriptors1, descriptors2, matches, cv::Mat());
+
+  std::sort(matches.begin(), matches.end());
+
+  const int numGoodMatches = matches.size() * matchFrac;
+  matches.erase(matches.begin() + numGoodMatches, matches.end());
+
+  std::vector<cv::Point2f> points1, points2;
+
+  for(size_t i = 0; i < matches.size(); i++) {
+    points1.push_back(keypoints1[ matches[i].queryIdx ].pt);
+    points2.push_back(keypoints2[ matches[i].trainIdx ].pt);
+  }
+
+  cv::Mat warpMatrix = cv::findHomography(points1, points2, homographyMethod);
+  cv2arma(warpMatrix, out);
+  return out;
+}
+
 arma::mat _getRotationMatrix2D(arma::fvec center, double angle, double scale) {
   arma::mat out;
   cv::Mat warpMatrix = getRotationMatrix2D(cv::Point2f(center(0), center(1)), angle, scale);
@@ -60,24 +91,11 @@ arma::mat _getPerspectiveTransform(arma::fmat from, arma::fmat to) {
   return out;
 }
 
-Image _warpPerspective(Image image, arma::fmat from, arma::fmat to, IntegerVector outputSize, int interpMode, int borderType, Rcpp::IntegerVector borderColor) {
+Image _warpPerspective(Image image, arma::fmat m, IntegerVector outputSize, int interpMode, int borderType, Rcpp::IntegerVector borderColor) {
   cv::Mat out;
-
-  cv::Point2f from_p[] = {
-    cv::Point2f(from(0, 0), from(0, 1)),
-    cv::Point2f(from(1, 0), from(1, 1)),
-    cv::Point2f(from(2, 0), from(2, 1)),
-    cv::Point2f(from(3, 0), from(3, 1)) };
-
-  cv::Point2f to_p[] = {
-    cv::Point2f(to(0, 0), to(0, 1)),
-    cv::Point2f(to(1, 0), to(1, 1)),
-    cv::Point2f(to(2, 0), to(2, 1)),
-    cv::Point2f(to(3, 0), to(3, 1)) };
-
-  cv::Mat perspMatrix = getPerspectiveTransform(from_p, to_p);
-
-  cv::warpPerspective(image.image, out, perspMatrix, cv::Size(outputSize(0), outputSize(1)), interpMode, borderType, col2Scalar(borderColor));
+  cv::Mat warpMatrix;
+  arma2cv(m, warpMatrix);
+  cv::warpPerspective(image.image, out, warpMatrix, cv::Size(outputSize(0), outputSize(1)), interpMode, borderType, col2Scalar(borderColor));
   return Image(out);
 }
 

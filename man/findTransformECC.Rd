@@ -59,7 +59,7 @@ Evangelidis, G. D., and Psarakis, E. Z. (2008). Parametric image
  Pattern Anal. Mach. Intell. 30, 1858–1865. doi:10.1109/TPAMI.2008.113.
 }
 \seealso{
-\code{\link{computeECC}}
+\code{\link{computeECC}}, \code{\link{findTransformORB}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}
