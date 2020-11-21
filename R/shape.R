@@ -120,6 +120,45 @@ findContours <- function(image, mode = "external", method = "simple", offset = c
                   offset)
 }
 
+
+#' @title Area of a Contour
+#'
+#' @description \code{polyArea} computes the surface area of a polygon.
+#'
+#' @param x A vector of the x coordinates of the contour vertices.
+#'
+#' @param y A vector of the y coordinates of the contour vertices.
+#'
+#' @param oriented A boolean indicating whether to return the oriented area of
+#'  the contour or not (default: FALSE).
+#'
+#' @return If `oriented = FALSE`, the function return the area in pixels enclosed
+#'  within the contour. If `oriented = TRUE`, the function returns a signed area
+#'  value depending on the contour orientation (clockwise or counter-clokwise).
+#'  Using this feature, you can determine the orientation of a contour by taking
+#'  the sign of the area.
+#'
+#' @note The function will certainly return a wrong result for contours with
+#'  self-intersections.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @examples
+#' contourArea(c(0, 1, 1, 0), c(0, 0, 1, 1))
+#'
+#' @export
+contourArea <- function(x, y, oriented = FALSE) {
+  if (!is.vector(x) | !is.vector(y))
+    stop("x and y must be vectors of the same length.")
+
+  if (length(x) != length(y))
+    stop("x and y must be vectors of the same length.")
+
+  `_contourArea`(x, y, oriented)
+}
+
+
+
 #' @title Find Connected Components in a binary Image
 #'
 #' @description \code{connectedComponents} computes the connected components

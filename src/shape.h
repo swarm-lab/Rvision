@@ -46,6 +46,16 @@ Rcpp::List _findContours(Image image, int mode, int method, Rcpp::NumericVector 
                             Rcpp::Named("hierarchy") = hierarchy_df);
 }
 
+double _contourArea(Rcpp::NumericVector x, Rcpp::NumericVector y, bool oriented) {
+  std::vector<cv::Point> poly;
+
+  for (uint i = 0; i < x.size(); i++) {
+    poly.push_back(cv::Point2f(x(i), y(i)));
+  }
+
+  return cv::contourArea(poly, oriented);
+}
+
 Rcpp::List _connectedComponents(Image image, int connectivity) {
   cv::Mat labels;
   int n = cv::connectedComponents(image.image, labels, connectivity, CV_16U);
