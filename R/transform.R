@@ -127,6 +127,15 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
 #' @param image A grayscale \code{\link{Image}} object of the same dimensions as
 #'  \code{template}.
 #'
+#' @param warp_mode A character string indicating the type of warping required
+#'  to transform \code{image} into \code{template}. It can be any of the following:
+#'  \itemize{
+#'   \item{"affine" (default):}{affine transformation (Euclidean + shear; this
+#'    transformation will preserve parallelism between lines).}
+#'   \item{"homography":}{homography transformation (affine + perspective; this
+#'    transformation does not preserve parallelism between lines).}
+#'  }
+#'
 #' @param max_features The maximum number of features to extract (default: 500).
 #'
 #' @param descriptor_matcher A character string indicating the type of the
@@ -159,7 +168,7 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
 #' findTransformORB(balloon1, balloon2)
 #'
 #' @export
-findTransformORB <- function(template, image, max_features = 500,
+findTransformORB <- function(template, image, warp_mode = "affine", max_features = 500,
                              descriptor_matcher = "BruteForce-Hamming",
                              match_frac = 0.15, homography_method = "RANSAC") {
   if (!isImage(template))
@@ -171,10 +180,18 @@ findTransformORB <- function(template, image, max_features = 500,
   if (colorspace(template) != "GRAY" | colorspace(image) != "GRAY")
     stop("template and image must be grayscale images.")
 
-  if (!all(dim(template) == dim(image)))
-    stop("template and image must have the same dimensions.")
+  # if (!all(dim(template) == dim(image)))
+  #   stop("template and image must have the same dimensions.")
 
-  `_findTransformORB`(template, image, max_features, descriptor_matcher,
+  if (warp_mode == "affine" & !(homography_method %in% c("RANSAC", "LSMEDS")))
+    stop("When warp_mode='affine', homography_method can only be one of 'RANSAC' or 'LSMEDS'.")
+
+  `_findTransformORB`(template, image,
+                      switch(warp_mode,
+                             "affine" = 2,
+                             "homography" = 3,
+                             stop("This is not a valid transformation. 'warp_mode' must be one of 'affine' or 'homography'.")),
+                      max_features, descriptor_matcher,
                       match_frac, switch(homography_method,
                              "LS" = 0,
                              "RANSAC" = 4,

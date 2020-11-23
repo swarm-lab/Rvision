@@ -292,7 +292,8 @@ RCPP_MODULE(methods_Transform) {
     _["motionType"], _["count"], _["eps"], _["gaussFiltSize"]), "");
   function("_computeECC", &_computeECC, List::create(_["image1"], _["image2"]), "");
   function("_findTransformORB", &_findTransformORB, List::create(_["image1"], _["image2"],
-    _["maxFeatures"], _["descriptorMatcher"], _["matchFrac"], _["homographyMethod"]), "");
+    _["warpMode"], _["maxFeatures"], _["descriptorMatcher"], _["matchFrac"],
+    _["homographyMethod"]), "");
   function("_getRotationMatrix2D", &_getRotationMatrix2D, List::create(_["center"],
     _["angle"], _["scale"]), "");
   function("_getPerspectiveTransform", &_getPerspectiveTransform,

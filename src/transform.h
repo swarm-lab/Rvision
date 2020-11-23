@@ -25,8 +25,9 @@ arma::fmat _findTransformECC(Image image1, Image image2, int warpMode, int count
   return out;
 }
 
-arma::mat _findTransformORB(Image image1, Image image2, int maxFeatures, String descriptorMatcher, double matchFrac, int homographyMethod) {
+arma::mat _findTransformORB(Image image1, Image image2, int warpMode, int maxFeatures, String descriptorMatcher, double matchFrac, int homographyMethod) {
   arma::mat out;
+  cv::Mat warpMatrix;
 
   std::vector<cv::KeyPoint> keypoints1, keypoints2;
   cv::Mat descriptors1, descriptors2;
@@ -51,7 +52,11 @@ arma::mat _findTransformORB(Image image1, Image image2, int maxFeatures, String 
     points2.push_back(keypoints2[ matches[i].trainIdx ].pt);
   }
 
-  cv::Mat warpMatrix = cv::findHomography(points1, points2, homographyMethod);
+  if (warpMode == 3)
+    warpMatrix = cv::findHomography(points1, points2, homographyMethod);
+  else
+    warpMatrix = cv::estimateAffine2D(points1, points2, cv::noArray(), homographyMethod);
+
   cv2arma(warpMatrix, out);
   return out;
 }

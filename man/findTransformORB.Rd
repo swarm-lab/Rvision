@@ -7,6 +7,7 @@
 findTransformORB(
   template,
   image,
+  warp_mode = "affine",
   max_features = 500,
   descriptor_matcher = "BruteForce-Hamming",
   match_frac = 0.15,
@@ -18,6 +19,15 @@ findTransformORB(
 
 \item{image}{A grayscale \code{\link{Image}} object of the same dimensions as
 \code{template}.}
+
+\item{warp_mode}{A character string indicating the type of warping required
+to transform \code{image} into \code{template}. It can be any of the following:
+\itemize{
+ \item{"affine" (default):}{affine transformation (Euclidean + shear; this
+  transformation will preserve parallelism between lines).}
+ \item{"homography":}{homography transformation (affine + perspective; this
+  transformation does not preserve parallelism between lines).}
+}}
 
 \item{max_features}{The maximum number of features to extract (default: 500).}
 
