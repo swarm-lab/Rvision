@@ -1,6 +1,6 @@
 Rcpp::List _findContours(Image image, int mode, int method, Rcpp::NumericVector offset) {
-  std::vector<std::vector<cv::Point> > contours;
-  std::vector<cv::Vec4i> hierarchy;
+  std::vector< std::vector< cv::Point > > contours;
+  std::vector< cv::Vec4i > hierarchy;
 
   cv::findContours(image.image, contours, hierarchy, mode, method, cv::Point(offset(0), offset(1)));
 
