@@ -204,7 +204,7 @@ selectROI <- function(image, window_name = "Display", scale = 1, return_mask = T
           return the result.")
 
   r <- 0.005 * min(nrow(image_copy), ncol(image_copy))
-  l <- ceiling(r / 2)
+  l <- max(1, round(r / 2))
 
   while (!done) {
     ROI <- rbind(ROI, click(image_copy, scale = scale, window_name = window_name))
