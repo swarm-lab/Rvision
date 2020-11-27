@@ -34,7 +34,7 @@ Rcpp::List _findContours(Image image, int mode, int method, Rcpp::NumericVector 
   }
 
   Rcpp::DataFrame contours_df = Rcpp::DataFrame::create(Rcpp::Named("id") = id,
-                                                        Rcpp::Named("x") = x,
+                                                        Rcpp::Named("x") = x + 1,
                                                         Rcpp::Named("y") = -y + image.nrow());
   Rcpp::DataFrame hierarchy_df = Rcpp::DataFrame::create(Rcpp::Named("id") = h_id,
                                                          Rcpp::Named("after") = after,
