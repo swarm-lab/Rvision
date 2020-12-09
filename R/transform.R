@@ -588,7 +588,7 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3) {
 
 
 #' @export
-floodFill <- function(image, seed = c(0, 0), color = "white", lo_diff = c(0, 0, 0, 0),
+floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = c(0, 0, 0, 0),
                       up_diff = c(0, 0, 0, 0), connectivity = 4) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
@@ -602,5 +602,6 @@ floodFill <- function(image, seed = c(0, 0), color = "white", lo_diff = c(0, 0, 
   if (!(connectivity %in% c(4, 8)))
     stop("'connectivity' must be either 4 or 8.")
 
-  `_floodFill`(image, seed, col2bgr(color, alpha = TRUE), lo_diff, up_diff, connectivity)
+  `_floodFill`(image, seed - c(-1, -1), col2bgr(color, alpha = TRUE), lo_diff,
+               up_diff, connectivity)
 }
