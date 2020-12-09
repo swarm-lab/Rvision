@@ -110,7 +110,12 @@ Image _distanceTransform(Image image, int distanceType, int maskSize) {
   return Image(out);
 }
 
-
+int _floodFill(Image image, IntegerVector seedPoint, IntegerVector newVal, IntegerVector loDiff, IntegerVector upDiff, int connectivity) {
+  int area = cv::floodFill(image.image, cv::Point(seedPoint(0), seedPoint(1)),
+                           col2Scalar(newVal), 0, col2Scalar(loDiff), col2Scalar(upDiff),
+                           connectivity);
+  return area;
+}
 
 
 

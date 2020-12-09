@@ -304,4 +304,6 @@ RCPP_MODULE(methods_Transform) {
     _["outputSize"], _["interpMode"], _["borderType"], _["borderColor"]), "");
   function("_distanceTransform", &_distanceTransform, List::create(_["image"],
     _["distanceType"], _["maskSize"]), "");
+  function("_floodFill", &_floodFill, List::create(_["image"], _["seedPoint"],
+    _["newVal"], _["loDiff"], _["upDiff"], _["connectivity"]), "");
 }

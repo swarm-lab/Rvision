@@ -28,18 +28,16 @@
 #' @export
 computeECC <- function(template, image) {
   if (!isImage(template))
-    stop("template is not an Image object.")
+    stop("'template' is not an Image object.")
 
   if (!isImage(image))
-    stop("image is not an Image object.")
+    stop("'image' is not an Image object.")
 
   if (colorspace(template) != "GRAY" | colorspace(image) != "GRAY")
-    stop("template and image must be grayscale images.")
+    stop("'template' and 'image' must be grayscale images.")
 
   if (!all(dim(template) == dim(image)))
-    stop("template and image must have the same dimensions.")
-
-
+    stop("'template' and 'image' must have the same dimensions.")
 
   `_computeECC`(template, image)
 }
@@ -95,16 +93,16 @@ computeECC <- function(template, image) {
 findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200,
                              epsilon = 1e-3, filt_size = 0) {
   if (!isImage(template))
-    stop("template is not an Image object.")
+    stop("'template' is not an Image object.")
 
   if (!isImage(image))
-    stop("image is not an Image object.")
+    stop("'image' is not an Image object.")
 
   if (colorspace(template) != "GRAY" | colorspace(image) != "GRAY")
-    stop("template and image must be grayscale images.")
+    stop("'template' and 'image' must be grayscale images.")
 
   if (!all(dim(template) == dim(image)))
-    stop("template and image must have the same dimensions.")
+    stop("'template' and 'image' must have the same dimensions.")
 
   `_findTransformECC`(template, image,
                       switch(warp_mode,
@@ -172,13 +170,13 @@ findTransformORB <- function(template, image, warp_mode = "affine", max_features
                              descriptor_matcher = "BruteForce-Hamming",
                              match_frac = 0.15, homography_method = "RANSAC") {
   if (!isImage(template))
-    stop("template is not an Image object.")
+    stop("'template' is not an Image object.")
 
   if (!isImage(image))
-    stop("image is not an Image object.")
+    stop("'image' is not an Image object.")
 
   if (colorspace(template) != "GRAY" | colorspace(image) != "GRAY")
-    stop("template and image must be grayscale images.")
+    stop("'template' and 'image' must be grayscale images.")
 
   # if (!all(dim(template) == dim(image)))
   #   stop("template and image must have the same dimensions.")
@@ -259,7 +257,7 @@ findTransformORB <- function(template, image, warp_mode = "affine", max_features
 #' @export
 getPerspectiveTransform <- function(from, to) {
   if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
-    stop("from and to must be 4x2 matrices.")
+    stop("'from' and 'to' must be 4x2 matrices.")
 
   `_getPerspectiveTransform`(from, to)
 }
@@ -296,10 +294,10 @@ getPerspectiveTransform <- function(from, to) {
 #' @export
 rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, scale = 1, ...) {
   if (!isImage(image))
-    stop("image is not an Image object.")
+    stop("'image' is not an Image object.")
 
   if (length(center) != 2)
-    stop("center must be a numeric vector of length 2.")
+    stop("'center' must be a numeric vector of length 2.")
 
   center[1] <- center[1] - 1
   center[2] <- -center[2] + nrow(image)
@@ -373,13 +371,13 @@ warpAffine <- function(image, warp_matrix, output_size = dim(image)[1:2],
                        interp_mode = "linear", inverse_map = TRUE,
                        border_type = "constant", border_color = "black") {
   if (!isImage(image))
-    stop("image is not an Image object.")
+    stop("'image' is not an Image object.")
 
   if (!all(dim(warp_matrix) == c(2, 3)))
-    stop("warp_matrix should have exactly 2 rows and 3 columns.")
+    stop("'warp_matrix' should have exactly 2 rows and 3 columns.")
 
   if (length(output_size) != 2 | !is.numeric(output_size))
-    stop("output_size should be a numeric vector of length 2.")
+    stop("'output_size' should be a numeric vector of length 2.")
 
   interp_modes <- c("nearest", "linear", "cubic", "area", "lanczos4", "linear_exact")
   interp_vals <- 0:5
@@ -465,13 +463,13 @@ warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
                             interp_mode = "linear", inverse_map = TRUE,
                             border_type = "constant", border_color = "black") {
   if (!isImage(image))
-    stop("image is not an Image object.")
+    stop("'image' is not an Image object.")
 
   if (!all(dim(warp_matrix) == c(3, 3)))
-    stop("warp_matrix should have exactly 3 rows and 3 columns.")
+    stop("'warp_matrix' should have exactly 3 rows and 3 columns.")
 
   if (length(output_size) != 2 | !is.numeric(output_size))
-    stop("output_size should be a numeric vector of length 2.")
+    stop("'output_size' should be a numeric vector of length 2.")
 
   interp_modes <- c("nearest", "linear", "cubic", "area", "lanczos4", "linear_exact")
   interp_vals <- 0:5
@@ -564,10 +562,10 @@ warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #' @export
 distanceTransform <- function(image, distance_type = "L1", mask_size = 3) {
   if (!isImage(image))
-    stop("image is not an Image object.")
+    stop("'image' is not an Image object.")
 
   if (colorspace(image) != "GRAY")
-    stop("image should be a grayscale object.")
+    stop("'image' should be a grayscale object.")
 
   if (min(image) > 0)
     stop("There are no zero pixel in this image.")
@@ -586,4 +584,23 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3) {
                               "HUBER" = 7,
                               stop("This is not a valid distance type. 'distance_type' must be one of 'L1', 'L2', 'C', 'L12', 'FAIR', 'WELSCH', or 'HUBER'.")),
                        mask_size)
+}
+
+
+#' @export
+floodFill <- function(image, seed = c(0, 0), color = "white", lo_diff = c(0, 0, 0, 0),
+                      up_diff = c(0, 0, 0, 0), connectivity = 4) {
+  if (!isImage(image))
+    stop("'image' is not an Image object.")
+
+  if (length(seed) != 2)
+    stop("'seed' should be a vector of length 2.")
+
+  if (length(lo_diff) != 4 | length(up_diff) != 4)
+    stop("'lo_diff' and 'up_diff' must be vectors of length 4.")
+
+  if (!(connectivity %in% c(4, 8)))
+    stop("'connectivity' must be either 4 or 8.")
+
+  `_floodFill`(image, seed, col2bgr(color, alpha = TRUE), lo_diff, up_diff, connectivity)
 }
