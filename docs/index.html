@@ -104,7 +104,6 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#rvision---a-computer-vision-library-for-r" class="anchor"></a>Rvision - A computer vision library for R</h1></div>
 
-<hr>
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"></a>Description</h2>
@@ -139,10 +138,11 @@
 <h3 class="hasAnchor">
 <a href="#can-i-take-selfies-with-my-webcam-using-rvision" class="anchor"></a>Can I take selfies with my webcam using <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a>?</h3>
 <p>You certainly can, but ask yourself first whether you should…</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="no">my_stream</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/stream.html">stream</a></span>(<span class="fl">0</span>)   <span class="co"># 0 will start your default webcam in general. </span>
-<span class="no">my_selfie</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/readNext.html">readNext</a></span>(<span class="no">my_stream</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">my_selfie</span>)
-<span class="fu"><a href="reference/release.html">release</a></span>(<span class="no">my_stream</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_stream</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/stream.html">stream</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>   <span class="co"># 0 will start your default webcam in general. </span>
+<span class="va">my_selfie</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_selfie</span><span class="op">)</span>
+<span class="fu"><a href="reference/release.Rcpp_Stream.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
 <p>Be careful, this will trigger the explosion of your camera if it detects that you are making a duck face ;-)</p>
 </div>
 </div>
@@ -177,8 +177,7 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/swarm-lab/Rvision"><img src="https://travis-ci.org/swarm-lab/Rvision.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/swarm-lab/Rvision"><img src="https://ci.appveyor.com/api/projects/status/github/swarm-lab/Rvision?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://github.com/swarm-lab/Rvision/actions"><img src="https://github.com/swarm-lab/Rvision/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 </div>
@@ -190,7 +189,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

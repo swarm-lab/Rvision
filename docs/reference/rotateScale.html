@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Affine Matrix of 2D Rotation — rotateScale • Rvision</title>
+<title>Image Rotation and Scaling — rotateScale • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,12 +52,8 @@
 
 
 
-<meta property="og:title" content="Affine Matrix of 2D Rotation — rotateScale" />
-<meta property="og:description" content="getRotationMatrix2D computes the affine matrix for the
- rotation of a 2D image.
-getPerspectiveTransform computes the matrix of a perspective
- transform from 4 pairs of corresponding points.
-rotateScale rotates (clockwise) and scales an image using
+<meta property="og:title" content="Image Rotation and Scaling — rotateScale" />
+<meta property="og:description" content="rotateScale rotates (clockwise) and scales an image using
  the warpAffine function." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
@@ -151,27 +147,23 @@ rotateScale rotates (clockwise) and scales an image using
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Affine Matrix of 2D Rotation</h1>
+    <h1>Image Rotation and Scaling</h1>
     <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/transform.R'><code>R/transform.R</code></a></small>
     <div class="hidden name"><code>rotateScale.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>getRotationMatrix2D</code> computes the affine matrix for the
- rotation of a 2D image.</p>
-<p><code>getPerspectiveTransform</code> computes the matrix of a perspective
- transform from 4 pairs of corresponding points.</p>
-<p><code>rotateScale</code> rotates (clockwise) and scales an image using
+    <p><code>rotateScale</code> rotates (clockwise) and scales an image using
  the <code><a href='warpAffine.html'>warpAffine</a></code> function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rotateScale</span>(
-  <span class='no'>image</span>,
-  <span class='kw'>center</span> <span class='kw'>=</span> (<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>image</span>)[<span class='fl'>2</span>:<span class='fl'>1</span>] - <span class='fl'>1</span>)/<span class='fl'>2</span>,
-  <span class='kw'>angle</span> <span class='kw'>=</span> <span class='fl'>90</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>rotateScale</span><span class='op'>(</span>
+  <span class='va'>image</span>,
+  center <span class='op'>=</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>image</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>,
+  angle <span class='op'>=</span> <span class='fl'>90</span>,
+  scale <span class='op'>=</span> <span class='fl'>1</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,36 +191,22 @@ the image.</p></td>
       <th>...</th>
       <td><p>Additional parameters for the <code><a href='warpAffine.html'>warpAffine</a></code> function.</p></td>
     </tr>
-    <tr>
-      <th>from</th>
-      <td><p>A 4x2 matrix indicating the location (x, y) of 4 points in the
-source image.</p></td>
-    </tr>
-    <tr>
-      <th>to</th>
-      <td><p>A 4x2 matrix indicating the location (x, y) of 4 points in the
-destination image. The order of the points must correspond to the order in
-<code>from</code>.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A 2x3 matrix.</p>
-<p>A 3x3 matrix.</p>
-<p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>rotateScale</code></p>
-<p><code><a href='warpPerspective.html'>warpPerspective</a></code></p>
-<p><code>getRotationMatrix2D</code>, <code><a href='warpAffine.html'>warpAffine</a></code></p></div>
+    <div class='dont-index'><p><code><a href='warpAffine.html'>warpAffine</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>getRotationMatrix2D</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>50</span>, <span class='fl'>50</span>), <span class='fl'>45</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in getRotationMatrix2D(c(50, 50), 45, 1): could not find function "getRotationMatrix2D"</span></div><div class='input'>
-<span class='no'>from</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>5</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>to</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>getPerspectiveTransform</span>(<span class='no'>from</span>, <span class='no'>to</span>)</div><div class='output co'>#&gt; <span class='error'>Error in getPerspectiveTransform(from, to): could not find function "getPerspectiveTransform"</span></div><div class='input'>
-<span class='fu'>getRotationMatrix2D</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>50</span>, <span class='fl'>50</span>), <span class='fl'>45</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in getRotationMatrix2D(c(50, 50), 45, 1): could not find function "getRotationMatrix2D"</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>img</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>img_rotated</span> <span class='op'>&lt;-</span> <span class='fu'>rotateScale</span><span class='op'>(</span><span class='va'>img</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>50</span>, <span class='fl'>50</span><span class='op'>)</span>, <span class='fl'>45</span>, <span class='fl'>1</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -245,7 +223,7 @@ destination image. The order of the points must correspond to the order in
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

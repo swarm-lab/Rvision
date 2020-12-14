@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sum Generic for additional arguments — sum • Rvision</title>
+<title>Sum Generic for Image objects — sum • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,8 +52,9 @@
 
 
 
-<meta property="og:title" content="Sum Generic for additional arguments — sum" />
-<meta property="og:description" content="Overloaded Sum to pass additional arguments" />
+<meta property="og:title" content="Sum Generic for Image objects — sum" />
+<meta property="og:description" content="Overloaded sum to handle Image
+ objects." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
 
@@ -146,31 +147,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Sum Generic for additional arguments</h1>
+    <h1>Sum Generic for Image objects</h1>
     <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/zzz.R'><code>R/zzz.R</code></a></small>
     <div class="hidden name"><code>sum.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Overloaded Sum to pass additional arguments</p>
+    <p>Overloaded <code><a href='https://rdrr.io/r/base/sum.html'>sum</a></code> to handle <code><a href='Image-class.html'>Image</a></code>
+ objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sum</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>sum</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>is an object of class <code>Rcpp_Image</code>.</p></td>
+      <td><p>An <code><a href='Image-class.html'>Image</a></code> object or a list of <code><a href='Image-class.html'>Image</a></code>
+objects.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>further arguments passed to summary methods</p></td>
-    </tr>
-    <tr>
-      <th>na.rm</th>
-      <td><p>logical: should missing values be removed?</p></td>
+      <td><p>Further arguments passed to summary methods.</p>
+<p>#' @examples
+balloon &lt;- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+sum(balloon)</p></td>
     </tr>
     </table>
 
@@ -190,7 +192,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make Timelapse from <code>Stream</code> Object — timelapse • Rvision</title>
+<title>Make Timelapse from Stream Object — timelapse • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,7 +52,7 @@
 
 
 
-<meta property="og:title" content="Make Timelapse from <code>Stream</code> Object — timelapse" />
+<meta property="og:title" content="Make Timelapse from Stream Object — timelapse" />
 <meta property="og:description" content="Generates a timelapse sequence from a Stream object with
  a given duration and interval between images." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
@@ -157,7 +157,7 @@
  a given duration and interval between images.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>timelapse</span>(<span class='no'>obj</span>, <span class='no'>outputFolder</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>duration</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"png"</span>)</pre>
+    <pre class="usage"><span class='fu'>timelapse</span><span class='op'>(</span><span class='va'>obj</span>, <span class='va'>outputFolder</span>, interval <span class='op'>=</span> <span class='fl'>1</span>, duration <span class='op'>=</span> <span class='cn'>Inf</span>, format <span class='op'>=</span> <span class='st'>"png"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,13 +195,18 @@ manually.</p></td>
 
     <p>This function does not return anything. It saves captured images in
  <code>outputFolder</code>.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>live</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='stream.html'>stream</a></span>(<span class='fl'>0</span>)
-<span class='fu'>timelapse</span>(<span class='no'>live</span>, <span class='st'>"./out"</span>)
-<span class='fu'><a href='release.html'>release</a></span>(<span class='no'>live</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>live</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stream.html'>stream</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>
+<span class='fu'>timelapse</span><span class='op'>(</span><span class='va'>live</span>, <span class='st'>"./out"</span><span class='op'>)</span>
+<span class='fu'><a href='release.Rcpp_Stream.html'>release</a></span><span class='op'>(</span><span class='va'>live</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -217,7 +222,7 @@ manually.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

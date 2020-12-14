@@ -157,15 +157,15 @@
  an image.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>warpPerspective</span>(
-  <span class='no'>image</span>,
-  <span class='no'>from</span>,
-  <span class='no'>to</span>,
-  <span class='kw'>output_size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>image</span>)[<span class='fl'>1</span>:<span class='fl'>2</span>],
-  <span class='kw'>interp_mode</span> <span class='kw'>=</span> <span class='st'>"linear"</span>,
-  <span class='kw'>border_type</span> <span class='kw'>=</span> <span class='st'>"constant"</span>,
-  <span class='kw'>border_color</span> <span class='kw'>=</span> <span class='st'>"black"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>warpPerspective</span><span class='op'>(</span>
+  <span class='va'>image</span>,
+  <span class='va'>warp_matrix</span>,
+  output_size <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>image</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>,
+  interp_mode <span class='op'>=</span> <span class='st'>"linear"</span>,
+  inverse_map <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  border_type <span class='op'>=</span> <span class='st'>"constant"</span>,
+  border_color <span class='op'>=</span> <span class='st'>"black"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,15 +175,8 @@
       <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
     </tr>
     <tr>
-      <th>from</th>
-      <td><p>A 4x2 matrix indicating the location (x, y) of 4 points in the
-source image.</p></td>
-    </tr>
-    <tr>
-      <th>to</th>
-      <td><p>A 4x2 matrix indicating the location (x, y) of 4 points in the
-destination image. The order of the points must correspond to the order in
-<code>from</code>.</p></td>
+      <th>warp_matrix</th>
+      <td><p>A 3x3 numeric matrix.</p></td>
     </tr>
     <tr>
       <th>output_size</th>
@@ -204,6 +197,11 @@ any of the following:</p><ul>
 <li><p>"lanczos4":Lanczos interpolation over 8x8 neighborhood.</p></li>
 <li><p>"linear_exact":bit exact bilinear interpolation.</p></li>
 </ul></td>
+    </tr>
+    <tr>
+      <th>inverse_map</th>
+      <td><p>A logical. TRUE if <code>warp_matrix</code> represents an inverse
+transformation. If FALSE, <code>warp_matrix</code> will be inverted.</p></td>
     </tr>
     <tr>
       <th>border_type</th>
@@ -233,14 +231,19 @@ compatible with <code><a href='col2bgr.html'>col2bgr</a></code> representing the
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code>warpPerspective</code>, <code><a href='findTransformECC.html'>findTransformECC</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>file1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"sample_img/balloon1.png"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"Rvision"</span>)
-<span class='no'>file2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"sample_img/balloon2.png"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"Rvision"</span>)
-<span class='no'>balloon1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span>(<span class='fu'><a href='image.html'>image</a></span>(<span class='no'>file1</span>), <span class='st'>"GRAY"</span>)
-<span class='no'>balloon2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span>(<span class='fu'><a href='image.html'>image</a></span>(<span class='no'>file2</span>), <span class='st'>"GRAY"</span>)
-<span class='no'>ecc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='findTransformECC.html'>findTransformECC</a></span>(<span class='no'>balloon1</span>, <span class='no'>balloon2</span>)
-<span class='no'>balloon2_transformed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='warpAffine.html'>warpAffine</a></span>(<span class='no'>balloon2</span>, <span class='no'>ecc</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>file1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span>
+<span class='va'>file2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon2.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span>
+<span class='va'>balloon1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='va'>file1</span><span class='op'>)</span>, <span class='st'>"GRAY"</span><span class='op'>)</span>
+<span class='va'>balloon2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='va'>file2</span><span class='op'>)</span>, <span class='st'>"GRAY"</span><span class='op'>)</span>
+<span class='va'>ecc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='findTransformECC.html'>findTransformECC</a></span><span class='op'>(</span><span class='va'>balloon1</span>, <span class='va'>balloon2</span><span class='op'>)</span>
+<span class='va'>balloon2_transformed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='warpAffine.html'>warpAffine</a></span><span class='op'>(</span><span class='va'>balloon2</span>, <span class='va'>ecc</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -256,7 +259,7 @@ compatible with <code><a href='col2bgr.html'>col2bgr</a></code> representing the
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

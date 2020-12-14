@@ -79,6 +79,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/connectedComponents.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/contourArea.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/destroyDisplay.html</loc>
   </url>
   <url>
@@ -136,6 +139,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/findTransformECC.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/findTransformORB.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/fps.html</loc>
   </url>
   <url>
@@ -143,6 +149,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/gaussianBlur.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/getPerspectiveTransform.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/getTextSize.html</loc>
@@ -176,9 +185,6 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/matchTemplate.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/mean.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/medianBlur.html</loc>

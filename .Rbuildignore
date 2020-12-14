@@ -3,8 +3,6 @@
 helpers
 LICENSE
 scripts
-^appveyor\.yml$
-^\.travis\.yml$
 vignettes/old
 _pkgdown.yaml
 pkgdown
@@ -12,3 +10,4 @@ docs
 index.Rmd
 logo.*
 ci_script
+^\.github$

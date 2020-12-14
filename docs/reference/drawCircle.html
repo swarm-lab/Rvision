@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Draw Circles on an <code><a href='Image-class.html'>Image</a></code> — drawCircle • Rvision</title>
+<title>Draw Circles on an Image — drawCircle • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,7 +52,7 @@
 
 
 
-<meta property="og:title" content="Draw Circles on an <code><a href='Image-class.html'>Image</a></code> — drawCircle" />
+<meta property="og:title" content="Draw Circles on an Image — drawCircle" />
 <meta property="og:description" content="drawCirlc draws circles over an Image
  object. This operation is destructive: it changes irreversibly the
  Image object and cannot be undone." />
@@ -159,7 +159,7 @@
  <code><a href='Image-class.html'>Image</a></code> object and cannot be undone.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>drawCircle</span>(<span class='no'>image</span>, <span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>radius</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>thickness</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>drawCircle</span><span class='op'>(</span><span class='va'>image</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>radius</span>, color <span class='op'>=</span> <span class='st'>"red"</span>, thickness <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,11 +203,15 @@ rectangle is drawn.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='drawEllipse.html'>drawEllipse</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>balloon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"sample_img/balloon1.png"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"Rvision"</span>))
-<span class='fu'>drawCircle</span>(<span class='no'>balloon</span>, <span class='fl'>365</span>, <span class='fl'>245</span>, <span class='fl'>90</span>, <span class='kw'>thickness</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>balloon</span>)</div><div class='img'><img src='drawCircle-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>drawCircle</span><span class='op'>(</span><span class='va'>balloon</span>, <span class='fl'>365</span>, <span class='fl'>245</span>, <span class='fl'>90</span>, thickness <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>
+</div><div class='img'><img src='drawCircle-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -224,7 +228,7 @@ rectangle is drawn.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

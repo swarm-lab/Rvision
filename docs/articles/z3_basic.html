@@ -97,7 +97,8 @@
 
       
 
-      </header><script src="z3_basic_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="z3_basic_files/header-attrs-2.5/header-attrs.js"></script><link href="z3_basic_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="z3_basic_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>3 - Basic operations</h1>
@@ -180,14 +181,14 @@
 </tr>
 <tr class="odd">
 <td align="left"><strong>Framerate</strong></td>
-<td align="left"><code><a href="../reference/fps.html">fps(x)</a></code></td>
+<td align="left"><code><a href="../reference/fps.Rcpp_Video.html">fps(x)</a></code></td>
 <td align="left">-</td>
 <td align="left">-</td>
 <td align="left">-</td>
 </tr>
 <tr class="even">
 <td align="left"><strong>Codec</strong></td>
-<td align="left"><code><a href="../reference/codec.html">codec(x)</a></code></td>
+<td align="left"><code><a href="../reference/codec.Rcpp_Video.html">codec(x)</a></code></td>
 <td align="left">-</td>
 <td align="left">-</td>
 <td align="left">-</td>
@@ -218,37 +219,39 @@
 <div id="method-compatible-with-base-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#method-compatible-with-base-r" class="anchor"></a>3.2.1 - Method compatible with base R</h3>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">path_to_image</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"Rvision"</span>)
-<span class="no">my_image</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span>(<span class="kw">filename</span> <span class="kw">=</span> <span class="no">path_to_image</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">my_image</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="kw">h</span> <span class="kw">=</span> <span class="fl">400</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"red"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">5</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="kw">h</span> <span class="kw">=</span> <span class="fl">550</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"red"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">5</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="kw">v</span> <span class="kw">=</span> <span class="fl">430</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"red"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">5</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="kw">v</span> <span class="kw">=</span> <span class="fl">570</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"red"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">5</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">400</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">550</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">430</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">570</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
 <p><img src="z3_basic_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
 <div id="method-incompatible-with-base-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#method-incompatible-with-base-r" class="anchor"></a>3.2.2 - Method incompatible with base R</h3>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">path_to_video</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"Rvision"</span>)
-<span class="no">my_video</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span>(<span class="kw">filename</span> <span class="kw">=</span> <span class="no">path_to_video</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+<span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span>
 
 <span class="co"># Create an empty display window (note: it can hide behind other windows)</span>
-<span class="fu"><a href="../reference/newDisplay.html">newDisplay</a></span>(<span class="st">"My display"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">my_video</span>) / <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">my_video</span>) / <span class="fl">2</span>)
+<span class="fu"><a href="../reference/newDisplay.html">newDisplay</a></span><span class="op">(</span><span class="st">"My display"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> 
 
 <span class="co"># Display images (note: it creates the display window if it doesn't exist yet)</span>
 <span class="co"># The 3rd argument ('delay') is the minimum time in ms during which the image </span>
 <span class="co"># should be displayed before it can be replaced</span>
-<span class="kw">for</span> (<span class="no">i</span> <span class="kw">in</span> <span class="fl">1</span>:<span class="fl">25</span>) {
-  <span class="fu"><a href="../reference/display.html">display</a></span>(<span class="fu"><a href="../reference/readNext.html">readNext</a></span>(<span class="no">my_video</span>), <span class="st">"My display"</span>, <span class="fl">25</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">my_video</span>) / <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">my_video</span>) / <span class="fl">2</span>)
-}
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="../reference/display.html">display</a></span><span class="op">(</span><span class="fu"><a href="../reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span>, <span class="st">"My display"</span>, <span class="fl">25</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>
+<span class="op">}</span>
 
 <span class="co"># Close display</span>
-<span class="fu"><a href="../reference/destroyDisplay.html">destroyDisplay</a></span>(<span class="st">"My display"</span>)
+<span class="fu"><a href="../reference/destroyDisplay.html">destroyDisplay</a></span><span class="op">(</span><span class="st">"My display"</span><span class="op">)</span>
 
 <span class="co"># Close all opened displays</span>
-<span class="fu"><a href="../reference/destroyDisplay.html">destroyAllDisplays</a></span>()</pre></body></html></div>
+<span class="fu"><a href="../reference/destroyDisplay.html">destroyAllDisplays</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <hr>
 </div>
 </div>
@@ -256,25 +259,29 @@
 <h2 class="hasAnchor">
 <a href="#accessingreplacing-parts-of-an-image" class="anchor"></a>3.3 - Accessing/replacing parts of an image</h2>
 <p>You can access parts of an image in the same way you would do it with matrices and arrays in base <a href="https://cran.r-project.org"><code>R</code></a>.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">my_image</span>[]          <span class="co"># Entire image</span>
-<span class="no">my_image</span>[<span class="fl">1</span>, <span class="fl">1</span>]      <span class="co"># Bottom-right pixel</span>
-<span class="no">my_image</span>[<span class="fl">1</span>, ]       <span class="co"># Bottom row of pixels</span>
-<span class="no">my_image</span>[, <span class="fl">1</span>]       <span class="co"># Leftmost column of pixels</span>
-<span class="no">my_image</span>[<span class="fl">1</span>:<span class="fl">5</span>, <span class="fl">1</span>:<span class="fl">5</span>]  <span class="co"># All pixels between the 1st and 5th row and column</span>
-<span class="no">my_image</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">TRUE</span>, <span class="fl">FALSE</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">TRUE</span>, <span class="fl">FALSE</span>)]  <span class="co"># Every other row and column of pixels</span></pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_image</span><span class="op">[</span><span class="op">]</span>          <span class="co"># Entire image</span>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span>      <span class="co"># Bottom-right pixel</span>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>       <span class="co"># Bottom row of pixels</span>
+<span class="va">my_image</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>       <span class="co"># Leftmost column of pixels</span>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>  <span class="co"># All pixels between the 1st and 5th row and column</span>
+<span class="va">my_image</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">]</span>  <span class="co"># Every other row and column of pixels</span></code></pre></div>
 <p>Note that images are not exactly like traditional matrices. Color images have multiple layers, each corresponsing to a dimension in the BGR or BGRA space (Blue, Green, Red, Alpha transparency). Therefore, when accessing a pixel of a color image, you will obtain 3 or 4 values in return. Grayscale images, on the other hand, function similarly to regular monolayer matrices in base <a href="https://cran.r-project.org"><code>R</code></a>.</p>
-<p>To replace parts of an image, you can use the <code>&lt;-</code> assignment operator. With grayscale images, it works exactly like in base <a href="https://cran.r-project.org"><code>R</code></a> with matrices.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">my_gray_image</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/changeColorSpace.html">changeColorSpace</a></span>(<span class="no">my_image</span>, <span class="st">"GRAY"</span>)
-<span class="no">my_gray_image</span>[<span class="fl">1</span>:<span class="fl">250</span>, <span class="fl">1</span>:<span class="fl">250</span>] <span class="kw">&lt;-</span> <span class="fl">0</span>  <span class="co"># Turn the corresponding pixels to black</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">my_gray_image</span>)</pre></body></html></div>
+<p>To replace parts of an image, you can use the <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> assignment operator. With grayscale images, it works exactly like in base <a href="https://cran.r-project.org"><code>R</code></a> with matrices.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_gray_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="st">"GRAY"</span><span class="op">)</span>
+<span class="va">my_gray_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">250</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>  <span class="co"># Turn the corresponding pixels to black</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_gray_image</span><span class="op">)</span></code></pre></div>
 <p><img src="z3_basic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>With color images however, you will need to supply 3 (for BGR images) or 4 (for BGRA images) values (or any multiple of 3 or 4 respectively).</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">my_image</span>[<span class="fl">1</span>:<span class="fl">250</span>, <span class="fl">1</span>:<span class="fl">250</span>] <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">255</span>, <span class="fl">255</span>) <span class="co"># Turn the corresponding pixels to red</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">my_image</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">250</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">255</span>, <span class="fl">255</span><span class="op">)</span> <span class="co"># Turn the corresponding pixels to red</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></code></pre></div>
 <p><img src="z3_basic_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>The utility function <code>col2bgr</code> provided by <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> (not to be confused with <code>col2rgb</code> provided by the <code>grDevices</code> package and on which <code>col2bgr</code> is based) will conveniently convert any of the <a href="https://cran.r-project.org"><code>R</code></a>-compatible color specifications to color codes compatible with <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> images.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">my_image</span>[<span class="fl">1</span>:<span class="fl">250</span>, <span class="fl">1</span>:<span class="fl">250</span>] <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/col2bgr.html">col2bgr</a></span>(<span class="st">"blue"</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="co"># Turn the corresponding pixels to blue</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">my_image</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">250</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/col2bgr.html">col2bgr</a></span><span class="op">(</span><span class="st">"blue"</span>, alpha <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># Turn the corresponding pixels to blue</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></code></pre></div>
 <p><img src="z3_basic_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
   </div>
@@ -294,7 +301,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
