@@ -68,6 +68,27 @@ range.Rcpp_Image <- function(x, ...) {
 }
 
 
+#' @title Mean Value of the Pixels in an Image
+#'
+#' @description Returns the mean of the pixel values of an \code{\link{Image}}
+#'  object. If the \code{\link{Image}} object has more than one channel, it
+#'  returns the mean for each channel.
+#'
+#' @param x An \code{\link{Image}} object.
+#'
+#' @param ... Unused at the moment.
+#'
+#' @return A numeric value (for single-channel images) or a vector of numeric
+#'  values (for multi-channel images).
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' mean(balloon)
+#'
 #' @export
 mean.Rcpp_Image <- function(x, ..., mask = NA) {
   if (!isImage(x))
@@ -94,6 +115,7 @@ mean.Rcpp_Image <- function(x, ..., mask = NA) {
   )
 }
 
+
 #' @export
 sum.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
@@ -111,6 +133,27 @@ sum.Rcpp_Image <- function(x, ...) {
 }
 
 
+#' @title Mean of Images in a List
+#'
+#' @description Returns the pixelwise mean of \code{\link{Image}} objects stored
+#' in a list.
+#'
+#' @param x A list of \code{\link{Image}} objects. All images must have the same
+#'  dimensions, number of channels, and bitdepth.
+#'
+#' @param ... Unused at the moment.
+#'
+#' @return An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' img_list <- lapply(1:10, function(x) readNext(balloon))
+#' plot(mean(img_list))
+#'
 #' @export
 mean.list <- function(x, ...) {
   test <- sapply(x, function(x) class(x) == "Rcpp_Image")

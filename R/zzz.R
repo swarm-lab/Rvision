@@ -101,13 +101,31 @@ methods::evalqOnLoad({
 #'  objects.
 #'
 #' @param x An \code{\link{Image}} object or a list of \code{\link{Image}}
-#'  objects.
+#'  objects with the same dimensions, number of channels, and bitdepth.
 #'
 #' @param ... Further arguments passed to summary methods.
 #'
-#' #' @examples
+#' @return If \code{x} is an \code{\link{Image}} object, the function returns
+#'  the sum of the pixel values of an \code{\link{Image}} object. If the
+#'  \code{\link{Image}} object has more than one channel, it returns the sum for
+#'  each channel. If \code{x} is a list of \code{\link{Image}} objects, the
+#'  function returns an \code{\link{Image}} object.
+#'
+#' @method sum Rcpp_Image
+#'
+#' @method sum list
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' sum(balloon)
+#'
+#' vid_balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' img_list <- lapply(1:10, function(x) readNext(vid_balloon))
+#' sum(img_list)
 #'
 #' @export
 setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),

@@ -587,21 +587,95 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3) {
 }
 
 
+#' @title Fills a Connected Component with a Given Color.
+#'
+#' @description \code{floodFill} fills a connected component starting from a
+#'  seed point with a specified color.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param seed A 2-element vector indicating the x and y coordinates of the seed
+#'  point from where to start the filling.
+#'
+#' @param color A value or vector of any kind of R color specification
+#'  compatible with \code{\link{col2bgr}} representing the color of the border
+#'  (default: "white").
+#'
+#' @param lo_diff Maximal lower brightness/color difference between the
+#'  currently observed pixel and one of its neighbors belonging to the component,
+#'  or a seed pixel being added to the component (see Details). This should be a
+#'  vector of length 4. If it is has less than 4 elements, they will be recycled.
+#'  If it has more, only the first 4 will be used.
+#'
+#' @param up_diff Maximal upper brightness/color difference between the
+#'  currently observed pixel and one of its neighbors belonging to the component,
+#'  or a seed pixel being added to the component (see Details). This should be a
+#'  vector of length 4. If it is has less than 4 elements, they will be recycled.
+#'  If it has more, only the first 4 will be used.
+#'
+#' @param connectivity The connetivity neighborhood to decide whether 2 pixels
+#'  are contiguous. This parameter can take two values:
+#'  \itemize{
+#'   \item{4: }{the neighborhood of a pixel are the four pixels located above
+#'    (north), below (south), to the left (west) and right (east) of the pixel.}
+#'   \item{8 (the default): }{the neighborhood of a pixel includes the four
+#'    4-neighbors and the four pixels along the diagonal directions (northeast,
+#'    northwest, southeast, and southwest).}
+#'  }
+#'
+#' @details The connectivity is determined by the color/brightness closeness of
+#'  the neighbor pixels. The pixel at (x,y) is considered to belong to the
+#'  repainted domain if:
+#'  \itemize{
+#'   \item{in case of a floating range:
+#'    \itemize{
+#'     \item{\code{image[x',y'] - lo_diff <= image[x,y] <= image[x',y'] + up_diff}}
+#'    }
+#'   }
+#'   \item{in case of a fixed range:
+#'    \itemize{
+#'     \item{\code{image[seed$x,seed$y] − lo_diff <= image[x,y] <= image(seed$x,seed$y) + up_diff }}
+#'    }
+#'   }
+#'  }
+#'  where image[x′,y′] is the value of one of pixel neighbors that is already
+#'  known to belong to the component. That is, to be added to the connected
+#'  component, a color/brightness of the pixel should be close enough to:
+#'  \itemize{
+#'   \item{Color/brightness of one of its neighbors that already belong to the
+#'    connected component in case of a floating range.}
+#'   \item{Color/brightness of the seed point in case of a fixed range.}
+#'  }
+#'
+#' @return This function returns the number of pixels that were filled and
+#'  modifies \code{image} in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{connectedComponents}}
+#'
+#' @examples
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_gray <- changeColorSpace(dots, "GRAY")
+#' dots_bin <- dots_gray < 200
+#' floodFill(dots, color = "green")
+#' plot(dots)
+#'
 #' @export
-floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = c(0, 0, 0, 0),
-                      up_diff = c(0, 0, 0, 0), connectivity = 4) {
+floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = rep(0, 4),
+                      up_diff = rep(0, 4), connectivity = 4) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
   if (length(seed) != 2)
     stop("'seed' should be a vector of length 2.")
 
-  if (length(lo_diff) != 4 | length(up_diff) != 4)
-    stop("'lo_diff' and 'up_diff' must be vectors of length 4.")
-
   if (!(connectivity %in% c(4, 8)))
     stop("'connectivity' must be either 4 or 8.")
 
-  `_floodFill`(image, seed - c(-1, -1), col2bgr(color, alpha = TRUE), lo_diff,
+  lo_diff <- rep(lo_diff, length.out = 4)
+  up_diff <- rep(up_diff, length.out = 4)
+
+  `_floodFill`(image, seed - 1, col2bgr(color, alpha = TRUE), lo_diff,
                up_diff, connectivity)
 }

@@ -81,11 +81,11 @@ Rcpp::List _connectedComponents(Image image, int connectivity) {
                               Rcpp::Named("y") = y));
 }
 
-Image _watershed(Image image, Image markers) {
+void _watershed(Image image, Image markers) {
   cv::Mat out;
-  markers.image.copyTo(out);
-  cv::watershed(image.image, out);
-  return Image(out);
+  // markers.image.copyTo(out);
+  //cv::watershed(image.image, out);
+  cv::watershed(image.image, markers.image);
 }
 
 Rcpp::List _fitEllipse(arma::fmat points) {

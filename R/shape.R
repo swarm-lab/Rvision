@@ -3,7 +3,7 @@
 #' @description \code{findContours} retrieves contours from a binary image using
 #'  the algorithm by Suzuki & Be (1985).
 #'
-#' @param image An 8-bit (8U) single-channel \code{\link{Image}} object.
+#' @param image An 8-bit (8U) single-channel (GRAY) \code{\link{Image}} object.
 #'
 #' @param mode Mode of the contour retrieval algorithm. It can take the following
 #'  values:
@@ -93,7 +93,7 @@ findContours <- function(image, mode = "external", method = "simple", offset = c
     stop("'image' must be an Image object.")
 
   if (nchan(image) != 1 || bitdepth(image) != "8U")
-    stop("'image' must be an 8-bit (8U) single-channel Image object.")
+    stop("'image' must be an 8-bit (8U) single-channel (GRAY) Image object.")
 
   if (!(mode %in% c("external", "list", "ccomp", "tree")))
     stop("'mode' must be one of 'external', 'list', 'ccomp', or 'tree'.")
@@ -207,32 +207,62 @@ connectedComponents <- function(image, connectivity = 8) {
     stop("'image' must be an Image object.")
 
   if (nchan(image) != 1 || bitdepth(image) != "8U")
-    stop("'image' must be an 8-bit (8U) single-channel Image object.")
+    stop("'image' must be an 8-bit (8U) single-channel (GRAY) Image object.")
 
   if (!(connectivity %in% c(4, 8)))
     stop("'connectivity' must be either 4 or 8.")
 
   `_connectedComponents`(image, connectivity)
-
-  # if (return_table) {
-  #   if (out$n > 0) {
-  #     out$table <- .extractComponent(out$labels)
-  #     # out$table <- do.call(rbind, lapply(1:out$n, extractComponent, image = out$labels))
-  #   } else {
-  #     out$table <- data.frame(id = numeric(), x = numeric(), y = numeric())
-  #   }
-  # }
 }
 
-# .extractComponent <- function(image) {
-#   image_mat <- as.matrix(image)
-#   idx <- image_mat > 0
-#   positions <- arrayInd(which(idx), dim(image_mat))
-#   labels <- image_mat[idx]
-#   data.frame(id = labels, x = positions[, 2], y = positions[, 1])
-# }
 
-
+#' @title Image Segmentation Using the Watershed Algorithm
+#'
+#' @description \code{watershed} implements one of the variants of watershed,
+#'  non-parametric marker-based segmentation algorithm, described in Meyer (1992).
+#'
+#' @param image An 8-bit (8U), BGR \code{\link{Image}} object.
+#'
+#' @param markers A signed 32-bit (32S) single-channel (GRAY) \code{\link{Image}}
+#'  object (see Details).
+#'
+#' @return This function does not return anything. It modifies \code{markers} in
+#'  place.
+#'
+#' @details Before passing \code{image} to the function, you have to roughly
+#'  outline the desired regions in the \code{markers} image with positive (>0)
+#'  indices. So, every region is represented as one or more connected components
+#'  with the pixel values 1, 2, 3, and so on. Such markers can be retrieved from
+#'  a binary mask using \code{\link{findContours}}. The markers are "seeds" of
+#'  the future image regions. All the other pixels in \code{markers}, whose
+#'  relation to the outlined regions is not known and should be defined by the
+#'  algorithm, should be set to 0's. In the function output, each pixel in
+#'  \code{markers} is set to a value of the "seed" components or to -1 at
+#'  boundaries between the regions.
+#'
+#' @references Meyer F. Color image segmentation. 1992 International Conference
+#'  on Image Processing. 1992. Available:
+#'  https://ieeexplore.ieee.org/abstract/document/785528/
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{findContours}}
+#'
+#' @examples
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_gray <- changeColorSpace(dots, "GRAY")
+#' dots_bin <- dots_gray < 200
+#' contours <- findContours(dots_bin)
+#' rows <- contours$contours$y
+#' cols <- contours$contours$x
+#' colors <- contours$contours$id + 2
+#' markers <- array(0.0, dim = c(nrow(dots_bin), ncol(dots_bin), 1))
+#' markers[1:2, 1:2, 1] <- 1
+#' markers[cbind(rows, cols, 1)] <- colors
+#' markers <- changeBitDepth(image(markers), "32S")
+#' watershed(dots, markers)
+#' plot(markers)
+#'
 #' @export
 watershed <- function(image, markers) {
   if (!isImage(image) | !isImage(markers))
@@ -248,6 +278,42 @@ watershed <- function(image, markers) {
 }
 
 
+#' @title Fit an Ellipse Around a Set of 2D Points
+#'
+#' @description \code{fitEllipse} calculates the ellipse that fits a set of 2D
+#'  points.
+#'
+#' @param x A vector of x coordinates.
+#'
+#' @param y A vector of y coordinates of the same lenght as \code{x}.
+#'
+#' @param method A character string indicating the method to use in order to fit
+#'  the ellipse. It can take the following values:
+#'  \itemize{
+#'     \item{'original': }{least square.}
+#'     \item{'ams': }{Approximate Mean Square (AMS) proposed in Taubin (1991).}
+#'     \item{'direct': }{Direct least square method proposed in Fitzgibbon, Pilu,
+#'      and Fisher (1999).}
+#'  }
+#'
+#' @return A list containing the height and width (in pixels) of the ellipse,
+#'  the angle (in degrees) of its main axis with respect to the x axis, and the
+#'  x and y coordinates of its center.
+#'
+#' @references Taubin G. Estimation of planar curves, surfaces, and nonplanar
+#'  space curves defined by implicit equations with applications to edge and
+#'  range image segmentation. IEEE Trans Pattern Anal Mach Intell. 1991;13:
+#'  1115–1138. doi:10.1109/34.103273
+#'
+#' @references Fitzgibbon A, Pilu M, Fisher RB. Direct least square fitting of
+#'  ellipses. IEEE Trans Pattern Anal Mach Intell. 1999;21: 476–480.
+#'  doi:10.1109/34.765658
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @examples
+#' fitEllipse(rnorm(100), rnorm(100))
+#'
 #' @export
 fitEllipse <- function(x, y, method = "original") {
   if (!is.vector(x) | !is.vector(y))

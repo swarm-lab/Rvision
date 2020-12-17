@@ -8,15 +8,33 @@ sum(x, ..., na.rm = FALSE)
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object or a list of \code{\link{Image}}
-objects.}
+objects with the same dimensions, number of channels, and bitdepth.}
 
-\item{...}{Further arguments passed to summary methods.
-
-#' @examples
-balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-sum(balloon)}
+\item{...}{Further arguments passed to summary methods.}
+}
+\value{
+If \code{x} is an \code{\link{Image}} object, the function returns
+ the sum of the pixel values of an \code{\link{Image}} object. If the
+ \code{\link{Image}} object has more than one channel, it returns the sum for
+ each channel. If \code{x} is a list of \code{\link{Image}} objects, the
+ function returns an \code{\link{Image}} object.
 }
 \description{
 Overloaded \code{\link[base]{sum}} to handle \code{\link{Image}}
  objects.
+}
+\examples{
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+sum(balloon)
+
+vid_balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+img_list <- lapply(1:10, function(x) readNext(vid_balloon))
+sum(img_list)
+
+}
+\seealso{
+\code{\link{Image}}
+}
+\author{
+Simon Garnier, \email{garnier@njit.edu}
 }

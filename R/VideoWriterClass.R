@@ -330,6 +330,25 @@ writerOuput <- function(x) {
 }
 
 
+#' @title Codec Name to FOURCC Code
+#'
+#' @description \code{fource} translates the 4-character name of a video codec
+#'  into its corresponding \href{http://www.fourcc.org/codecs.php}{FOURCC} code.
+#'
+#' @param x A 4-element character chain corresponding to the name of a valid
+#'  video codec. A list of valid codec names can be found at
+#'  \href{http://www.fourcc.org/codecs.php}{http://www.fourcc.org/codecs.php}.
+#'
+#' @return An integer value corresponding to the FOURCC code of the video codec.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{VideoWriter}}, \code{\link{videoWriter}},
+#'  \code{\link{codec}}
+#'
+#' @examples
+#' fourcc("xvid")
+#'
 #' @export
 fourcc <- function(x) {
   if (!is.character(x))
