@@ -93,9 +93,6 @@ void _fillPoly(Image image, Rcpp::IntegerMatrix polygon, Rcpp::IntegerVector col
   cv::fillPoly(image.image, polys, cv::Scalar(color(0), color(1), color(2)));
 }
 
-Image _inpaint(Image image, Image mask, double radius, int method) {
-  cv::Mat out;
-  cv::inpaint(image.image, mask.image, out, radius, method);
-
-  return Image(out);
+void _inpaint(Image image, Image mask, double radius, int method) {
+  cv::inpaint(image.image, mask.image, image.image, radius, method);
 }

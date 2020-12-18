@@ -402,7 +402,7 @@ drawText <- function(image, text, x, y, font_face = "simplex", font_scale = 1,
 #'
 #' @export
 getTextSize <- function(text, font_face = "simplex", font_scale = 1,
-                          italic = FALSE, thickness = 1) {
+                        italic = FALSE, thickness = 1) {
   `_getTextSize`(text, match(
     font_face,
     c("simplex", "plain", "duplex", "complex", "triplex",
@@ -474,7 +474,12 @@ fillPoly <- function(image, polygon, color = "white") {
 #'    \item{"Telea": }{Alexandru Telea's method.}
 #'  }
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -493,7 +498,7 @@ fillPoly <- function(image, polygon, color = "white") {
 #' plot(balloon_inpait)
 #'
 #' @export
-inpaint <- function(image, mask, radius = 5, method = "NS") {
+inpaint <- function(image, mask, radius = 5, method = "NS", in_place = FALSE) {
   if (!isImage(image))
     stop("image is not an 'Image' object.")
 
@@ -503,9 +508,23 @@ inpaint <- function(image, mask, radius = 5, method = "NS") {
   if (bitdepth(mask) != "8U")
     stop("mask is not an 8-bit single-channel (8U).")
 
-  `_inpaint`(image, mask, radius, switch(method,
-    "NS" = 0,
-    "Telea" = 1,
-    stop("This is not a valid method.")
-  ))
+  if (in_place == TRUE) {
+    `_inpaint`(image, mask, radius,
+               switch(method,
+                      "NS" = 0,
+                      "Telea" = 1,
+                      stop("This is not a valid method.")
+               ))
+  } else {
+    out <- `_cloneImage`(image)
+    `_inpaint`(out, mask, radius,
+               switch(method,
+                      "NS" = 0,
+                      "Telea" = 1,
+                      stop("This is not a valid method.")
+               ))
+    out
+  }
+
+
 }

@@ -4,7 +4,7 @@
 \alias{inpaint}
 \title{Reconstruct Image Region from Region Neighborhood}
 \usage{
-inpaint(image, mask, radius = 5, method = "NS")
+inpaint(image, mask, radius = 5, method = "NS", in_place = FALSE)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -21,9 +21,14 @@ following:
   \item{"NS": }{Navier-Stokes based method (the default).}
   \item{"Telea": }{Alexandru Telea's method.}
 }}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image} in place.
 }
 \description{
 \code{inpaint} reconstructs the selected image area from the
