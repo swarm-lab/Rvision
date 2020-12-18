@@ -25,6 +25,10 @@
 #' @param iterations The number of times the morphological operations should be
 #'  applied.
 #'
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
 #' @return An \code{\link{Image}} object.
 #'
 #' @note There are 8 types of morphological operations that can be achieved with
@@ -66,43 +70,82 @@
 #'
 #' @export
 morph <- function(image, operation, kernel = NULL, k_shape = "rectangle",
-                  k_height = 5, k_width = 5, iterations = 1) {
+                  k_height = 5, k_width = 5, iterations = 1, in_place = FALSE) {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
   if (is.null(kernel)) {
-    `_morph`(image,
-             switch(operation,
-                    "erode" = 0,
-                    "dilate" = 1,
-                    "open" = 2,
-                    "close" = 3,
-                    "gradient" = 4,
-                    "tophat" = 5,
-                    "blackhat" = 6,
-                    "hitmiss" = 7,
-                    stop("This is not a valid operation.")),
-             switch(k_shape,
-                    "rectangle" = 0,
-                    "cross" = 1,
-                    "ellipse" = 2,
-                    stop("This is not a valid kernel.")),
-             k_height, k_width, iterations)
+    if (in_place == TRUE) {
+      `_morph`(image,
+               switch(operation,
+                      "erode" = 0,
+                      "dilate" = 1,
+                      "open" = 2,
+                      "close" = 3,
+                      "gradient" = 4,
+                      "tophat" = 5,
+                      "blackhat" = 6,
+                      "hitmiss" = 7,
+                      stop("This is not a valid operation.")),
+               switch(k_shape,
+                      "rectangle" = 0,
+                      "cross" = 1,
+                      "ellipse" = 2,
+                      stop("This is not a valid kernel.")),
+               k_height, k_width, iterations)
+    } else {
+      out <- cloneImage(image)
+      `_morph`(out,
+               switch(operation,
+                      "erode" = 0,
+                      "dilate" = 1,
+                      "open" = 2,
+                      "close" = 3,
+                      "gradient" = 4,
+                      "tophat" = 5,
+                      "blackhat" = 6,
+                      "hitmiss" = 7,
+                      stop("This is not a valid operation.")),
+               switch(k_shape,
+                      "rectangle" = 0,
+                      "cross" = 1,
+                      "ellipse" = 2,
+                      stop("This is not a valid kernel.")),
+               k_height, k_width, iterations)
+      out
+    }
   } else {
     if (!is.matrix(kernel))
       stop("'kernel' must be a matrix.")
 
-    `_morphCustom`(image,
-             switch(operation,
-                    "erode" = 0,
-                    "dilate" = 1,
-                    "open" = 2,
-                    "close" = 3,
-                    "gradient" = 4,
-                    "tophat" = 5,
-                    "blackhat" = 6,
-                    "hitmiss" = 7,
-                    stop("This is not a valid operation.")),
-             kernel, iterations)
+    if (in_place == TRUE) {
+      `_morphCustom`(image,
+                     switch(operation,
+                            "erode" = 0,
+                            "dilate" = 1,
+                            "open" = 2,
+                            "close" = 3,
+                            "gradient" = 4,
+                            "tophat" = 5,
+                            "blackhat" = 6,
+                            "hitmiss" = 7,
+                            stop("This is not a valid operation.")),
+                     kernel, iterations)
+    } else {
+      out <- cloneImage(image)
+      `_morphCustom`(out,
+                     switch(operation,
+                            "erode" = 0,
+                            "dilate" = 1,
+                            "open" = 2,
+                            "close" = 3,
+                            "gradient" = 4,
+                            "tophat" = 5,
+                            "blackhat" = 6,
+                            "hitmiss" = 7,
+                            stop("This is not a valid operation.")),
+                     kernel, iterations)
+      out
+    }
   }
 }

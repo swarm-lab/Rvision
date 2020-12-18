@@ -11,7 +11,8 @@ morph(
   k_shape = "rectangle",
   k_height = 5,
   k_width = 5,
-  iterations = 1
+  iterations = 1,
+  in_place = FALSE
 )
 }
 \arguments{
@@ -36,6 +37,10 @@ custom \code{kernel} is provided.}
 
 \item{iterations}{The number of times the morphological operations should be
 applied.}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
 An \code{\link{Image}} object.
