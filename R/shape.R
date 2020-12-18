@@ -259,7 +259,7 @@ connectedComponents <- function(image, connectivity = 8) {
 #' markers <- array(0.0, dim = c(nrow(dots_bin), ncol(dots_bin), 1))
 #' markers[1:2, 1:2, 1] <- 1
 #' markers[cbind(rows, cols, 1)] <- colors
-#' markers <- changeBitDepth(image(markers), "32S")
+#' changeBitDepth(image(markers), "32S", in_place = TRUE)
 #' watershed(dots, markers)
 #' plot(markers)
 #'

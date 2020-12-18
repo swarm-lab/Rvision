@@ -488,7 +488,7 @@ fillPoly <- function(image, polygon, color = "white") {
 #' mask <- image(array(0L, dim = c(nrow(balloon), ncol(balloon), 3)))
 #' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 #' fillPoly(mask, poly, color = "white")
-#' mask <- changeColorSpace(mask, "GRAY")
+#' changeColorSpace(mask, "GRAY", in_place = TRUE)
 #' balloon_inpait <- inpaint(balloon, mask)
 #' plot(balloon_inpait)
 #'

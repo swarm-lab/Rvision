@@ -554,7 +554,8 @@ warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #'
 #' @examples
 #' file <- system.file("sample_img/balloon1.png", package = "Rvision")
-#' balloon <- changeColorSpace(image(file), "GRAY")
+#' balloon <- image(file)
+#' changeColorSpace(balloon, "GRAY", in_place = TRUE)
 #' bin <- balloon < 200
 #' dst <- distanceTransform(bin)
 #' plot(dst * round(65536 / 255))

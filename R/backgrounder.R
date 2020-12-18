@@ -34,7 +34,8 @@ backgrounder <- function(video, n = 10, method = "mean") {
 
     if (bitdepth(l1[[1]]) == "8U") {
       mat <- mat * 256
-      out <- changeBitDepth(image(mat), 8)
+      out <- image(mat)
+      changeBitDepth(out, 8, in_place = TRUE)
     } else {
       out <- image(mat)
     }

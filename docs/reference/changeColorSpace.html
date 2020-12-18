@@ -157,7 +157,7 @@
  it to another colorspace (e.g BGR to grayscale).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>changeColorSpace</span><span class='op'>(</span><span class='va'>image</span>, <span class='va'>colorspace</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>changeColorSpace</span><span class='op'>(</span><span class='va'>image</span>, <span class='va'>colorspace</span>, in_place <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,11 +174,18 @@ with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer
 mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR",
 "BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".</p></td>
     </tr>
+    <tr>
+      <th>in_place</th>
+      <td><p>A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p>An <code><a href='Image-class.html'>Image</a></code> object if <code>in_place=FALSE</code>. Otherwise, it
+ returns nothing and modifies <code>image</code> in place.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>

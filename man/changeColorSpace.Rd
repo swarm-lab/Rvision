@@ -4,7 +4,7 @@
 \alias{changeColorSpace}
 \title{Convert image between colorspaces}
 \usage{
-changeColorSpace(image, colorspace)
+changeColorSpace(image, colorspace, in_place = FALSE)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -14,9 +14,14 @@ be converted to. Options are "BGR" (Blue Green Red image), "BGRA" (BGR image
 with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer
 mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR",
 "BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image} in place.
 }
 \description{
 This function takes an \code{\link{Image}} object and converts

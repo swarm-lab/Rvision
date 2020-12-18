@@ -61,16 +61,16 @@ farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
   img2 <- cloneImage(image2)
 
   if (colorspace(img1) != "GRAY")
-    img1 <- changeColorSpace(img1, "GRAY")
+    changeColorSpace(img1, "GRAY", in_place = TRUE)
 
   if (colorspace(img2) != "GRAY")
-    img2 <- changeColorSpace(img2, "GRAY")
+    changeColorSpace(img2, "GRAY", in_place = TRUE)
 
   if (bitdepth(img1) != "8U")
-    img1 <- changeBitDepth(img1, 8)
+    changeBitDepth(img1, 8, in_place = TRUE)
 
   if (bitdepth(img2) != "8U")
-    img2 <- changeBitDepth(img2, 8)
+    changeBitDepth(img2, 8, in_place = TRUE)
 
   out <- `_farneback`(img1, img2, pyr_scale, levels, winsize, iterations, poly_n, poly_sigma)
   class(out) <- "OF_array"

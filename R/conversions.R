@@ -11,7 +11,12 @@
 #'  mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR",
 #'  "BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -22,16 +27,20 @@
 #' grey_balloon <- changeColorSpace(balloon, "GRAY")
 #'
 #' @export
-changeColorSpace <- function(image, colorspace) {
+changeColorSpace <- function(image, colorspace, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
   if (!(colorspace %in% c("BGR", "BGRA", "GRAY","BayerBG2BGR","BayerGB2BGR","BayerRG2BGR","BayerGR2BGR")))
     stop("colorspace must be one of 'BGR', 'BGRA', 'GRAY', 'BayerBG2BGR', 'BayerGB2BGR', 'BayerRG2BGR', 'BayerGR2BGR'.")
 
-  out <- cloneImage(image)
-  out$changeColorSpace(colorspace)
-  out
+  if (in_place == TRUE) {
+    image$changeColorSpace(colorspace)
+  } else {
+    out <- cloneImage(image)
+    out$changeColorSpace(colorspace)
+    out
+  }
 }
 
 
@@ -48,7 +57,12 @@ changeColorSpace <- function(image, colorspace) {
 #'
 #' @param scale A scaling factor (default: 1).
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -59,7 +73,7 @@ changeColorSpace <- function(image, colorspace) {
 #' balloon_16 <- changeBitDepth(balloon, "16U")
 #'
 #' @export
-changeBitDepth <- function(image, bitdepth, scale = 1) {
+changeBitDepth <- function(image, bitdepth, scale = 1, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
@@ -72,7 +86,11 @@ changeBitDepth <- function(image, bitdepth, scale = 1) {
                      "32F" = 5L,
                      stop("Invalid bit depth."))
 
-  out <- cloneImage(image)
-  out$changeBitDepth(bitdepth, scale)
-  out
+  if (in_place == TRUE) {
+    image$changeBitDepth(bitdepth, scale)
+  } else {
+    out <- cloneImage(image)
+    out$changeBitDepth(bitdepth, scale)
+    out
+  }
 }

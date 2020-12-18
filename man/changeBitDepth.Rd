@@ -4,7 +4,7 @@
 \alias{changeBitDepth}
 \title{Convert image bit depth}
 \usage{
-changeBitDepth(image, bitdepth, scale = 1)
+changeBitDepth(image, bitdepth, scale = 1, in_place = FALSE)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -14,9 +14,14 @@ be converted to. Options are "8U", "8S", "16U", "16S", "32S", and "32F"
 respectively.}
 
 \item{scale}{A scaling factor (default: 1).}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image} in place.
 }
 \description{
 This function takes an \code{\link{Image}} object and modifies
