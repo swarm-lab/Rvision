@@ -4,7 +4,14 @@
 \alias{gaussianBlur}
 \title{Blurs an Image Using a Gaussian Filter}
 \usage{
-gaussianBlur(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y = 1)
+gaussianBlur(
+  image,
+  k_height = 5,
+  k_width = 5,
+  sigma_x = 1,
+  sigma_y = 1,
+  in_place = FALSE
+)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -18,9 +25,14 @@ gaussianBlur(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y = 1)
 
 \item{sigma_y}{The standard deviation of the kernel along the y axis
 (default: 1).}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image} in place.
 }
 \description{
 \code{gaussianBlur} convolves the source image with the

@@ -4,7 +4,7 @@
 \alias{scharr}
 \title{Calculates an Image Derivatives Using a Scharr Operator}
 \usage{
-scharr(image, dx = 1, dy = 1, scale = 1)
+scharr(image, dx = 1, dy = 1, scale = 1, in_place = FALSE)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -14,9 +14,14 @@ scharr(image, dx = 1, dy = 1, scale = 1)
 \item{dy}{Order of the y derivative (default: 1),}
 
 \item{scale}{The scale factor for the computed derivative values (default: 1).}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image} in place.
 }
 \description{
 \code{scharr} calculates the derivatives of an image using a

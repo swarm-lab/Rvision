@@ -29,7 +29,8 @@
 #'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
 #'  the default, slower but non destructive).
 #'
-#' @return An \code{\link{Image}} object.
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @note There are 8 types of morphological operations that can be achieved with
 #'  this function:
@@ -94,7 +95,7 @@ morph <- function(image, operation, kernel = NULL, k_shape = "rectangle",
                       stop("This is not a valid kernel.")),
                k_height, k_width, iterations)
     } else {
-      out <- cloneImage(image)
+      out <- `_cloneImage`(image)
       `_morph`(out,
                switch(operation,
                       "erode" = 0,
@@ -132,7 +133,7 @@ morph <- function(image, operation, kernel = NULL, k_shape = "rectangle",
                             stop("This is not a valid operation.")),
                      kernel, iterations)
     } else {
-      out <- cloneImage(image)
+      out <- `_cloneImage`(image)
       `_morphCustom`(out,
                      switch(operation,
                             "erode" = 0,

@@ -4,7 +4,7 @@
 \alias{sobel}
 \title{Calculates an Image Derivatives Using an Extended Sobel Operator}
 \usage{
-sobel(image, dx = 1, dy = 1, k_size = 5, scale = 1)
+sobel(image, dx = 1, dy = 1, k_size = 5, scale = 1, in_place = FALSE)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -16,9 +16,14 @@ sobel(image, dx = 1, dy = 1, k_size = 5, scale = 1)
 \item{k_size}{The half-size in pixels of the kernel (default: 5).}
 
 \item{scale}{The scale factor for the computed derivative values (default: 1).}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image} in place.
 }
 \description{
 \code{sobel} calculates the first, second, third, or mixed image

@@ -10,7 +10,8 @@ adaptiveThreshold(
   method = "mean",
   threshold_type = "inverse",
   block_size = 31,
-  C = 25
+  C = 25,
+  in_place = FALSE
 )
 }
 \arguments{
@@ -32,9 +33,14 @@ threshold value for the pixel (default: 31).}
 
 \item{C}{Constant subtracted from the mean or weighted mean. Normally, it is
 positive but may be zero or negative as well (default: 25).}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image} in place.
 }
 \description{
 \code{adaptiveThreshold} transforms a grayscale image to a

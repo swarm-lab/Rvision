@@ -4,15 +4,20 @@
 \alias{medianBlur}
 \title{Blurs an Image Using a Median Filter}
 \usage{
-medianBlur(image, k_size = 5)
+medianBlur(image, k_size = 5, in_place = FALSE)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
 \item{k_size}{The half-size in pixels of the kernel (default: 5).}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image} in place.
 }
 \description{
 \code{medianBlur} smoothes an image using a median filter, i.e.

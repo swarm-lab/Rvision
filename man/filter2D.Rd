@@ -4,15 +4,20 @@
 \alias{filter2D}
 \title{Image Convolution with Kernel}
 \usage{
-filter2D(image, kernel)
+filter2D(image, kernel, in_place = FALSE)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
 \item{kernel}{A matrix representing the convolution kernel.}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image} in place.
 }
 \description{
 \code{filter2D} applies an arbitrary linear filter to an image.

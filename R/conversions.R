@@ -37,7 +37,7 @@ changeColorSpace <- function(image, colorspace, in_place = FALSE) {
   if (in_place == TRUE) {
     image$changeColorSpace(colorspace)
   } else {
-    out <- cloneImage(image)
+    out <- `_cloneImage`(image)
     out$changeColorSpace(colorspace)
     out
   }
@@ -89,7 +89,7 @@ changeBitDepth <- function(image, bitdepth, scale = 1, in_place = FALSE) {
   if (in_place == TRUE) {
     image$changeBitDepth(bitdepth, scale)
   } else {
-    out <- cloneImage(image)
+    out <- `_cloneImage`(image)
     out$changeBitDepth(bitdepth, scale)
     out
   }

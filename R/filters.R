@@ -6,7 +6,12 @@
 #'
 #' @param kernel A matrix representing the convolution kernel.
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @note For color images, the same kernel is applied to each channel of the
 #'  image. If you want to apply different kernels to each channel, first split
@@ -24,14 +29,20 @@
 #' plot(balloon_edge)
 #'
 #' @export
-filter2D <- function(image, kernel) {
+filter2D <- function(image, kernel, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
   if (!is.matrix(kernel))
     stop("'kernel' must be a matrix.")
 
-  `_filter2D`(image, kernel)
+  if (in_place == TRUE) {
+    `_filter2D`(image, kernel)
+  } else {
+    out <- `_cloneImage`(image)
+    `_filter2D`(out, kernel)
+    out
+  }
 }
 
 
@@ -47,7 +58,12 @@ filter2D <- function(image, kernel) {
 #'
 #' @param kernel_y A vector representing the kernel along the y axis.
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @note For color images, the same kernel is applied to each channel of the
 #'  image. If you want to apply different kernels to each channel, first split
@@ -67,11 +83,17 @@ filter2D <- function(image, kernel) {
 #' plot(balloon_edge)
 #'
 #' @export
-sepFilter2D <- function(image, kernel_x, kernel_y) {
+sepFilter2D <- function(image, kernel_x, kernel_y, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  `_sepFilter2D`(image, kernel_x, kernel_y)
+  if (in_place == TRUE) {
+    `_sepFilter2D`(image, kernel_x, kernel_y)
+  } else {
+    out <- `_cloneImage`(image)
+    `_sepFilter2D`(out, kernel_x, kernel_y)
+    out
+  }
 }
 
 
@@ -93,7 +115,12 @@ sepFilter2D <- function(image, kernel_x, kernel_y) {
 #' @param sigma_y The standard deviation of the kernel along the y axis
 #'  (default: 1).
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -105,11 +132,18 @@ sepFilter2D <- function(image, kernel_x, kernel_y) {
 #' plot(balloon_blur)
 #'
 #' @export
-gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y = 1) {
+gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1,
+                         sigma_y = 1, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  `_gaussianBlur`(image, k_height, k_width, sigma_x, sigma_y)
+  if (in_place == TRUE) {
+    `_gaussianBlur`(image, k_height, k_width, sigma_x, sigma_y)
+  } else {
+    out <- `_cloneImage`(image)
+    `_gaussianBlur`(out, k_height, k_width, sigma_x, sigma_y)
+    out
+  }
 }
 
 
@@ -125,7 +159,12 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y 
 #'
 #' @param k_width The half-width in pixels of the kernel (default: 5).
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -137,11 +176,17 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1, sigma_y 
 #' plot(balloon_blur)
 #'
 #' @export
-boxFilter <- function(image, k_height = 5, k_width = 5) {
+boxFilter <- function(image, k_height = 5, k_width = 5, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  `_boxFilter`(image, k_height, k_width)
+  if (in_place == TRUE) {
+    `_boxFilter`(image, k_height, k_width)
+  } else {
+    out <- `_cloneImage`(image)
+    `_boxFilter`(out, k_height, k_width)
+    out
+  }
 }
 
 
@@ -157,7 +202,12 @@ boxFilter <- function(image, k_height = 5, k_width = 5) {
 #'
 #' @param k_width The half-width in pixels of the kernel (default: 5).
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -169,11 +219,17 @@ boxFilter <- function(image, k_height = 5, k_width = 5) {
 #' plot(balloon_blur)
 #'
 #' @export
-blur <- function(image, k_height = 5, k_width = 5) {
+blur <- function(image, k_height = 5, k_width = 5, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  `_blur`(image, k_height, k_width)
+  if (in_place == TRUE) {
+    `_blur`(image, k_height, k_width)
+  } else {
+    out <- `_cloneImage`(image)
+    `_blur`(out, k_height, k_width)
+    out
+  }
 }
 
 
@@ -187,7 +243,12 @@ blur <- function(image, k_height = 5, k_width = 5) {
 #'
 #' @param k_size The half-size in pixels of the kernel (default: 5).
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -199,11 +260,17 @@ blur <- function(image, k_height = 5, k_width = 5) {
 #' plot(balloon_blur)
 #'
 #' @export
-medianBlur <- function(image, k_size = 5) {
+medianBlur <- function(image, k_size = 5, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  `_medianBlur`(image, k_size)
+  if (in_place == TRUE) {
+    `_medianBlur`(image, k_size)
+  } else {
+    out <- `_cloneImage`(image)
+    `_medianBlur`(out, k_size)
+    out
+  }
 }
 
 
@@ -255,7 +322,12 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE) {
 #'
 #' @param scale The scale factor for the computed derivative values (default: 1).
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -267,11 +339,17 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE) {
 #' plot(balloon_scharr)
 #'
 #' @export
-scharr <- function(image, dx = 1, dy = 1, scale = 1) {
+scharr <- function(image, dx = 1, dy = 1, scale = 1, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  `_scharr`(image, dx, dy, scale)
+  if (in_place == TRUE) {
+    `_scharr`(image, dx, dy, scale)
+  } else {
+    out <- `_cloneImage`(image)
+    `_scharr`(out, dx, dy, scale)
+    out
+  }
 }
 
 
@@ -290,7 +368,12 @@ scharr <- function(image, dx = 1, dy = 1, scale = 1) {
 #'
 #' @param scale The scale factor for the computed derivative values (default: 1).
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -302,11 +385,17 @@ scharr <- function(image, dx = 1, dy = 1, scale = 1) {
 #' plot(balloon_sobel)
 #'
 #' @export
-sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1) {
+sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  `_sobel`(image, dx, dy, k_size, scale)
+  if (in_place == TRUE) {
+    `_sobel`(image, dx, dy, k_size, scale)
+  } else {
+    out <- `_cloneImage`(image)
+    `_sobel`(out, dx, dy, k_size, scale)
+    out
+  }
 }
 
 
@@ -321,7 +410,12 @@ sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1) {
 #'
 #' @param scale The scale factor for the computed Laplacian values (default: 1).
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -333,11 +427,17 @@ sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1) {
 #' plot(balloon_laplacian)
 #'
 #' @export
-laplacian <- function(image, k_size = 5, scale = 1) {
+laplacian <- function(image, k_size = 5, scale = 1, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  `_laplacian`(image, k_size, scale)
+  if (in_place == TRUE) {
+    `_laplacian`(image, k_size, scale)
+  } else {
+    out <- `_cloneImage`(image)
+    `_laplacian`(out, k_size, scale)
+    out
+  }
 }
 
 
@@ -390,7 +490,7 @@ spatialGradient <- function(image, k_size = 5) {
 #' @param sigma_space The filter standard deviation in the coordinate space
 #'  (see Note; default: 25).
 #'
-#' @return image An \code{\link{Image}} object.
+#' @return An \code{\link{Image}} object.
 #'
 #' @note A larger value of \code{sigma_color} means that farther colors within
 #'  the pixel neighborhood will be mixed together, resulting in larger areas of
@@ -449,7 +549,12 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
 #' @param C Constant subtracted from the mean or weighted mean. Normally, it is
 #'  positive but may be zero or negative as well (default: 25).
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -463,7 +568,8 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
 #'
 #' @export
 adaptiveThreshold <- function(image, max_value = 255, method = "mean",
-                              threshold_type = "inverse", block_size = 31, C = 25) {
+                              threshold_type = "inverse", block_size = 31, C = 25,
+                              in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
@@ -479,9 +585,17 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
   if (!(threshold_type %in% c("binary", "inverse")))
     stop("'threshold_type' must be either 'binary' or 'inverse'.")
 
-  `_adaptiveThreshold`(image, max_value, if (method == "mean") 0 else 1,
-                       if (threshold_type == "binary") 0 else 1,
-                       block_size, C)
+  if (in_place == TRUE) {
+    `_adaptiveThreshold`(image, max_value, if (method == "mean") 0 else 1,
+                         if (threshold_type == "binary") 0 else 1,
+                         block_size, C)
+  } else {
+    out <- `_cloneImage`(image)
+    `_adaptiveThreshold`(out, max_value, if (method == "mean") 0 else 1,
+                         if (threshold_type == "binary") 0 else 1,
+                         block_size, C)
+    out
+  }
 }
 
 

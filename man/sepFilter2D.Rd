@@ -4,7 +4,7 @@
 \alias{sepFilter2D}
 \title{Image Filtering with a Separable Linear Filter}
 \usage{
-sepFilter2D(image, kernel_x, kernel_y)
+sepFilter2D(image, kernel_x, kernel_y, in_place = FALSE)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -12,9 +12,14 @@ sepFilter2D(image, kernel_x, kernel_y)
 \item{kernel_x}{A vector representing the kernel along the x axis.}
 
 \item{kernel_y}{A vector representing the kernel along the y axis.}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image} in place.
 }
 \description{
 \code{sepFilter2D} applies a separable linear filter to an image.

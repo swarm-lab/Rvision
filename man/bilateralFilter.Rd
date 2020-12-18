@@ -18,7 +18,7 @@ bilateralFilter(image, d = 5, sigma_color = 25, sigma_space = 25)
 (see Note; default: 25).}
 }
 \value{
-image An \code{\link{Image}} object.
+An \code{\link{Image}} object.
 }
 \description{
 \code{bilateralFilter} applies the bilateral filter to an image.
