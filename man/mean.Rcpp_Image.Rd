@@ -10,6 +10,11 @@
 \item{x}{An \code{\link{Image}} object.}
 
 \item{...}{Unused at the moment.}
+
+\item{mask}{A single-channel (GRAY) 8-bit (8U) \code{\link{Image}} object
+with the same dimensions as \code{x}. This can be used to mask out pixels
+that should not be considered when calculating the mean (pixels set to 0 in
+the mask will be ignored during the mean calculation).}
 }
 \value{
 A numeric value (for single-channel images) or a vector of numeric

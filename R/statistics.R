@@ -78,6 +78,11 @@ range.Rcpp_Image <- function(x, ...) {
 #'
 #' @param ... Unused at the moment.
 #'
+#' @param mask A single-channel (GRAY) 8-bit (8U) \code{\link{Image}} object
+#'  with the same dimensions as \code{x}. This can be used to mask out pixels
+#'  that should not be considered when calculating the mean (pixels set to 0 in
+#'  the mask will be ignored during the mean calculation).
+#'
 #' @return A numeric value (for single-channel images) or a vector of numeric
 #'  values (for multi-channel images).
 #'
@@ -111,23 +116,6 @@ mean.Rcpp_Image <- function(x, ..., mask = NA) {
          NA,
          avg[, 1:3],
          avg,
-         NA
-  )
-}
-
-
-#' @export
-sum.Rcpp_Image <- function(x, ...) {
-  if (!isImage(x))
-    stop("This is not an Image object.")
-
-  sum <- `_sumPx`(x)
-
-  switch(nchan(x),
-         matrix(sum[1, 1], nrow = 1, ncol = 1, dimnames = list(c("sum"), c("GRAY"))),
-         NA,
-         sum[, 1:3],
-         sum,
          NA
   )
 }

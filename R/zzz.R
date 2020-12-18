@@ -95,25 +95,25 @@ methods::evalqOnLoad({
 })
 
 
+### Define generic statistics methods ###
 #' @title Sum Generic for Image objects
 #'
 #' @description Overloaded \code{\link[base]{sum}} to handle \code{\link{Image}}
-#'  objects.
+#'  objects and lists of \code{\link{Image}} objects.
 #'
 #' @param x An \code{\link{Image}} object or a list of \code{\link{Image}}
-#'  objects with the same dimensions, number of channels, and bitdepth.
+#'  objects.
 #'
 #' @param ... Further arguments passed to summary methods.
 #'
-#' @return If \code{x} is an \code{\link{Image}} object, the function returns
-#'  the sum of the pixel values of an \code{\link{Image}} object. If the
-#'  \code{\link{Image}} object has more than one channel, it returns the sum for
-#'  each channel. If \code{x} is a list of \code{\link{Image}} objects, the
-#'  function returns an \code{\link{Image}} object.
+#' @param na.rm Not used but retained for compatibility with base
+#'  \code{\link[base]{sum}}.
 #'
-#' @method sum Rcpp_Image
-#'
-#' @method sum list
+#' @return If \code{x} is an \code{\link{Image}} object, the function returns a
+#'  numeric value (for single-channel images) or a vector of numeric values (for
+#'  multi-channel images). If \code{x} is a list of \code{\link{Image}} objects,
+#'  the function returns an \code{\link{Image}} object corresponding to the
+#'  pixelwise sum of the images in the  list.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -123,18 +123,20 @@ methods::evalqOnLoad({
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' sum(balloon)
 #'
-#' vid_balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
-#' img_list <- lapply(1:10, function(x) readNext(vid_balloon))
+#' balloon_vid <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' img_list <- lapply(1:10, function(x) readNext(balloon_vid))
 #' sum(img_list)
+#'
+#' @name sum
 #'
 #' @export
 setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),
            useAsDefault = function(x, ..., na.rm = FALSE) base::sum(x, ..., na.rm = na.rm),
            group = "Summary")
 
-
-### Define generic statistics methods ###
 methods::evalqOnLoad({
+  #' @name sum
+  #' @rdname sum
   setMethod("sum", "list",
             function(x, ...) {
               test <- sapply(x, function(x) class(x) == "Rcpp_Image")
@@ -142,6 +144,20 @@ methods::evalqOnLoad({
                 `_sumList`(x)
               else
                 base::sum(x, ...)
+            })
+
+  setMethod("sum", "Rcpp_Image",
+            function(x, ...) {
+              sum <- `_sumPx`(x)
+
+              switch(nchan(x),
+                     matrix(sum[1, 1], nrow = 1, ncol = 1,
+                            dimnames = list(c("sum"), c("GRAY"))),
+                     NA,
+                     sum[, 1:3],
+                     sum,
+                     NA
+              )
             })
 })
 
