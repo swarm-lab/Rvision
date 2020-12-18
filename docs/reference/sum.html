@@ -54,7 +54,7 @@
 
 <meta property="og:title" content="Sum Generic for Image objects — sum" />
 <meta property="og:description" content="Overloaded sum to handle Image
- objects." />
+ objects and lists of Image objects." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
 
@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.1</span>
       </span>
     </div>
 
@@ -154,7 +154,7 @@
 
     <div class="ref-description">
     <p>Overloaded <code><a href='https://rdrr.io/r/base/sum.html'>sum</a></code> to handle <code><a href='Image-class.html'>Image</a></code>
- objects.</p>
+ objects and lists of <code><a href='Image-class.html'>Image</a></code> objects.</p>
     </div>
 
     <pre class="usage"><span class='fu'>sum</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
@@ -169,14 +169,41 @@ objects.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Further arguments passed to summary methods.</p>
-<p>#' @examples
-balloon &lt;- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-sum(balloon)</p></td>
+      <td><p>Further arguments passed to summary methods.</p></td>
+    </tr>
+    <tr>
+      <th>na.rm</th>
+      <td><p>Not used but retained for compatibility with base
+<code><a href='https://rdrr.io/r/base/sum.html'>sum</a></code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>If <code>x</code> is an <code><a href='Image-class.html'>Image</a></code> object, the function returns a
+ numeric value (for single-channel images) or a vector of numeric values (for
+ multi-channel images). If <code>x</code> is a list of <code><a href='Image-class.html'>Image</a></code> objects,
+ the function returns an <code><a href='Image-class.html'>Image</a></code> object corresponding to the
+ pixelwise sum of the images in the  list.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>sum</span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        B        G        R 
+#&gt; 37967180 34473652 29520940 </div><div class='input'>
+<span class='va'>balloon_vid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='video.html'>video</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_vid/Balloon.mp4"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>img_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='readNext.Rcpp_Stream.html'>readNext</a></span><span class='op'>(</span><span class='va'>balloon_vid</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>sum</span><span class='op'>(</span><span class='va'>img_list</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Class: image. 
+#&gt; Dimensions: 640x360.
+#&gt; Type: BGR, 32F.</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

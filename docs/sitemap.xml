@@ -142,6 +142,15 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/findTransformORB.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/fitEllipse.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/floodFill.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/fourcc.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/fps.html</loc>
   </url>
   <url>
@@ -185,6 +194,12 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/matchTemplate.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/mean.Rcpp_Image.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/mean.list.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/medianBlur.html</loc>
@@ -296,6 +311,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/warpPerspective.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/watershed.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/write.Image.html</loc>
