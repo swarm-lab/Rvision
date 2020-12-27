@@ -83,8 +83,6 @@ Rcpp::List _connectedComponents(Image image, int connectivity) {
 
 void _watershed(Image image, Image markers) {
   cv::Mat out;
-  // markers.image.copyTo(out);
-  //cv::watershed(image.image, out);
   cv::watershed(image.image, markers.image);
 }
 
@@ -122,4 +120,44 @@ Rcpp::List _fitEllipseDirect(arma::fmat points) {
                             Rcpp::Named("height") = box.size.height,
                             Rcpp::Named("width") = box.size.width,
                             Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
+}
+
+std::vector< int > _convexHull(arma::fmat points, bool clockwise) {
+  cv::Mat cvpoints;
+  arma2cv(points, cvpoints);
+  std::vector< int > out;
+  cv::convexHull(cvpoints, out, clockwise, false);
+  return out;
+}
+
+Rcpp::DataFrame _convexityDefects(Rcpp::DataFrame contour, std::vector< int > convexhull) {
+  std::vector< cv::Point > contourpoints(contour.nrow());
+  std::vector< cv::Vec4i > defects;
+  NumericVector x = contour["x"];
+  NumericVector y = contour["y"];
+
+  for (uint i = 0; i < contour.nrow(); i++) {
+    contourpoints[i].x = x(i);
+    contourpoints[i].y = y(i);
+  }
+
+  cv::convexityDefects(contourpoints, convexhull, defects);
+
+  Rcpp::IntegerVector start_index(defects.size());
+  Rcpp::IntegerVector end_index(defects.size());
+  Rcpp::IntegerVector farthest_pt_index(defects.size());
+  Rcpp::IntegerVector fixpt_depth(defects.size());
+  for (uint i = 0; i < defects.size(); i++) {
+    start_index(i) = defects[i][0];
+    end_index(i) = defects[i][1];
+    farthest_pt_index(i) = defects[i][2];
+    fixpt_depth(i) = defects[i][3];
+  }
+
+  Rcpp::DataFrame defects_df = Rcpp::DataFrame::create(Rcpp::Named("start_index") = start_index,
+                                                       Rcpp::Named("end_index") = end_index,
+                                                       Rcpp::Named("farthest_pt_index") = farthest_pt_index,
+                                                       Rcpp::Named("fixpt_depth") = fixpt_depth);
+
+  return defects_df;
 }

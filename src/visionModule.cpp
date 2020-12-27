@@ -284,6 +284,8 @@ RCPP_MODULE(methods_Shape) {
   function("_fitEllipseAMS", &_fitEllipseAMS, List::create(_["points"]), "");
   function("_fitEllipseDirect", &_fitEllipseDirect, List::create(_["points"]), "");
   function("_contourArea", &_contourArea, List::create(_["x"], _["y"], _["oriented"]), "");
+  function("_convexHull", &_convexHull, List::create(_["points"], _["clockwise"]), "");
+  function("_convexityDefects", &_convexityDefects, List::create(_["contour"], _["convexHull"]), "");
 }
 
 #include "transform.h"

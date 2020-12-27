@@ -329,3 +329,40 @@ fitEllipse <- function(x, y, method = "original") {
          "direct" = `_fitEllipseDirect`(cbind(x, y)),
          stop("Invalid method."))
 }
+
+
+#' @export
+convexHull <- function(x, y, clockwise = TRUE) {
+  if (!is.vector(x) | !is.vector(y))
+    stop("x and y must be vectors.")
+
+  if (length(x) != length(y))
+    stop("x and y must have the same length.")
+
+  `_convexHull`(cbind(x, y), clockwise) + 1
+}
+
+
+#' @export
+convexityDefects <- function(contour, convex_hull) {
+  if (!is.vector(convex_hull))
+    stop("convex_hull must be a vector of indices.")
+
+  if (min(convex_hull) < 1 | max(convex_hull) > nrow(contour))
+    stop("Indices in convex_hull out of bound.")
+
+  if (!is.data.frame(contour))
+    stop("contour must be a data frame.")
+
+  if (any(!(c("x", "y") %in% names(contour))))
+    stop("contour must contain two columns named x and y.")
+
+  if ("id" %in% names(contour)) {
+    if (length(unique(contour$id)) > 1)
+      stop("Multiple contours found in contour.")
+  }
+
+  out <- `_convexityDefects`(contour, convex_hull - 1)
+  out[, 1:3] <- out[, 1:3] + 1
+  out
+}
