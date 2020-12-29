@@ -84,6 +84,17 @@ matchTemplate <- function(image, template, method, mask = NULL) {
 }
 
 
+#' @export
+inRange <- function(image, low = rep(0, 4), up = rep(255, 4)) {
+  if (!isImage(image))
+    stop("'image' is not an Image object.")
+
+  low <- rep(low, length.out = 4)
+  up <- rep(up, length.out = 4)
+
+  `_inRange`(image, low, up)
+}
+
 ### Define generic comparison methods ###
 
 # See zzz.R

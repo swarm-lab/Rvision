@@ -165,6 +165,7 @@ RCPP_MODULE(methods_Comparisons) {
     _["method"], _["mask"]), "");
   function("_matchTemplateNoMask", &_matchTemplateNoMask, List::create(_["image"],
     _["templ"], _["method"]), "");
+  function("_inRange", &_inRange, List::create(_["image"], _["low"], _["up"]), "");
 }
 
 #include "logical.h"
@@ -308,4 +309,10 @@ RCPP_MODULE(methods_Transform) {
     _["distanceType"], _["maskSize"]), "");
   function("_floodFill", &_floodFill, List::create(_["image"], _["seedPoint"],
     _["newVal"], _["loDiff"], _["upDiff"], _["connectivity"]), "");
+}
+
+#include "feature.h"
+RCPP_MODULE(methods_Feature) {
+  function("_canny", &_canny, List::create(_["image"], _["threshold1"],
+    _["threshold2"], _["apertureSize"], _["L2gradient"]), "");
 }
