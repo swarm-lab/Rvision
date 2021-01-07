@@ -467,18 +467,18 @@ Rcpp::NumericVector Image::_get4(int row, int column) {
 }
 
 Rcpp::NumericMatrix Image::get(Rcpp::IntegerVector row, Rcpp::IntegerVector column) {
-  Rcpp::NumericMatrix out(this->image.channels(), row.length());
+  Rcpp::NumericMatrix out(row.length(), this->image.channels());
 
   for (int i = 0; i < row.length(); i++) {
     switch(this->image.channels()) {
     case 1:
-      out(Rcpp::_, i) = this->_get1(row(i), column(i));
+      out(i, Rcpp::_) = this->_get1(row(i), column(i));
       break;
     case 3:
-      out(Rcpp::_, i) = this->_get3(row(i), column(i));
+      out(i, Rcpp::_) = this->_get3(row(i), column(i));
       break;
     case 4:
-      out(Rcpp::_, i) = this->_get4(row(i), column(i));
+      out(i, Rcpp::_) = this->_get4(row(i), column(i));
       break;
     default:
       throw std::range_error("Invalid input image dimensions (1, 3, and 4 channels only).");

@@ -495,6 +495,28 @@ readMulti <- function(x) {
 }
 
 
+#' @export
+pget <- function(image, x, y) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  if (length(x) != length(y) | !is.vector(x) | !is.vector(y))
+    stop("x and y should be vector of the same length.")
+
+  if (max(x) > ncol(image) | max(y) > nrow(image) | min(x) < 1 | min(y) < 1)
+    stop("Index out of bounds.")
+
+  out <- image$get(-y + nrow(image), x - 1)
+  colnames(out) <- switch(nchan(image),
+                          "I",
+                          NA,
+                          c("B", "G", "R"),
+                          c("B", "G", "R", "A"),
+                          NA)
+  out
+}
+
+
 #' @title Extract or Replace Parts of an Image
 #'
 #' @description Operators acting on \code{\link{Image}} objects to extract or
