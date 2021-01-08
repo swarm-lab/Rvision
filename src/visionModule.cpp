@@ -266,6 +266,7 @@ RCPP_MODULE(methods_Draw) {
     _["color"]), "");
   function("_inpaint", &_inpaint, List::create(_["image"], _["mask"], _["radius"],
     _["method"]), "");
+  function("_setTo", &_setTo, List::create(_["image"], _["mask"], _["color"]), "");
 }
 
 #include "geometry.h"

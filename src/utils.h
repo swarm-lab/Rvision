@@ -133,7 +133,7 @@ int getAPIId(std::string APIId) {
 }
 
 cv::Scalar col2Scalar(IntegerVector col) {
-  cv::Scalar out(0, 0, 0, 0);
+  cv::Scalar out;
 
   for (int i = 0; i < col.size(); i++) {
     out[i] = col(i);

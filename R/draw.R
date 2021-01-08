@@ -525,6 +525,25 @@ inpaint <- function(image, mask, radius = 5, method = "NS", in_place = FALSE) {
                ))
     out
   }
+}
 
 
+#' @export
+setTo <- function(image, mask, color, in_place = FALSE) {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
+  if (!isImage(mask))
+    stop("mask is not an 'Image' object.")
+
+  if (bitdepth(mask) != "8U")
+    stop("mask is not an 8-bit single-channel (8U).")
+
+  if (in_place == TRUE) {
+    `_setTo`(image, mask, col2bgr(color))
+  } else {
+    out <- `_cloneImage`(image)
+    `_setTo`(out, mask, col2bgr(color))
+    out
+  }
 }
