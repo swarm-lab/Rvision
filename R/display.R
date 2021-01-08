@@ -203,29 +203,32 @@ selectROI <- function(image, window_name = "Display", scale = 1, return_mask = T
   message("Use left click to draw the ROI. Use right click to close it and
           return the result.")
 
-  r <- 0.005 * min(nrow(image_copy), ncol(image_copy))
+  r <- 0.01 * min(nrow(image_copy), ncol(image_copy))
   l <- max(1, round(r / 2))
 
   while (!done) {
     ROI <- rbind(ROI, click(image_copy, scale = scale, window_name = window_name))
 
-    drawCircle(image_copy, x = ROI$x[nrow(ROI)], y = ROI$y[nrow(ROI)],
-               radius = r, thickness = -1)
-
     if (nrow(ROI) > 1) {
       drawLine(image_copy, pt1_x = ROI$x[nrow(ROI)], pt1_y = ROI$y[nrow(ROI)],
                pt2_x = ROI$x[nrow(ROI) - 1], pt2_y = ROI$y[nrow(ROI) - 1],
-               thickness = l)
+               thickness = l, color = "red")
     }
 
     if (ROI$button[nrow(ROI)] == 1) {
       drawLine(image_copy, pt1_x = ROI$x[nrow(ROI)], pt1_y = ROI$y[nrow(ROI)],
                pt2_x = ROI$x[1], pt2_y = ROI$y[1],
-               thickness = l)
-      display(image_copy, window_name = window_name, delay = 10,
-              height = nrow(image_copy) * scale, width = ncol(image_copy) * scale)
+               thickness = l, color = "red")
       done <- TRUE
     }
+
+    drawCircle(image_copy, x = ROI$x, y = ROI$y,
+               radius = 1.5 * r, thickness = -1, color = "white")
+    drawCircle(image_copy, x = ROI$x, y = ROI$y,
+               radius = r, thickness = -1, color = "red")
+
+    display(image_copy, window_name = window_name, delay = 10,
+            height = nrow(image_copy) * scale, width = ncol(image_copy) * scale)
   }
 
   if (return_mask) {
