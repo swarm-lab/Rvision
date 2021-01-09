@@ -366,3 +366,23 @@ convexityDefects <- function(contour, convex_hull) {
   out[, 1:3] <- out[, 1:3] + 1
   out
 }
+
+
+#' @export
+moments <- function(contour) {
+  if (!is.data.frame(contour))
+    stop("contour must be a data frame.")
+
+  if (any(!(c("x", "y") %in% names(contour))))
+    stop("contour must contain two columns named x and y.")
+
+  if ("id" %in% names(contour)) {
+    if (length(unique(contour$id)) > 1)
+      stop("Multiple contours found in contour.")
+  }
+
+  base::split(`_moments`(contour),
+        c("m00", "m10", "m01", "m20", "m11", "m02", "m30", "m21", "m12",
+          "m03", "mu20", "mu11", "mu02", "mu30", "mu21", "mu12", "mu03",
+          "nu20", "nu11", "nu02", "nu30", "nu21", "nu12", "nu03"))
+}

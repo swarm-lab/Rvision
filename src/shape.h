@@ -154,10 +154,29 @@ Rcpp::DataFrame _convexityDefects(Rcpp::DataFrame contour, std::vector< int > co
     fixpt_depth(i) = defects[i][3];
   }
 
-  Rcpp::DataFrame defects_df = Rcpp::DataFrame::create(Rcpp::Named("start_index") = start_index,
-                                                       Rcpp::Named("end_index") = end_index,
-                                                       Rcpp::Named("farthest_pt_index") = farthest_pt_index,
-                                                       Rcpp::Named("fixpt_depth") = fixpt_depth);
+  Rcpp::DataFrame out = Rcpp::DataFrame::create(Rcpp::Named("start_index") = start_index,
+                                                Rcpp::Named("end_index") = end_index,
+                                                Rcpp::Named("farthest_pt_index") = farthest_pt_index,
+                                                Rcpp::Named("fixpt_depth") = fixpt_depth);
 
-  return defects_df;
+  return out;
+}
+
+Rcpp::NumericVector _moments(Rcpp::DataFrame contour) {
+  std::vector< cv::Point > contourpoints(contour.nrow());
+  Rcpp::NumericVector x = contour["x"];
+  Rcpp::NumericVector y = contour["y"];
+
+  for (uint i = 0; i < contour.nrow(); i++) {
+    contourpoints[i].x = x(i);
+    contourpoints[i].y = y(i);
+  }
+
+  cv::Moments m = cv::moments(contourpoints);
+
+  Rcpp::NumericVector out = { m.m00, m.m10, m.m01, m.m20, m.m11, m.m02, m.m30,
+    m.m21, m.m12, m.m03, m.mu20, m.mu11, m.mu02, m.mu30, m.mu21, m.mu12, m.mu03,
+    m.nu20, m.nu11, m.nu02, m.nu30, m.nu21, m.nu12, m.nu03 };
+
+  return out;
 }
