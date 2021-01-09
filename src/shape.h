@@ -180,3 +180,15 @@ Rcpp::NumericVector _moments(Rcpp::DataFrame contour) {
 
   return out;
 }
+
+Rcpp::List _minAreaRect(arma::fmat points) {
+  cv::Mat cvpoints;
+  arma2cv(points, cvpoints);
+  cv::RotatedRect box;
+  box = minAreaRect(cvpoints);
+
+  return Rcpp::List::create(Rcpp::Named("angle") = box.angle,
+                            Rcpp::Named("height") = box.size.height,
+                            Rcpp::Named("width") = box.size.width,
+                            Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
+}

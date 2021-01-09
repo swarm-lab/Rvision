@@ -386,3 +386,14 @@ moments <- function(contour) {
           "m03", "mu20", "mu11", "mu02", "mu30", "mu21", "mu12", "mu03",
           "nu20", "nu11", "nu02", "nu30", "nu21", "nu12", "nu03"))
 }
+
+#' @export
+minAreaRect <- function(x, y) {
+  if (!is.vector(x) | !is.vector(y))
+    stop("x and y must be vectors.")
+
+  if (length(x) != length(y))
+    stop("x and y must have the same length.")
+
+  `_minAreaRect`(cbind(x, y))
+}

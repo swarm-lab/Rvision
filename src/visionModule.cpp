@@ -289,6 +289,7 @@ RCPP_MODULE(methods_Shape) {
   function("_convexHull", &_convexHull, List::create(_["points"], _["clockwise"]), "");
   function("_convexityDefects", &_convexityDefects, List::create(_["contour"], _["convexHull"]), "");
   function("_moments", &_moments, List::create(_["contour"]), "");
+  function("_minAreaRect", &_minAreaRect, List::create(_["points"]), "");
 }
 
 #include "transform.h"
