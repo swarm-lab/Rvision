@@ -451,6 +451,18 @@ fillPoly <- function(image, polygon, color = "white") {
   `_fillPoly`(image, polygon, col2bgr(color))
 }
 
+#' @export
+fillConvexPoly <- function(image, polygon, color = "white") {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
+  polygon <- as.matrix(polygon)
+  polygon[, 1] <- polygon[, 1] - 1
+  polygon[, 2] <- -polygon[, 2] + nrow(image)
+
+  `_fillConvexPoly`(image, polygon, col2bgr(color))
+}
+
 
 #' @title Reconstruct Image Region from Region Neighborhood
 #'

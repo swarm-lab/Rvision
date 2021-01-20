@@ -81,8 +81,8 @@ Rcpp::NumericVector _getTextSize(std::string text, int font_face, double font_sc
 }
 
 void _fillPoly(Image image, Rcpp::IntegerMatrix polygon, Rcpp::IntegerVector color) {
-  std::vector<cv::Point> poly;
-  std::vector<std::vector<cv::Point> > polys;
+  std::vector< cv::Point > poly;
+  std::vector< std::vector<cv::Point> > polys;
 
   for (int i = 0; i < polygon.nrow(); i++) {
     poly.push_back(cv::Point(polygon(i, 0), polygon(i, 1)));
@@ -90,7 +90,17 @@ void _fillPoly(Image image, Rcpp::IntegerMatrix polygon, Rcpp::IntegerVector col
 
   polys.push_back(poly);
 
-  cv::fillPoly(image.image, polys, cv::Scalar(color(0), color(1), color(2)));
+  cv::fillPoly(image.image, polys, col2Scalar(color));
+}
+
+void _fillConvexPoly(Image image, Rcpp::IntegerMatrix polygon, Rcpp::IntegerVector color) {
+  std::vector<cv::Point> poly;
+
+  for (int i = 0; i < polygon.nrow(); i++) {
+    poly.push_back(cv::Point(polygon(i, 0), polygon(i, 1)));
+  }
+
+  cv::fillConvexPoly(image.image, poly, col2Scalar(color));
 }
 
 void _inpaint(Image image, Image mask, double radius, int method) {

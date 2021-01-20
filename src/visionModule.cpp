@@ -41,6 +41,8 @@ RCPP_MODULE(class_Image) {
     _["width"], _["height"]), "");
   function("_copyMakeBorder", &_copyMakeBorder, List::create(_["image"], _["top"],
     _["bottom"], _["left"], _["right"], _["borderType"], _["borderValue"]), "");
+  function("_zeros", &_zeros, List::create(_["nrow"], _["ncol"], _["type"]), "");
+  function("_ones", &_ones, List::create(_["nrow"], _["ncol"], _["type"]), "");
 }
 
 #include "Video.h"
@@ -263,6 +265,8 @@ RCPP_MODULE(methods_Draw) {
   function("_getTextSize", &_getTextSize, List::create(_["text"], _["font_face"],
     _["font_scale"], _["thickness"]), "");
   function("_fillPoly", &_fillPoly, List::create(_["image"], _["polygon"],
+    _["color"]), "");
+  function("_fillConvexPoly", &_fillConvexPoly, List::create(_["image"], _["polygon"],
     _["color"]), "");
   function("_inpaint", &_inpaint, List::create(_["image"], _["mask"], _["radius"],
     _["method"]), "");

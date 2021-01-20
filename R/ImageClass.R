@@ -772,3 +772,26 @@ subImage <- function(image, x, y, width, height, border = TRUE, ...) {
   }
 }
 
+#' @export
+zeros <- function(nrow, ncol, colorspace = "BGR", bitdepth = "8U") {
+  type <- paste0(bitdepth,
+                 switch (colorspace,
+                   "GRAY" = "C1",
+                   "BGR" = "C3",
+                   "BGRA" = "C4"
+                 ))
+
+  `_zeros`(nrow, ncol, type)
+}
+
+#' @export
+ones <- function(nrow, ncol, colorspace = "BGR", bitdepth = "8U") {
+  type <- paste0(bitdepth,
+                 switch (colorspace,
+                         "GRAY" = "C1",
+                         "BGR" = "C3",
+                         "BGRA" = "C4"
+                 ))
+
+  `_ones`(nrow, ncol, type)
+}

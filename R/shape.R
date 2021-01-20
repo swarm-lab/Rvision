@@ -397,3 +397,29 @@ minAreaRect <- function(x, y) {
 
   `_minAreaRect`(cbind(x, y))
 }
+
+#' @export
+pixelsInContour <- function(contour) {
+  if (!is.data.frame(contour))
+    stop("contour must be a data frame.")
+
+  if (any(!(c("x", "y") %in% names(contour))))
+    stop("contour must contain two columns named x and y.")
+
+  if ("id" %in% names(contour)) {
+    if (length(unique(contour$id)) > 1)
+      stop("Multiple contours found in contour.")
+  }
+
+  shift_x <- min(contour$x)
+  shift_y <- min(contour$y)
+  contour$x <- contour$x - shift_x + 1
+  contour$y <- contour$y - shift_y + 1
+
+  mask <- zeros(nrow = max(contour$y), ncol = max(contour$x), "GRAY", "8U")
+  fillConvexPoly(mask, contour)
+  nz <- findNonZero(mask)
+  nz$x <- nz$x + shift_x - 1
+  nz$y <- nz$y + shift_y - 1
+  nz
+}

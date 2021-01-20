@@ -968,3 +968,13 @@ Image _copyMakeBorder(Image &image, int top, int bottom, int left, int right, in
   cv::copyMakeBorder(image.image, out, top, bottom, left, right, borderType, col2Scalar(borderColor));
   return Image(out);
 }
+
+Image _zeros(int nrow, int ncol, std::string type) {
+  cv::Mat out = cv::Mat::zeros(nrow, ncol, str2type(type));
+  return Image(out);
+}
+
+Image _ones(int nrow, int ncol, std::string type) {
+  cv::Mat out = cv::Mat::ones(nrow, ncol, str2type(type));
+  return Image(out);
+}
