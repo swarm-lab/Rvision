@@ -136,7 +136,7 @@ Rcpp::DataFrame _convexityDefects(Rcpp::DataFrame contour, std::vector< int > co
   NumericVector x = contour["x"];
   NumericVector y = contour["y"];
 
-  for (uint i = 0; i < contour.nrow(); i++) {
+  for (int i = 0; i < contour.nrow(); i++) {
     contourpoints[i].x = x(i);
     contourpoints[i].y = y(i);
   }
@@ -167,7 +167,7 @@ Rcpp::NumericVector _moments(Rcpp::DataFrame contour) {
   Rcpp::NumericVector x = contour["x"];
   Rcpp::NumericVector y = contour["y"];
 
-  for (uint i = 0; i < contour.nrow(); i++) {
+  for (int i = 0; i < contour.nrow(); i++) {
     contourpoints[i].x = x(i);
     contourpoints[i].y = y(i);
   }
