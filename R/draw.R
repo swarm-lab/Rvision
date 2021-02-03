@@ -55,6 +55,25 @@ drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thic
 }
 
 
+#' @export
+drawRotatedRectangle <- function(image, x, y, axis1, axis2, angle, color = "red",
+                                 thickness = 1) {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
+  l <- lengths(list(x, y))
+  if (length(unique(l)) != 1)
+    stop("x and y must have the same length.")
+
+  `_drawRotatedRectangles`(image, x - 1, -y + nrow(image),
+                           rep_len(axis1, l[1]),
+                           rep_len(axis2, l[1]),
+                           rep_len(-angle, l[1]),
+                           as.matrix(col2bgr(rep_len(color, l[1]))),
+                           rep_len(thickness, l[1]))
+}
+
+
 #' @title Draw Circles on an \code{\link{Image}}
 #'
 #' @description \code{drawCirlc} draws circles over an \code{\link{Image}}

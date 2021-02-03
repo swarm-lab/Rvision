@@ -5,8 +5,33 @@ void _drawRectangles(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector
     cv::rectangle(image.image,
                   cv::Point(pt1_x(i), pt1_y(i)),
                   cv::Point(pt2_x(i), pt2_y(i)),
-                  cv::Scalar(color(0, i), color(1, i), color(2, i)),
+                  col2Scalar(color(_,i)),
                   thickness(i));
+  }
+}
+
+void _drawRotatedRectangles(Image image, Rcpp::NumericVector x, Rcpp::NumericVector y,
+                            Rcpp::NumericVector axis1, Rcpp::NumericVector axis2,
+                            Rcpp::NumericVector angle, Rcpp::IntegerMatrix color,
+                            Rcpp::IntegerVector thickness) {
+  cv::RotatedRect rect;
+  cv::Point2f vertices[4];
+  cv::Point verticesFilled[4];
+
+  for (int i = 0; i < x.size(); i++) {
+    rect = cv::RotatedRect(cv::Point2f(x(i), y(i)), cv::Size2f(axis1(i), axis2(i)), angle(i));
+    rect.points(vertices);
+
+    if (thickness(i) > 0) {
+      for (int j = 0; j < 4; j++)
+        line(image.image, vertices[j], vertices[(j+1)%4], col2Scalar(color(_,i)), thickness(i));
+    } else {
+      for(int j = 0; j < 4; ++j){
+        verticesFilled[j] = vertices[j];
+      }
+
+      cv::fillConvexPoly(image.image, verticesFilled, 4, col2Scalar(color(_,i)));
+    }
   }
 }
 
@@ -16,7 +41,7 @@ void _drawCircles(Image image, Rcpp::NumericVector x, Rcpp::NumericVector y,
   for (int i = 0; i < x.size(); i++) {
     cv::circle(image.image, cv::Point(x(i), y(i)),
                radius(i),
-               cv::Scalar(color(0, i), color(1, i), color(2, i)),
+               col2Scalar(color(_,i)),
                thickness(i));
   }
 }
@@ -29,7 +54,7 @@ void _drawEllipses(Image image, Rcpp::NumericVector x, Rcpp::NumericVector y,
   for (int i = 0; i < x.size(); i++) {
     cv::ellipse(image.image, cv::Point(x(i), y(i)), cv::Size(axis1(i), axis2(i)),
                 angle(i), start_angle(i), end_angle(i),
-                cv::Scalar(color(0, i), color(1, i), color(2, i)), thickness(i));
+                col2Scalar(color(_,i)), thickness(i));
   }
 }
 
@@ -40,7 +65,7 @@ void _drawLines(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1_
     cv::line(image.image,
              cv::Point(pt1_x(i), pt1_y(i)),
              cv::Point(pt2_x(i), pt2_y(i)),
-             cv::Scalar(color(0, i), color(1, i), color(2, i)),
+             col2Scalar(color(_,i)),
              thickness(i));
   }
 }
@@ -53,7 +78,7 @@ void _drawArrows(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1
     cv::arrowedLine(image.image,
              cv::Point(pt1_x(i), pt1_y(i)),
              cv::Point(pt2_x(i), pt2_y(i)),
-             cv::Scalar(color(0, i), color(1, i), color(2, i)),
+             col2Scalar(color(_,i)),
              thickness(i), 8, 0, tip_length(i));
   }
 }
@@ -68,7 +93,7 @@ void _drawTexts(Image image, Rcpp::StringVector text, Rcpp::NumericVector x,
                 cv::Point(x(i), y(i)),
                 font_face(i),
                 font_scale(i),
-                cv::Scalar(color(0, i), color(1, i), color(2, i)),
+                col2Scalar(color(_,i)),
                 thickness(i),
                 8, bl_orig(i));
   }

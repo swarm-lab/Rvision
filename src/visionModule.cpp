@@ -251,6 +251,8 @@ RCPP_MODULE(methods_Display) {
 RCPP_MODULE(methods_Draw) {
   function("_drawRectangles", &_drawRectangles, List::create(_["image"], _["pt1_x"],
     _["pt1_y"], _["pt2_x"], _["pt2_y"], _["color"], _["thickness"]), "");
+  function("_drawRotatedRectangles", &_drawRotatedRectangles, List::create(_["image"],
+    _["x"], _["y"], _["axis1"], _["axis2"], _["angle"], _["color"], _["thickness"]), "");
   function("_drawCircles", &_drawCircles, List::create(_["image"], _["x"], _["y"],
     _["radius"], _["color"], _["thickness"]), "");
   function("_drawEllipses", &_drawEllipses, List::create(_["image"], _["x"], _["y"],
