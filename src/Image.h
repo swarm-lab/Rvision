@@ -975,6 +975,7 @@ Image _zeros(int nrow, int ncol, std::string type) {
 }
 
 Image _ones(int nrow, int ncol, std::string type) {
-  cv::Mat out = cv::Mat::ones(nrow, ncol, str2type(type));
+  cv::Mat out = cv::Mat::zeros(nrow, ncol, str2type(type));
+  out = cv::Scalar::all(1);
   return Image(out);
 }
