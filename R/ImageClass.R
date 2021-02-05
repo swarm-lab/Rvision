@@ -495,6 +495,28 @@ readMulti <- function(x) {
 }
 
 
+#' @title Return Pixel Value at Specified Location
+#'
+#' @description \code{pget} returns the values of the pixels at the specified x
+#'  and y coordinates in the image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param x A vector of x locations (columns) in the image.
+#'
+#' @param y A vector of y locations (rows) in the image.
+#'
+#' @return A matrix. The number of columns of the matrix depends on the number
+#'  of channels in the image. Each row corresponds to a pair of x/y coordinates.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' pget(balloon, c(1, 100, 200), c(200, 100, 1))
+#'
 #' @export
 pget <- function(image, x, y) {
   if (!isImage(image))
@@ -689,6 +711,17 @@ pget <- function(image, x, y) {
 #'  compatible with \code{\link{col2bgr}} representing the color of the border
 #'  (default: "black").
 #'
+#' @return An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_border <- border(balloon, 10)
+#' plot(balloon_border)
+#'
 #' @export
 border <- function(image, top, bottom = top, left = top, right = top,
                    border_type = "constant", border_color = "black") {
@@ -772,6 +805,32 @@ subImage <- function(image, x, y, width, height, border = TRUE, ...) {
   }
 }
 
+
+#' @title Create a Zero-Filled Image
+#'
+#' @description \code{zeros} creates an \code{\link{Image}} object filled with
+#'  zeros.
+#'
+#' @param nrow An integer indicating desired the number of rows for the image.
+#'
+#' @param ncol An integer indicating desired the number of columns for the image.
+#'
+#' @param colorspace A string indicating the desired color space for the image.
+#'  Options are "BGR" (Blue Green Red image, the default), "BGRA" (BGR image
+#'  with Alpha channel), and "GRAY" (grayscale image).
+#'
+#' @param bitdepth A string indicating the desired bit depth for the image.
+#'  Options are "8U" (the default), "8S", "16U", "16S", "32S", and "32F".
+#'
+#' @return An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{ones}}
+#'
+#' @examples
+#' zero <- zeros(100, 100)
+#'
 #' @export
 zeros <- function(nrow, ncol, colorspace = "BGR", bitdepth = "8U") {
   type <- paste0(bitdepth,
@@ -784,6 +843,32 @@ zeros <- function(nrow, ncol, colorspace = "BGR", bitdepth = "8U") {
   `_zeros`(nrow, ncol, type)
 }
 
+
+#' @title Create a One-Filled Image
+#'
+#' @description \code{ones} creates an \code{\link{Image}} object filled with
+#'  ones.
+#'
+#' @param nrow An integer indicating desired the number of rows for the image.
+#'
+#' @param ncol An integer indicating desired the number of columns for the image.
+#'
+#' @param colorspace A string indicating the desired color space for the image.
+#'  Options are "BGR" (Blue Green Red image, the default), "BGRA" (BGR image
+#'  with Alpha channel), and "GRAY" (grayscale image).
+#'
+#' @param bitdepth A string indicating the desired bit depth for the image.
+#'  Options are "8U" (the default), "8S", "16U", "16S", "32S", and "32F".
+#'
+#' @return An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{zeros}}
+#'
+#' @examples
+#' one <- ones(100, 100)
+#'
 #' @export
 ones <- function(nrow, ncol, colorspace = "BGR", bitdepth = "8U") {
   type <- paste0(bitdepth,

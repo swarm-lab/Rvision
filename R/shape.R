@@ -312,6 +312,8 @@ watershed <- function(image, markers) {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
+#' @seealso \code{\link{minAreaRect}}
+#'
 #' @examples
 #' fitEllipse(rnorm(100), rnorm(100))
 #'
@@ -331,6 +333,57 @@ fitEllipse <- function(x, y, method = "original") {
 }
 
 
+#' @title Fit a Rectangle Around a Set of 2D Points
+#'
+#' @description \code{minAreaRect} calculates the minimum area enclosing
+#'  rectangle that fits a set of 2D points.
+#'
+#' @param x A vector of x coordinates.
+#'
+#' @param y A vector of y coordinates of the same lenght as \code{x}.
+#'
+#' @return A list containing the height and width (in pixels) of the ellipse,
+#'  the angle (in degrees) of its main axis with respect to the x axis, and the
+#'  x and y coordinates of its center.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{fitEllipse}}
+#'
+#' @examples
+#' minAreaRect(rnorm(100), rnorm(100))
+#'
+#' @export
+minAreaRect <- function(x, y) {
+  if (!is.vector(x) | !is.vector(y))
+    stop("x and y must be vectors.")
+
+  if (length(x) != length(y))
+    stop("x and y must have the same length.")
+
+  `_minAreaRect`(cbind(x, y))
+}
+
+
+#' @title Compute the Convex Hull of a Set of Points
+#'
+#' @description \code{convexHull} computes the subset of points which lie on the
+#'  convex hull of the set of points specified.
+#'
+#' @param x A vector of x coordinates.
+#'
+#' @param y A vector of y coordinates of the same lenght as \code{x}.
+#'
+#' @param clockwise If TRUE (the default), the output convex hull is oriented
+#'  clockwise. Otherwise, it is oriented counter-clockwise.
+#'
+#' @return A vector indicating the index of the points on the convex hull.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @examples
+#' convexHull(rnorm(100), rnorm(100))
+#'
 #' @export
 convexHull <- function(x, y, clockwise = TRUE) {
   if (!is.vector(x) | !is.vector(y))
@@ -343,83 +396,188 @@ convexHull <- function(x, y, clockwise = TRUE) {
 }
 
 
+#' @title Find the Convexity Defects of a Contour
+#'
+#' @description \code{convexityDefects} finds the convexity defects of a contour,
+#'  that is area that do not belong to an object but are located inside of its
+#'  convex hull.
+#'
+#' @param contours A list of two data frames as produced by
+#'  \code{\link{findContours}}.
+#'
+#' @param id An optional vector indicating the identity of the specific contours
+#'  for which to run the function.
+#'
+#' @return #' @return a data frame with 5 columns:
+#'  \itemize{
+#'    \item{"id": }{the contour identity (indicates the set of points belonging
+#'     to the same contour).}
+#'    \item{"start_index": }{index of the first point of the contour belonging to
+#'     a convexity defect.}
+#'    \item{"end_index": }{index of the last point of the contour belonging to
+#'     a convexity defect.}
+#'    \item{"farthest_pt_index": }{index of the point of the contour belonging to
+#'     a convexity defect and that is the farthest away from the convex hull.}
+#'    \item{"fixpt_depth": }{distance between the farthest contour point and the
+#'     convex hull.}
+#' }
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{findContours}}, \code{\link{convexHull}}
+#'
+#' @examples
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_gray <- changeColorSpace(dots, "GRAY")
+#' dots_bin <- dots_gray < 200
+#' contours <- findContours(dots_bin)
+#' convexityDefects(contours, id = c(3, 5))
+#'
 #' @export
-convexityDefects <- function(contour, convex_hull) {
-  if (!is.vector(convex_hull))
-    stop("convex_hull must be a vector of indices.")
+convexityDefects <- function(contours, id = NULL) {
+  if (!all(names(contours) == c("contours", "hierarchy")))
+    stop("contours must be a list of two data frames as produced by `findContours`.")
 
-  if (min(convex_hull) < 1 | max(convex_hull) > nrow(contour))
-    stop("Indices in convex_hull out of bound.")
+  if (!is.null(id))
+    contours$contours <- contours$contours[contours$contours$id %in% id, ]
 
-  if (!is.data.frame(contour))
-    stop("contour must be a data frame.")
-
-  if (any(!(c("x", "y") %in% names(contour))))
-    stop("contour must contain two columns named x and y.")
-
-  if ("id" %in% names(contour)) {
-    if (length(unique(contour$id)) > 1)
-      stop("Multiple contours found in contour.")
-  }
-
-  out <- `_convexityDefects`(contour, convex_hull - 1)
-  out[, 1:3] <- out[, 1:3] + 1
-  out
+  as.data.frame(
+    do.call(rbind,
+            by(contours$contours, list(id = contours$contours$id),
+               function(contour) {
+                 convex_hull <- convexHull(contour$x, contour$y)
+                 out <- `_convexityDefects`(contour, convex_hull - 1)
+                 out[, 1:3] <- out[, 1:3] + 1
+                 cbind(id = contour$id[1], as.matrix(out))
+               }
+            )
+    )
+  )
 }
 
 
+#' @title Calculate the Moments of a Shape
+#'
+#' @description \code{moments} calculates all of the moments up to the third
+#'  order of a polygon or rasterized shape.
+#'
+#' @param contours A list of two data frames as produced by
+#'  \code{\link{findContours}}.
+#'
+#' @param id An optional vector indicating the identity of the specific contours
+#'  for which to run the function.
+#'
+#' @return a data frame with 3 columns:
+#'  \itemize{
+#'    \item{"id": }{the contour identity (indicates the set of points belonging
+#'     to the same contour).}
+#'    \item{"moment": }{the name of the moment. See Note below.}
+#'    \item{"value": }{the value of the moment.}
+#' }
+#'
+#' @note The spatial moments \eqn{\texttt{m} _{ji}} are computed as:
+#'  \deqn{\texttt{m} _{ji}= \sum _{x,y} \left ( \texttt{contour} (x,y) \cdot x^j \cdot y^i \right )}
+#'
+#' @note The central moments \eqn{mu_ij} are computed as:
+#'  \deqn{\texttt{mu} _{ji}= \sum _{x,y} \left ( \texttt{contour} (x,y) \cdot (x - \bar{x} )^j \cdot (y - \bar{y} )^i \right )}
+#' where \eqn{(\bar{x}, \bar{y})} is the mass center:
+#'  \deqn{\bar{x} = \frac{\texttt{m}_{10}}{\texttt{m}_{00}} , \; \bar{y} = \frac{\texttt{m}_{01}}{\texttt{m}_{00}}}
+#'
+#' @note The normalized central moments moments \eqn{nu_ij} are computed as:
+#'  \deqn{\texttt{nu} _{ji}= \frac{\texttt{mu}_{ji}}{\texttt{m}_{00}^{(i+j)/2+1}} .}
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{findContours}}
+#'
+#' @examples
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_gray <- changeColorSpace(dots, "GRAY")
+#' dots_bin <- dots_gray < 200
+#' contours <- findContours(dots_bin)
+#' moments(contours, id = c(3, 5))
+#'
 #' @export
-moments <- function(contour) {
-  if (!is.data.frame(contour))
-    stop("contour must be a data frame.")
+moments <- function(contours, id = NULL) {
+  if (!all(names(contours) == c("contours", "hierarchy")))
+    stop("contours must be a list of two data frames as produced by `findContours`.")
 
-  if (any(!(c("x", "y") %in% names(contour))))
-    stop("contour must contain two columns named x and y.")
+  if (!is.null(id))
+    contours$contours <- contours$contours[contours$contours$id %in% id, ]
 
-  if ("id" %in% names(contour)) {
-    if (length(unique(contour$id)) > 1)
-      stop("Multiple contours found in contour.")
-  }
-
-  base::split(`_moments`(contour),
-        c("m00", "m10", "m01", "m20", "m11", "m02", "m30", "m21", "m12",
-          "m03", "mu20", "mu11", "mu02", "mu30", "mu21", "mu12", "mu03",
-          "nu20", "nu11", "nu02", "nu30", "nu21", "nu12", "nu03"))
+  do.call(rbind,
+          c(by(contours$contours, list(id = contours$contours$id),
+             function(contour) {
+               data.frame(
+                 id = rep(contour$id[1], 24),
+                 moment = c("m00", "m10", "m01", "m20", "m11", "m02", "m30", "m21",
+                            "m12", "m03", "mu20", "mu11", "mu02", "mu30", "mu21",
+                            "mu12", "mu03", "nu20", "nu11", "nu02", "nu30", "nu21",
+                            "nu12", "nu03"),
+                 value = `_moments`(contour))
+             }
+          ), make.row.names = FALSE)
+  )
 }
 
+
+#' @title Which Pixels are Inside a Contour
+#'
+#' @description \code{pixelsInContour} determines the pixels that are inside a
+#'  specified contour.
+#'
+#' @param contours A list of two data frames as produced by
+#'  \code{\link{findContours}}.
+#'
+#' @param id An optional vector indicating the identity of the specific contours
+#'  for which to run the function.
+#'
+#' @return a data frame with 3 columns:
+#'  \itemize{
+#'    \item{"id": }{the contour identity (indicates the set of points belonging
+#'     to the same contour).}
+#'    \item{"x": }{the x coordinates of the points inside the contour.}
+#'    \item{"y": }{the y coordinates of the points inside the contour.}
+#' }
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{findContours}}
+#'
+#' @examples
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_gray <- changeColorSpace(dots, "GRAY")
+#' dots_bin <- dots_gray < 200
+#' contours <- findContours(dots_bin)
+#' pixelsInContour(contours, id = c(3, 5))
+#'
 #' @export
-minAreaRect <- function(x, y) {
-  if (!is.vector(x) | !is.vector(y))
-    stop("x and y must be vectors.")
+pixelsInContour <- function(contours, id = NULL) {
+  if (!all(names(contours) == c("contours", "hierarchy")))
+    stop("contours must be a list of two data frames as produced by `findContours`.")
 
-  if (length(x) != length(y))
-    stop("x and y must have the same length.")
+  if (!is.null(id))
+    contours$contours <- contours$contours[contours$contours$id %in% id, ]
 
-  `_minAreaRect`(cbind(x, y))
+  as.data.frame(
+    do.call(rbind,
+            by(contours$contours, list(id = contours$contours$id),
+               function(contour) {
+                 shift_x <- min(contour$x)
+                 shift_y <- min(contour$y)
+                 contour$x <- contour$x - shift_x + 1
+                 contour$y <- contour$y - shift_y + 1
+
+                 mask <- zeros(nrow = max(contour$y),
+                               ncol = max(contour$x), "GRAY", "8U")
+                 fillConvexPoly(mask, contour[, 2:3])
+                 nz <- findNonZero(mask)
+                 nz$x <- nz$x + shift_x - 1
+                 nz$y <- nz$y + shift_y - 1
+                 cbind(id = contour$id[1], as.matrix(nz))
+               }
+            )
+    )
+  )
 }
 
-#' @export
-pixelsInContour <- function(contour) {
-  if (!is.data.frame(contour))
-    stop("contour must be a data frame.")
-
-  if (any(!(c("x", "y") %in% names(contour))))
-    stop("contour must contain two columns named x and y.")
-
-  if ("id" %in% names(contour)) {
-    if (length(unique(contour$id)) > 1)
-      stop("Multiple contours found in contour.")
-  }
-
-  shift_x <- min(contour$x)
-  shift_y <- min(contour$y)
-  contour$x <- contour$x - shift_x + 1
-  contour$y <- contour$y - shift_y + 1
-
-  mask <- zeros(nrow = max(contour$y), ncol = max(contour$x), "GRAY", "8U")
-  fillConvexPoly(mask, contour)
-  nz <- findNonZero(mask)
-  nz$x <- nz$x + shift_x - 1
-  nz$y <- nz$y + shift_y - 1
-  nz
-}

@@ -50,7 +50,7 @@ points(mm[1, 2], mm[1, 3], col = "red", pch = 20, cex = 5)
 
 }
 \seealso{
-\code{\link{Image}}, \code{\link{minMaxLoc}}.
+\code{\link{Image}}, \code{\link{minMaxLoc}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

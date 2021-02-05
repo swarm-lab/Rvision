@@ -9,9 +9,8 @@ changeBitDepth(image, bitdepth, scale = 1, in_place = FALSE)
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{bitdepth}{A scalar corresponding to the colorspace the image should
-be converted to. Options are "8U", "8S", "16U", "16S", "32S", and "32F"
-respectively.}
+\item{bitdepth}{A string corresponding to the bitdepth the image should
+be converted to. Options are "8U", "8S", "16U", "16S", "32S", and "32F".}
 
 \item{scale}{A scaling factor (default: 1).}
 

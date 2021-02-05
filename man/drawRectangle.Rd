@@ -45,7 +45,7 @@ plot(balloon)
 
 }
 \seealso{
-\code{\link{Image}}
+\code{\link{Image}}, \code{\link{drawRotatedRectangle}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

@@ -38,6 +38,21 @@ any of the following:
 compatible with \code{\link{col2bgr}} representing the color of the border
 (default: "black").}
 }
+\value{
+An \code{\link{Image}} object.
+}
 \description{
 \code{border} adds a border to an image.
+}
+\examples{
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+balloon_border <- border(balloon, 10)
+plot(balloon_border)
+
+}
+\seealso{
+\code{\link{Image}}
+}
+\author{
+Simon Garnier, \email{garnier@njit.edu}
 }

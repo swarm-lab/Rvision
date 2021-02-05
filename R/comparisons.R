@@ -33,7 +33,7 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}, \code{\link{minMaxLoc}}.
+#' @seealso \code{\link{Image}}, \code{\link{minMaxLoc}}
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
@@ -84,6 +84,39 @@ matchTemplate <- function(image, template, method, mask = NULL) {
 }
 
 
+#' @title Range Thresholding
+#'
+#' @description \code{inRange} performs range thresholding on an
+#'  \code{\link{Image}} object. Pixels which values are within the desired
+#'  range are turned white while pixels which values are outside are turned
+#'  black. This operation is performed separately on each channel for
+#'  multi-channel images.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param low A vector indicating the lower end of the thresholding range. The
+#'  can have as many elements as the number of channels in the image. If it has
+#'  less elements than the number of channels, it is recycled to match the
+#'  number of channels. If it has more elements than the number of channels, the
+#'  extra elements are ignored without warning (default: rep(0, 4)).
+#'
+#' @param up A vector indicating the upper end of the thresholding range. The
+#'  can have as many elements as the number of channels in the image. If it has
+#'  less elements than the number of channels, it is recycled to match the
+#'  number of channels. If it has more elements than the number of channels, the
+#'  extra elements are ignored without warning (default: rep(255, 4)).
+#'
+#' @return An \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' bw <- inRange(balloon, low = c(10, 20, 30), up = c(120, 130, 140))
+#' plot(bw)
+#'
 #' @export
 inRange <- function(image, low = rep(0, 4), up = rep(255, 4)) {
   if (!isImage(image))

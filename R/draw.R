@@ -31,7 +31,7 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}
+#' @seealso \code{\link{Image}}, \code{\link{drawRotatedRectangle}}
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
@@ -55,6 +55,49 @@ drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thic
 }
 
 
+#' @title Draw Rotated Rectangles on an \code{\link{Image}}
+#'
+#' @description \code{drawRotatedRectangle} draws rotated rectangles over an
+#'  \code{\link{Image}} object. This operation is destructive: it changes
+#'  irreversibly the \code{\link{Image}} object and cannot be undone.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param x A numeric value or vector representing the x coordinates of the
+#'  center of each rectangle.
+#'
+#' @param y A numeric value or vector representing the y coordinates of the
+#'  center of each rectangle.
+#'
+#' @param axis1 A numeric value or vector representing the length of the
+#'  first axis of each rectangle.
+#'
+#' @param axis2 A numeric value or vector representing the length of the
+#'  second axis of each rectangle.
+#'
+#' @param angle A numeric value or vector representing the angle in degrees
+#'  between \code{axis1} and the horizontal.
+#'
+#' @param color A value or vector of any kind of R color specification compatible
+#'  with \code{\link{col2bgr}} representing the color of each rectangle's outline
+#'  (default: "red").
+#'
+#' @param thickness A numeric value or vector representing the thickness in
+#'  pixels of each rectangle's outline (default: 1). If negative, then a filled
+#'  rectangle is drawn.
+#'
+#' @return This function does not return anything. It modifies \code{image} in
+#'  place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{drawRectangle}}, \code{\link{drawEllipse}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' drawRectangle(balloon, 290, 170, 440, 325, thickness = 3)
+#' plot(balloon)
+#'
 #' @export
 drawRotatedRectangle <- function(image, x, y, axis1, axis2, angle, color = "red",
                                  thickness = 1) {
@@ -168,7 +211,7 @@ drawCircle <- function(image, x, y, radius, color = "red", thickness = 1) {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}, \code{\link{drawCircle}}
+#' @seealso \code{\link{Image}}, \code{\link{drawCircle}}, \code{\link{drawRotatedRectangle}}
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
@@ -450,7 +493,7 @@ getTextSize <- function(text, font_face = "simplex", font_scale = 1,
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}, \code{\link{selectROI}}
+#' @seealso \code{\link{Image}}, \code{\link{selectROI}}, \code{\link{fillConvexPoly}}
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
@@ -470,6 +513,40 @@ fillPoly <- function(image, polygon, color = "white") {
   `_fillPoly`(image, polygon, col2bgr(color))
 }
 
+
+#' @title Fill Convex Polygon with Color in Image
+#'
+#' @description \code{fillConvexPoly} fills all the pixels of an image withing a
+#'  given convex polygon with a given color. This function is much faster than
+#'  the function \code{\link{fillPoly}}. It can fill not only convex polygons
+#'  but any monotonic polygon without self-intersections, that is, a polygon
+#'  whose contour intersects every horizontal line (scan line) twice at the most
+#'  (though, its top-most and/or the bottom edge could be horizontal).
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param polygon An m x 2 matrix (or an object that can be converted to an
+#'  m x 2 matrix), with the first column containing the x coordinates of the
+#'  polygon and the second column containing the y coordinates of the polygon.
+#'
+#' @param color A value or vector of any kind of R color specification compatible
+#'  with \code{\link{col2bgr}} representing the color to fill the polygon with
+#'  (default: "white").
+#'
+#' @return This function does not return anything. It modifies \code{image} in
+#'  place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{selectROI}}, \code{\link{fillPoly}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
+#' fillConvexPoly(balloon, poly, color = "red")
+#' plot(balloon)
+#'
+#' @export
 #' @export
 fillConvexPoly <- function(image, polygon, color = "white") {
   if (!isImage(image))
@@ -559,10 +636,47 @@ inpaint <- function(image, mask, radius = 5, method = "NS", in_place = FALSE) {
 }
 
 
+#' @title Set All or Some of an Image to the Specified Value
+#'
+#' @description If a mask is specified, \code{setTo} sets the color of the
+#'  parts of an image corresponding to the white parts of the mask to the desired
+#'  color. If no mask is specified, the entire image is set to the desired color.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param mask An 8-bit \code{\link{Image}} object. The region to be colored
+#'  should be white.
+#'
+#' @param color A value or vector of any kind of R color specification compatible
+#'  with \code{\link{col2bgr}} representing the color of each rectangle's outline
+#'  (default: "red").
+#'
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' mask <- zeros(nrow(balloon), ncol(balloon))
+#' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
+#' fillPoly(mask, poly, color = "white")
+#' balloon_painted <- setTo(balloon, mask, "green")
+#' plot(balloon_painted)
+#'
 #' @export
-setTo <- function(image, mask, color, in_place = FALSE) {
+setTo <- function(image, mask, color = "red", in_place = FALSE) {
   if (!isImage(image))
     stop("image is not an 'Image' object.")
+
+  if (missing(mask))
+    mask <- ones(nrow(image), ncol(image)) * 255
 
   if (!isImage(mask))
     stop("mask is not an 'Image' object.")

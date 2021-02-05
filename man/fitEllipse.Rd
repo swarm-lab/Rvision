@@ -43,6 +43,9 @@ Fitzgibbon A, Pilu M, Fisher RB. Direct least square fitting of
  ellipses. IEEE Trans Pattern Anal Mach Intell. 1999;21: 476–480.
  doi:10.1109/34.765658
 }
+\seealso{
+\code{\link{minAreaRect}}
+}
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
