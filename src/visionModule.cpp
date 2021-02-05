@@ -279,6 +279,7 @@ RCPP_MODULE(methods_Draw) {
 RCPP_MODULE(methods_Geometry) {
   function("_resize", &_resize, List::create(_["image"], _["height"], _["width"],
     _["fx"], _["fy"], _["interpolation"]), "");
+  function("_flip", &_flip, List::create(_["image"], _["flipCode"]), "");
 }
 
 #include "shape.h"

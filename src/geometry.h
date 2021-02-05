@@ -4,3 +4,7 @@ Image _resize(Image image, int height, int width, double fx, double fy, int inte
   cv::resize(image.image, out, cv::Size(width, height), fx, fy, interpolation);
   return Image(out);
 }
+
+void _flip(Image image, int flipCode) {
+  cv::flip(image.image, image.image, flipCode);
+}

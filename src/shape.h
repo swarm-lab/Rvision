@@ -82,7 +82,6 @@ Rcpp::List _connectedComponents(Image image, int connectivity) {
 }
 
 void _watershed(Image image, Image markers) {
-  cv::Mat out;
   cv::watershed(image.image, markers.image);
 }
 

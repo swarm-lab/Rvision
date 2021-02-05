@@ -93,3 +93,47 @@ resize <- function(image, height = NULL, width = NULL, fx = NULL, fy = NULL, int
                    exact = 5,
                    stop("This is not a valid interpolation method.")))
 }
+
+
+#' @title Flip an \code{\link{Image}}
+#'
+#' @description \code{flip} returns a flipped version of an \code{\link{Image}}
+#'  around one or both of its axes.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param type An integer indicating the type of flipping to be performed. If
+#'  \code{type = 0} (the default), the image is flipped around its x-axis; if
+#'  \code{type = 1} (or any positive value, then it is flipped around its y-axis;
+#'  finally, if \code{type = -1} (or any negative value, then it is flipped
+#'  around both axes.)
+#'
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_flipped <- flip(balloon, -1)
+#' plot(balloon_flipped)
+#'
+#' @export
+flip <- function(image, type = 0, in_place = FALSE) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  if (in_place == TRUE) {
+    `_flip`(image, type)
+  } else {
+    out <- `_cloneImage`(image)
+    `_flip`(out, type)
+    out
+  }
+}
