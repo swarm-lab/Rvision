@@ -52,6 +52,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/boxFilter.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/canny.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/changeBitDepth.html</loc>
   </url>
   <url>
@@ -80,6 +83,12 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/contourArea.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/convexHull.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/convexityDefects.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/destroyDisplay.html</loc>
@@ -118,10 +127,16 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/drawRectangle.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/drawRotatedRectangle.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/drawText.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/farneback.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/fillConvexPoly.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/fillPoly.html</loc>
@@ -169,6 +184,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/image.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/inRange.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/inpaint.html</loc>
   </url>
   <url>
@@ -211,7 +229,13 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/min.Rcpp_Image.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/minAreaRect.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/minMaxLoc.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/moments.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/morph.html</loc>
@@ -221,6 +245,15 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/nrow.Rcpp_Image.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/ones.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/pget.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/pixelsInContour.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plot.Image.html</loc>
@@ -260,6 +293,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/setProp.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/setTo.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/simpleBlobDetector.html</loc>
@@ -323,6 +359,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/writerOuput.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/zeros.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//articles/z1_install.html</loc>
