@@ -8,14 +8,13 @@ Authors@R: c(
     person("Muschelli", "John", email = "muschellij2@gmail.com", role = c("ctb", "cph"))
   )
 Maintainer: Simon Garnier <garnier@njit.edu>
-Description: This package uses the OpenCV library to provide R users with methods 
-    to read and manipulate video and image files, as well as camera streams.
+Description: An OpenCV-based computer vision library providing methods to read 
+    and manipulate video and image files, as well as camera streams.
 License: GPL-3
 LazyData: TRUE
 NeedsCompilation: yes
 Imports:
     Rcpp (>= 1.0.1),
-    RcppArmadillo (>= 0.9.400),
     ROpenCVLite (>= 0.3.412),
     methods,
     pbapply,

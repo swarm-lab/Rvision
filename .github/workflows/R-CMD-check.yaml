@@ -63,6 +63,9 @@ jobs:
           do
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+          sudo apt install -y libavcodec-dev libavformat-dev libswscale-dev
+          sudo apt install -y libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev
+          sudo apt install -y libpng-dev libjpeg-dev libtiff-dev
 
       - name: Install dependencies
         run: |
