@@ -70,16 +70,27 @@ void _drawLines(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1_
   }
 }
 
+void _drawPolyLines(Image image, Rcpp::List line, bool isClosed,
+                        Rcpp::IntegerVector color, int thickness) {
+  std::vector< std::vector< cv::Point > > lines;
+
+  for (int i; i < line.length(); i++) {
+    lines.push_back(rmat2poly(line[i]));
+  }
+
+  cv::polylines(image.image, lines, isClosed, col2Scalar(color), thickness);
+}
+
 void _drawArrows(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1_y,
                  Rcpp::NumericVector pt2_x, Rcpp::NumericVector pt2_y,
                  Rcpp::NumericVector tip_length, Rcpp::IntegerMatrix color,
                  Rcpp::IntegerVector thickness) {
   for (int i = 0; i < pt1_x.size(); i++) {
     cv::arrowedLine(image.image,
-             cv::Point(pt1_x(i), pt1_y(i)),
-             cv::Point(pt2_x(i), pt2_y(i)),
-             col2Scalar(color(_,i)),
-             thickness(i), 8, 0, tip_length(i));
+                    cv::Point(pt1_x(i), pt1_y(i)),
+                    cv::Point(pt2_x(i), pt2_y(i)),
+                    col2Scalar(color(_,i)),
+                    thickness(i), 8, 0, tip_length(i));
   }
 }
 
@@ -105,27 +116,18 @@ Rcpp::NumericVector _getTextSize(std::string text, int font_face, double font_sc
   return(Rcpp::NumericVector::create(text_size.height, text_size.width));
 }
 
-void _fillPoly(Image image, Rcpp::IntegerMatrix polygon, Rcpp::IntegerVector color) {
-  std::vector< cv::Point > poly;
-  std::vector< std::vector<cv::Point> > polys;
+void _fillPoly(Image image, Rcpp::List polygon, Rcpp::IntegerVector color) {
+  std::vector< std::vector<cv::Point> > polygons;
 
-  for (int i = 0; i < polygon.nrow(); i++) {
-    poly.push_back(cv::Point(polygon(i, 0), polygon(i, 1)));
+  for (int i = 0; i < polygon.length(); i++) {
+    polygons.push_back(rmat2poly(polygon[i]));
   }
 
-  polys.push_back(poly);
-
-  cv::fillPoly(image.image, polys, col2Scalar(color));
+  cv::fillPoly(image.image, polygons, col2Scalar(color));
 }
 
 void _fillConvexPoly(Image image, Rcpp::IntegerMatrix polygon, Rcpp::IntegerVector color) {
-  std::vector<cv::Point> poly;
-
-  for (int i = 0; i < polygon.nrow(); i++) {
-    poly.push_back(cv::Point(polygon(i, 0), polygon(i, 1)));
-  }
-
-  cv::fillConvexPoly(image.image, poly, col2Scalar(color));
+  cv::fillConvexPoly(image.image, rmat2poly(polygon), col2Scalar(color));
 }
 
 void _inpaint(Image image, Image mask, double radius, int method) {

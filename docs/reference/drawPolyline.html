@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Fill Polygon with Color in Image — fillPoly • Rvision</title>
+<title>Draw Polygonal Lines on an Image — drawPolyline • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,10 @@
 
 
 
-<meta property="og:title" content="Fill Polygon with Color in Image — fillPoly" />
-<meta property="og:description" content="fillPolygon fills all the pixels of an image withing a
- given polygon with a given color." />
+<meta property="og:title" content="Draw Polygonal Lines on an Image — drawPolyline" />
+<meta property="og:description" content="drawPolyline draws polygonal lines over an
+Image object. This operation is destructive: it changes
+ irreversibly the Image object and cannot be undone." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
 
@@ -147,17 +148,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Fill Polygon with Color in Image</h1>
+    <h1>Draw Polygonal Lines on an Image</h1>
     <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/draw.R'><code>R/draw.R</code></a></small>
-    <div class="hidden name"><code>fillPoly.Rd</code></div>
+    <div class="hidden name"><code>drawPolyline.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>fillPolygon</code> fills all the pixels of an image withing a
- given polygon with a given color.</p>
+    <p><code>drawPolyline</code> draws polygonal lines over an
+<code><a href='Image-class.html'>Image</a></code> object. This operation is destructive: it changes
+ irreversibly the <code><a href='Image-class.html'>Image</a></code> object and cannot be undone.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fillPoly</span><span class='op'>(</span><span class='va'>image</span>, <span class='va'>polygon</span>, color <span class='op'>=</span> <span class='st'>"white"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>drawPolyline</span><span class='op'>(</span><span class='va'>image</span>, <span class='va'>line</span>, closed <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"red"</span>, thickness <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,17 +169,28 @@
       <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
     </tr>
     <tr>
-      <th>polygon</th>
+      <th>line</th>
       <td><p>An m x 2 matrix (or an object that can be converted to an
 m x 2 matrix) or a list of m x 2 matrices, with the first column containing
-the x coordinates of the polygons and the second column containing the y
-coordinates of the polygons.</p></td>
+the x coordinates of the polygonal lines and the second column containing
+the y coordinates of the polygonal lines.</p></td>
+    </tr>
+    <tr>
+      <th>closed</th>
+      <td><p>A boolean indicating whether the drawn polylines are closed or
+not (default: FALSE). If they are closed, the function draws a line from the
+last vertex of each curve to its first vertex.</p></td>
     </tr>
     <tr>
       <th>color</th>
       <td><p>A value or vector of any kind of R color specification compatible
 with <code><a href='col2bgr.html'>col2bgr</a></code> representing the color to fill the polygon with
 (default: "white").</p></td>
+    </tr>
+    <tr>
+      <th>thickness</th>
+      <td><p>A numeric value representing the thickness in pixels of the
+line (default: 1).</p></td>
     </tr>
     </table>
 
@@ -195,9 +208,9 @@ with <code><a href='col2bgr.html'>col2bgr</a></code> representing the color to f
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>poly</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>290</span>, <span class='fl'>290</span>, <span class='fl'>440</span>, <span class='fl'>440</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>170</span>, <span class='fl'>325</span>, <span class='fl'>325</span>, <span class='fl'>170</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>fillPoly</span><span class='op'>(</span><span class='va'>balloon</span>, <span class='va'>poly</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+<span class='fu'>drawPolyline</span><span class='op'>(</span><span class='va'>balloon</span>, <span class='va'>poly</span>, closed <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"red"</span>, thickness <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>
-</div><div class='img'><img src='fillPoly-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='drawPolyline-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

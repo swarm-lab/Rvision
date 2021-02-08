@@ -260,6 +260,8 @@ RCPP_MODULE(methods_Draw) {
     _["color"], _["thickness"]), "");
   function("_drawLines", &_drawLines, List::create(_["image"], _["pt1_x"], _["pt1_y"],
     _["pt2_x"], _["pt2_y"], _["color"], _["thickness"]), "");
+  function("_drawPolyLines", &_drawPolyLines, List::create(_["image"],
+    _["line"], _["isClosed"], _["color"], _["thickness"]), "");
   function("_drawArrows", &_drawArrows, List::create(_["image"], _["pt1_x"], _["pt1_y"],
     _["pt2_x"], _["pt2_y"], _["tip_length"], _["color"], _["thickness"]), "");
   function("_drawTexts", &_drawTexts, List::create(_["image"], _["text"], _["x"], _["y"],

@@ -473,6 +473,68 @@ getTextSize <- function(text, font_face = "simplex", font_scale = 1,
 }
 
 
+#' @title Draw Polygonal Lines on an Image
+#'
+#' @description \code{drawPolyline} draws polygonal lines over an
+#' \code{\link{Image}} object. This operation is destructive: it changes
+#'  irreversibly the \code{\link{Image}} object and cannot be undone.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param line An m x 2 matrix (or an object that can be converted to an
+#'  m x 2 matrix) or a list of m x 2 matrices, with the first column containing
+#'  the x coordinates of the polygonal lines and the second column containing
+#'  the y coordinates of the polygonal lines.
+#'
+#' @param closed A boolean indicating whether the drawn polylines are closed or
+#'  not (default: FALSE). If they are closed, the function draws a line from the
+#'  last vertex of each curve to its first vertex.
+#'
+#' @param color A value or vector of any kind of R color specification compatible
+#'  with \code{\link{col2bgr}} representing the color to fill the polygon with
+#'  (default: "white").
+#'
+#' @param thickness A numeric value representing the thickness in pixels of the
+#'  line (default: 1).
+#'
+#' @return This function does not return anything. It modifies \code{image} in
+#'  place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{selectROI}}, \code{\link{fillConvexPoly}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
+#' drawPolyline(balloon, poly, closed = FALSE, color = "red", thickness = 3)
+#' plot(balloon)
+#'
+#' @export
+drawPolyline <- function(image, line, closed = FALSE, color = "red", thickness = 1) {
+  if (!isImage(image))
+    stop("image is not an 'Image' object.")
+
+  if (!is.list(line) | is.data.frame(line)) {
+    line <- list(line)
+  }
+
+  line <- lapply(line, function(l) {
+    if (!is.matrix(l))
+      l <- as.matrix(l)
+
+    if (ncol(l) != 2)
+      stop("line must either be a 2-column matrix or a list of 2-column matrices.")
+
+    l[, 1] <- l[, 1] - 1
+    l[, 2] <- -l[, 2] + nrow(image)
+    l
+  })
+
+  `_drawPolyLines`(image, line, closed, col2bgr(color), thickness)
+}
+
+
 #' @title Fill Polygon with Color in Image
 #'
 #' @description \code{fillPolygon} fills all the pixels of an image withing a
@@ -481,8 +543,9 @@ getTextSize <- function(text, font_face = "simplex", font_scale = 1,
 #' @param image An \code{\link{Image}} object.
 #'
 #' @param polygon An m x 2 matrix (or an object that can be converted to an
-#'  m x 2 matrix), with the first column containing the x coordinates of the
-#'  polygon and the second column containing the y coordinates of the polygon.
+#'  m x 2 matrix) or a list of m x 2 matrices, with the first column containing
+#'  the x coordinates of the polygons and the second column containing the y
+#'  coordinates of the polygons.
 #'
 #' @param color A value or vector of any kind of R color specification compatible
 #'  with \code{\link{col2bgr}} representing the color to fill the polygon with
@@ -506,9 +569,21 @@ fillPoly <- function(image, polygon, color = "white") {
   if (!isImage(image))
     stop("image is not an 'Image' object.")
 
-  polygon <- as.matrix(polygon)
-  polygon[, 1] <- polygon[, 1] - 1
-  polygon[, 2] <- -polygon[, 2] + nrow(image)
+  if (!is.list(polygon) | is.data.frame(polygon)) {
+    polygon <- list(polygon)
+  }
+
+  polygon <- lapply(polygon, function(l) {
+    if (!is.matrix(l))
+      l <- as.matrix(l)
+
+    if (ncol(l) != 2)
+      stop("line must either be a 2-column matrix or a list of 2-column matrices.")
+
+    l[, 1] <- l[, 1] - 1
+    l[, 2] <- -l[, 2] + nrow(image)
+    l
+  })
 
   `_fillPoly`(image, polygon, col2bgr(color))
 }
@@ -552,7 +627,12 @@ fillConvexPoly <- function(image, polygon, color = "white") {
   if (!isImage(image))
     stop("image is not an 'Image' object.")
 
-  polygon <- as.matrix(polygon)
+  if (!is.matrix(polygon))
+    polygon <- as.matrix(polygon)
+
+  if (ncol(polygon) != 2)
+    stop("polygon must be a 2-column matrix.")
+
   polygon[, 1] <- polygon[, 1] - 1
   polygon[, 2] <- -polygon[, 2] + nrow(image)
 

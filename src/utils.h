@@ -141,3 +141,15 @@ cv::Scalar col2Scalar(IntegerVector col) {
 
   return out;
 }
+
+std::vector< cv::Point > rmat2poly(Rcpp::IntegerMatrix mat) {
+  std::vector< cv::Point > poly;
+
+  for (int i = 0; i < mat.nrow(); i++) {
+    poly.push_back(cv::Point(mat(i, 0), mat(i, 1)));
+  }
+
+  return poly;
+}
+
+

@@ -10,8 +10,9 @@ fillPoly(image, polygon, color = "white")
 \item{image}{An \code{\link{Image}} object.}
 
 \item{polygon}{An m x 2 matrix (or an object that can be converted to an
-m x 2 matrix), with the first column containing the x coordinates of the
-polygon and the second column containing the y coordinates of the polygon.}
+m x 2 matrix) or a list of m x 2 matrices, with the first column containing
+the x coordinates of the polygons and the second column containing the y
+coordinates of the polygons.}
 
 \item{color}{A value or vector of any kind of R color specification compatible
 with \code{\link{col2bgr}} representing the color to fill the polygon with
