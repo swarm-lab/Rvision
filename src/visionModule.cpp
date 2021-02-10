@@ -146,6 +146,8 @@ RCPP_MODULE(methods_Statistics) {
   function("_min", &_min, List::create(_["image"]), "");
   function("_max", &_max, List::create(_["image"]), "");
   function("_minMaxLoc", &_minMaxLoc, List::create(_["image"]), "");
+  function("_imhist", &_imhist, List::create(_["image"], _["nbins"],
+    _["range"], _["mask"]), "");
 }
 
 #include "comparisons.h"

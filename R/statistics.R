@@ -184,3 +184,78 @@ minMaxLoc <- function(x) {
          NA
   )
 }
+
+
+#' @title Multichannel Histogram of an Image
+#'
+#' @description \code{imhist} computes (or plots) the multichannel histogram of
+#'  an \code{\link{Image}} object.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param nbins An integer indicating the number of bins of the histogram
+#'  (default: 256).
+#'
+#' @param range The range of pixel values to include in the histogram (default:
+#'  c(0, 255)).
+#'
+#' @param mask A single-channel (GRAY) 8-bit (8U) \code{\link{Image}} object
+#'  with the same dimensions as \code{image}. This can be used to mask out
+#'  pixels that should not be considered when calculating the histogram (pixels
+#'  set to 0 in the mask will be ignored during the histogram calculation).
+#'
+#' @param plot A logical indicating whether to plot the histogram (default:
+#'  FALSE).
+#'
+#' @param color A value or vector of any kind of R color specification
+#'  compatible with \code{\link{col2rgb}} representing the color of the
+#'  histogram for each image channel (default:
+#'  c("blue", "green", "red", "black")).
+#'
+#' @param xlab,ylab Character strings for the axis labels (default: "Pixel
+#'  value" for the x axis and "Counts" for the y axis).
+#'
+#' @param ... Further arguments passed to \code{\link{plot}}.
+#'
+#' @return If \code{plot=FALSE}, the function returns a \code{m x n} matrix,
+#'  with \code{m = nbins} and \code{n} equal to the number of channels in the
+#'  image + 1. The first column corresponds to the bin values. If
+#'  \code{plot=TRUE}, the function plots the histogram without returning
+#'  anything.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' imhist(balloon, plot = TRUE)
+#'
+#' @export
+imhist <- function(image, nbins = 256, range = c(0, 255), mask = NULL,
+                   plot = FALSE, color = c("blue", "green", "red", "black"),
+                   xlab = "Pixel value", ylab = "Counts", ...) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  if (!is.null(mask)) {
+    if (!isImage(mask))
+      stop("mask is not an Image object.")
+  } else {
+    mask <- 255 * ones(nrow(image), ncol(image), "GRAY")
+  }
+
+  h <- cbind(seq(range[1], range[2], length.out = nbins),
+             Rvision:::`_imhist`(image, nbins, range, mask))
+  colnames(h) <- c("value", paste0("C", 1:(ncol(h) - 1)))
+
+  if (plot) {
+    plot(h[, 2] ~ h[, 1], col = color[1], type = "l", xlab = xlab, ylab = ylab, ...)
+
+    for (i in 1:(ncol(h) - 2)) {
+      lines(h[, i + 2] ~ h[, 1], col = color[i %% (length(color) - 1) + 1])
+    }
+  } else {
+    h
+  }
+}

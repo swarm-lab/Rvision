@@ -16,7 +16,7 @@ Image _sumList(Rcpp::List images) {
     break;
   default:
     throw std::range_error("Not a valid image.");
-    break;
+  break;
   }
 
   for (int i = 0; i < images.size(); i++) {
@@ -89,4 +89,20 @@ double _min(Image image) {
 double _max(Image image) {
   Rcpp::NumericMatrix minMax = _minMaxLoc(image);
   return minMax(1, 0);
+}
+
+arma::fmat _imhist(Image image, int nbins, Rcpp::NumericVector range, Image mask) {
+  arma::fmat out;
+  cv::Mat hist(nbins, image.nchan(), CV_32F);
+  float frange[] = {(float) range[0], (float) range[1]};
+  const float* histRange = { frange };
+  std::vector<cv::Mat> channels;
+  cv::split(image.image, channels);
+
+  for (int i = 0; i < image.nchan(); i++) {
+    calcHist(&channels[i], 1, 0, mask.image, hist.col(i), 1, &nbins, &histRange, true, false);
+  }
+
+  cv2arma(hist, out);
+  return out;
 }
