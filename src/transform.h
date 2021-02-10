@@ -117,5 +117,6 @@ int _floodFill(Image image, IntegerVector seedPoint, IntegerVector newVal, Integ
   return area;
 }
 
-
-
+void _LUT(Image image, Image lut) {
+  cv::LUT(image.image, lut.image, image.image);
+}

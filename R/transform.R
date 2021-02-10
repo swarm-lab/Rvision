@@ -680,3 +680,38 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = rep(0, 4
   `_floodFill`(image, seed - 1, col2bgr(color, alpha = TRUE), lo_diff,
                up_diff, connectivity)
 }
+
+
+#' @export
+LUT <- function(image, lut, in_place = FALSE) {
+  if (!isImage(image))
+    stop("'image' is not an Image object.")
+
+  if (is.vector(lut)) {
+    if (length(lut) != 256)
+      stop("'lut' should have 256 elements.")
+
+    im_lut <- image(array(lut, dim = c(1, 256, image$nchan())))
+  }
+
+  if (is.matrix(lut)) {
+    if (nrow(lut) != 256)
+      stop("'lut' should have 256 rows")
+
+    if (ncol(lut) != image$nchan())
+      stop("'lut' should have the same number of columns as the number of channels in 'image'.")
+
+    im_lut <- image(array(lut, dim = c(1, 256, image$nchan())))
+  }
+
+  if (im_lut$depth() != image$depth())
+    changeBitDepth(im_lut, image$depth(), in_place = TRUE)
+
+  if (in_place == TRUE) {
+    `_LUT`(image, im_lut)
+  } else {
+    out <- `_cloneImage`(image)
+    `_LUT`(out, im_lut)
+    out
+  }
+}

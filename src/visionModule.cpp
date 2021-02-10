@@ -323,6 +323,7 @@ RCPP_MODULE(methods_Transform) {
     _["distanceType"], _["maskSize"]), "");
   function("_floodFill", &_floodFill, List::create(_["image"], _["seedPoint"],
     _["newVal"], _["loDiff"], _["upDiff"], _["connectivity"]), "");
+  function("_LUT", &_LUT, List::create(_["image"], _["lut"]), "");
 }
 
 #include "feature.h"
