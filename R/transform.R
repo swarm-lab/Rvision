@@ -715,3 +715,31 @@ LUT <- function(image, lut, in_place = FALSE) {
     out
   }
 }
+
+#' @export
+histmatch <- function(image, target, in_place = FALSE) {
+  if (!isImage(image) | !isImage(target))
+    stop("'image' and 'target' must be Image objects.")
+
+  if (target$nchan() != image$nchan())
+    stop("'image' and 'target' must have the same number of channels.")
+
+  if (target$depth() != image$depth())
+    stop("'image' and 'target' must have the same bit depth.")
+
+  map <- matrix(0, nrow = 256, ncol = image$nchan())
+  n <- nrow(image) * ncol(image)
+
+  h_target <- imhist(target)[, 1:target$nchan() + 1]
+  h_image <- imhist(image)[, 1:image$nchan() + 1]
+  cdf_target <- apply(h_target, 2, cumsum)
+  cdf_image <- apply(h_image, 2, cumsum)
+
+  for (i in 1:256) {
+    for (j in 1:target$nchan()) {
+      map[i, j] <- which.min(abs(cdf_image[i, j] - cdf_target[, j])) - 1
+    }
+  }
+
+  LUT(image, map, in_place)
+}
