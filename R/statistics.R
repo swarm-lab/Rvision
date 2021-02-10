@@ -197,7 +197,7 @@ minMaxLoc <- function(x) {
 #'  (default: 256).
 #'
 #' @param range The range of pixel values to include in the histogram (default:
-#'  c(0, 255)).
+#'  c(0, 256)). The lower boundary is inclusive but the higher one is exclusive.
 #'
 #' @param mask A single-channel (GRAY) 8-bit (8U) \code{\link{Image}} object
 #'  with the same dimensions as \code{image}. This can be used to mask out
@@ -232,7 +232,7 @@ minMaxLoc <- function(x) {
 #' imhist(balloon, plot = TRUE)
 #'
 #' @export
-imhist <- function(image, nbins = 256, range = c(0, 255), mask = NULL,
+imhist <- function(image, nbins = 256, range = c(0, 256), mask = NULL,
                    plot = FALSE, color = c("blue", "green", "red", "black"),
                    xlab = "Pixel value", ylab = "Counts", ...) {
   if (!isImage(image))

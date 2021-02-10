@@ -7,7 +7,7 @@
 imhist(
   image,
   nbins = 256,
-  range = c(0, 255),
+  range = c(0, 256),
   mask = NULL,
   plot = FALSE,
   color = c("blue", "green", "red", "black"),
@@ -23,7 +23,7 @@ imhist(
 (default: 256).}
 
 \item{range}{The range of pixel values to include in the histogram (default:
-c(0, 255)).}
+c(0, 256)). The lower boundary is inclusive but the higher one is exclusive.}
 
 \item{mask}{A single-channel (GRAY) 8-bit (8U) \code{\link{Image}} object
 with the same dimensions as \code{image}. This can be used to mask out
