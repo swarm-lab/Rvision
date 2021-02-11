@@ -682,6 +682,35 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = rep(0, 4
 }
 
 
+#' @title Look-up Table Transform
+#'
+#' @description \code{LUT} performs a look-up table transform of an
+#'  \code{\link{Image}} object.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param lut A look-up table. This should be a vector with 256 elements, or a
+#'  \code{256 x n} table, with n corresponding to the number of channels in
+#'  \code{image}. If \code{lut} is a vector and \code{image} has more than one
+#'  channel, then \code{lut} is recycled for each channel.
+#'
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{histmatch}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' high_contrast_lut <- 255 * pbeta(0:255 / 255, 4, 4)
+#' high_contrast_balloon <- LUT(balloon, high_contrast_lut)
+#' plot(high_contrast_balloon)
+#'
 #' @export
 LUT <- function(image, lut, in_place = FALSE) {
   if (!isImage(image))
@@ -716,6 +745,7 @@ LUT <- function(image, lut, in_place = FALSE) {
   }
 }
 
+
 #' @export
 histmatch <- function(image, target, in_place = FALSE) {
   if (!isImage(image) | !isImage(target))
@@ -727,17 +757,12 @@ histmatch <- function(image, target, in_place = FALSE) {
   if (target$depth() != image$depth())
     stop("'image' and 'target' must have the same bit depth.")
 
+  cdf_target <- apply(imhist(target)[, 1:target$nchan() + 1], 2, cumsum)
+  cdf_image <- apply(imhist(image)[, 1:image$nchan() + 1], 2, cumsum)
+
   map <- matrix(0, nrow = 256, ncol = image$nchan())
-
-  h_target <- imhist(target)[, 1:target$nchan() + 1]
-  h_image <- imhist(image)[, 1:image$nchan() + 1]
-  cdf_target <- apply(h_target, 2, cumsum)
-  cdf_image <- apply(h_image, 2, cumsum)
-
-  for (i in 1:256) {
-    for (j in 1:target$nchan()) {
-      map[i, j] <- which.min(abs(cdf_image[i, j] - cdf_target[, j])) - 1
-    }
+  for (j in 1:target$nchan()) {
+    map[, j] <- apply(abs(outer(cdf_image[, j], cdf_target[, j], "-")), 1, which.min) - 1
   }
 
   LUT(image, map, in_place)
