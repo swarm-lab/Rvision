@@ -728,7 +728,6 @@ histmatch <- function(image, target, in_place = FALSE) {
     stop("'image' and 'target' must have the same bit depth.")
 
   map <- matrix(0, nrow = 256, ncol = image$nchan())
-  n <- nrow(image) * ncol(image)
 
   h_target <- imhist(target)[, 1:target$nchan() + 1]
   h_image <- imhist(image)[, 1:image$nchan() + 1]

@@ -74,7 +74,7 @@ void _drawPolyLines(Image image, Rcpp::List line, bool isClosed,
                         Rcpp::IntegerVector color, int thickness) {
   std::vector< std::vector< cv::Point > > lines;
 
-  for (int i; i < line.length(); i++) {
+  for (int i = 0; i < line.length(); i++) {
     lines.push_back(rmat2poly(line[i]));
   }
 
