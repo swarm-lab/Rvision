@@ -746,22 +746,50 @@ LUT <- function(image, lut, in_place = FALSE) {
 }
 
 
+#' @title Histogram Matching/Specification
+#'
+#' @description \code{histmatch} transforms an \code{\link{Image}} object so
+#'  that its histogram matches (approximately) that of another
+#'  \code{\link{Image}} object.
+#'
+#' @param image An \code{\link{Image}} object to transform.
+#'
+#' @param reference An \code{\link{Image}} object which histogram will be used
+#'  as a reference to transform \code{image}.
+#'
+#' @param A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image} in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{histmatch}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_matched <- histmatch(dots, balloon)
+#' plot(dots_matched)
+#'
 #' @export
-histmatch <- function(image, target, in_place = FALSE) {
-  if (!isImage(image) | !isImage(target))
-    stop("'image' and 'target' must be Image objects.")
+histmatch <- function(image, reference, in_place = FALSE) {
+  if (!isImage(image) | !isImage(reference))
+    stop("'image' and 'reference' must be Image objects.")
 
-  if (target$nchan() != image$nchan())
-    stop("'image' and 'target' must have the same number of channels.")
+  if (reference$nchan() != image$nchan())
+    stop("'image' and 'reference' must have the same number of channels.")
 
-  if (target$depth() != image$depth())
-    stop("'image' and 'target' must have the same bit depth.")
+  if (reference$depth() != image$depth())
+    stop("'image' and 'reference' must have the same bit depth.")
 
-  cdf_target <- apply(imhist(target)[, 1:target$nchan() + 1], 2, cumsum)
+  cdf_target <- apply(imhist(reference)[, 1:reference$nchan() + 1], 2, cumsum)
   cdf_image <- apply(imhist(image)[, 1:image$nchan() + 1], 2, cumsum)
 
   map <- matrix(0, nrow = 256, ncol = image$nchan())
-  for (j in 1:target$nchan()) {
+  for (j in 1:reference$nchan()) {
     map[, j] <- apply(abs(outer(cdf_image[, j], cdf_target[, j], "-")), 1, which.min) - 1
   }
 
