@@ -212,6 +212,8 @@ minMaxLoc <- function(x) {
 #'  histogram for each image channel (default:
 #'  c("blue", "green", "red", "black")).
 #'
+#' @param lty A vector of line types, see \code{\link{par}}.
+#'
 #' @param xlab,ylab Character strings for the axis labels (default: "Pixel
 #'  value" for the x axis and "Counts" for the y axis).
 #'
@@ -228,7 +230,7 @@ minMaxLoc <- function(x) {
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
-#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' imhist(balloon, plot = TRUE)
 #'
 #' @export

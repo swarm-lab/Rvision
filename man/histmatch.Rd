@@ -12,7 +12,7 @@ histmatch(image, reference, in_place = FALSE)
 \item{reference}{An \code{\link{Image}} object which histogram will be used
 as a reference to transform \code{image}.}
 
-\item{A}{logical indicating whether the change should be applied to
+\item{in_place}{logical indicating whether the change should be applied to
 the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
 the default, slower but non destructive).}
 }

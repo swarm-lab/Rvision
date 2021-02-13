@@ -42,6 +42,8 @@ c("blue", "green", "red", "black")).}
 \item{xlab, ylab}{Character strings for the axis labels (default: "Pixel
 value" for the x axis and "Counts" for the y axis).}
 
+\item{lty}{A vector of line types, see \code{\link{par}}.}
+
 \item{...}{Further arguments passed to \code{\link{matplot}}.}
 }
 \value{
@@ -56,7 +58,7 @@ If \code{plot=FALSE}, the function returns a \code{m x n} matrix,
  an \code{\link{Image}} object.
 }
 \examples{
-balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 imhist(balloon, plot = TRUE)
 
 }

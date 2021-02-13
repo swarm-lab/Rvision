@@ -757,7 +757,7 @@ LUT <- function(image, lut, in_place = FALSE) {
 #' @param reference An \code{\link{Image}} object which histogram will be used
 #'  as a reference to transform \code{image}.
 #'
-#' @param A logical indicating whether the change should be applied to
+#' @param in_place logical indicating whether the change should be applied to
 #'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
 #'  the default, slower but non destructive).
 #'
