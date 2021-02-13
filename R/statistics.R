@@ -207,7 +207,7 @@ minMaxLoc <- function(x) {
 #' @param plot A logical indicating whether to plot the histogram (default:
 #'  FALSE).
 #'
-#' @param color A value or vector of any kind of R color specification
+#' @param col A value or vector of any kind of R color specification
 #'  compatible with \code{\link{col2rgb}} representing the color of the
 #'  histogram for each image channel (default:
 #'  c("blue", "green", "red", "black")).
@@ -215,7 +215,7 @@ minMaxLoc <- function(x) {
 #' @param xlab,ylab Character strings for the axis labels (default: "Pixel
 #'  value" for the x axis and "Counts" for the y axis).
 #'
-#' @param ... Further arguments passed to \code{\link{plot}}.
+#' @param ... Further arguments passed to \code{\link{matplot}}.
 #'
 #' @return If \code{plot=FALSE}, the function returns a \code{m x n} matrix,
 #'  with \code{m = nbins} and \code{n} equal to the number of channels in the
@@ -233,8 +233,8 @@ minMaxLoc <- function(x) {
 #'
 #' @export
 imhist <- function(image, nbins = 256, range = c(0, 256), mask = NULL,
-                   plot = FALSE, color = c("blue", "green", "red", "black"),
-                   xlab = "Pixel value", ylab = "Counts", ...) {
+                   plot = FALSE, col = c("blue", "green", "red", "black"),
+                   xlab = "Pixel value", ylab = "Counts", lty = 1, ...) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
@@ -246,15 +246,12 @@ imhist <- function(image, nbins = 256, range = c(0, 256), mask = NULL,
   }
 
   h <- cbind(seq(range[1], range[2], length.out = nbins),
-             Rvision:::`_imhist`(image, nbins, range, mask))
+             `_imhist`(image, nbins, range, mask))
   colnames(h) <- c("value", paste0("C", 1:(ncol(h) - 1)))
 
   if (plot) {
-    plot(h[, 2] ~ h[, 1], col = color[1], type = "l", xlab = xlab, ylab = ylab, ...)
-
-    for (i in 1:(ncol(h) - 2)) {
-      lines(h[, i + 2] ~ h[, 1], col = color[i %% (length(color) - 1) + 1])
-    }
+    graphics::matplot(h[, 1], h[, 2:ncol(h)], type = "l", lty = lty, col = col,
+            xlab = xlab, ylab = ylab, ...)
   } else {
     h
   }

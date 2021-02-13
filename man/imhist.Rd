@@ -10,9 +10,10 @@ imhist(
   range = c(0, 256),
   mask = NULL,
   plot = FALSE,
-  color = c("blue", "green", "red", "black"),
+  col = c("blue", "green", "red", "black"),
   xlab = "Pixel value",
   ylab = "Counts",
+  lty = 1,
   ...
 )
 }
@@ -33,7 +34,7 @@ set to 0 in the mask will be ignored during the histogram calculation).}
 \item{plot}{A logical indicating whether to plot the histogram (default:
 FALSE).}
 
-\item{color}{A value or vector of any kind of R color specification
+\item{col}{A value or vector of any kind of R color specification
 compatible with \code{\link{col2rgb}} representing the color of the
 histogram for each image channel (default:
 c("blue", "green", "red", "black")).}
@@ -41,7 +42,7 @@ c("blue", "green", "red", "black")).}
 \item{xlab, ylab}{Character strings for the axis labels (default: "Pixel
 value" for the x axis and "Counts" for the y axis).}
 
-\item{...}{Further arguments passed to \code{\link{plot}}.}
+\item{...}{Further arguments passed to \code{\link{matplot}}.}
 }
 \value{
 If \code{plot=FALSE}, the function returns a \code{m x n} matrix,
