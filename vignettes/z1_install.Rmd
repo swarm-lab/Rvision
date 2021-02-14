@@ -10,9 +10,9 @@ vignette: >
 __This page describes the installation process of [`Rvision`](https://github.com/swarm-lab/Rvision).__ 
 
 Installing [`Rvision`](https://github.com/swarm-lab/Rvision) should go smoothly 
-on all major operating systems (Mac, Windows, "Ubuntu-like" Linux). There are a 
-few steps to follow before installing the package itself in order to install all 
-the necessary dependencies. 
+on all major operating systems (Mac, Windows, and "Ubuntu-like" Linux). There 
+are a few steps to follow before installing the package itself in order to 
+prepare all the necessary dependencies. 
 
 All installation steps are described below. 
 
@@ -43,8 +43,7 @@ if (!require(devtools))
 ### 1.1.2 - ROpenCVLite
 
 You will also need to install the [`ROpenCVLite`](https://github.com/swarm-lab/ROpenCVLite)
-package from its [Github repository](https://github.com/swarm-lab/ROpenCVLite). 
-Installation instructions for [`ROpenCVLite`](https://github.com/swarm-lab/ROpenCVLite)
+package. Installation instructions for [`ROpenCVLite`](https://github.com/swarm-lab/ROpenCVLite)
 can be found at https://swarm-lab.github.io/ROpenCVLite/articles/install.html.
 
 This step may take some time as it will download, compile and install 
@@ -54,7 +53,7 @@ installed (compilation time will depend on your computer).
 
 Note that you can skip this step and [`Rvision`](https://github.com/swarm-lab/Rvision)
 will attempt to install it in the next step. However it might fail if your 
-system is missing one of the external dependencies required to compile [`OpenCV`](https://opencv.org). 
+system is missing one of the external dependencies required by `ROpenCVLite`. 
 
 ---
 

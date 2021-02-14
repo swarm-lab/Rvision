@@ -47,7 +47,7 @@ release(my_video)
 ```
 
 Note that `Video` objects are wrappers around [`OpenCV`](http://opencv.org/)
-[`VideoCapture`](https://docs.opencv.org/3.4.1/d8/dfe/classcv_1_1VideoCapture.html)
+[`VideoCapture`](https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html)
 objects. They will not persist between [`R`](https://cran.r-project.org) sessions. 
 
 ### 2.1.2 - Camera streams
@@ -71,7 +71,7 @@ release(my_stream)
 ```
 
 Note that `Stream` objects are wrappers around [`OpenCV`](http://opencv.org/)
-[`VideoCapture`](https://docs.opencv.org/3.4.1/d8/dfe/classcv_1_1VideoCapture.html)
+[`VideoCapture`](https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html)
 objects. They will not persist between [`R`](https://cran.r-project.org) sessions. 
 
 ### 2.1.3 - Images
@@ -80,7 +80,7 @@ There are three ways to create `Image` objects: from files, from `Video` objects
 and from `Stream` objects. 
 
 Note that `Image` objects are wrappers around [`OpenCV`](http://opencv.org/)
-[`Mat`](https://docs.opencv.org/3.4.1/d3/d63/classcv_1_1Mat.html) objects. They 
+[`Mat`](https://docs.opencv.org/4.5.0/d3/d63/classcv_1_1Mat.html) objects. They 
 will not persist between [`R`](https://cran.r-project.org) sessions.
 
 #### 2.1.3.1 - From files
@@ -170,7 +170,7 @@ release(my_writer)
 ```
 
 Note that `VideoWriter` objects are wrappers around [`OpenCV`](http://opencv.org/)
-[`VideoWriter`](https://docs.opencv.org/3.4.1/dd/d9e/classcv_1_1VideoWriter.html)
+[`VideoWriter`](https://docs.opencv.org/4.5.0/dd/d9e/classcv_1_1VideoWriter.html)
 objects. They will not persist between [`R`](https://cran.r-project.org) sessions.
 
 ### 2.2.2 - Images
