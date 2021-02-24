@@ -3,6 +3,7 @@
 [![R-CMD-check](https://github.com/swarm-lab/Rvision/workflows/R-CMD-check/badge.svg)](https://github.com/swarm-lab/Rvision/actions)
 ![CRAN](https://www.r-pkg.org/badges/version/Rvision)
 ![CRANLOGS](https://cranlogs.r-pkg.org/badges/Rvision)
+[![DOI](https://zenodo.org/badge/62589719.svg)](https://zenodo.org/badge/latestdoi/62589719)
 
 ## Description
 
