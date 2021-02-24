@@ -259,6 +259,11 @@ getPerspectiveTransform <- function(from, to) {
   if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
     stop("'from' and 'to' must be 4x2 matrices.")
 
+  from[, 1] <- from[, 1] - 1
+  from[, 2] <- -from[, 2] + nrow(image)
+  to[, 1] <- to[, 1] - 1
+  to[, 2] <- -to[, 2] + nrow(image) - (nrow(image) - output_size[1])
+
   `_getPerspectiveTransform`(from, to)
 }
 
@@ -487,36 +492,6 @@ warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
   `_warpPerspective`(image, warp_matrix, output_size[2:1],
                      interp_vals[interp_modes == interp_mode] + inverse_map * 16,
                      border_vals[border_type == border_types], col2bgr(border_color))
-
-
-  # if (!isImage(image))
-  #   stop("image is not an Image object.")
-  #
-  # if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
-  #   stop("from and to must be 4x2 matrices.")
-  #
-  # if (length(output_size) != 2 | !is.numeric(output_size))
-  #   stop("output_size should be a numeric vector of length 2.")
-  #
-  # interp_modes <- c("nearest", "linear", "cubic", "area", "lanczos4", "linear_exact")
-  # interp_vals <- 0:5
-  # if (!all(interp_mode %in% interp_modes))
-  #   stop("This is not a valid combination of interpolation modes.")
-  #
-  # border_types <- c("constant", "replicate", "reflect", "wrap", "reflect_101", "transparent")
-  # border_vals <- 0:5
-  # if (!(border_type %in% border_types))
-  #   stop("This is not a valid border type.")
-  #
-  # from[, 1] <- from[, 1] - 1
-  # from[, 2] <- -from[, 2] + nrow(image)
-  #
-  # to[, 1] <- to[, 1] - 1
-  # to[, 2] <- -to[, 2] + nrow(image) - (nrow(image) - output_size[1])
-  #
-  # `_warpPerspective`(image, from, to, output_size[2:1],
-  #                    interp_vals[interp_modes == interp_mode],
-  #                    border_vals[border_type == border_types], col2bgr(border_color))
 }
 
 
