@@ -455,8 +455,8 @@ warpAffine <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #' file2 <- system.file("sample_img/balloon2.png", package = "Rvision")
 #' balloon1 <- changeColorSpace(image(file1), "GRAY")
 #' balloon2 <- changeColorSpace(image(file2), "GRAY")
-#' ecc <- findTransformECC(balloon1, balloon2)
-#' balloon2_transformed <- warpAffine(balloon2, ecc)
+#' ecc <- findTransformECC(balloon1, balloon2, warp_mode = "homography")
+#' balloon2_transformed <- warpPerspective(balloon2, ecc)
 #'
 #' @export
 warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
