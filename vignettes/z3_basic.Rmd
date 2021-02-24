@@ -2,7 +2,7 @@
 title: "3 - Basic operations"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{basic}
+  %\VignetteIndexEntry{3 - Basic operations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

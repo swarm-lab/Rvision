@@ -1,7 +1,8 @@
 Package: Rvision
 Type: Package
-Title: Basic Computer Vision Library
+Title: Computer vision library for R
 Version: 0.4.2
+Date: 2021-02-19
 Authors@R: c(
     person("Simon", "Garnier", email = "garnier@njit.edu", role = c("aut", "cre"),
       comment = c(ORCID = "0000-0002-3886-3974")),

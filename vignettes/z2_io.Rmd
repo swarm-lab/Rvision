@@ -2,7 +2,7 @@
 title: "2 - Input/output operations"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{io}
+  %\VignetteIndexEntry{2 - Input/output operations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

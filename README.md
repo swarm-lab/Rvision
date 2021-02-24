@@ -1,4 +1,4 @@
-# Rvision - A computer vision library for R
+# Rvision - A computer vision library for R <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 [![R-CMD-check](https://github.com/swarm-lab/Rvision/workflows/R-CMD-check/badge.svg)](https://github.com/swarm-lab/Rvision/actions)
 ![CRAN](https://www.r-pkg.org/badges/version/Rvision)
