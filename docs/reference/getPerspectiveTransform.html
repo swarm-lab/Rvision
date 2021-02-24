@@ -54,7 +54,8 @@
 
 <meta property="og:title" content="Perspective Transform — getPerspectiveTransform" />
 <meta property="og:description" content="getPerspectiveTransform computes the matrix of a perspective
- transform from 4 pairs of corresponding points." />
+ transform from 4 pairs of corresponding points in a source and destination
+ image." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
 
@@ -87,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.3</span>
       </span>
     </div>
 
@@ -154,10 +155,11 @@
 
     <div class="ref-description">
     <p><code>getPerspectiveTransform</code> computes the matrix of a perspective
- transform from 4 pairs of corresponding points.</p>
+ transform from 4 pairs of corresponding points in a source and destination
+ image.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getPerspectiveTransform</span><span class='op'>(</span><span class='va'>from</span>, <span class='va'>to</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>getPerspectiveTransform</span><span class='op'>(</span><span class='va'>from</span>, <span class='va'>to</span>, <span class='va'>from_dim</span>, to_dim <span class='op'>=</span> <span class='va'>from_dim</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,6 +174,17 @@ source image.</p></td>
       <td><p>A 4x2 matrix indicating the location (x, y) of 4 points in the
 destination image. The order of the points must correspond to the order in
 <code>from</code>.</p></td>
+    </tr>
+    <tr>
+      <th>from_dim</th>
+      <td><p>A vector which first two elements indicate the number of rows
+and columns of the source image.</p></td>
+    </tr>
+    <tr>
+      <th>to_dim</th>
+      <td><p>A vector which first two elements indicate the number of rows
+and columns of the destination image. If not specified, <code>from_dim</code> will
+be used as a default.</p></td>
     </tr>
     </table>
 
@@ -188,11 +201,11 @@ destination image. The order of the points must correspond to the order in
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>from</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>5</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='fl'>4</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>to</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='fl'>4</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='fu'>getPerspectiveTransform</span><span class='op'>(</span><span class='va'>from</span>, <span class='va'>to</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;               [,1]          [,2]          [,3]
-#&gt; [1,]  1.000000e+00 -2.500000e-01  2.500000e-01
-#&gt; [2,]  1.381996e-16  1.000000e+00 -2.862294e-16
-#&gt; [3,] -7.944461e-33  5.724587e-17  1.000000e+00</div><div class='input'>
+<span class='fu'>getPerspectiveTransform</span><span class='op'>(</span><span class='va'>from</span>, <span class='va'>to</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1080</span>, <span class='fl'>1920</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1080</span>, <span class='fl'>1920</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;               [,1]         [,2]          [,3]
+#&gt; [1,]  1.000000e+00 2.500000e-01 -2.697500e+02
+#&gt; [2,]  3.023970e-14 1.000000e+00 -8.048597e-12
+#&gt; [3,] -1.972152e-31 6.938894e-18  1.000000e+00</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

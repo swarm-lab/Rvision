@@ -4,7 +4,7 @@
 \alias{getPerspectiveTransform}
 \title{Perspective Transform}
 \usage{
-getPerspectiveTransform(from, to)
+getPerspectiveTransform(from, to, from_dim, to_dim = from_dim)
 }
 \arguments{
 \item{from}{A 4x2 matrix indicating the location (x, y) of 4 points in the
@@ -13,18 +13,26 @@ source image.}
 \item{to}{A 4x2 matrix indicating the location (x, y) of 4 points in the
 destination image. The order of the points must correspond to the order in
 \code{from}.}
+
+\item{from_dim}{A vector which first two elements indicate the number of rows
+and columns of the source image.}
+
+\item{to_dim}{A vector which first two elements indicate the number of rows
+and columns of the destination image. If not specified, \code{from_dim} will
+be used as a default.}
 }
 \value{
 A 3x3 matrix.
 }
 \description{
 \code{getPerspectiveTransform} computes the matrix of a perspective
- transform from 4 pairs of corresponding points.
+ transform from 4 pairs of corresponding points in a source and destination
+ image.
 }
 \examples{
 from <- matrix(c(1, 1, 2, 5, 6, 5, 5, 1), nrow = 4, byrow = TRUE)
 to <- matrix(c(1, 1, 1, 5, 5, 5, 5, 1), nrow = 4, byrow = TRUE)
-getPerspectiveTransform(from, to)
+getPerspectiveTransform(from, to, c(1080, 1920), c(1080, 1920))
 
 }
 \seealso{
