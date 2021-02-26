@@ -291,7 +291,7 @@ RCPP_MODULE(methods_Shape) {
   function("_findContours", &_findContours, List::create(_["image"], _["mode"],
     _["method"], _["offset"]), "");
   function("_connectedComponents", &_connectedComponents, List::create(_["image"],
-    _["connectivity"]), "");
+    _["connectivity"], _["algorithm"]), "");
   function("_watershed", &_watershed, List::create(_["image"], _["markers"]), "");
   function("_fitEllipse", &_fitEllipse, List::create(_["points"]), "");
   function("_fitEllipseAMS", &_fitEllipseAMS, List::create(_["points"]), "");

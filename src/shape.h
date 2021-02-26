@@ -56,9 +56,9 @@ double _contourArea(Rcpp::NumericVector x, Rcpp::NumericVector y, bool oriented)
   return cv::contourArea(poly, oriented);
 }
 
-Rcpp::List _connectedComponents(Image image, int connectivity) {
+Rcpp::List _connectedComponents(Image image, int connectivity, int algorithm) {
   cv::Mat labels;
-  int n = cv::connectedComponents(image.image, labels, connectivity, CV_16U);
+  int n = cv::connectedComponents(image.image, labels, connectivity, CV_16U, algorithm);
 
   std::vector<cv::Point> locs;
   cv::findNonZero(labels > 0, locs);

@@ -176,6 +176,15 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'    northwest, southeast, and southwest).}
 #'  }
 #'
+#' @param algorithm A character string specifying the connected components
+#'  labeling algorithm to use. This parameter can take two values:
+#'  \itemize{
+#'   \item{"grana" (the default): }{Block-based connected-component labeling for
+#'    8-way connectivity, scan array union find labeling for 4-way connectivity.}
+#'   \item{"wu": }{Scan array union find labeling for both 8-way and 4-way
+#'    connectivity.}
+#'  }
+#'
 #' @return A list with 2 (or 3) items:
 #'  \itemize{
 #'   \item{n: }{the number of connected components in the image.}
@@ -202,7 +211,7 @@ contourArea <- function(x, y, oriented = FALSE) {
 #' plot(cc_img)
 #'
 #' @export
-connectedComponents <- function(image, connectivity = 8) {
+connectedComponents <- function(image, connectivity = 8, algorithm = "grana") {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
@@ -212,7 +221,12 @@ connectedComponents <- function(image, connectivity = 8) {
   if (!(connectivity %in% c(4, 8)))
     stop("'connectivity' must be either 4 or 8.")
 
-  `_connectedComponents`(image, connectivity)
+  `_connectedComponents`(image, connectivity,
+                         switch (algorithm,
+                                 "grana" = 1,
+                                 "wu" = 0,
+                                 stop("This is not a valid algorithm.")
+                         ))
 }
 
 
@@ -507,15 +521,15 @@ moments <- function(contours, id = NULL) {
 
   do.call(rbind,
           c(by(contours$contours, list(id = contours$contours$id),
-             function(contour) {
-               data.frame(
-                 id = rep(contour$id[1], 24),
-                 moment = c("m00", "m10", "m01", "m20", "m11", "m02", "m30", "m21",
-                            "m12", "m03", "mu20", "mu11", "mu02", "mu30", "mu21",
-                            "mu12", "mu03", "nu20", "nu11", "nu02", "nu30", "nu21",
-                            "nu12", "nu03"),
-                 value = `_moments`(contour))
-             }
+               function(contour) {
+                 data.frame(
+                   id = rep(contour$id[1], 24),
+                   moment = c("m00", "m10", "m01", "m20", "m11", "m02", "m30", "m21",
+                              "m12", "m03", "mu20", "mu11", "mu02", "mu30", "mu21",
+                              "mu12", "mu03", "nu20", "nu11", "nu02", "nu30", "nu21",
+                              "nu12", "nu03"),
+                   value = `_moments`(contour))
+               }
           ), make.row.names = FALSE)
   )
 }

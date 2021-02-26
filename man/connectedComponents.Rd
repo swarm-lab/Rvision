@@ -4,7 +4,7 @@
 \alias{connectedComponents}
 \title{Find Connected Components in a binary Image}
 \usage{
-connectedComponents(image, connectivity = 8)
+connectedComponents(image, connectivity = 8, algorithm = "grana")
 }
 \arguments{
 \item{image}{An an 8-bit (8U) single-channel \code{\link{Image}} object.}
@@ -17,6 +17,15 @@ are contiguous. This parameter can take two values:
  \item{8 (the default): }{the neighborhood of a pixel includes the four
   4-neighbors and the four pixels along the diagonal directions (northeast,
   northwest, southeast, and southwest).}
+}}
+
+\item{algorithm}{A character string specifying the connected components
+labeling algorithm to use. This parameter can take two values:
+\itemize{
+ \item{"grana" (the default): }{Block-based connected-component labeling for
+  8-way connectivity, scan array union find labeling for 4-way connectivity.}
+ \item{"wu": }{Scan array union find labeling for both 8-way and 4-way
+  connectivity.}
 }}
 }
 \value{
