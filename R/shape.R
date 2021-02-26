@@ -77,10 +77,10 @@
 #' dots_gray <- changeColorSpace(dots, "GRAY")
 #' dots_bin <- dots_gray < 200
 #' contours <- findContours(dots_bin)
-#' colors <- rainbow(max(contours$contours$id + 1))
+#' colors <- rainbow(max(contours$contours[, 1] + 1))
 #' plot(dots_bin)
 #' invisible(sapply(
-#'   base::split(contours$contours, contours$contours$id),
+#'   base::split(contours$contours, contours$contours[, 1]),
 #'   function(dat) {
 #'     dat <- rbind(dat, dat[1, ])
 #'     lines(y ~ x, data = dat, col = colors[id + 1], lwd = 2)
@@ -267,9 +267,9 @@ connectedComponents <- function(image, connectivity = 8, algorithm = "grana") {
 #' dots_gray <- changeColorSpace(dots, "GRAY")
 #' dots_bin <- dots_gray < 200
 #' contours <- findContours(dots_bin)
-#' rows <- contours$contours$y
-#' cols <- contours$contours$x
-#' colors <- contours$contours$id + 2
+#' rows <- contours$contours[, 3]
+#' cols <- contours$contours[, 2]
+#' colors <- contours$contours[, 1] + 2
 #' markers <- array(0.0, dim = c(nrow(dots_bin), ncol(dots_bin), 1))
 #' markers[1:2, 1:2, 1] <- 1
 #' markers[cbind(rows, cols, 1)] <- colors
@@ -512,7 +512,7 @@ moments <- function(contours, id = NULL) {
     stop("contours must be a list of two data frames as produced by `findContours`.")
 
   if (!is.null(id))
-    contours$contours <- contours$contours[contours$contours$id %in% id, ]
+    contours$contours <- contours$contours[contours$contours[, 1] %in% id, ]
 
   do.call(rbind,
           lapply(split.data.frame(contours$contours, contours$contours[, 1]),
@@ -564,7 +564,7 @@ pixelsInContour <- function(contours, id = NULL) {
     stop("contours must be a list of two data frames as produced by `findContours`.")
 
   if (!is.null(id))
-    contours$contours <- contours$contours[contours$contours$id %in% id, ]
+    contours$contours <- contours$contours[contours$contours[, 1] %in% id, ]
 
   do.call(rbind,
           lapply(split.data.frame(contours$contours, contours$contours[, 1]),

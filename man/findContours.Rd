@@ -74,10 +74,10 @@ dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
 dots_gray <- changeColorSpace(dots, "GRAY")
 dots_bin <- dots_gray < 200
 contours <- findContours(dots_bin)
-colors <- rainbow(max(contours$contours$id + 1))
+colors <- rainbow(max(contours$contours[, 1] + 1))
 plot(dots_bin)
 invisible(sapply(
-  base::split(contours$contours, contours$contours$id),
+  base::split(contours$contours, contours$contours[, 1]),
   function(dat) {
     dat <- rbind(dat, dat[1, ])
     lines(y ~ x, data = dat, col = colors[id + 1], lwd = 2)

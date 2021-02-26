@@ -37,9 +37,9 @@ dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
 dots_gray <- changeColorSpace(dots, "GRAY")
 dots_bin <- dots_gray < 200
 contours <- findContours(dots_bin)
-rows <- contours$contours$y
-cols <- contours$contours$x
-colors <- contours$contours$id + 2
+rows <- contours$contours[, 3]
+cols <- contours$contours[, 2]
+colors <- contours$contours[, 1] + 2
 markers <- array(0.0, dim = c(nrow(dots_bin), ncol(dots_bin), 1))
 markers[1:2, 1:2, 1] <- 1
 markers[cbind(rows, cols, 1)] <- colors
