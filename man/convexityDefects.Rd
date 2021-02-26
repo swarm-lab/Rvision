@@ -7,14 +7,13 @@
 convexityDefects(contours, id = NULL)
 }
 \arguments{
-\item{contours}{A list of two data frames as produced by
-\code{\link{findContours}}.}
+\item{contours}{A list of two matrices as produced by \code{\link{findContours}}.}
 
 \item{id}{An optional vector indicating the identity of the specific contours
 for which to run the function.}
 }
 \value{
-#' @return a data frame with 5 columns:
+A matrix with 5 columns:
  \itemize{
    \item{"id": }{the contour identity (indicates the set of points belonging
     to the same contour).}

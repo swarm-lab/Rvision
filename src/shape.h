@@ -9,41 +9,29 @@ Rcpp::List _findContours(Image image, int mode, int method, Rcpp::NumericVector 
     size += contours[i].size();
   }
 
-  Rcpp::IntegerVector id(size);
-  Rcpp::NumericVector x(size);
-  Rcpp::NumericVector y(size);
-  Rcpp::IntegerVector h_id(contours.size());
-  Rcpp::IntegerVector after(contours.size());
-  Rcpp::IntegerVector before(contours.size());
-  Rcpp::IntegerVector child(contours.size());
-  Rcpp::IntegerVector parent(contours.size());
+  Rcpp::NumericMatrix contours_mat(size, 3);
+  colnames(contours_mat) = Rcpp::CharacterVector::create("id", "x", "y");
+  Rcpp::NumericMatrix hierarchy_mat(contours.size(), 5);
+  colnames(hierarchy_mat) = Rcpp::CharacterVector::create("id", "after", "before", "child", "parent");
+
   int counter = 0;
   for (uint i = 0; i < contours.size(); i++) {
     for (uint j = 0; j < contours[i].size(); j++) {
-      id(counter) = i;
-      x(counter) = contours[i][j].x;
-      y(counter) = contours[i][j].y;
+      contours_mat(counter, 0) = i;
+      contours_mat(counter, 1) = contours[i][j].x;
+      contours_mat(counter, 2) = contours[i][j].y;
       counter += 1;
     }
 
-    h_id(i) = i;
-    after(i) = hierarchy[i][0];
-    before(i) = hierarchy[i][1];
-    child(i) = hierarchy[i][2];
-    parent(i) = hierarchy[i][3];
+    hierarchy_mat(i, 0) = i;
+    hierarchy_mat(i, 1) = hierarchy[i][0];
+    hierarchy_mat(i, 2) = hierarchy[i][1];
+    hierarchy_mat(i, 3) = hierarchy[i][2];
+    hierarchy_mat(i, 4) = hierarchy[i][3];
   }
 
-  Rcpp::DataFrame contours_df = Rcpp::DataFrame::create(Rcpp::Named("id") = id,
-                                                        Rcpp::Named("x") = x + 1,
-                                                        Rcpp::Named("y") = -y + image.nrow());
-  Rcpp::DataFrame hierarchy_df = Rcpp::DataFrame::create(Rcpp::Named("id") = h_id,
-                                                         Rcpp::Named("after") = after,
-                                                         Rcpp::Named("before") = before,
-                                                         Rcpp::Named("child") = child,
-                                                         Rcpp::Named("parent") = parent);
-
-  return Rcpp::List::create(Rcpp::Named("contours") = contours_df,
-                            Rcpp::Named("hierarchy") = hierarchy_df);
+  return Rcpp::List::create(Rcpp::Named("contours") = contours_mat,
+                            Rcpp::Named("hierarchy") = hierarchy_mat);
 }
 
 double _contourArea(Rcpp::NumericVector x, Rcpp::NumericVector y, bool oriented) {
@@ -63,22 +51,18 @@ Rcpp::List _connectedComponents(Image image, int connectivity, int algorithm) {
   std::vector<cv::Point> locs;
   cv::findNonZero(labels > 0, locs);
 
-  Rcpp::NumericVector x(locs.size());
-  Rcpp::NumericVector y(locs.size());
-  Rcpp::NumericVector id(locs.size());
+  Rcpp::NumericMatrix table_mat(locs.size(), 3);
+  colnames(table_mat) = Rcpp::CharacterVector::create("id", "x", "y");
 
   for (uint i = 0; i < locs.size(); i++) {
-    x(i) = locs[i].x + 1;
-    y(i) = -locs[i].y + image.image.rows;
-    id(i) = labels.at< uint16_t >(locs[i]);
+    table_mat(i, 0) = labels.at< uint16_t >(locs[i]);
+    table_mat(i, 1) = locs[i].x + 1;
+    table_mat(i, 2) = -locs[i].y + image.image.rows;
   }
 
   return Rcpp::List::create(Rcpp::Named("n") = n - 1,
                             Rcpp::Named("labels") = Image(labels),
-                            Rcpp::Named("table") = Rcpp::DataFrame::create(
-                              Rcpp::Named("id") = id,
-                              Rcpp::Named("x") = x,
-                              Rcpp::Named("y") = y));
+                            Rcpp::Named("table") = table_mat);
 }
 
 void _watershed(Image image, Image markers) {
@@ -129,15 +113,13 @@ std::vector< int > _convexHull(arma::fmat points, bool clockwise) {
   return out;
 }
 
-Rcpp::DataFrame _convexityDefects(Rcpp::DataFrame contour, std::vector< int > convexhull) {
+Rcpp::IntegerMatrix _convexityDefects(Rcpp::NumericMatrix contour, std::vector< int > convexhull) {
   std::vector< cv::Point > contourpoints(contour.nrow());
   std::vector< cv::Vec4i > defects;
-  NumericVector x = contour["x"];
-  NumericVector y = contour["y"];
 
   for (int i = 0; i < contour.nrow(); i++) {
-    contourpoints[i].x = x(i);
-    contourpoints[i].y = y(i);
+    contourpoints[i].x = contour(i, 1);
+    contourpoints[i].y = contour(i, 2);
   }
 
   cv::convexityDefects(contourpoints, convexhull, defects);
@@ -146,29 +128,26 @@ Rcpp::DataFrame _convexityDefects(Rcpp::DataFrame contour, std::vector< int > co
   Rcpp::IntegerVector end_index(defects.size());
   Rcpp::IntegerVector farthest_pt_index(defects.size());
   Rcpp::IntegerVector fixpt_depth(defects.size());
+
+  Rcpp::IntegerMatrix defects_mat(defects.size(), 4);
+  colnames(defects_mat) = Rcpp::CharacterVector::create("start_index", "end_index", "farthest_pt_index", "fixpt_depth");
+
   for (uint i = 0; i < defects.size(); i++) {
-    start_index(i) = defects[i][0];
-    end_index(i) = defects[i][1];
-    farthest_pt_index(i) = defects[i][2];
-    fixpt_depth(i) = defects[i][3];
+    defects_mat(i, 0) = defects[i][0];
+    defects_mat(i, 1) = defects[i][2];
+    defects_mat(i, 2) = defects[i][2];
+    defects_mat(i, 3) = defects[i][3];
   }
 
-  Rcpp::DataFrame out = Rcpp::DataFrame::create(Rcpp::Named("start_index") = start_index,
-                                                Rcpp::Named("end_index") = end_index,
-                                                Rcpp::Named("farthest_pt_index") = farthest_pt_index,
-                                                Rcpp::Named("fixpt_depth") = fixpt_depth);
-
-  return out;
+  return defects_mat;
 }
 
-Rcpp::NumericVector _moments(Rcpp::DataFrame contour) {
+Rcpp::NumericVector _moments(Rcpp::NumericMatrix contour) {
   std::vector< cv::Point > contourpoints(contour.nrow());
-  Rcpp::NumericVector x = contour["x"];
-  Rcpp::NumericVector y = contour["y"];
 
   for (int i = 0; i < contour.nrow(); i++) {
-    contourpoints[i].x = x(i);
-    contourpoints[i].y = y(i);
+    contourpoints[i].x = contour(i, 1);
+    contourpoints[i].y = contour(i, 2);
   }
 
   cv::Moments m = cv::moments(contourpoints);

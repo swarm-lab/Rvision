@@ -16,18 +16,17 @@ Image _not(Image image) {
   return Image(out);
 }
 
-Rcpp::DataFrame _findNonZero(Image image) {
+Rcpp::NumericMatrix _findNonZero(Image image) {
   std::vector<cv::Point> locs;
   cv::findNonZero(image.image, locs);
 
-  Rcpp::NumericVector x(locs.size());
-  Rcpp::NumericVector y(locs.size());
+  Rcpp::NumericMatrix table(locs.size(), 2);
+  colnames(table) = Rcpp::CharacterVector::create("x", "y");
 
   for (uint i = 0; i < locs.size(); i++) {
-    x(i) = locs[i].x;
-    y(i) = locs[i].y;
+    table(i, 0) = locs[i].x + 1;
+    table(i, 1) = -locs[i].y + image.image.rows;
   }
 
-  return Rcpp::DataFrame::create(Rcpp::Named("x") = x,
-                                 Rcpp::Named("y") = y);
+  return table;
 }

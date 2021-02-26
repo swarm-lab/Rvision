@@ -42,9 +42,9 @@ the contours are extracted from the image ROI but then should be analyzed in
 the whole image context.}
 }
 \value{
-A list of two data frames:
+A list of two matrices:
 \itemize{
-   \item{"contours": }{a data frame with 3 columns:
+   \item{"contours": }{a matrix with 3 columns:
       \itemize{
          \item{"id": }{the contour identity (indicates the set of points
             belonging to the same contour).}
@@ -52,7 +52,7 @@ A list of two data frames:
          \item{"y": }{the y coordinates of the contour points.}
       }
    }
-   \item{"hierarchy": }{a data frame with 5 columns:
+   \item{"hierarchy": }{a matrix with 5 columns:
       \itemize{
          \item{"id": }{the contour identity.}
          \item{"after": }{the identity of the next contour at the same

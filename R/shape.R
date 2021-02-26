@@ -37,9 +37,9 @@
 #'  the contours are extracted from the image ROI but then should be analyzed in
 #'  the whole image context.
 #'
-#' @return A list of two data frames:
+#' @return A list of two matrices:
 #' \itemize{
-#'    \item{"contours": }{a data frame with 3 columns:
+#'    \item{"contours": }{a matrix with 3 columns:
 #'       \itemize{
 #'          \item{"id": }{the contour identity (indicates the set of points
 #'             belonging to the same contour).}
@@ -47,7 +47,7 @@
 #'          \item{"y": }{the y coordinates of the contour points.}
 #'       }
 #'    }
-#'    \item{"hierarchy": }{a data frame with 5 columns:
+#'    \item{"hierarchy": }{a matrix with 5 columns:
 #'       \itemize{
 #'          \item{"id": }{the contour identity.}
 #'          \item{"after": }{the identity of the next contour at the same
@@ -191,9 +191,9 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'   \item{labels: }{a 16-bit (16U) single-channel  image in which each pixel of
 #'    each connected component is represented by the identity number of the
 #'    component, and the background pixels by zero.}
-#'   \item{table (if `return_table = TRUE`): }{a dataframe with 3 columns
-#'    representing the identity of the connected components (id), and the x-y
-#'    coordinates of the pixels they are composed of. }
+#'   \item{table: }{a matrix with 3 columns representing the identity of the
+#'    connected components (id), and the x-y coordinates of the pixels they are
+#'    composed of. }
 #'  }
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -416,13 +416,12 @@ convexHull <- function(x, y, clockwise = TRUE) {
 #'  that is area that do not belong to an object but are located inside of its
 #'  convex hull.
 #'
-#' @param contours A list of two data frames as produced by
-#'  \code{\link{findContours}}.
+#' @param contours A list of two matrices as produced by \code{\link{findContours}}.
 #'
 #' @param id An optional vector indicating the identity of the specific contours
 #'  for which to run the function.
 #'
-#' @return #' @return a data frame with 5 columns:
+#' @return A matrix with 5 columns:
 #'  \itemize{
 #'    \item{"id": }{the contour identity (indicates the set of points belonging
 #'     to the same contour).}
@@ -450,22 +449,19 @@ convexHull <- function(x, y, clockwise = TRUE) {
 #' @export
 convexityDefects <- function(contours, id = NULL) {
   if (!all(names(contours) == c("contours", "hierarchy")))
-    stop("contours must be a list of two data frames as produced by `findContours`.")
+    stop("contours must be a list of two matrices as produced by `findContours`.")
 
   if (!is.null(id))
-    contours$contours <- contours$contours[contours$contours$id %in% id, ]
+    contours$contours <- contours$contours[contours$contours[, 1] %in% id, ]
 
-  as.data.frame(
-    do.call(rbind,
-            by(contours$contours, list(id = contours$contours$id),
-               function(contour) {
-                 convex_hull <- convexHull(contour$x, contour$y)
-                 out <- `_convexityDefects`(contour, convex_hull - 1)
-                 out[, 1:3] <- out[, 1:3] + 1
-                 cbind(id = contour$id[1], as.matrix(out))
-               }
-            )
-    )
+  do.call(rbind,
+          lapply(split.data.frame(contours$contours, contours$contours[, 1]),
+                 function(contour) {
+                   convex_hull <- convexHull(contour[, 2], contour[, 3])
+                   out <- `_convexityDefects`(contour, convex_hull - 1)
+                   out[, 1:3] <- out[, 1:3] + 1
+                   cbind(id = contour[1, 1], out)
+                 })
   )
 }
 
@@ -475,13 +471,12 @@ convexityDefects <- function(contours, id = NULL) {
 #' @description \code{moments} calculates all of the moments up to the third
 #'  order of a polygon or rasterized shape.
 #'
-#' @param contours A list of two data frames as produced by
-#'  \code{\link{findContours}}.
+#' @param contours A list of two matrices as produced by \code{\link{findContours}}.
 #'
 #' @param id An optional vector indicating the identity of the specific contours
 #'  for which to run the function.
 #'
-#' @return a data frame with 3 columns:
+#' @return A data frame with 3 columns:
 #'  \itemize{
 #'    \item{"id": }{the contour identity (indicates the set of points belonging
 #'     to the same contour).}
@@ -520,17 +515,16 @@ moments <- function(contours, id = NULL) {
     contours$contours <- contours$contours[contours$contours$id %in% id, ]
 
   do.call(rbind,
-          c(by(contours$contours, list(id = contours$contours$id),
-               function(contour) {
-                 data.frame(
-                   id = rep(contour$id[1], 24),
-                   moment = c("m00", "m10", "m01", "m20", "m11", "m02", "m30", "m21",
-                              "m12", "m03", "mu20", "mu11", "mu02", "mu30", "mu21",
-                              "mu12", "mu03", "nu20", "nu11", "nu02", "nu30", "nu21",
-                              "nu12", "nu03"),
-                   value = `_moments`(contour))
-               }
-          ), make.row.names = FALSE)
+          lapply(split.data.frame(contours$contours, contours$contours[, 1]),
+                 function(contour) {
+                   data.frame(
+                     id = rep(contour[1, 1], 24),
+                     moment = c("m00", "m10", "m01", "m20", "m11", "m02", "m30", "m21",
+                                "m12", "m03", "mu20", "mu11", "mu02", "mu30", "mu21",
+                                "mu12", "mu03", "nu20", "nu11", "nu02", "nu30", "nu21",
+                                "nu12", "nu03"),
+                     value = `_moments`(contour))
+                 })
   )
 }
 
@@ -540,13 +534,12 @@ moments <- function(contours, id = NULL) {
 #' @description \code{pixelsInContour} determines the pixels that are inside a
 #'  specified contour.
 #'
-#' @param contours A list of two data frames as produced by
-#'  \code{\link{findContours}}.
+#' @param contours A list of two matrices as produced by \code{\link{findContours}}.
 #'
 #' @param id An optional vector indicating the identity of the specific contours
 #'  for which to run the function.
 #'
-#' @return a data frame with 3 columns:
+#' @return A matrix with 3 columns:
 #'  \itemize{
 #'    \item{"id": }{the contour identity (indicates the set of points belonging
 #'     to the same contour).}
@@ -573,25 +566,22 @@ pixelsInContour <- function(contours, id = NULL) {
   if (!is.null(id))
     contours$contours <- contours$contours[contours$contours$id %in% id, ]
 
-  as.data.frame(
-    do.call(rbind,
-            by(contours$contours, list(id = contours$contours$id),
-               function(contour) {
-                 shift_x <- min(contour$x)
-                 shift_y <- min(contour$y)
-                 contour$x <- contour$x - shift_x + 1
-                 contour$y <- contour$y - shift_y + 1
+  do.call(rbind,
+          lapply(split.data.frame(contours$contours, contours$contours[, 1]),
+                 function(contour) {
+                   shift_x <- min(contour[, 2])
+                   shift_y <- min(contour[, 3])
+                   contour[, 2] <- contour[, 2] - shift_x + 1
+                   contour[, 3] <- contour[, 3] - shift_y + 1
 
-                 mask <- zeros(nrow = max(contour$y),
-                               ncol = max(contour$x), "GRAY", "8U")
-                 fillConvexPoly(mask, contour[, 2:3])
-                 nz <- findNonZero(mask)
-                 nz$x <- nz$x + shift_x - 1
-                 nz$y <- nz$y + shift_y - 1
-                 cbind(id = contour$id[1], as.matrix(nz))
-               }
-            )
-    )
+                   mask <- zeros(nrow = max(contour[, 3]),
+                                 ncol = max(contour[, 2]), "GRAY", "8U")
+                   fillConvexPoly(mask, contour[, 2:3])
+                   nz <- findNonZero(mask)
+                   nz[, 1] <- nz[, 1] + shift_x - 1
+                   nz[, 2] <- nz[, 2] + shift_y - 1
+                   cbind(id = contour[1, 1], nz)
+                 })
   )
 }
 

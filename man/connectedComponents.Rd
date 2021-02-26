@@ -35,9 +35,9 @@ A list with 2 (or 3) items:
   \item{labels: }{a 16-bit (16U) single-channel  image in which each pixel of
    each connected component is represented by the identity number of the
    component, and the background pixels by zero.}
-  \item{table (if `return_table = TRUE`): }{a dataframe with 3 columns
-   representing the identity of the connected components (id), and the x-y
-   coordinates of the pixels they are composed of. }
+  \item{table: }{a matrix with 3 columns representing the identity of the
+   connected components (id), and the x-y coordinates of the pixels they are
+   composed of. }
  }
 }
 \description{

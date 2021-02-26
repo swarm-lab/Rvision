@@ -10,8 +10,8 @@ findNonZero(image)
 \item{image}{An an 8-bit (8U) single-channel \code{\link{Image}} object.}
 }
 \value{
-A data frame with two columns, corresponding to the x (columns) and
- y (rows) coordinates of the non-zero pixels.
+A matrix with two columns, corresponding to the x (columns) and y
+ (rows) coordinates of the non-zero pixels.
 }
 \description{
 \code{findNonZero} retrieves the locations of all non-zero
