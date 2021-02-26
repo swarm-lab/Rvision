@@ -7,6 +7,17 @@ assignees: ''
 
 ---
 
+<!--
+Before posting an issue, please:
+
+* Read the documentation and make sure you have followed all the steps to install and run `Rvision`.
+* Check if another person has already created the same issue to avoid duplicates. If yes, please comment there instead of creating a new issue.
+* Try to be as detailed as possible in your report.
+* Report only one problem per created issue.
+
+This is a template helping you to create an issue that can be processed as quickly as possible. 
+-->
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
