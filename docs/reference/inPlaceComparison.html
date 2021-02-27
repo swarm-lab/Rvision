@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Invert Colors — invert • Rvision</title>
+<title>In Place Comparison Operators for Images — inPlaceComparison • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,8 @@
 
 
 
-<meta property="og:title" content="Invert Colors — invert" />
-<meta property="og:description" content="invert returns an image which colors are the linear
- inverse of that of the original image." />
+<meta property="og:title" content="In Place Comparison Operators for Images — inPlaceComparison" />
+<meta property="og:description" content="In Place Comparison Operators for Images" />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
 
@@ -147,36 +146,44 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Invert Colors</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/filters.R'><code>R/filters.R</code></a></small>
-    <div class="hidden name"><code>invert.Rd</code></div>
+    <h1>In Place Comparison Operators for Images</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/comparisons.R'><code>R/comparisons.R</code></a>, <a href='https://github.com/swarm-lab/Rvision/blob/master/R/zzz.R'><code>R/zzz.R</code></a></small>
+    <div class="hidden name"><code>inPlaceComparison.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>invert</code> returns an image which colors are the linear
- inverse of that of the original image.</p>
+    <p>In Place Comparison Operators for Images</p>
     </div>
 
-    <pre class="usage"><span class='fu'>invert</span><span class='op'>(</span><span class='va'>image</span>, in_place <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>e1</span> <span class='op'>%i&gt;%</span> <span class='va'>e2</span>
+
+<span class='va'>e1</span> <span class='op'>%i&lt;%</span> <span class='va'>e2</span>
+
+<span class='va'>e1</span> <span class='op'>%i&gt;=%</span> <span class='va'>e2</span>
+
+<span class='va'>e1</span> <span class='op'>%i&lt;=%</span> <span class='va'>e2</span>
+
+<span class='va'>e1</span> <span class='op'>%i==%</span> <span class='va'>e2</span>
+
+<span class='va'>e1</span> <span class='op'>%i!=%</span> <span class='va'>e2</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>image</th>
-      <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
-    </tr>
-    <tr>
-      <th>in_place</th>
-      <td><p>A logical indicating whether the change should be applied to
-the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-the default, slower but non destructive).</p></td>
+      <th>e1, e2</th>
+      <td><p>Either 2 <code><a href='Image-class.html'>Image</a></code> objects or 1 <code><a href='Image-class.html'>Image</a></code>
+object and 1 numeric value/vector. If a vector and its length is less than
+the number of channels of the image, then it is recycled to match it.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p>These operators do not return anything. They modify the image in
+ place (destructive operation). If 2 images are passed to the operators, only
+ the one of the left side of the operator is modified; the other is left
+ untouched.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
@@ -185,10 +192,11 @@ the default, slower but non destructive).</p></td>
     <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>balloon_inv</span> <span class='op'>&lt;-</span> <span class='fu'>invert</span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>balloon_inv</span><span class='op'>)</span>
-</div><div class='img'><img src='invert-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>balloon1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>balloon2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon2.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>balloon1</span> <span class='op'>%i&gt;%</span> <span class='va'>balloon2</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>balloon1</span><span class='op'>)</span>
+</div><div class='img'><img src='inPlaceComparison-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

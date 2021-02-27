@@ -155,18 +155,8 @@ RCPP_MODULE(methods_Statistics) {
 #include "comparisons.h"
 RCPP_MODULE(methods_Comparisons) {
 
-  function("_sup", &_sup, List::create(_["image1"], _["image2"]), "");
-  function("_inf", &_inf, List::create(_["image1"], _["image2"]), "");
-  function("_eq", &_eq, List::create(_["image1"], _["image2"]), "");
-  function("_dif", &_dif, List::create(_["image1"], _["image2"]), "");
-  function("_seq", &_seq, List::create(_["image1"], _["image2"]), "");
-  function("_ieq", &_ieq, List::create(_["image1"], _["image2"]), "");
-  function("_supScalar", &_supScalar, List::create(_["image"], _["value"]), "");
-  function("_infScalar", &_infScalar, List::create(_["image"], _["value"]), "");
-  function("_eqScalar", &_eqScalar, List::create(_["image"], _["value"]), "");
-  function("_difScalar", &_difScalar, List::create(_["image"], _["value"]), "");
-  function("_seqScalar", &_seqScalar, List::create(_["image"], _["value"]), "");
-  function("_ieqScalar", &_ieqScalar, List::create(_["image"], _["value"]), "");
+  function("_compare", &_compare, List::create(_["image1"], _["image2"], _["comp"]), "");
+  function("_compareScalar", &_compareScalar, List::create(_["image"], _["value"], _["comp"]), "");
   function("_matchTemplate", &_matchTemplate, List::create(_["image"], _["templ"],
     _["method"], _["mask"]), "");
   function("_matchTemplateNoMask", &_matchTemplateNoMask, List::create(_["image"],
@@ -178,7 +168,9 @@ RCPP_MODULE(methods_Comparisons) {
 RCPP_MODULE(methods_Logical) {
 
   function("_and", &_and, List::create(_["image1"], _["image2"]), "");
+  function("_andScalar", &_andScalar, List::create(_["image"], _["value"]), "");
   function("_or", &_or, List::create(_["image1"], _["image2"]), "");
+  function("_orScalar", &_orScalar, List::create(_["image"], _["value"]), "");
   function("_not", &_not, List::create(_["image"]), "");
   function("_findNonZero", &_findNonZero, List::create(_["image"]), "");
 }

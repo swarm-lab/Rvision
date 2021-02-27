@@ -1,3 +1,53 @@
+#' @title In Place Comparison Operators for Images
+#'
+#' @param e1,e2 Either 2 \code{\link{Image}} objects or 1 \code{\link{Image}}
+#'  object and 1 numeric value/vector. If a vector and its length is less than
+#'  the number of channels of the image, then it is recycled to match it.
+#'
+#' @return These operators do not return anything. They modify the image in
+#'  place (destructive operation). If 2 images are passed to the operators, only
+#'  the one of the left side of the operator is modified; the other is left
+#'  untouched.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
+#' balloon1 %i>% balloon2
+#' plot(balloon1)
+#'
+#' @name inPlaceComparison
+NULL
+#> NULL
+
+#' @rdname inPlaceComparison
+#' @export
+setGeneric("%i>%", function(e1, e2) { standardGeneric("%i>%") })
+
+#' @rdname inPlaceComparison
+#' @export
+setGeneric("%i<%", function(e1, e2) { standardGeneric("%i<%") })
+
+#' @rdname inPlaceComparison
+#' @export
+setGeneric("%i>=%", function(e1, e2) { standardGeneric("%i>=%") })
+
+#' @rdname inPlaceComparison
+#' @export
+setGeneric("%i<=%", function(e1, e2) { standardGeneric("%i<=%") })
+
+#' @rdname inPlaceComparison
+#' @export
+setGeneric("%i==%", function(e1, e2) { standardGeneric("%i==%") })
+
+#' @rdname inPlaceComparison
+#' @export
+setGeneric("%i!=%", function(e1, e2) { standardGeneric("%i!=%") })
+
+
 #' @title Template Matching
 #'
 #' @description \code{matchTemplate} compares a template against overlapping

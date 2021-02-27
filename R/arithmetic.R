@@ -1,4 +1,4 @@
-#' @title In Place Operators for Images
+#' @title In Place Arithmetic Operators for Images
 #'
 #' @param e1,e2 Either 2 \code{\link{Image}} objects or 1 \code{\link{Image}}
 #'  object and 1 numeric value/vector. If a vector and its length is less than

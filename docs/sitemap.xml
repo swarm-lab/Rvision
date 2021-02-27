@@ -202,6 +202,12 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/inPlaceArithmetic.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/inPlaceComparison.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/inPlaceLogical.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/inRange.html</loc>
   </url>
   <url>

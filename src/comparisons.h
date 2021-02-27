@@ -1,73 +1,9 @@
-Image _sup(Image image1, Image image2) {
-  cv::Mat out;
-  out = image1.image > image2.image;
-  return Image(out);
+void _compare(Image image1, Image image2, int comp) {
+  cv::compare(image1.image, image2.image, image1.image, comp);
 }
 
-Image _inf(Image image1, Image image2) {
-  cv::Mat out;
-  out = image1.image < image2.image;
-  return Image(out);
-}
-
-Image _eq(Image image1, Image image2) {
-  cv::Mat out;
-  out = image1.image == image2.image;
-  return Image(out);
-}
-
-Image _dif(Image image1, Image image2) {
-  cv::Mat out;
-  out = image1.image != image2.image;
-  return Image(out);
-}
-
-Image _seq(Image image1, Image image2) {
-  cv::Mat out;
-  out = image1.image >= image2.image;
-  return Image(out);
-}
-
-Image _ieq(Image image1, Image image2) {
-  cv::Mat out;
-  out = image1.image <= image2.image;
-  return Image(out);
-}
-
-Image _supScalar(Image image, double value) {
-  cv::Mat out;
-  out = image.image > value;
-  return Image(out);
-}
-
-Image _infScalar(Image image, double value) {
-  cv::Mat out;
-  out = image.image < value;
-  return Image(out);
-}
-
-Image _eqScalar(Image image, double value) {
-  cv::Mat out;
-  out = image.image == value;
-  return Image(out);
-}
-
-Image _difScalar(Image image, double value) {
-  cv::Mat out;
-  out = image.image != value;
-  return Image(out);
-}
-
-Image _seqScalar(Image image, double value) {
-  cv::Mat out;
-  out = image.image >= value;
-  return Image(out);
-}
-
-Image _ieqScalar(Image image, double value) {
-  cv::Mat out;
-  out = image.image <= value;
-  return Image(out);
+void _compareScalar(Image image, Rcpp::NumericVector value, int comp) {
+  cv::compare(image.image, col2Scalar(value), image.image, comp);
 }
 
 Image _matchTemplate(Image image, Image templ, int method, Image mask) {
@@ -94,7 +30,7 @@ Image _matchTemplateNoMask(Image image, Image templ, int method) {
   return Image(out);
 }
 
-Image _inRange(Image image, NumericVector low, NumericVector up) {
+Image _inRange(Image image, Rcpp::NumericVector low, Rcpp::NumericVector up) {
   cv::Mat out;
   cv::inRange(image.image, col2Scalar(low), col2Scalar(up), out);
   return Image(out);

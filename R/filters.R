@@ -606,6 +606,10 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #'
 #' @param image An \code{\link{Image}} object.
 #'
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
 #' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -618,9 +622,13 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #' plot(balloon_inv)
 #'
 #' @export
-invert <- function(image) {
+invert <- function(image, in_place = FALSE) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  (if (bitdepth(image) == "8U") 255 else 65535) - image
+  if (in_place) {
+    not(image)
+  } else {
+    !image
+  }
 }

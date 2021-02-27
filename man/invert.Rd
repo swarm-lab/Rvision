@@ -4,10 +4,14 @@
 \alias{invert}
 \title{Invert Colors}
 \usage{
-invert(image)
+invert(image, in_place = FALSE)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
 An \code{\link{Image}} object.

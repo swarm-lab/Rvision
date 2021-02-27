@@ -755,8 +755,10 @@ setTo <- function(image, mask, color = "red", in_place = FALSE) {
   if (!isImage(image))
     stop("image is not an 'Image' object.")
 
-  if (missing(mask))
-    mask <- ones(nrow(image), ncol(image)) * 255
+  if (missing(mask)) {
+    mask <- ones(nrow(image), ncol(image))
+    mask %i*% 255
+  }
 
   if (!isImage(mask))
     stop("mask is not an 'Image' object.")

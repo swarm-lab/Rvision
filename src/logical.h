@@ -1,19 +1,21 @@
-Image _and(Image image1, Image image2) {
-  cv::Mat out;
-  cv::bitwise_and(image1.image, image2.image, out);
-  return Image(out);
+void _and(Image image1, Image image2) {
+  cv::bitwise_and(image1.image, image2.image, image1.image);
 }
 
-Image _or(Image image1, Image image2) {
-  cv::Mat out;
-  cv::bitwise_or(image1.image, image2.image, out);
-  return Image(out);
+void _andScalar(Image image1, Rcpp::NumericVector value) {
+  cv::bitwise_and(image1.image, col2Scalar(value), image1.image);
 }
 
-Image _not(Image image) {
-  cv::Mat out;
-  cv::bitwise_not(image.image, out);
-  return Image(out);
+void _or(Image image1, Image image2) {
+  cv::bitwise_or(image1.image, image2.image, image1.image);
+}
+
+void _orScalar(Image image1, Rcpp::NumericVector value) {
+  cv::bitwise_or(image1.image, col2Scalar(value), image1.image);
+}
+
+void _not(Image image) {
+  cv::bitwise_not(image.image, image.image);
 }
 
 Rcpp::NumericMatrix _findNonZero(Image image) {
