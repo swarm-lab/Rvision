@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.4</span>
       </span>
     </div>
 
@@ -164,8 +164,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>contours</th>
-      <td><p>A list of two data frames as produced by
-<code><a href='findContours.html'>findContours</a></code>.</p></td>
+      <td><p>A list of two matrices as produced by <code><a href='findContours.html'>findContours</a></code>.</p></td>
     </tr>
     <tr>
       <th>id</th>
@@ -176,7 +175,7 @@ for which to run the function.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data frame with 3 columns:</p><ul>
+    <p>A data frame with 3 columns:</p><ul>
 <li><p>"id": the contour identity (indicates the set of points belonging
     to the same contour).</p></li>
 <li><p>"moment": the name of the moment. See Note below.</p></li>
@@ -206,55 +205,55 @@ where \((\bar{x}, \bar{y})\) is the mass center:
 <span class='va'>dots_bin</span> <span class='op'>&lt;-</span> <span class='va'>dots_gray</span> <span class='op'>&lt;</span> <span class='fl'>200</span>
 <span class='va'>contours</span> <span class='op'>&lt;-</span> <span class='fu'><a href='findContours.html'>findContours</a></span><span class='op'>(</span><span class='va'>dots_bin</span><span class='op'>)</span>
 <span class='fu'>moments</span><span class='op'>(</span><span class='va'>contours</span>, id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    id moment         value
-#&gt; 1   3    m00  8.290500e+03
-#&gt; 2   3    m10  5.846871e+06
-#&gt; 3   3    m01  7.960358e+05
-#&gt; 4   3    m20  4.128506e+09
-#&gt; 5   3    m11  5.610887e+08
-#&gt; 6   3    m02  8.243463e+07
-#&gt; 7   3    m30  2.918683e+12
-#&gt; 8   3    m21  3.959663e+11
-#&gt; 9   3    m12  5.807725e+10
-#&gt; 10  3    m03  9.066588e+09
-#&gt; 11  3   mu20  5.002732e+06
-#&gt; 12  3   mu11 -3.152508e+05
-#&gt; 13  3   mu02  6.000996e+06
-#&gt; 14  3   mu30 -7.443355e+05
-#&gt; 15  3   mu21  7.637233e+05
-#&gt; 16  3   mu12  8.001813e+05
-#&gt; 17  3   mu03 -1.012028e+06
-#&gt; 18  3   nu20  7.278566e-02
-#&gt; 19  3   nu11 -4.586642e-03
-#&gt; 20  3   nu02  8.730957e-02
-#&gt; 21  3   nu30 -1.189370e-04
-#&gt; 22  3   nu21  1.220350e-04
-#&gt; 23  3   nu12  1.278606e-04
-#&gt; 24  3   nu03 -1.617115e-04
-#&gt; 25  5    m00  5.059000e+03
-#&gt; 26  5    m10  5.517633e+06
-#&gt; 27  5    m01  6.791772e+05
-#&gt; 28  5    m20  6.019317e+09
-#&gt; 29  5    m11  7.411701e+08
-#&gt; 30  5    m02  9.411835e+07
-#&gt; 31  5    m30  6.568222e+12
-#&gt; 32  5    m21  8.090197e+11
-#&gt; 33  5    m12  1.027642e+11
-#&gt; 34  5    m03  1.342318e+10
-#&gt; 35  5   mu20  1.473124e+06
-#&gt; 36  5   mu11  4.209014e+05
-#&gt; 37  5   mu02  2.937954e+06
-#&gt; 38  5   mu30  1.266930e+04
-#&gt; 39  5   mu21  7.011204e+05
-#&gt; 40  5   mu12  3.794716e+05
-#&gt; 41  5   mu03 -1.176398e+06
-#&gt; 42  5   nu20  5.755855e-02
-#&gt; 43  5   nu11  1.644565e-02
-#&gt; 44  5   nu02  1.147931e-01
-#&gt; 45  5   nu30  6.959707e-06
-#&gt; 46  5   nu21  3.851509e-04
-#&gt; 47  5   nu12  2.084575e-04
-#&gt; 48  5   nu03 -6.462379e-04</div><div class='input'>
+</div><div class='output co'>#&gt;      id moment         value
+#&gt; 3.1   3    m00  8.290500e+03
+#&gt; 3.2   3    m10  5.846871e+06
+#&gt; 3.3   3    m01  7.960358e+05
+#&gt; 3.4   3    m20  4.128506e+09
+#&gt; 3.5   3    m11  5.610887e+08
+#&gt; 3.6   3    m02  8.243463e+07
+#&gt; 3.7   3    m30  2.918683e+12
+#&gt; 3.8   3    m21  3.959663e+11
+#&gt; 3.9   3    m12  5.807725e+10
+#&gt; 3.10  3    m03  9.066588e+09
+#&gt; 3.11  3   mu20  5.002732e+06
+#&gt; 3.12  3   mu11 -3.152508e+05
+#&gt; 3.13  3   mu02  6.000996e+06
+#&gt; 3.14  3   mu30 -7.443355e+05
+#&gt; 3.15  3   mu21  7.637233e+05
+#&gt; 3.16  3   mu12  8.001813e+05
+#&gt; 3.17  3   mu03 -1.012028e+06
+#&gt; 3.18  3   nu20  7.278566e-02
+#&gt; 3.19  3   nu11 -4.586642e-03
+#&gt; 3.20  3   nu02  8.730957e-02
+#&gt; 3.21  3   nu30 -1.189370e-04
+#&gt; 3.22  3   nu21  1.220350e-04
+#&gt; 3.23  3   nu12  1.278606e-04
+#&gt; 3.24  3   nu03 -1.617115e-04
+#&gt; 5.1   5    m00  5.059000e+03
+#&gt; 5.2   5    m10  5.517633e+06
+#&gt; 5.3   5    m01  6.791772e+05
+#&gt; 5.4   5    m20  6.019317e+09
+#&gt; 5.5   5    m11  7.411701e+08
+#&gt; 5.6   5    m02  9.411835e+07
+#&gt; 5.7   5    m30  6.568222e+12
+#&gt; 5.8   5    m21  8.090197e+11
+#&gt; 5.9   5    m12  1.027642e+11
+#&gt; 5.10  5    m03  1.342318e+10
+#&gt; 5.11  5   mu20  1.473124e+06
+#&gt; 5.12  5   mu11  4.209014e+05
+#&gt; 5.13  5   mu02  2.937954e+06
+#&gt; 5.14  5   mu30  1.266930e+04
+#&gt; 5.15  5   mu21  7.011204e+05
+#&gt; 5.16  5   mu12  3.794716e+05
+#&gt; 5.17  5   mu03 -1.176398e+06
+#&gt; 5.18  5   nu20  5.755855e-02
+#&gt; 5.19  5   nu11  1.644565e-02
+#&gt; 5.20  5   nu02  1.147931e-01
+#&gt; 5.21  5   nu30  6.959707e-06
+#&gt; 5.22  5   nu21  3.851509e-04
+#&gt; 5.23  5   nu12  2.084575e-04
+#&gt; 5.24  5   nu03 -6.462379e-04</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

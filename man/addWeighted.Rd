@@ -4,7 +4,7 @@
 \alias{addWeighted}
 \title{Weighted Sum of Two Images}
 \usage{
-addWeighted(image1, image2, weight = c(0.5, 0.5))
+addWeighted(image1, image2, weight = c(0.5, 0.5), in_place = FALSE)
 }
 \arguments{
 \item{image1}{An \code{\link{Image}} object.}
@@ -14,9 +14,14 @@ addWeighted(image1, image2, weight = c(0.5, 0.5))
 \item{weight}{A 2-element vector of the respective weight of each image
 (default: c(0.5, 0.5)). If the two weights do not add up to 1, they will be
 rescaled accordingly.}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image1} in place.
 }
 \description{
 This function computes the weighted sum of two

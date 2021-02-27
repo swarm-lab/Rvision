@@ -18,8 +18,8 @@ Rcpp::List _findContours(Image image, int mode, int method, Rcpp::NumericVector 
   for (uint i = 0; i < contours.size(); i++) {
     for (uint j = 0; j < contours[i].size(); j++) {
       contours_mat(counter, 0) = i;
-      contours_mat(counter, 1) = contours[i][j].x;
-      contours_mat(counter, 2) = contours[i][j].y;
+      contours_mat(counter, 1) = contours[i][j].x + 1;
+      contours_mat(counter, 2) = -contours[i][j].y + image.image.rows;
       counter += 1;
     }
 

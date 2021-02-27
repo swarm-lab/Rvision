@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.4</span>
       </span>
     </div>
 
@@ -206,9 +206,9 @@ object (see Details).</p></td>
 <span class='va'>dots_gray</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='va'>dots</span>, <span class='st'>"GRAY"</span><span class='op'>)</span>
 <span class='va'>dots_bin</span> <span class='op'>&lt;-</span> <span class='va'>dots_gray</span> <span class='op'>&lt;</span> <span class='fl'>200</span>
 <span class='va'>contours</span> <span class='op'>&lt;-</span> <span class='fu'><a href='findContours.html'>findContours</a></span><span class='op'>(</span><span class='va'>dots_bin</span><span class='op'>)</span>
-<span class='va'>rows</span> <span class='op'>&lt;-</span> <span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span><span class='op'>$</span><span class='va'>y</span>
-<span class='va'>cols</span> <span class='op'>&lt;-</span> <span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span><span class='op'>$</span><span class='va'>x</span>
-<span class='va'>colors</span> <span class='op'>&lt;-</span> <span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span><span class='op'>$</span><span class='va'>id</span> <span class='op'>+</span> <span class='fl'>2</span>
+<span class='va'>rows</span> <span class='op'>&lt;-</span> <span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span><span class='op'>[</span>, <span class='fl'>3</span><span class='op'>]</span>
+<span class='va'>cols</span> <span class='op'>&lt;-</span> <span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>
+<span class='va'>colors</span> <span class='op'>&lt;-</span> <span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>2</span>
 <span class='va'>markers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span><span class='op'>(</span><span class='fl'>0.0</span>, dim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>dots_bin</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>dots_bin</span><span class='op'>)</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>markers</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
 <span class='va'>markers</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>rows</span>, <span class='va'>cols</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>colors</span>

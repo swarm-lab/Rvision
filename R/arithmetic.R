@@ -1,3 +1,45 @@
+#' @title In Place Operators for Images
+#'
+#' @param e1,e2 Either 2 \code{\link{Image}} objects or 1 \code{\link{Image}}
+#'  object and 1 numeric value/vector. If a vector and its length is less than
+#'  the number of channels of the image, then it is recycled to match it.
+#'
+#' @return These operators do not return anything. They modify the image in
+#'  place (destructive operation). If 2 images are passed to the operators, only
+#'  the one of the left side of the operator is modified; the other is left
+#'  untouched.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
+#' balloon1 %i+% balloon2
+#' plot(balloon1)
+#'
+#' @name inPlaceArithmetic
+NULL
+#> NULL
+
+#' @rdname inPlaceArithmetic
+#' @export
+setGeneric("%i+%", function(e1, e2) { standardGeneric("%i+%") })
+
+#' @rdname inPlaceArithmetic
+#' @export
+setGeneric("%i-%", function(e1, e2) { standardGeneric("%i-%") })
+
+#' @rdname inPlaceArithmetic
+#' @export
+setGeneric("%i*%", function(e1, e2) { standardGeneric("%i*%") })
+
+#' @rdname inPlaceArithmetic
+#' @export
+setGeneric("%i/%", function(e1, e2) { standardGeneric("%i/%") })
+
+
 #' @title Absolute Difference Between Two Images
 #'
 #' @description This function computes the absolute difference between two
@@ -7,7 +49,12 @@
 #'
 #' @param image2 An \code{\link{Image}} object.
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image1} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -19,11 +66,17 @@
 #' plot(absdiff(balloon1, balloon2))
 #'
 #' @export
-absdiff <- function(image1, image2) {
+absdiff <- function(image1, image2, in_place = FALSE) {
   if (!isImage(image1) | !isImage(image2))
     stop("Both arguments need to be Image object.")
 
-  `_absdiff`(image1, image2)
+  if (in_place == TRUE) {
+    `_absdiff`(image1, image2)
+  } else {
+    out <- `_cloneImage`(image1)
+    `_absdiff`(out, image2)
+    out
+  }
 }
 
 
@@ -40,7 +93,12 @@ absdiff <- function(image1, image2) {
 #'  (default: c(0.5, 0.5)). If the two weights do not add up to 1, they will be
 #'  rescaled accordingly.
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place A logical indicating whether the change should be applied to
+#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+#'  the default, slower but non destructive).
+#'
+#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+#'  returns nothing and modifies \code{image1} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -52,14 +110,20 @@ absdiff <- function(image1, image2) {
 #' plot(addWeighted(balloon1, balloon2))
 #'
 #' @export
-addWeighted <- function(image1, image2, weight = c(0.5, 0.5)) {
+addWeighted <- function(image1, image2, weight = c(0.5, 0.5), in_place = FALSE) {
   if (!isImage(image1) | !isImage(image2))
     stop("Both arguments need to be Image object.")
 
   if (length(weight) != 2)
     stop("Exactly two weigths need to be supplied.")
 
-  `_addWeighted`(image1, weight[1], image2, weight[2])
+  if (in_place == TRUE) {
+    `_addWeighted`(image1, weight[1], image2, weight[2])
+  } else {
+    out <- `_cloneImage`(image1)
+    `_addWeighted`(out, weight[1], image2, weight[2])
+    out
+  }
 }
 
 

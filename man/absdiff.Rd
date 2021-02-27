@@ -4,15 +4,20 @@
 \alias{absdiff}
 \title{Absolute Difference Between Two Images}
 \usage{
-absdiff(image1, image2)
+absdiff(image1, image2, in_place = FALSE)
 }
 \arguments{
 \item{image1}{An \code{\link{Image}} object.}
 
 \item{image2}{An \code{\link{Image}} object.}
+
+\item{in_place}{A logical indicating whether the change should be applied to
+the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
+the default, slower but non destructive).}
 }
 \value{
-An \code{\link{Image}} object.
+An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
+ returns nothing and modifies \code{image1} in place.
 }
 \description{
 This function computes the absolute difference between two

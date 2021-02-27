@@ -132,7 +132,7 @@ int getAPIId(std::string APIId) {
   throw std::range_error("Unknown property.");
 }
 
-cv::Scalar col2Scalar(IntegerVector col) {
+cv::Scalar col2Scalar(Rcpp::NumericVector col) {
   cv::Scalar out;
 
   for (int i = 0; i < col.size(); i++) {

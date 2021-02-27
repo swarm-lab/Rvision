@@ -1,59 +1,49 @@
-Image _plus(Image image1, Image image2) {
-  cv::Mat out;
-  cv::add(image1.image, image2.image, out, cv::noArray(), image1.image.type());
-  return Image(out);
+void _plus(Image image1, Image image2) {
+  cv::add(image1.image, image2.image, image1.image, cv::noArray(), -1);
 }
 
-Image _minus(Image image1, Image image2) {
-  cv::Mat out;
-  cv::subtract(image1.image, image2.image, out, cv::noArray(), image1.image.type());
-  return Image(out);
+void _plusScalar(Image image, Rcpp::NumericVector value) {
+  cv::add(image.image, col2Scalar(value), image.image, cv::noArray(), -1);
 }
 
-Image _multiply(Image image1, Image image2) {
-  cv::Mat out;
-  cv::multiply(image1.image, image2.image, out, 1, image1.image.type());
-  return Image(out);
+void _minus(Image image1, Image image2) {
+  cv::subtract(image1.image, image2.image, image1.image, cv::noArray(), -1);
 }
 
-Image _divide(Image image1, Image image2) {
-  cv::Mat out;
-  cv::divide(image1.image, image2.image, out, 1, image1.image.type());
-  return Image(out);
-}
-
-Image _plusScalar(Image image, double value) {
-  cv::Mat out;
-  image.image.convertTo(out, -1, 1, value);
-  return Image(out);
-}
-
-Image _minusScalar(Image image, double value, bool order) {
-  cv::Mat out;
+void _minusScalar(Image image, Rcpp::NumericVector value, bool order) {
   if (order) {
-    image.image.convertTo(out, -1, 1, -value);
+    cv::subtract(image.image, col2Scalar(value), image.image, cv::noArray(), -1);
   } else {
-    image.image.convertTo(out, -1, -1, value);
+    cv::subtract(col2Scalar(value), image.image, image.image, cv::noArray(), -1);
   }
-  return Image(out);
 }
 
-Image _multiplyScalar(Image image, double value) {
-  cv::Mat out;
-  image.image.convertTo(out, -1, value, 0);
-  return Image(out);
+void _multiply(Image image1, Image image2) {
+  cv::multiply(image1.image, image2.image, image1.image, 1, -1);
 }
 
-Image _absdiff(Image image1, Image image2) {
-  cv::Mat out;
-  cv::absdiff(image1.image, image2.image, out);
-  return Image(out);
+void _multiplyScalar(Image image, Rcpp::NumericVector value) {
+  cv::multiply(image.image, col2Scalar(value), image.image, 1, -1);
 }
 
-Image _addWeighted(Image image1, double alpha, Image image2, double beta) {
-  cv::Mat out;
+void _divide(Image image1, Image image2) {
+  cv::divide(image1.image, image2.image, image1.image, 1, -1);
+}
+
+void _divideScalar(Image image, Rcpp::NumericVector value, bool order) {
+  if (order) {
+    cv::divide(image.image, col2Scalar(value), image.image, 1, -1);
+  } else {
+    cv::divide(col2Scalar(value), image.image, image.image, 1, -1);
+  }
+}
+
+void _absdiff(Image image1, Image image2) {
+  cv::absdiff(image1.image, image2.image, image1.image);
+}
+
+void _addWeighted(Image image1, double alpha, Image image2, double beta) {
   alpha = alpha / (alpha + beta);
   beta = 1 - alpha;
-  cv::addWeighted(image1.image, alpha, image2.image, beta, 0, out);
-  return Image(out);
+  cv::addWeighted(image1.image, alpha, image2.image, beta, 0, image1.image);
 }

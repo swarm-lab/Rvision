@@ -68,7 +68,7 @@ arma::mat _getRotationMatrix2D(arma::fvec center, double angle, double scale) {
   return out;
 }
 
-Image _warpAffine(Image image, arma::fmat m, IntegerVector outputSize, int interpMode, int borderType, Rcpp::IntegerVector borderColor) {
+Image _warpAffine(Image image, arma::fmat m, IntegerVector outputSize, int interpMode, int borderType, Rcpp::NumericVector borderColor) {
   cv::Mat out;
   cv::Mat warpMatrix;
   arma2cv(m, warpMatrix);
@@ -96,7 +96,7 @@ arma::mat _getPerspectiveTransform(arma::fmat from, arma::fmat to) {
   return out;
 }
 
-Image _warpPerspective(Image image, arma::fmat m, IntegerVector outputSize, int interpMode, int borderType, Rcpp::IntegerVector borderColor) {
+Image _warpPerspective(Image image, arma::fmat m, IntegerVector outputSize, int interpMode, int borderType, Rcpp::NumericVector borderColor) {
   cv::Mat out;
   cv::Mat warpMatrix;
   arma2cv(m, warpMatrix);
@@ -110,7 +110,7 @@ Image _distanceTransform(Image image, int distanceType, int maskSize) {
   return Image(out);
 }
 
-int _floodFill(Image image, IntegerVector seedPoint, IntegerVector newVal, IntegerVector loDiff, IntegerVector upDiff, int connectivity) {
+int _floodFill(Image image, IntegerVector seedPoint, NumericVector newVal, NumericVector loDiff, NumericVector upDiff, int connectivity) {
   int area = cv::floodFill(image.image, cv::Point(seedPoint(0), seedPoint(1)),
                            col2Scalar(newVal), 0, col2Scalar(loDiff), col2Scalar(upDiff),
                            connectivity);

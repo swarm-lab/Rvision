@@ -94,7 +94,7 @@ Image _matchTemplateNoMask(Image image, Image templ, int method) {
   return Image(out);
 }
 
-Image _inRange(Image image, IntegerVector low, IntegerVector up) {
+Image _inRange(Image image, NumericVector low, NumericVector up) {
   cv::Mat out;
   cv::inRange(image.image, col2Scalar(low), col2Scalar(up), out);
   return Image(out);

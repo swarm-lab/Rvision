@@ -963,7 +963,7 @@ Image _subimage(Image &image, int x, int y, int width, int height) {
   return Image(out);
 }
 
-Image _copyMakeBorder(Image &image, int top, int bottom, int left, int right, int borderType, Rcpp::IntegerVector borderColor) {
+Image _copyMakeBorder(Image &image, int top, int bottom, int left, int right, int borderType, Rcpp::NumericVector borderColor) {
   cv::Mat out;
   cv::copyMakeBorder(image.image, out, top, bottom, left, right, borderType, col2Scalar(borderColor));
   return Image(out);

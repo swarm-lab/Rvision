@@ -76,11 +76,11 @@ dots_bin <- dots_gray < 200
 contours <- findContours(dots_bin)
 colors <- rainbow(max(contours$contours[, 1] + 1))
 plot(dots_bin)
-invisible(sapply(
-  base::split(contours$contours, contours$contours[, 1]),
-  function(dat) {
-    dat <- rbind(dat, dat[1, ])
-    lines(y ~ x, data = dat, col = colors[id + 1], lwd = 2)
+invisible(lapply(
+  split.data.frame(contours$contours, contours$contours[, 1]),
+  function(contour) {
+    contour <- rbind(contour, contour[1, ])
+    lines(contour[, 2:3], col = colors[contour[, 1] + 1], lwd = 2)
   })
 )
 

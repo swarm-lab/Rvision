@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.4</span>
       </span>
     </div>
 
@@ -206,15 +206,15 @@ the whole image context.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of two data frames:</p><ul>
-<li><p>"contours": a data frame with 3 columns:
+    <p>A list of two matrices:</p><ul>
+<li><p>"contours": a matrix with 3 columns:
       <ul>
 <li><p>"id": the contour identity (indicates the set of points
             belonging to the same contour).</p></li>
 <li><p>"x": the x coordinates of the contour points.</p></li>
 <li><p>"y": the y coordinates of the contour points.</p></li>
 </ul></p></li>
-<li><p>"hierarchy": a data frame with 5 columns:
+<li><p>"hierarchy": a matrix with 5 columns:
       <ul>
 <li><p>"id": the contour identity.</p></li>
 <li><p>"after": the identity of the next contour at the same
@@ -246,13 +246,13 @@ the whole image context.</p></td>
 <span class='va'>dots_gray</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='va'>dots</span>, <span class='st'>"GRAY"</span><span class='op'>)</span>
 <span class='va'>dots_bin</span> <span class='op'>&lt;-</span> <span class='va'>dots_gray</span> <span class='op'>&lt;</span> <span class='fl'>200</span>
 <span class='va'>contours</span> <span class='op'>&lt;-</span> <span class='fu'>findContours</span><span class='op'>(</span><span class='va'>dots_bin</span><span class='op'>)</span>
-<span class='va'>colors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span><span class='op'>$</span><span class='va'>id</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>colors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dots_bin</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/invisible.html'>invisible</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span>
-  <span class='fu'>base</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span>, <span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span><span class='op'>$</span><span class='va'>id</span><span class='op'>)</span>,
-  <span class='kw'>function</span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span> <span class='op'>{</span>
-    <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>dat</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span><span class='op'>)</span>
-    <span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x</span>, data <span class='op'>=</span> <span class='va'>dat</span>, col <span class='op'>=</span> <span class='va'>colors</span><span class='op'>[</span><span class='va'>id</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>]</span>, lwd <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/invisible.html'>invisible</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split.data.frame</a></span><span class='op'>(</span><span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span>, <span class='va'>contours</span><span class='op'>$</span><span class='va'>contours</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>,
+  <span class='kw'>function</span><span class='op'>(</span><span class='va'>contour</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='va'>contour</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>contour</span>, <span class='va'>contour</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>contour</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, col <span class='op'>=</span> <span class='va'>colors</span><span class='op'>[</span><span class='va'>contour</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>]</span>, lwd <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
   <span class='op'>}</span><span class='op'>)</span>
 <span class='op'>)</span>
 </div><div class='img'><img src='findContours-1.png' alt='' width='700' height='433' /></div><div class='input'>
