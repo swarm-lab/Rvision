@@ -71,8 +71,8 @@ findNonZero <- function(image) {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
-  if (nchan(image) != 1 || bitdepth(image) != "8U")
-    stop("'image' must be an 8-bit (8U) single-channel Image object.")
+  if (nchan(image) != 1)
+    stop("'image' must be a single-channel Image object.")
 
   `_findNonZero`(image)
 }

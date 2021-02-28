@@ -18,17 +18,17 @@ void _not(Image image) {
   cv::bitwise_not(image.image, image.image);
 }
 
-Rcpp::NumericMatrix _findNonZero(Image image) {
-  std::vector<cv::Point> locs;
+Rcpp::IntegerMatrix _findNonZero(Image image) {
+  cv::Mat locs;
   cv::findNonZero(image.image, locs);
 
-  Rcpp::NumericMatrix table(locs.size(), 2);
-  colnames(table) = Rcpp::CharacterVector::create("x", "y");
+  Rcpp::IntegerMatrix out(locs.rows, 2);
+  colnames(out) = Rcpp::CharacterVector::create("x", "y");
 
-  for (uint i = 0; i < locs.size(); i++) {
-    table(i, 0) = locs[i].x + 1;
-    table(i, 1) = -locs[i].y + image.image.rows;
+  for (int i = 0; i < locs.rows; i++) {
+    out(i, 0) = locs.at<cv::Point>(i).x + 1;
+    out(i, 1) = -locs.at<cv::Point>(i).y + image.image.rows;
   }
 
-  return table;
+  return out;
 }

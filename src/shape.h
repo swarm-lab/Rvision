@@ -48,21 +48,21 @@ Rcpp::List _connectedComponents(Image image, int connectivity, int algorithm) {
   cv::Mat labels;
   int n = cv::connectedComponents(image.image, labels, connectivity, CV_16U, algorithm);
 
-  std::vector<cv::Point> locs;
-  cv::findNonZero(labels > 0, locs);
+  cv::Mat locs;
+  cv::findNonZero(labels, locs);
 
-  Rcpp::NumericMatrix table_mat(locs.size(), 3);
-  colnames(table_mat) = Rcpp::CharacterVector::create("id", "x", "y");
+  Rcpp::IntegerMatrix table(locs.rows, 3);
+  colnames(table) = Rcpp::CharacterVector::create("id", "x", "y");
 
-  for (uint i = 0; i < locs.size(); i++) {
-    table_mat(i, 0) = labels.at< uint16_t >(locs[i]);
-    table_mat(i, 1) = locs[i].x + 1;
-    table_mat(i, 2) = -locs[i].y + image.image.rows;
+  for (uint i = 0; i < locs.rows; i++) {
+    table(i, 0) = labels.at< uint16_t >(locs.at<cv::Point>(i));
+    table(i, 1) = locs.at<cv::Point>(i).x + 1;
+    table(i, 2) = -locs.at<cv::Point>(i).y + image.image.rows;
   }
 
   return Rcpp::List::create(Rcpp::Named("n") = n - 1,
                             Rcpp::Named("labels") = Image(labels),
-                            Rcpp::Named("table") = table_mat);
+                            Rcpp::Named("table") = table);
 }
 
 void _watershed(Image image, Image markers) {
