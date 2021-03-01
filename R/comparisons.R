@@ -98,10 +98,10 @@ matchTemplate <- function(image, template, method, mask = NULL) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (nrow(template) > nrow(image) | ncol(template) > ncol(image))
+  if (template$nrow() > image$nrow() | template$ncol() > image$ncol())
     stop("The template cannot be larger than the image.")
 
-  if (nchan(template) != nchan(image) | bitdepth(template) != bitdepth(image))
+  if (template$nchan() != image$nchan() | template$depth() != image$depth())
     stop("The template must be of the same type as the image")
 
   if (!is.null(mask) & !(method %in% c("SQDIFF", "CCORR_NORMED"))) {
@@ -121,7 +121,7 @@ matchTemplate <- function(image, template, method, mask = NULL) {
                                   {warning("Unsupported method. Defaulting to SQDIFF."); 1}
                            ))
   } else {
-    if (!all(dim(template) == dim(mask)) | bitdepth(template) != bitdepth(mask))
+    if (!all(template$dim() == mask$dim()) | template$depth() != mask$depth())
       stop("The mask must have the same type and dimensions as the template.")
 
     `_matchTemplate`(image, template,

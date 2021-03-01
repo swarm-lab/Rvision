@@ -7,6 +7,7 @@ public:
   void release();
   Image readNext();
   Image readFrame(int frameId);
+  void readStream(Image image, int frameId);
   bool set(std::string propId, double value);
   double get(std::string propId);
   Rcpp::NumericVector dim();
@@ -16,6 +17,7 @@ public:
 
 private:
   cv::VideoCapture video;
+  cv::Mat out;
   int nf;
 };
 
@@ -137,7 +139,6 @@ std::string Video::codec() {
 Image Video::readNext() {
   cv::Mat outputFrame;
   this->video.read(outputFrame);
-
   return Image(outputFrame);
 }
 
@@ -154,5 +155,9 @@ Image Video::readFrame(int frameId) {
   return Image(outputFrame);
 }
 
-
-
+void Video::readStream(Image image, int frameId) {
+  if (frameId > 0) {
+    this->video.set(cv::CAP_PROP_POS_FRAMES, frameId - 1);
+  }
+  this->video.read(image.image);
+}

@@ -31,7 +31,7 @@ min.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  switch (nchan(x),
+  switch (x$nchan(),
           matrix(`_min`(x), nrow = 1, ncol = 1, dimnames = list(c("min"), c("GRAY"))),
           NA,
           matrix(sapply(split(x), `_min`), nrow = 1, ncol = 3,
@@ -49,7 +49,7 @@ max.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  switch(nchan(x),
+  switch(x$nchan(),
          matrix(`_max`(x), nrow = 1, ncol = 1, dimnames = list(c("max"), c("GRAY"))),
          NA,
          matrix(sapply(split(x), `_max`), nrow = 1, ncol = 3,
@@ -111,7 +111,7 @@ mean.Rcpp_Image <- function(x, ..., mask = NA) {
     avg <- `_meanPx`(x, image(array(255L, dim = c(nrow(x), ncol(x), 1))))
   }
 
-  switch(nchan(x),
+  switch(x$nchan(),
          matrix(avg[1, 1], nrow = 1, ncol = 1, dimnames = list(c("mean"), c("GRAY"))),
          NA,
          avg[, 1:3],
@@ -176,7 +176,7 @@ minMaxLoc <- function(x) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  switch(nchan(x),
+  switch(x$nchan(),
          `_minMaxLoc`(x),
          NA,
          lapply(split(x), `_minMaxLoc`),

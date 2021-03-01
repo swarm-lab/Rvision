@@ -518,7 +518,7 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
-  if (!(nchan(image) %in% c(1, 3)))
+  if (!(image$nchan() %in% c(1, 3)))
     stop("'image' must be an Image object with 1 or 3 channels only.")
 
   `_bilateralFilter`(image, d, sigma_color, sigma_space)
@@ -573,7 +573,7 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (nchan(image) != 1 || bitdepth(image) != "8U")
+  if (image$nchan() != 1 || image$depth() != "8U")
     stop("'image' must be an 8-bit (8U) single-channel Image object.")
 
   if (max_value <= 0)

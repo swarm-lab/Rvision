@@ -71,7 +71,7 @@ findNonZero <- function(image) {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
-  if (nchan(image) != 1)
+  if (image$nchan() != 1)
     stop("'image' must be a single-channel Image object.")
 
   `_findNonZero`(image)

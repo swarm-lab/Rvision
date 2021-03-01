@@ -6,6 +6,7 @@ public:
   bool isOpened();
   void release();
   Image readNext();
+  void readStream(Image image);
   bool set(std::string propId, double value);
   double get(std::string propId);
   Rcpp::NumericVector dim();
@@ -67,4 +68,8 @@ Image Stream::readNext() {
   this->stream.read(outputFrame);
 
   return Image(outputFrame);
+}
+
+void Stream::readStream(Image image) {
+  this->stream.read(image.image);
 }

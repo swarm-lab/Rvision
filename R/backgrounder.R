@@ -20,15 +20,15 @@ backgrounder <- function(video, n = 10, method = "mean") {
     l2 <- lapply(l1, as.array)
 
     l3 <- list()
-    for (i in 1:nchan(l1[[1]])) {
+    for (i in 1:l1[[1]]$nchan()) {
       l3[[i]] <- simplify2array(lapply(l2, function(m, i) m[, , i], i = i))
     }
 
     print("Computing median image. This is a slow process, please be patient.")
 
     mat <- array(NA, dim = dim(l1[[1]]))
-    for (i in 1:nchan(l1[[1]])) {
-      print(paste0("Processing channel ", i, " out of ", nchan(l1[[1]])))
+    for (i in 1:l1[[1]]$nchan()) {
+      print(paste0("Processing channel ", i, " out of ", l1[[1]]$nchan()))
       mat[, , i] <- pbapply::pbapply(l3[[i]], c(1, 2), stats::median.default)
     }
 

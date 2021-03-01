@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read Next Frame of an Object — readNext.Rcpp_Stream • Rvision</title>
+<title>Read Next Frame of an Object in Place — readStream.Rcpp_Stream • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,10 @@
 
 
 
-<meta property="og:title" content="Read Next Frame of an Object — readNext.Rcpp_Stream" />
+<meta property="og:title" content="Read Next Frame of an Object in Place — readStream.Rcpp_Stream" />
 <meta property="og:description" content="Read the next frame of a Video or
- Stream object and returns it as an Image object." />
+ Stream object and use it to update an Image
+ object in place." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
 
@@ -147,23 +148,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read Next Frame of an Object</h1>
+    <h1>Read Next Frame of an Object in Place</h1>
     <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/StreamClass.R'><code>R/StreamClass.R</code></a>, <a href='https://github.com/swarm-lab/Rvision/blob/master/R/VideoClass.R'><code>R/VideoClass.R</code></a>, <a href='https://github.com/swarm-lab/Rvision/blob/master/R/generic.R'><code>R/generic.R</code></a></small>
-    <div class="hidden name"><code>readNext.Rd</code></div>
+    <div class="hidden name"><code>readStream.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Read the next frame of a <code><a href='Video-class.html'>Video</a></code> or
- <code><a href='Stream-class.html'>Stream</a></code> object and returns it as an <code><a href='Image-class.html'>Image</a></code> object.</p>
+ <code><a href='Stream-class.html'>Stream</a></code> object and use it to update an <code><a href='Image-class.html'>Image</a></code>
+ object in place.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for Rcpp_Stream</span>
-<span class='fu'>readNext</span><span class='op'>(</span><span class='va'>obj</span><span class='op'>)</span>
+<span class='fu'>readStream</span><span class='op'>(</span><span class='va'>obj</span>, <span class='va'>image</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for Rcpp_Video</span>
-<span class='fu'>readNext</span><span class='op'>(</span><span class='va'>obj</span><span class='op'>)</span>
+<span class='fu'>readStream</span><span class='op'>(</span><span class='va'>obj</span>, <span class='va'>image</span>, pos <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>readNext</span><span class='op'>(</span><span class='va'>obj</span><span class='op'>)</span></pre>
+<span class='fu'>readStream</span><span class='op'>(</span><span class='va'>obj</span>, <span class='va'>image</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,23 +174,39 @@
       <th>obj</th>
       <td><p>A <code><a href='Video-class.html'>Video</a></code> or <code><a href='Stream-class.html'>Stream</a></code> object.</p></td>
     </tr>
+    <tr>
+      <th>image</th>
+      <td><p>An <code><a href='Image-class.html'>Image</a></code> to update in place.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Not used.</p></td>
+    </tr>
+    <tr>
+      <th>pos</th>
+      <td><p>An integer corresponding to the number of the frame to read in the
+video. If -1 (the default), then the next frame is read.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p>This function returns nothing and modifies <code>image</code> in place.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Video-class.html'>Video</a></code>, <code><a href='Stream-class.html'>Stream</a></code>,
-<code><a href='Image-class.html'>Image</a></code>, <code><a href='readFrame.html'>readFrame</a></code>, <code><a href='readStream.Rcpp_Stream.html'>readStream</a></code></p></div>
+<code><a href='Image-class.html'>Image</a></code>, <code><a href='readFrame.html'>readFrame</a></code>, <code><a href='readNext.Rcpp_Stream.html'>readNext</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='video.html'>video</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_vid/Balloon.mp4"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>readNext</span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='readNext-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='release.Rcpp_Stream.html'>release</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>
+<span class='va'>frame</span> <span class='op'>&lt;-</span> <span class='fu'><a href='readNext.Rcpp_Stream.html'>readNext</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>frame</span><span class='op'>)</span>
+</div><div class='img'><img src='readStream-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>readStream</span><span class='op'>(</span><span class='va'>balloon</span>, <span class='va'>frame</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>frame</span><span class='op'>)</span>
+</div><div class='img'><img src='readStream-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='release.Rcpp_Stream.html'>release</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Video released successfully.</div><div class='input'>
 </div></pre>
   </div>

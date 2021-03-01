@@ -68,6 +68,7 @@ RCPP_MODULE(class_Video) {
   .method("codec", &Video::codec)
   .method("readNext", &Video::readNext)
   .method("readFrame", &Video::readFrame)
+  .method("readStream", &Video::readStream)
   ;
 }
 
@@ -89,6 +90,7 @@ RCPP_MODULE(class_Stream) {
   .method("nrow", &Stream::nrow)
   .method("ncol", &Stream::ncol)
   .method("readNext", &Stream::readNext)
+  .method("readStream", &Stream::readStream)
   ;
 }
 

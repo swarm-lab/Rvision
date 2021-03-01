@@ -237,13 +237,15 @@ release.Rcpp_Video <- function(obj) {
 #'
 #' @param x A \code{\link{Video}} object.
 #'
-#' @param pos An integer corresponding to the number of the frame to read.
+#' @param pos An integer corresponding to the position of the frame to read in
+#'  the video.
 #'
 #' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Video}}, \code{\link{Image}}
+#' @seealso \code{\link{Video}}, \code{\link{Image}}, \code{\link{readNext}},
+#'  \code{\link{readStream}}
 #'
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
@@ -266,6 +268,25 @@ readNext.Rcpp_Video <- function(obj) {
     stop("This is not a Video object.")
 
   obj$readNext()
+}
+
+
+#' @export
+#' @rdname readStream
+readStream.Rcpp_Video <- function(obj, image, pos = -1, ...) {
+  if (!isVideo(obj))
+    stop("obj is not a Video object.")
+
+  if (!isImage(image))
+    stop("image is not an Image object.")
+
+  if (!all(obj$dim()[1:2] == image$dim()[1:2]))
+    stop("obj and image must have the same dimensions.")
+
+  if (image$nchan() != 3)
+    stop("image must have 3 channels.")
+
+  obj$readStream(image, pos)
 }
 
 

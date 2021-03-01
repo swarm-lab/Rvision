@@ -1,8 +1,7 @@
-#' @title Read Next of an Object Frame
+#' @title Read Next Frame of an Object
 #'
-#' @description Read the next frame of a \code{\link{Video}}
-#' or \code{\link{Stream}} object and returns
-#'  it as an \code{\link{Image}} object.
+#' @description Read the next frame of a \code{\link{Video}} or
+#'  \code{\link{Stream}} object and returns it as an \code{\link{Image}} object.
 #'
 #' @param obj A \code{\link{Video}} or \code{\link{Stream}} object.
 #'
@@ -11,7 +10,7 @@
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Video}}, \code{\link{Stream}},
-#' \code{\link{Image}}, \code{\link{readFrame}}
+#' \code{\link{Image}}, \code{\link{readFrame}}, \code{\link{readStream}}
 #'
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
@@ -20,6 +19,41 @@
 #'
 #' @export
 readNext <- function(obj) UseMethod("readNext")
+
+
+#' @title Read Next Frame of an Object in Place
+#'
+#' @description Read the next frame of a \code{\link{Video}} or
+#'  \code{\link{Stream}} object and use it to update an \code{\link{Image}}
+#'  object in place.
+#'
+#' @param obj A \code{\link{Video}} or \code{\link{Stream}} object.
+#'
+#' @param image An \code{\link{Image}} to update in place.
+#'
+#' @param pos An integer corresponding to the number of the frame to read in the
+#'  video. If -1 (the default), then the next frame is read.
+#'
+#' @param ... Not used.
+#'
+#' @return This function returns nothing and modifies \code{image} in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Video}}, \code{\link{Stream}},
+#' \code{\link{Image}}, \code{\link{readFrame}}, \code{\link{readNext}}
+#'
+#' @examples
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' frame <- readNext(balloon)
+#' plot(frame)
+#' readStream(balloon, frame)
+#' plot(frame)
+#' release(balloon)
+#'
+#' @export
+readStream <- function(obj, image, ...) UseMethod("readStream")
+
 
 #' @title Release Object from Memory
 #'

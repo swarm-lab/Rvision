@@ -4,7 +4,7 @@
 \alias{readNext.Rcpp_Stream}
 \alias{readNext.Rcpp_Video}
 \alias{readNext}
-\title{Read Next of an Object Frame}
+\title{Read Next Frame of an Object}
 \usage{
 \method{readNext}{Rcpp_Stream}(obj)
 
@@ -19,9 +19,8 @@ readNext(obj)
 An \code{\link{Image}} object.
 }
 \description{
-Read the next frame of a \code{\link{Video}}
-or \code{\link{Stream}} object and returns
- it as an \code{\link{Image}} object.
+Read the next frame of a \code{\link{Video}} or
+ \code{\link{Stream}} object and returns it as an \code{\link{Image}} object.
 }
 \examples{
 balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
@@ -31,7 +30,7 @@ release(balloon)
 }
 \seealso{
 \code{\link{Video}}, \code{\link{Stream}},
-\code{\link{Image}}, \code{\link{readFrame}}
+\code{\link{Image}}, \code{\link{readFrame}}, \code{\link{readStream}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

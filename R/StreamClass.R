@@ -189,6 +189,24 @@ readNext.Rcpp_Stream <- function(obj) {
 }
 
 
+#' @export
+#' @rdname readStream
+readStream.Rcpp_Stream <- function(obj, image, ...) {
+  if (!isStream(obj))
+    stop("obj is not a Stream object.")
+
+  if (!isImage(image))
+    stop("image is not an Image object.")
+
+  if (!all(obj$dim()[1:2] == image$dim()[1:2]))
+    stop("obj and image must have the same dimensions.")
+
+  if (image$nchan() != 3)
+    stop("image must have 3 channels.")
+
+  obj$readStream(image)
+}
+
 
 #' @rdname setProp
 #' @export

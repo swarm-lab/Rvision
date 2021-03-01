@@ -9,7 +9,8 @@ readFrame(x, pos)
 \arguments{
 \item{x}{A \code{\link{Video}} object.}
 
-\item{pos}{An integer corresponding to the number of the frame to read.}
+\item{pos}{An integer corresponding to the position of the frame to read in
+the video.}
 }
 \value{
 An \code{\link{Image}} object.
@@ -25,7 +26,8 @@ plot(readNext(balloon))
 release(balloon)
 }
 \seealso{
-\code{\link{Video}}, \code{\link{Image}}
+\code{\link{Video}}, \code{\link{Image}}, \code{\link{readNext}},
+ \code{\link{readStream}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

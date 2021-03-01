@@ -428,7 +428,7 @@ split <- function(x) {
 
   out <- `_split`(x)
 
-  names(out) <- switch(nchan(x),
+  names(out) <- switch(x$nchan(),
                        "I", NA, c("B", "G", "R"), c("B", "G", "R", "A"), NA)
 
   out
@@ -529,7 +529,7 @@ pget <- function(image, x, y) {
     stop("Index out of bounds.")
 
   out <- image$get(-y + nrow(image), x - 1)
-  colnames(out) <- switch(nchan(image),
+  colnames(out) <- switch(image$nchan(),
                           "I",
                           NA,
                           c("B", "G", "R"),
@@ -677,7 +677,7 @@ pget <- function(image, x, y) {
       any(pixel$column < 1) | any(pixel$column > ncol(x)))
     stop("Subscript out of bounds.")
 
-  color <- matrix(value, nrow = nchan(x), ncol = nrow(pixel))
+  color <- matrix(value, nrow = x$nchan(), ncol = nrow(pixel))
 
   x$set(pixel$row, pixel$column, color)
   x

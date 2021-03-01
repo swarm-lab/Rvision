@@ -92,7 +92,7 @@ findContours <- function(image, mode = "external", method = "simple", offset = c
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
-  if (nchan(image) != 1 || bitdepth(image) != "8U")
+  if (image$nchan() != 1 || image$depth() != "8U")
     stop("'image' must be an 8-bit (8U) single-channel (GRAY) Image object.")
 
   if (!(mode %in% c("external", "list", "ccomp", "tree")))
@@ -215,7 +215,7 @@ connectedComponents <- function(image, connectivity = 8, algorithm = "grana") {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
-  if (nchan(image) != 1 || bitdepth(image) != "8U")
+  if (image$nchan() != 1 || image$depth() != "8U")
     stop("'image' must be an 8-bit (8U) single-channel (GRAY) Image object.")
 
   if (!(connectivity %in% c(4, 8)))

@@ -239,7 +239,7 @@ methods::evalqOnLoad({
             function(x, ...) {
               sum <- `_sumPx`(x)
 
-              switch(nchan(x),
+              switch(x$nchan(),
                      matrix(sum[1, 1], nrow = 1, ncol = 1,
                             dimnames = list(c("sum"), c("GRAY"))),
                      NA,
