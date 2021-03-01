@@ -51,7 +51,7 @@ Rcpp::List _connectedComponents(Image image, int connectivity, int algorithm) {
   cv::Mat locs;
   cv::findNonZero(labels, locs);
 
-  Rcpp::IntegerMatrix table(locs.rows, 3);
+  Rcpp::NumericMatrix table(locs.rows, 3);
   colnames(table) = Rcpp::CharacterVector::create("id", "x", "y");
 
   for (uint i = 0; i < locs.rows; i++) {
