@@ -764,53 +764,220 @@ methods::evalqOnLoad({
 
 ### Define generic logical methods ###
 methods::evalqOnLoad({
+  setMethod("bitAnd", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_and`(e1, e2, target)
+            })
+
+  setMethod("bitAnd", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_and`(e1, e2, e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_and`(e1, e2, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitAnd", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_andScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("bitAnd", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_andScalar`(e1, rep(e2, length.out = e1$nchan()), e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_andScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitAnd", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_andScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("bitAnd", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_andScalar`(e2, rep(e1, length.out = e2$nchan()), e2)
+              } else if (target == "new") {
+                out <- cloneImage(e2)
+                `_andScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitAnd", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_and`(e1, e2, out)
+              out
+            })
+
+  setMethod("bitAnd", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_andScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+              out
+            })
+
+  setMethod("bitAnd", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e2)
+              `_andScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+              out
+            })
+})
+
+methods::evalqOnLoad({
+  setMethod("bitOr", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_or`(e1, e2, target)
+            })
+
+  setMethod("bitOr", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_or`(e1, e2, e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_or`(e1, e2, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitOr", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_orScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("bitOr", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_orScalar`(e1, rep(e2, length.out = e1$nchan()), e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_orScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitOr", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_orScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("bitOr", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_orScalar`(e2, rep(e1, length.out = e2$nchan()), e2)
+              } else if (target == "new") {
+                out <- cloneImage(e2)
+                `_orScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitOr", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_or`(e1, e2, out)
+              out
+            })
+
+  setMethod("bitOr", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_orScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+              out
+            })
+
+  setMethod("bitOr", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e2)
+              `_orScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+              out
+            })
+})
+
+methods::evalqOnLoad({
+  setMethod("bitNot", signature(e1 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, target) {
+              `_not`(e1, target)
+            })
+
+  setMethod("bitNot", signature(e1 = "Rcpp_Image", target = "character"),
+            function(e1, target) {
+              if (target == "self") {
+                `_not`(e1, e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_not`(e1, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitNot", signature(e1 = "Rcpp_Image", target = "missing"),
+            function(e1, target) {
+              out <- cloneImage(e1)
+              `_not`(e1, out)
+              out
+            })
+})
+
+methods::evalqOnLoad({
   setMethod("&", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- cloneImage(e1)
-              `_and`(out, e2)
-              out
+              bitAnd(e1, e2)
             }, where = .GlobalEnv)
 
   setMethod("&", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- cloneImage(e1)
-              `_andScalar`(out, rep(e2, length.out = e1$nchan()))
-              out
+              bitAnd(e1, e2)
             }, where = .GlobalEnv)
 
   setMethod("&", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- cloneImage(e2)
-              `_andScalar`(out, rep(e1, length.out = e2$nchan()))
-              out
+              bitAnd(e1, e2)
             }, where = .GlobalEnv)
 
   setMethod("|", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- cloneImage(e1)
-              `_or`(out, e2)
-              out
+              bitOr(e1, e2)
             }, where = .GlobalEnv)
 
   setMethod("|", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- cloneImage(e1)
-              `_orScalar`(out, rep(e2, length.out = e1$nchan()))
-              out
+              bitOr(e1, e2)
             }, where = .GlobalEnv)
 
   setMethod("|", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- cloneImage(e2)
-              `_orScalar`(out, rep(e1, length.out = e2$nchan()))
-              out
+              bitOr(e1, e2)
             }, where = .GlobalEnv)
 
   setMethod("!", signature(x = "Rcpp_Image"),
             function(x) {
-              out <- cloneImage(x)
-              `_not`(out)
-              out
+              bitNot(e1)
             }, where = .GlobalEnv)
 })
 
@@ -819,32 +986,32 @@ methods::evalqOnLoad({
   #' @rdname inPlaceLogical
   setMethod("%i&%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_and`(e1, e2)
+              bitAnd(e1, e2, "self")
             })
 
   setMethod("%i&%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_andScalar`(e1, rep(e2, length.out = e1$nchan()))
+              bitAnd(e1, e2, "self")
             })
 
   setMethod("%i&%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_andScalar`(e2, rep(e1, length.out = e2$nchan()))
+              bitAnd(e1, e2, "self")
             })
 
   setMethod("%i|%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_or`(e1, e2)
+              bitOr(e1, e2, "self")
             })
 
   setMethod("%i|%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_orScalar`(e1, rep(e2, length.out = e1$nchan()))
+              bitOr(e1, e2, "self")
             })
 
   setMethod("%i|%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_orScalar`(e2, rep(e1, length.out = e2$nchan()))
+              bitOr(e1, e2, "self")
             })
 })
 

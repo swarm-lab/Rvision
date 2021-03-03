@@ -169,11 +169,11 @@ RCPP_MODULE(methods_Comparisons) {
 #include "logical.h"
 RCPP_MODULE(methods_Logical) {
 
-  function("_and", &_and, List::create(_["image1"], _["image2"]), "");
-  function("_andScalar", &_andScalar, List::create(_["image"], _["value"]), "");
-  function("_or", &_or, List::create(_["image1"], _["image2"]), "");
-  function("_orScalar", &_orScalar, List::create(_["image"], _["value"]), "");
-  function("_not", &_not, List::create(_["image"]), "");
+  function("_and", &_and, List::create(_["image1"], _["image2"], _["target"]), "");
+  function("_andScalar", &_andScalar, List::create(_["image"], _["value"], _["target"]), "");
+  function("_or", &_or, List::create(_["image1"], _["image2"], _["target"]), "");
+  function("_orScalar", &_orScalar, List::create(_["image"], _["value"], _["target"]), "");
+  function("_not", &_not, List::create(_["image"], _["target"]), "");
   function("_findNonZero", &_findNonZero, List::create(_["image"]), "");
 }
 
