@@ -36,7 +36,7 @@
 #' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
 #' plot(add(balloon1, balloon2))
 #'
-#' @name inPlaceArithmetic
+#' @name imageArithmetic
 NULL
 #> NULL
 
