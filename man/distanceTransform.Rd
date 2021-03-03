@@ -4,7 +4,7 @@
 \alias{distanceTransform}
 \title{Distance Transform}
 \usage{
-distanceTransform(image, distance_type = "L1", mask_size = 3)
+distanceTransform(image, distance_type = "L1", mask_size = 3, target = "new")
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -29,8 +29,28 @@ transform mask. It can be any of the following:
  \item{3 (the default):}{3x3 mask.}
  \item{5:}{5x5 mask.}
 }}
+
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{"self":}{the results are stored back into \code{image} (faster but
+  destructive).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast and will not replace the
+  content of \code{image} but will replace that of \code{target}. Note that
+  \code{target} must have the same dimensions as \code{image}, must have a
+  single channel, and its bit depth must be either "8U" or "32F".}
+}}
 }
 \value{
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target="self"}, the function returns nothing and modifies
+ \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+ the function returns nothing and modifies that \code{\link{Image}} object in
+ place.
+
 An \code{\link{Image}} object.
 }
 \description{
@@ -43,7 +63,7 @@ balloon <- image(file)
 changeColorSpace(balloon, "GRAY", in_place = TRUE)
 bin <- balloon < 200
 dst <- distanceTransform(bin)
-plot(dst * round(65536 / 255))
+plot(dst)
 
 }
 \author{

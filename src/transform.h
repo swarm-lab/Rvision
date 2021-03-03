@@ -104,19 +104,34 @@ Image _warpPerspective(Image image, arma::fmat m, IntegerVector outputSize, int 
   return Image(out);
 }
 
-Image _distanceTransform(Image image, int distanceType, int maskSize) {
-  cv::Mat out;
-  cv::distanceTransform(image.image, out, distanceType, maskSize, 5);
-  return Image(out);
+void _distanceTransform(Image image, int distanceType, int maskSize, Image target) {
+  cv::distanceTransform(image.image, target.image, distanceType, maskSize, target.image.type());
 }
 
-int _floodFill(Image image, IntegerVector seedPoint, NumericVector newVal, NumericVector loDiff, NumericVector upDiff, int connectivity) {
+int _floodFill(Image image, IntegerVector seedPoint, NumericVector newVal,
+               NumericVector loDiff, NumericVector upDiff, int connectivity) {
   int area = cv::floodFill(image.image, cv::Point(seedPoint(0), seedPoint(1)),
-                           col2Scalar(newVal), 0, col2Scalar(loDiff), col2Scalar(upDiff),
-                           connectivity);
+                           col2Scalar(newVal), 0, col2Scalar(loDiff),
+                           col2Scalar(upDiff), connectivity);
   return area;
 }
 
-void _LUT(Image image, Image lut) {
-  cv::LUT(image.image, lut.image, image.image);
+void _LUT(Image image, Image lut, Image target) {
+  cv::LUT(image.image, lut.image, target.image);
+}
+
+void _histEqGRAY(Image image, Image target) {
+  cv::equalizeHist(image.image, target.image);
+}
+
+void _histEqBGR(Image image, Image target) {
+  cv::Mat ycrcb;
+  cv::cvtColor(image.image, ycrcb, cv::COLOR_BGR2YCrCb);
+
+  std::vector< cv::Mat > channels;
+  cv::split(ycrcb, channels);
+  cv::equalizeHist(channels[0], channels[0]);
+  cv::merge(channels, ycrcb);
+
+  cv::cvtColor(ycrcb, target.image, cv::COLOR_YCrCb2BGR);
 }

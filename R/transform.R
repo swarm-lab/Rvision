@@ -33,10 +33,10 @@ computeECC <- function(template, image) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (colorspace(template) != "GRAY" | colorspace(image) != "GRAY")
+  if (template$space() != "GRAY" | image$space() != "GRAY")
     stop("'template' and 'image' must be grayscale images.")
 
-  if (!all(dim(template) == dim(image)))
+  if (!all(template$dim() == image$dim()))
     stop("'template' and 'image' must have the same dimensions.")
 
   `_computeECC`(template, image)
@@ -98,10 +98,10 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (colorspace(template) != "GRAY" | colorspace(image) != "GRAY")
+  if (template$space() != "GRAY" | image$space() != "GRAY")
     stop("'template' and 'image' must be grayscale images.")
 
-  if (!all(dim(template) == dim(image)))
+  if (!all(template$dim() == image$dim()))
     stop("'template' and 'image' must have the same dimensions.")
 
   `_findTransformECC`(template, image,
@@ -175,11 +175,8 @@ findTransformORB <- function(template, image, warp_mode = "affine", max_features
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (colorspace(template) != "GRAY" | colorspace(image) != "GRAY")
+  if (template$space() != "GRAY" | image$space() != "GRAY")
     stop("'template' and 'image' must be grayscale images.")
-
-  # if (!all(dim(template) == dim(image)))
-  #   stop("template and image must have the same dimensions.")
 
   if (warp_mode == "affine" & !(homography_method %in% c("RANSAC", "LSMEDS")))
     stop("When warp_mode='affine', homography_method can only be one of 'RANSAC' or 'LSMEDS'.")
@@ -191,44 +188,13 @@ findTransformORB <- function(template, image, warp_mode = "affine", max_features
                              stop("This is not a valid transformation. 'warp_mode' must be one of 'affine' or 'homography'.")),
                       max_features, descriptor_matcher,
                       match_frac, switch(homography_method,
-                             "LS" = 0,
-                             "RANSAC" = 4,
-                             "LMEDS" = 8,
-                             "RHO" = 16,
-                             stop("This is not a valid method. 'homography_method'
+                                         "LS" = 0,
+                                         "RANSAC" = 4,
+                                         "LMEDS" = 8,
+                                         "RHO" = 16,
+                                         stop("This is not a valid method. 'homography_method'
                                   must be one of 'LS', 'RANSAC', 'LMEDS', or 'RHO'.")))
 }
-
-
-# #' @title Affine Matrix of 2D Rotation
-# #'
-# #' @description \code{getRotationMatrix2D} computes the affine matrix for the
-# #'  rotation of a 2D image.
-# #'
-# #' @param center A 2-elements vector indicating the location (x, y) of
-# #'  the center of the rotation in the source image.
-# #'
-# #' @param angle A numeric value indicating the rotation angle in degrees
-# #'  (default: 90).
-# #'
-# #' @param scale A numeric value indicating an isotropic scale factor (default: 1).
-# #'
-# #' @return A 2x3 matrix.
-# #'
-# #' @author Simon Garnier, \email{garnier@@njit.edu}
-# #'
-# #' @seealso \code{\link{rotateScale}}
-# #'
-# #' @examples
-# #' getRotationMatrix2D(c(50, 50), 45, 1)
-# #'
-# # #' @export
-# getRotationMatrix2D <- function(center, angle = 90, scale = 1) {
-#   if (length(center) != 2)
-#     stop("center must be a numeric vector of length 2.")
-#
-#   `_getRotationMatrix2D`(center, angle, scale)
-# }
 
 
 #' @title Image Rotation and Scaling
@@ -531,6 +497,26 @@ warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #'   \item{5:}{5x5 mask.}
 #'  }
 #'
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    \code{target} must have the same dimensions as \code{image}, must have a
+#'    single channel, and its bit depth must be either "8U" or "32F".}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
+#'
 #' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -541,14 +527,15 @@ warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #' changeColorSpace(balloon, "GRAY", in_place = TRUE)
 #' bin <- balloon < 200
 #' dst <- distanceTransform(bin)
-#' plot(dst * round(65536 / 255))
+#' plot(dst)
 #'
 #' @export
-distanceTransform <- function(image, distance_type = "L1", mask_size = 3) {
+distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
+                              target = "new") {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (colorspace(image) != "GRAY")
+  if (image$space() != "GRAY")
     stop("'image' should be a grayscale object.")
 
   if (min(image) > 0)
@@ -557,17 +544,28 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3) {
   if (!(mask_size %in% c(0, 3, 5)))
     stop("This is not a valid mask size. 'mask_size' must be one of 0, 3, or 5.")
 
-  `_distanceTransform`(image,
-                       switch(distance_type,
-                              "L1" = 1,
-                              "L2" = 2,
-                              "C" = 3,
-                              "L12" = 4,
-                              "FAIR" = 5,
-                              "WELSCH" = 6,
-                              "HUBER" = 7,
-                              stop("This is not a valid distance type. 'distance_type' must be one of 'L1', 'L2', 'C', 'L12', 'FAIR', 'WELSCH', or 'HUBER'.")),
-                       mask_size)
+  dt <- switch(
+    distance_type,
+    "L1" = 1,
+    "L2" = 2,
+    "C" = 3,
+    "L12" = 4,
+    "FAIR" = 5,
+    "WELSCH" = 6,
+    "HUBER" = 7,
+    stop("This is not a valid distance type. 'distance_type' must be one of 'L1', 'L2', 'C', 'L12', 'FAIR', 'WELSCH', or 'HUBER'."))
+
+  if (isImage(target)) {
+    `_distanceTransform`(image, dt, mask_size, target)
+  } else if (target == "self") {
+    `_distanceTransform`(image, dt, mask_size, target)
+  } else if (target == "new") {
+    out <- zeros(nrow(image), ncol(image), "GRAY", "32F")
+    `_distanceTransform`(image, dt, mask_size, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 
@@ -677,12 +675,25 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = rep(0, 4
 #'  \code{image}. If \code{lut} is a vector and \code{image} has more than one
 #'  channel, then \code{lut} is recycled for each channel.
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, nothing will be stored.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -695,7 +706,7 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = rep(0, 4
 #' plot(high_contrast_balloon)
 #'
 #' @export
-LUT <- function(image, lut, in_place = FALSE) {
+LUT <- function(image, lut, target = "new") {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
@@ -719,12 +730,16 @@ LUT <- function(image, lut, in_place = FALSE) {
   if (im_lut$depth() != image$depth())
     changeBitDepth(im_lut, image$depth(), in_place = TRUE)
 
-  if (in_place == TRUE) {
-    `_LUT`(image, im_lut)
-  } else {
+  if (isImage(target)) {
+    `_LUT`(image, im_lut, target)
+  } else if (target == "self") {
+    `_LUT`(image, im_lut, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_LUT`(out, im_lut)
+    `_LUT`(image, im_lut, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -740,12 +755,25 @@ LUT <- function(image, lut, in_place = FALSE) {
 #' @param reference An \code{\link{Image}} object which histogram will be used
 #'  as a reference to transform \code{image}.
 #'
-#' @param in_place logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, nothing will be stored.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -758,7 +786,7 @@ LUT <- function(image, lut, in_place = FALSE) {
 #' plot(dots_matched)
 #'
 #' @export
-histmatch <- function(image, reference, in_place = FALSE) {
+histmatch <- function(image, reference, target = "new") {
   if (!isImage(image) | !isImage(reference))
     stop("'image' and 'reference' must be Image objects.")
 
@@ -776,5 +804,84 @@ histmatch <- function(image, reference, in_place = FALSE) {
     map[, j] <- apply(abs(outer(cdf_image[, j], cdf_target[, j], "-")), 1, which.min) - 1
   }
 
-  LUT(image, map, in_place)
+  LUT(image, map, target)
+}
+
+
+#' @title Histogram Equalization
+#'
+#' @description \code{histEq} performs the histogram equalization of an image.
+#'  The function equalizes the histogram of the input image using the following
+#'  algorithm:
+#'  \itemize{
+#'   \item{Calculate the histogram of the image.}
+#'   \item{Normalize the histogram so that the sum of histogram bins is 255.}
+#'   \item{Compute the integral of the histogram.}
+#'   \item{Transform the image using the integral of the histogram as a look-up
+#'    table.}
+#'  }
+#'
+#' @param image An \code{\link{Image}} object to transform.
+#'
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, nothing will be stored.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{histmatch}}, \code{\link{LUT}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_eq <- histEq(balloon)
+#' plot(balloon_eq)
+#'
+#' @export
+histEq <- function(image, target = "new") {
+  if (!isImage(image))
+    stop("'image' is not an Image object.")
+
+  if (image$space() == "GRAY") {
+    if (isImage(target)) {
+      `_histEqGRAY`(image, target)
+    } else if (target == "self") {
+      `_histEqGRAY`(image, image)
+    } else if (target == "new") {
+      out <- `_cloneImage`(image)
+      `_histEqGRAY`(image, out)
+      out
+    } else {
+      stop("Invalid target.")
+    }
+  } else if (image$space() == "BGR") {
+    if (isImage(target)) {
+      `_histEqBGR`(image, target)
+    } else if (target == "self") {
+      `_histEqBGR`(image, image)
+    } else if (target == "new") {
+      out <- `_cloneImage`(image)
+      `_histEqBGR`(image, out)
+      out
+    } else {
+      stop("Invalid target.")
+    }
+  } else {
+    stop("The colorspace of 'image' must be either GRAY or BGR.")
+  }
 }

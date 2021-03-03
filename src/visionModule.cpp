@@ -316,10 +316,12 @@ RCPP_MODULE(methods_Transform) {
   function("_warpPerspective", &_warpPerspective, List::create(_["image"], _["m"],
     _["outputSize"], _["interpMode"], _["borderType"], _["borderColor"]), "");
   function("_distanceTransform", &_distanceTransform, List::create(_["image"],
-    _["distanceType"], _["maskSize"]), "");
+    _["distanceType"], _["maskSize"], _["target"]), "");
   function("_floodFill", &_floodFill, List::create(_["image"], _["seedPoint"],
     _["newVal"], _["loDiff"], _["upDiff"], _["connectivity"]), "");
-  function("_LUT", &_LUT, List::create(_["image"], _["lut"]), "");
+  function("_LUT", &_LUT, List::create(_["image"], _["lut"], _["target"]), "");
+  function("_histEqGRAY", &_histEqGRAY, List::create(_["image"], _["target"]), "");
+  function("_histEqBGR", &_histEqBGR, List::create(_["image"], _["target"]), "");
 }
 
 #include "feature.h"

@@ -4,7 +4,7 @@
 \alias{LUT}
 \title{Look-up Table Transform}
 \usage{
-LUT(image, lut, in_place = FALSE)
+LUT(image, lut, target = "new")
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -14,13 +14,26 @@ LUT(image, lut, in_place = FALSE)
 \code{image}. If \code{lut} is a vector and \code{image} has more than one
 channel, then \code{lut} is recycled for each channel.}
 
-\item{in_place}{A logical indicating whether the change should be applied to
-the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-the default, slower but non destructive).}
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{"self":}{the results are stored back into \code{image} (faster but
+  destructive).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast and will not replace the
+  content of \code{image} but will replace that of \code{target}. Note that
+  if \code{target} does not have the same dimensions, colorspace, and
+  bitdepth as \code{image}, nothing will be stored.}
+}}
 }
 \value{
-An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
- returns nothing and modifies \code{image} in place.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target="self"}, the function returns nothing and modifies
+ \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+ the function returns nothing and modifies that \code{\link{Image}} object in
+ place.
 }
 \description{
 \code{LUT} performs a look-up table transform of an
