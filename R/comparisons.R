@@ -1,3 +1,45 @@
+#' @title Comparison between Images
+#'
+#' @param e1,e2 Either 2 \code{\link{Image}} objects or 1 \code{\link{Image}}
+#'  object and 1 numeric value/vector. If a vector and its length is less than
+#'  the number of channels of the image, then it is recycled to match it.
+#'
+#' @param comparison A character string indicating the comparison to be
+#'  performed between \code{e1} on the left and \code{e2} on the right. It can
+#'  be any of the followings: "==", "!=", ">", "<", ">=", "<=".
+#'
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{e1} if it is an
+#'    \code{\link{Image}} object, otherwise into \code{e2} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{e1} or \code{e2} but will replace that of \code{target}.
+#'    Note that if \code{target} does not have the same dimensions, colorspace,
+#'    and bit depth as \code{e1} (if \code{e1} is an \code{\link{Image}} object,
+#'    \code{e2} otherwise), an error will be thrown.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{e1} in place if it is an \code{\link{Image}} object, otherwise it
+#'  modifies \code{e2} in place. If \code{target} is an \code{\link{Image}}
+#'  object, the function returns nothing and modifies that \code{\link{Image}}
+#'  object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
+#' plot(compare(balloon1, balloon2, ">="))
+#'
 #' @export
 setGeneric("compare", function(e1, e2, comparison, target) { standardGeneric("compare") })
 
@@ -160,6 +202,21 @@ matchTemplate <- function(image, template, method, mask = NULL) {
 #'  number of channels. If it has more elements than the number of channels, the
 #'  extra elements are ignored without warning (default: rep(255, 4)).
 #'
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. In this case, \code{target} must be a
+#'    single channel image with an 8U bit depth. Note that this will replace the
+#'    content of \code{target}. }
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
+#'
 #' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -172,14 +229,22 @@ matchTemplate <- function(image, template, method, mask = NULL) {
 #' plot(bw)
 #'
 #' @export
-inRange <- function(image, low = rep(0, 4), up = rep(255, 4)) {
+inRange <- function(image, low = rep(0, 4), up = rep(255, 4), target = "new") {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
   low <- rep(low, length.out = 4)
   up <- rep(up, length.out = 4)
 
-  `_inRange`(image, low, up)
+  if (isImage(target)) {
+    `_inRange`(image, low, up, target)
+  } else if (target == "new") {
+    out <- zeros(nrow(image), ncol(image), "GRAY", "8U")
+    `_inRange`(image, low, up, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 ### Define generic comparison methods ###

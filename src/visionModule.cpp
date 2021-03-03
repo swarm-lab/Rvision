@@ -165,7 +165,8 @@ RCPP_MODULE(methods_Comparisons) {
     _["method"], _["mask"]), "");
   function("_matchTemplateNoMask", &_matchTemplateNoMask, List::create(_["image"],
     _["templ"], _["method"]), "");
-  function("_inRange", &_inRange, List::create(_["image"], _["low"], _["up"]), "");
+  function("_inRange", &_inRange, List::create(_["image"], _["low"], _["up"],
+    _["target"]), "");
 }
 
 #include "logical.h"

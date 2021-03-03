@@ -4,7 +4,7 @@
 \alias{inRange}
 \title{Range Thresholding}
 \usage{
-inRange(image, low = rep(0, 4), up = rep(255, 4))
+inRange(image, low = rep(0, 4), up = rep(255, 4), target = "new")
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -20,8 +20,23 @@ can have as many elements as the number of channels in the image. If it has
 less elements than the number of channels, it is recycled to match the
 number of channels. If it has more elements than the number of channels, the
 extra elements are ignored without warning (default: rep(255, 4)).}
+
+\item{target}{The location where the results should be stored. It can take 2
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. In this case, \code{target} must be a
+  single channel image with an 8U bit depth. Note that this will replace the
+  content of \code{target}. }
+}}
 }
 \value{
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target} is an \code{\link{Image}} object, the function
+ returns nothing and modifies that \code{\link{Image}} object in place.
+
 An \code{\link{Image}} object.
 }
 \description{

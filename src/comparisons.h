@@ -30,8 +30,6 @@ Image _matchTemplateNoMask(Image image, Image templ, int method) {
   return Image(out);
 }
 
-Image _inRange(Image image, Rcpp::NumericVector low, Rcpp::NumericVector up) {
-  cv::Mat out;
-  cv::inRange(image.image, col2Scalar(low), col2Scalar(up), out);
-  return Image(out);
+void _inRange(Image image, Rcpp::NumericVector low, Rcpp::NumericVector up, Image target) {
+  cv::inRange(image.image, col2Scalar(low), col2Scalar(up), target.image);
 }
