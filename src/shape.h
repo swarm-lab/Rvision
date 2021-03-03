@@ -44,26 +44,56 @@ double _contourArea(Rcpp::NumericVector x, Rcpp::NumericVector y, bool oriented)
   return cv::contourArea(poly, oriented);
 }
 
-Rcpp::List _connectedComponents(Image image, int connectivity, int algorithm) {
-  cv::Mat labels;
-  int n = cv::connectedComponents(image.image, labels, connectivity, CV_16U, algorithm);
+// Rcpp::List _connectedComponents(Image image, int connectivity, int algorithm) {
+//   cv::Mat labels;
+//   int n = cv::connectedComponents(image.image, labels, connectivity, CV_16U, algorithm);
+//
+//   cv::Mat locs;
+//   cv::findNonZero(labels, locs);
+//
+//   Rcpp::NumericMatrix table(locs.rows, 3);
+//   colnames(table) = Rcpp::CharacterVector::create("id", "x", "y");
+//
+//   for (uint i = 0; i < locs.rows; i++) {
+//     table(i, 0) = labels.at< uint16_t >(locs.at<cv::Point>(i));
+//     table(i, 1) = locs.at<cv::Point>(i).x + 1;
+//     table(i, 2) = -locs.at<cv::Point>(i).y + image.image.rows;
+//   }
+//
+//   return Rcpp::List::create(Rcpp::Named("n") = n - 1,
+//                             Rcpp::Named("labels") = Image(labels),
+//                             Rcpp::Named("table") = table);
+// }
+
+Rcpp::List _connectedComponentsTAB(Image image, int connectivity, int algorithm,
+                                    Image target) {
+  int n = cv::connectedComponents(image.image, target.image, connectivity,
+                                  target.image.type(), algorithm);
 
   cv::Mat locs;
-  cv::findNonZero(labels, locs);
+  cv::findNonZero(target.image, locs);
 
   Rcpp::NumericMatrix table(locs.rows, 3);
   colnames(table) = Rcpp::CharacterVector::create("id", "x", "y");
 
   for (uint i = 0; i < locs.rows; i++) {
-    table(i, 0) = labels.at< uint16_t >(locs.at<cv::Point>(i));
+    table(i, 0) = target.image.at< uint16_t >(locs.at<cv::Point>(i));
     table(i, 1) = locs.at<cv::Point>(i).x + 1;
     table(i, 2) = -locs.at<cv::Point>(i).y + image.image.rows;
   }
 
   return Rcpp::List::create(Rcpp::Named("n") = n - 1,
-                            Rcpp::Named("labels") = Image(labels),
                             Rcpp::Named("table") = table);
 }
+
+Rcpp::List _connectedComponentsNOTAB(Image image, int connectivity, int algorithm,
+                                      Image target) {
+  int n = cv::connectedComponents(image.image, target.image, connectivity,
+                                  target.image.type(), algorithm);
+  return Rcpp::List::create(Rcpp::Named("n") = n - 1);
+}
+
+
 
 void _watershed(Image image, Image markers) {
   cv::watershed(image.image, markers.image);
@@ -153,8 +183,8 @@ Rcpp::NumericVector _moments(Rcpp::NumericMatrix contour) {
   cv::Moments m = cv::moments(contourpoints);
 
   Rcpp::NumericVector out = { m.m00, m.m10, m.m01, m.m20, m.m11, m.m02, m.m30,
-    m.m21, m.m12, m.m03, m.mu20, m.mu11, m.mu02, m.mu30, m.mu21, m.mu12, m.mu03,
-    m.nu20, m.nu11, m.nu02, m.nu30, m.nu21, m.nu12, m.nu03 };
+                              m.m21, m.m12, m.m03, m.mu20, m.mu11, m.mu02, m.mu30, m.mu21, m.mu12, m.mu03,
+                              m.nu20, m.nu11, m.nu02, m.nu30, m.nu21, m.nu12, m.nu03 };
 
   return out;
 }

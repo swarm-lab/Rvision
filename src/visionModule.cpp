@@ -124,20 +124,20 @@ RCPP_MODULE(class_VideoWriter) {
 #include "arithmetic.h"
 RCPP_MODULE(methods_Arithmetic) {
 
-  function("_plus", &_plus, List::create(_["image1"], _["image2"]), "");
-  function("_plusScalar", &_plusScalar, List::create(_["image"], _["value"]), "");
-  function("_minus", &_minus, List::create(_["image1"], _["image2"]), "");
+  function("_plus", &_plus, List::create(_["image1"], _["image2"], _["target"]), "");
+  function("_plusScalar", &_plusScalar, List::create(_["image"], _["value"], _["target"]), "");
+  function("_minus", &_minus, List::create(_["image1"], _["image2"], _["target"]), "");
   function("_minusScalar", &_minusScalar, List::create(_["image"], _["value"],
-    _["order"]), "");
-  function("_multiply", &_multiply, List::create(_["image1"], _["image2"]), "");
+    _["order"], _["target"]), "");
+  function("_multiply", &_multiply, List::create(_["image1"], _["image2"], _["target"]), "");
   function("_multiplyScalar", &_multiplyScalar, List::create(_["image"],
-    _["value"]), "");
-  function("_divide", &_divide, List::create(_["image1"], _["image2"]), "");
+    _["value"], _["target"]), "");
+  function("_divide", &_divide, List::create(_["image1"], _["image2"], _["target"]), "");
   function("_divideScalar", &_divideScalar, List::create(_["image"], _["value"],
-    _["order"]), "");
-  function("_absdiff", &_absdiff, List::create(_["image1"], _["image2"]), "");
+    _["order"], _["target"]), "");
+  function("_absdiff", &_absdiff, List::create(_["image1"], _["image2"], _["target"]), "");
   function("_addWeighted", &_addWeighted, List::create(_["image1"], _["alpha"],
-    _["image2"], _["beta"]), "");
+    _["image2"], _["beta"], _["target"]), "");
 }
 
 #include "statistics.h"
@@ -286,8 +286,10 @@ RCPP_MODULE(methods_Geometry) {
 RCPP_MODULE(methods_Shape) {
   function("_findContours", &_findContours, List::create(_["image"], _["mode"],
     _["method"], _["offset"]), "");
-  function("_connectedComponents", &_connectedComponents, List::create(_["image"],
-    _["connectivity"], _["algorithm"]), "");
+  function("_connectedComponentsTAB", &_connectedComponentsTAB, List::create(_["image"],
+    _["connectivity"], _["algorithm"], _["target"]), "");
+  function("_connectedComponentsNOTAB", &_connectedComponentsNOTAB, List::create(_["image"],
+    _["connectivity"], _["algorithm"], _["target"]), "");
   function("_watershed", &_watershed, List::create(_["image"], _["markers"]), "");
   function("_fitEllipse", &_fitEllipse, List::create(_["points"]), "");
   function("_fitEllipseAMS", &_fitEllipseAMS, List::create(_["points"]), "");

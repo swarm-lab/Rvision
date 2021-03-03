@@ -30,92 +30,376 @@ Rcpp::loadModule("methods_Feature", TRUE)
 
 ### Define generic arithmetic methods ###
 methods::evalqOnLoad({
+  setMethod("add", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_plus`(e1, e2, target)
+            })
+
+  setMethod("add", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_plus`(e1, e2, e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_plus`(e1, e2, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("add", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_plusScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("add", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_plusScalar`(e1, rep(e2, length.out = e1$nchan()), e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_plusScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("add", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_plusScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("add", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_plusScalar`(e2, rep(e1, length.out = e2$nchan()), e2)
+              } else if (target == "new") {
+                out <- cloneImage(e2)
+                `_plusScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("add", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_plus`(e1, e2, out)
+              out
+            })
+
+  setMethod("add", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_plusScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+              out
+            })
+
+  setMethod("add", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e2)
+              `_plusScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+              out
+            })
+})
+
+methods::evalqOnLoad({
+  setMethod("subtract", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_minus`(e1, e2, target)
+            })
+
+  setMethod("subtract", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_minus`(e1, e2, e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_minus`(e1, e2, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("subtract", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_minusScalar`(e1, rep(e2, length.out = e1$nchan()), TRUE, target)
+            })
+
+  setMethod("subtract", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_minusScalar`(e1, rep(e2, length.out = e1$nchan()), TRUE,  e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_minusScalar`(e1, rep(e2, length.out = e1$nchan()), TRUE, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("subtract", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_minusScalar`(e1, rep(e2, length.out = e1$nchan()), FALSE, target)
+            })
+
+  setMethod("subtract", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_minusScalar`(e2, rep(e1, length.out = e2$nchan()), FALSE, e2)
+              } else if (target == "new") {
+                out <- cloneImage(e2)
+                `_minusScalar`(e2, rep(e1, length.out = e2$nchan()), FALSE, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("subtract", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_minus`(e1, e2, out)
+              out
+            })
+
+  setMethod("subtract", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_minusScalar`(e1, rep(e2, length.out = e1$nchan()), TRUE, out)
+              out
+            })
+
+  setMethod("subtract", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e2)
+              `_minusScalar`(e2, rep(e1, length.out = e2$nchan()), FALSE, out)
+              out
+            })
+})
+
+methods::evalqOnLoad({
+  setMethod("multiply", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_multiply`(e1, e2, target)
+            })
+
+  setMethod("multiply", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_multiply`(e1, e2, e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_multiply`(e1, e2, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("multiply", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_multiplyScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("multiply", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_multiplyScalar`(e1, rep(e2, length.out = e1$nchan()), e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_multiplyScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("multiply", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_multiplyScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("multiply", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_multiplyScalar`(e2, rep(e1, length.out = e2$nchan()), e2)
+              } else if (target == "new") {
+                out <- cloneImage(e2)
+                `_multiplyScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("multiply", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_multiply`(e1, e2, out)
+              out
+            })
+
+  setMethod("multiply", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_multiplyScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+              out
+            })
+
+  setMethod("multiply", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e2)
+              `_multiplyScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+              out
+            })
+})
+
+methods::evalqOnLoad({
+  setMethod("divide", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_divide`(e1, e2, target)
+            })
+
+  setMethod("divide", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_divide`(e1, e2, e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_divide`(e1, e2, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("divide", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_divideScalar`(e1, rep(e2, length.out = e1$nchan()), TRUE, target)
+            })
+
+  setMethod("divide", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_divideScalar`(e1, rep(e2, length.out = e1$nchan()), TRUE,  e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_divideScalar`(e1, rep(e2, length.out = e1$nchan()), TRUE, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("divide", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_divideScalar`(e1, rep(e2, length.out = e1$nchan()), FALSE, target)
+            })
+
+  setMethod("divide", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_divideScalar`(e2, rep(e1, length.out = e2$nchan()), FALSE, e2)
+              } else if (target == "new") {
+                out <- cloneImage(e2)
+                `_divideScalar`(e2, rep(e1, length.out = e2$nchan()), FALSE, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("divide", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_divide`(e1, e2, out)
+              out
+            })
+
+  setMethod("divide", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_divideScalar`(e1, rep(e2, length.out = e1$nchan()), TRUE, out)
+              out
+            })
+
+  setMethod("divide", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e2)
+              `_divideScalar`(e2, rep(e1, length.out = e2$nchan()), FALSE, out)
+              out
+            })
+})
+
+methods::evalqOnLoad({
   #' @aliases Arith,Rcpp_Image,Rcpp_Image-method
   #' @aliases Arith,Rcpp_Image,numeric-method
   #' @aliases Arith,numeric,Rcpp_Image-method
 
   setMethod("+", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_plus`(out, e2)
-              out
+              add(e1, e2, "new")
             }, where = .GlobalEnv)
 
   setMethod("+", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_plusScalar`(out, rep(e2, length.out = e1$nchan()))
-              out
+              add(e1, e2, "new")
             }, where = .GlobalEnv)
 
   setMethod("+", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e2)
-              `_plusScalar`(out, rep(e1, length.out = e2$nchan()))
-              out
+              add(e1, e2, "new")
             }, where = .GlobalEnv)
 
   setMethod("-", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_minus`(out, e2)
-              out
+              subtract(e1, e2, "new")
             }, where = .GlobalEnv)
 
   setMethod("-", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_minusScalar`(out, rep(e2, length.out = e1$nchan()), TRUE)
-              out
+              subtract(e1, e2, "new")
             }, where = .GlobalEnv)
 
   setMethod("-", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e2)
-              `_minusScalar`(out, rep(e1, length.out = e2$nchan()), FALSE)
-              out
+              subtract(e1, e2, "new")
             }, where = .GlobalEnv)
 
   setMethod("*", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_multiply`(out, e2)
-              out
+              multiply(e1, e2, "new")
             }, where = .GlobalEnv)
 
   setMethod("*", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_multiplyScalar`(out, rep(e2, length.out = e1$nchan()))
-              out
+              multiply(e1, e2, "new")
             }, where = .GlobalEnv)
 
   setMethod("*", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e2)
-              `_multiplyScalar`(out, rep(e1, length.out = e2$nchan()))
-              out
+              multiply(e1, e2, "new")
             }, where = .GlobalEnv)
 
   setMethod("/", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_divide`(out, e2)
-              out
+              divide(e1, e2, "new")
             }, where = .GlobalEnv)
 
   setMethod("/", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_divideScalar`(out, rep(e2, length.out = e1$nchan()), TRUE)
-              out
+              divide(e1, e2, "new")
             }, where = .GlobalEnv)
 
   setMethod("/", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e2)
-              `_divideScalar`(out, rep(e1, length.out = e2$nchan()), FALSE)
-              out
+              divide(e1, e2, "new")
             }, where = .GlobalEnv)
 })
 
@@ -124,62 +408,62 @@ methods::evalqOnLoad({
   #' @rdname inPlaceArithmetic
   setMethod("%i+%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_plus`(e1, e2)
+              add(e1, e2, "self")
             })
 
   setMethod("%i+%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_plusScalar`(e1, rep(e2, length.out = e1$nchan()))
+              add(e1, e2, "self")
             })
 
   setMethod("%i+%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_plusScalar`(e2, rep(e1, length.out = e2$nchan()))
+              add(e1, e2, "self")
             })
 
   setMethod("%i-%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_minus`(e1, e2)
+              subtract(e1, e2, "self")
             })
 
   setMethod("%i-%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_minusScalar`(e1, rep(e2, length.out = e1$nchan()), TRUE)
+              subtract(e1, e2, "self")
             })
 
   setMethod("%i-%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_minusScalar`(e2, rep(e1, length.out = e2$nchan()), FALSE)
+              subtract(e1, e2, "self")
             })
 
   setMethod("%i*%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_multiply`(e1, e2)
+              multiply(e1, e2, "self")
             })
 
   setMethod("%i*%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_multiplyScalar`(e1, rep(e2, length.out = e1$nchan()))
+              multiply(e1, e2, "self")
             })
 
   setMethod("%i*%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_multiplyScalar`(e2, rep(e1, length.out = e2$nchan()))
+              multiply(e1, e2, "self")
             })
 
   setMethod("%i/%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_divide`(e1, e2)
+              divide(e1, e2, "self")
             })
 
   setMethod("%i/%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_divideScalar`(e1, rep(e2, length.out = e1$nchan()), TRUE)
+              divide(e1, e2, "self")
             })
 
   setMethod("%i/%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_divideScalar`(e2, rep(e1, length.out = e2$nchan()), FALSE)
+              divide(e1, e2, "self")
             })
 })
 
@@ -522,7 +806,7 @@ methods::evalqOnLoad({
               out
             }, where = .GlobalEnv)
 
-    setMethod("!", signature(x = "Rcpp_Image"),
+  setMethod("!", signature(x = "Rcpp_Image"),
             function(x) {
               out <- cloneImage(x)
               `_not`(out)

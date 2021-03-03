@@ -185,15 +185,30 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'    connectivity.}
 #'  }
 #'
-#' @return A list with 2 (or 3) items:
+#' @param table A boolean indicatinng whether the coordinates of the pixels of
+#'  each component should be returned.
+#'
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
 #'  \itemize{
-#'   \item{n: }{the number of connected components in the image.}
-#'   \item{labels: }{a 16-bit (16U) single-channel  image in which each pixel of
-#'    each connected component is represented by the identity number of the
-#'    component, and the background pixels by zero.}
-#'   \item{table: }{a matrix with 3 columns representing the identity of the
-#'    connected components (id), and the x-y coordinates of the pixels they are
-#'    composed of. }
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. In this case, \code{target} must be a
+#'    single channel image with a 16U or 32S bit depth. Note that this will
+#'    replace the content of \code{target}. }
+#'  }
+#'
+#' @return A list with 1 to 3 items:
+#'  \itemize{
+#'   \item{n: }{the number of connected components in the image. It is always
+#'    returned.}
+#'   \item{table: }{if \code{table=TRUE}, a matrix with 3 columns representing
+#'    the identity of the connected components (id), and the x-y coordinates of
+#'    the pixels they are composed of.}
+#'   \item{labels: }{if \code{target="new"} a 32S single-channel image in which
+#'    each pixel of each connected component is represented by the identity
+#'    number of the component, and the background pixels by zero.}
 #'  }
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -205,29 +220,72 @@ contourArea <- function(x, y, oriented = FALSE) {
 #' dots_gray <- changeColorSpace(dots, "GRAY")
 #' dots_bin <- dots_gray < 200
 #' cc <- connectedComponents(dots_bin)
-#' cc_mat <- as.matrix(cc$labels)
-#' colors <- c("black", rainbow(cc$n))
-#' cc_img <- image(array(t(col2bgr(colors[cc_mat + 1])), dim = dim(dots)))
-#' plot(cc_img)
+#' plot(cc$labels)
 #'
 #' @export
-connectedComponents <- function(image, connectivity = 8, algorithm = "grana") {
+connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
+                                table = TRUE, target = "new") {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
-  if (image$nchan() != 1 || image$depth() != "8U")
-    stop("'image' must be an 8-bit (8U) single-channel (GRAY) Image object.")
+  if (!(image$nchan() == 1 && image$depth() == "8U"))
+    stop("'image' must be an 8U single-channel (GRAY) Image object.")
 
   if (!(connectivity %in% c(4, 8)))
     stop("'connectivity' must be either 4 or 8.")
 
-  `_connectedComponents`(image, connectivity,
-                         switch (algorithm,
-                                 "grana" = 1,
-                                 "wu" = 0,
-                                 stop("This is not a valid algorithm.")
-                         ))
+  algo <- switch (algorithm,
+                  "grana" = 1,
+                  "wu" = 0,
+                  stop("This is not a valid algorithm."))
+
+  if (isImage(target)) {
+    if (!(target$nchan() == 1 && (target$depth() == "32S" || target$depth() == "16U")))
+      stop("'target' must be a 16U or 32S single-channel (GRAY) Image object.")
+
+    if (table) {
+      `_connectedComponentsTAB`(image, connectivity, algo, target)
+    } else {
+      `_connectedComponentsNOTAB`(image, connectivity, algo, target)
+    }
+  } else if (target == "new") {
+    out <- zeros(nrow(image), ncol(image), "GRAY", "32S")
+
+    if (table) {
+      l <- `_connectedComponentsTAB`(image, connectivity, algo, out)
+    } else {
+      l <- `_connectedComponentsNOTAB`(image, connectivity, algo, out)
+    }
+
+    l$labels <- out
+    l
+  } else {
+    stop("Invalid target.")
+  }
 }
+
+
+# connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
+#                                 target = "new") {
+#   if (!isImage(image))
+#     stop("'image' must be an Image object.")
+#
+#   if (image$nchan() != 1 || image$depth() != "8U")
+#     stop("'image' must be an 8-bit (8U) single-channel (GRAY) Image object.")
+#
+#   if (!(connectivity %in% c(4, 8)))
+#     stop("'connectivity' must be either 4 or 8.")
+#
+#
+#
+#
+#   `_connectedComponents`(image, connectivity,
+#                          switch (algorithm,
+#                                  "grana" = 1,
+#                                  "wu" = 0,
+#                                  stop("This is not a valid algorithm.")
+#                          ))
+# }
 
 
 #' @title Image Segmentation Using the Watershed Algorithm
@@ -281,12 +339,12 @@ connectedComponents <- function(image, connectivity = 8, algorithm = "grana") {
 #' @export
 watershed <- function(image, markers) {
   if (!isImage(image) | !isImage(markers))
-    stop("'image' must be an Image object.")
+    stop("'image' and 'markers' must be Image objects.")
 
-  if (bitdepth(image) != "8U" | colorspace(image) != "BGR")
+  if (image$depth() != "8U" | image$space() != "BGR")
     stop("'image' must be a 8U BGR Image object.")
 
-  if (bitdepth(markers) != "32S" | colorspace(markers) != "GRAY")
+  if (markers$depth() != "32S" | markers$space() != "GRAY")
     stop("'markers' must be a 32S GRAY Image object.")
 
   `_watershed`(image, markers)
