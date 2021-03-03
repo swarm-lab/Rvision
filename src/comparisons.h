@@ -1,9 +1,9 @@
-void _compare(Image image1, Image image2, int comp) {
-  cv::compare(image1.image, image2.image, image1.image, comp);
+void _compare(Image image1, Image image2, int comp, Image target) {
+  cv::compare(image1.image, image2.image, target.image, comp);
 }
 
-void _compareScalar(Image image, Rcpp::NumericVector value, int comp) {
-  cv::compare(image.image, col2Scalar(value), image.image, comp);
+void _compareScalar(Image image, Rcpp::NumericVector value, int comp, Image target) {
+  cv::compare(image.image, col2Scalar(value), target.image, comp);
 }
 
 Image _matchTemplate(Image image, Image templ, int method, Image mask) {

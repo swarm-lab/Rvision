@@ -1,3 +1,7 @@
+#' @export
+setGeneric("compare", function(e1, e2, comparison, target) { standardGeneric("compare") })
+
+
 #' @title In Place Comparison Operators for Images
 #'
 #' @param e1,e2 Either 2 \code{\link{Image}} objects or 1 \code{\link{Image}}

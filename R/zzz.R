@@ -536,134 +536,187 @@ methods::evalqOnLoad({
 
 
 ### Define generic comparison methods ###
+comparison <- function(str) {
+  switch (str,
+          "==" = 0L,
+          ">" = 1L,
+          ">=" = 2L,
+          "<" = 3L,
+          "<=" = 4L,
+          "!=" = 5L,
+          stop("Invalid comparison.")
+  )
+}
+
+methods::evalqOnLoad({
+  setMethod("compare", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, comparison, target) {
+              `_compare`(e1, e2, comparison(comparison), target)
+            })
+
+  setMethod("compare", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, comparison, target) {
+              if (target == "self") {
+                `_compare`(e1, e2, comparison(comparison), e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_compare`(e1, e2, comparison(comparison), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("compare", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, comparison, target) {
+              out <- cloneImage(e1)
+              `_compare`(e1, e2, comparison(comparison), out)
+              out
+            })
+
+  setMethod("compare", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
+            function(e1, e2, comparison, target) {
+              `_compare`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), target)
+            })
+
+  setMethod("compare", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
+            function(e1, e2, comparison, target) {
+              if (target == "self") {
+                `_compare`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_compare`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("compare", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
+            function(e1, e2, comparison, target) {
+              out <- cloneImage(e1)
+              `_compare`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), out)
+              out
+            })
+
+  setMethod("compare", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, comparison, target) {
+              `_compare`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), target)
+            })
+
+  setMethod("compare", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, comparison, target) {
+              if (target == "self") {
+                `_compare`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), e2)
+              } else if (target == "new") {
+                out <- cloneImage(e2)
+                `_compare`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("compare", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, comparison, target) {
+              out <- cloneImage(e2)
+              `_compare`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), out)
+              out
+            })
+})
+
 methods::evalqOnLoad({
   #' @aliases Comparison,Rcpp_Image,Rcpp_Image-method
   #' @aliases Comparison,Rcpp_Image,numeric-method
   #' @aliases Comparison,numeric,Rcpp_Image-method
   setMethod(">", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compare`(out, e2, 1)
-              out
+              compare(e1, e2, ">")
             }, where = .GlobalEnv)
 
   setMethod(">", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compareScalar`(out, rep(e2, length.out = e1$nchan()), 1)
-              out
+              compare(e1, e2, ">")
             }, where = .GlobalEnv)
 
   setMethod(">", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e2)
-              `_compareScalar`(out, rep(e1, length.out = e2$nchan()), 1)
-              out
+              compare(e1, e2, ">")
             }, where = .GlobalEnv)
 
   setMethod("<", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compare`(out, e2, 3)
-              out
+              compare(e1, e2, "<")
             }, where = .GlobalEnv)
 
   setMethod("<", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compareScalar`(out, rep(e2, length.out = e1$nchan()), 3)
-              out
+              compare(e1, e2, "<")
             }, where = .GlobalEnv)
 
   setMethod("<", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e2)
-              `_compareScalar`(out, rep(e1, length.out = e2$nchan()), 3)
-              out
+              compare(e1, e2, "<")
             }, where = .GlobalEnv)
 
   setMethod("==", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compare`(out, e2, 0)
-              out
+              compare(e1, e2, "==")
             }, where = .GlobalEnv)
 
   setMethod("==", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compareScalar`(out, rep(e2, length.out = e1$nchan()), 0)
-              out
+              compare(e1, e2, "==")
             }, where = .GlobalEnv)
 
   setMethod("==", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e2)
-              `_compareScalar`(out, rep(e1, length.out = e2$nchan()), 0)
-              out
+              compare(e1, e2, "==")
             }, where = .GlobalEnv)
 
   setMethod("!=", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compare`(out, e2, 5)
-              out
+              compare(e1, e2, "!=")
             }, where = .GlobalEnv)
 
   setMethod("!=", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compareScalar`(out, rep(e2, length.out = e1$nchan()), 5)
-              out
+              compare(e1, e2, "!=")
             }, where = .GlobalEnv)
 
   setMethod("!=", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e2)
-              `_compareScalar`(out, rep(e1, length.out = e2$nchan()), 5)
-              out
+              compare(e1, e2, "!=")
             }, where = .GlobalEnv)
 
   setMethod(">=", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compare`(out, e2, 2)
-              out
+              compare(e1, e2, ">=")
             }, where = .GlobalEnv)
 
   setMethod(">=", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compareScalar`(out, rep(e2, length.out = e1$nchan()), 2)
-              out
+              compare(e1, e2, ">=")
             }, where = .GlobalEnv)
 
   setMethod(">=", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e2)
-              `_compareScalar`(out, rep(e1, length.out = e2$nchan()), 2)
-              out
+              compare(e1, e2, ">=")
             }, where = .GlobalEnv)
 
   setMethod("<=", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compare`(out, e2, 4)
-              out
+              compare(e1, e2, "<=")
             }, where = .GlobalEnv)
 
   setMethod("<=", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              out <- `_cloneImage`(e1)
-              `_compareScalar`(out, rep(e2, length.out = e1$nchan()), 4)
-              out
+              compare(e1, e2, "<=")
             }, where = .GlobalEnv)
 
   setMethod("<=", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              out <- `_cloneImage`(e2)
-              `_compareScalar`(out, rep(e1, length.out = e2$nchan()), 4)
-              out
+              compare(e1, e2, "<=")
             }, where = .GlobalEnv)
 })
 
@@ -672,92 +725,92 @@ methods::evalqOnLoad({
   #' @rdname inPlaceComparison
   setMethod("%i>%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compare`(e1, e2, 1)
+              compare(e1, e2, ">", "self")
             })
 
   setMethod("%i>%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_compareScalar`(e1, rep(e2, length.out = e1$nchan()), 1)
+              compare(e1, e2, ">", "self")
             })
 
   setMethod("%i>%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compareScalar`(e2, rep(e1, length.out = e2$nchan()), 4)
+              compare(e1, e2, ">", "self")
             })
 
   setMethod("%i<%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compare`(e1, e2, 3)
+              compare(e1, e2, "<", "self")
             })
 
   setMethod("%i<%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_compareScalar`(e1, rep(e2, length.out = e1$nchan()), 3)
+              compare(e1, e2, "<", "self")
             })
 
   setMethod("%i<%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compareScalar`(e2, rep(e1, length.out = e2$nchan()), 2)
+              compare(e1, e2, "<", "self")
             })
 
   setMethod("%i>=%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compare`(e1, e2, 2)
+              compare(e1, e2, ">=", "self")
             })
 
   setMethod("%i>=%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_compareScalar`(e1, rep(e2, length.out = e1$nchan()), 2)
+              compare(e1, e2, ">=", "self")
             })
 
   setMethod("%i>=%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compareScalar`(e2, rep(e1, length.out = e2$nchan()), 3)
+              compare(e1, e2, ">=", "self")
             })
 
   setMethod("%i<=%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compare`(e1, e2, 4)
+              compare(e1, e2, "<=", "self")
             })
 
   setMethod("%i<=%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_compareScalar`(e1, rep(e2, length.out = e1$nchan()), 4)
+              compare(e1, e2, "<=", "self")
             })
 
   setMethod("%i<=%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compareScalar`(e2, rep(e1, length.out = e2$nchan()), 1)
+              compare(e1, e2, "<=", "self")
             })
 
   setMethod("%i==%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compare`(e1, e2, 0)
+              compare(e1, e2, "==", "self")
             })
 
   setMethod("%i==%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_compareScalar`(e1, rep(e2, length.out = e1$nchan()), 0)
+              compare(e1, e2, "==", "self")
             })
 
   setMethod("%i==%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compareScalar`(e2, rep(e1, length.out = e2$nchan()), 0)
+              compare(e1, e2, "==", "self")
             })
 
   setMethod("%i!=%", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compare`(e1, e2, 5)
+              compare(e1, e2, "!=", "self")
             })
 
   setMethod("%i!=%", signature(e1 = "Rcpp_Image", e2 = "numeric"),
             function(e1, e2) {
-              `_compareScalar`(e1, rep(e2, length.out = e1$nchan()), 5)
+              compare(e1, e2, "!=", "self")
             })
 
   setMethod("%i!=%", signature(e1 = "numeric", e2 = "Rcpp_Image"),
             function(e1, e2) {
-              `_compareScalar`(e2, rep(e1, length.out = e2$nchan()), 5)
+              compare(e1, e2, "!=", "self")
             })
 })
 

@@ -157,8 +157,10 @@ RCPP_MODULE(methods_Statistics) {
 #include "comparisons.h"
 RCPP_MODULE(methods_Comparisons) {
 
-  function("_compare", &_compare, List::create(_["image1"], _["image2"], _["comp"]), "");
-  function("_compareScalar", &_compareScalar, List::create(_["image"], _["value"], _["comp"]), "");
+  function("_compare", &_compare, List::create(_["image1"], _["image2"], _["comp"],
+    _["target"]), "");
+  function("_compareScalar", &_compareScalar, List::create(_["image"], _["value"],
+    _["comp"], _["target"]), "");
   function("_matchTemplate", &_matchTemplate, List::create(_["image"], _["templ"],
     _["method"], _["mask"]), "");
   function("_matchTemplateNoMask", &_matchTemplateNoMask, List::create(_["image"],
