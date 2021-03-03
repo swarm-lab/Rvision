@@ -104,16 +104,29 @@ setGeneric("%i/%", function(e1, e2) { standardGeneric("%i/%") })
 #' @description This function computes the absolute difference between two
 #'  \code{\link{Image}} objects.
 #'
-#' @param image1 An \code{\link{Image}} object.
+#' @param e1 An \code{\link{Image}} object.
 #'
-#' @param image2 An \code{\link{Image}} object.
+#' @param e2 An \code{\link{Image}} object.
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{e1} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{e1} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{e1}, nothing will be stored.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image1} in place.
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{e1} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -125,16 +138,20 @@ setGeneric("%i/%", function(e1, e2) { standardGeneric("%i/%") })
 #' plot(absdiff(balloon1, balloon2))
 #'
 #' @export
-absdiff <- function(image1, image2, in_place = FALSE) {
-  if (!isImage(image1) | !isImage(image2))
-    stop("Both arguments need to be Image object.")
+absdiff <- function(e1, e2, target = "new") {
+  if (!isImage(e1) | !isImage(e2))
+    stop("Both 'e1' and 'e2' must be Image objects.")
 
-  if (in_place == TRUE) {
-    `_absdiff`(image1, image2)
-  } else {
-    out <- `_cloneImage`(image1)
-    `_absdiff`(out, image2)
+  if (isImage(target)) {
+    `_absdiff`(e1, e2, target)
+  } else if (target == "self") {
+    `_absdiff`(e1, e2, e1)
+  } else if (target == "new") {
+    out <- `_cloneImage`(e1)
+    `_absdiff`(e1, e2, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -144,20 +161,33 @@ absdiff <- function(image1, image2, in_place = FALSE) {
 #' @description This function computes the weighted sum of two
 #'  \code{\link{Image}} objects.
 #'
-#' @param image1 An \code{\link{Image}} object.
+#' @param e1 An \code{\link{Image}} object.
 #'
-#' @param image2 An \code{\link{Image}} object.
+#' @param e2 An \code{\link{Image}} object.
 #'
 #' @param weight A 2-element vector of the respective weight of each image
 #'  (default: c(0.5, 0.5)). If the two weights do not add up to 1, they will be
 #'  rescaled accordingly.
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{e1} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{e1} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{e1}, nothing will be stored.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image1} in place.
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{e1} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -169,19 +199,23 @@ absdiff <- function(image1, image2, in_place = FALSE) {
 #' plot(addWeighted(balloon1, balloon2))
 #'
 #' @export
-addWeighted <- function(image1, image2, weight = c(0.5, 0.5), in_place = FALSE) {
-  if (!isImage(image1) | !isImage(image2))
+addWeighted <- function(e1, e2, weight = c(0.5, 0.5), target = "new") {
+  if (!isImage(e1) | !isImage(e2))
     stop("Both arguments need to be Image object.")
 
   if (length(weight) != 2)
     stop("Exactly two weigths need to be supplied.")
 
-  if (in_place == TRUE) {
-    `_addWeighted`(image1, weight[1], image2, weight[2])
-  } else {
-    out <- `_cloneImage`(image1)
-    `_addWeighted`(out, weight[1], image2, weight[2])
+  if (isImage(target)) {
+    `_addWeighted`(e1, weight[1], e2, weight[2], target)
+  } else if (target == "self") {
+    `_addWeighted`(e1, weight[1], e2, weight[2], e1)
+  } else if (target == "new") {
+    out <- `_cloneImage`(e1)
+    `_addWeighted`(e1, weight[1], e2, weight[2], out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 

@@ -4,20 +4,33 @@
 \alias{absdiff}
 \title{Absolute Difference Between Two Images}
 \usage{
-absdiff(image1, image2, in_place = FALSE)
+absdiff(e1, e2, target = "new")
 }
 \arguments{
-\item{image1}{An \code{\link{Image}} object.}
+\item{e1}{An \code{\link{Image}} object.}
 
-\item{image2}{An \code{\link{Image}} object.}
+\item{e2}{An \code{\link{Image}} object.}
 
-\item{in_place}{A logical indicating whether the change should be applied to
-the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-the default, slower but non destructive).}
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{"self":}{the results are stored back into \code{e1} (faster but
+  destructive).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast and will not replace the
+  content of \code{e1} but will replace that of \code{target}. Note that
+  if \code{target} does not have the same dimensions, colorspace, and
+  bitdepth as \code{e1}, nothing will be stored.}
+}}
 }
 \value{
-An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
- returns nothing and modifies \code{image1} in place.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target="self"}, the function returns nothing and modifies
+ \code{e1} in place. If \code{target} is an \code{\link{Image}} object,
+ the function returns nothing and modifies that \code{\link{Image}} object in
+ place.
 }
 \description{
 This function computes the absolute difference between two
