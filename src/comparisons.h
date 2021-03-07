@@ -15,7 +15,7 @@ Image _matchTemplate(Image image, Image templ, int method, Image mask) {
   image.image.copyTo(padded(cv::Rect(templ.image.cols / 2, templ.image.rows / 2,
                                      image.image.cols, image.image.rows)));
   cv::matchTemplate(padded, templ.image, out, method, mask.image);
-  return Image(out);
+  return Image(out, image.space);
 }
 
 Image _matchTemplateNoMask(Image image, Image templ, int method) {
@@ -27,7 +27,7 @@ Image _matchTemplateNoMask(Image image, Image templ, int method) {
   image.image.copyTo(padded(cv::Rect(templ.image.cols / 2, templ.image.rows / 2,
                                      image.image.cols, image.image.rows)));
   cv::matchTemplate(padded, templ.image, out, method);
-  return Image(out);
+  return Image(out, image.space);
 }
 
 void _inRange(Image image, Rcpp::NumericVector low, Rcpp::NumericVector up, Image target) {

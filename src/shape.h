@@ -93,14 +93,12 @@ Rcpp::List _connectedComponentsNOTAB(Image image, int connectivity, int algorith
   return Rcpp::List::create(Rcpp::Named("n") = n - 1);
 }
 
-
-
 void _watershed(Image image, Image markers) {
   cv::watershed(image.image, markers.image);
 }
 
-Rcpp::List _fitEllipse(arma::fmat points) {
-  cv::Mat cvpoints;
+Rcpp::List _fitEllipse(arma::Mat< float > points) {
+  cv::Mat_< float > cvpoints;
   arma2cv(points, cvpoints);
   cv::RotatedRect box;
   box = cv::fitEllipse(cvpoints);
@@ -111,8 +109,8 @@ Rcpp::List _fitEllipse(arma::fmat points) {
                             Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
 }
 
-Rcpp::List _fitEllipseAMS(arma::fmat points) {
-  cv::Mat cvpoints;
+Rcpp::List _fitEllipseAMS(arma::Mat< float > points) {
+  cv::Mat_< float > cvpoints;
   arma2cv(points, cvpoints);
   cv::RotatedRect box;
   box = cv::fitEllipseAMS(cvpoints);
@@ -123,8 +121,8 @@ Rcpp::List _fitEllipseAMS(arma::fmat points) {
                             Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
 }
 
-Rcpp::List _fitEllipseDirect(arma::fmat points) {
-  cv::Mat cvpoints;
+Rcpp::List _fitEllipseDirect(arma::Mat< float > points) {
+  cv::Mat_< float > cvpoints;
   arma2cv(points, cvpoints);
   cv::RotatedRect box;
   box = cv::fitEllipseDirect(cvpoints);
@@ -135,8 +133,8 @@ Rcpp::List _fitEllipseDirect(arma::fmat points) {
                             Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
 }
 
-std::vector< int > _convexHull(arma::fmat points, bool clockwise) {
-  cv::Mat cvpoints;
+std::vector< int > _convexHull(arma::Mat< float > points, bool clockwise) {
+  cv::Mat_< float > cvpoints;
   arma2cv(points, cvpoints);
   std::vector< int > out;
   cv::convexHull(cvpoints, out, clockwise, false);
@@ -189,8 +187,8 @@ Rcpp::NumericVector _moments(Rcpp::NumericMatrix contour) {
   return out;
 }
 
-Rcpp::List _minAreaRect(arma::fmat points) {
-  cv::Mat cvpoints;
+Rcpp::List _minAreaRect(arma::Mat< float > points) {
+  cv::Mat_< float > cvpoints;
   arma2cv(points, cvpoints);
   cv::RotatedRect box;
   box = minAreaRect(cvpoints);

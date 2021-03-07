@@ -194,34 +194,34 @@ frame <- function(x) {
 
 #' @export
 #' @rdname fps
-fps.Rcpp_Video <- function(obj) {
-  if (!isVideo(obj))
+fps.Rcpp_Video <- function(x) {
+  if (!isVideo(x))
     stop("This is not a Video object.")
 
-  obj$fps()
+  x$fps()
 }
 
 
 #' @export
 #' @rdname codec
-codec.Rcpp_Video <- function(obj) {
-  if (!isVideo(obj))
+codec.Rcpp_Video <- function(x) {
+  if (!isVideo(x))
     stop("This is not a Video object.")
 
-  obj$codec()
+  x$codec()
 }
 
 
 #' @export
 #' @rdname release
-release.Rcpp_Video <- function(obj) {
-  if (!isVideo(obj))
+release.Rcpp_Video <- function(x) {
+  if (!isVideo(x))
     stop("This is not a Video object.")
 
-  obj$release()
+  x$release()
 
-  if (!obj$isOpened()) {
-    tmp <- deparse(substitute(obj))
+  if (!x$isOpened()) {
+    tmp <- deparse(substitute(x))
     rm(list = tmp, envir = parent.frame(1))
     cat("Video released successfully.\n")
   } else {
@@ -240,72 +240,85 @@ release.Rcpp_Video <- function(obj) {
 #' @param pos An integer corresponding to the position of the frame to read in
 #'  the video.
 #'
-#' @return An \code{\link{Image}} object.
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This will replace the content of
+#'    \code{target}. Note that \code{target} must have the same dimensions as
+#'    \code{x}.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Video}}, \code{\link{Image}}, \code{\link{readNext}},
-#'  \code{\link{readStream}}
+#' @seealso \code{\link{Video}}, \code{\link{Image}}, \code{\link{readNext}}
 #'
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
-#' plot(readFrame(balloon, 10))
-#' plot(readNext(balloon))
+#' frame10 <- readFrame(balloon, 10)
+#' frame11 <- readNext(balloon)
 #' release(balloon)
+#'
 #' @export
-readFrame <- function(x, pos) {
+readFrame <- function(x, pos, target = "new") {
   if (!isVideo(x))
     stop("This is not a Video object.")
 
-  x$readFrame(pos)
+  if (isImage(target)) {
+    x$readFrame(pos, target)
+  } else if (target == "new") {
+    out <- zeros(nrow(x), ncol(x))
+    x$readFrame(pos, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 
 #' @export
 #' @rdname readNext
-readNext.Rcpp_Video <- function(obj) {
-  if (!isVideo(obj))
+readNext.Rcpp_Video <- function(x, target = "new") {
+  if (!isVideo(x))
     stop("This is not a Video object.")
 
-  obj$readNext()
-}
+  if (x$frame() >= x$nframes())
+    stop("No more frames available.")
 
-
-#' @export
-#' @rdname readStream
-readStream.Rcpp_Video <- function(obj, image, pos = -1, ...) {
-  if (!isVideo(obj))
-    stop("obj is not a Video object.")
-
-  if (!isImage(image))
-    stop("image is not an Image object.")
-
-  if (!all(obj$dim()[1:2] == image$dim()[1:2]))
-    stop("obj and image must have the same dimensions.")
-
-  if (image$nchan() != 3)
-    stop("image must have 3 channels.")
-
-  obj$readStream(image, pos)
+  if (isImage(target)) {
+    x$readNext(target)
+  } else if (target == "new") {
+    out <- zeros(nrow(x), ncol(x))
+    x$readNext(out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 
 #' @rdname setProp
 #' @export
-setProp.Rcpp_Video <- function(obj, property, value) {
-  if (!isVideo(obj))
+setProp.Rcpp_Video <- function(x, property, value) {
+  if (!isVideo(x))
     stop("This is not a Video object.")
 
-  tryCatch({obj$set(property, value); TRUE}, finally = FALSE)
+  tryCatch({x$set(property, value); TRUE}, finally = FALSE)
 }
 
 
 #' @export
 #' @rdname setProp
-getProp.Rcpp_Video <- function(obj, property) {
-  if (!isVideo(obj))
+getProp.Rcpp_Video <- function(x, property) {
+  if (!isVideo(x))
     stop("This is not a Video object.")
 
-  obj$get(property)
+  x$get(property)
 }
 

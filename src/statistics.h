@@ -23,7 +23,7 @@ Image _sumList(Rcpp::List images) {
     cv::add(out, as<Image>(images[i]).image, out, cv::noArray(), out.type());
   }
 
-  return Image(out);
+  return Image(out, as<Image>(images[0]).space);
 }
 
 Image _meanList(Rcpp::List images) {
@@ -32,7 +32,7 @@ Image _meanList(Rcpp::List images) {
 
   sum.image.convertTo(out, as<Image>(images[0]).image.type(), 1.0 / images.size(), 0);
 
-  return Image(out);
+  return Image(out, as<Image>(images[0]).space);
 }
 
 Rcpp::NumericMatrix _sumPx(Image image) {
@@ -91,9 +91,9 @@ double _max(Image image) {
   return minMax(1, 0);
 }
 
-arma::fmat _imhist(Image image, int nbins, Rcpp::NumericVector range, Image mask) {
-  arma::fmat out;
-  cv::Mat hist(nbins, image.nchan(), CV_32F);
+arma::Mat< float > _imhist(Image image, int nbins, Rcpp::NumericVector range, Image mask) {
+  arma::Mat< float > out;
+  cv::Mat_< float > hist(nbins, image.nchan());
   float frange[] = {(float) range[0], (float) range[1]};
   const float* histRange = { frange };
   std::vector<cv::Mat> channels;

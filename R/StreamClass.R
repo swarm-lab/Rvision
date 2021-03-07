@@ -163,14 +163,14 @@ ncol.Rcpp_Stream <- function(x) {
 
 #' @export
 #' @rdname release
-release.Rcpp_Stream <- function(obj) {
-  if (!isStream(obj))
+release.Rcpp_Stream <- function(x) {
+  if (!isStream(x))
     stop("This is not a Stream object.")
 
-  obj$release()
+  x$release()
 
-  if (!obj$isOpened()) {
-    tmp <- deparse(substitute(obj))
+  if (!x$isOpened()) {
+    tmp <- deparse(substitute(x))
     rm(list = tmp, envir = parent.frame(1))
     message("Stream released successfully. \n")
   } else {
@@ -181,49 +181,40 @@ release.Rcpp_Stream <- function(obj) {
 
 #' @export
 #' @rdname readNext
-readNext.Rcpp_Stream <- function(obj) {
-  if (!isStream(obj))
+readNext.Rcpp_Stream <- function(x, target = "new") {
+  if (!isStream(x))
     stop("This is not a Stream object.")
 
-  obj$readNext()
-}
+  if (isImage(target)) {
+    x$readNext(target)
+  } else if (target == "new") {
+    out <- zeros(nrow(x), ncol(x))
+    x$readNext(out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 
-
-#' @export
-#' @rdname readStream
-readStream.Rcpp_Stream <- function(obj, image, ...) {
-  if (!isStream(obj))
-    stop("obj is not a Stream object.")
-
-  if (!isImage(image))
-    stop("image is not an Image object.")
-
-  if (!all(obj$dim()[1:2] == image$dim()[1:2]))
-    stop("obj and image must have the same dimensions.")
-
-  if (image$nchan() != 3)
-    stop("image must have 3 channels.")
-
-  obj$readStream(image)
+  x$readNext()
 }
 
 
 #' @rdname setProp
 #' @export
-setProp.Rcpp_Stream <- function(obj, property, value) {
-  if (!isStream(obj))
+setProp.Rcpp_Stream <- function(x, property, value) {
+  if (!isStream(x))
     stop("This is not a Stream object.")
 
-  obj$set(property, value)
+  x$set(property, value)
 }
 
 #' @export
 #' @rdname setProp
-getProp.Rcpp_Stream <- function(obj, property) {
-  if (!isStream(obj))
+getProp.Rcpp_Stream <- function(x, property) {
+  if (!isStream(x))
     stop("This is not a Stream object.")
 
-  obj$get(property)
+  x$get(property)
 }
 
 
@@ -232,7 +223,7 @@ getProp.Rcpp_Stream <- function(obj, property) {
 #' @description Generates a timelapse sequence from a \code{Stream} object with
 #'  a given duration and interval between images.
 #'
-#' @param obj The \code{Stream} object to use.
+#' @param x The \code{Stream} object to use.
 #'
 #' @param outputFolder The path to the folder where the timelapse images will be
 #'  saved. If it does not exist, it will be created. Note: the function will
@@ -262,9 +253,9 @@ getProp.Rcpp_Stream <- function(obj, property) {
 #' }
 #'
 #' @export
-timelapse <- function(obj, outputFolder, interval = 1, duration = Inf,
+timelapse <- function(x, outputFolder, interval = 1, duration = Inf,
                       format = "png") {
-  if (!isStream(obj))
+  if (!isStream(x))
     stop("This is not a Stream object.")
 
   outputFolder <- suppressWarnings(normalizePath(outputFolder))
@@ -278,7 +269,7 @@ timelapse <- function(obj, outputFolder, interval = 1, duration = Inf,
   end <- start + duration * 1000
 
   while (.now() < end) {
-    img <- obj$readNext()
+    img <- x$readNext()
     img$write(paste0(outputFolder, "/", counter, ".", format))
     counter <- counter + 1
     print(paste0("Last picture taken at: ", Sys.time()))

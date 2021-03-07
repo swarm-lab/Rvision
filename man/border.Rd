@@ -47,7 +47,6 @@ An \code{\link{Image}} object.
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon_border <- border(balloon, 10)
-plot(balloon_border)
 
 }
 \seealso{

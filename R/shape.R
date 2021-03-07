@@ -341,10 +341,10 @@ watershed <- function(image, markers) {
   if (!isImage(image) | !isImage(markers))
     stop("'image' and 'markers' must be Image objects.")
 
-  if (image$depth() != "8U" | image$space() != "BGR")
+  if (image$depth() != "8U" | image$space != "BGR")
     stop("'image' must be a 8U BGR Image object.")
 
-  if (markers$depth() != "32S" | markers$space() != "GRAY")
+  if (markers$depth() != "32S" | markers$space != "GRAY")
     stop("'markers' must be a 32S GRAY Image object.")
 
   `_watershed`(image, markers)

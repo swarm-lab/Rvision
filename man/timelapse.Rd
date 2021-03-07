@@ -4,10 +4,10 @@
 \alias{timelapse}
 \title{Make Timelapse from \code{Stream} Object}
 \usage{
-timelapse(obj, outputFolder, interval = 1, duration = Inf, format = "png")
+timelapse(x, outputFolder, interval = 1, duration = Inf, format = "png")
 }
 \arguments{
-\item{obj}{The \code{Stream} object to use.}
+\item{x}{The \code{Stream} object to use.}
 
 \item{outputFolder}{The path to the folder where the timelapse images will be
 saved. If it does not exist, it will be created. Note: the function will

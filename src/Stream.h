@@ -5,8 +5,7 @@ public:
   bool open(int index, std::string api);
   bool isOpened();
   void release();
-  Image readNext();
-  void readStream(Image image);
+  void readNext(Image& target);
   bool set(std::string propId, double value);
   double get(std::string propId);
   Rcpp::NumericVector dim();
@@ -63,13 +62,6 @@ int Stream::ncol() {
   return this->stream.get(cv::CAP_PROP_FRAME_WIDTH);
 }
 
-Image Stream::readNext() {
-  cv::Mat outputFrame;
-  this->stream.read(outputFrame);
-
-  return Image(outputFrame);
-}
-
-void Stream::readStream(Image image) {
-  this->stream.read(image.image);
+void Stream::readNext(Image& target) {
+  this->stream.read(target.image);
 }

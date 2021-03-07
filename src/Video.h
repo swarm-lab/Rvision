@@ -5,9 +5,8 @@ public:
   bool open(std::string filename, std::string api);
   bool isOpened();
   void release();
-  Image readNext();
-  Image readFrame(int frameId);
-  void readStream(Image image, int frameId);
+  void readNext(Image& target);
+  void readFrame(int frameId, Image& target);
   bool set(std::string propId, double value);
   double get(std::string propId);
   Rcpp::NumericVector dim();
@@ -115,7 +114,6 @@ int Video::nframes() {
   }
 
   return this->nf;
-  // return this->video.get(cv::CAP_PROP_FRAME_COUNT);
 }
 
 int Video::frame() {
@@ -136,28 +134,15 @@ std::string Video::codec() {
   return fourcc.c;
 }
 
-Image Video::readNext() {
-  cv::Mat outputFrame;
-  this->video.read(outputFrame);
-  return Image(outputFrame);
+void Video::readNext(Image& target) {
+  this->video.read(target.image);
 }
 
-Image Video::readFrame(int frameId) {
+void Video::readFrame(int frameId, Image& target) {
   if (frameId > this->video.get(cv::CAP_PROP_FRAME_COUNT)) {
     throw std::range_error("The requested frame does not exist. Try with a lower frame number.");
   }
 
-  cv::Mat outputFrame;
-
   this->video.set(cv::CAP_PROP_POS_FRAMES, frameId - 1);
-  this->video.read(outputFrame);
-
-  return Image(outputFrame);
-}
-
-void Video::readStream(Image image, int frameId) {
-  if (frameId > 0) {
-    this->video.set(cv::CAP_PROP_POS_FRAMES, frameId - 1);
-  }
-  this->video.read(image.image);
+  this->video.read(target.image);
 }

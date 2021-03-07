@@ -35,7 +35,6 @@ An \code{\link{Image}} object.
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon_sub <- subImage(balloon, 290, 170, 150, 150)
-plot(balloon_sub)
 
 }
 \seealso{

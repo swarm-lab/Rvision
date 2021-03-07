@@ -8,16 +8,16 @@
 \alias{release}
 \title{Release Object from Memory}
 \usage{
-\method{release}{Rcpp_Stream}(obj)
+\method{release}{Rcpp_Stream}(x)
 
-\method{release}{Rcpp_Video}(obj)
+\method{release}{Rcpp_Video}(x)
 
 \method{release}{Rcpp_VideoWriter}(obj)
 
-release(obj)
+release(x)
 }
 \arguments{
-\item{obj}{A \code{\link{Video}} or \code{\link{Stream}} object.}
+\item{x}{A \code{\link{Video}} or \code{\link{Stream}} object.}
 }
 \value{
 If successful, the \code{\link{Stream}} or

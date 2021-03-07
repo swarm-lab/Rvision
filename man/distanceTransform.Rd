@@ -60,7 +60,7 @@ An \code{\link{Image}} object.
 \examples{
 file <- system.file("sample_img/balloon1.png", package = "Rvision")
 balloon <- image(file)
-changeColorSpace(balloon, "GRAY", in_place = TRUE)
+changeColorSpace(balloon, "GRAY", target = "self")
 bin <- balloon < 200
 dst <- distanceTransform(bin)
 plot(dst)

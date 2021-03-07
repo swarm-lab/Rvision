@@ -6,14 +6,14 @@
 \alias{fps}
 \title{Framerate of a Video}
 \usage{
-\method{fps}{Rcpp_Video}(obj)
+\method{fps}{Rcpp_Video}(x)
 
 \method{fps}{Rcpp_VideoWriter}(obj)
 
-fps(obj)
+fps(x)
 }
 \arguments{
-\item{obj}{A \code{\link{Video}} object.}
+\item{x}{A \code{\link{Video}} object.}
 }
 \value{
 A numeric value.

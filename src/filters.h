@@ -49,7 +49,7 @@ Image _sqrBoxFilter(Image image, int k_height, int k_width, bool normalize) {
   cv::Mat out;
   cv::sqrBoxFilter(image.image, out, -1, cv::Size(2 * k_width + 1, 2 * k_height + 1),
                    cv::Point(-1, -1), normalize);
-  return Image(out);
+  return Image(out, image.space);
 }
 
 void _scharr(Image image, int dx, int dy, double scale) {
@@ -67,7 +67,7 @@ void _laplacian(Image image, int k_size, double scale) {
 Image _bilateralFilter(Image image, int d, double sigma_color, double sigma_space) {
   cv::Mat out;
   cv::bilateralFilter(image.image, out, d, sigma_color, sigma_space);
-  return Image(out);
+  return Image(out, image.space);
 }
 
 void _adaptiveThreshold(Image image, double max_value, int method, int threshold_type, int block_size, double C) {

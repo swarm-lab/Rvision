@@ -4,16 +4,29 @@
 \alias{readFrame}
 \title{Read Specific Video Frame}
 \usage{
-readFrame(x, pos)
+readFrame(x, pos, target = "new")
 }
 \arguments{
 \item{x}{A \code{\link{Video}} object.}
 
 \item{pos}{An integer corresponding to the position of the frame to read in
 the video.}
+
+\item{target}{The location where the results should be stored. It can take 2
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This will replace the content of
+  \code{target}. Note that \code{target} must have the same dimensions as
+  \code{x}.}
+}}
 }
 \value{
-An \code{\link{Image}} object.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target} is an \code{\link{Image}} object, the function
+ returns nothing and modifies that \code{\link{Image}} object in place.
 }
 \description{
 Read a specific frame of a \code{\link{Video}} object and
@@ -21,13 +34,13 @@ Read a specific frame of a \code{\link{Video}} object and
 }
 \examples{
 balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
-plot(readFrame(balloon, 10))
-plot(readNext(balloon))
+frame10 <- readFrame(balloon, 10)
+frame11 <- readNext(balloon)
 release(balloon)
+
 }
 \seealso{
-\code{\link{Video}}, \code{\link{Image}}, \code{\link{readNext}},
- \code{\link{readStream}}
+\code{\link{Video}}, \code{\link{Image}}, \code{\link{readNext}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

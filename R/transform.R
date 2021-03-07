@@ -33,7 +33,7 @@ computeECC <- function(template, image) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (template$space() != "GRAY" | image$space() != "GRAY")
+  if (template$space() != "GRAY" | image$space != "GRAY")
     stop("'template' and 'image' must be grayscale images.")
 
   if (!all(template$dim() == image$dim()))
@@ -98,7 +98,7 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (template$space() != "GRAY" | image$space() != "GRAY")
+  if (template$space() != "GRAY" | image$space != "GRAY")
     stop("'template' and 'image' must be grayscale images.")
 
   if (!all(template$dim() == image$dim()))
@@ -175,7 +175,7 @@ findTransformORB <- function(template, image, warp_mode = "affine", max_features
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (template$space() != "GRAY" | image$space() != "GRAY")
+  if (template$space() != "GRAY" | image$space != "GRAY")
     stop("'template' and 'image' must be grayscale images.")
 
   if (warp_mode == "affine" & !(homography_method %in% c("RANSAC", "LSMEDS")))
@@ -524,7 +524,7 @@ warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
 #' @examples
 #' file <- system.file("sample_img/balloon1.png", package = "Rvision")
 #' balloon <- image(file)
-#' changeColorSpace(balloon, "GRAY", in_place = TRUE)
+#' changeColorSpace(balloon, "GRAY", target = "self")
 #' bin <- balloon < 200
 #' dst <- distanceTransform(bin)
 #' plot(dst)
@@ -535,7 +535,7 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (image$space() != "GRAY")
+  if (image$space != "GRAY")
     stop("'image' should be a grayscale object.")
 
   if (min(image) > 0)
@@ -728,7 +728,7 @@ LUT <- function(image, lut, target = "new") {
   }
 
   if (im_lut$depth() != image$depth())
-    changeBitDepth(im_lut, image$depth(), in_place = TRUE)
+    changeBitDepth(im_lut, image$depth(), target = "self")
 
   if (isImage(target)) {
     `_LUT`(image, im_lut, target)
@@ -857,7 +857,7 @@ histEq <- function(image, target = "new") {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (image$space() == "GRAY") {
+  if (image$space == "GRAY") {
     if (isImage(target)) {
       `_histEqGRAY`(image, target)
     } else if (target == "self") {
@@ -869,7 +869,7 @@ histEq <- function(image, target = "new") {
     } else {
       stop("Invalid target.")
     }
-  } else if (image$space() == "BGR") {
+  } else if (image$space == "BGR") {
     if (isImage(target)) {
       `_histEqBGR`(image, target)
     } else if (target == "self") {

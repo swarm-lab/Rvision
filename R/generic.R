@@ -3,63 +3,42 @@
 #' @description Read the next frame of a \code{\link{Video}} or
 #'  \code{\link{Stream}} object and returns it as an \code{\link{Image}} object.
 #'
-#' @param obj A \code{\link{Video}} or \code{\link{Stream}} object.
+#' @param x A \code{\link{Video}} or \code{\link{Stream}} object.
 #'
-#' @return An \code{\link{Image}} object.
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This will replace the content of
+#'    \code{target}. Note that \code{target} must have the same dimensions as
+#'    \code{x}.}
+#'  }
 #'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Video}}, \code{\link{Stream}},
-#' \code{\link{Image}}, \code{\link{readFrame}}, \code{\link{readStream}}
-#'
-#' @examples
-#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
-#' plot(readNext(balloon))
-#' release(balloon)
-#'
-#' @export
-readNext <- function(obj) UseMethod("readNext")
-
-
-#' @title Read Next Frame of an Object in Place
-#'
-#' @description Read the next frame of a \code{\link{Video}} or
-#'  \code{\link{Stream}} object and use it to update an \code{\link{Image}}
-#'  object in place.
-#'
-#' @param obj A \code{\link{Video}} or \code{\link{Stream}} object.
-#'
-#' @param image An \code{\link{Image}} to update in place.
-#'
-#' @param pos An integer corresponding to the number of the frame to read in the
-#'  video. If -1 (the default), then the next frame is read.
-#'
-#' @param ... Not used.
-#'
-#' @return This function returns nothing and modifies \code{image} in place.
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Video}}, \code{\link{Stream}},
-#' \code{\link{Image}}, \code{\link{readFrame}}, \code{\link{readNext}}
+#' \code{\link{Image}}, \code{\link{readFrame}}
 #'
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
-#' frame <- readNext(balloon)
-#' plot(frame)
-#' readStream(balloon, frame)
-#' plot(frame)
+#' frame_next <- readNext(balloon)
 #' release(balloon)
 #'
 #' @export
-readStream <- function(obj, image, ...) UseMethod("readStream")
+readNext <- function(x, target = "new") UseMethod("readNext")
 
 
 #' @title Release Object from Memory
 #'
 #' @description Close a \code{\link{Stream}} or \code{\link{Video}} object.
 #'
-#' @param obj A \code{\link{Video}} or \code{\link{Stream}} object.
+#' @param x A \code{\link{Video}} or \code{\link{Stream}} object.
 #'
 #' @return If successful, the \code{\link{Stream}} or
 #' \code{\link{Video}} object is cleared from memory
@@ -73,7 +52,7 @@ readStream <- function(obj, image, ...) UseMethod("readStream")
 #' release(balloon)
 #'
 #' @export
-release <- function(obj) UseMethod("release")
+release <- function(x) UseMethod("release")
 
 
 #' @title Set/Get Video Properties
@@ -81,7 +60,7 @@ release <- function(obj) UseMethod("release")
 #' @description Set or get the values of various properties of the
 #'  \code{\link{Video}} or \code{\link{Stream}} object.
 #'
-#' @param obj A \code{\link{Video}} or \code{\link{Stream}} object.
+#' @param x A \code{\link{Video}} or \code{\link{Stream}} object.
 #'
 #' @param property A character string specifying the name of the property to
 #'  modify (see details below for a complete list).
@@ -133,19 +112,19 @@ release <- function(obj) UseMethod("release")
 #' release(balloon)
 #'
 #' @export
-setProp <- function(obj, property, value) UseMethod("setProp")
+setProp <- function(x, property, value) UseMethod("setProp")
 
 
 #' @export
 #' @rdname setProp
-getProp <- function(obj, property) UseMethod("getProp")
+getProp <- function(x, property) UseMethod("getProp")
 
 
 #' @title Codec of a Video
 #'
 #' @description Retrieve the codec of a \code{\link{Video}} object.
 #'
-#' @param obj A \code{\link{Video}} object.
+#' @param x A \code{\link{Video}} object.
 #'
 #' @return A character string corresponding to the
 #'  \href{http://www.fourcc.org/codecs.php}{FOURCC} code of the codec.
@@ -160,7 +139,7 @@ getProp <- function(obj, property) UseMethod("getProp")
 #' release(balloon)
 #'
 #' @export
-codec <- function(obj) UseMethod("codec")
+codec <- function(x) UseMethod("codec")
 
 
 #' @title Framerate of a Video
@@ -168,7 +147,7 @@ codec <- function(obj) UseMethod("codec")
 #' @description Retrieve the framerate (in frames per second) of a
 #'  \code{\link{Video}} object.
 #'
-#' @param obj A \code{\link{Video}} object.
+#' @param x A \code{\link{Video}} object.
 #'
 #' @return A numeric value.
 #'
@@ -182,4 +161,4 @@ codec <- function(obj) UseMethod("codec")
 #' release(balloon)
 #'
 #' @export
-fps <- function(obj) UseMethod("fps")
+fps <- function(x) UseMethod("fps")

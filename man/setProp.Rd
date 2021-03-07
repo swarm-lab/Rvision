@@ -12,24 +12,24 @@
 \alias{getProp}
 \title{Set/Get Video Properties}
 \usage{
-\method{setProp}{Rcpp_Stream}(obj, property, value)
+\method{setProp}{Rcpp_Stream}(x, property, value)
 
-\method{getProp}{Rcpp_Stream}(obj, property)
+\method{getProp}{Rcpp_Stream}(x, property)
 
-\method{setProp}{Rcpp_Video}(obj, property, value)
+\method{setProp}{Rcpp_Video}(x, property, value)
 
-\method{getProp}{Rcpp_Video}(obj, property)
+\method{getProp}{Rcpp_Video}(x, property)
 
 \method{setProp}{Rcpp_VideoWriter}(obj, property, value)
 
 \method{getProp}{Rcpp_VideoWriter}(obj, property)
 
-setProp(obj, property, value)
+setProp(x, property, value)
 
-getProp(obj, property)
+getProp(x, property)
 }
 \arguments{
-\item{obj}{A \code{\link{Video}} or \code{\link{Stream}} object.}
+\item{x}{A \code{\link{Video}} or \code{\link{Stream}} object.}
 
 \item{property}{A character string specifying the name of the property to
 modify (see details below for a complete list).}
