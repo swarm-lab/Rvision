@@ -25,12 +25,27 @@
 #' @param iterations The number of times the morphological operations should be
 #'  applied.
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, number of channels,
+#'    and bit depth as \code{image}, an error will be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @note There are 8 types of morphological operations that can be achieved with
 #'  this function:
@@ -67,86 +82,67 @@
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_eroded <- morph(balloon, "erode")
-#' plot(balloon_eroded)
 #'
 #' @export
 morph <- function(image, operation, kernel = NULL, k_shape = "rectangle",
-                  k_height = 5, k_width = 5, iterations = 1, in_place = FALSE) {
+                  k_height = 5, k_width = 5, iterations = 1, target = "new",
+                  in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
+  op <- switch(operation,
+               "erode" = 0,
+               "dilate" = 1,
+               "open" = 2,
+               "close" = 3,
+               "gradient" = 4,
+               "tophat" = 5,
+               "blackhat" = 6,
+               "hitmiss" = 7,
+               stop("This is not a valid operation."))
+
   if (is.null(kernel)) {
-    if (in_place == TRUE) {
-      `_morph`(image,
-               switch(operation,
-                      "erode" = 0,
-                      "dilate" = 1,
-                      "open" = 2,
-                      "close" = 3,
-                      "gradient" = 4,
-                      "tophat" = 5,
-                      "blackhat" = 6,
-                      "hitmiss" = 7,
-                      stop("This is not a valid operation.")),
-               switch(k_shape,
-                      "rectangle" = 0,
-                      "cross" = 1,
-                      "ellipse" = 2,
-                      stop("This is not a valid kernel.")),
-               k_height, k_width, iterations)
-    } else {
+    sh <- switch(k_shape,
+                 "rectangle" = 0,
+                 "cross" = 1,
+                 "ellipse" = 2,
+                 stop("This is not a valid kernel."))
+
+    if (isImage(target)) {
+      `_morph`(image, op, sh, k_height, k_width, iterations, target)
+    } else if (target == "self") {
+      `_morph`(image, op, sh, k_height, k_width, iterations, image)
+    } else if (target == "new") {
       out <- `_cloneImage`(image)
-      `_morph`(out,
-               switch(operation,
-                      "erode" = 0,
-                      "dilate" = 1,
-                      "open" = 2,
-                      "close" = 3,
-                      "gradient" = 4,
-                      "tophat" = 5,
-                      "blackhat" = 6,
-                      "hitmiss" = 7,
-                      stop("This is not a valid operation.")),
-               switch(k_shape,
-                      "rectangle" = 0,
-                      "cross" = 1,
-                      "ellipse" = 2,
-                      stop("This is not a valid kernel.")),
-               k_height, k_width, iterations)
+      `_morph`(image, op, sh, k_height, k_width, iterations, out)
       out
+    } else {
+      stop("Invalid target.")
     }
   } else {
     if (!is.matrix(kernel))
       stop("'kernel' must be a matrix.")
 
-    if (in_place == TRUE) {
-      `_morphCustom`(image,
-                     switch(operation,
-                            "erode" = 0,
-                            "dilate" = 1,
-                            "open" = 2,
-                            "close" = 3,
-                            "gradient" = 4,
-                            "tophat" = 5,
-                            "blackhat" = 6,
-                            "hitmiss" = 7,
-                            stop("This is not a valid operation.")),
-                     kernel, iterations)
-    } else {
+    if (isImage(target)) {
+      `_morphCustom`(image, op, kernel, iterations, target)
+    } else if (target == "self") {
+      `_morphCustom`(image, op, kernel, iterations, image)
+    } else if (target == "new") {
       out <- `_cloneImage`(image)
-      `_morphCustom`(out,
-                     switch(operation,
-                            "erode" = 0,
-                            "dilate" = 1,
-                            "open" = 2,
-                            "close" = 3,
-                            "gradient" = 4,
-                            "tophat" = 5,
-                            "blackhat" = 6,
-                            "hitmiss" = 7,
-                            stop("This is not a valid operation.")),
-                     kernel, iterations)
+      `_morphCustom`(image, op, kernel, iterations, out)
       out
+    } else {
+      stop("Invalid target.")
     }
   }
 }

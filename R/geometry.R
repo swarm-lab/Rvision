@@ -146,8 +146,8 @@ resize <- function(image, height = NULL, width = NULL, fx = NULL, fy = NULL,
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, nothing will be stored.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, nothing will be stored.}
 #'  }
 #'
 #' @return If \code{target="new"}, the function returns an \code{\link{Image}}

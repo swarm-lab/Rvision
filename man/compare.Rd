@@ -26,9 +26,9 @@ values:
  \item{An \code{\link{Image}} object:}{the results are stored in another
   existing \code{\link{Image}} object. This is fast and will not replace the
   content of \code{e1} or \code{e2} but will replace that of \code{target}.
-  Note that if \code{target} does not have the same dimensions, colorspace,
-  and bit depth as \code{e1} (if \code{e1} is an \code{\link{Image}} object,
-  \code{e2} otherwise), an error will be thrown.}
+  Note that if \code{target} does not have the same dimensions, number of
+  channels, and bit depth as \code{e1} (if \code{e1} is an \code{\link{Image}}
+  object, \code{e2} otherwise), an error will be thrown.}
 }}
 }
 \value{

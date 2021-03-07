@@ -15,9 +15,9 @@
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{e1} or \code{e2} but will replace that of \code{target}.
-#'    Note that if \code{target} does not have the same dimensions, colorspace,
-#'    and bit depth as \code{e1} (if \code{e1} is an \code{\link{Image}} object,
-#'    \code{e2} otherwise), an error will be thrown.}
+#'    Note that if \code{target} does not have the same dimensions, number of
+#'    channels, and bit depth as \code{e1} (if \code{e1} is an \code{\link{Image}}
+#'    object, \code{e2} otherwise), an error will be thrown.}
 #'  }
 #'
 #' @return If \code{target="new"}, the function returns an \code{\link{Image}}
@@ -34,7 +34,6 @@
 #' @examples
 #' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
-#' plot(bitAnd(balloon1, balloon2))
 #'
 #' @name imageLogic
 NULL
@@ -72,8 +71,8 @@ setGeneric("bitNot", function(e1, target) { standardGeneric("bitNot") })
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.

@@ -203,9 +203,9 @@ RCPP_MODULE(methods_Blob) {
 RCPP_MODULE(methods_Morphology) {
 
   function("_morph", &_morph, List::create(_["image"], _["operation"], _["k_shape"],
-    _["k_height"], _["k_width"], _["iterations"]), "");
+    _["k_height"], _["k_width"], _["iterations"], _["target"]), "");
   function("_morphCustom", &_morphCustom, List::create(_["image"], _["operation"],
-    _["kernel"], _["iterations"]), "");
+    _["kernel"], _["iterations"], _["target"]), "");
 }
 
 #include "filters.h"

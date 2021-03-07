@@ -1,9 +1,11 @@
-void _morph(Image image, int operation, int k_shape, int k_height, int k_width, int iterations) {
+void _morph(Image& image, int operation, int k_shape, int k_height, int k_width,
+            int iterations, Image& target) {
   cv::Mat k = cv::getStructuringElement(k_shape, cv::Size(2 * k_width + 1, 2 * k_height + 1));
-  cv::morphologyEx(image.image, image.image, operation, k, cv::Point(-1, -1), iterations);
+  cv::morphologyEx(image.image, target.image, operation, k, cv::Point(-1, -1), iterations);
 }
 
-void _morphCustom(Image image, int operation, Rcpp::NumericVector kernel, int iterations) {
+void _morphCustom(Image& image, int operation, Rcpp::NumericVector kernel,
+                  int iterations, Image& target) {
   cv::Mat k;
   Rcpp::IntegerVector kernelDims = kernel.attr("dim");
   k.create(kernelDims[0], kernelDims[1], CV_8U);
@@ -22,5 +24,5 @@ void _morphCustom(Image image, int operation, Rcpp::NumericVector kernel, int it
     }
   }
 
-  cv::morphologyEx(image.image, image.image, operation, k, cv::Point(-1, -1), iterations);
+  cv::morphologyEx(image.image, target.image, operation, k, cv::Point(-1, -1), iterations);
 }

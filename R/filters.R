@@ -16,8 +16,8 @@
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -96,8 +96,8 @@ filter2D <- function(image, kernel, target = "new", in_place = NULL) {
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -181,8 +181,8 @@ sepFilter2D <- function(image, kernel_x, kernel_y, target = "new", in_place = NU
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -253,8 +253,8 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1,
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -324,8 +324,8 @@ boxFilter <- function(image, k_height = 5, k_width = 5, target = "new", in_place
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -393,8 +393,8 @@ blur <- function(image, k_height = 5, k_width = 5, target = "new", in_place = NU
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -467,8 +467,8 @@ medianBlur <- function(image, k_size = 5, target = "new", in_place = NULL) {
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -540,8 +540,8 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE,
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -614,8 +614,8 @@ scharr <- function(image, dx = 1, dy = 1, scale = 1, target = "new", in_place = 
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -685,8 +685,8 @@ sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1, target = "new",
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -790,8 +790,8 @@ spatialGradient <- function(image, k_size = 5) {
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -888,8 +888,8 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25,
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
@@ -975,8 +975,8 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, colorspace, and
-#'    bitdepth as \code{image}, an error may be thrown.}
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
 #' @param in_place Deprecated. Use \code{target} instead.
