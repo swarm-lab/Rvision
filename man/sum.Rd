@@ -5,10 +5,6 @@
 \title{Sum Generic for Image objects}
 \usage{
 sum(x, ...)
-
-sum(x, target = "new", ...)
-
-sum(x, ...)
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object or a list of \code{\link{Image}}
@@ -16,18 +12,6 @@ objects.}
 
 \item{...}{Further arguments passed to summary methods. Unused if \code{x} is
 an image or a list of images.}
-
-\item{target}{The location where the results should be stored when passing a
-sum of images to the function. It can take 3 values:
-\itemize{
- \item{"new":}{a new \code{\link{Image}} object is created and the results
-  are stored inside (the default).}
- \item{An \code{\link{Image}} object:}{the results are stored in another
-  existing \code{\link{Image}} object. This is fast but will replace the
-  content of \code{target}. Note that \code{target} should have the same
-  dimensions and number of channels as the images in the list, otherwise an
-  error will be thrown.}
-}}
 }
 \value{
 If \code{x} is an \code{\link{Image}} object, the function returns a

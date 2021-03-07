@@ -487,12 +487,9 @@ methods::evalqOnLoad({
 #'    content of \code{target}. Note that \code{target} should have the same
 #'    dimensions and number of channels as the images in the list, otherwise an
 #'    error will be thrown.}
-#'  }
 #'
 #' @param ... Further arguments passed to summary methods. Unused if \code{x} is
 #'  an image or a list of images.
-#'
-#' @usage sum(x, target = "new", ...)
 #'
 #' @return If \code{x} is an \code{\link{Image}} object, the function returns a
 #'  numeric value (for single-channel images) or a vector of numeric values (for
@@ -1052,7 +1049,7 @@ methods::evalqOnLoad({
 
   setMethod("!", signature(x = "Rcpp_Image"),
             function(x) {
-              bitNot(e1)
+              bitNot(x)
             }, where = .GlobalEnv)
 })
 

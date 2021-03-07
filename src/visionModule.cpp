@@ -334,5 +334,5 @@ RCPP_MODULE(methods_Transform) {
 #include "feature.h"
 RCPP_MODULE(methods_Feature) {
   function("_canny", &_canny, List::create(_["image"], _["threshold1"],
-    _["threshold2"], _["apertureSize"], _["L2gradient"]), "");
+    _["threshold2"], _["apertureSize"], _["L2gradient"], _["target"]), "");
 }
