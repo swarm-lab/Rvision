@@ -1,8 +1,8 @@
-double _computeECC(Image image1, Image image2) {
+double _computeECC(Image& image1, Image& image2) {
   return cv::computeECC(image1.image, image2.image, cv::noArray());
 }
 
-arma::Mat< float > _findTransformECC(Image image1, Image image2, int warpMode,
+arma::Mat< float > _findTransformECC(Image& image1, Image& image2, int warpMode,
                                      int count, double eps, int gaussFiltSize) {
   arma::Mat< float > out;
   cv::Mat_< float > warpMatrix;
@@ -26,7 +26,7 @@ arma::Mat< float > _findTransformECC(Image image1, Image image2, int warpMode,
   return out;
 }
 
-arma::Mat< float > _findTransformORB(Image image1, Image image2, int warpMode,
+arma::Mat< float > _findTransformORB(Image& image1, Image& image2, int warpMode,
                             int maxFeatures, String descriptorMatcher,
                             double matchFrac, int homographyMethod) {
   arma::Mat< float > out;
@@ -71,12 +71,13 @@ arma::Mat< float > _getRotationMatrix2D(arma::fvec center, double angle, double 
   return out;
 }
 
-Image _warpAffine(Image image, arma::Mat< float > m, IntegerVector outputSize,
+Image _warpAffine(Image& image, arma::Mat< float > m, IntegerVector outputSize,
                   int interpMode, int borderType, Rcpp::NumericVector borderColor) {
   cv::Mat out;
   cv::Mat_< float > warpMatrix;
   arma2cv(m, warpMatrix);
-  cv::warpAffine(image.image, out, warpMatrix, cv::Size(outputSize(0), outputSize(1)), interpMode, borderType, col2Scalar(borderColor));
+  cv::warpAffine(image.image, out, warpMatrix, cv::Size(outputSize(0), outputSize(1)),
+                 interpMode, borderType, col2Scalar(borderColor));
   return Image(out, image.space);
 }
 
@@ -100,7 +101,7 @@ arma::Mat< float > _getPerspectiveTransform(arma::Mat< float > from, arma::Mat< 
   return out;
 }
 
-Image _warpPerspective(Image image, arma::Mat< float > m, IntegerVector outputSize,
+Image _warpPerspective(Image& image, arma::Mat< float > m, IntegerVector outputSize,
                        int interpMode, int borderType, Rcpp::NumericVector borderColor) {
   cv::Mat out;
   cv::Mat_< float > warpMatrix;
@@ -121,15 +122,15 @@ int _floodFill(Image image, IntegerVector seedPoint, NumericVector newVal,
   return area;
 }
 
-void _LUT(Image image, Image lut, Image target) {
+void _LUT(Image& image, Image& lut, Image& target) {
   cv::LUT(image.image, lut.image, target.image);
 }
 
-void _histEqGRAY(Image image, Image target) {
+void _histEqGRAY(Image& image, Image& target) {
   cv::equalizeHist(image.image, target.image);
 }
 
-void _histEqBGR(Image image, Image target) {
+void _histEqBGR(Image& image, Image& target) {
   cv::Mat ycrcb;
   cv::cvtColor(image.image, ycrcb, cv::COLOR_BGR2YCrCb);
 

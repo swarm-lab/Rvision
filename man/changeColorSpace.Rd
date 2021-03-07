@@ -10,8 +10,8 @@ changeColorSpace(image, colorspace, target = "new")
 \item{image}{An \code{\link{Image}} object.}
 
 \item{colorspace}{A string corresponding to the color space the image should
-be converted to. All available color spaces can be retrieved with . Not all
-conversions between color spaces are possible.}
+be converted to. Not all conversions between color spaces are possible. All
+available color space conversions can be found in \code{\link{cc_table}}.}
 
 \item{target}{The location where the results should be stored. It can take 3
 values:
@@ -43,7 +43,7 @@ grey_balloon <- changeColorSpace(balloon, "GRAY")
 
 }
 \seealso{
-\code{\link{Image}}
+\code{\link{Image}}, \code{\link{changeBitDepth}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

@@ -157,7 +157,7 @@
  objects and lists of <code><a href='Image-class.html'>Image</a></code> objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sum</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>sum</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,12 +169,21 @@ objects.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Further arguments passed to summary methods.</p></td>
+      <td><p>Further arguments passed to summary methods. Unused if <code>x</code> is
+an image or a list of images.</p></td>
     </tr>
     <tr>
-      <th>na.rm</th>
-      <td><p>Not used but retained for compatibility with base
-<code><a href='https://rdrr.io/r/base/sum.html'>sum</a></code>.</p></td>
+      <th>target</th>
+      <td><p>The location where the results should be stored when passing a
+sum of images to the function. It can take 3 values:</p><ul>
+<li><p>"new":a new <code><a href='Image-class.html'>Image</a></code> object is created and the results
+  are stored inside (the default).</p></li>
+<li><p>An <code><a href='Image-class.html'>Image</a></code> object:the results are stored in another
+  existing <code><a href='Image-class.html'>Image</a></code> object. This is fast but will replace the
+  content of <code>target</code>. Note that <code>target</code> should have the same
+  dimensions and number of channels as the images in the list, otherwise an
+  error will be thrown.</p></li>
+</ul></td>
     </tr>
     </table>
 
@@ -182,9 +191,11 @@ objects.</p></td>
 
     <p>If <code>x</code> is an <code><a href='Image-class.html'>Image</a></code> object, the function returns a
  numeric value (for single-channel images) or a vector of numeric values (for
- multi-channel images). If <code>x</code> is a list of <code><a href='Image-class.html'>Image</a></code> objects,
- the function returns an <code><a href='Image-class.html'>Image</a></code> object corresponding to the
- pixelwise sum of the images in the  list.</p>
+ multi-channel images).</p>
+<p>If <code>x</code> is a list of <code><a href='Image-class.html'>Image</a></code> objects and <code>target="new"</code>,
+ the function returns an <code><a href='Image-class.html'>Image</a></code> object. If <code>target</code> is an
+ <code><a href='Image-class.html'>Image</a></code> object, the function returns nothing and modifies that
+ <code><a href='Image-class.html'>Image</a></code> object in place.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
@@ -202,7 +213,7 @@ objects.</p></td>
 <span class='fu'>sum</span><span class='op'>(</span><span class='va'>img_list</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Class: image. 
 #&gt; Dimensions: 640x360.
-#&gt; Type: BGR, 32F.</div><div class='input'>
+#&gt; Type: BGR, 3-channel, 32F.</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

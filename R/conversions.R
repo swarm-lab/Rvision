@@ -1,3 +1,25 @@
+#' @title Table of Color Space Conversions
+#'
+#' @description A data frame containing all the possible color space conversions
+#'  that can be done with \code{\link{changeColorSpace}}.
+#'
+#' @docType data
+#'
+#' @usage data(cc_table)
+#'
+#' @format An object of class \code{"data.frame"}.
+#'
+#' @keywords datasets
+#'
+#' @seealso \code{\link{Image}}, \code{\link{changeColorSpace}}
+#'
+#' @examples
+#' data(cc_table)
+#' cc_table
+#'
+"cc_table"
+
+
 #' @title Convert Image to New Color Space
 #'
 #' @description This function takes an \code{\link{Image}} object and converts
@@ -6,8 +28,8 @@
 #' @param image An \code{\link{Image}} object.
 #'
 #' @param colorspace A string corresponding to the color space the image should
-#'  be converted to. All available color spaces can be retrieved with . Not all
-#'  conversions between color spaces are possible.
+#'  be converted to. Not all conversions between color spaces are possible. All
+#'  available color space conversions can be found in \code{\link{cc_table}}.
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
@@ -30,7 +52,7 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}
+#' @seealso \code{\link{Image}}, \code{\link{changeBitDepth}}
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
@@ -90,7 +112,7 @@ changeColorSpace <- function(image, colorspace, target = "new") {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}
+#' @seealso \code{\link{Image}}, \code{\link{changeColorSpace}}
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))

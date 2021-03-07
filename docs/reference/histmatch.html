@@ -208,8 +208,8 @@ values:</p><ul>
     <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>dots</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/dots.jpg"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>dots_matched</span> <span class='op'>&lt;-</span> <span class='fu'>histmatch</span><span class='op'>(</span><span class='va'>dots</span>, <span class='va'>balloon</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in `_ones`(nrow, ncol, paste0(bitdepth, "C", nchan), colorspace): Unknown image type.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dots_matched</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in plot(dots_matched): object 'dots_matched' not found</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dots_matched</span><span class='op'>)</span>
+</div><div class='img'><img src='histmatch-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

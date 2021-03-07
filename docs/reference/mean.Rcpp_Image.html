@@ -196,7 +196,8 @@ the mask will be ignored during the mean calculation).</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in `_meanPx`(x, image(array(255L, dim = c(nrow(x), ncol(x), 1)))): OpenCV(4.5.0) /var/folders/tv/zc70_5gn4_z_c29g5_wq4s_80000gn/T/RtmpEd04ZO/opencv-4.5.0/modules/core/src/mean.dispatch.cpp:126: error: (-215:Assertion failed) mask.empty() || mask.type() == CV_8U in function 'mean'</span></div><div class='input'>
+</div><div class='output co'>#&gt;        B        G        R 
+#&gt; 164.7881 149.6252 128.1291 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

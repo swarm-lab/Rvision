@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert Image to New Bit Depth — changeBitDepth • Rvision</title>
+<title>Table of Color Space Conversions — cc_table • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,9 @@
 
 
 
-<meta property="og:title" content="Convert Image to New Bit Depth — changeBitDepth" />
-<meta property="og:description" content="This function takes an Image object and modifies
- its bit depth (e.g. from 16 bits to 8 bits)." />
+<meta property="og:title" content="Table of Color Space Conversions — cc_table" />
+<meta property="og:description" content="A data frame containing all the possible color space conversions
+ that can be done with changeColorSpace." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
 
@@ -147,70 +147,235 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert Image to New Bit Depth</h1>
+    <h1>Table of Color Space Conversions</h1>
     <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/conversions.R'><code>R/conversions.R</code></a></small>
-    <div class="hidden name"><code>changeBitDepth.Rd</code></div>
+    <div class="hidden name"><code>cc_table.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function takes an <code><a href='Image-class.html'>Image</a></code> object and modifies
- its bit depth (e.g. from 16 bits to 8 bits).</p>
+    <p>A data frame containing all the possible color space conversions
+ that can be done with <code><a href='changeColorSpace.html'>changeColorSpace</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>changeBitDepth</span><span class='op'>(</span><span class='va'>image</span>, <span class='va'>bitdepth</span>, scale <span class='op'>=</span> <span class='fl'>1</span>, target <span class='op'>=</span> <span class='st'>"new"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cc_table</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>image</th>
-      <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
-    </tr>
-    <tr>
-      <th>bitdepth</th>
-      <td><p>A string corresponding to the bit depth the image should
-be converted to. Options are "8U", "8S", "16U", "16S", "32S", "32F", and
-"64F". Converting from a higher bit depth to a lower one (e.g., "16U" to
-"8U" may result in data loss).</p></td>
-    </tr>
-    <tr>
-      <th>scale</th>
-      <td><p>A scaling factor (default: 1).</p></td>
-    </tr>
-    <tr>
-      <th>target</th>
-      <td><p>The location where the results should be stored. It can take 3
-values:</p><ul>
-<li><p>"new":a new <code><a href='Image-class.html'>Image</a></code> object is created and the results
-  are stored inside (the default).</p></li>
-<li><p>"self":the results are stored back into <code>image</code> (faster but
-  destructive).</p></li>
-<li><p>An <code><a href='Image-class.html'>Image</a></code> object:the results are stored in another
-  existing <code><a href='Image-class.html'>Image</a></code> object. This is fast and will not replace the
-  content of <code>image</code> but will replace that of <code>target</code>. Note that
-  <code>target</code> must have the same dimensions as <code>image</code>.</p></li>
-</ul></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>If <code>target="new"</code>, the function returns an <code><a href='Image-class.html'>Image</a></code>
- object. If <code>target="self"</code>, the function returns nothing and modifies
- <code>image</code> in place. If <code>target</code> is an <code><a href='Image-class.html'>Image</a></code> object,
- the function returns nothing and modifies that <code><a href='Image-class.html'>Image</a></code> object in
- place.</p>
+    <p>An object of class <code>"data.frame"</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='changeColorSpace.html'>changeColorSpace</a></code></p></div>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
-
-    <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>balloon_16</span> <span class='op'>&lt;-</span> <span class='fu'>changeBitDepth</span><span class='op'>(</span><span class='va'>balloon</span>, <span class='st'>"16U"</span><span class='op'>)</span>
-
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cc_table</span><span class='op'>)</span>
+<span class='va'>cc_table</span>
+</div><div class='output co'>#&gt;         From        To
+#&gt; 1        BGR      BGRA
+#&gt; 2        RGB      RGBA
+#&gt; 3       BGRA       BGR
+#&gt; 4       RGBA       RGB
+#&gt; 5        BGR      RGBA
+#&gt; 6        RGB      BGRA
+#&gt; 7       RGBA       BGR
+#&gt; 8       BGRA       RGB
+#&gt; 9        BGR       RGB
+#&gt; 10       RGB       BGR
+#&gt; 11      BGRA      RGBA
+#&gt; 12      RGBA      BGRA
+#&gt; 13       BGR      GRAY
+#&gt; 14       RGB      GRAY
+#&gt; 15      GRAY       BGR
+#&gt; 16      GRAY       RGB
+#&gt; 17      GRAY      BGRA
+#&gt; 18      GRAY      RGBA
+#&gt; 19      BGRA      GRAY
+#&gt; 20      RGBA      GRAY
+#&gt; 21       BGR    BGR565
+#&gt; 22       RGB    BGR565
+#&gt; 23    BGR565       BGR
+#&gt; 24    BGR565       RGB
+#&gt; 25      BGRA    BGR565
+#&gt; 26      RGBA    BGR565
+#&gt; 27    BGR565      BGRA
+#&gt; 28    BGR565      RGBA
+#&gt; 29      GRAY    BGR565
+#&gt; 30    BGR565      GRAY
+#&gt; 31       BGR    BGR555
+#&gt; 32       RGB    BGR555
+#&gt; 33    BGR555       BGR
+#&gt; 34    BGR555       RGB
+#&gt; 35      BGRA    BGR555
+#&gt; 36      RGBA    BGR555
+#&gt; 37    BGR555      BGRA
+#&gt; 38    BGR555      RGBA
+#&gt; 39      GRAY    BGR555
+#&gt; 40    BGR555      GRAY
+#&gt; 41       BGR       XYZ
+#&gt; 42       RGB       XYZ
+#&gt; 43       XYZ       BGR
+#&gt; 44       XYZ       RGB
+#&gt; 45       BGR     YCrCb
+#&gt; 46       RGB     YCrCb
+#&gt; 47     YCrCb       BGR
+#&gt; 48     YCrCb       RGB
+#&gt; 49       BGR       HSV
+#&gt; 50       RGB       HSV
+#&gt; 51       BGR       Lab
+#&gt; 52       RGB       Lab
+#&gt; 53       BGR       Luv
+#&gt; 54       RGB       Luv
+#&gt; 55       BGR       HLS
+#&gt; 56       RGB       HLS
+#&gt; 57       HSV       BGR
+#&gt; 58       HSV       RGB
+#&gt; 59       Lab       BGR
+#&gt; 60       Lab       RGB
+#&gt; 61       Luv       BGR
+#&gt; 62       Luv       RGB
+#&gt; 63       HLS       BGR
+#&gt; 64       HLS       RGB
+#&gt; 65       BGR  HSV_FULL
+#&gt; 66       RGB  HSV_FULL
+#&gt; 67       BGR  HLS_FULL
+#&gt; 68       RGB  HLS_FULL
+#&gt; 69       HSV  BGR_FULL
+#&gt; 70       HSV  RGB_FULL
+#&gt; 71       HLS  BGR_FULL
+#&gt; 72       HLS  RGB_FULL
+#&gt; 73      LBGR       Lab
+#&gt; 74      LRGB       Lab
+#&gt; 75      LBGR       Luv
+#&gt; 76      LRGB       Luv
+#&gt; 77       Lab      LBGR
+#&gt; 78       Lab      LRGB
+#&gt; 79       Luv      LBGR
+#&gt; 80       Luv      LRGB
+#&gt; 81       BGR       YUV
+#&gt; 82       RGB       YUV
+#&gt; 83       YUV       BGR
+#&gt; 84       YUV       RGB
+#&gt; 85       YUV  RGB_NV12
+#&gt; 86       YUV  BGR_NV12
+#&gt; 87       YUV  RGB_NV21
+#&gt; 88       YUV  BGR_NV21
+#&gt; 89  YUV420sp       RGB
+#&gt; 90  YUV420sp       BGR
+#&gt; 91       YUV RGBA_NV12
+#&gt; 92       YUV BGRA_NV12
+#&gt; 93       YUV RGBA_NV21
+#&gt; 94       YUV BGRA_NV21
+#&gt; 95  YUV420sp      RGBA
+#&gt; 96  YUV420sp      BGRA
+#&gt; 97       YUV  RGB_YV12
+#&gt; 98       YUV  BGR_YV12
+#&gt; 99       YUV  RGB_IYUV
+#&gt; 100      YUV  BGR_IYUV
+#&gt; 101      YUV  RGB_I420
+#&gt; 102      YUV  BGR_I420
+#&gt; 103  YUV420p       RGB
+#&gt; 104  YUV420p       BGR
+#&gt; 105      YUV RGBA_YV12
+#&gt; 106      YUV BGRA_YV12
+#&gt; 107      YUV RGBA_IYUV
+#&gt; 108      YUV BGRA_IYUV
+#&gt; 109      YUV RGBA_I420
+#&gt; 110      YUV BGRA_I420
+#&gt; 111  YUV420p      RGBA
+#&gt; 112  YUV420p      BGRA
+#&gt; 113      YUV  GRAY_420
+#&gt; 114      YUV GRAY_NV21
+#&gt; 115      YUV GRAY_NV12
+#&gt; 116      YUV GRAY_YV12
+#&gt; 117      YUV GRAY_IYUV
+#&gt; 118      YUV GRAY_I420
+#&gt; 119 YUV420sp      GRAY
+#&gt; 120  YUV420p      GRAY
+#&gt; 121      YUV  RGB_UYVY
+#&gt; 122      YUV  BGR_UYVY
+#&gt; 123      YUV  RGB_Y422
+#&gt; 124      YUV  BGR_Y422
+#&gt; 125      YUV  RGB_UYNV
+#&gt; 126      YUV  BGR_UYNV
+#&gt; 127      YUV RGBA_UYVY
+#&gt; 128      YUV BGRA_UYVY
+#&gt; 129      YUV RGBA_Y422
+#&gt; 130      YUV BGRA_Y422
+#&gt; 131      YUV RGBA_UYNV
+#&gt; 132      YUV BGRA_UYNV
+#&gt; 133      YUV  RGB_YUY2
+#&gt; 134      YUV  BGR_YUY2
+#&gt; 135      YUV  RGB_YVYU
+#&gt; 136      YUV  BGR_YVYU
+#&gt; 137      YUV  RGB_YUYV
+#&gt; 138      YUV  BGR_YUYV
+#&gt; 139      YUV  RGB_YUNV
+#&gt; 140      YUV  BGR_YUNV
+#&gt; 141      YUV RGBA_YUY2
+#&gt; 142      YUV BGRA_YUY2
+#&gt; 143      YUV RGBA_YVYU
+#&gt; 144      YUV BGRA_YVYU
+#&gt; 145      YUV RGBA_YUYV
+#&gt; 146      YUV BGRA_YUYV
+#&gt; 147      YUV RGBA_YUNV
+#&gt; 148      YUV BGRA_YUNV
+#&gt; 149      YUV GRAY_UYVY
+#&gt; 150      YUV GRAY_YUY2
+#&gt; 151      YUV GRAY_Y422
+#&gt; 152      YUV GRAY_UYNV
+#&gt; 153      YUV GRAY_YVYU
+#&gt; 154      YUV GRAY_YUYV
+#&gt; 155      YUV GRAY_YUNV
+#&gt; 156     RGBA     mRGBA
+#&gt; 157    mRGBA      RGBA
+#&gt; 158      RGB  YUV_I420
+#&gt; 159      BGR  YUV_I420
+#&gt; 160      RGB  YUV_IYUV
+#&gt; 161      BGR  YUV_IYUV
+#&gt; 162     RGBA  YUV_I420
+#&gt; 163     BGRA  YUV_I420
+#&gt; 164     RGBA  YUV_IYUV
+#&gt; 165     BGRA  YUV_IYUV
+#&gt; 166      RGB  YUV_YV12
+#&gt; 167      BGR  YUV_YV12
+#&gt; 168     RGBA  YUV_YV12
+#&gt; 169     BGRA  YUV_YV12
+#&gt; 170  BayerBG       BGR
+#&gt; 171  BayerGB       BGR
+#&gt; 172  BayerRG       BGR
+#&gt; 173  BayerGR       BGR
+#&gt; 174  BayerBG       RGB
+#&gt; 175  BayerGB       RGB
+#&gt; 176  BayerRG       RGB
+#&gt; 177  BayerGR       RGB
+#&gt; 178  BayerBG      GRAY
+#&gt; 179  BayerGB      GRAY
+#&gt; 180  BayerRG      GRAY
+#&gt; 181  BayerGR      GRAY
+#&gt; 182  BayerBG   BGR_VNG
+#&gt; 183  BayerGB   BGR_VNG
+#&gt; 184  BayerRG   BGR_VNG
+#&gt; 185  BayerGR   BGR_VNG
+#&gt; 186  BayerBG   RGB_VNG
+#&gt; 187  BayerGB   RGB_VNG
+#&gt; 188  BayerRG   RGB_VNG
+#&gt; 189  BayerGR   RGB_VNG
+#&gt; 190  BayerBG    BGR_EA
+#&gt; 191  BayerGB    BGR_EA
+#&gt; 192  BayerRG    BGR_EA
+#&gt; 193  BayerGR    BGR_EA
+#&gt; 194  BayerBG    RGB_EA
+#&gt; 195  BayerGB    RGB_EA
+#&gt; 196  BayerRG    RGB_EA
+#&gt; 197  BayerGR    RGB_EA
+#&gt; 198  BayerBG      BGRA
+#&gt; 199  BayerGB      BGRA
+#&gt; 200  BayerRG      BGRA
+#&gt; 201  BayerGR      BGRA
+#&gt; 202  BayerBG      RGBA
+#&gt; 203  BayerGB      RGBA
+#&gt; 204  BayerRG      RGBA
+#&gt; 205  BayerGR      RGBA</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

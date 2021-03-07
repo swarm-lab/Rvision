@@ -44,7 +44,7 @@ compute a homography matrix. It can be one of the followings: "LS"
 (Least-Median robust method), or "RHO" (PROSAC-based robust method).}
 }
 \value{
-A 3x3 matrix.
+A 2x3 or 3x3 (if \code{warp_mode = "homography"}) matrix.
 }
 \description{
 \code{findTransformORB} computes the geometric transform between

@@ -33,7 +33,7 @@ computeECC <- function(template, image) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (template$space() != "GRAY" | image$space != "GRAY")
+  if (template$space != "GRAY" | image$space != "GRAY")
     stop("'template' and 'image' must be grayscale images.")
 
   if (!all(template$dim() == image$dim()))
@@ -98,7 +98,7 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (template$space() != "GRAY" | image$space != "GRAY")
+  if (template$space != "GRAY" | image$space != "GRAY")
     stop("'template' and 'image' must be grayscale images.")
 
   if (!all(template$dim() == image$dim()))
@@ -148,7 +148,7 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
 #'  (least-square), "RANSAC" (RANSAC-based robust method; the default), "LMEDS"
 #'  (Least-Median robust method), or "RHO" (PROSAC-based robust method).
 #'
-#' @return A 3x3 matrix.
+#' @return A 2x3 or 3x3 (if \code{warp_mode = "homography"}) matrix.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -175,7 +175,7 @@ findTransformORB <- function(template, image, warp_mode = "affine", max_features
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (template$space() != "GRAY" | image$space != "GRAY")
+  if (template$space != "GRAY" | image$space != "GRAY")
     stop("'template' and 'image' must be grayscale images.")
 
   if (warp_mode == "affine" & !(homography_method %in% c("RANSAC", "LSMEDS")))

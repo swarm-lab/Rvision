@@ -35,5 +35,5 @@ template <typename T>
 void arma2cv(const arma::Mat<T> &src, cv::Mat_<T> &dst) {
   dst = cv::Mat_<T>{int(src.n_cols), int(src.n_rows), const_cast<T*>(src.memptr())};
   cv::transpose(dst, dst);
-  cv::flip(dst, dst, 0);
+  // cv::flip(dst, dst, 0);
 }

@@ -46,7 +46,7 @@ balloon_16 <- changeBitDepth(balloon, "16U")
 
 }
 \seealso{
-\code{\link{Image}}
+\code{\link{Image}}, \code{\link{changeColorSpace}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

@@ -215,7 +215,7 @@ compute a homography matrix. It can be one of the followings: "LS"
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A 3x3 matrix.</p>
+    <p>A 2x3 or 3x3 (if <code>warp_mode = "homography"</code>) matrix.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Evangelidis, G. D., and Psarakis, E. Z. (2008). Parametric image
@@ -234,7 +234,9 @@ compute a homography matrix. It can be one of the followings: "LS"
 <span class='va'>balloon1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='va'>file1</span><span class='op'>)</span>, <span class='st'>"GRAY"</span><span class='op'>)</span>
 <span class='va'>balloon2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='va'>file2</span><span class='op'>)</span>, <span class='st'>"GRAY"</span><span class='op'>)</span>
 <span class='fu'>findTransformORB</span><span class='op'>(</span><span class='va'>balloon1</span>, <span class='va'>balloon2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in template$space(): attempt to apply non-function</span></div><div class='input'>
+</div><div class='output co'>#&gt;            [,1]     [,2]      [,3]
+#&gt; [1,]  1.1929843 0.154035 -212.9814
+#&gt; [2,] -0.2644756 1.137650  152.6791</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
