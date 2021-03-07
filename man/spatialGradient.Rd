@@ -22,8 +22,6 @@ A list containing two \code{\link{Image}} objects, one of for the
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon_gradient <- spatialGradient(balloon, 5)
-plot(balloon_gradient$dx)
-plot(balloon_gradient$dy)
 
 }
 \seealso{

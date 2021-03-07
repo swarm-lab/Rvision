@@ -62,10 +62,30 @@ setGeneric("bitNot", function(e1, target) { standardGeneric("bitNot") })
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @return These operators do not return anything. They modify the image in
-#'  place (destructive operation). If 2 images are passed to the operators, only
-#'  the one of the left side of the operator is modified; the other is left
-#'  untouched.
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
+#'
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return The operators do not return anything. They modify the image in place
+#'  (destructive operation). If 2 images are passed to the operators, only the
+#'  one of the left side of the operator is modified; the other is left untouched.
+#'
+#'  If \code{target="new"}, \code{not} returns an \code{\link{Image}} object. If
+#'  \code{target="self"}, \code{not} returns nothing and modifies \code{image}
+#'  in place. If \code{target} is an \code{\link{Image}} object, \code{not}
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
 #'
 #' @note R does not support the creation of custom unary operators. This is why
 #'  there is no \code{!}-like operator but the \code{not} function instead.
@@ -78,9 +98,7 @@ setGeneric("bitNot", function(e1, target) { standardGeneric("bitNot") })
 #' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
 #' balloon1 %i|% balloon2
-#' plot(balloon1)
 #' not(balloon2)
-#' plot(balloon2)
 #'
 #' @name inPlaceLogical
 NULL
@@ -96,11 +114,21 @@ setGeneric("%i|%", function(e1, e2) { standardGeneric("%i|%") })
 
 #' @rdname inPlaceLogical
 #' @export
-not <- function(image) {
+not <- function(image, target = "new") {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
-  `_not`(image)
+  if (isImage(target)) {
+    `_not`(image, target)
+  } else if (target == "self") {
+    `_not`(image, image)
+  } else if (target == "new") {
+    out <- `_cloneImage`(image)
+    `_not`(image, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 #' @title Find Non-Zero Pixels in an Image

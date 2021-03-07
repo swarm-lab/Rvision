@@ -11,7 +11,7 @@ e1 \%i&\% e2
 
 e1 \%i|\% e2
 
-not(image)
+not(image, target = "new")
 }
 \arguments{
 \item{e1, e2}{Either 2 \code{\link{Image}} objects or 1 \code{\link{Image}}
@@ -19,12 +19,32 @@ object and 1 numeric value/vector. If a vector and its length is less than
 the number of channels of the image, then it is recycled to match it.}
 
 \item{image}{An \code{\link{Image}} object.}
+
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{"self":}{the results are stored back into \code{image} (faster but
+  destructive).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast and will not replace the
+  content of \code{image} but will replace that of \code{target}. Note that
+  if \code{target} does not have the same dimensions, colorspace, and
+  bitdepth as \code{image}, an error may be thrown.}
+}}
+
+\item{in_place}{Deprecated. Use \code{target} instead.}
 }
 \value{
-These operators do not return anything. They modify the image in
- place (destructive operation). If 2 images are passed to the operators, only
- the one of the left side of the operator is modified; the other is left
- untouched.
+The operators do not return anything. They modify the image in place
+ (destructive operation). If 2 images are passed to the operators, only the
+ one of the left side of the operator is modified; the other is left untouched.
+
+ If \code{target="new"}, \code{not} returns an \code{\link{Image}} object. If
+ \code{target="self"}, \code{not} returns nothing and modifies \code{image}
+ in place. If \code{target} is an \code{\link{Image}} object, \code{not}
+ returns nothing and modifies that \code{\link{Image}} object in place.
 }
 \description{
 In Place Logical Operators for Images
@@ -37,9 +57,7 @@ R does not support the creation of custom unary operators. This is why
 balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
 balloon1 \%i|\% balloon2
-plot(balloon1)
 not(balloon2)
-plot(balloon2)
 
 }
 \seealso{

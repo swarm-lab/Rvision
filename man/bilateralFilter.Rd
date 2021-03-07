@@ -4,7 +4,14 @@
 \alias{bilateralFilter}
 \title{Edge-Preserving Noise Reduction with a Bilateral Filter}
 \usage{
-bilateralFilter(image, d = 5, sigma_color = 25, sigma_space = 25)
+bilateralFilter(
+  image,
+  d = 5,
+  sigma_color = 25,
+  sigma_space = 25,
+  target = "new",
+  in_place = NULL
+)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -16,9 +23,29 @@ bilateralFilter(image, d = 5, sigma_color = 25, sigma_space = 25)
 
 \item{sigma_space}{The filter standard deviation in the coordinate space
 (see Note; default: 25).}
+
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{"self":}{the results are stored back into \code{image} (faster but
+  destructive).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast and will not replace the
+  content of \code{image} but will replace that of \code{target}. Note that
+  if \code{target} does not have the same dimensions, colorspace, and
+  bitdepth as \code{image}, an error may be thrown.}
+}}
+
+\item{in_place}{Deprecated. Use \code{target} instead.}
 }
 \value{
-An \code{\link{Image}} object.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target="self"}, the function returns nothing and modifies
+ \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+ the function returns nothing and modifies that \code{\link{Image}} object in
+ place.
 }
 \description{
 \code{bilateralFilter} applies the bilateral filter to an image.
@@ -39,9 +66,7 @@ A larger value of \code{sigma_space} means that farther pixels will
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon_noisy <- balloon + image(array(sample(0:30, nrow(balloon) * ncol(balloon), replace = TRUE),
                                        dim = c(nrow(balloon), ncol(balloon), 3)))
-plot(balloon_noisy)
 balloon_bilateral <- bilateralFilter(balloon_noisy, 25)
-plot(balloon_bilateral)
 
 }
 \seealso{

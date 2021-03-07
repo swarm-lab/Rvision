@@ -4,7 +4,14 @@
 \alias{canny}
 \title{Canny Edge Detector}
 \usage{
-canny(image, threshold1, threshold2, aperture_size = 3, L2_gradient = FALSE)
+canny(
+  image,
+  threshold1,
+  threshold2,
+  aperture_size = 3,
+  L2_gradient = FALSE,
+  target = "new"
+)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -20,6 +27,22 @@ procedure}
 \item{L2_gradient}{A logical flag, indicating whether a more accurate L2 norm
 should be used to calculate the image gradient magnitude, or whether the
 default L1 norm is enough (default: FALSE).}
+
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. Note that \code{target} has to be an
+  8-bit ("8U") single-channel image with the same dimensions as \code{image},
+  otherwise an error will be thrown.}
+}}
+}
+\value{
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target} is an \code{\link{Image}} object, the function
+ returns nothing and modifies that \code{\link{Image}} object in place.
 }
 \description{
 \code{canny} finds edges in an image using the Canny algorithm.

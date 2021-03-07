@@ -1,4 +1,4 @@
-void _drawRectangles(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1_y,
+void _drawRectangles(Image& image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1_y,
                      Rcpp::NumericVector pt2_x, Rcpp::NumericVector pt2_y,
                      Rcpp::NumericMatrix color, Rcpp::IntegerVector thickness) {
   for (int i = 0; i < pt1_x.size(); i++) {
@@ -10,7 +10,7 @@ void _drawRectangles(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector
   }
 }
 
-void _drawRotatedRectangles(Image image, Rcpp::NumericVector x, Rcpp::NumericVector y,
+void _drawRotatedRectangles(Image& image, Rcpp::NumericVector x, Rcpp::NumericVector y,
                             Rcpp::NumericVector axis1, Rcpp::NumericVector axis2,
                             Rcpp::NumericVector angle, Rcpp::NumericMatrix color,
                             Rcpp::IntegerVector thickness) {
@@ -35,7 +35,7 @@ void _drawRotatedRectangles(Image image, Rcpp::NumericVector x, Rcpp::NumericVec
   }
 }
 
-void _drawCircles(Image image, Rcpp::NumericVector x, Rcpp::NumericVector y,
+void _drawCircles(Image& image, Rcpp::NumericVector x, Rcpp::NumericVector y,
                   Rcpp::IntegerVector radius, Rcpp::NumericMatrix color,
                   Rcpp::IntegerVector thickness) {
   for (int i = 0; i < x.size(); i++) {
@@ -46,7 +46,7 @@ void _drawCircles(Image image, Rcpp::NumericVector x, Rcpp::NumericVector y,
   }
 }
 
-void _drawEllipses(Image image, Rcpp::NumericVector x, Rcpp::NumericVector y,
+void _drawEllipses(Image& image, Rcpp::NumericVector x, Rcpp::NumericVector y,
                    Rcpp::NumericVector axis1, Rcpp::NumericVector axis2,
                    Rcpp::NumericVector angle, Rcpp::NumericVector start_angle,
                    Rcpp::NumericVector end_angle,
@@ -58,7 +58,7 @@ void _drawEllipses(Image image, Rcpp::NumericVector x, Rcpp::NumericVector y,
   }
 }
 
-void _drawLines(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1_y,
+void _drawLines(Image& image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1_y,
                 Rcpp::NumericVector pt2_x, Rcpp::NumericVector pt2_y,
                 Rcpp::NumericMatrix color, Rcpp::IntegerVector thickness) {
   for (int i = 0; i < pt1_x.size(); i++) {
@@ -70,7 +70,7 @@ void _drawLines(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1_
   }
 }
 
-void _drawPolyLines(Image image, Rcpp::List line, bool isClosed,
+void _drawPolyLines(Image& image, Rcpp::List line, bool isClosed,
                         Rcpp::NumericVector color, int thickness) {
   std::vector< std::vector< cv::Point > > lines;
 
@@ -81,7 +81,7 @@ void _drawPolyLines(Image image, Rcpp::List line, bool isClosed,
   cv::polylines(image.image, lines, isClosed, col2Scalar(color), thickness);
 }
 
-void _drawArrows(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1_y,
+void _drawArrows(Image& image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1_y,
                  Rcpp::NumericVector pt2_x, Rcpp::NumericVector pt2_y,
                  Rcpp::NumericVector tip_length, Rcpp::NumericMatrix color,
                  Rcpp::IntegerVector thickness) {
@@ -94,7 +94,7 @@ void _drawArrows(Image image, Rcpp::NumericVector pt1_x, Rcpp::NumericVector pt1
   }
 }
 
-void _drawTexts(Image image, Rcpp::StringVector text, Rcpp::NumericVector x,
+void _drawTexts(Image& image, Rcpp::StringVector text, Rcpp::NumericVector x,
                 Rcpp::NumericVector y, Rcpp::IntegerVector font_face,
                 Rcpp::NumericVector font_scale, Rcpp::NumericMatrix color,
                 Rcpp::IntegerVector thickness, Rcpp::LogicalVector bl_orig) {
@@ -116,7 +116,7 @@ Rcpp::NumericVector _getTextSize(std::string text, int font_face, double font_sc
   return(Rcpp::NumericVector::create(text_size.height, text_size.width));
 }
 
-void _fillPoly(Image image, Rcpp::List polygon, Rcpp::NumericVector color) {
+void _fillPoly(Image& image, Rcpp::List polygon, Rcpp::NumericVector color) {
   std::vector< std::vector<cv::Point> > polygons;
 
   for (int i = 0; i < polygon.length(); i++) {
@@ -126,14 +126,14 @@ void _fillPoly(Image image, Rcpp::List polygon, Rcpp::NumericVector color) {
   cv::fillPoly(image.image, polygons, col2Scalar(color));
 }
 
-void _fillConvexPoly(Image image, Rcpp::IntegerMatrix polygon, Rcpp::NumericVector color) {
+void _fillConvexPoly(Image& image, Rcpp::IntegerMatrix polygon, Rcpp::NumericVector color) {
   cv::fillConvexPoly(image.image, rmat2poly(polygon), col2Scalar(color));
 }
 
-void _inpaint(Image image, Image mask, double radius, int method) {
+void _inpaint(Image& image, Image& mask, double radius, int method) {
   cv::inpaint(image.image, mask.image, image.image, radius, method);
 }
 
-void _setTo(Image image, Image mask, NumericVector color) {
+void _setTo(Image& image, Image& mask, NumericVector color) {
   image.image.setTo(col2Scalar(color), mask.image);
 }

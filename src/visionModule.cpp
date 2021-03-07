@@ -211,27 +211,29 @@ RCPP_MODULE(methods_Morphology) {
 #include "filters.h"
 RCPP_MODULE(methods_Filters) {
 
-  function("_filter2D", &_filter2D, List::create(_["image"], _["kernel"]), "");
+  function("_filter2D", &_filter2D, List::create(_["image"], _["kernel"], _["target"]), "");
   function("_sepFilter2D", &_sepFilter2D, List::create(_["image"], _["kernel_x"],
-    _["kernel_y"]), "");
+    _["kernel_y"], _["target"]), "");
   function("_gaussianBlur", &_gaussianBlur, List::create(_["image"], _["k_height"],
-    _["k_width"], _["sigma_x"], _["sigma_y"]), "");
+    _["k_width"], _["sigma_x"], _["sigma_y"], _["target"]), "");
   function("_boxFilter", &_boxFilter, List::create(_["image"], _["k_height"],
-    _["k_width"]), "");
-  function("_blur", &_blur, List::create(_["image"], _["k_height"], _["k_width"]), "");
-  function("_medianBlur", &_medianBlur, List::create(_["image"], _["k_size"]), "");
+    _["k_width"], _["target"]), "");
+  function("_blur", &_blur, List::create(_["image"], _["k_height"], _["k_width"],
+    _["target"]), "");
+  function("_medianBlur", &_medianBlur, List::create(_["image"], _["k_size"],
+    _["target"]), "");
   function("_sqrBoxFilter", &_sqrBoxFilter, List::create(_["image"], _["k_height"],
-    _["k_width"], _["normalize"]), "");
+    _["k_width"], _["normalize"], _["target"]), "");
   function("_scharr", &_scharr, List::create(_["image"], _["dx"], _["dy"],
-    _["scale"]), "");
+    _["scale"], _["target"]), "");
   function("_sobel", &_sobel, List::create(_["image"], _["dx"], _["dy"],
-    _["k_size"], _["scale"]), "");
+    _["k_size"], _["scale"], _["target"]), "");
   function("_laplacian", &_laplacian, List::create(_["image"], _["k_size"],
-    _["scale"]), "");
+    _["scale"], _["target"]), "");
   function("_bilateralFilter", &_bilateralFilter, List::create(_["image"], _["d"],
-    _["sigma_color"], _["sigma_space"]), "");
+    _["sigma_color"], _["sigma_space"], _["target"]), "");
   function("_adaptiveThreshold", &_adaptiveThreshold, List::create(_["image"], _["max_value"],
-    _["method"], _["threshold_type"], _["block_size"], _["C"]), "");
+    _["method"], _["threshold_type"], _["block_size"], _["C"], _["target"]), "");
 }
 
 #include "display.h"

@@ -6,12 +6,27 @@
 #'
 #' @param kernel A matrix representing the convolution kernel.
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @note For color images, the same kernel is applied to each channel of the
 #'  image. If you want to apply different kernels to each channel, first split
@@ -26,22 +41,35 @@
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' k_edge_detection <- matrix(c(-1, -1, -1, -1, 8, -1, -1, -1, -1), nrow = 3)
 #' balloon_edge <- filter2D(balloon, k_edge_detection)
-#' plot(balloon_edge)
 #'
 #' @export
-filter2D <- function(image, kernel, in_place = FALSE) {
+filter2D <- function(image, kernel, target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
   if (!is.matrix(kernel))
     stop("'kernel' must be a matrix.")
 
-  if (in_place == TRUE) {
-    `_filter2D`(image, kernel)
-  } else {
+  if (isImage(target)) {
+    `_filter2D`(image, kernel, target)
+  } else if (target == "self") {
+    `_filter2D`(image, kernel, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_filter2D`(out, kernel)
+    `_filter2D`(image, kernel, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -58,12 +86,27 @@ filter2D <- function(image, kernel, in_place = FALSE) {
 #'
 #' @param kernel_y A vector representing the kernel along the y axis.
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @note For color images, the same kernel is applied to each channel of the
 #'  image. If you want to apply different kernels to each channel, first split
@@ -80,19 +123,32 @@ filter2D <- function(image, kernel, in_place = FALSE) {
 #' k_edge_detection_x <- c(1, 2, 1)
 #' k_edge_detection_y <- c(1, 0, -1)
 #' balloon_edge <- sepFilter2D(balloon, k_edge_detection_x, k_edge_detection_y)
-#' plot(balloon_edge)
 #'
 #' @export
-sepFilter2D <- function(image, kernel_x, kernel_y, in_place = FALSE) {
+sepFilter2D <- function(image, kernel_x, kernel_y, target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (in_place == TRUE) {
-    `_sepFilter2D`(image, kernel_x, kernel_y)
-  } else {
+  if (isImage(target)) {
+    `_sepFilter2D`(image, kernel_x, kernel_y, target)
+  } else if (target == "self") {
+    `_sepFilter2D`(image, kernel_x, kernel_y, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_sepFilter2D`(out, kernel_x, kernel_y)
+    `_sepFilter2D`(image, kernel_x, kernel_y, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -115,12 +171,27 @@ sepFilter2D <- function(image, kernel_x, kernel_y, in_place = FALSE) {
 #' @param sigma_y The standard deviation of the kernel along the y axis
 #'  (default: 1).
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -129,20 +200,33 @@ sepFilter2D <- function(image, kernel_x, kernel_y, in_place = FALSE) {
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_blur <- gaussianBlur(balloon, 11, 11, 5, 5)
-#' plot(balloon_blur)
 #'
 #' @export
 gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1,
-                         sigma_y = 1, in_place = FALSE) {
+                         sigma_y = 1, target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (in_place == TRUE) {
-    `_gaussianBlur`(image, k_height, k_width, sigma_x, sigma_y)
-  } else {
+  if (isImage(target)) {
+    `_gaussianBlur`(image, k_height, k_width, sigma_x, sigma_y, target)
+  } else if (target == "self") {
+    `_gaussianBlur`(image, k_height, k_width, sigma_x, sigma_y, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_gaussianBlur`(out, k_height, k_width, sigma_x, sigma_y)
+    `_gaussianBlur`(image, k_height, k_width, sigma_x, sigma_y, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -159,12 +243,27 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1,
 #'
 #' @param k_width The half-width in pixels of the kernel (default: 5).
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -173,19 +272,32 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1,
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_blur <- boxFilter(balloon, 11, 11)
-#' plot(balloon_blur)
 #'
 #' @export
-boxFilter <- function(image, k_height = 5, k_width = 5, in_place = FALSE) {
+boxFilter <- function(image, k_height = 5, k_width = 5, target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (in_place == TRUE) {
-    `_boxFilter`(image, k_height, k_width)
-  } else {
+  if (isImage(target)) {
+    `_boxFilter`(image, k_height, k_width, target)
+  } else if (target == "self") {
+    `_boxFilter`(image, k_height, k_width, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_boxFilter`(out, k_height, k_width)
+    `_boxFilter`(image, k_height, k_width, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -202,12 +314,27 @@ boxFilter <- function(image, k_height = 5, k_width = 5, in_place = FALSE) {
 #'
 #' @param k_width The half-width in pixels of the kernel (default: 5).
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -216,19 +343,32 @@ boxFilter <- function(image, k_height = 5, k_width = 5, in_place = FALSE) {
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_blur <- blur(balloon, 11, 11)
-#' plot(balloon_blur)
 #'
 #' @export
-blur <- function(image, k_height = 5, k_width = 5, in_place = FALSE) {
+blur <- function(image, k_height = 5, k_width = 5, target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (in_place == TRUE) {
-    `_blur`(image, k_height, k_width)
-  } else {
+  if (isImage(target)) {
+    `_blur`(image, k_height, k_width, target)
+  } else if (target == "self") {
+    `_blur`(image, k_height, k_width, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_blur`(out, k_height, k_width)
+    `_blur`(image, k_height, k_width, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -243,12 +383,27 @@ blur <- function(image, k_height = 5, k_width = 5, in_place = FALSE) {
 #'
 #' @param k_size The half-size in pixels of the kernel (default: 5).
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -257,19 +412,32 @@ blur <- function(image, k_height = 5, k_width = 5, in_place = FALSE) {
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_blur <- medianBlur(balloon, 11)
-#' plot(balloon_blur)
 #'
 #' @export
-medianBlur <- function(image, k_size = 5, in_place = FALSE) {
+medianBlur <- function(image, k_size = 5, target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (in_place == TRUE) {
-    `_medianBlur`(image, k_size)
-  } else {
+  if (isImage(target)) {
+    `_medianBlur`(image, k_size, target)
+  } else if (target == "self") {
+    `_medianBlur`(image, k_size, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_medianBlur`(out, k_size)
+    `_medianBlur`(image, k_size, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -289,7 +457,27 @@ medianBlur <- function(image, k_size = 5, in_place = FALSE) {
 #' @param normalize Whether the kernel is to be normalized by its area (default:
 #'  true).
 #'
-#' @return An \code{\link{Image}} object.
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
+#'
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -298,14 +486,34 @@ medianBlur <- function(image, k_size = 5, in_place = FALSE) {
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_blur <- sqrBoxFilter(balloon, 11, 11)
-#' plot(balloon_blur)
 #'
 #' @export
-sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE) {
+sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE,
+                         target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  `_sqrBoxFilter`(image, k_height, k_width, normalize)
+  if (isImage(target)) {
+    `_sqrBoxFilter`(image, k_height, k_width, normalize, target)
+  } else if (target == "self") {
+    `_sqrBoxFilter`(image, k_height, k_width, normalize, image)
+  } else if (target == "new") {
+    out <- `_cloneImage`(image)
+    `_sqrBoxFilter`(image, k_height, k_width, normalize, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 
@@ -322,12 +530,27 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE) {
 #'
 #' @param scale The scale factor for the computed derivative values (default: 1).
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -336,19 +559,32 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE) {
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_scharr <- scharr(balloon, 1, 1, 1)
-#' plot(balloon_scharr)
 #'
 #' @export
-scharr <- function(image, dx = 1, dy = 1, scale = 1, in_place = FALSE) {
+scharr <- function(image, dx = 1, dy = 1, scale = 1, target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (in_place == TRUE) {
-    `_scharr`(image, dx, dy, scale)
-  } else {
+  if (isImage(target)) {
+    `_scharr`(image, dx, dy, scale, target)
+  } else if (target == "self") {
+    `_scharr`(image, dx, dy, scale, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_scharr`(out, dx, dy, scale)
+    `_scharr`(image, dx, dy, scale, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -368,12 +604,27 @@ scharr <- function(image, dx = 1, dy = 1, scale = 1, in_place = FALSE) {
 #'
 #' @param scale The scale factor for the computed derivative values (default: 1).
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -382,19 +633,33 @@ scharr <- function(image, dx = 1, dy = 1, scale = 1, in_place = FALSE) {
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_sobel <- sobel(balloon, 1, 1, 5)
-#' plot(balloon_sobel)
 #'
 #' @export
-sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1, in_place = FALSE) {
+sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1, target = "new",
+                  in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (in_place == TRUE) {
-    `_sobel`(image, dx, dy, k_size, scale)
-  } else {
+  if (isImage(target)) {
+    `_sobel`(image, dx, dy, k_size, scale, target)
+  } else if (target == "self") {
+    `_sobel`(image, dx, dy, k_size, scale, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_sobel`(out, dx, dy, k_size, scale)
+    `_sobel`(image, dx, dy, k_size, scale, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -410,12 +675,27 @@ sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1, in_place = FALSE
 #'
 #' @param scale The scale factor for the computed Laplacian values (default: 1).
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -424,19 +704,32 @@ sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1, in_place = FALSE
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_laplacian <- laplacian(balloon, 5)
-#' plot(balloon_laplacian)
 #'
 #' @export
-laplacian <- function(image, k_size = 5, scale = 1, in_place = FALSE) {
+laplacian <- function(image, k_size = 5, scale = 1, target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (in_place == TRUE) {
-    `_laplacian`(image, k_size, scale)
-  } else {
+  if (isImage(target)) {
+    `_laplacian`(image, k_size, scale, target)
+  } else if (target == "self") {
+    `_laplacian`(image, k_size, scale, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_laplacian`(out, k_size, scale)
+    `_laplacian`(image, k_size, scale, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -460,17 +753,14 @@ laplacian <- function(image, k_size = 5, scale = 1, in_place = FALSE) {
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_gradient <- spatialGradient(balloon, 5)
-#' plot(balloon_gradient$dx)
-#' plot(balloon_gradient$dy)
 #'
 #' @export
 spatialGradient <- function(image, k_size = 5) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  dx <- sobel(image, dx = 1, dy = 0, k_size)
-  dy <- sobel(image, dx = 0, dy = 1, k_size)
-  list(dx = dx, dy = dy)
+  list(dx = sobel(image, dx = 1, dy = 0, k_size),
+       dy = sobel(image, dx = 0, dy = 1, k_size))
 }
 
 
@@ -490,7 +780,27 @@ spatialGradient <- function(image, k_size = 5) {
 #' @param sigma_space The filter standard deviation in the coordinate space
 #'  (see Note; default: 25).
 #'
-#' @return An \code{\link{Image}} object.
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
+#'
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @note A larger value of \code{sigma_color} means that farther colors within
 #'  the pixel neighborhood will be mixed together, resulting in larger areas of
@@ -509,19 +819,38 @@ spatialGradient <- function(image, k_size = 5) {
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_noisy <- balloon + image(array(sample(0:30, nrow(balloon) * ncol(balloon), replace = TRUE),
 #'                                        dim = c(nrow(balloon), ncol(balloon), 3)))
-#' plot(balloon_noisy)
 #' balloon_bilateral <- bilateralFilter(balloon_noisy, 25)
-#' plot(balloon_bilateral)
 #'
 #' @export
-bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
+bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25,
+                            target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
   if (!(image$nchan() %in% c(1, 3)))
     stop("'image' must be an Image object with 1 or 3 channels only.")
 
-  `_bilateralFilter`(image, d, sigma_color, sigma_space)
+  if (isImage(target)) {
+    `_bilateralFilter`(image, d, sigma_color, sigma_space, target)
+  } else if (target == "self") {
+    `_bilateralFilter`(image, d, sigma_color, sigma_space, image)
+  } else if (target == "new") {
+    out <- `_cloneImage`(image)
+    `_bilateralFilter`(image, d, sigma_color, sigma_space, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 
@@ -549,12 +878,27 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
 #' @param C Constant subtracted from the mean or weighted mean. Normally, it is
 #'  positive but may be zero or negative as well (default: 25).
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -564,12 +908,21 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25) {
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_gray <- changeColorSpace(balloon, "GRAY")
 #' balloon_th <- adaptiveThreshold(balloon_gray)
-#' plot(balloon_th)
 #'
 #' @export
 adaptiveThreshold <- function(image, max_value = 255, method = "mean",
                               threshold_type = "inverse", block_size = 31, C = 25,
-                              in_place = FALSE) {
+                              target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
@@ -585,16 +938,22 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
   if (!(threshold_type %in% c("binary", "inverse")))
     stop("'threshold_type' must be either 'binary' or 'inverse'.")
 
-  if (in_place == TRUE) {
+  if (isImage(target)) {
     `_adaptiveThreshold`(image, max_value, if (method == "mean") 0 else 1,
                          if (threshold_type == "binary") 0 else 1,
-                         block_size, C)
-  } else {
-    out <- `_cloneImage`(image)
-    `_adaptiveThreshold`(out, max_value, if (method == "mean") 0 else 1,
+                         block_size, C, target)
+  } else if (target == "self") {
+    `_adaptiveThreshold`(image, max_value, if (method == "mean") 0 else 1,
                          if (threshold_type == "binary") 0 else 1,
-                         block_size, C)
+                         block_size, C, image)
+  } else if (target == "new") {
+    out <- `_cloneImage`(image)
+    `_adaptiveThreshold`(image, max_value, if (method == "mean") 0 else 1,
+                         if (threshold_type == "binary") 0 else 1,
+                         block_size, C, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -606,11 +965,27 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, an error may be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -619,16 +994,31 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_inv <- invert(balloon)
-#' plot(balloon_inv)
 #'
 #' @export
-invert <- function(image, in_place = FALSE) {
+invert <- function(image, target = "new", in_place = FALSE) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (in_place) {
-    not(image)
+  if (isImage(target)) {
+    `_not`(image, target)
+  } else if (target == "self") {
+    `_not`(image, image)
+  } else if (target == "new") {
+    out <- `_cloneImage`(image)
+    `_not`(image, out)
+    out
   } else {
-    !image
+    stop("Invalid target.")
   }
 }

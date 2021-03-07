@@ -5,7 +5,7 @@ void _newDisplay(std::string window_name, int height, int width) {
   cv::waitKey(1);
 }
 
-void _display(Image image, std::string window_name, int delay, int height, int width) {
+void _display(Image& image, std::string window_name, int delay, int height, int width) {
   if ((image.image.rows != height) || (image.image.cols != width)) {
     cv::Mat screen;
     image.image.copyTo(screen);
@@ -33,7 +33,7 @@ void _destroyAllDisplays() {
   cv::waitKey(1);
 }
 
-Rcpp::DataFrame _selectBoundingBoxes(Image image, std::string window_name, bool crosshair) {
+Rcpp::DataFrame _selectBoundingBoxes(Image& image, std::string window_name, bool crosshair) {
   std::vector< cv::Rect > ROIs;
 
   cv::selectROIs(window_name, image.image, ROIs, crosshair);

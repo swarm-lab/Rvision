@@ -4,7 +4,7 @@
 \alias{sepFilter2D}
 \title{Image Filtering with a Separable Linear Filter}
 \usage{
-sepFilter2D(image, kernel_x, kernel_y, in_place = FALSE)
+sepFilter2D(image, kernel_x, kernel_y, target = "new", in_place = NULL)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -13,13 +13,28 @@ sepFilter2D(image, kernel_x, kernel_y, in_place = FALSE)
 
 \item{kernel_y}{A vector representing the kernel along the y axis.}
 
-\item{in_place}{A logical indicating whether the change should be applied to
-the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-the default, slower but non destructive).}
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{"self":}{the results are stored back into \code{image} (faster but
+  destructive).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast and will not replace the
+  content of \code{image} but will replace that of \code{target}. Note that
+  if \code{target} does not have the same dimensions, colorspace, and
+  bitdepth as \code{image}, an error may be thrown.}
+}}
+
+\item{in_place}{Deprecated. Use \code{target} instead.}
 }
 \value{
-An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
- returns nothing and modifies \code{image} in place.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target="self"}, the function returns nothing and modifies
+ \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+ the function returns nothing and modifies that \code{\link{Image}} object in
+ place.
 }
 \description{
 \code{sepFilter2D} applies a separable linear filter to an image.
@@ -37,7 +52,6 @@ balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 k_edge_detection_x <- c(1, 2, 1)
 k_edge_detection_y <- c(1, 0, -1)
 balloon_edge <- sepFilter2D(balloon, k_edge_detection_x, k_edge_detection_y)
-plot(balloon_edge)
 
 }
 \seealso{

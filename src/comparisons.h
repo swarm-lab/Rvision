@@ -1,12 +1,16 @@
-void _compare(Image image1, Image image2, int comp, Image target) {
+void _compare(Image& image1, Image& image2, int comp, Image& target) {
   cv::compare(image1.image, image2.image, target.image, comp);
 }
 
-void _compareScalar(Image image, Rcpp::NumericVector value, int comp, Image target) {
+void _compareScalar(Image& image, Rcpp::NumericVector value, int comp, Image& target) {
   cv::compare(image.image, col2Scalar(value), target.image, comp);
 }
 
-Image _matchTemplate(Image image, Image templ, int method, Image mask) {
+void _inRange(Image& image, Rcpp::NumericVector low, Rcpp::NumericVector up, Image& target) {
+  cv::inRange(image.image, col2Scalar(low), col2Scalar(up), target.image);
+}
+
+Image _matchTemplate(Image& image, Image& templ, int method, Image& mask) {
   cv::Mat out;
   cv::Mat padded;
   padded.create(image.image.rows + templ.image.rows - 1,
@@ -18,7 +22,7 @@ Image _matchTemplate(Image image, Image templ, int method, Image mask) {
   return Image(out, image.space);
 }
 
-Image _matchTemplateNoMask(Image image, Image templ, int method) {
+Image _matchTemplateNoMask(Image& image, Image& templ, int method) {
   cv::Mat out;
   cv::Mat padded;
   padded.create(image.image.rows + templ.image.rows - 1,
@@ -28,8 +32,4 @@ Image _matchTemplateNoMask(Image image, Image templ, int method) {
                                      image.image.cols, image.image.rows)));
   cv::matchTemplate(padded, templ.image, out, method);
   return Image(out, image.space);
-}
-
-void _inRange(Image image, Rcpp::NumericVector low, Rcpp::NumericVector up, Image target) {
-  cv::inRange(image.image, col2Scalar(low), col2Scalar(up), target.image);
 }
