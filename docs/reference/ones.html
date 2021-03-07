@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -157,7 +157,7 @@
  ones.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ones</span><span class='op'>(</span><span class='va'>nrow</span>, <span class='va'>ncol</span>, colorspace <span class='op'>=</span> <span class='st'>"BGR"</span>, bitdepth <span class='op'>=</span> <span class='st'>"8U"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ones</span><span class='op'>(</span><span class='va'>nrow</span>, <span class='va'>ncol</span>, nchan <span class='op'>=</span> <span class='fl'>3</span>, bitdepth <span class='op'>=</span> <span class='st'>"8U"</span>, colorspace <span class='op'>=</span> <span class='st'>"BGR"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,15 +171,17 @@
       <td><p>An integer indicating desired the number of columns for the image.</p></td>
     </tr>
     <tr>
-      <th>colorspace</th>
-      <td><p>A string indicating the desired color space for the image.
-Options are "BGR" (Blue Green Red image, the default), "BGRA" (BGR image
-with Alpha channel), and "GRAY" (grayscale image).</p></td>
+      <th>nchan</th>
+      <td><p>An integer indicating the desired number of channels for the image.</p></td>
     </tr>
     <tr>
       <th>bitdepth</th>
       <td><p>A string indicating the desired bit depth for the image.
-Options are "8U" (the default), "8S", "16U", "16S", "32S", and "32F".</p></td>
+Options are "8U" (the default), "8S", "16U", "16S", "32S", "32F", and "64F".</p></td>
+    </tr>
+    <tr>
+      <th>colorspace</th>
+      <td><p>A string indicating the desired color space for the image.</p></td>
     </tr>
     </table>
 

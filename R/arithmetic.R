@@ -34,7 +34,7 @@
 #' @examples
 #' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
-#' plot(add(balloon1, balloon2))
+#' balloon_sum <- add(balloon1, balloon2)
 #'
 #' @name imageArithmetic
 NULL
@@ -76,7 +76,6 @@ setGeneric("divide", function(e1, e2, target) { standardGeneric("divide") })
 #' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
 #' balloon1 %i+% balloon2
-#' plot(balloon1)
 #'
 #' @name inPlaceArithmetic
 NULL
@@ -135,7 +134,7 @@ setGeneric("%i/%", function(e1, e2) { standardGeneric("%i/%") })
 #' @examples
 #' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
-#' plot(absdiff(balloon1, balloon2))
+#' balloon_diff <- absdiff(balloon1, balloon2)
 #'
 #' @export
 absdiff <- function(e1, e2, target = "new") {
@@ -196,7 +195,7 @@ absdiff <- function(e1, e2, target = "new") {
 #' @examples
 #' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
-#' plot(addWeighted(balloon1, balloon2))
+#' balloon_weighted <- addWeighted(balloon1, balloon2)
 #'
 #' @export
 addWeighted <- function(e1, e2, weight = c(0.5, 0.5), target = "new") {

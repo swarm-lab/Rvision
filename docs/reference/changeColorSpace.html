@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert image between colorspaces — changeColorSpace • Rvision</title>
+<title>Convert Image to New Color Space — changeColorSpace • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,9 @@
 
 
 
-<meta property="og:title" content="Convert image between colorspaces — changeColorSpace" />
+<meta property="og:title" content="Convert Image to New Color Space — changeColorSpace" />
 <meta property="og:description" content="This function takes an Image object and converts
- it to another colorspace (e.g BGR to grayscale)." />
+ it to another color space (e.g BGR to grayscale)." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
 
@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -147,17 +147,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert image between colorspaces</h1>
+    <h1>Convert Image to New Color Space</h1>
     <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/conversions.R'><code>R/conversions.R</code></a></small>
     <div class="hidden name"><code>changeColorSpace.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>This function takes an <code><a href='Image-class.html'>Image</a></code> object and converts
- it to another colorspace (e.g BGR to grayscale).</p>
+ it to another color space (e.g BGR to grayscale).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>changeColorSpace</span><span class='op'>(</span><span class='va'>image</span>, <span class='va'>colorspace</span>, in_place <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>changeColorSpace</span><span class='op'>(</span><span class='va'>image</span>, <span class='va'>colorspace</span>, target <span class='op'>=</span> <span class='st'>"new"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,24 +168,33 @@
     </tr>
     <tr>
       <th>colorspace</th>
-      <td><p>A string corresponding to the colorspace the image should
-be converted to. Options are "BGR" (Blue Green Red image), "BGRA" (BGR image
-with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer
-mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR",
-"BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".</p></td>
+      <td><p>A string corresponding to the color space the image should
+be converted to. All available color spaces can be retrieved with . Not all
+conversions between color spaces are possible.</p></td>
     </tr>
     <tr>
-      <th>in_place</th>
-      <td><p>A logical indicating whether the change should be applied to
-the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-the default, slower but non destructive).</p></td>
+      <th>target</th>
+      <td><p>The location where the results should be stored. It can take 3
+values:</p><ul>
+<li><p>"new":a new <code><a href='Image-class.html'>Image</a></code> object is created and the results
+  are stored inside (the default).</p></li>
+<li><p>"self":the results are stored back into <code>image</code> (faster but
+  destructive).</p></li>
+<li><p>An <code><a href='Image-class.html'>Image</a></code> object:the results are stored in another
+  existing <code><a href='Image-class.html'>Image</a></code> object. This is fast and will not replace the
+  content of <code>image</code> but will replace that of <code>target</code>. Note that
+  <code>target</code> must have the same dimensions as <code>image</code>.</p></li>
+</ul></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object if <code>in_place=FALSE</code>. Otherwise, it
- returns nothing and modifies <code>image</code> in place.</p>
+    <p>If <code>target="new"</code>, the function returns an <code><a href='Image-class.html'>Image</a></code>
+ object. If <code>target="self"</code>, the function returns nothing and modifies
+ <code>image</code> in place. If <code>target</code> is an <code><a href='Image-class.html'>Image</a></code> object,
+ the function returns nothing and modifies that <code><a href='Image-class.html'>Image</a></code> object in
+ place.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>

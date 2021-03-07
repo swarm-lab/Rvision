@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -163,7 +163,7 @@
  multi-channel images.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>inRange</span><span class='op'>(</span><span class='va'>image</span>, low <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>4</span><span class='op'>)</span>, up <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>255</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>inRange</span><span class='op'>(</span><span class='va'>image</span>, low <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>4</span><span class='op'>)</span>, up <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>255</span>, <span class='fl'>4</span><span class='op'>)</span>, target <span class='op'>=</span> <span class='st'>"new"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -188,11 +188,26 @@ less elements than the number of channels, it is recycled to match the
 number of channels. If it has more elements than the number of channels, the
 extra elements are ignored without warning (default: rep(255, 4)).</p></td>
     </tr>
+    <tr>
+      <th>target</th>
+      <td><p>The location where the results should be stored. It can take 2
+values:</p><ul>
+<li><p>"new":a new <code><a href='Image-class.html'>Image</a></code> object is created and the results
+  are stored inside (the default).</p></li>
+<li><p>An <code><a href='Image-class.html'>Image</a></code> object:the results are stored in another
+  existing <code><a href='Image-class.html'>Image</a></code> object. In this case, <code>target</code> must be a
+  single channel image with an 8U bit depth. Note that this will replace the
+  content of <code>target</code>.</p></li>
+</ul></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p>If <code>target="new"</code>, the function returns an <code><a href='Image-class.html'>Image</a></code>
+ object. If <code>target</code> is an <code><a href='Image-class.html'>Image</a></code> object, the function
+ returns nothing and modifies that <code><a href='Image-class.html'>Image</a></code> object in place.</p>
+<p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
@@ -203,8 +218,8 @@ extra elements are ignored without warning (default: rep(255, 4)).</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>bw</span> <span class='op'>&lt;-</span> <span class='fu'>inRange</span><span class='op'>(</span><span class='va'>balloon</span>, low <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span><span class='op'>)</span>, up <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>120</span>, <span class='fl'>130</span>, <span class='fl'>140</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>bw</span><span class='op'>)</span>
-</div><div class='img'><img src='inRange-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in `_zeros`(nrow, ncol, paste0(bitdepth, "C", nchan), colorspace): Unknown image type.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>bw</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in plot(bw): object 'bw' not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -43,7 +43,7 @@ This function computes the weighted sum of two
 \examples{
 balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
-plot(addWeighted(balloon1, balloon2))
+balloon_weighted <- addWeighted(balloon1, balloon2)
 
 }
 \seealso{

@@ -33,11 +33,11 @@ abline(v = 570, col = "red", lwd = 5)
 
 ## ---- message=FALSE, results=FALSE--------------------------------------------
 my_image[]          # Entire image
-my_image[1, 1]      # Bottom-right pixel
-my_image[1, ]       # Bottom row of pixels
-my_image[, 1]       # Leftmost column of pixels
-my_image[1:5, 1:5]  # All pixels between the 1st and 5th row and column
-my_image[c(TRUE, FALSE), c(TRUE, FALSE)]  # Every other row and column of pixels
+my_image[1, 1,]      # Bottom-right pixel
+my_image[1,,]       # Bottom row of pixels
+my_image[, 1,]       # Leftmost column of pixels
+my_image[1:5, 1:5,]  # All pixels between the 1st and 5th row and column
+my_image[c(TRUE, FALSE), c(TRUE, FALSE),]  # Every other row and column of pixels
 
 ## ---- message=FALSE, results=FALSE--------------------------------------------
 my_gray_image <- changeColorSpace(my_image, "GRAY")

@@ -34,7 +34,6 @@ In Place Arithmetic Operators for Images
 balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
 balloon1 \%i+\% balloon2
-plot(balloon1)
 
 }
 \seealso{

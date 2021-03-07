@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -157,7 +157,13 @@
  (i.e. areas of contiguous non-zero pixels) of a binary image.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>connectedComponents</span><span class='op'>(</span><span class='va'>image</span>, connectivity <span class='op'>=</span> <span class='fl'>8</span>, algorithm <span class='op'>=</span> <span class='st'>"grana"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>connectedComponents</span><span class='op'>(</span>
+  <span class='va'>image</span>,
+  connectivity <span class='op'>=</span> <span class='fl'>8</span>,
+  algorithm <span class='op'>=</span> <span class='st'>"grana"</span>,
+  table <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  target <span class='op'>=</span> <span class='st'>"new"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,18 +193,36 @@ labeling algorithm to use. This parameter can take two values:</p><ul>
   connectivity.</p></li>
 </ul></td>
     </tr>
+    <tr>
+      <th>table</th>
+      <td><p>A boolean indicatinng whether the coordinates of the pixels of
+each component should be returned.</p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p>The location where the results should be stored. It can take 2
+values:</p><ul>
+<li><p>"new":a new <code><a href='Image-class.html'>Image</a></code> object is created and the results
+  are stored inside (the default).</p></li>
+<li><p>An <code><a href='Image-class.html'>Image</a></code> object:the results are stored in another
+  existing <code><a href='Image-class.html'>Image</a></code> object. In this case, <code>target</code> must be a
+  single channel image with a 16U or 32S bit depth. Note that this will
+  replace the content of <code>target</code>.</p></li>
+</ul></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list with 2 (or 3) items:</p><ul>
-<li><p>n: the number of connected components in the image.</p></li>
-<li><p>labels: a 16-bit (16U) single-channel  image in which each pixel of
-   each connected component is represented by the identity number of the
-   component, and the background pixels by zero.</p></li>
-<li><p>table: a matrix with 3 columns representing the identity of the
-   connected components (id), and the x-y coordinates of the pixels they are
-   composed of.</p></li>
+    <p>A list with 1 to 3 items:</p><ul>
+<li><p>n: the number of connected components in the image. It is always
+   returned.</p></li>
+<li><p>table: if <code>table=TRUE</code>, a matrix with 3 columns representing
+   the identity of the connected components (id), and the x-y coordinates of
+   the pixels they are composed of.</p></li>
+<li><p>labels: if <code>target="new"</code> a 32S single-channel image in which
+   each pixel of each connected component is represented by the identity
+   number of the component, and the background pixels by zero.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -212,12 +236,9 @@ labeling algorithm to use. This parameter can take two values:</p><ul>
     <pre class="examples"><div class='input'><span class='va'>dots</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/dots.jpg"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>dots_gray</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='va'>dots</span>, <span class='st'>"GRAY"</span><span class='op'>)</span>
 <span class='va'>dots_bin</span> <span class='op'>&lt;-</span> <span class='va'>dots_gray</span> <span class='op'>&lt;</span> <span class='fl'>200</span>
-<span class='va'>cc</span> <span class='op'>&lt;-</span> <span class='fu'>connectedComponents</span><span class='op'>(</span><span class='va'>dots_bin</span><span class='op'>)</span>
-<span class='va'>cc_mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>cc</span><span class='op'>$</span><span class='va'>labels</span><span class='op'>)</span>
-<span class='va'>colors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"black"</span>, <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span><span class='op'>(</span><span class='va'>cc</span><span class='op'>$</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>cc_img</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='fu'><a href='col2bgr.html'>col2bgr</a></span><span class='op'>(</span><span class='va'>colors</span><span class='op'>[</span><span class='va'>cc_mat</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>, dim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>dots</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cc_img</span><span class='op'>)</span>
-</div><div class='img'><img src='connectedComponents-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in `_compare`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison),     out): Cannot convert object to an environment: [type=double; target=ENVSXP].</span></div><div class='input'><span class='va'>cc</span> <span class='op'>&lt;-</span> <span class='fu'>connectedComponents</span><span class='op'>(</span><span class='va'>dots_bin</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in isImage(image): object 'dots_bin' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cc</span><span class='op'>$</span><span class='va'>labels</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in plot(cc$labels): object 'cc' not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

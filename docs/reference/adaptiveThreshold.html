@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -164,7 +164,8 @@
   threshold_type <span class='op'>=</span> <span class='st'>"inverse"</span>,
   block_size <span class='op'>=</span> <span class='fl'>31</span>,
   C <span class='op'>=</span> <span class='fl'>25</span>,
-  in_place <span class='op'>=</span> <span class='cn'>FALSE</span>
+  target <span class='op'>=</span> <span class='st'>"new"</span>,
+  in_place <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -202,17 +203,33 @@ threshold value for the pixel (default: 31).</p></td>
 positive but may be zero or negative as well (default: 25).</p></td>
     </tr>
     <tr>
+      <th>target</th>
+      <td><p>The location where the results should be stored. It can take 3
+values:</p><ul>
+<li><p>"new":a new <code><a href='Image-class.html'>Image</a></code> object is created and the results
+  are stored inside (the default).</p></li>
+<li><p>"self":the results are stored back into <code>image</code> (faster but
+  destructive).</p></li>
+<li><p>An <code><a href='Image-class.html'>Image</a></code> object:the results are stored in another
+  existing <code><a href='Image-class.html'>Image</a></code> object. This is fast and will not replace the
+  content of <code>image</code> but will replace that of <code>target</code>. Note that
+  if <code>target</code> does not have the same dimensions, colorspace, and
+  bitdepth as <code>image</code>, an error may be thrown.</p></li>
+</ul></td>
+    </tr>
+    <tr>
       <th>in_place</th>
-      <td><p>A logical indicating whether the change should be applied to
-the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-the default, slower but non destructive).</p></td>
+      <td><p>Deprecated. Use <code>target</code> instead.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object if <code>in_place=FALSE</code>. Otherwise, it
- returns nothing and modifies <code>image</code> in place.</p>
+    <p>If <code>target="new"</code>, the function returns an <code><a href='Image-class.html'>Image</a></code>
+ object. If <code>target="self"</code>, the function returns nothing and modifies
+ <code>image</code> in place. If <code>target</code> is an <code><a href='Image-class.html'>Image</a></code> object,
+ the function returns nothing and modifies that <code><a href='Image-class.html'>Image</a></code> object in
+ place.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
@@ -224,8 +241,7 @@ the default, slower but non destructive).</p></td>
     <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>balloon_gray</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='va'>balloon</span>, <span class='st'>"GRAY"</span><span class='op'>)</span>
 <span class='va'>balloon_th</span> <span class='op'>&lt;-</span> <span class='fu'>adaptiveThreshold</span><span class='op'>(</span><span class='va'>balloon_gray</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>balloon_th</span><span class='op'>)</span>
-</div><div class='img'><img src='adaptiveThreshold-1.png' alt='' width='700' height='433' /></div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

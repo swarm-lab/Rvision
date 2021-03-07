@@ -223,25 +223,16 @@ dim.Rcpp_Image <- function(x) {
 #'
 #' @export
 nrow.Rcpp_Image <- function(x) {
-  if (!isImage(x))
-    stop("This is not an Image object.")
-
   x$nrow()
 }
 
 #' @export
 ncol.Rcpp_Image <- function(x) {
-  if (!isImage(x))
-    stop("This is not an Image object.")
-
   x$ncol()
 }
 
 #' @export
 nchan <- function(x) {
-  if (!isImage(x))
-    stop("This is not an Image object.")
-
   x$nchan()
 }
 
@@ -418,7 +409,21 @@ split <- function(x) {
 #'
 #' @param x A list of single channel (grayscale) \code{\link{Image}} objects.
 #'
-#' @return An \code{\link{Image}} object.
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. Note that if \code{target} does not have the
+#'    same dimensions as the images in \code{x} and the same number of channels
+#'    as the number of images in \code{x}, an error will be thrown.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
 #'
 #' @note Color images are usually represented by 3 channels (possibly 4) in the
 #'  following order: green (1), blue (2), red (3), and possibly alpha (4).
@@ -433,7 +438,7 @@ split <- function(x) {
 #' balloon_merged <- merge(balloon_chan)
 #'
 #' @export
-merge <- function(x) {
+merge <- function(x, target = "new") {
   if (!is.list(x))
     stop("This is not a list of grayscale images.")
 
@@ -443,7 +448,15 @@ merge <- function(x) {
   if (!all(apply(sapply(x, dim), 1, function(x) diff(range(x)) < .Machine$double.eps ^ 0.5)))
     stop("The grayscale images do not have the same dimensions.")
 
-  `_merge`(x)
+  if (isImage(target)) {
+    `_merge`(x, target)
+  } else if (target == "new") {
+    out <- `_cloneImage`(e1)
+    `_merge`(x, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 #' @title Read a Multi-Page Image
@@ -463,11 +476,11 @@ merge <- function(x) {
 #' balloon <- readMulti(system.file("sample_img/multipage.tif", package = "Rvision"))
 #'
 #' @export
-readMulti <- function(x) {
+readMulti <- function(x, colorspace = "BGR") {
   if (!file.exists(x))
     stop("File not found.")
 
-  `_readMulti`(x)
+  `_readMulti`(x, colorspace = "BGR")
 }
 
 

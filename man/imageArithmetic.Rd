@@ -51,7 +51,7 @@ Arithmetic Functions for Images
 \examples{
 balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
-plot(add(balloon1, balloon2))
+balloon_sum <- add(balloon1, balloon2)
 
 }
 \seealso{

@@ -79,6 +79,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/colorspace.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/compare.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/computeECC.html</loc>
   </url>
   <url>
@@ -190,10 +193,19 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/getTextSize.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/histEq.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/histmatch.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/image.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/imageArithmetic.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/imageLogic.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/imhist.html</loc>
@@ -289,6 +301,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plot.blob.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/pset.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/readFrame.html</loc>
   </url>
   <url>
@@ -296,9 +311,6 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/readNext.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/readStream.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/release.html</loc>

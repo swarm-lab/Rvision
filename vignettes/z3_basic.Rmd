@@ -96,16 +96,16 @@ destroyAllDisplays()
 
 ## 3.3 - Accessing/replacing parts of an image
 
-You can access parts of an image in the same way you would do it with matrices 
-and arrays in base [`R`](https://cran.r-project.org). 
+You can access parts of an image in the same way you would do it with arrays in 
+base [`R`](https://cran.r-project.org). 
 
 ```{r, message=FALSE, results=FALSE}
 my_image[]          # Entire image
-my_image[1, 1]      # Bottom-right pixel
-my_image[1, ]       # Bottom row of pixels
-my_image[, 1]       # Leftmost column of pixels
-my_image[1:5, 1:5]  # All pixels between the 1st and 5th row and column
-my_image[c(TRUE, FALSE), c(TRUE, FALSE)]  # Every other row and column of pixels
+my_image[1, 1,]      # Bottom-right pixel
+my_image[1,,]       # Bottom row of pixels
+my_image[, 1,]       # Leftmost column of pixels
+my_image[1:5, 1:5,]  # All pixels between the 1st and 5th row and column
+my_image[c(TRUE, FALSE), c(TRUE, FALSE),]  # Every other row and column of pixels
 ```
 
 Note that images are not exactly like traditional matrices. Color images have 

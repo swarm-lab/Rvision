@@ -417,17 +417,14 @@ Rcpp::List _split(Image& image) {
   return out;
 }
 
-Image _merge(Rcpp::List& channels, std::string colorspace) {
-  cv::Mat out;
+void _merge(Rcpp::List& channels, std::string colorspace, Image& target) {
   std::vector<cv::Mat> tomerge(channels.size());
 
   for (int i = 0; i < channels.size(); i++) {
     tomerge[i] = as<Image>(channels[i]).image;
   }
 
-  cv::merge(tomerge, out);
-
-  return Image(out, colorspace);
+  cv::merge(tomerge, target.image);
 }
 
 Rcpp::List _readMulti(std::string file, std::string colorspace) {

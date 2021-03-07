@@ -4,7 +4,7 @@
 \alias{readMulti}
 \title{Read a Multi-Page Image}
 \usage{
-readMulti(x)
+readMulti(x, colorspace = "BGR")
 }
 \arguments{
 \item{x}{A character string naming the path to a multi-page image file.}

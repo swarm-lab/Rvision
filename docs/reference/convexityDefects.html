@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -201,85 +201,9 @@ for which to run the function.</p></td>
     <pre class="examples"><div class='input'><span class='va'>dots</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/dots.jpg"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>dots_gray</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='va'>dots</span>, <span class='st'>"GRAY"</span><span class='op'>)</span>
 <span class='va'>dots_bin</span> <span class='op'>&lt;-</span> <span class='va'>dots_gray</span> <span class='op'>&lt;</span> <span class='fl'>200</span>
-<span class='va'>contours</span> <span class='op'>&lt;-</span> <span class='fu'><a href='findContours.html'>findContours</a></span><span class='op'>(</span><span class='va'>dots_bin</span><span class='op'>)</span>
-<span class='fu'>convexityDefects</span><span class='op'>(</span><span class='va'>contours</span>, id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;       id start_index end_index farthest_pt_index fixpt_depth
-#&gt;  [1,]  3           1         2                 2         217
-#&gt;  [2,]  3           3         4                 4         162
-#&gt;  [3,]  3           9        10                10         114
-#&gt;  [4,]  3          11        12                12         176
-#&gt;  [5,]  3          15        16                16         154
-#&gt;  [6,]  3          18        19                19         154
-#&gt;  [7,]  3          20        21                21         142
-#&gt;  [8,]  3          22        23                23         114
-#&gt;  [9,]  3          28        29                29         162
-#&gt; [10,]  3          34        35                35         210
-#&gt; [11,]  3          37        38                38         210
-#&gt; [12,]  3          39        40                40         186
-#&gt; [13,]  3          41        42                42         162
-#&gt; [14,]  3          45        46                46         114
-#&gt; [15,]  3          53        54                54         142
-#&gt; [16,]  3          58        59                59         142
-#&gt; [17,]  3          60        63                63         176
-#&gt; [18,]  3          64        65                65         114
-#&gt; [19,]  3          66        67                67         162
-#&gt; [20,]  3          72        73                73         201
-#&gt; [21,]  3          75        76                76         201
-#&gt; [22,]  3          77        78                78         162
-#&gt; [23,]  3          81        82                82         114
-#&gt; [24,]  3          85        86                86         176
-#&gt; [25,]  3          90        91                91         142
-#&gt; [26,]  3          92        95                95         176
-#&gt; [27,]  3          96        97                97         190
-#&gt; [28,]  3         100       101               101         162
-#&gt; [29,]  3         102       103               103         186
-#&gt; [30,]  3         104       105               105         201
-#&gt; [31,]  3         107       108               108         201
-#&gt; [32,]  3         109       110               110         186
-#&gt; [33,]  3         111       112               112         162
-#&gt; [34,]  3         113       116               116         190
-#&gt; [35,]  3         117       118               118         114
-#&gt; [36,]  3         121       122               122         142
-#&gt; [37,]  3         126       127               127         142
-#&gt; [38,]  3         130       131               131         114
-#&gt; [39,]  3         132       133               133         190
-#&gt; [40,]  3         136       137               137         162
-#&gt; [41,]  3         140       141               141         222
-#&gt; [42,]  5           1         2                 2         186
-#&gt; [43,]  5           3         4                 4         162
-#&gt; [44,]  5           5         6                 6         114
-#&gt; [45,]  5           9        10                10         142
-#&gt; [46,]  5          11        12                12         154
-#&gt; [47,]  5          14        15                15         154
-#&gt; [48,]  5          16        17                17         142
-#&gt; [49,]  5          18        19                19         114
-#&gt; [50,]  5          28        29                29         162
-#&gt; [51,]  5          32        33                33         186
-#&gt; [52,]  5          36        37                37         229
-#&gt; [53,]  5          39        40                40         226
-#&gt; [54,]  5          41        42                42         186
-#&gt; [55,]  5          43        44                44         162
-#&gt; [56,]  5          47        48                48         114
-#&gt; [57,]  5          56        57                57         114
-#&gt; [58,]  5          60        61                61         162
-#&gt; [59,]  5          63        64                64         162
-#&gt; [60,]  5          65        66                66         114
-#&gt; [61,]  5          69        70                70         142
-#&gt; [62,]  5          71        72                72         154
-#&gt; [63,]  5          74        75                75         160
-#&gt; [64,]  5          76        79                79         176
-#&gt; [65,]  5          80        81                81         114
-#&gt; [66,]  5          88        89                89         162
-#&gt; [67,]  5          96        97                97         201
-#&gt; [68,]  5          98        99                99         217
-#&gt; [69,]  5         101       102               102         217
-#&gt; [70,]  5         103       104               104         186
-#&gt; [71,]  5         105       106               106         162
-#&gt; [72,]  5         107       108               108         114
-#&gt; [73,]  5         113       114               114         142
-#&gt; [74,]  5         116       117               117         142
-#&gt; [75,]  5         118       119               119         114
-#&gt; [76,]  5         122       123               123         186</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in `_compare`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison),     out): Cannot convert object to an environment: [type=double; target=ENVSXP].</span></div><div class='input'><span class='va'>contours</span> <span class='op'>&lt;-</span> <span class='fu'><a href='findContours.html'>findContours</a></span><span class='op'>(</span><span class='va'>dots_bin</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in isImage(image): object 'dots_bin' not found</span></div><div class='input'><span class='fu'>convexityDefects</span><span class='op'>(</span><span class='va'>contours</span>, id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in convexityDefects(contours, id = c(3, 5)): object 'contours' not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

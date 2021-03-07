@@ -39,7 +39,7 @@ This function computes the absolute difference between two
 \examples{
 balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
-plot(absdiff(balloon1, balloon2))
+balloon_diff <- absdiff(balloon1, balloon2)
 
 }
 \seealso{

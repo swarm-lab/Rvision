@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -159,7 +159,14 @@
  sharp. However, it is very slow compared to most filters.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bilateralFilter</span><span class='op'>(</span><span class='va'>image</span>, d <span class='op'>=</span> <span class='fl'>5</span>, sigma_color <span class='op'>=</span> <span class='fl'>25</span>, sigma_space <span class='op'>=</span> <span class='fl'>25</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bilateralFilter</span><span class='op'>(</span>
+  <span class='va'>image</span>,
+  d <span class='op'>=</span> <span class='fl'>5</span>,
+  sigma_color <span class='op'>=</span> <span class='fl'>25</span>,
+  sigma_space <span class='op'>=</span> <span class='fl'>25</span>,
+  target <span class='op'>=</span> <span class='st'>"new"</span>,
+  in_place <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,11 +189,34 @@
       <td><p>The filter standard deviation in the coordinate space
 (see Note; default: 25).</p></td>
     </tr>
+    <tr>
+      <th>target</th>
+      <td><p>The location where the results should be stored. It can take 3
+values:</p><ul>
+<li><p>"new":a new <code><a href='Image-class.html'>Image</a></code> object is created and the results
+  are stored inside (the default).</p></li>
+<li><p>"self":the results are stored back into <code>image</code> (faster but
+  destructive).</p></li>
+<li><p>An <code><a href='Image-class.html'>Image</a></code> object:the results are stored in another
+  existing <code><a href='Image-class.html'>Image</a></code> object. This is fast and will not replace the
+  content of <code>image</code> but will replace that of <code>target</code>. Note that
+  if <code>target</code> does not have the same dimensions, colorspace, and
+  bitdepth as <code>image</code>, an error may be thrown.</p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>in_place</th>
+      <td><p>Deprecated. Use <code>target</code> instead.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p>If <code>target="new"</code>, the function returns an <code><a href='Image-class.html'>Image</a></code>
+ object. If <code>target="self"</code>, the function returns nothing and modifies
+ <code>image</code> in place. If <code>target</code> is an <code><a href='Image-class.html'>Image</a></code> object,
+ the function returns nothing and modifies that <code><a href='Image-class.html'>Image</a></code> object in
+ place.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>A larger value of <code>sigma_color</code> means that farther colors within
@@ -207,10 +237,8 @@
     <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>balloon_noisy</span> <span class='op'>&lt;-</span> <span class='va'>balloon</span> <span class='op'>+</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>30</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
                                        dim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>balloon_noisy</span><span class='op'>)</span>
-</div><div class='img'><img src='bilateralFilter-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>balloon_bilateral</span> <span class='op'>&lt;-</span> <span class='fu'>bilateralFilter</span><span class='op'>(</span><span class='va'>balloon_noisy</span>, <span class='fl'>25</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>balloon_bilateral</span><span class='op'>)</span>
-</div><div class='img'><img src='bilateralFilter-2.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in `_plus`(e1, e2, out): OpenCV(4.5.0) /var/folders/tv/zc70_5gn4_z_c29g5_wq4s_80000gn/T/RtmpEd04ZO/opencv-4.5.0/modules/core/src/arithm.cpp:693: error: (-5:Bad argument) When the input arrays in add/subtract/multiply/divide functions have different types, the output array type must be explicitly specified in function 'arithm_op'</span></div><div class='input'><span class='va'>balloon_bilateral</span> <span class='op'>&lt;-</span> <span class='fu'>bilateralFilter</span><span class='op'>(</span><span class='va'>balloon_noisy</span>, <span class='fl'>25</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in isImage(image): object 'balloon_noisy' not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

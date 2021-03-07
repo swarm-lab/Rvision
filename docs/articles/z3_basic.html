@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -257,14 +257,14 @@
 <div id="accessingreplacing-parts-of-an-image" class="section level2">
 <h2 class="hasAnchor">
 <a href="#accessingreplacing-parts-of-an-image" class="anchor"></a>3.3 - Accessing/replacing parts of an image</h2>
-<p>You can access parts of an image in the same way you would do it with matrices and arrays in base <a href="https://cran.r-project.org"><code>R</code></a>.</p>
+<p>You can access parts of an image in the same way you would do it with arrays in base <a href="https://cran.r-project.org"><code>R</code></a>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_image</span><span class="op">[</span><span class="op">]</span>          <span class="co"># Entire image</span>
-<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span>      <span class="co"># Bottom-right pixel</span>
-<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>       <span class="co"># Bottom row of pixels</span>
-<span class="va">my_image</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>       <span class="co"># Leftmost column of pixels</span>
-<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>  <span class="co"># All pixels between the 1st and 5th row and column</span>
-<span class="va">my_image</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">]</span>  <span class="co"># Every other row and column of pixels</span></code></pre></div>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span>,<span class="op">]</span>      <span class="co"># Bottom-right pixel</span>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span>,,<span class="op">]</span>       <span class="co"># Bottom row of pixels</span>
+<span class="va">my_image</span><span class="op">[</span>, <span class="fl">1</span>,<span class="op">]</span>       <span class="co"># Leftmost column of pixels</span>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>  <span class="co"># All pixels between the 1st and 5th row and column</span>
+<span class="va">my_image</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,<span class="op">]</span>  <span class="co"># Every other row and column of pixels</span></code></pre></div>
 <p>Note that images are not exactly like traditional matrices. Color images have multiple layers, each corresponsing to a dimension in the BGR or BGRA space (Blue, Green, Red, Alpha transparency). Therefore, when accessing a pixel of a color image, you will obtain 3 or 4 values in return. Grayscale images, on the other hand, function similarly to regular monolayer matrices in base <a href="https://cran.r-project.org"><code>R</code></a>.</p>
 <p>To replace parts of an image, you can use the <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> assignment operator. With grayscale images, it works exactly like in base <a href="https://cran.r-project.org"><code>R</code></a> with matrices.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">

@@ -4,13 +4,27 @@
 \alias{merge}
 \title{Merge Separate Channels into an Image}
 \usage{
-merge(x)
+merge(x, target = "new")
 }
 \arguments{
 \item{x}{A list of single channel (grayscale) \code{\link{Image}} objects.}
+
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast but will replace the
+  content of \code{target}. Note that if \code{target} does not have the
+  same dimensions as the images in \code{x} and the same number of channels
+  as the number of images in \code{x}, an error will be thrown.}
+}}
 }
 \value{
-An \code{\link{Image}} object.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target} is an \code{\link{Image}} object, the function
+ returns nothing and modifies that \code{\link{Image}} object in place.
 }
 \description{
 \code{merge} returns an image from the combination of grayscale
