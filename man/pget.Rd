@@ -2,7 +2,7 @@
 % Please edit documentation in R/ImageClass.R
 \name{pget}
 \alias{pget}
-\title{Return Pixel Value at Specified Location}
+\title{Return Pixel Value at Specified Locations}
 \usage{
 pget(image, x, y)
 }

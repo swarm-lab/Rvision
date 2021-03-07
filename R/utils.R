@@ -41,8 +41,8 @@
 #' @export
 col2bgr <- function(col, alpha = FALSE) {
   if (alpha) {
-    col2rgb(col, alpha)[c(3:1, 4), ]
+    col2rgb(col, alpha)[c(3:1, 4), , drop = FALSE]
   } else {
-    col2rgb(col, alpha)[3:1, ]
+    col2rgb(col, alpha)[3:1, , drop = FALSE]
   }
 }

@@ -2,7 +2,7 @@
 #'
 #' @name Image-class
 #'
-#' @aliases Rcpp_Image
+#' @aliases Rcpp_Image2
 #'
 #' @docType class
 #'
@@ -43,8 +43,8 @@
 #' noise <- image(array(sample(0:255, 100 * 100 * 3, replace = TRUE), dim = c(100, 100, 3)))
 #'
 #' @export
-image <- function(...) {
-  new(Rvision::Image, ...)
+image <- function(..., colorspace = "BGR") {
+  new(Rvision::Image, ..., colorspace)
 }
 
 
@@ -84,56 +84,30 @@ plot.Rcpp_Image <- function(x, ...) {
     ylim <- c(1, nrow(x))
   }
 
-  if (bitdepth(x) == "8S") {
-    x <- changeBitDepth(x, "8U")
-  }
-
-  if (bitdepth(x) == "16S") {
-    x <- changeBitDepth(x, "16U")
-  }
-
-  if (bitdepth(x) == "32S") {
-    x <- changeBitDepth(x, "32F")
-  }
-
-  imgRange <- switch (bitdepth(x),
-    "8U" = c(0, 255),
-    # "8S" = c(-128, 127),
-    "16U" = c(0, 65535),
-    # "16S" = c(-32768, 32767),
-    # "32S" = c(-2147483648, 2147483647),
-    "32F" = range(range(x)),
-    stop("Invalid bit depth.")
-  )
-
-  if (colorspace(x) == "GRAY") {
-    x <- changeColorSpace(x, "BGR")
-  }
-
-  d <- diff(imgRange)
-  if (d == 0) {
-    imgRange <- c(0, 255)
-    d <- 255
-  }
-
   img <- x[min(nrow(x), ylim[2]):max(1, ylim[1]),
-           max(1, xlim[1]):min(ncol(x), xlim[2]), drop = FALSE]
+           max(1, xlim[1]):min(ncol(x), xlim[2]),,
+           drop = FALSE]
 
-  img <- (img - imgRange[1]) / d
-
-  if (dim(img)[3] == 4) {
+  if (dim(img)[3] == 3) {
+    img <- img[, , 3:1]
+  } else if (dim(img)[3] == 4) {
     img <- img[, , c(3:1, 4)]
   } else {
-    img <- img[, , 3:1]
+    img <- array(img, dim = c(nrow(img), ncol(img), 3))
+  }
+
+  if (x$depth() != "8U") {
+    img_range <- range(img)
+    img <- 255 * ((img - img_range[1]) / (img_range[2] - img_range[1]))
   }
 
   op <- par(mar = rep(0, 4))
-  plot(NA, xlim = xlim, ylim = ylim, asp = 1, xaxt = "n",
-       yaxt = "n", ann = FALSE, bty = "n", xaxs = "i", yaxs = "i")
+  plot(NA, xlim = xlim + c(-0.5, 0.5), ylim = ylim + c(-0.5, 0.5), asp = 1,
+       xaxt = "n", yaxt = "n", ann = FALSE, bty = "n", xaxs = "i", yaxs = "i")
 
   rasterImage(
-    img, xleft = max(1, xlim[1]), xright = min(ncol(x), xlim[2]),
-    ybottom = max(1, ylim[1]), ytop = min(nrow(x), ylim[2]), ...)
+    img / 255, xleft = max(1, xlim[1]) - 0.5, xright = min(ncol(x), xlim[2]) + 0.5,
+    ybottom = max(1, ylim[1]) - 0.5, ytop = min(nrow(x), ylim[2]) + 0.5, ...)
   par(op)
 }
 
@@ -333,7 +307,7 @@ colorspace <- function(x) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  x$space()
+  x$space
 }
 
 
@@ -427,10 +401,12 @@ split <- function(x) {
     stop("This is not an Image object.")
 
   out <- `_split`(x)
-
   names(out) <- switch(x$nchan(),
-                       "I", NA, c("B", "G", "R"), c("B", "G", "R", "A"), NA)
-
+                       "I",
+                       c("I1", "I2"),
+                       c("B", "G", "R"),
+                       c("B", "G", "R", "A"),
+                       NA)
   out
 }
 
@@ -495,7 +471,7 @@ readMulti <- function(x) {
 }
 
 
-#' @title Return Pixel Value at Specified Location
+#' @title Return Pixel Value at Specified Locations
 #'
 #' @description \code{pget} returns the values of the pixels at the specified x
 #'  and y coordinates in the image.
@@ -528,14 +504,68 @@ pget <- function(image, x, y) {
   if (max(x) > ncol(image) | max(y) > nrow(image) | min(x) < 1 | min(y) < 1)
     stop("Index out of bounds.")
 
-  out <- image$get(-y + nrow(image), x - 1)
-  colnames(out) <- switch(image$nchan(),
+  out <- image$pget(x, y)
+  rownames(out) <- switch(image$nchan(),
                           "I",
-                          NA,
+                          c("I1", "I2"),
                           c("B", "G", "R"),
                           c("B", "G", "R", "A"),
                           NA)
   out
+}
+
+
+#' @title Set Pixel Value at Specified Locations
+#'
+#' @description \code{pset} sets the values of the pixels at the specified x
+#'  and y coordinates in the image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param x A vector of x locations (columns) in the image.
+#'
+#' @param y A vector of y locations (rows) in the image.
+#'
+#' @param color A value or vector of any kind of R color specification compatible
+#'  with \code{\link{col2bgr}}. It can also be a matrix with the same number of
+#'  columns as the number of elements in \code{x} and the same number of rows as
+#'  the number of channels in \code{image}.
+#'
+#' @return This functions returns nothing and changes the values of the pixels
+#'  in \code{image} in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' pset(balloon, 1:100, 200:101, "red")
+#'
+#' @export
+pset <- function(image, x, y, color) {
+  invisible({
+    if (!isImage(image))
+      stop("This is not an Image object.")
+
+    if (length(x) != length(y) | !is.vector(x) | !is.vector(y))
+      stop("'x' and 'y' should be vectors of the same length.")
+
+    if (max(x) > ncol(image) | max(y) > nrow(image) | min(x) < 1 | min(y) < 1)
+      stop("Index out of bounds.")
+
+    if (is.matrix(color)) {
+      if (ncol(color) != length(x))
+        stop("The number of columns of 'color' should be equal to the length of 'x'.")
+
+      if (nrow(color) != image$nchan())
+        stop("The number of rows of 'color' should be equal to the number of channels of 'image'.")
+    } else {
+      color <- col2bgr(rep_len(color, length(x)), alpha = image$nchan() == 4)
+    }
+
+    image$pset(x, y, color)
+  })
 }
 
 
@@ -555,15 +585,13 @@ pget <- function(image, x, y) {
 #'  \code{\link{as.integer}} (and hence truncated towards zero) or logical
 #'  vectors which are recycled if necessary to match the dimensions of the image.
 #'
-#' @param ... Ignored.
+#' @param ... Other arguments passed to \code{\link{[}} when extracting parts.
+#'  In this case, the function treat that image as an R array and will
+#'  accept/require the same arguments.
 #'
-#' @param drop If \code{TRUE} the result is coerced to the lowest possible
-#'  dimension. This only works for extracting elements, not for the replacement.
-#'
-#' @param value Single-, three- or four-values vectors representing the gray
-#'  intensity, BGR or BGRA values (respectively) of the pixels. The vector is
-#'  recycled if it is shorter than the number of pixels to modify times the
-#'  number of channels of the image.
+#' @param value Vector or matrix with the data to replace the pixels. Typically,
+#'  this is a matrix with the same number of rows as the number of channels in
+#'  \code{image}, similar to that produced by \code{\link{col2rgb}}.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -571,68 +599,12 @@ pget <- function(image, x, y) {
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-#' balloon[1:100, 1:100]
-#' balloon[1:100, 1:100] <- c(0, 0, 255)
-#' plot(balloon)
+#' balloon[1:100, 1:100, ]
+#' balloon[1:100, 1:100] <- col2rgb(c("red", "green", "blue", "yellow"))
 #'
 #' @export
-`[.Rcpp_Image` <- function(x, i = NULL, j = NULL, ..., drop = TRUE) {
-  if (!isImage(x))
-    stop("This is not an Image object.")
-
-  if ((nargs() == 2 & missing(drop)) | (nargs() == 3 & !missing(drop))) {
-    if (missing(i)) {
-      i <- 1:nrow(x)
-      j <- 1:ncol(x)
-      out <- x$toR()
-      dimnames(out) <- switch(dim(out)[3],
-                              list(i, j, "I"),
-                              NA,
-                              list(i, j, c("B", "G", "R")),
-                              list(i, j, c("B", "G", "R", "A")),
-                              NA)
-      if (dim(out)[3] == 1 & drop)
-        out <- out[, , 1]
-    } else {
-      if (is.logical(i))
-        i <- rep_len(i, nrow(x) * ncol(x))
-
-      out <- apply(x$toR(), 3, as.vector)[i, , drop = FALSE]
-      rownames(out) <- if (is.logical(i)) which(i) else i
-      colnames(out) <- switch(ncol(out), "I", NA, c("B", "G", "R"),
-                              c("B", "G", "R", "A"), NA)
-    }
-  } else {
-    if (missing(i))
-      i <- 1:nrow(x)
-
-    if (missing(j))
-      j <- 1:ncol(x)
-
-    if (is.logical(i))
-      i <- rep_len(i, nrow(x))
-
-    if (is.logical(j))
-      j <- rep_len(j, ncol(x))
-
-    out <- x$toR()[i, j, , drop = FALSE]
-    dimnames(out) <- switch(dim(out)[3],
-                            list(if (is.logical(i)) which(i) else i,
-                                 if (is.logical(j)) which(j) else j,
-                                 "I"),
-                            NA,
-                            list(if (is.logical(i)) which(i) else i,
-                                 if (is.logical(j)) which(j) else j,
-                                 c("B", "G", "R")),
-                            list(if (is.logical(i)) which(i) else i,
-                                 if (is.logical(j)) which(j) else j,
-                                 c("B", "G", "R", "A")),
-                            NA)
-    if (dim(out)[3] == 1 & drop)
-      out <- out[, , 1]
-  }
-
-  out
+`[.Rcpp_Image` <- function(x, ...) {
+  x$toR()[...]
 }
 
 
@@ -641,8 +613,6 @@ pget <- function(image, x, y) {
 #' @method [<- Rcpp_Image
 #' @export
 `[<-.Rcpp_Image` <- function(x, i = NULL, j = NULL, value) {
-  # WARNING: might not be similar to [
-
   if (!isImage(x))
     stop("This is not an Image object.")
 
@@ -679,7 +649,7 @@ pget <- function(image, x, y) {
 
   color <- matrix(value, nrow = x$nchan(), ncol = nrow(pixel))
 
-  x$set(pixel$row, pixel$column, color)
+  x$pset(pixel$column, pixel$row, color)
   x
 }
 
@@ -720,7 +690,6 @@ pget <- function(image, x, y) {
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_border <- border(balloon, 10)
-#' plot(balloon_border)
 #'
 #' @export
 border <- function(image, top, bottom = top, left = top, right = top,
@@ -771,7 +740,6 @@ border <- function(image, top, bottom = top, left = top, right = top,
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_sub <- subImage(balloon, 290, 170, 150, 150)
-#' plot(balloon_sub)
 #'
 #' @export
 subImage <- function(image, x, y, width, height, border = TRUE, ...) {
@@ -811,16 +779,16 @@ subImage <- function(image, x, y, width, height, border = TRUE, ...) {
 #' @description \code{zeros} creates an \code{\link{Image}} object filled with
 #'  zeros.
 #'
-#' @param nrow An integer indicating desired the number of rows for the image.
+#' @param nrow An integer indicating the desired number of rows for the image.
 #'
-#' @param ncol An integer indicating desired the number of columns for the image.
+#' @param ncol An integer indicating the desired number of columns for the image.
 #'
-#' @param colorspace A string indicating the desired color space for the image.
-#'  Options are "BGR" (Blue Green Red image, the default), "BGRA" (BGR image
-#'  with Alpha channel), and "GRAY" (grayscale image).
+#' @param nchan An integer indicating the desired number of channels for the image.
 #'
 #' @param bitdepth A string indicating the desired bit depth for the image.
-#'  Options are "8U" (the default), "8S", "16U", "16S", "32S", and "32F".
+#'  Options are "8U" (the default), "8S", "16U", "16S", "32S", "32F", and "64F".
+#'
+#' @param colorspace A string indicating the desired color space for the image.
 #'
 #' @return An \code{\link{Image}} object.
 #'
@@ -832,15 +800,8 @@ subImage <- function(image, x, y, width, height, border = TRUE, ...) {
 #' zero <- zeros(100, 100)
 #'
 #' @export
-zeros <- function(nrow, ncol, colorspace = "BGR", bitdepth = "8U") {
-  type <- paste0(bitdepth,
-                 switch (colorspace,
-                   "GRAY" = "C1",
-                   "BGR" = "C3",
-                   "BGRA" = "C4"
-                 ))
-
-  `_zeros`(nrow, ncol, type)
+zeros <- function(nrow, ncol, nchan = 3, bitdepth = "8U", colorspace = "BGR") {
+  `_zeros`(nrow, ncol, paste0(bitdepth, "C", nchan), colorspace)
 }
 
 
@@ -853,12 +814,12 @@ zeros <- function(nrow, ncol, colorspace = "BGR", bitdepth = "8U") {
 #'
 #' @param ncol An integer indicating desired the number of columns for the image.
 #'
-#' @param colorspace A string indicating the desired color space for the image.
-#'  Options are "BGR" (Blue Green Red image, the default), "BGRA" (BGR image
-#'  with Alpha channel), and "GRAY" (grayscale image).
+#' @param nchan An integer indicating the desired number of channels for the image.
 #'
 #' @param bitdepth A string indicating the desired bit depth for the image.
-#'  Options are "8U" (the default), "8S", "16U", "16S", "32S", and "32F".
+#'  Options are "8U" (the default), "8S", "16U", "16S", "32S", "32F", and "64F".
+#'
+#' @param colorspace A string indicating the desired color space for the image.
 #'
 #' @return An \code{\link{Image}} object.
 #'
@@ -870,13 +831,6 @@ zeros <- function(nrow, ncol, colorspace = "BGR", bitdepth = "8U") {
 #' one <- ones(100, 100)
 #'
 #' @export
-ones <- function(nrow, ncol, colorspace = "BGR", bitdepth = "8U") {
-  type <- paste0(bitdepth,
-                 switch (colorspace,
-                         "GRAY" = "C1",
-                         "BGR" = "C3",
-                         "BGRA" = "C4"
-                 ))
-
-  `_ones`(nrow, ncol, type)
+ones <- function(nrow, ncol, nchan = 3, bitdepth = "8U", colorspace = "BGR") {
+  `_ones`(nrow, ncol, paste0(bitdepth, "C", nchan), colorspace)
 }

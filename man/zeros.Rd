@@ -4,19 +4,19 @@
 \alias{zeros}
 \title{Create a Zero-Filled Image}
 \usage{
-zeros(nrow, ncol, colorspace = "BGR", bitdepth = "8U")
+zeros(nrow, ncol, nchan = 3, bitdepth = "8U", colorspace = "BGR")
 }
 \arguments{
-\item{nrow}{An integer indicating desired the number of rows for the image.}
+\item{nrow}{An integer indicating the desired number of rows for the image.}
 
-\item{ncol}{An integer indicating desired the number of columns for the image.}
+\item{ncol}{An integer indicating the desired number of columns for the image.}
 
-\item{colorspace}{A string indicating the desired color space for the image.
-Options are "BGR" (Blue Green Red image, the default), "BGRA" (BGR image
-with Alpha channel), and "GRAY" (grayscale image).}
+\item{nchan}{An integer indicating the desired number of channels for the image.}
 
 \item{bitdepth}{A string indicating the desired bit depth for the image.
-Options are "8U" (the default), "8S", "16U", "16S", "32S", and "32F".}
+Options are "8U" (the default), "8S", "16U", "16S", "32S", "32F", and "64F".}
+
+\item{colorspace}{A string indicating the desired color space for the image.}
 }
 \value{
 An \code{\link{Image}} object.

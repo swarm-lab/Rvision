@@ -4,7 +4,7 @@
 \alias{image}
 \title{Create an Object of Class \code{Image}}
 \usage{
-image(...)
+image(..., colorspace = "BGR")
 }
 \arguments{
 \item{...}{When created from an image file, \code{image} takes one argument

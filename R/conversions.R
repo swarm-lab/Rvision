@@ -1,22 +1,32 @@
-#' @title Convert image between colorspaces
+#' @title Convert Image to New Color Space
 #'
 #' @description This function takes an \code{\link{Image}} object and converts
-#'  it to another colorspace (e.g BGR to grayscale).
+#'  it to another color space (e.g BGR to grayscale).
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param colorspace A string corresponding to the colorspace the image should
-#'  be converted to. Options are "BGR" (Blue Green Red image), "BGRA" (BGR image
-#'  with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer
-#'  mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR",
-#'  "BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".
+#' @param colorspace A string corresponding to the color space the image should
+#'  be converted to. All available color spaces can be retrieved with . Not all
+#'  conversions between color spaces are possible.
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    \code{target} must have the same dimensions as \code{image}.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -27,41 +37,56 @@
 #' grey_balloon <- changeColorSpace(balloon, "GRAY")
 #'
 #' @export
-changeColorSpace <- function(image, colorspace, in_place = FALSE) {
+changeColorSpace <- function(image, colorspace, target = "new") {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (!(colorspace %in% c("BGR", "BGRA", "GRAY","BayerBG2BGR","BayerGB2BGR","BayerRG2BGR","BayerGR2BGR")))
-    stop("colorspace must be one of 'BGR', 'BGRA', 'GRAY', 'BayerBG2BGR', 'BayerGB2BGR', 'BayerRG2BGR', 'BayerGR2BGR'.")
-
-  if (in_place == TRUE) {
-    image$changeColorSpace(colorspace)
-  } else {
+  if (isImage(target)) {
+    `_changeColorSpace`(image, colorspace, target)
+  } else if (target == "self") {
+    `_changeColorSpace`(image, colorspace, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    out$changeColorSpace(colorspace)
+    `_changeColorSpace`(image, colorspace, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
 
-#' @title Convert image bit depth
+#' @title Convert Image to New Bit Depth
 #'
 #' @description This function takes an \code{\link{Image}} object and modifies
 #'  its bit depth (e.g. from 16 bits to 8 bits).
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param bitdepth A string corresponding to the bitdepth the image should
-#'  be converted to. Options are "8U", "8S", "16U", "16S", "32S", and "32F".
+#' @param bitdepth A string corresponding to the bit depth the image should
+#'  be converted to. Options are "8U", "8S", "16U", "16S", "32S", "32F", and
+#'  "64F". Converting from a higher bit depth to a lower one (e.g., "16U" to
+#'  "8U" may result in data loss).
 #'
 #' @param scale A scaling factor (default: 1).
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    \code{target} must have the same dimensions as \code{image}.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -72,7 +97,7 @@ changeColorSpace <- function(image, colorspace, in_place = FALSE) {
 #' balloon_16 <- changeBitDepth(balloon, "16U")
 #'
 #' @export
-changeBitDepth <- function(image, bitdepth, scale = 1, in_place = FALSE) {
+changeBitDepth <- function(image, bitdepth, scale = 1, target = "new") {
   if (!isImage(image))
     stop("This is not an Image object.")
 
@@ -83,13 +108,18 @@ changeBitDepth <- function(image, bitdepth, scale = 1, in_place = FALSE) {
                      "16S" = 3L,
                      "32S" = 4L,
                      "32F" = 5L,
+                     "64F" = 6L,
                      stop("Invalid bit depth."))
 
-  if (in_place == TRUE) {
-    image$changeBitDepth(bitdepth, scale)
-  } else {
+  if (isImage(target)) {
+    `_changeBitDepth`(image, bitdepth, scale, target)
+  } else if (target == "self") {
+    `_changeBitDepth`(image, bitdepth, scale, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    out$changeBitDepth(bitdepth, scale)
+    `_changeBitDepth`(image, bitdepth, scale, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }

@@ -5,27 +5,25 @@
 \alias{[<-.Rcpp_Image}
 \title{Extract or Replace Parts of an Image}
 \usage{
-\method{[}{Rcpp_Image}(x, i = NULL, j = NULL, ..., drop = TRUE)
+\method{[}{Rcpp_Image}(x, ...)
 
 \method{[}{Rcpp_Image}(x, i = NULL, j = NULL) <- value
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object.}
 
+\item{...}{Other arguments passed to \code{\link{[}} when extracting parts.
+In this case, the function treat that image as an R array and will
+accept/require the same arguments.}
+
 \item{i, j}{Indices specifying elements to extract or replace. Indices are
 numeric vectors which values are coerced to integer as by
 \code{\link{as.integer}} (and hence truncated towards zero) or logical
 vectors which are recycled if necessary to match the dimensions of the image.}
 
-\item{...}{Ignored.}
-
-\item{drop}{If \code{TRUE} the result is coerced to the lowest possible
-dimension. This only works for extracting elements, not for the replacement.}
-
-\item{value}{Single-, three- or four-values vectors representing the gray
-intensity, BGR or BGRA values (respectively) of the pixels. The vector is
-recycled if it is shorter than the number of pixels to modify times the
-number of channels of the image.}
+\item{value}{Vector or matrix with the data to replace the pixels. Typically,
+this is a matrix with the same number of rows as the number of channels in
+\code{image}, similar to that produced by \code{\link{col2rgb}}.}
 }
 \description{
 Operators acting on \code{\link{Image}} objects to extract or
@@ -33,9 +31,8 @@ Operators acting on \code{\link{Image}} objects to extract or
 }
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-balloon[1:100, 1:100]
-balloon[1:100, 1:100] <- c(0, 0, 255)
-plot(balloon)
+balloon[1:100, 1:100, ]
+balloon[1:100, 1:100] <- col2rgb(c("red", "green", "blue", "yellow"))
 
 }
 \seealso{

@@ -13,26 +13,27 @@ RCPP_MODULE(class_Image) {
   class_<Image>("Image")
 
   .constructor()
-  .constructor<std::string>("", &ImageConst1)
-  .constructor<arma::Cube<int> > ("", &ImageConst2)
-  .constructor<arma::Cube<double> > ("", &ImageConst3)
+  .constructor< std::string, std::string > ("", &ImageConst1)
+  .constructor< arma::icube, std::string > ("", &ImageConst2)
+  .constructor< arma::fcube, std::string > ("", &ImageConst3)
 
-  .method("open", &Image::open)
+  .field("space", &Image::space)
+
   .method("write", &Image::write)
-  .method("get", &Image::get)
-  .method("set", &Image::set)
-  .method("loadArray", &Image::loadArray)
+  .method("pget", &Image::pget)
+  .method("pset", &Image::pset)
   .method("toR", &Image::toR)
   .method("dim", &Image::dim)
   .method("nrow", &Image::nrow)
   .method("ncol", &Image::ncol)
   .method("nchan", &Image::nchan)
   .method("depth", &Image::depth)
-  .method("space", &Image::space)
-  .method("changeBitDepth", &Image::changeBitDepth)
-  .method("changeColorSpace", &Image::changeColorSpace)
   ;
 
+  function("_changeBitDepth", &_changeBitDepth, List::create(_["image"], _["depth"],
+    _["scale"], _["target"]), "");
+  function("_changeColorSpace", &_changeColorSpace, List::create(_["image"],
+    _["colorspace"], _["target"]), "");
   function("_cloneImage", &_cloneImage, List::create(_["image"]), "");
   function("_split", &_split, List::create(_["image"]), "");
   function("_merge", &_merge, List::create(_["channels"]), "");
@@ -41,8 +42,8 @@ RCPP_MODULE(class_Image) {
     _["width"], _["height"]), "");
   function("_copyMakeBorder", &_copyMakeBorder, List::create(_["image"], _["top"],
     _["bottom"], _["left"], _["right"], _["borderType"], _["borderValue"]), "");
-  function("_zeros", &_zeros, List::create(_["nrow"], _["ncol"], _["type"]), "");
-  function("_ones", &_ones, List::create(_["nrow"], _["ncol"], _["type"]), "");
+  function("_zeros", &_zeros, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
+  function("_ones", &_ones, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
 }
 
 #include "Video.h"
@@ -68,7 +69,6 @@ RCPP_MODULE(class_Video) {
   .method("codec", &Video::codec)
   .method("readNext", &Video::readNext)
   .method("readFrame", &Video::readFrame)
-  .method("readStream", &Video::readStream)
   ;
 }
 
@@ -90,7 +90,6 @@ RCPP_MODULE(class_Stream) {
   .method("nrow", &Stream::nrow)
   .method("ncol", &Stream::ncol)
   .method("readNext", &Stream::readNext)
-  .method("readStream", &Stream::readStream)
   ;
 }
 

@@ -1077,12 +1077,7 @@ methods::evalqOnLoad({
 
     width <- ncol(object)
     height <- nrow(object)
-    type <- switch(colorspace(object),
-                   GRAY = "GRAY",
-                   BGR = "BGR",
-                   BGRA = "BGRA",
-                   NA
-    )
+    type <- colorspace(object)
     depth <- bitdepth(object)
 
     cat("Class: image. \n")

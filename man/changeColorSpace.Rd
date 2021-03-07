@@ -2,30 +2,40 @@
 % Please edit documentation in R/conversions.R
 \name{changeColorSpace}
 \alias{changeColorSpace}
-\title{Convert image between colorspaces}
+\title{Convert Image to New Color Space}
 \usage{
-changeColorSpace(image, colorspace, in_place = FALSE)
+changeColorSpace(image, colorspace, target = "new")
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{colorspace}{A string corresponding to the colorspace the image should
-be converted to. Options are "BGR" (Blue Green Red image), "BGRA" (BGR image
-with Alpha channel), and "GRAY" (grayscale image). Converting from a Bayer
-mosaic to BGR using the default algorithm is also possible with "BayerBG2BGR",
-"BayerGB2BGR", "BayerRG2BGR", or "BayerGR2BGR".}
+\item{colorspace}{A string corresponding to the color space the image should
+be converted to. All available color spaces can be retrieved with . Not all
+conversions between color spaces are possible.}
 
-\item{in_place}{A logical indicating whether the change should be applied to
-the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-the default, slower but non destructive).}
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{"self":}{the results are stored back into \code{image} (faster but
+  destructive).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast and will not replace the
+  content of \code{image} but will replace that of \code{target}. Note that
+  \code{target} must have the same dimensions as \code{image}.}
+}}
 }
 \value{
-An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
- returns nothing and modifies \code{image} in place.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target="self"}, the function returns nothing and modifies
+ \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+ the function returns nothing and modifies that \code{\link{Image}} object in
+ place.
 }
 \description{
 This function takes an \code{\link{Image}} object and converts
- it to another colorspace (e.g BGR to grayscale).
+ it to another color space (e.g BGR to grayscale).
 }
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))

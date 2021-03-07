@@ -2,25 +2,39 @@
 % Please edit documentation in R/conversions.R
 \name{changeBitDepth}
 \alias{changeBitDepth}
-\title{Convert image bit depth}
+\title{Convert Image to New Bit Depth}
 \usage{
-changeBitDepth(image, bitdepth, scale = 1, in_place = FALSE)
+changeBitDepth(image, bitdepth, scale = 1, target = "new")
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{bitdepth}{A string corresponding to the bitdepth the image should
-be converted to. Options are "8U", "8S", "16U", "16S", "32S", and "32F".}
+\item{bitdepth}{A string corresponding to the bit depth the image should
+be converted to. Options are "8U", "8S", "16U", "16S", "32S", "32F", and
+"64F". Converting from a higher bit depth to a lower one (e.g., "16U" to
+"8U" may result in data loss).}
 
 \item{scale}{A scaling factor (default: 1).}
 
-\item{in_place}{A logical indicating whether the change should be applied to
-the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-the default, slower but non destructive).}
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{"self":}{the results are stored back into \code{image} (faster but
+  destructive).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast and will not replace the
+  content of \code{image} but will replace that of \code{target}. Note that
+  \code{target} must have the same dimensions as \code{image}.}
+}}
 }
 \value{
-An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
- returns nothing and modifies \code{image} in place.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target="self"}, the function returns nothing and modifies
+ \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+ the function returns nothing and modifies that \code{\link{Image}} object in
+ place.
 }
 \description{
 This function takes an \code{\link{Image}} object and modifies

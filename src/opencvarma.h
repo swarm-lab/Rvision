@@ -1,43 +1,41 @@
+// Convert an OpenCV matrix to Armadillo matrix. A copy is made.
 template <typename T>
-void cv2arma(cv::Mat& cvMat, arma::Mat<T>& armaMat) {
-  armaMat.set_size(cvMat.rows, cvMat.cols);
-
-	for (int j = 0; j < cvMat.cols; j++)
-	  for (int i = 0; i < cvMat.rows; i++)
-	    armaMat(i, j) = cvMat.at<T>(i, j);
+void cv2arma(const cv::Mat_<T> &src, arma::Mat<T> &dst) {
+  cv::Mat_<T> t = src.t();
+  cv::flip(src, src, 0);
+  dst = arma::Mat<T>(reinterpret_cast<T*>(t.data), src.cols, src.rows);
+  cv::flip(src, src, 0);
 }
 
-template <typename T>
-void cv2arma(cv::Mat& cvMat, arma::Cube<T>& armaMat) {
-  armaMat.set_size(cvMat.rows, cvMat.cols, cvMat.channels());
-
-  for (int k = 0; k < cvMat.channels(); k++)
-    for (int j = 0; j < cvMat.cols; j++)
-      for (int i = 0; i < cvMat.rows; i++)
-        armaMat(i, j, k) = cvMat.at<T>(i, j)[k];
+// Convert an OpenCV multi-channel matrix to Armadillo cube. A copy is made.
+template <typename T, int NC>
+void cv2arma(const cv::Mat_<cv::Vec<T, NC>> &src, arma::Cube<T>& dst) {
+  std::vector<cv::Mat_<T>> channels;
+  dst.set_size(src.rows, src.cols, NC);
+  for (int c = 0; c < NC; ++c)
+    channels.push_back({src.cols, src.rows, dst.slice(c).memptr()});
+  cv::flip(src, src, 0);
+  cv::split(src.t(), channels);
+  cv::flip(src, src, 0);
 }
 
+// Convert an Armadillo cube to OpenCV matrix. A copy is made.
 template <typename T>
-int cvType(int nchannels) {
-  int depth = cv::DataType<T>::depth;
-  return (CV_MAT_DEPTH(depth) + (((nchannels) - 1) << CV_CN_SHIFT));
+void arma2cv(const arma::Cube<T> &src, cv::Mat &dst) {
+  std::vector<cv::Mat_<T>> channels;
+  for (size_t c = 0; c < src.n_slices; ++c) {
+    auto *data = const_cast<T*>(src.slice(c).memptr());
+    channels.push_back({int(src.n_cols), int(src.n_rows), data});
+    cv::transpose(channels[c], channels[c]);
+  }
+  cv::merge(channels, dst);
+  cv::flip(dst, dst, 0);
 }
 
+// Convert an Armadillo cube to OpenCV matrix. A copy is made (I think).
 template <typename T>
-void arma2cv(arma::Mat<T>& armaMat, cv::Mat& cvMat) {
-  cvMat.create(armaMat.n_rows, armaMat.n_cols, cvType<T>(1));
-
-    for (uint j = 0; j < armaMat.n_cols; j++)
-      for (uint i = 0; i < armaMat.n_rows; i++)
-        cvMat.at<T>(i, j) = armaMat(i,j);
-}
-
-template <typename T>
-void arma2cv(arma::Cube<T>& armaMat, cv::Mat& cvMat) {
-  cvMat.create(armaMat.n_rows, armaMat.n_cols, cvType<T>(armaMat.n_slices));
-
-  for (int k = 0; k < armaMat.n_slices; k++)
-    for (int j = 0; j < armaMat.n_cols; j++)
-      for (int i = 0; i < armaMat.n_rows; i++)
-        cvMat.at<T>(i, j)[k] = armaMat(i,j,k);
+void arma2cv(const arma::Mat<T> &src, cv::Mat_<T> &dst) {
+  dst = cv::Mat_<T>{int(src.n_cols), int(src.n_rows), const_cast<T*>(src.memptr())};
+  cv::transpose(dst, dst);
+  cv::flip(dst, dst, 0);
 }
