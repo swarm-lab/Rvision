@@ -576,16 +576,16 @@ methods::evalqOnLoad({
 
   setMethod("compare", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
             function(e1, e2, comparison, target) {
-              `_compare`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), target)
+              `_compareScalar`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), target)
             })
 
   setMethod("compare", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
             function(e1, e2, comparison, target) {
               if (target == "self") {
-                `_compare`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), e1)
+                `_compareScalar`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), e1)
               } else if (target == "new") {
                 out <- cloneImage(e1)
-                `_compare`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), out)
+                `_compareScalar`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), out)
                 out
               } else {
                 stop("Invalid target")
@@ -595,22 +595,22 @@ methods::evalqOnLoad({
   setMethod("compare", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
             function(e1, e2, comparison, target) {
               out <- cloneImage(e1)
-              `_compare`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), out)
+              `_compareScalar`(e1, rep(e2, length.out = e1$nchan()), comparison(comparison), out)
               out
             })
 
   setMethod("compare", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
             function(e1, e2, comparison, target) {
-              `_compare`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), target)
+              `_compareScalar`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), target)
             })
 
   setMethod("compare", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
             function(e1, e2, comparison, target) {
               if (target == "self") {
-                `_compare`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), e2)
+                `_compareScalar`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), e2)
               } else if (target == "new") {
                 out <- cloneImage(e2)
-                `_compare`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), out)
+                `_compareScalar`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), out)
                 out
               } else {
                 stop("Invalid target")
@@ -620,7 +620,7 @@ methods::evalqOnLoad({
   setMethod("compare", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
             function(e1, e2, comparison, target) {
               out <- cloneImage(e2)
-              `_compare`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), out)
+              `_compareScalar`(e2, rep(e1, length.out = e2$nchan()), comparison(comparison), out)
               out
             })
 })

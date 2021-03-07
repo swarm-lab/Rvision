@@ -1,4 +1,4 @@
-Rcpp::List _findContours(Image image, int mode, int method, Rcpp::NumericVector offset) {
+Rcpp::List _findContours(Image& image, int mode, int method, Rcpp::NumericVector offset) {
   std::vector< std::vector< cv::Point > > contours;
   std::vector< cv::Vec4i > hierarchy;
 
@@ -44,29 +44,8 @@ double _contourArea(Rcpp::NumericVector x, Rcpp::NumericVector y, bool oriented)
   return cv::contourArea(poly, oriented);
 }
 
-// Rcpp::List _connectedComponents(Image image, int connectivity, int algorithm) {
-//   cv::Mat labels;
-//   int n = cv::connectedComponents(image.image, labels, connectivity, CV_16U, algorithm);
-//
-//   cv::Mat locs;
-//   cv::findNonZero(labels, locs);
-//
-//   Rcpp::NumericMatrix table(locs.rows, 3);
-//   colnames(table) = Rcpp::CharacterVector::create("id", "x", "y");
-//
-//   for (uint i = 0; i < locs.rows; i++) {
-//     table(i, 0) = labels.at< uint16_t >(locs.at<cv::Point>(i));
-//     table(i, 1) = locs.at<cv::Point>(i).x + 1;
-//     table(i, 2) = -locs.at<cv::Point>(i).y + image.image.rows;
-//   }
-//
-//   return Rcpp::List::create(Rcpp::Named("n") = n - 1,
-//                             Rcpp::Named("labels") = Image(labels),
-//                             Rcpp::Named("table") = table);
-// }
-
-Rcpp::List _connectedComponentsTAB(Image image, int connectivity, int algorithm,
-                                    Image target) {
+Rcpp::List _connectedComponentsTAB(Image& image, int connectivity, int algorithm,
+                                   Image& target) {
   int n = cv::connectedComponents(image.image, target.image, connectivity,
                                   target.image.type(), algorithm);
 
@@ -87,13 +66,13 @@ Rcpp::List _connectedComponentsTAB(Image image, int connectivity, int algorithm,
 }
 
 Rcpp::List _connectedComponentsNOTAB(Image image, int connectivity, int algorithm,
-                                      Image target) {
+                                     Image target) {
   int n = cv::connectedComponents(image.image, target.image, connectivity,
                                   target.image.type(), algorithm);
   return Rcpp::List::create(Rcpp::Named("n") = n - 1);
 }
 
-void _watershed(Image image, Image markers) {
+void _watershed(Image& image, Image& markers) {
   cv::watershed(image.image, markers.image);
 }
 

@@ -77,15 +77,6 @@
 #' dots_gray <- changeColorSpace(dots, "GRAY")
 #' dots_bin <- dots_gray < 200
 #' contours <- findContours(dots_bin)
-#' colors <- rainbow(max(contours$contours[, 1] + 1))
-#' plot(dots_bin)
-#' invisible(lapply(
-#'   split.data.frame(contours$contours, contours$contours[, 1]),
-#'   function(contour) {
-#'     contour <- rbind(contour, contour[1, ])
-#'     lines(contour[, 2:3], col = colors[contour[, 1] + 1], lwd = 2)
-#'   })
-#' )
 #'
 #' @export
 findContours <- function(image, mode = "external", method = "simple", offset = c(0, 0)) {
@@ -220,7 +211,6 @@ contourArea <- function(x, y, oriented = FALSE) {
 #' dots_gray <- changeColorSpace(dots, "GRAY")
 #' dots_bin <- dots_gray < 200
 #' cc <- connectedComponents(dots_bin)
-#' plot(cc$labels)
 #'
 #' @export
 connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
@@ -263,29 +253,6 @@ connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
     stop("Invalid target.")
   }
 }
-
-
-# connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
-#                                 target = "new") {
-#   if (!isImage(image))
-#     stop("'image' must be an Image object.")
-#
-#   if (image$nchan() != 1 || image$depth() != "8U")
-#     stop("'image' must be an 8-bit (8U) single-channel (GRAY) Image object.")
-#
-#   if (!(connectivity %in% c(4, 8)))
-#     stop("'connectivity' must be either 4 or 8.")
-#
-#
-#
-#
-#   `_connectedComponents`(image, connectivity,
-#                          switch (algorithm,
-#                                  "grana" = 1,
-#                                  "wu" = 0,
-#                                  stop("This is not a valid algorithm.")
-#                          ))
-# }
 
 
 #' @title Image Segmentation Using the Watershed Algorithm
@@ -332,9 +299,8 @@ connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
 #' markers[1:2, 1:2, 1] <- 1
 #' markers[cbind(rows, cols, 1)] <- colors
 #' markers <- image(markers)
-#' changeBitDepth(markers, "32S", in_place = TRUE)
+#' changeBitDepth(markers, "32S", target = "self")
 #' watershed(dots, markers)
-#' plot(markers)
 #'
 #' @export
 watershed <- function(image, markers) {

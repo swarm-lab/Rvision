@@ -1,4 +1,4 @@
-arma::cube _farneback(Image image1, Image image2, double pyr_scale, int levels,
+arma::cube _farneback(Image& image1, Image& image2, double pyr_scale, int levels,
                       int winsize, int iterations, int poly_n, double poly_sigma) {
   arma::cube outputArray;
   cv::Mat flow;

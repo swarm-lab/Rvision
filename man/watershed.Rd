@@ -44,9 +44,8 @@ markers <- array(0.0, dim = c(nrow(dots_bin), ncol(dots_bin), 1))
 markers[1:2, 1:2, 1] <- 1
 markers[cbind(rows, cols, 1)] <- colors
 markers <- image(markers)
-changeBitDepth(markers, "32S", in_place = TRUE)
+changeBitDepth(markers, "32S", target = "self")
 watershed(dots, markers)
-plot(markers)
 
 }
 \references{

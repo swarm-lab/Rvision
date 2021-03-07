@@ -70,7 +70,6 @@ dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
 dots_gray <- changeColorSpace(dots, "GRAY")
 dots_bin <- dots_gray < 200
 cc <- connectedComponents(dots_bin)
-plot(cc$labels)
 
 }
 \seealso{
