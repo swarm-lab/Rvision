@@ -36,7 +36,7 @@ RCPP_MODULE(class_Image) {
     _["colorspace"], _["target"]), "");
   function("_cloneImage", &_cloneImage, List::create(_["image"]), "");
   function("_split", &_split, List::create(_["image"]), "");
-  function("_merge", &_merge, List::create(_["channels"]), "");
+  function("_merge", &_merge, List::create(_["channels"], _["target"]), "");
   function("_readMulti", &_readMulti, List::create(_["file"]), "");
   function("_subimage", &_subimage, List::create(_["image"], _["x"], _["y"],
     _["width"], _["height"]), "");
@@ -146,6 +146,7 @@ RCPP_MODULE(methods_Statistics) {
   function("_sumPx", &_sumPx, List::create(_["image"]), "");
   function("_meanList", &_meanList, List::create(_["images"]), "");
   function("_meanPx", &_meanPx, List::create(_["image"], _["mask"]), "");
+  function("_meanPxNOMASK", &_meanPxNOMASK, List::create(_["image"]), "");
   function("_min", &_min, List::create(_["image"]), "");
   function("_max", &_max, List::create(_["image"]), "");
   function("_minMaxLoc", &_minMaxLoc, List::create(_["image"]), "");

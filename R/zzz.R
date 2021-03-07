@@ -522,15 +522,13 @@ methods::evalqOnLoad({
   setMethod("sum", "Rcpp_Image",
             function(x, ...) {
               sum <- `_sumPx`(x)
-
-              switch(x$nchan(),
-                     matrix(sum[1, 1], nrow = 1, ncol = 1,
-                            dimnames = list(c("sum"), c("GRAY"))),
-                     NA,
-                     sum[, 1:3],
-                     sum,
-                     NA
-              )
+              names(sum) <- switch(x$nchan(),
+                                   "I",
+                                   c("I1", "I2"),
+                                   c("B", "G", "R"),
+                                   c("B", "G", "R", "A"),
+                                   NULL)
+              sum
             })
 })
 
@@ -1075,14 +1073,15 @@ methods::evalqOnLoad({
     if (!isImage(object))
       stop("This is not an Image object.")
 
-    width <- ncol(object)
-    height <- nrow(object)
-    type <- colorspace(object)
-    depth <- bitdepth(object)
+    width <- object$ncol()
+    height <- object$nrow()
+    type <- object$space
+    depth <- object$depth()
+    chan <- object$nchan()
 
     cat("Class: image. \n")
     cat("Dimensions: ", width, "x", height, ".\n", sep = "")
-    cat("Type: ", type, ", ", depth, ".\n", sep = "")
+    cat("Type: ", type, ", ", chan, "-channel, ", depth, ".\n", sep = "")
   })
 
   setMethod("show", "Rcpp_Video", function(object) {

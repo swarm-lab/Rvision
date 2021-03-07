@@ -2,9 +2,7 @@
 template <typename T>
 void cv2arma(const cv::Mat_<T> &src, arma::Mat<T> &dst) {
   cv::Mat_<T> t = src.t();
-  cv::flip(src, src, 0);
-  dst = arma::Mat<T>(reinterpret_cast<T*>(t.data), src.cols, src.rows);
-  cv::flip(src, src, 0);
+  dst = arma::Mat<T>(reinterpret_cast<T*>(t.data), src.rows, src.cols);
 }
 
 // Convert an OpenCV multi-channel matrix to Armadillo cube. A copy is made.

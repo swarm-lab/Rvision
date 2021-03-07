@@ -108,16 +108,16 @@ mean.Rcpp_Image <- function(x, ..., mask = NA) {
 
     avg <- `_meanPx`(x, mask)
   } else {
-    avg <- `_meanPx`(x, image(array(255L, dim = c(nrow(x), ncol(x), 1))))
+    avg <- `_meanPxNOMASK`(x)
   }
 
-  switch(x$nchan(),
-         matrix(avg[1, 1], nrow = 1, ncol = 1, dimnames = list(c("mean"), c("GRAY"))),
-         NA,
-         avg[, 1:3],
-         avg,
-         NA
-  )
+  names(avg) <- switch(x$nchan(),
+                       "I",
+                       c("I1", "I2"),
+                       c("B", "G", "R"),
+                       c("B", "G", "R", "A"),
+                       NULL)
+  avg
 }
 
 
@@ -140,7 +140,7 @@ mean.Rcpp_Image <- function(x, ..., mask = NA) {
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 #' img_list <- lapply(1:10, function(x) readNext(balloon))
-#' plot(mean(img_list))
+#' mean_img <- mean(img_list)
 #'
 #' @export
 mean.list <- function(x, ...) {
@@ -176,13 +176,11 @@ minMaxLoc <- function(x) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  switch(x$nchan(),
-         `_minMaxLoc`(x),
-         NA,
-         lapply(split(x), `_minMaxLoc`),
-         lapply(split(x), `_minMaxLoc`),
-         NA
-  )
+  if (x$nchan() == 1) {
+    `_minMaxLoc`(x)
+  } else {
+    lapply(split(x), `_minMaxLoc`)
+  }
 }
 
 
@@ -222,8 +220,8 @@ minMaxLoc <- function(x) {
 #' @return If \code{plot=FALSE}, the function returns a \code{m x n} matrix,
 #'  with \code{m = nbins} and \code{n} equal to the number of channels in the
 #'  image + 1. The first column corresponds to the bin values. If
-#'  \code{plot=TRUE}, the function plots the histogram without returning
-#'  anything.
+#'  \code{plot=TRUE}, the function plots the histogram and returned the
+#'  aforementioned matrix silently.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -234,7 +232,7 @@ minMaxLoc <- function(x) {
 #' imhist(balloon, plot = TRUE)
 #'
 #' @export
-imhist <- function(image, nbins = 256, range = c(0, 256), mask = NULL,
+imhist <- function(image, nbins = 256, range = c(0, 255), mask = NULL,
                    plot = FALSE, col = c("blue", "green", "red", "black"),
                    xlab = "Pixel value", ylab = "Counts", lty = 1, ...) {
   if (!isImage(image))
@@ -244,7 +242,7 @@ imhist <- function(image, nbins = 256, range = c(0, 256), mask = NULL,
     if (!isImage(mask))
       stop("mask is not an Image object.")
   } else {
-    mask <- 255 * ones(nrow(image), ncol(image), "GRAY")
+    mask <- 255 * ones(nrow(image), ncol(image), 1)
   }
 
   h <- cbind(seq(range[1], range[2], length.out = nbins),
@@ -254,6 +252,7 @@ imhist <- function(image, nbins = 256, range = c(0, 256), mask = NULL,
   if (plot) {
     graphics::matplot(h[, 1], h[, 2:ncol(h)], type = "l", lty = lty, col = col,
             xlab = xlab, ylab = ylab, ...)
+    invisible(h)
   } else {
     h
   }

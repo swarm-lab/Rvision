@@ -45,8 +45,6 @@
 #' balloon1 <- readFrame(balloon, 1)
 #' balloon2 <- readFrame(balloon, 25)
 #' of <- farneback(balloon1, balloon2)
-#' plot(balloon2)
-#' plot(of, length = 0.05)
 #'
 #' @export
 farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
@@ -149,7 +147,6 @@ plot.OF_array <- function(x, gridsize = c(25, 25), thresh = 0,
   maxr <- max(sqrt(u ^ 2 + v ^ 2))
   u <- (arrow.ex * u) / maxr
   v <- (arrow.ex * v) / maxr
-  invisible()
   old.xpd <- par()$xpd
   graphics::par(xpd = xpd)
   graphics::arrows(locs$x[valid], locs$y[valid], locs$x[valid] + u[valid], locs$y[valid] + v[valid], ...)

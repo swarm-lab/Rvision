@@ -194,8 +194,6 @@ readNext.Rcpp_Stream <- function(x, target = "new") {
   } else {
     stop("Invalid target.")
   }
-
-  x$readNext()
 }
 
 
@@ -269,7 +267,7 @@ timelapse <- function(x, outputFolder, interval = 1, duration = Inf,
   end <- start + duration * 1000
 
   while (.now() < end) {
-    img <- x$readNext()
+    img <- readNext(x)
     img$write(paste0(outputFolder, "/", counter, ".", format))
     counter <- counter + 1
     print(paste0("Last picture taken at: ", Sys.time()))

@@ -397,7 +397,7 @@ split <- function(x) {
                        c("I1", "I2"),
                        c("B", "G", "R"),
                        c("B", "G", "R", "A"),
-                       NA)
+                       NULL)
   out
 }
 
@@ -451,7 +451,7 @@ merge <- function(x, target = "new") {
   if (isImage(target)) {
     `_merge`(x, target)
   } else if (target == "new") {
-    out <- `_cloneImage`(e1)
+    out <- zeros(x[[1]]$nrow(), x[[1]]$ncol(), length(x), x[[1]]$depth())
     `_merge`(x, out)
     out
   } else {

@@ -55,8 +55,6 @@ balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 balloon1 <- readFrame(balloon, 1)
 balloon2 <- readFrame(balloon, 25)
 of <- farneback(balloon1, balloon2)
-plot(balloon2)
-plot(of, length = 0.05)
 
 }
 \references{

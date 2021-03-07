@@ -1,4 +1,4 @@
-Image _sumList(Rcpp::List images) {
+Image _sumList(Rcpp::List& images) {
   cv::Mat out;
 
   switch(as<Image>(images[0]).image.channels()) {
@@ -26,7 +26,7 @@ Image _sumList(Rcpp::List images) {
   return Image(out, as<Image>(images[0]).space);
 }
 
-Image _meanList(Rcpp::List images) {
+Image _meanList(Rcpp::List& images) {
   cv::Mat out;
   Image sum = _sumList(images);
 
@@ -35,35 +35,19 @@ Image _meanList(Rcpp::List images) {
   return Image(out, as<Image>(images[0]).space);
 }
 
-Rcpp::NumericMatrix _sumPx(Image image) {
-  cv::Scalar tot = cv::sum(image.image);
-  Rcpp::NumericMatrix out(1, 4);
-
-  for (int i = 0; i < 4; i++) {
-    out(0, i) = tot[i];
-  }
-
-  Rcpp::rownames(out) = Rcpp::CharacterVector::create("sum");
-  Rcpp::colnames(out) = Rcpp::CharacterVector::create("B", "G", "R", "A");
-
-  return out;
+Rcpp::NumericVector _sumPx(Image& image) {
+  return scalar2Col(cv::sum(image.image), image.image.channels());
 }
 
-Rcpp::NumericMatrix _meanPx(Image image, Image mask) {
-  cv::Scalar avg = cv::mean(image.image, mask.image);
-  Rcpp::NumericMatrix out(1, 4);
-
-  for (int i = 0; i < 4; i++) {
-    out(0, i) = avg[i];
-  }
-
-  Rcpp::rownames(out) = Rcpp::CharacterVector::create("mean");
-  Rcpp::colnames(out) = Rcpp::CharacterVector::create("B", "G", "R", "A");
-
-  return out;
+Rcpp::NumericVector _meanPx(Image& image, Image& mask) {
+  return scalar2Col(cv::mean(image.image, mask.image), image.image.channels());
 }
 
-Rcpp::NumericMatrix _minMaxLoc(Image image) {
+Rcpp::NumericVector _meanPxNOMASK(Image& image) {
+  return scalar2Col(cv::mean(image.image, cv::noArray()), image.image.channels());
+}
+
+Rcpp::NumericMatrix _minMaxLoc(Image& image) {
   double minVal, maxVal;
   cv::Point minLoc, maxLoc;
   Rcpp::NumericMatrix out(2, 3);
@@ -81,17 +65,17 @@ Rcpp::NumericMatrix _minMaxLoc(Image image) {
   return out;
 }
 
-double _min(Image image) {
+double _min(Image& image) {
   Rcpp::NumericMatrix minMax = _minMaxLoc(image);
   return minMax(0, 0);
 }
 
-double _max(Image image) {
+double _max(Image& image) {
   Rcpp::NumericMatrix minMax = _minMaxLoc(image);
   return minMax(1, 0);
 }
 
-arma::Mat< float > _imhist(Image image, int nbins, Rcpp::NumericVector range, Image mask) {
+arma::Mat< float > _imhist(Image& image, int nbins, Rcpp::NumericVector range, Image& mask) {
   arma::Mat< float > out;
   cv::Mat_< float > hist(nbins, image.nchan());
   float frange[] = {(float) range[0], (float) range[1]};

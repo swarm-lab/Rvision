@@ -417,7 +417,7 @@ Rcpp::List _split(Image& image) {
   return out;
 }
 
-void _merge(Rcpp::List& channels, std::string colorspace, Image& target) {
+void _merge(Rcpp::List& channels, Image& target) {
   std::vector<cv::Mat> tomerge(channels.size());
 
   for (int i = 0; i < channels.size(); i++) {

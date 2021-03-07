@@ -7,7 +7,7 @@
 imhist(
   image,
   nbins = 256,
-  range = c(0, 256),
+  range = c(0, 255),
   mask = NULL,
   plot = FALSE,
   col = c("blue", "green", "red", "black"),
@@ -50,8 +50,8 @@ value" for the x axis and "Counts" for the y axis).}
 If \code{plot=FALSE}, the function returns a \code{m x n} matrix,
  with \code{m = nbins} and \code{n} equal to the number of channels in the
  image + 1. The first column corresponds to the bin values. If
- \code{plot=TRUE}, the function plots the histogram without returning
- anything.
+ \code{plot=TRUE}, the function plots the histogram and returned the
+ aforementioned matrix silently.
 }
 \description{
 \code{imhist} computes (or plots) the multichannel histogram of

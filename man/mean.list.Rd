@@ -22,7 +22,7 @@ in a list.
 \examples{
 balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 img_list <- lapply(1:10, function(x) readNext(balloon))
-plot(mean(img_list))
+mean_img <- mean(img_list)
 
 }
 \seealso{
