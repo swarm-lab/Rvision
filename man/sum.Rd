@@ -4,23 +4,36 @@
 \alias{sum}
 \title{Sum Generic for Image objects}
 \usage{
-sum(x, ..., na.rm = FALSE)
+sum(x, ...)
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object or a list of \code{\link{Image}}
 objects.}
 
-\item{...}{Further arguments passed to summary methods.}
+\item{...}{Further arguments passed to summary methods. Unused if \code{x} is
+an image or a list of images.}
 
-\item{na.rm}{Not used but retained for compatibility with base
-\code{\link[base]{sum}}.}
+\item{target}{The location where the results should be stored when passing a
+sum of images to the function. It can take 3 values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast but will replace the
+  content of \code{target}. Note that \code{target} should have the same
+  dimensions and number of channels as the images in the list, otherwise an
+  error will be thrown.}
+}}
 }
 \value{
 If \code{x} is an \code{\link{Image}} object, the function returns a
  numeric value (for single-channel images) or a vector of numeric values (for
- multi-channel images). If \code{x} is a list of \code{\link{Image}} objects,
- the function returns an \code{\link{Image}} object corresponding to the
- pixelwise sum of the images in the  list.
+ multi-channel images).
+
+ If \code{x} is a list of \code{\link{Image}} objects and \code{target="new"},
+ the function returns an \code{\link{Image}} object. If \code{target} is an
+ \code{\link{Image}} object, the function returns nothing and modifies that
+ \code{\link{Image}} object in place.
 }
 \description{
 Overloaded \code{\link[base]{sum}} to handle \code{\link{Image}}

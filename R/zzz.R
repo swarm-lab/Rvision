@@ -477,16 +477,29 @@ methods::evalqOnLoad({
 #' @param x An \code{\link{Image}} object or a list of \code{\link{Image}}
 #'  objects.
 #'
-#' @param ... Further arguments passed to summary methods.
+#' @param target The location where the results should be stored when passing a
+#'  sum of images to the function. It can take 3 values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. Note that \code{target} should have the same
+#'    dimensions and number of channels as the images in the list, otherwise an
+#'    error will be thrown.}
+#'  }
 #'
-#' @param na.rm Not used but retained for compatibility with base
-#'  \code{\link[base]{sum}}.
+#' @param ... Further arguments passed to summary methods. Unused if \code{x} is
+#'  an image or a list of images.
 #'
 #' @return If \code{x} is an \code{\link{Image}} object, the function returns a
 #'  numeric value (for single-channel images) or a vector of numeric values (for
-#'  multi-channel images). If \code{x} is a list of \code{\link{Image}} objects,
-#'  the function returns an \code{\link{Image}} object corresponding to the
-#'  pixelwise sum of the images in the  list.
+#'  multi-channel images).
+#'
+#'  If \code{x} is a list of \code{\link{Image}} objects and \code{target="new"},
+#'  the function returns an \code{\link{Image}} object. If \code{target} is an
+#'  \code{\link{Image}} object, the function returns nothing and modifies that
+#'  \code{\link{Image}} object in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -503,20 +516,29 @@ methods::evalqOnLoad({
 #' @name sum
 #'
 #' @export
-setGeneric("sum", function(x, ..., na.rm = FALSE) standardGeneric("sum"),
-           useAsDefault = function(x, ..., na.rm = FALSE) base::sum(x, ..., na.rm = na.rm),
+setGeneric("sum", function(x, ...) standardGeneric("sum"),
+           useAsDefault = function(x, ...) base::sum(x, ...),
            group = "Summary")
 
 methods::evalqOnLoad({
   #' @name sum
   #' @rdname sum
   setMethod("sum", "list",
-            function(x, ...) {
+            function(x, target = "new", ...) {
               test <- sapply(x, function(x) class(x) == "Rcpp_Image")
-              if (all(test))
-                `_sumList`(x)
-              else
+              if (all(test)) {
+                if (isImage(target)) {
+                  `_sumList`(x, target)
+                } else if (target == "new") {
+                  out <- zeros(x[[1]]$nrow(), x[[1]]$ncol(), x[[1]]$nchan(), "32F")
+                  `_sumList`(x, out)
+                  out
+                } else {
+                  stop("Invalid target.")
+                }
+              } else {
                 base::sum(x, ...)
+              }
             })
 
   setMethod("sum", "Rcpp_Image",

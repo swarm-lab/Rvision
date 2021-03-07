@@ -129,9 +129,24 @@ mean.Rcpp_Image <- function(x, ..., mask = NA) {
 #' @param x A list of \code{\link{Image}} objects. All images must have the same
 #'  dimensions, number of channels, and bitdepth.
 #'
-#' @param ... Unused at the moment.
+#' @param target The location where the results should be stored when passing a
+#'  sum of images to the function. It can take 3 values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. Note that \code{target} should have the same
+#'    dimensions and number of channels as the images in the list, otherwise an
+#'    error will be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object.
+#' @param ... Further arguments passed to summary methods. Unused if \code{x} is
+#'  a list of images.
+#'
+#' @return If  \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -143,12 +158,22 @@ mean.Rcpp_Image <- function(x, ..., mask = NA) {
 #' mean_img <- mean(img_list)
 #'
 #' @export
-mean.list <- function(x, ...) {
+mean.list <- function(x, target = "new", ...) {
   test <- sapply(x, function(x) class(x) == "Rcpp_Image")
-  if (all(test))
-    `_meanList`(x)
-  else
+  if (all(test)) {
+    if (isImage(target)) {
+      `_meanList`(x, target)
+    } else if (target == "new") {
+      out <- zeros(x[[1]]$nrow(), x[[1]]$ncol(), x[[1]]$nchan(), "32F")
+      `_meanList`(x, out)
+      out
+    } else {
+      stop("Invalid target.")
+    }
+
+  } else {
     base::mean(x, ...)
+  }
 }
 
 

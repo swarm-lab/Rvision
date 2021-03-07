@@ -142,9 +142,9 @@ RCPP_MODULE(methods_Arithmetic) {
 #include "statistics.h"
 RCPP_MODULE(methods_Statistics) {
 
-  function("_sumList", &_sumList, List::create(_["images"]), "");
+  function("_sumList", &_sumList, List::create(_["images"], _["target"]), "");
   function("_sumPx", &_sumPx, List::create(_["image"]), "");
-  function("_meanList", &_meanList, List::create(_["images"]), "");
+  function("_meanList", &_meanList, List::create(_["images"], _["target"]), "");
   function("_meanPx", &_meanPx, List::create(_["image"], _["mask"]), "");
   function("_meanPxNOMASK", &_meanPxNOMASK, List::create(_["image"]), "");
   function("_min", &_min, List::create(_["image"]), "");

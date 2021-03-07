@@ -98,7 +98,12 @@ plot.Rcpp_Image <- function(x, ...) {
 
   if (x$depth() != "8U") {
     img_range <- range(img)
-    img <- 255 * ((img - img_range[1]) / (img_range[2] - img_range[1]))
+
+    if (diff(img_range) != 0) {
+      img <- 255 * ((img - img_range[1]) / (img_range[2] - img_range[1]))
+    } else if (img_range[1] > 255) {
+      img <- img / img_range[1]
+    }
   }
 
   op <- par(mar = rep(0, 4))

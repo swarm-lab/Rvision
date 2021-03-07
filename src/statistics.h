@@ -1,38 +1,13 @@
-Image _sumList(Rcpp::List& images) {
-  cv::Mat out;
-
-  switch(as<Image>(images[0]).image.channels()) {
-  case 1:
-    out = cv::Mat::zeros(as<Image>(images[0]).image.size(), CV_32F);
-    break;
-  case 2:
-    out = cv::Mat::zeros(as<Image>(images[0]).image.size(), CV_32FC2);
-    break;
-  case 3:
-    out = cv::Mat::zeros(as<Image>(images[0]).image.size(), CV_32FC3);
-    break;
-  case 4:
-    out = cv::Mat::zeros(as<Image>(images[0]).image.size(), CV_32FC4);
-    break;
-  default:
-    throw std::range_error("Not a valid image.");
-  break;
-  }
-
+void _sumList(Rcpp::List& images, Image& target) {
   for (int i = 0; i < images.size(); i++) {
-    cv::add(out, as<Image>(images[i]).image, out, cv::noArray(), out.type());
+    cv::add(target.image, as<Image>(images[i]).image, target.image, cv::noArray(),
+            target.image.type());
   }
-
-  return Image(out, as<Image>(images[0]).space);
 }
 
-Image _meanList(Rcpp::List& images) {
-  cv::Mat out;
-  Image sum = _sumList(images);
-
-  sum.image.convertTo(out, as<Image>(images[0]).image.type(), 1.0 / images.size(), 0);
-
-  return Image(out, as<Image>(images[0]).space);
+void _meanList(Rcpp::List& images, Image& target) {
+  _sumList(images, target);
+  target.image.convertTo(target.image, target.image.type(), 1.0 / images.size(), 0);
 }
 
 Rcpp::NumericVector _sumPx(Image& image) {

@@ -4,16 +4,31 @@
 \alias{mean.list}
 \title{Mean of Images in a List}
 \usage{
-\method{mean}{list}(x, ...)
+\method{mean}{list}(x, target = "new", ...)
 }
 \arguments{
 \item{x}{A list of \code{\link{Image}} objects. All images must have the same
 dimensions, number of channels, and bitdepth.}
 
-\item{...}{Unused at the moment.}
+\item{target}{The location where the results should be stored when passing a
+sum of images to the function. It can take 3 values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast but will replace the
+  content of \code{target}. Note that \code{target} should have the same
+  dimensions and number of channels as the images in the list, otherwise an
+  error will be thrown.}
+}}
+
+\item{...}{Further arguments passed to summary methods. Unused if \code{x} is
+a list of images.}
 }
 \value{
-An \code{\link{Image}} object.
+If  \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target} is an \code{\link{Image}} object, the function
+ returns nothing and modifies that \code{\link{Image}} object in place.
 }
 \description{
 Returns the pixelwise mean of \code{\link{Image}} objects stored
