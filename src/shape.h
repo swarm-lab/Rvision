@@ -55,10 +55,18 @@ Rcpp::List _connectedComponentsTAB(Image& image, int connectivity, int algorithm
   Rcpp::NumericMatrix table(locs.rows, 3);
   colnames(table) = Rcpp::CharacterVector::create("id", "x", "y");
 
-  for (uint i = 0; i < locs.rows; i++) {
-    table(i, 0) = target.image.at< uint16_t >(locs.at<cv::Point>(i));
-    table(i, 1) = locs.at<cv::Point>(i).x + 1;
-    table(i, 2) = -locs.at<cv::Point>(i).y + image.image.rows;
+  if (target.depth() == "32S") {
+    for (uint i = 0; i < locs.rows; i++) {
+      table(i, 0) = target.image.at< int >(locs.at<cv::Point>(i));
+      table(i, 1) = locs.at<cv::Point>(i).x + 1;
+      table(i, 2) = -locs.at<cv::Point>(i).y + image.image.rows;
+    }
+  } else {
+    for (uint i = 0; i < locs.rows; i++) {
+      table(i, 0) = target.image.at< ushort >(locs.at<cv::Point>(i));
+      table(i, 1) = locs.at<cv::Point>(i).x + 1;
+      table(i, 2) = -locs.at<cv::Point>(i).y + image.image.rows;
+    }
   }
 
   return Rcpp::List::create(Rcpp::Named("n") = n - 1,
