@@ -20,7 +20,21 @@
 #'  to use during resizing (default: "linear"). See notes for all accepted
 #'  interpolation methods.
 #'
-#' @return An \code{\link{Image}} object.
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. Note that \code{target} must have the same bit
+#'    depth and number of channels as \code{image} but that its dimensions must
+#'    match that of the resized image, otherwise an error is thrown.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
 #'
 #' @note The following interpolation methods are supported:
 #'  \itemize{
@@ -39,19 +53,21 @@
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_resized <- resize(balloon, fx = 0.2, fy = 0.5)
-#' plot(balloon_resized)
 #'
 #' @export
-resize <- function(image, height = NULL, width = NULL, fx = NULL, fy = NULL, interpolation = "linear") {
+resize <- function(image, height = NULL, width = NULL, fx = NULL, fy = NULL,
+                   interpolation = "linear", target = "new") {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
   test <- !c(is.null(height), is.null(width), is.null(fx), is.null(fy))
+  new_dims <- c(NA, NA)
 
   if (sum(test[1:2]) == 2) {
     if (sum(test[3:4]) > 0)
       warning("When 'height' and 'width' are set 'fx' and 'fy' are ignored.")
 
+    new_dims <- c(height, width)
     fx <- 0
     fy <- 0
   } else if (sum(test[1:2]) == 1) {
@@ -76,22 +92,34 @@ resize <- function(image, height = NULL, width = NULL, fx = NULL, fy = NULL, int
       height <- nrow(image) * fy
       fy <- 0
     }
+    new_dims <- c(height, width)
   } else if (sum(test[3:4]) == 2) {
     height <- 0
     width <- 0
+    new_dims <- c(image$nrow() * fy, image$ncol() * fx)
   } else {
     stop("At least two of 'height', 'width', 'fx' and 'fy' must be set.")
   }
 
-  `_resize`(image, height, width, fx, fy,
-            switch(interpolation,
+  interp <- switch(interpolation,
                    nearest = 0,
                    linear = 1,
                    cubic = 2,
                    area = 3,
                    Lanczos = 4,
                    exact = 5,
-                   stop("This is not a valid interpolation method.")))
+                   stop("This is not a valid interpolation method."))
+
+  if (isImage(target)) {
+    `_resize`(image, height, width, fx, fy, interp, target)
+  } else if (target == "new") {
+    out <- zeros(new_dims[1], new_dims[2], bitdepth = image$depth(),
+                 nchan = image$nchan(), colorspace = image$space)
+    `_resize`(image, height, width, fx, fy, interp, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 
@@ -108,12 +136,25 @@ resize <- function(image, height = NULL, width = NULL, fx = NULL, fy = NULL, int
 #'  finally, if \code{type = -1} (or any negative value, then it is flipped
 #'  around both axes.)
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, colorspace, and
+#'    bitdepth as \code{image}, nothing will be stored.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -122,18 +163,31 @@ resize <- function(image, height = NULL, width = NULL, fx = NULL, fy = NULL, int
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_flipped <- flip(balloon, -1)
-#' plot(balloon_flipped)
 #'
 #' @export
-flip <- function(image, type = 0, in_place = FALSE) {
+flip <- function(image, type = 0, target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (in_place == TRUE) {
-    `_flip`(image, type)
-  } else {
+  if (isImage(target)) {
+    `_flip`(image, type, target)
+  } else if (target == "self") {
+    `_flip`(image, type, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_flip`(out, type)
+    `_flip`(image, type, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }

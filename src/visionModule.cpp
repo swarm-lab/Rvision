@@ -282,8 +282,8 @@ RCPP_MODULE(methods_Draw) {
 #include "geometry.h"
 RCPP_MODULE(methods_Geometry) {
   function("_resize", &_resize, List::create(_["image"], _["height"], _["width"],
-    _["fx"], _["fy"], _["interpolation"]), "");
-  function("_flip", &_flip, List::create(_["image"], _["flipCode"]), "");
+    _["fx"], _["fy"], _["interpolation"], _["target"]), "");
+  function("_flip", &_flip, List::create(_["image"], _["flipCode"], _["target"]), "");
 }
 
 #include "shape.h"

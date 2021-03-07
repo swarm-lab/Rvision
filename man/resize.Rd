@@ -10,7 +10,8 @@ resize(
   width = NULL,
   fx = NULL,
   fy = NULL,
-  interpolation = "linear"
+  interpolation = "linear",
+  target = "new"
 )
 }
 \arguments{
@@ -31,9 +32,23 @@ the image must be resized (default: NULL). Ignored if \code{height} is set.}
 \item{interpolation}{A character string representing the type of interpolation
 to use during resizing (default: "linear"). See notes for all accepted
 interpolation methods.}
+
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast but will replace the
+  content of \code{target}. Note that \code{target} must have the same bit
+  depth and number of channels as \code{image} but that its dimensions must
+  match that of the resized image, otherwise an error is thrown.}
+}}
 }
 \value{
-An \code{\link{Image}} object.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target} is an \code{\link{Image}} object, the function
+ returns nothing and modifies that \code{\link{Image}} object in place.
 }
 \description{
 \code{resize} returns a resized version of an \code{\link{Image}}.
@@ -52,7 +67,6 @@ The following interpolation methods are supported:
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon_resized <- resize(balloon, fx = 0.2, fy = 0.5)
-plot(balloon_resized)
 
 }
 \seealso{
