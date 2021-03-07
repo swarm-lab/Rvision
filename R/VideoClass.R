@@ -273,7 +273,7 @@ readFrame <- function(x, pos, target = "new") {
   if (isImage(target)) {
     x$readFrame(pos, target)
   } else if (target == "new") {
-    out <- zeros(nrow(x), ncol(x))
+    out <- zeros(nrow(x), ncol(x), 3)
     x$readFrame(pos, out)
     out
   } else {
@@ -294,7 +294,7 @@ readNext.Rcpp_Video <- function(x, target = "new") {
   if (isImage(target)) {
     x$readNext(target)
   } else if (target == "new") {
-    out <- zeros(nrow(x), ncol(x))
+    out <- zeros(nrow(x), ncol(x), 3)
     x$readNext(out)
     out
   } else {

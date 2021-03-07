@@ -5,6 +5,10 @@
 \title{Sum Generic for Image objects}
 \usage{
 sum(x, ...)
+
+sum(x, target = "new", ...)
+
+sum(x, ...)
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object or a list of \code{\link{Image}}

@@ -150,6 +150,8 @@ resize <- function(image, height = NULL, width = NULL, fx = NULL, fy = NULL,
 #'    bit depth as \code{image}, nothing will be stored.}
 #'  }
 #'
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
 #' @return If \code{target="new"}, the function returns an \code{\link{Image}}
 #'  object. If \code{target="self"}, the function returns nothing and modifies
 #'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,

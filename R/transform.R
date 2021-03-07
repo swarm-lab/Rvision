@@ -560,7 +560,7 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
   } else if (target == "self") {
     `_distanceTransform`(image, dt, mask_size, target)
   } else if (target == "new") {
-    out <- zeros(nrow(image), ncol(image), "GRAY", "32F")
+    out <- zeros(nrow(image), ncol(image), 1, "32F")
     `_distanceTransform`(image, dt, mask_size, out)
     out
   } else {

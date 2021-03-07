@@ -239,7 +239,7 @@ connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
       `_connectedComponentsNOTAB`(image, connectivity, algo, target)
     }
   } else if (target == "new") {
-    out <- zeros(nrow(image), ncol(image), "GRAY", "32S")
+    out <- zeros(nrow(image), ncol(image), 1, "32S", "GRAY")
 
     if (table) {
       l <- `_connectedComponentsTAB`(image, connectivity, algo, out)
@@ -599,7 +599,7 @@ pixelsInContour <- function(contours, id = NULL) {
                    contour[, 3] <- contour[, 3] - shift_y + 1
 
                    mask <- zeros(nrow = max(contour[, 3]),
-                                 ncol = max(contour[, 2]), "GRAY", "8U")
+                                 ncol = max(contour[, 2]), 1, "8U")
                    fillConvexPoly(mask, contour[, 2:3])
                    nz <- findNonZero(mask)
                    nz[, 1] <- nz[, 1] + shift_x - 1

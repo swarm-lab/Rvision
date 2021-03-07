@@ -50,6 +50,8 @@
 #'  the function returns nothing and modifies that \code{\link{Image}} object in
 #'  place.
 #'
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}, \code{\link{changeBitDepth}}
@@ -59,7 +61,17 @@
 #' grey_balloon <- changeColorSpace(balloon, "GRAY")
 #'
 #' @export
-changeColorSpace <- function(image, colorspace, target = "new") {
+changeColorSpace <- function(image, colorspace, target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 
@@ -104,6 +116,8 @@ changeColorSpace <- function(image, colorspace, target = "new") {
 #'    \code{target} must have the same dimensions as \code{image}.}
 #'  }
 #'
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
 #' @return If \code{target="new"}, the function returns an \code{\link{Image}}
 #'  object. If \code{target="self"}, the function returns nothing and modifies
 #'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
@@ -119,7 +133,17 @@ changeColorSpace <- function(image, colorspace, target = "new") {
 #' balloon_16 <- changeBitDepth(balloon, "16U")
 #'
 #' @export
-changeBitDepth <- function(image, bitdepth, scale = 1, target = "new") {
+changeBitDepth <- function(image, bitdepth, scale = 1, target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("This is not an Image object.")
 

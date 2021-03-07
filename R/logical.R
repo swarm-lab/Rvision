@@ -75,8 +75,6 @@ setGeneric("bitNot", function(e1, target) { standardGeneric("bitNot") })
 #'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
-#' @param in_place Deprecated. Use \code{target} instead.
-#'
 #' @return The operators do not return anything. They modify the image in place
 #'  (destructive operation). If 2 images are passed to the operators, only the
 #'  one of the left side of the operator is modified; the other is left untouched.

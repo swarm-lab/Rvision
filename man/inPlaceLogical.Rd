@@ -33,8 +33,6 @@ values:
   if \code{target} does not have the same dimensions, number of channels, and
   bit depth as \code{image}, an error may be thrown.}
 }}
-
-\item{in_place}{Deprecated. Use \code{target} instead.}
 }
 \value{
 The operators do not return anything. They modify the image in place

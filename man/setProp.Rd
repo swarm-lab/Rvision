@@ -20,9 +20,9 @@
 
 \method{getProp}{Rcpp_Video}(x, property)
 
-\method{setProp}{Rcpp_VideoWriter}(obj, property, value)
+\method{setProp}{Rcpp_VideoWriter}(x, property, value)
 
-\method{getProp}{Rcpp_VideoWriter}(obj, property)
+\method{getProp}{Rcpp_VideoWriter}(x, property)
 
 setProp(x, property, value)
 

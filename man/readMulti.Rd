@@ -8,6 +8,8 @@ readMulti(x, colorspace = "BGR")
 }
 \arguments{
 \item{x}{A character string naming the path to a multi-page image file.}
+
+\item{colorspace}{A string indicating the desired color space for the images.}
 }
 \value{
 A list of \code{\link{Image}} objects.

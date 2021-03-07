@@ -8,7 +8,7 @@
 \usage{
 \method{codec}{Rcpp_Video}(x)
 
-\method{codec}{Rcpp_VideoWriter}(obj)
+\method{codec}{Rcpp_VideoWriter}(x)
 
 codec(x)
 }

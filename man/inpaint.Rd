@@ -38,7 +38,7 @@ An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
 }
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-mask <- image(array(0L, dim = c(nrow(balloon), ncol(balloon), 3)))
+mask <- zeros(nrow(balloon), ncol(balloon), 3)
 poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 fillPoly(mask, poly, color = "white")
 changeColorSpace(mask, "GRAY", in_place = TRUE)

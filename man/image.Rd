@@ -12,6 +12,8 @@ that is a character string indicating the path to the image file. When
 created from an array (e.g. a matrix), it takes this array as its single
 argument. An \code{Image} object can also be created without any argument,
 in which case it is empty and can be populated with an image later.}
+
+\item{colorspace}{A string indicating the desired color space for the image.}
 }
 \value{
 An \code{\link{Image}} object.

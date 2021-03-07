@@ -64,8 +64,10 @@ A larger value of \code{sigma_space} means that farther pixels will
 }
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-balloon_noisy <- balloon + image(array(sample(0:30, nrow(balloon) * ncol(balloon), replace = TRUE),
-                                       dim = c(nrow(balloon), ncol(balloon), 3)))
+rnd <- image(array(sample(0:30, nrow(balloon) * ncol(balloon), replace = TRUE),
+                   dim = c(nrow(balloon), ncol(balloon), 3)))
+changeBitDepth(rnd, "8U", target = "self")
+balloon_noisy <- balloon + rnd
 balloon_bilateral <- bilateralFilter(balloon_noisy, 25)
 
 }

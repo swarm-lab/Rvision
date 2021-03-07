@@ -188,7 +188,7 @@ readNext.Rcpp_Stream <- function(x, target = "new") {
   if (isImage(target)) {
     x$readNext(target)
   } else if (target == "new") {
-    out <- zeros(nrow(x), ncol(x))
+    out <- zeros(nrow(x), ncol(x), 3)
     x$readNext(out)
     out
   } else {

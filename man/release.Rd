@@ -12,7 +12,7 @@
 
 \method{release}{Rcpp_Video}(x)
 
-\method{release}{Rcpp_VideoWriter}(obj)
+\method{release}{Rcpp_VideoWriter}(x)
 
 release(x)
 }

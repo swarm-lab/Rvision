@@ -29,6 +29,8 @@
 #'  argument. An \code{Image} object can also be created without any argument,
 #'  in which case it is empty and can be populated with an image later.
 #'
+#' @param colorspace A string indicating the desired color space for the image.
+#'
 #' @return An \code{\link{Image}} object.
 #'
 #' @note \code{Image} objects can be created from video files and video streams
@@ -470,6 +472,8 @@ merge <- function(x, target = "new") {
 #'  \code{\link{Image}} objects, each corresponding to a different page.
 #'
 #' @param x A character string naming the path to a multi-page image file.
+#'
+#' @param colorspace A string indicating the desired color space for the images.
 #'
 #' @return A list of \code{\link{Image}} objects.
 #'

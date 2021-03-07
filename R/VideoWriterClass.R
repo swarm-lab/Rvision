@@ -116,14 +116,14 @@ isVideoWriter <- function(object) {
 
 #' @export
 #' @rdname release
-release.Rcpp_VideoWriter <- function(obj) {
-  if (!isVideoWriter(obj))
+release.Rcpp_VideoWriter <- function(x) {
+  if (!isVideoWriter(x))
     stop("This is not a VideoWriter object.")
 
-  obj$release()
+  x$release()
 
-  if (!obj$isOpened()) {
-    tmp <- deparse(substitute(obj))
+  if (!x$isOpened()) {
+    tmp <- deparse(substitute(x))
     rm(list = tmp, envir = parent.frame(1))
     message("VideoWriter released successfully. \n")
   } else {
@@ -171,21 +171,21 @@ writeFrame <- function(x, frame) {
 
 #' @rdname setProp
 #' @export
-setProp.Rcpp_VideoWriter <- function(obj, property, value) {
-  if (!isVideoWriter(obj))
+setProp.Rcpp_VideoWriter <- function(x, property, value) {
+  if (!isVideoWriter(x))
     stop("This is not a VideoWriter object.")
 
-  obj$set(property, value)
+  x$set(property, value)
 }
 
 
 #' @export
 #' @rdname setProp
-getProp.Rcpp_VideoWriter <- function(obj, property) {
-  if (!isVideoWriter(obj))
+getProp.Rcpp_VideoWriter <- function(x, property) {
+  if (!isVideoWriter(x))
     stop("This is not a VideoWriter object.")
 
-  obj$get(property)
+  x$get(property)
 }
 
 
@@ -254,21 +254,21 @@ ncol.Rcpp_VideoWriter <- function(x) {
 
 #' @export
 #' @rdname fps
-fps.Rcpp_VideoWriter <- function(obj) {
-  if (!isVideoWriter(obj))
+fps.Rcpp_VideoWriter <- function(x) {
+  if (!isVideoWriter(x))
     stop("This is not a VideoWriter object.")
 
-  obj$fps()
+  x$fps()
 }
 
 
 #' @export
 #' @rdname codec
-codec.Rcpp_VideoWriter <- function(obj) {
-  if (!isVideoWriter(obj))
+codec.Rcpp_VideoWriter <- function(x) {
+  if (!isVideoWriter(x))
     stop("This is not a VideoWriter object.")
 
-  obj$codec()
+  x$codec()
 }
 
 

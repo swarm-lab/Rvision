@@ -239,7 +239,7 @@ inRange <- function(image, low = rep(0, 4), up = rep(255, 4), target = "new") {
   if (isImage(target)) {
     `_inRange`(image, low, up, target)
   } else if (target == "new") {
-    out <- zeros(nrow(image), ncol(image), "GRAY", "8U")
+    out <- zeros(nrow(image), ncol(image), 1, "8U")
     `_inRange`(image, low, up, out)
     out
   } else {

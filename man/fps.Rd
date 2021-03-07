@@ -8,7 +8,7 @@
 \usage{
 \method{fps}{Rcpp_Video}(x)
 
-\method{fps}{Rcpp_VideoWriter}(obj)
+\method{fps}{Rcpp_VideoWriter}(x)
 
 fps(x)
 }

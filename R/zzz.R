@@ -492,6 +492,8 @@ methods::evalqOnLoad({
 #' @param ... Further arguments passed to summary methods. Unused if \code{x} is
 #'  an image or a list of images.
 #'
+#' @usage sum(x, target = "new", ...)
+#'
 #' @return If \code{x} is an \code{\link{Image}} object, the function returns a
 #'  numeric value (for single-channel images) or a vector of numeric values (for
 #'  multi-channel images).

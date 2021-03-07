@@ -14,6 +14,8 @@ Description: An OpenCV-based computer vision library providing methods to read
 License: GPL-3
 LazyData: TRUE
 NeedsCompilation: yes
+Depends: 
+    R (>= 3.5.0)
 Imports:
     Rcpp (>= 1.0.1),
     ROpenCVLite (>= 4.50.0),

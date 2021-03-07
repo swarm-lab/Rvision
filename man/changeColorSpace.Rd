@@ -4,7 +4,7 @@
 \alias{changeColorSpace}
 \title{Convert Image to New Color Space}
 \usage{
-changeColorSpace(image, colorspace, target = "new")
+changeColorSpace(image, colorspace, target = "new", in_place = NULL)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -25,6 +25,8 @@ values:
   content of \code{image} but will replace that of \code{target}. Note that
   \code{target} must have the same dimensions as \code{image}.}
 }}
+
+\item{in_place}{Deprecated. Use \code{target} instead.}
 }
 \value{
 If \code{target="new"}, the function returns an \code{\link{Image}}

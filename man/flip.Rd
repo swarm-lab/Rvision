@@ -28,6 +28,8 @@ values:
   if \code{target} does not have the same dimensions, number of channels, and
   bit depth as \code{image}, nothing will be stored.}
 }}
+
+\item{in_place}{Deprecated. Use \code{target} instead.}
 }
 \value{
 If \code{target="new"}, the function returns an \code{\link{Image}}
