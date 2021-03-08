@@ -276,7 +276,7 @@ RCPP_MODULE(methods_Draw) {
   function("_fillConvexPoly", &_fillConvexPoly, List::create(_["image"], _["polygon"],
     _["color"]), "");
   function("_inpaint", &_inpaint, List::create(_["image"], _["mask"], _["radius"],
-    _["method"]), "");
+    _["method"], _["target"]), "");
   function("_setTo", &_setTo, List::create(_["image"], _["mask"], _["color"]), "");
 }
 

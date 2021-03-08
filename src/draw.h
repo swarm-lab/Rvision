@@ -130,8 +130,8 @@ void _fillConvexPoly(Image& image, Rcpp::IntegerMatrix polygon, Rcpp::NumericVec
   cv::fillConvexPoly(image.image, rmat2poly(polygon), col2Scalar(color));
 }
 
-void _inpaint(Image& image, Image& mask, double radius, int method) {
-  cv::inpaint(image.image, mask.image, image.image, radius, method);
+void _inpaint(Image& image, Image& mask, double radius, int method, Image& target) {
+  cv::inpaint(image.image, mask.image, target.image, radius, method);
 }
 
 void _setTo(Image& image, Image& mask, NumericVector color) {

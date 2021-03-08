@@ -36,7 +36,6 @@
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' drawRectangle(balloon, 290, 170, 440, 325, thickness = 3)
-#' plot(balloon)
 #'
 #' @export
 drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness = 1) {
@@ -96,7 +95,6 @@ drawRectangle <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thic
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' drawRectangle(balloon, 290, 170, 440, 325, thickness = 3)
-#' plot(balloon)
 #'
 #' @export
 drawRotatedRectangle <- function(image, x, y, axis1, axis2, angle, color = "red",
@@ -151,7 +149,6 @@ drawRotatedRectangle <- function(image, x, y, axis1, axis2, angle, color = "red"
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' drawCircle(balloon, 365, 245, 90, thickness = 3)
-#' plot(balloon)
 #'
 #' @export
 drawCircle <- function(image, x, y, radius, color = "red", thickness = 1) {
@@ -216,7 +213,6 @@ drawCircle <- function(image, x, y, radius, color = "red", thickness = 1) {
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' drawEllipse(balloon, 365, 245, 120, 90, angle = 45, thickness = 3)
-#' plot(balloon)
 #'
 #' @export
 drawEllipse <- function(image, x, y, axis1, axis2, angle, start_angle = 0,
@@ -276,7 +272,6 @@ drawEllipse <- function(image, x, y, axis1, axis2, angle, start_angle = 0,
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' drawLine(balloon, 1, 1, ncol(balloon), nrow(balloon), thickness = 3)
-#' plot(balloon)
 #'
 #' @export
 drawLine <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness = 1) {
@@ -335,7 +330,6 @@ drawLine <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, color = "red", thickness
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' drawArrow(balloon, 1, 1, ncol(balloon) / 2, nrow(balloon) / 2, thickness = 3)
-#' plot(balloon)
 #'
 #' @export
 drawArrow <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
@@ -401,7 +395,6 @@ drawArrow <- function(image, pt1_x, pt1_y, pt2_x, pt2_y, tip_length = 0.1,
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' drawText(balloon, "I'm a balloon", 50, 50, thickness = 3)
-#' plot(balloon)
 #'
 #' @export
 drawText <- function(image, text, x, y, font_face = "simplex", font_scale = 1,
@@ -508,7 +501,6 @@ getTextSize <- function(text, font_face = "simplex", font_scale = 1,
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 #' drawPolyline(balloon, poly, closed = FALSE, color = "red", thickness = 3)
-#' plot(balloon)
 #'
 #' @export
 drawPolyline <- function(image, line, closed = FALSE, color = "red", thickness = 1) {
@@ -562,7 +554,6 @@ drawPolyline <- function(image, line, closed = FALSE, color = "red", thickness =
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 #' fillPoly(balloon, poly, color = "red")
-#' plot(balloon)
 #'
 #' @export
 fillPoly <- function(image, polygon, color = "white") {
@@ -619,9 +610,7 @@ fillPoly <- function(image, polygon, color = "white") {
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 #' fillConvexPoly(balloon, poly, color = "red")
-#' plot(balloon)
 #'
-#' @export
 #' @export
 fillConvexPoly <- function(image, polygon, color = "white") {
   if (!isImage(image))
@@ -662,12 +651,27 @@ fillConvexPoly <- function(image, polygon, color = "white") {
 #'    \item{"Telea": }{Alexandru Telea's method.}
 #'  }
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    \code{target} must have the same dimensions, number of channels, and bit
+#'    depth,  as \code{image}, otherwise an error will be thrown.}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -683,10 +687,19 @@ fillConvexPoly <- function(image, polygon, color = "white") {
 #' fillPoly(mask, poly, color = "white")
 #' changeColorSpace(mask, "GRAY", in_place = TRUE)
 #' balloon_inpait <- inpaint(balloon, mask)
-#' plot(balloon_inpait)
 #'
 #' @export
-inpaint <- function(image, mask, radius = 5, method = "NS", in_place = FALSE) {
+inpaint <- function(image, mask, radius = 5, method = "NS", target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("image is not an 'Image' object.")
 
@@ -696,22 +709,19 @@ inpaint <- function(image, mask, radius = 5, method = "NS", in_place = FALSE) {
   if (bitdepth(mask) != "8U")
     stop("mask is not an 8-bit single-channel (8U).")
 
-  if (in_place == TRUE) {
-    `_inpaint`(image, mask, radius,
-               switch(method,
-                      "NS" = 0,
-                      "Telea" = 1,
-                      stop("This is not a valid method.")
-               ))
-  } else {
+  meth <- switch(method, "NS" = 0, "Telea" = 1,
+                 stop("This is not a valid method."))
+
+  if (isImage(target)) {
+    `_inpaint`(image, mask, radius, meth, target)
+  } else if (target == "self") {
+    `_inpaint`(image, mask, radius, meth, image)
+  } else if (target == "new") {
     out <- `_cloneImage`(image)
-    `_inpaint`(out, mask, radius,
-               switch(method,
-                      "NS" = 0,
-                      "Telea" = 1,
-                      stop("This is not a valid method.")
-               ))
+    `_inpaint`(image, mask, radius, meth, out)
     out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -731,12 +741,20 @@ inpaint <- function(image, mask, radius = 5, method = "NS", in_place = FALSE) {
 #'  with \code{\link{col2bgr}} representing the color of each rectangle's outline
 #'  (default: "red").
 #'
-#' @param in_place A logical indicating whether the change should be applied to
-#'  the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-#'  the default, slower but non destructive).
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'  }
 #'
-#' @return An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
-#'  returns nothing and modifies \code{image} in place.
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -748,10 +766,19 @@ inpaint <- function(image, mask, radius = 5, method = "NS", in_place = FALSE) {
 #' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 #' fillPoly(mask, poly, color = "white")
 #' balloon_painted <- setTo(balloon, mask, "green")
-#' plot(balloon_painted)
 #'
 #' @export
-setTo <- function(image, mask, color = "red", in_place = FALSE) {
+setTo <- function(image, mask, color = "red", target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
   if (!isImage(image))
     stop("image is not an 'Image' object.")
 
@@ -766,7 +793,7 @@ setTo <- function(image, mask, color = "red", in_place = FALSE) {
   if (bitdepth(mask) != "8U")
     stop("mask is not an 8-bit single-channel (8U).")
 
-  if (in_place == TRUE) {
+  if (target == "self") {
     `_setTo`(image, mask, col2bgr(color))
   } else {
     out <- `_cloneImage`(image)

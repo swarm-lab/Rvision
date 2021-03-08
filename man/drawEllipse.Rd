@@ -61,7 +61,6 @@ This function does not return anything. It modifies \code{image} in
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 drawEllipse(balloon, 365, 245, 120, 90, angle = 45, thickness = 3)
-plot(balloon)
 
 }
 \seealso{

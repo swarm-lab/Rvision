@@ -59,7 +59,6 @@ This function does not return anything. It modifies \code{image} in
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 drawText(balloon, "I'm a balloon", 50, 50, thickness = 3)
-plot(balloon)
 
 }
 \seealso{

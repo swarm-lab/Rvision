@@ -33,7 +33,6 @@ This function does not return anything. It modifies \code{image} in
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 fillConvexPoly(balloon, poly, color = "red")
-plot(balloon)
 
 }
 \seealso{

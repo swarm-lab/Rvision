@@ -4,7 +4,14 @@
 \alias{inpaint}
 \title{Reconstruct Image Region from Region Neighborhood}
 \usage{
-inpaint(image, mask, radius = 5, method = "NS", in_place = FALSE)
+inpaint(
+  image,
+  mask,
+  radius = 5,
+  method = "NS",
+  target = "new",
+  in_place = NULL
+)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -22,13 +29,28 @@ following:
   \item{"Telea": }{Alexandru Telea's method.}
 }}
 
-\item{in_place}{A logical indicating whether the change should be applied to
-the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-the default, slower but non destructive).}
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{"self":}{the results are stored back into \code{image} (faster but
+  destructive).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast and will not replace the
+  content of \code{image} but will replace that of \code{target}. Note that
+  \code{target} must have the same dimensions, number of channels, and bit
+  depth,  as \code{image}, otherwise an error will be thrown.}
+}}
+
+\item{in_place}{Deprecated. Use \code{target} instead.}
 }
 \value{
-An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
- returns nothing and modifies \code{image} in place.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target="self"}, the function returns nothing and modifies
+ \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+ the function returns nothing and modifies that \code{\link{Image}} object in
+ place.
 }
 \description{
 \code{inpaint} reconstructs the selected image area from the
@@ -43,7 +65,6 @@ poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 fillPoly(mask, poly, color = "white")
 changeColorSpace(mask, "GRAY", in_place = TRUE)
 balloon_inpait <- inpaint(balloon, mask)
-plot(balloon_inpait)
 
 }
 \references{

@@ -4,7 +4,7 @@
 \alias{setTo}
 \title{Set All or Some of an Image to the Specified Value}
 \usage{
-setTo(image, mask, color = "red", in_place = FALSE)
+setTo(image, mask, color = "red", target = "new", in_place = NULL)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -16,13 +16,21 @@ should be white.}
 with \code{\link{col2bgr}} representing the color of each rectangle's outline
 (default: "red").}
 
-\item{in_place}{A logical indicating whether the change should be applied to
-the image itself (TRUE, faster but destructive) or to a copy of it (FALSE,
-the default, slower but non destructive).}
+\item{target}{The location where the results should be stored. It can take 2
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{"self":}{the results are stored back into \code{image} (faster but
+  destructive).}
+}}
+
+\item{in_place}{Deprecated. Use \code{target} instead.}
 }
 \value{
-An \code{\link{Image}} object if \code{in_place=FALSE}. Otherwise, it
- returns nothing and modifies \code{image} in place.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target="self"}, the function returns nothing and modifies
+ \code{image} in place.
 }
 \description{
 If a mask is specified, \code{setTo} sets the color of the
@@ -35,7 +43,6 @@ mask <- zeros(nrow(balloon), ncol(balloon))
 poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 fillPoly(mask, poly, color = "white")
 balloon_painted <- setTo(balloon, mask, "green")
-plot(balloon_painted)
 
 }
 \seealso{
