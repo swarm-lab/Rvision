@@ -7,20 +7,18 @@
 warpPerspective(
   image,
   warp_matrix,
-  output_size = dim(image)[1:2],
   interp_mode = "linear",
   inverse_map = TRUE,
   border_type = "constant",
-  border_color = "black"
+  border_color = "black",
+  target = "new",
+  output_size = dim(image)[2:1]
 )
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
 \item{warp_matrix}{A 3x3 numeric matrix.}
-
-\item{output_size}{A 2-elements vector indicating the number of rows and
-columns of the output image (defaults to the dimensions of \code{image}).}
 
 \item{interp_mode}{A character string indicating the interpolation method to
 be used. It can be
@@ -55,9 +53,31 @@ any of the following:
 \item{border_color}{A value or vector of any kind of R color specification
 compatible with \code{\link{col2bgr}} representing the color of the border
 (default: "black").}
+
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{"self":}{the results are stored back into \code{image} (faster but
+  destructive).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast and will not replace the
+  content of \code{image} but will replace that of \code{target}. Note that
+  \code{target} must have the same bit depth and number of channels as
+  \code{image} but can have different dimensions.}
+}}
+
+\item{output_size}{If \code{target="new"}, a 2-elements vector indicating the
+number of rows and columns of the output image (defaults to the dimensions
+of \code{image}).}
 }
 \value{
-An \code{\link{Image}} object.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target="self"}, the function returns nothing and modifies
+ \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+ the function returns nothing and modifies that \code{\link{Image}} object in
+ place.
 }
 \description{
 \code{warpPerspective} applies a perspective transformation to
@@ -68,7 +88,7 @@ file1 <- system.file("sample_img/balloon1.png", package = "Rvision")
 file2 <- system.file("sample_img/balloon2.png", package = "Rvision")
 balloon1 <- changeColorSpace(image(file1), "GRAY")
 balloon2 <- changeColorSpace(image(file2), "GRAY")
-ecc <- findTransformECC(balloon1, balloon2, warp_mode = "homography")
+ecc <- findTransformORB(balloon1, balloon2, warp_mode = "homography")
 balloon2_transformed <- warpPerspective(balloon2, ecc)
 
 }

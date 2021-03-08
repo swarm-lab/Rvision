@@ -249,8 +249,7 @@ rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, s
 #'
 #' @param warp_matrix A 2x3 numeric matrix.
 #'
-#' @param output_size A 2-elements vector indicating the number of rows and
-#'  columns of the output image (defaults to the dimensions of \code{image}).
+#'
 #'
 #' @param interp_mode A character string indicating the interpolation method to
 #'  be used. It can be
@@ -286,7 +285,29 @@ rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, s
 #'  compatible with \code{\link{col2bgr}} representing the color of the border
 #'  (default: "black").
 #'
-#' @return An \code{\link{Image}} object.
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    \code{target} must have the same bit depth and number of channels as
+#'    \code{image} but can have different dimensions.}
+#'  }
+#'
+#' @param output_size If \code{target="new"}, a 2-elements vector indicating the
+#'  number of rows and columns of the output image (defaults to the dimensions
+#'  of \code{image}).
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -297,13 +318,13 @@ rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, s
 #' file2 <- system.file("sample_img/balloon2.png", package = "Rvision")
 #' balloon1 <- changeColorSpace(image(file1), "GRAY")
 #' balloon2 <- changeColorSpace(image(file2), "GRAY")
-#' ecc <- findTransformECC(balloon1, balloon2)
+#' ecc <- findTransformORB(balloon1, balloon2)
 #' balloon2_transformed <- warpAffine(balloon2, ecc)
 #'
 #' @export
-warpAffine <- function(image, warp_matrix, output_size = dim(image)[1:2],
-                       interp_mode = "linear", inverse_map = TRUE,
-                       border_type = "constant", border_color = "black") {
+warpAffine <- function(image, warp_matrix, interp_mode = "linear", inverse_map = TRUE,
+                       border_type = "constant", border_color = "black",
+                       target = "new", output_size = dim(image)[2:1]) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
@@ -326,9 +347,22 @@ warpAffine <- function(image, warp_matrix, output_size = dim(image)[1:2],
   if (!is.logical(inverse_map))
     stop("inverse_map must be a logical.")
 
-  `_warpAffine`(image, warp_matrix, output_size[2:1],
-                interp_vals[interp_modes == interp_mode] + inverse_map * 16,
-                border_vals[border_type == border_types], col2bgr(border_color))
+  if (isImage(target)) {
+    `_warpAffine`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+                  border_vals[border_type == border_types], col2bgr(border_color), target)
+  } else if (target == "self") {
+    `_warpAffine`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+                  border_vals[border_type == border_types], col2bgr(border_color),
+                  image)
+  } else if (target == "new") {
+    out <- zeros(output_size[1], output_size[2], image$nchan(), image$depth(), image$space)
+    `_warpAffine`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+                  border_vals[border_type == border_types], col2bgr(border_color),
+                  out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 
@@ -386,9 +420,6 @@ getPerspectiveTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #'
 #' @param warp_matrix A 3x3 numeric matrix.
 #'
-#' @param output_size A 2-elements vector indicating the number of rows and
-#'  columns of the output image (defaults to the dimensions of \code{image}).
-#'
 #' @param interp_mode A character string indicating the interpolation method to
 #'  be used. It can be
 #'  any of the following:
@@ -423,7 +454,29 @@ getPerspectiveTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #'  compatible with \code{\link{col2bgr}} representing the color of the border
 #'  (default: "black").
 #'
-#' @return An \code{\link{Image}} object.
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    \code{target} must have the same bit depth and number of channels as
+#'    \code{image} but can have different dimensions.}
+#'  }
+#'
+#' @param output_size If \code{target="new"}, a 2-elements vector indicating the
+#'  number of rows and columns of the output image (defaults to the dimensions
+#'  of \code{image}).
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -434,21 +487,18 @@ getPerspectiveTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #' file2 <- system.file("sample_img/balloon2.png", package = "Rvision")
 #' balloon1 <- changeColorSpace(image(file1), "GRAY")
 #' balloon2 <- changeColorSpace(image(file2), "GRAY")
-#' ecc <- findTransformECC(balloon1, balloon2, warp_mode = "homography")
+#' ecc <- findTransformORB(balloon1, balloon2, warp_mode = "homography")
 #' balloon2_transformed <- warpPerspective(balloon2, ecc)
 #'
 #' @export
-warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
-                            interp_mode = "linear", inverse_map = TRUE,
-                            border_type = "constant", border_color = "black") {
+warpPerspective <- function(image, warp_matrix, interp_mode = "linear", inverse_map = TRUE,
+                            border_type = "constant", border_color = "black",
+                            target = "new", output_size = dim(image)[2:1]) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
   if (!all(dim(warp_matrix) == c(3, 3)))
     stop("'warp_matrix' should have exactly 3 rows and 3 columns.")
-
-  if (length(output_size) != 2 | !is.numeric(output_size))
-    stop("'output_size' should be a numeric vector of length 2.")
 
   interp_modes <- c("nearest", "linear", "cubic", "area", "lanczos4", "linear_exact")
   interp_vals <- 0:5
@@ -463,9 +513,20 @@ warpPerspective <- function(image, warp_matrix, output_size = dim(image)[1:2],
   if (!is.logical(inverse_map))
     stop("inverse_map must be a logical.")
 
-  `_warpPerspective`(image, warp_matrix, output_size[2:1],
-                     interp_vals[interp_modes == interp_mode] + inverse_map * 16,
-                     border_vals[border_type == border_types], col2bgr(border_color))
+  if (isImage(target)) {
+    `_warpPerspective`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+                       border_vals[border_type == border_types], col2bgr(border_color), target)
+  } else if (target == "self") {
+    `_warpPerspective`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+                       border_vals[border_type == border_types], col2bgr(border_color), image)
+  } else if (target == "new") {
+    out <- zeros(output_size[1], output_size[2], image$nchan(), image$depth(), image$space)
+    `_warpPerspective`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+                       border_vals[border_type == border_types], col2bgr(border_color), out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 

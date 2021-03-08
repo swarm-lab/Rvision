@@ -318,10 +318,10 @@ RCPP_MODULE(methods_Transform) {
     _["angle"], _["scale"]), "");
   function("_getPerspectiveTransform", &_getPerspectiveTransform,
            List::create(_["from"], _["to"]), "");
-  function("_warpAffine", &_warpAffine, List::create(_["image"], _["m"], _["outputSize"],
-    _["interpMode"], _["borderType"], _["borderColor"]), "");
+  function("_warpAffine", &_warpAffine, List::create(_["image"], _["m"],
+    _["interpMode"], _["borderType"], _["borderColor"], _["target"]), "");
   function("_warpPerspective", &_warpPerspective, List::create(_["image"], _["m"],
-    _["outputSize"], _["interpMode"], _["borderType"], _["borderColor"]), "");
+    _["interpMode"], _["borderType"], _["borderColor"], _["target"]), "");
   function("_distanceTransform", &_distanceTransform, List::create(_["image"],
     _["distanceType"], _["maskSize"], _["target"]), "");
   function("_floodFill", &_floodFill, List::create(_["image"], _["seedPoint"],

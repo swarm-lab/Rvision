@@ -71,14 +71,12 @@ arma::Mat< float > _getRotationMatrix2D(arma::fvec center, double angle, double 
   return out;
 }
 
-Image _warpAffine(Image& image, arma::Mat< float > m, IntegerVector outputSize,
-                  int interpMode, int borderType, Rcpp::NumericVector borderColor) {
-  cv::Mat out;
+void _warpAffine(Image& image, arma::Mat< float > m, int interpMode, int borderType,
+                 Rcpp::NumericVector borderColor, Image& target) {
   cv::Mat_< float > warpMatrix;
   arma2cv(m, warpMatrix);
-  cv::warpAffine(image.image, out, warpMatrix, cv::Size(outputSize(0), outputSize(1)),
+  cv::warpAffine(image.image, target.image, warpMatrix, target.image.size(),
                  interpMode, borderType, col2Scalar(borderColor));
-  return Image(out, image.space);
 }
 
 arma::Mat< float > _getPerspectiveTransform(arma::Mat< float > from, arma::Mat< float > to) {
@@ -101,20 +99,19 @@ arma::Mat< float > _getPerspectiveTransform(arma::Mat< float > from, arma::Mat< 
   return out;
 }
 
-Image _warpPerspective(Image& image, arma::Mat< float > m, IntegerVector outputSize,
-                       int interpMode, int borderType, Rcpp::NumericVector borderColor) {
-  cv::Mat out;
+void _warpPerspective(Image& image, arma::Mat< float > m, int interpMode, int borderType,
+                      Rcpp::NumericVector borderColor, Image& target) {
   cv::Mat_< float > warpMatrix;
   arma2cv(m, warpMatrix);
-  cv::warpPerspective(image.image, out, warpMatrix, cv::Size(outputSize(0), outputSize(1)), interpMode, borderType, col2Scalar(borderColor));
-  return Image(out, image.space);
+  cv::warpPerspective(image.image, target.image, warpMatrix, target.image.size(),
+                      interpMode, borderType, col2Scalar(borderColor));
 }
 
-void _distanceTransform(Image image, int distanceType, int maskSize, Image target) {
+void _distanceTransform(Image& image, int distanceType, int maskSize, Image& target) {
   cv::distanceTransform(image.image, target.image, distanceType, maskSize, target.image.type());
 }
 
-int _floodFill(Image image, IntegerVector seedPoint, NumericVector newVal,
+int _floodFill(Image& image, IntegerVector seedPoint, NumericVector newVal,
                NumericVector loDiff, NumericVector upDiff, int connectivity) {
   int area = cv::floodFill(image.image, cv::Point(seedPoint(0), seedPoint(1)),
                            col2Scalar(newVal), 0, col2Scalar(loDiff),
