@@ -4,7 +4,7 @@
 \alias{invert}
 \title{Invert Colors}
 \usage{
-invert(image, target = "new", in_place = FALSE)
+invert(image, target = "new", in_place = NULL)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}

@@ -998,7 +998,7 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #' balloon_inv <- invert(balloon)
 #'
 #' @export
-invert <- function(image, target = "new", in_place = FALSE) {
+invert <- function(image, target = "new", in_place = NULL) {
   if (!missing(in_place)) {
     if (in_place) {
       warning("in_place is deprecated. Use target='self' instead.")
