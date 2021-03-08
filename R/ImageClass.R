@@ -854,5 +854,7 @@ zeros <- function(nrow, ncol, nchan = 3, bitdepth = "8U", colorspace = "BGR") {
 #'
 #' @export
 ones <- function(nrow, ncol, nchan = 3, bitdepth = "8U", colorspace = "BGR") {
-  `_ones`(nrow, ncol, paste0(bitdepth, "C", nchan), colorspace)
+  out <- `_zeros`(nrow, ncol, paste0(bitdepth, "C", nchan), colorspace)
+  out %i+% 1
+  out
 }

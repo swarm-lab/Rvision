@@ -43,7 +43,7 @@ RCPP_MODULE(class_Image) {
   function("_copyMakeBorder", &_copyMakeBorder, List::create(_["image"], _["top"],
     _["bottom"], _["left"], _["right"], _["borderType"], _["borderValue"]), "");
   function("_zeros", &_zeros, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
-  function("_ones", &_ones, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
+  // function("_ones", &_ones, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
 }
 
 #include "Video.h"

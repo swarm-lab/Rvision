@@ -487,6 +487,7 @@ methods::evalqOnLoad({
 #'    content of \code{target}. Note that \code{target} should have the same
 #'    dimensions and number of channels as the images in the list, otherwise an
 #'    error will be thrown.}
+#'  }
 #'
 #' @param ... Further arguments passed to summary methods. Unused if \code{x} is
 #'  an image or a list of images.
