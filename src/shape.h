@@ -73,8 +73,8 @@ Rcpp::List _connectedComponentsTAB(Image& image, int connectivity, int algorithm
                             Rcpp::Named("table") = table);
 }
 
-Rcpp::List _connectedComponentsNOTAB(Image image, int connectivity, int algorithm,
-                                     Image target) {
+Rcpp::List _connectedComponentsNOTAB(Image& image, int connectivity, int algorithm,
+                                     Image& target) {
   int n = cv::connectedComponents(image.image, target.image, connectivity,
                                   target.image.type(), algorithm);
   return Rcpp::List::create(Rcpp::Named("n") = n - 1);
