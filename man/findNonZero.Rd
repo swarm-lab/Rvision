@@ -4,14 +4,19 @@
 \alias{findNonZero}
 \title{Find Non-Zero Pixels in an Image}
 \usage{
-findNonZero(image)
+findNonZero(image, values = FALSE)
 }
 \arguments{
-\item{image}{An an 8-bit (8U) single-channel \code{\link{Image}} object.}
+\item{image}{A single-channel \code{\link{Image}} object.}
+
+\item{values}{A logical indicating whether the values of the non-zero pixels
+should also be returned (default: FALSE).}
 }
 \value{
-A matrix with two columns, corresponding to the x (columns) and y
- (rows) coordinates of the non-zero pixels.
+If \code{values=FALSE}, a matrix with two columns, corresponding to
+ the x (columns) and y (rows) coordinates of the non-zero pixels. If
+ \code{values=TRUE}, an additional column corresponding to the pixel values
+ will also be returned.
 }
 \description{
 \code{findNonZero} retrieves the locations of all non-zero

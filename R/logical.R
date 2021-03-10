@@ -133,10 +133,15 @@ not <- function(image, target = "new") {
 #' @description \code{findNonZero} retrieves the locations of all non-zero
 #'  pixels in an image.
 #'
-#' @param image An an 8-bit (8U) single-channel \code{\link{Image}} object.
+#' @param image A single-channel \code{\link{Image}} object.
 #'
-#' @return A matrix with two columns, corresponding to the x (columns) and y
-#'  (rows) coordinates of the non-zero pixels.
+#' @param values A logical indicating whether the values of the non-zero pixels
+#'  should also be returned (default: FALSE).
+#'
+#' @return If \code{values=FALSE}, a matrix with two columns, corresponding to
+#'  the x (columns) and y (rows) coordinates of the non-zero pixels. If
+#'  \code{values=TRUE}, an additional column corresponding to the pixel values
+#'  will also be returned.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -148,12 +153,16 @@ not <- function(image, target = "new") {
 #' findNonZero(balloon_gray)
 #'
 #' @export
-findNonZero <- function(image) {
+findNonZero <- function(image, values = FALSE) {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
   if (image$nchan() != 1)
     stop("'image' must be a single-channel Image object.")
 
-  `_findNonZero`(image)
+  if (values) {
+    `_findNonZeroVAL`(image)
+  } else {
+    `_findNonZero`(image)
+  }
 }

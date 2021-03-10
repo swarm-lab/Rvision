@@ -460,7 +460,3 @@ Image _copyMakeBorder(Image &image, int top, int bottom, int left, int right,
 Image _zeros(int nrow, int ncol, std::string type, std::string colorspace) {
   return Image(cv::Mat::zeros(nrow, ncol, str2type(type)), colorspace);
 }
-
-// Image _ones(int nrow, int ncol, std::string type, std::string colorspace) {
-//   return Image(cv::Mat::ones(nrow, ncol, str2type(type)) + 1, colorspace);
-// }
