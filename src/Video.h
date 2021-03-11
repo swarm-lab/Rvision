@@ -135,14 +135,12 @@ std::string Video::codec() {
 }
 
 void Video::readNext(Image& target) {
-  this->video.read(target.image);
+  if (!this->video.read(target.image))
+    throw std::range_error("No more frames available.");
 }
 
 void Video::readFrame(int frameId, Image& target) {
-  if (frameId > this->video.get(cv::CAP_PROP_FRAME_COUNT)) {
-    throw std::range_error("The requested frame does not exist. Try with a lower frame number.");
-  }
-
   this->video.set(cv::CAP_PROP_POS_FRAMES, frameId - 1);
-  this->video.read(target.image);
+  if (!this->video.read(target.image))
+    throw std::range_error("The requested frame does not exist. Try with a lower frame number.");
 }

@@ -288,8 +288,8 @@ readNext.Rcpp_Video <- function(x, target = "new") {
   if (!isVideo(x))
     stop("This is not a Video object.")
 
-  if (x$frame() >= x$nframes())
-    stop("No more frames available.")
+  # if (x$frame() >= x$nframes())
+  #   stop("No more frames available.")
 
   if (isImage(target)) {
     x$readNext(target)

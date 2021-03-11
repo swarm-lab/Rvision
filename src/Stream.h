@@ -63,5 +63,6 @@ int Stream::ncol() {
 }
 
 void Stream::readNext(Image& target) {
-  this->stream.read(target.image);
+  if (!this->stream.read(target.image))
+    throw std::range_error("The frame could not be captured.");
 }
