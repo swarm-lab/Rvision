@@ -1,5 +1,9 @@
 void _plus(Image& image1, Image& image2, Image& target) {
-  cv::add(image1.image, image2.image, target.image, cv::noArray(), target.image.depth());
+  if (image1.GPU && image2.GPU && target.GPU) {
+    cv::add(image1.uimage, image2.uimage, target.uimage, cv::noArray(), target.uimage.depth());
+  } else {
+    cv::add(image1.image, image2.image, target.image, cv::noArray(), target.image.depth());
+  }
 }
 
 void _plusScalar(Image& image, Rcpp::NumericVector value, Image& target) {
@@ -19,7 +23,11 @@ void _minusScalar(Image& image, Rcpp::NumericVector value, bool order, Image& ta
 }
 
 void _multiply(Image& image1, Image& image2, Image& target) {
-  cv::multiply(image1.image, image2.image, target.image, 1, target.image.depth());
+  if (image1.GPU && image2.GPU && target.GPU) {
+    cv::multiply(image1.uimage, image2.uimage, target.uimage, 1, target.uimage.depth());
+  } else {
+    cv::multiply(image1.image, image2.image, target.image, 1, target.image.depth());
+  }
 }
 
 void _multiplyScalar(Image& image, Rcpp::NumericVector value, Image& target) {

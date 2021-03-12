@@ -28,8 +28,13 @@ void _sepFilter2D(Image& image, Rcpp::NumericVector kernel_x, Rcpp::NumericVecto
 
 void _gaussianBlur(Image& image, int k_height, int k_width, double sigma_x,
                    double sigma_y, Image& target) {
-  cv::GaussianBlur(image.image, target.image, cv::Size(2 * k_width + 1, 2 * k_height + 1),
-                   sigma_x, sigma_y);
+  if (image.GPU && target.GPU) {
+    cv::GaussianBlur(image.uimage, target.uimage, cv::Size(2 * k_width + 1, 2 * k_height + 1),
+                     sigma_x, sigma_y);
+  } else {
+    cv::GaussianBlur(image.image, target.image, cv::Size(2 * k_width + 1, 2 * k_height + 1),
+                     sigma_x, sigma_y);
+  }
 }
 
 void _boxFilter(Image& image, int k_height, int k_width, Image& target) {

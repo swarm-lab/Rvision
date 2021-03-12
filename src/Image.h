@@ -6,10 +6,13 @@ public:
   Image(arma::icube inputArray, std::string colorspace);
   Image(arma::fcube inputArray, std::string colorspace);
   cv::Mat image;
+  cv::UMat uimage;
   bool write(std::string outputFile);
   Rcpp::NumericMatrix pget(Rcpp::IntegerVector x, Rcpp::IntegerVector y);
   void pset(Rcpp::IntegerVector x, Rcpp::IntegerVector y, Rcpp::NumericMatrix color);
   arma::fcube toR();
+  void toGPU(), fromGPU();
+  bool GPU;
   Rcpp::NumericVector dim();
   int nrow(), ncol(), nchan();
   std::string depth(), space;
@@ -78,6 +81,8 @@ Image::Image(arma::Cube< float > inputArray, std::string colorspace) {
 }
 
 void Image::init() {
+  this->GPU = false;
+
   if (this->space == "BGR" && this->nchan() != 3) {
     switch(this->nchan()) {
     case 1:
@@ -90,6 +95,16 @@ void Image::init() {
       this->space = "UNKNOWN";
     }
   }
+}
+
+void Image::toGPU() {
+  this->uimage = this->image.getUMat(cv::ACCESS_READ);
+  this->GPU = true;
+}
+
+void Image::fromGPU() {
+  this->image = this->uimage.getMat(cv::ACCESS_READ);
+  this->GPU = false;
 }
 
 bool Image::write(std::string outputFile) {

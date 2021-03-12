@@ -18,10 +18,13 @@ RCPP_MODULE(class_Image) {
   .constructor< arma::fcube, std::string > ("", &ImageConst3)
 
   .field("space", &Image::space)
+  .field("GPU", &Image::GPU)
 
   .method("write", &Image::write)
   .method("pget", &Image::pget)
   .method("pset", &Image::pset)
+  .method("toGPU", &Image::toGPU)
+  .method("fromGPU", &Image::fromGPU)
   .method("toR", &Image::toR)
   .method("dim", &Image::dim)
   .method("nrow", &Image::nrow)
@@ -218,6 +221,8 @@ RCPP_MODULE(methods_Filters) {
     _["kernel_y"], _["target"]), "");
   function("_gaussianBlur", &_gaussianBlur, List::create(_["image"], _["k_height"],
     _["k_width"], _["sigma_x"], _["sigma_y"], _["target"]), "");
+  // function("_ugaussianBlur", &_ugaussianBlur, List::create(_["image"], _["k_height"],
+  //   _["k_width"], _["sigma_x"], _["sigma_y"], _["target"]), "");
   function("_boxFilter", &_boxFilter, List::create(_["image"], _["k_height"],
     _["k_width"], _["target"]), "");
   function("_blur", &_blur, List::create(_["image"], _["k_height"], _["k_width"],
