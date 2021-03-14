@@ -6,6 +6,7 @@
 \alias{subtract}
 \alias{multiply}
 \alias{divide}
+\alias{absdiff}
 \title{Arithmetic Functions for Images}
 \usage{
 add(e1, e2, target)
@@ -15,6 +16,8 @@ subtract(e1, e2, target)
 multiply(e1, e2, target)
 
 divide(e1, e2, target)
+
+absdiff(e1, e2, target)
 }
 \arguments{
 \item{e1, e2}{Either 2 \code{\link{Image}} objects or 1 \code{\link{Image}}
@@ -52,6 +55,7 @@ Arithmetic Functions for Images
 balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
 balloon_sum <- add(balloon1, balloon2)
+balloon_absdiff <- absdiff(balloon1, balloon2)
 
 }
 \seealso{

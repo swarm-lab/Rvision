@@ -12,7 +12,7 @@ void _filter2D(Image& image, Rcpp::NumericMatrix kernel, Image& target) {
   } else if (!image.GPU && !target.GPU) {
     cv::filter2D(image.image, target.image, -1, k, cv::Point(-1, -1));
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 
@@ -34,7 +34,7 @@ void _sepFilter2D(Image& image, Rcpp::NumericVector kernel_x, Rcpp::NumericVecto
   } else if (!image.GPU && !target.GPU) {
     cv::sepFilter2D(image.image, target.image, -1, k_x, k_y);
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 
@@ -47,7 +47,7 @@ void _gaussianBlur(Image& image, int k_height, int k_width, double sigma_x,
     cv::GaussianBlur(image.image, target.image, cv::Size(2 * k_width + 1, 2 * k_height + 1),
                      sigma_x, sigma_y);
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 
@@ -59,7 +59,7 @@ void _boxFilter(Image& image, int k_height, int k_width, Image& target) {
     cv::boxFilter(image.image, target.image, -1, cv::Size(2 * k_width + 1, 2 * k_height + 1),
                   cv::Point(-1, -1));
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 
@@ -71,7 +71,7 @@ void _blur(Image& image, int k_height, int k_width, Image& target) {
     cv::blur(image.image, target.image, cv::Size(2 * k_width + 1, 2 * k_height + 1),
              cv::Point(-1, -1));
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 
@@ -81,7 +81,7 @@ void _medianBlur(Image& image, int k_size, Image& target) {
   } else if (!image.GPU && !target.GPU) {
     cv::medianBlur(image.image, target.image, 2 * k_size + 1);
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 
@@ -94,7 +94,7 @@ void _sqrBoxFilter(Image& image, int k_height, int k_width, bool normalize,
     cv::sqrBoxFilter(image.image, target.image, -1, cv::Size(2 * k_width + 1, 2 * k_height + 1),
                      cv::Point(-1, -1), normalize);
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 
@@ -104,7 +104,7 @@ void _scharr(Image& image, int dx, int dy, double scale, Image& target) {
   } else if (!image.GPU && !target.GPU) {
     cv::Scharr(image.image, target.image, -1, dx, dy, scale);
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 
@@ -114,7 +114,7 @@ void _sobel(Image& image, int dx, int dy, int k_size, double scale, Image& targe
   } else if (!image.GPU && !target.GPU) {
     cv::Sobel(image.image, target.image, -1, dx, dy, 2 * k_size + 1, scale);
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 
@@ -124,7 +124,7 @@ void _laplacian(Image& image, int k_size, double scale, Image& target) {
   } else if (!image.GPU && !target.GPU) {
     cv::Laplacian(image.image, target.image, -1, 2 * k_size + 1, scale);
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 
@@ -135,7 +135,7 @@ void _bilateralFilter(Image& image, int d, double sigma_color, double sigma_spac
   } else if (!image.GPU && !target.GPU) {
     cv::bilateralFilter(image.image, target.image, d, sigma_color, sigma_space);
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 
@@ -148,7 +148,7 @@ void _adaptiveThreshold(Image& image, double max_value, int method,
     cv::adaptiveThreshold(image.image, target.image, max_value, method,
                           threshold_type, block_size, C);
   } else {
-    Rcpp::stop("'image.GPU' and 'target.GPU' are not equal.");
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
 }
 

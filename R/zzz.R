@@ -467,6 +467,83 @@ methods::evalqOnLoad({
             })
 })
 
+methods::evalqOnLoad({
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_absdiff`(e1, e2, target)
+            })
+
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_absdiff`(e1, e2, e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_absdiff`(e1, e2, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_absdiffScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_absdiffScalar`(e1, rep(e2, length.out = e1$nchan()), e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_absdiffScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("absdiff", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_absdiffScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("absdiff", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_absdiffScalar`(e2, rep(e1, length.out = e2$nchan()), e2)
+              } else if (target == "new") {
+                out <- cloneImage(e2)
+                `_absdiffScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_absdiff`(e1, e2, out)
+              out
+            })
+
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_absdiffScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+              out
+            })
+
+  setMethod("absdiff", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e2)
+              `_absdiffScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+              out
+            })
+})
+
 
 ### Define generic statistics methods ###
 #' @title Sum Generic for Image objects
