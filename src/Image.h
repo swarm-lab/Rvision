@@ -98,12 +98,12 @@ void Image::init() {
 }
 
 void Image::toGPU() {
-  this->uimage = this->image.getUMat(cv::ACCESS_READ);
+  this->image.copyTo(this->uimage);
   this->GPU = true;
 }
 
 void Image::fromGPU() {
-  this->image = this->uimage.getMat(cv::ACCESS_READ);
+  this->uimage.copyTo(this->image);
   this->GPU = false;
 }
 
