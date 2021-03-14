@@ -5,6 +5,7 @@ public:
   Image(cv::Mat inputImage, std::string colorspace);
   Image(arma::icube inputArray, std::string colorspace);
   Image(arma::fcube inputArray, std::string colorspace);
+  Image(const Image& image);
   cv::Mat image;
   cv::UMat uimage;
   bool write(std::string outputFile);
@@ -41,7 +42,7 @@ Image::Image(std::string inputFile, std::string colorspace) {
   this->space = colorspace;
 
   if (!this->image.data) {
-    throw std::range_error("Could not open the image file.");
+    Rcpp::stop("Could not open the image file.");
   }
 
   this->init();
@@ -52,7 +53,7 @@ Image::Image(cv::Mat inputImage, std::string colorspace) {
   this->space = colorspace;
 
   if (!this->image.data) {
-    throw std::range_error("Could not read the image matrix.");
+    Rcpp::stop("Could not read the image matrix.");
   }
 
   this->init();
@@ -63,7 +64,7 @@ Image::Image(arma::Cube< int > inputArray, std::string colorspace) {
   this->space = colorspace;
 
   if (!this->image.data) {
-    throw std::range_error("Could not read the input array.");
+    Rcpp::stop("Could not read the input array.");
   }
 
   this->init();
@@ -74,10 +75,18 @@ Image::Image(arma::Cube< float > inputArray, std::string colorspace) {
   this->space = colorspace;
 
   if (!this->image.data) {
-    throw std::range_error("Could not read the input array.");
+    Rcpp::stop("Could not read the input array.");
   }
 
   this->init();
+}
+
+// Copy constructor
+Image::Image(const Image& image) {
+  image.image.copyTo(this->image);
+  image.uimage.copyTo(this->uimage);
+  this->GPU = image.GPU;
+  this->space = image.space;
 }
 
 void Image::init() {
@@ -98,13 +107,21 @@ void Image::init() {
 }
 
 void Image::toGPU() {
-  this->image.copyTo(this->uimage);
-  this->GPU = true;
+  if (cv::ocl::haveOpenCL()) {
+    this->image.copyTo(this->uimage);
+    this->GPU = true;
+  } else {
+    stop("OpenCL was not detected on this machine.");
+  }
 }
 
 void Image::fromGPU() {
-  this->uimage.copyTo(this->image);
-  this->GPU = false;
+  if (cv::ocl::haveOpenCL()) {
+    this->uimage.copyTo(this->image);
+    this->GPU = false;
+  } else {
+    stop("OpenCL was not detected on this machine.");
+  }
 }
 
 bool Image::write(std::string outputFile) {
@@ -136,7 +153,7 @@ Rcpp::NumericVector Image::_get1(int x, int y) {
   if (this->depth() == "64F")
     return Rcpp::NumericVector::create(this->image.at<double>(y, x));
 
-  throw std::range_error("Invalid bit depth.");
+  Rcpp::stop("Invalid bit depth.");
 }
 
 Rcpp::NumericVector Image::_get2(int x, int y) {
@@ -161,7 +178,7 @@ Rcpp::NumericVector Image::_get2(int x, int y) {
   if (this->depth() == "64F")
     return scalar2Col(this->image.at< cv::Vec<double, 2> >(y, x), 2);
 
-  throw std::range_error("Invalid bit depth.");
+  Rcpp::stop("Invalid bit depth.");
 }
 
 Rcpp::NumericVector Image::_get3(int x, int y) {
@@ -186,7 +203,7 @@ Rcpp::NumericVector Image::_get3(int x, int y) {
   if (this->depth() == "64F")
     return scalar2Col(this->image.at< cv::Vec<double, 3> >(y, x), 3);
 
-  throw std::range_error("Invalid bit depth.");
+  Rcpp::stop("Invalid bit depth.");
 }
 
 Rcpp::NumericVector Image::_get4(int x, int y) {
@@ -211,7 +228,7 @@ Rcpp::NumericVector Image::_get4(int x, int y) {
   if (this->depth() == "64F")
     return scalar2Col(this->image.at< cv::Vec<double, 4> >(y, x), 4);
 
-  throw std::range_error("Invalid bit depth.");
+  Rcpp::stop("Invalid bit depth.");
 }
 
 Rcpp::NumericMatrix Image::pget(Rcpp::IntegerVector x, Rcpp::IntegerVector y) {
@@ -232,7 +249,7 @@ Rcpp::NumericMatrix Image::pget(Rcpp::IntegerVector x, Rcpp::IntegerVector y) {
       out(Rcpp::_, i) = this->_get4(x(i) - 1, -y(i) + this->image.rows);
       break;
     default:
-      throw std::range_error("Images with more than 4 channels are not supported yet.");
+      Rcpp::stop("Images with more than 4 channels are not supported yet.");
     }
   }
 
@@ -255,7 +272,7 @@ void Image::_set1(int x, int y, Rcpp::NumericVector color) {
   } else if (this->depth() == "64F") {
     this->image.at< cv::Vec<double, 1> >(y, x) = color(0);
   } else {
-    throw std::range_error("Invalid bit depth.");
+    Rcpp::stop("Invalid bit depth.");
   }
 }
 
@@ -275,7 +292,7 @@ void Image::_set2(int x, int y, Rcpp::NumericVector color) {
   } else if (this->depth() == "64F") {
     this->image.at< cv::Vec<double, 2> >(y, x) = cv::Vec<double, 2>(color(0), color(1));
   } else {
-    throw std::range_error("Invalid bit depth.");
+    Rcpp::stop("Invalid bit depth.");
   }
 }
 
@@ -295,7 +312,7 @@ void Image::_set3(int x, int y, Rcpp::NumericVector color) {
   } else if (this->depth() == "64F") {
     this->image.at< cv::Vec<double, 3> >(y, x) = cv::Vec<double, 3>(color(0), color(1), color(2));
   } else {
-    throw std::range_error("Invalid bit depth.");
+    Rcpp::stop("Invalid bit depth.");
   }
 }
 
@@ -322,7 +339,7 @@ void Image::_set4(int x, int y, Rcpp::NumericVector color) {
     this->image.at< cv::Vec<double, 4> >(y, x) = cv::Vec<double, 4>(color(0),
                                           color(1), color(2), color(3));
   } else {
-    throw std::range_error("Invalid bit depth.");
+    Rcpp::stop("Invalid bit depth.");
   }
 }
 
@@ -342,7 +359,7 @@ void Image::pset(Rcpp::IntegerVector x, Rcpp::IntegerVector y, Rcpp::NumericMatr
       this->_set4(x(i) - 1, -y(i) + this->image.rows, color(Rcpp::_, i));
       break;
     default:
-      throw std::range_error("Images with more than 4 channels are not supported yet.");
+      Rcpp::stop("Images with more than 4 channels are not supported yet.");
     }
   }
 }
@@ -396,7 +413,7 @@ arma::Cube< float > Image::toR() {
     break;
   }
   default: {
-    throw std::range_error("Images with more than 4 channels are not supported yet.");
+    Rcpp::stop("Images with more than 4 channels are not supported yet.");
     break;
   }
   }
@@ -414,9 +431,7 @@ void _changeColorSpace(Image& image, std::string colorSpace, Image& target) {
 }
 
 Image _cloneImage(Image& image) {
-  cv::Mat copy;
-  image.image.copyTo(copy);
-  return Image(copy, image.space);
+  return Image(image);
 }
 
 Rcpp::List _split(Image& image) {

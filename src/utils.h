@@ -55,7 +55,7 @@ int getPropId(std::string propId) {
     if(propId == enum_strings[i]) return enum_ints[i];
   }
 
-  throw std::range_error("Unknown property.");
+  Rcpp::stop("Unknown property.");
 }
 
 std::string type2str(int type) {
@@ -81,7 +81,7 @@ std::string type2str(int type) {
     if(type == enum_ints[i]) return enum_strings[i];
   }
 
-  throw std::range_error("Unknown image type.");
+  Rcpp::stop("Unknown image type.");
 }
 
 int str2type(std::string str) {
@@ -107,7 +107,7 @@ int str2type(std::string str) {
     if(str == enum_strings[i]) return enum_ints[i];
   }
 
-  throw std::range_error("Unknown image type.");
+  Rcpp::stop("Unknown image type.");
 }
 
 int getAPIId(std::string APIId) {
@@ -129,7 +129,7 @@ int getAPIId(std::string APIId) {
     if(APIId == enum_strings[i]) return enum_ints[i];
   }
 
-  throw std::range_error("Unknown property.");
+  Rcpp::stop("Unknown property.");
 }
 
 cv::Scalar col2Scalar(Rcpp::NumericVector color) {
@@ -287,5 +287,5 @@ int string2conv(std::string str) {
     if(str == enum_strings[i]) return enum_ints[i];
   }
 
-  throw std::range_error("Unknown conversion.");
+  Rcpp::stop("Unknown conversion.");
 }

@@ -29,7 +29,7 @@ Video::Video(std::string inputFile, std::string api) {
   Rcpp::Function pathExpand = base["path.expand"];
 
   if (!this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)), getAPIId(api))) {
-    throw std::range_error("Could not open the video.");
+    Rcpp::stop("Could not open the video.");
   } else {
     this->nf = -1;
   }
@@ -40,7 +40,7 @@ bool Video::open(std::string inputFile, std::string api) {
   Rcpp::Function pathExpand = base["path.expand"];
 
   if (!this->video.open(Rcpp::as<std::string>(pathExpand(inputFile)), getAPIId(api))) {
-    throw std::range_error("Could not open the video.");
+    Rcpp::stop("Could not open the video.");
   } else {
     this->nf = -1;
     return true;
@@ -136,11 +136,11 @@ std::string Video::codec() {
 
 void Video::readNext(Image& target) {
   if (!this->video.read(target.image))
-    throw std::range_error("No more frames available.");
+    Rcpp::stop("No more frames available.");
 }
 
 void Video::readFrame(int frameId, Image& target) {
   this->video.set(cv::CAP_PROP_POS_FRAMES, frameId - 1);
   if (!this->video.read(target.image))
-    throw std::range_error("The requested frame does not exist. Try with a lower frame number.");
+    Rcpp::stop("The requested frame does not exist. Try with a lower frame number.");
 }

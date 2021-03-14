@@ -21,13 +21,13 @@ Stream::Stream() {
 
 Stream::Stream(int index, std::string api) {
   if (!this->stream.open(index, getAPIId(api))) {
-    throw std::range_error("Could not open the stream.");
+    Rcpp::stop("Could not open the stream.");
   }
 }
 
 bool Stream::open(int index, std::string api) {
   if (!this->stream.open(index, getAPIId(api))) {
-    throw std::range_error("Could not open the stream.");
+    Rcpp::stop("Could not open the stream.");
   } else {
     return true;
   }
@@ -64,5 +64,5 @@ int Stream::ncol() {
 
 void Stream::readNext(Image& target) {
   if (!this->stream.read(target.image))
-    throw std::range_error("The frame could not be captured.");
+    Rcpp::stop("The frame could not be captured.");
 }

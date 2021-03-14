@@ -4,14 +4,16 @@
 \alias{scharr}
 \title{Calculates an Image Derivatives Using a Scharr Operator}
 \usage{
-scharr(image, dx = 1, dy = 1, scale = 1, target = "new", in_place = NULL)
+scharr(image, dx = 1, dy = 0, scale = 1, target = "new", in_place = NULL)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{dx}{Order of the x derivative (default: 1).}
+\item{dx}{Order of the x derivative. It can only take 2 values: 1 (the
+default) or 0. If \code{dx=1} then \code{dy} must be zero.}
 
-\item{dy}{Order of the y derivative (default: 1),}
+\item{dy}{Order of the y derivative. It can only take 2 values: 1 or 0 (the
+default). If \code{dy=1} then \code{dx} must be zero.}
 
 \item{scale}{The scale factor for the computed derivative values (default: 1).}
 
@@ -39,12 +41,12 @@ If \code{target="new"}, the function returns an \code{\link{Image}}
  place.
 }
 \description{
-\code{scharr} calculates the derivatives of an image using a
- Scharr operator.
+\code{scharr} calculates the x or y derivative of an image using
+ a Scharr operator.
 }
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-balloon_scharr <- scharr(balloon, 1, 1, 1)
+balloon_scharr <- scharr(balloon)
 
 }
 \seealso{
