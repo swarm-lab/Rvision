@@ -38,8 +38,13 @@ void _gaussianBlur(Image& image, int k_height, int k_width, double sigma_x,
 }
 
 void _boxFilter(Image& image, int k_height, int k_width, Image& target) {
-  cv::boxFilter(image.image, target.image, -1, cv::Size(2 * k_width + 1, 2 * k_height + 1),
-                cv::Point(-1, -1));
+  if (image.GPU && target.GPU) {
+    cv::boxFilter(image.uimage, target.uimage, -1, cv::Size(2 * k_width + 1, 2 * k_height + 1),
+                  cv::Point(-1, -1));
+  } else {
+    cv::boxFilter(image.image, target.image, -1, cv::Size(2 * k_width + 1, 2 * k_height + 1),
+                  cv::Point(-1, -1));
+  }
 }
 
 void _blur(Image& image, int k_height, int k_width, Image& target) {
@@ -48,7 +53,11 @@ void _blur(Image& image, int k_height, int k_width, Image& target) {
 }
 
 void _medianBlur(Image& image, int k_size, Image& target) {
-  cv::medianBlur(image.image, target.image, 2 * k_size + 1);
+  if (image.GPU && target.GPU) {
+    cv::medianBlur(image.uimage, target.uimage, 2 * k_size + 1);
+  } else {
+    cv::medianBlur(image.image, target.image, 2 * k_size + 1);
+  }
 }
 
 void _sqrBoxFilter(Image& image, int k_height, int k_width, bool normalize,
