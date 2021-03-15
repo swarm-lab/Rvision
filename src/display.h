@@ -1,18 +1,29 @@
 void _newDisplay(std::string window_name, int height, int width) {
   cv::Mat blank = cv::Mat::zeros(height, width, CV_8UC3);
-  cv::namedWindow(window_name, cv::WINDOW_AUTOSIZE);
+  cv::namedWindow(window_name, cv::WINDOW_OPENGL | cv::WINDOW_AUTOSIZE);
   cv::imshow(window_name, blank);
   cv::waitKey(1);
 }
 
 void _display(Image& image, std::string window_name, int delay, int height, int width) {
-  if ((image.image.rows != height) || (image.image.cols != width)) {
-    cv::Mat screen;
-    image.image.copyTo(screen);
-    cv::resize(screen, screen, cv::Size(width, height));
-    cv::imshow(window_name, screen);
+  if (image.GPU) {
+    if ((image.uimage.rows != height) || (image.uimage.cols != width)) {
+      cv::UMat screen;
+      image.uimage.copyTo(screen);
+      cv::resize(screen, screen, cv::Size(width, height));
+      cv::imshow(window_name, screen);
+    } else {
+      cv::imshow(window_name, image.uimage);
+    }
   } else {
-    cv::imshow(window_name, image.image);
+    if ((image.image.rows != height) || (image.image.cols != width)) {
+      cv::Mat screen;
+      image.image.copyTo(screen);
+      cv::resize(screen, screen, cv::Size(width, height));
+      cv::imshow(window_name, screen);
+    } else {
+      cv::imshow(window_name, image.image);
+    }
   }
 
   cv::Rect window = cv::getWindowImageRect(window_name);
@@ -36,7 +47,11 @@ void _destroyAllDisplays() {
 Rcpp::DataFrame _selectBoundingBoxes(Image& image, std::string window_name, bool crosshair) {
   std::vector< cv::Rect > ROIs;
 
-  cv::selectROIs(window_name, image.image, ROIs, crosshair);
+  if (image.GPU) {
+    cv::selectROIs(window_name, image.uimage, ROIs, crosshair);
+  } else {
+    cv::selectROIs(window_name, image.image, ROIs, crosshair);
+  }
 
   Rcpp::NumericVector left(ROIs.size());
   Rcpp::NumericVector top(ROIs.size());

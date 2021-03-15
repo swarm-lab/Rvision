@@ -52,7 +52,7 @@ This function does not return anything. It modifies \code{image} in
 }
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-drawRectangle(balloon, 290, 170, 440, 325, thickness = 3)
+drawRotatedRectangle(balloon, 290, 170, 440, 325, 60, thickness = 3)
 
 }
 \seealso{
