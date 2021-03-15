@@ -99,18 +99,19 @@ setGeneric("%i!=%", function(e1, e2) { standardGeneric("%i!=%") })
 #' @description \code{matchTemplate} compares a template against overlapping
 #'  image regions using the specified \code{method}. After the function finishes
 #'  the comparison, the best matches can be found as global minimums (when
-#'  methods "SQDIFF" or "SQDIFF_NORMED" were used) or maximums (when methods
-#'  "CCORR", "CCORR_NORMED", "CCOEFF" or "CCOEF_NORMED" were used) using the
+#'  methods "SQDIFF" or "SQDIFF_NORMED" are used) or maximums (when methods
+#'  "CCORR", "CCORR_NORMED", "CCOEFF" or "CCOEF_NORMED" are used) using the
 #'  \code{\link{minMaxLoc}} function.
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param template An \code{\link{Image}} object of the same type as \code{image}.
-#'  \code{template} cannot be larger than \code{image}.
+#' @param template An \code{\link{Image}} object with  the same number of
+#'  channels and bit depth as \code{image}. \code{template} cannot be greater
+#'  than \code{image} in any dimension.
 #'
 #' @param method A string indicating the comparison method to use. It can be any
-#'  of the following (see \url{https://bit.ly/2RjELvJ} for a full description of each
-#'  comparison method):
+#'  of the following (see \url{https://bit.ly/2RjELvJ} for a full description of
+#'  each comparison method):
 #'  \itemize{
 #'   \item "SQDIFF"
 #'   \item "SQDIFF_NORMED"
@@ -120,12 +121,33 @@ setGeneric("%i!=%", function(e1, e2) { standardGeneric("%i!=%") })
 #'   \item "CCOEFF_NORMED"
 #'  }
 #'
-#' @param mask An \code{\link{Image}} object of the same type and dimensions as
-#'  \code{template} (default: NULL). \code{mask} is currently only supported when
-#'  \code{SQDIFF} and \code{CCORR_NORMED} are used.
+#' @param mask An \code{\link{Image}} object with the same dimensions as
+#'  \code{template} (default: NULL). It can have either one channel or the same
+#'  number of channels as \code{template}. It can be an 8U or 32F
+#'  \code{\link{Image}} object. If 8U, it is interpreted as a binary mask,
+#'   meaning only elements where mask is nonzero are used and are kept unchanged
+#'   independent of the actual mask value. If 32F, then the mask values are used
+#'   as weights. \code{mask} is not supported when \code{method='CCOEFF_NORMED'}.
 #'
-#' @return A 16-bit grayscale \code{\link{Image}} object of the same dimensions
-#'  as \code{image}.
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. Note that \code{target} must be a single-channel,
+#'    32F \code{\link{Image}} object with \code{(R-r+1)} rows and \code{(C-c+1)}
+#'    columns, where \code{CxR} and \code{cxr} are the dimensions of \code{image}
+#'    and \code{template}, respectively.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object with \code{(R-r+1)} rows and \code{(C-c+1)} columns, where \code{CxR}
+#'  and \code{cxr} are the dimensions of \code{image} and \code{template},
+#'  respectively. If \code{target} is an \code{\link{Image}} object, the
+#'  function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -136,46 +158,78 @@ setGeneric("%i!=%", function(e1, e2) { standardGeneric("%i!=%") })
 #' sub <- subImage(balloon, 290, 170, 150, 150)
 #' match <- matchTemplate(balloon, sub, method = "SQDIFF")
 #' mm <- minMaxLoc(match)
-#' plot(balloon)
-#' points(mm[1, 2], mm[1, 3], col = "red", pch = 20, cex = 5)
 #'
 #' @export
-matchTemplate <- function(image, template, method, mask = NULL) {
+matchTemplate <- function(image, template, method, mask = NULL, target = "new") {
   if (!isImage(image))
     stop("This is not an Image object.")
 
   if (template$nrow() > image$nrow() | template$ncol() > image$ncol())
-    stop("The template cannot be larger than the image.")
+    stop("The dimensions of 'template' must be not greater than that of 'image'.")
 
   if (template$nchan() != image$nchan() | template$depth() != image$depth())
-    stop("The template must be of the same type as the image")
+    stop("'template' must have the same number of channels and bit depth as 'image'.")
 
-  if (!is.null(mask) & !(method %in% c("SQDIFF", "CCORR_NORMED"))) {
+  meth <- switch(method,
+                 "SQDIFF" = 0,
+                 "SQDIFF_NORMED" = 1,
+                 "CCORR" = 2,
+                 "CCORR_NORMED" = 3,
+                 "CCOEFF" = 4,
+                 "CCOEFF_NORMED" = 5,
+                 stop("Unsupported method.")
+  )
+
+  if (!is.null(mask) & meth == 5) {
     mask <- NULL
     warning("This method does not support masks. The mask is ignored.")
   }
 
-  if (is.null(mask)) {
-    `_matchTemplateNoMask`(image, template,
-                           switch(method,
-                                  "SQDIFF" = 0,
-                                  "SQDIFF_NORMED" = 1,
-                                  "CCORR" = 2,
-                                  "CCORR_NORMED" = 3,
-                                  "CCOEFF" = 4,
-                                  "CCOEFF_NORMED" = 5,
-                                  {warning("Unsupported method. Defaulting to SQDIFF."); 1}
-                           ))
-  } else {
-    if (!all(template$dim() == mask$dim()) | template$depth() != mask$depth())
-      stop("The mask must have the same type and dimensions as the template.")
+  if (isImage(target)) {
+    if (target$nchan() != 1 | target$depth() != "32F")
+      stop("'target' must be a single channel, 32F Image object.")
 
-    `_matchTemplate`(image, template,
-                     switch(method,
-                            "SQDIFF" = 0,
-                            "CCORR_NORMED" = 3,
-                            {warning("Unsupported method. Defaulting to SQDIFF."); 1}
-                     ), mask)
+    if (target$nrow() != (image$nrow() - template$nrow() + 1) |
+        target$ncol() != (image$ncol() - template$ncol() + 1))
+      stop("Incorrect 'target' dimensions.")
+
+    if (is.null(mask)) {
+      `_matchTemplateNoMask`(image, template, meth, target)
+    } else {
+      if (!all(template$dim() == mask$dim()))
+        stop("'mask' and 'template' must have the same dimensions.")
+
+      if (mask$nchan() != template$nchan() & mask$nchan() != 1)
+        stop("'mask' must either have one channel or the same number of channels as 'template'.")
+
+      if (mask$depth() != "8U" & mask$depth() != "32F")
+        stop("'mask' must either be a 8U or 32F Image object.")
+
+      `_matchTemplateNoMask`(image, template, meth, mask, target)
+    }
+  } else if (target == "new") {
+    out <- zeros(image$nrow() - template$nrow() + 1,
+                 image$ncol() - template$ncol() + 1,
+                 1, "32F")
+
+    if (is.null(mask)) {
+      `_matchTemplateNoMask`(image, template, meth, out)
+    } else {
+      if (!all(template$dim() == mask$dim()))
+        stop("'mask' and 'template' must have the same dimensions.")
+
+      if (mask$nchan() != template$nchan() & mask$nchan() != 1)
+        stop("'mask' must either have one channel or the same number of channels as 'template'.")
+
+      if (mask$depth() != "8U" & mask$depth() != "32F")
+        stop("'mask' must either be a 8U or 32F Image object.")
+
+      `_matchTemplateNoMask`(image, template, meth, mask, out)
+    }
+
+    out
+  } else {
+    stop("Invalid target.")
   }
 }
 
@@ -190,17 +244,17 @@ matchTemplate <- function(image, template, method, mask = NULL) {
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param low A vector indicating the lower end of the thresholding range. The
-#'  can have as many elements as the number of channels in the image. If it has
-#'  less elements than the number of channels, it is recycled to match the
-#'  number of channels. If it has more elements than the number of channels, the
-#'  extra elements are ignored without warning (default: rep(0, 4)).
+#' @param low A vector indicating the inclusive lower end of the thresholding
+#'  range. It can have as many elements as the number of channels in the image.
+#'  If it has less elements than the number of channels, it is recycled to match
+#'  the number of channels. If it has more elements than the number of channels,
+#'  the extra elements are ignored without warning (default: 0).
 #'
-#' @param up A vector indicating the upper end of the thresholding range. The
-#'  can have as many elements as the number of channels in the image. If it has
-#'  less elements than the number of channels, it is recycled to match the
-#'  number of channels. If it has more elements than the number of channels, the
-#'  extra elements are ignored without warning (default: rep(255, 4)).
+#' @param up A vector indicating the inclusive upper end of the thresholding
+#'  range. Itcan have as many elements as the number of channels in the image.
+#'  If it has less elements than the number of channels, it is recycled to match
+#'  the number of channels. If it has more elements than the number of channels,
+#'  the extra elements are ignored without warning (default: 255).
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
@@ -229,12 +283,12 @@ matchTemplate <- function(image, template, method, mask = NULL) {
 #' plot(bw)
 #'
 #' @export
-inRange <- function(image, low = rep(0, 4), up = rep(255, 4), target = "new") {
+inRange <- function(image, low = 0, up = 255, target = "new") {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  low <- rep(low, length.out = 4)
-  up <- rep(up, length.out = 4)
+  low <- rep(low, length.out = image$nchan())
+  up <- rep(up, length.out = image$nchan())
 
   if (isImage(target)) {
     `_inRange`(image, low, up, target)

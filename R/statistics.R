@@ -31,15 +31,9 @@ min.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  switch (x$nchan(),
-          matrix(`_min`(x), nrow = 1, ncol = 1, dimnames = list(c("min"), c("GRAY"))),
-          NA,
-          matrix(sapply(split(x), `_min`), nrow = 1, ncol = 3,
-                 dimnames = list(c("min"), c("B", "G", "R"))),
-          matrix(sapply(split(x), `_min`), nrow = 1, ncol = 4,
-                 dimnames = list(c("min"), c("B", "G", "R", "A"))),
-          NA
-  )
+  mins <- t(as.matrix(sapply(split(x), `_min`)))
+  rownames(mins) <- "min"
+  mins
 }
 
 
@@ -49,15 +43,9 @@ max.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  switch(x$nchan(),
-         matrix(`_max`(x), nrow = 1, ncol = 1, dimnames = list(c("max"), c("GRAY"))),
-         NA,
-         matrix(sapply(split(x), `_max`), nrow = 1, ncol = 3,
-                dimnames = list(c("max"), c("B", "G", "R"))),
-         matrix(sapply(split(x), `_max`), nrow = 1, ncol = 4,
-                dimnames = list(c("max"), c("B", "G", "R", "A"))),
-         NA
-  )
+  maxs <- t(as.matrix(sapply(split(x), `_max`)))
+  rownames(maxs) <- "max"
+  maxs
 }
 
 

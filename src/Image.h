@@ -490,3 +490,19 @@ Image _copyMakeBorder(Image &image, int top, int bottom, int left, int right,
 Image _zeros(int nrow, int ncol, std::string type, std::string colorspace) {
   return Image(cv::Mat::zeros(nrow, ncol, str2type(type)), colorspace);
 }
+
+void _randu(Image& image, Rcpp::NumericVector low, Rcpp::NumericVector high) {
+  if (image.GPU) {
+    cv::randu(image.uimage, col2Scalar(low), col2Scalar(high));
+  } else {
+    cv::randu(image.image, col2Scalar(low), col2Scalar(high));
+  }
+}
+
+void _randn(Image& image, Rcpp::NumericVector mean, Rcpp::NumericVector stddev) {
+  if (image.GPU) {
+    cv::randn(image.uimage, col2Scalar(mean), col2Scalar(stddev));
+  } else {
+    cv::randn(image.image, col2Scalar(mean), col2Scalar(stddev));
+  }
+}

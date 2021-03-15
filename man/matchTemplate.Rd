@@ -4,17 +4,18 @@
 \alias{matchTemplate}
 \title{Template Matching}
 \usage{
-matchTemplate(image, template, method, mask = NULL)
+matchTemplate(image, template, method, mask = NULL, target = "new")
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{template}{An \code{\link{Image}} object of the same type as \code{image}.
-\code{template} cannot be larger than \code{image}.}
+\item{template}{An \code{\link{Image}} object with  the same number of
+channels and bit depth as \code{image}. \code{template} cannot be greater
+than \code{image} in any dimension.}
 
 \item{method}{A string indicating the comparison method to use. It can be any
-of the following (see \url{https://bit.ly/2RjELvJ} for a full description of each
-comparison method):
+of the following (see \url{https://bit.ly/2RjELvJ} for a full description of
+each comparison method):
 \itemize{
  \item "SQDIFF"
  \item "SQDIFF_NORMED"
@@ -24,20 +25,41 @@ comparison method):
  \item "CCOEFF_NORMED"
 }}
 
-\item{mask}{An \code{\link{Image}} object of the same type and dimensions as
-\code{template} (default: NULL). \code{mask} is currently only supported when
-\code{SQDIFF} and \code{CCORR_NORMED} are used.}
+\item{mask}{An \code{\link{Image}} object with the same dimensions as
+\code{template} (default: NULL). It can have either one channel or the same
+number of channels as \code{template}. It can be an 8U or 32F
+\code{\link{Image}} object. If 8U, it is interpreted as a binary mask,
+ meaning only elements where mask is nonzero are used and are kept unchanged
+ independent of the actual mask value. If 32F, then the mask values are used
+ as weights. \code{mask} is not supported when \code{method='CCOEFF_NORMED'}.}
+
+\item{target}{The location where the results should be stored. It can take 2
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast but will replace the
+  content of \code{target}. Note that \code{target} must be a single-channel,
+  32F \code{\link{Image}} object with \code{(R-r+1)} rows and \code{(C-c+1)}
+  columns, where \code{CxR} and \code{cxr} are the dimensions of \code{image}
+  and \code{template}, respectively.}
+}}
 }
 \value{
-A 16-bit grayscale \code{\link{Image}} object of the same dimensions
- as \code{image}.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object with \code{(R-r+1)} rows and \code{(C-c+1)} columns, where \code{CxR}
+ and \code{cxr} are the dimensions of \code{image} and \code{template},
+ respectively. If \code{target} is an \code{\link{Image}} object, the
+ function returns nothing and modifies that \code{\link{Image}} object in
+ place.
 }
 \description{
 \code{matchTemplate} compares a template against overlapping
  image regions using the specified \code{method}. After the function finishes
  the comparison, the best matches can be found as global minimums (when
- methods "SQDIFF" or "SQDIFF_NORMED" were used) or maximums (when methods
- "CCORR", "CCORR_NORMED", "CCOEFF" or "CCOEF_NORMED" were used) using the
+ methods "SQDIFF" or "SQDIFF_NORMED" are used) or maximums (when methods
+ "CCORR", "CCORR_NORMED", "CCOEFF" or "CCOEF_NORMED" are used) using the
  \code{\link{minMaxLoc}} function.
 }
 \examples{
@@ -45,8 +67,6 @@ balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 sub <- subImage(balloon, 290, 170, 150, 150)
 match <- matchTemplate(balloon, sub, method = "SQDIFF")
 mm <- minMaxLoc(match)
-plot(balloon)
-points(mm[1, 2], mm[1, 3], col = "red", pch = 20, cex = 5)
 
 }
 \seealso{

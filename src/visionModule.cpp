@@ -47,7 +47,8 @@ RCPP_MODULE(class_Image) {
   function("_copyMakeBorder", &_copyMakeBorder, List::create(_["image"], _["top"],
     _["bottom"], _["left"], _["right"], _["borderType"], _["borderValue"]), "");
   function("_zeros", &_zeros, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
-  // function("_ones", &_ones, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
+  function("_randu", &_randu, List::create(_["image"], _["low"], _["high"]), "");
+  function("_randn", &_randn, List::create(_["image"], _["mean"], _["stddev"]), "");
 }
 
 #include "Video.h"
@@ -167,9 +168,9 @@ RCPP_MODULE(methods_Comparisons) {
   function("_compareScalar", &_compareScalar, List::create(_["image"], _["value"],
     _["comp"], _["target"]), "");
   function("_matchTemplate", &_matchTemplate, List::create(_["image"], _["templ"],
-    _["method"], _["mask"]), "");
+    _["method"], _["mask"], _["target"]), "");
   function("_matchTemplateNoMask", &_matchTemplateNoMask, List::create(_["image"],
-    _["templ"], _["method"]), "");
+    _["templ"], _["method"], _["target"]), "");
   function("_inRange", &_inRange, List::create(_["image"], _["low"], _["up"],
     _["target"]), "");
 }

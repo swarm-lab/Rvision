@@ -858,3 +858,83 @@ ones <- function(nrow, ncol, nchan = 3, bitdepth = "8U", colorspace = "BGR") {
   out %i+% 1
   out
 }
+
+
+#' @title Random Uniform Image
+#'
+#' @description \code{randu} replaces the content of an \code{\link{Image}}
+#'  object with uniformly-distributed random pixel values.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param low A vector indicating the inclusive lower boundary of the generated
+#'  random numbers. It can have as many elements as the number of channels in
+#'  the image. If it has less elements than the number of channels, it is
+#'  recycled to match the number of channels. If it has more elements than the
+#'  number of channels, the extra elements are ignored without warning (default:
+#'  0).
+#'
+#' @param high A vector indicating the exclusive upper boundary of the generated
+#'  random numbers. It can have as many elements as the number of channels in
+#'  the image. If it has less elements than the number of channels, it is
+#'  recycled to match the number of channels. If it has more elements than the
+#'  number of channels, the extra elements are ignored without warning (default:
+#'  256).
+#'
+#' @return This function returns nothing and modifies image in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{randn}}
+#'
+#' @examples
+#' rnd <- zeros(100, 100)
+#' randu(rnd)
+#'
+#' @export
+randu <- function(image, low = 0, high = 256) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  `_randu`(image, rep(low, length.out = image$nchan()), rep(high, length.out = image$nchan()))
+}
+
+
+#' @title Random Normal Image
+#'
+#' @description \code{randn} replaces the content of an \code{\link{Image}}
+#'  object with normally-distributed random pixel values.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param mean A vector indicating the mean value (expectation) of the generated
+#'  random numbers. It can have as many elements as the number of channels in
+#'  the image. If it has less elements than the number of channels, it is
+#'  recycled to match the number of channels. If it has more elements than the
+#'  number of channels, the extra elements are ignored without warning (default:
+#'  0).
+#'
+#' @param sd A vector indicating the standard deviation  of the generated
+#'  random numbers. It can have as many elements as the number of channels in
+#'  the image. If it has less elements than the number of channels, it is
+#'  recycled to match the number of channels. If it has more elements than the
+#'  number of channels, the extra elements are ignored without warning (default:
+#'  256).
+#'
+#' @return This function returns nothing and modifies image in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{randn}}
+#'
+#' @examples
+#' rnd <- zeros(100, 100)
+#' randn(rnd)
+#'
+#' @export
+randn <- function(image, mean = 127, sd = 1) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  `_randn`(image, rep(mean, length.out = image$nchan()), rep(sd, length.out = image$nchan()))
+}

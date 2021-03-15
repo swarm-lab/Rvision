@@ -4,22 +4,22 @@
 \alias{inRange}
 \title{Range Thresholding}
 \usage{
-inRange(image, low = rep(0, 4), up = rep(255, 4), target = "new")
+inRange(image, low = 0, up = 255, target = "new")
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{low}{A vector indicating the lower end of the thresholding range. The
-can have as many elements as the number of channels in the image. If it has
-less elements than the number of channels, it is recycled to match the
-number of channels. If it has more elements than the number of channels, the
-extra elements are ignored without warning (default: rep(0, 4)).}
+\item{low}{A vector indicating the inclusive lower end of the thresholding
+range. It can have as many elements as the number of channels in the image.
+If it has less elements than the number of channels, it is recycled to match
+the number of channels. If it has more elements than the number of channels,
+the extra elements are ignored without warning (default: 0).}
 
-\item{up}{A vector indicating the upper end of the thresholding range. The
-can have as many elements as the number of channels in the image. If it has
-less elements than the number of channels, it is recycled to match the
-number of channels. If it has more elements than the number of channels, the
-extra elements are ignored without warning (default: rep(255, 4)).}
+\item{up}{A vector indicating the inclusive upper end of the thresholding
+range. Itcan have as many elements as the number of channels in the image.
+If it has less elements than the number of channels, it is recycled to match
+the number of channels. If it has more elements than the number of channels,
+the extra elements are ignored without warning (default: 255).}
 
 \item{target}{The location where the results should be stored. It can take 2
 values:

@@ -716,11 +716,10 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = rep(0, 4
   if (!(connectivity %in% c(4, 8)))
     stop("'connectivity' must be either 4 or 8.")
 
-  lo_diff <- rep(lo_diff, length.out = 4)
-  up_diff <- rep(up_diff, length.out = 4)
-
-  `_floodFill`(image, seed - 1, col2bgr(color, alpha = TRUE), lo_diff,
-               up_diff, connectivity)
+  `_floodFill`(image, seed - 1, col2bgr(color, alpha = TRUE),
+               rep(lo_diff, length.out = 4),
+               rep(up_diff, length.out = 4),
+               connectivity)
 }
 
 
