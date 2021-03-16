@@ -183,8 +183,7 @@ RCPP_MODULE(methods_Logical) {
   function("_or", &_or, List::create(_["image1"], _["image2"], _["target"]), "");
   function("_orScalar", &_orScalar, List::create(_["image"], _["value"], _["target"]), "");
   function("_not", &_not, List::create(_["image"], _["target"]), "");
-  function("_findNonZero", &_findNonZero, List::create(_["image"]), "");
-  function("_findNonZeroVAL", &_findNonZeroVAL, List::create(_["image"]), "");
+  function("_findNonZero", &_findNonZero, List::create(_["image"], _["values"]), "");
 }
 
 #include "opticalFlow.h"

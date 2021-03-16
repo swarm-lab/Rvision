@@ -48,79 +48,145 @@ void _not(Image& image, Image& target) {
   }
 }
 
-Rcpp::IntegerMatrix _findNonZero(Image& image) {
-  cv::Mat locs;
-
-  if (image.GPU) {
-    cv::findNonZero(image.uimage, locs);
-  } else {
-    cv::findNonZero(image.image, locs);
-  }
-
-  Rcpp::IntegerMatrix out(locs.rows, 2);
+void _findNonZeroNOVAL(cv::InputArray& _src, Rcpp::NumericMatrix& out) {
+  cv::Mat src = _src.getMat();
+  int n = cv::countNonZero(src);
+  out = Rcpp::NumericMatrix(n, 2);
   colnames(out) = Rcpp::CharacterVector::create("x", "y");
 
-  for (int i = 0; i < locs.rows; i++) {
-    out(i, 0) = locs.at<cv::Point>(i).x + 1;
-    out(i, 1) = -locs.at<cv::Point>(i).y + image.image.rows;
-  }
+  if (n > 0) {
+    int depth = src.depth();
+    int rows = src.rows, cols = src.cols;
+    int k = 0;
 
-  return out;
+    for( int i = 0; i < rows; i++ ) {
+      int j;
+      const uchar* ptr8 = src.ptr(i);
+
+      if( depth == CV_8U || depth == CV_8S ) {
+        for( j = 0; j < cols; j++ )
+          if( ptr8[j] != 0 ) {
+            out(k, 0) = j + 1;
+            out(k, 1) = -i + rows;
+            k+=1;
+          }
+      }
+      else if( depth == CV_16U || depth == CV_16S ) {
+        const ushort* ptr16 = (const ushort*)ptr8;
+        for( j = 0; j < cols; j++ )
+          if( ptr16[j] != 0 ) {
+            out(k, 0) = j + 1;
+            out(k, 1) = -i + rows;
+            k+=1;
+          }
+      } else if( depth == CV_32S ) {
+        const int* ptr32s = (const int*)ptr8;
+        for( j = 0; j < cols; j++ )
+          if( ptr32s[j] != 0 ) {
+            out(k, 0) = j + 1;
+            out(k, 1) = -i + rows;
+            k+=1;
+          }
+      } else if( depth == CV_32F ) {
+        const float* ptr32f = (const float*)ptr8;
+        for( j = 0; j < cols; j++ )
+          if( ptr32f[j] != 0 ) {
+            out(k, 0) = j + 1;
+            out(k, 1) = -i + rows;
+            k+=1;
+          }
+      }  else {
+        const double* ptr64f = (const double*)ptr8;
+        for( j = 0; j < cols; j++ )
+          if( ptr64f[j] != 0 ) {
+            out(k, 0) = j + 1;
+            out(k, 1) = -i + rows;
+            k+=1;
+          }
+      }
+    }
+  }
 }
 
-Rcpp::NumericMatrix _findNonZeroVAL(Image& image) {
-  cv::Mat locs;
-
-  if (image.GPU) {
-    cv::findNonZero(image.uimage, locs);
-  } else {
-    cv::findNonZero(image.image, locs);
-  }
-
-  Rcpp::NumericMatrix out(locs.rows, 3);
+void _findNonZeroVAL(cv::InputArray& _src, Rcpp::NumericMatrix& out) {
+  cv::Mat src = _src.getMat();
+  int n = cv::countNonZero(src);
+  out = Rcpp::NumericMatrix(n, 3);
   colnames(out) = Rcpp::CharacterVector::create("x", "y", "value");
 
-  if (image.depth() == "8U") {
-    for (int i = 0; i < locs.rows; i++) {
-      out(i, 0) = locs.at<cv::Point>(i).x + 1;
-      out(i, 1) = -locs.at<cv::Point>(i).y + image.image.rows;
-      out(i, 2) = image.image.at<uchar>(locs.at<cv::Point>(i));
+  if (n > 0) {
+    int depth = src.depth();
+    int rows = src.rows, cols = src.cols;
+    int k = 0;
+
+    for( int i = 0; i < rows; i++ ) {
+      int j;
+      const uchar* ptr8 = src.ptr(i);
+
+      if( depth == CV_8U || depth == CV_8S ) {
+        for( j = 0; j < cols; j++ )
+          if( ptr8[j] != 0 ) {
+            out(k, 0) = j + 1;
+            out(k, 1) = -i + rows;
+            out(k, 2) = ptr8[j];
+            k+=1;
+          }
+      }
+      else if( depth == CV_16U || depth == CV_16S ) {
+        const ushort* ptr16 = (const ushort*)ptr8;
+        for( j = 0; j < cols; j++ )
+          if( ptr16[j] != 0 ) {
+            out(k, 0) = j + 1;
+            out(k, 1) = -i + rows;
+            out(k, 2) = ptr8[j];
+            k+=1;
+          }
+      } else if( depth == CV_32S ) {
+        const int* ptr32s = (const int*)ptr8;
+        for( j = 0; j < cols; j++ )
+          if( ptr32s[j] != 0 ) {
+            out(k, 0) = j + 1;
+            out(k, 1) = -i + rows;
+            out(k, 2) = ptr8[j];
+            k+=1;
+          }
+      } else if( depth == CV_32F ) {
+        const float* ptr32f = (const float*)ptr8;
+        for( j = 0; j < cols; j++ )
+          if( ptr32f[j] != 0 ) {
+            out(k, 0) = j + 1;
+            out(k, 1) = -i + rows;
+            out(k, 2) = ptr8[j];
+            k+=1;
+          }
+      }  else {
+        const double* ptr64f = (const double*)ptr8;
+        for( j = 0; j < cols; j++ )
+          if( ptr64f[j] != 0 ) {
+            out(k, 0) = j + 1;
+            out(k, 1) = -i + rows;
+            out(k, 2) = ptr8[j];
+            k+=1;
+          }
+      }
     }
-  } else if (image.depth() == "16U") {
-    for (int i = 0; i < locs.rows; i++) {
-      out(i, 0) = locs.at<cv::Point>(i).x + 1;
-      out(i, 1) = -locs.at<cv::Point>(i).y + image.image.rows;
-      out(i, 2) = image.image.at<ushort>(locs.at<cv::Point>(i));
-    }
-  } else if (image.depth() == "32S") {
-    for (int i = 0; i < locs.rows; i++) {
-      out(i, 0) = locs.at<cv::Point>(i).x + 1;
-      out(i, 1) = -locs.at<cv::Point>(i).y + image.image.rows;
-      out(i, 2) = image.image.at<int>(locs.at<cv::Point>(i));
-    }
-  } else if (image.depth() == "32F") {
-    for (int i = 0; i < locs.rows; i++) {
-      out(i, 0) = locs.at<cv::Point>(i).x + 1;
-      out(i, 1) = -locs.at<cv::Point>(i).y + image.image.rows;
-      out(i, 2) = image.image.at<float>(locs.at<cv::Point>(i));
-    }
-  } else if (image.depth() == "8S") {
-    for (int i = 0; i < locs.rows; i++) {
-      out(i, 0) = locs.at<cv::Point>(i).x + 1;
-      out(i, 1) = -locs.at<cv::Point>(i).y + image.image.rows;
-      out(i, 2) = image.image.at<schar>(locs.at<cv::Point>(i));
-    }
-  } else if (image.depth() == "16S") {
-    for (int i = 0; i < locs.rows; i++) {
-      out(i, 0) = locs.at<cv::Point>(i).x + 1;
-      out(i, 1) = -locs.at<cv::Point>(i).y + image.image.rows;
-      out(i, 2) = image.image.at<short>(locs.at<cv::Point>(i));
+  }
+}
+
+Rcpp::NumericMatrix _findNonZero(Image& image, bool values) {
+  Rcpp::NumericMatrix out;
+
+  if (values) {
+    if (image.GPU) {
+      _findNonZeroVAL(image.uimage, out);
+    } else {
+      _findNonZeroVAL(image.image, out);
     }
   } else {
-    for (int i = 0; i < locs.rows; i++) {
-      out(i, 0) = locs.at<cv::Point>(i).x + 1;
-      out(i, 1) = -locs.at<cv::Point>(i).y + image.image.rows;
-      out(i, 2) = image.image.at<double>(locs.at<cv::Point>(i));
+    if (image.GPU) {
+      _findNonZeroNOVAL(image.uimage, out);
+    } else {
+      _findNonZeroNOVAL(image.image, out);
     }
   }
 
