@@ -2,7 +2,11 @@ Rcpp::List _findContours(Image& image, int mode, int method, Rcpp::NumericVector
   std::vector< std::vector< cv::Point > > contours;
   std::vector< cv::Vec4i > hierarchy;
 
-  cv::findContours(image.image, contours, hierarchy, mode, method, cv::Point(offset(0), offset(1)));
+  if (image.GPU) {
+    cv::findContours(image.uimage, contours, hierarchy, mode, method, cv::Point(offset(0), offset(1)));
+  } else {
+    cv::findContours(image.image, contours, hierarchy, mode, method, cv::Point(offset(0), offset(1)));
+  }
 
   int size = 0;
   for (uint i = 0; i < contours.size(); i++) {
@@ -46,28 +50,22 @@ double _contourArea(Rcpp::NumericVector x, Rcpp::NumericVector y, bool oriented)
 
 Rcpp::List _connectedComponentsTAB(Image& image, int connectivity, int algorithm,
                                    Image& target) {
-  int n = cv::connectedComponents(image.image, target.image, connectivity,
-                                  target.image.type(), algorithm);
+  int n;
+  Rcpp::NumericMatrix table;
 
-  cv::Mat locs;
-  cv::findNonZero(target.image, locs);
-
-  Rcpp::NumericMatrix table(locs.rows, 3);
-  colnames(table) = Rcpp::CharacterVector::create("id", "x", "y");
-
-  if (target.depth() == "32S") {
-    for (uint i = 0; i < locs.rows; i++) {
-      table(i, 0) = target.image.at< int >(locs.at<cv::Point>(i));
-      table(i, 1) = locs.at<cv::Point>(i).x + 1;
-      table(i, 2) = -locs.at<cv::Point>(i).y + image.image.rows;
-    }
+  if (image.GPU && target.GPU) {
+    n = cv::connectedComponents(image.uimage, target.uimage, connectivity,
+                                target.uimage.type(), algorithm);
+    _findNonZeroVAL(target.uimage, table);
+  } else if (!image.GPU && !target.GPU) {
+    n = cv::connectedComponents(image.image, target.image, connectivity,
+                                target.image.type(), algorithm);
+    _findNonZeroVAL(target.image, table);
   } else {
-    for (uint i = 0; i < locs.rows; i++) {
-      table(i, 0) = target.image.at< ushort >(locs.at<cv::Point>(i));
-      table(i, 1) = locs.at<cv::Point>(i).x + 1;
-      table(i, 2) = -locs.at<cv::Point>(i).y + image.image.rows;
-    }
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
   }
+
+  colnames(table) = Rcpp::CharacterVector::create("x", "y", "id");
 
   return Rcpp::List::create(Rcpp::Named("n") = n - 1,
                             Rcpp::Named("table") = table);
@@ -75,13 +73,29 @@ Rcpp::List _connectedComponentsTAB(Image& image, int connectivity, int algorithm
 
 Rcpp::List _connectedComponentsNOTAB(Image& image, int connectivity, int algorithm,
                                      Image& target) {
-  int n = cv::connectedComponents(image.image, target.image, connectivity,
-                                  target.image.type(), algorithm);
+  int n;
+
+  if (image.GPU && target.GPU) {
+    n = cv::connectedComponents(image.uimage, target.uimage, connectivity,
+                                target.uimage.type(), algorithm);
+  } else if (!image.GPU && !target.GPU) {
+    n = cv::connectedComponents(image.image, target.image, connectivity,
+                                target.image.type(), algorithm);
+  } else {
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+  }
+
   return Rcpp::List::create(Rcpp::Named("n") = n - 1);
 }
 
 void _watershed(Image& image, Image& markers) {
-  cv::watershed(image.image, markers.image);
+  if (image.GPU && markers.GPU) {
+    cv::watershed(image.uimage, markers.uimage);
+  } else if (!image.GPU && !markers.GPU) {
+    cv::watershed(image.image, markers.image);
+  } else {
+    Rcpp::stop("'image$GPU' and 'markers$GPU' are not equal.");
+  }
 }
 
 Rcpp::List _fitEllipse(arma::Mat< float > points) {

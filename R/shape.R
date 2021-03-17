@@ -289,17 +289,14 @@ connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
 #'
 #' @examples
 #' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
-#' dots_gray <- changeColorSpace(dots, "GRAY")
-#' dots_bin <- dots_gray < 200
-#' contours <- findContours(dots_bin)
-#' rows <- contours$contours[, 3]
-#' cols <- contours$contours[, 2]
-#' colors <- contours$contours[, 1] + 2
-#' markers <- array(0.0, dim = c(nrow(dots_bin), ncol(dots_bin), 1))
-#' markers[1:2, 1:2, 1] <- 1
-#' markers[cbind(rows, cols, 1)] <- colors
-#' markers <- image(markers)
-#' changeBitDepth(markers, "32S", target = "self")
+#' bw <- inRange(dots, 0, 250)
+#' medianBlur(bw, target = "self")
+#' sure_bg <- morph(bw, "dilate", k_shape = "ellipse", iterations = 3)
+#' dt <- distanceTransform(bw, "L2")
+#' sure_fg <- dt > 20
+#' unknown <- sure_bg - sure_fg
+#' markers <- connectedComponents(sure_fg, table = FALSE)$labels + 1
+#' markers <- markers * (invert(unknown) / 255)
 #' watershed(dots, markers)
 #'
 #' @export
@@ -307,8 +304,8 @@ watershed <- function(image, markers) {
   if (!isImage(image) | !isImage(markers))
     stop("'image' and 'markers' must be Image objects.")
 
-  if (image$depth() != "8U" | image$space != "BGR")
-    stop("'image' must be a 8U BGR Image object.")
+  if (image$depth() != "8U" | image$nchan() != 3)
+    stop("'image' must be a 3-channel, 8U Image object.")
 
   if (markers$depth() != "32S" | markers$space != "GRAY")
     stop("'markers' must be a 32S GRAY Image object.")
