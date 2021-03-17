@@ -138,7 +138,7 @@ void _findNonZeroVAL(cv::InputArray& _src, Rcpp::NumericMatrix& out) {
           if( ptr16[j] != 0 ) {
             out(k, 0) = j + 1;
             out(k, 1) = -i + rows;
-            out(k, 2) = ptr8[j];
+            out(k, 2) = ptr16[j];
             k+=1;
           }
       } else if( depth == CV_32S ) {
@@ -147,7 +147,7 @@ void _findNonZeroVAL(cv::InputArray& _src, Rcpp::NumericMatrix& out) {
           if( ptr32s[j] != 0 ) {
             out(k, 0) = j + 1;
             out(k, 1) = -i + rows;
-            out(k, 2) = ptr8[j];
+            out(k, 2) = ptr32s[j];
             k+=1;
           }
       } else if( depth == CV_32F ) {
@@ -156,7 +156,7 @@ void _findNonZeroVAL(cv::InputArray& _src, Rcpp::NumericMatrix& out) {
           if( ptr32f[j] != 0 ) {
             out(k, 0) = j + 1;
             out(k, 1) = -i + rows;
-            out(k, 2) = ptr8[j];
+            out(k, 2) = ptr32f[j];
             k+=1;
           }
       }  else {
@@ -165,7 +165,7 @@ void _findNonZeroVAL(cv::InputArray& _src, Rcpp::NumericMatrix& out) {
           if( ptr64f[j] != 0 ) {
             out(k, 0) = j + 1;
             out(k, 1) = -i + rows;
-            out(k, 2) = ptr8[j];
+            out(k, 2) = ptr64f[j];
             k+=1;
           }
       }
