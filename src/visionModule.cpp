@@ -148,16 +148,19 @@ RCPP_MODULE(methods_Arithmetic) {
 #include "statistics.h"
 RCPP_MODULE(methods_Statistics) {
 
-  function("_sumList", &_sumList, List::create(_["images"], _["target"]), "");
   function("_sumPx", &_sumPx, List::create(_["image"]), "");
-  function("_meanList", &_meanList, List::create(_["images"], _["target"]), "");
   function("_meanPx", &_meanPx, List::create(_["image"], _["mask"]), "");
   function("_meanPxNOMASK", &_meanPxNOMASK, List::create(_["image"]), "");
+  function("_countNonZero", &_countNonZero, List::create(_["image"]), "");
   function("_min", &_min, List::create(_["image"]), "");
   function("_max", &_max, List::create(_["image"]), "");
   function("_minMaxLoc", &_minMaxLoc, List::create(_["image"]), "");
   function("_imhist", &_imhist, List::create(_["image"], _["nbins"],
     _["range"], _["mask"]), "");
+  function("_bitMin", &_bitMin, List::create(_["image1"], _["image2"], _["target"]), "");
+  function("_bitMax", &_bitMax, List::create(_["image1"], _["image2"], _["target"]), "");
+  function("_bitMinScalar", &_bitMinScalar, List::create(_["image"], _["value"], _["target"]), "");
+  function("_bitMaxScalar", &_bitMaxScalar, List::create(_["image"], _["value"], _["target"]), "");
 }
 
 #include "comparisons.h"
