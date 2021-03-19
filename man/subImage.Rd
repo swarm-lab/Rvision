@@ -4,7 +4,7 @@
 \alias{subImage}
 \title{Extract Subimage}
 \usage{
-subImage(image, x, y, width, height, border = TRUE, ...)
+subImage(image, x, y, width, height, target = "new")
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -12,18 +12,23 @@ subImage(image, x, y, width, height, border = TRUE, ...)
 \item{x, y}{The coordinates of the bottom-left corner of the subimage within
 the original image.}
 
-\item{width}{The width of the subimage.}
+\item{width}{The width of the subimage. Ignored if \code{target} is an
+\code{\link{Image}} object.}
 
-\item{height}{The height of the subimage.}
+\item{height}{The height of the subimage. Ignored if \code{target} is an
+\code{\link{Image}} object.}
 
-\item{border}{If the subimage extends beyond the boundaries of the source
-image and \code{border = TRUE} (the default), a border is created to account
-for the missing pixels.}
-
-\item{...}{Additional parameters to be passed to \code{\link{border}} if the
-the subimage extends beyond the boundaries of the source image and
-\code{border = TRUE}. These parameters control for the type and color of the
-border.}
+\item{target}{The location where the results should be stored. It can take 2
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast but will replace the
+  content of \code{target}. Note that if \code{target} does not have the
+  same number of channels and bit depth as \code{image}, an error will be
+  thrown.}
+}}
 }
 \value{
 An \code{\link{Image}} object.

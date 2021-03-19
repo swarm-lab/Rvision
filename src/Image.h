@@ -3,6 +3,7 @@ public:
   Image();
   Image(std::string inputFile, std::string colorspace);
   Image(cv::Mat inputImage, std::string colorspace);
+  Image(cv::UMat inputImage, std::string colorspace);
   Image(arma::icube inputArray, std::string colorspace);
   Image(arma::fcube inputArray, std::string colorspace);
   Image(const Image& image);
@@ -45,39 +46,35 @@ Image::Image(std::string inputFile, std::string colorspace) {
     Rcpp::stop("Could not open the image file.");
   }
 
+  this->GPU = false;
   this->init();
 }
 
-Image::Image(cv::Mat inputImage, std::string colorspace) {
-  this->image = inputImage;
+Image::Image(cv::Mat inputMat, std::string colorspace) {
+  this->image = inputMat;
   this->space = colorspace;
+  this->GPU = false;
+  this->init();
+}
 
-  if (!this->image.data) {
-    Rcpp::stop("Could not read the image matrix.");
-  }
-
+Image::Image(cv::UMat inputMat, std::string colorspace) {
+  this->uimage = inputMat;
+  this->space = colorspace;
+  this->GPU = true;
   this->init();
 }
 
 Image::Image(arma::Cube< int > inputArray, std::string colorspace) {
   arma2cv(inputArray, this->image);
   this->space = colorspace;
-
-  if (!this->image.data) {
-    Rcpp::stop("Could not read the input array.");
-  }
-
+  this->GPU = false;
   this->init();
 }
 
 Image::Image(arma::Cube< float > inputArray, std::string colorspace) {
   arma2cv(inputArray, this->image);
   this->space = colorspace;
-
-  if (!this->image.data) {
-    Rcpp::stop("Could not read the input array.");
-  }
-
+  this->GPU = false;
   this->init();
 }
 
@@ -90,8 +87,6 @@ Image::Image(const Image& image) {
 }
 
 void Image::init() {
-  this->GPU = false;
-
   if (this->space == "BGR" && this->nchan() != 3) {
     switch(this->nchan()) {
     case 1:
@@ -127,6 +122,9 @@ void Image::fromGPU() {
 bool Image::write(std::string outputFile) {
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
+
+  if (this->GPU)
+    return cv::imwrite(Rcpp::as<std::string>(pathExpand(outputFile)), this->uimage);
 
   return cv::imwrite(Rcpp::as<std::string>(pathExpand(outputFile)), this->image);
 }
@@ -365,26 +363,44 @@ void Image::pset(Rcpp::IntegerVector x, Rcpp::IntegerVector y, Rcpp::NumericMatr
 }
 
 Rcpp::NumericVector Image::dim() {
+  if (this->GPU)
+    return Rcpp::NumericVector::create(this->uimage.rows, this->uimage.cols, this->uimage.channels());
+
   return Rcpp::NumericVector::create(this->image.rows, this->image.cols, this->image.channels());
 }
 
 int Image::nrow() {
+  if (this->GPU)
+    return this->uimage.rows;
+
   return this->image.rows;
 }
 
 int Image::ncol() {
+  if (this->GPU)
+    return this->uimage.cols;
+
   return this->image.cols;
 }
 
 int Image::nchan() {
+  if (this->GPU)
+    return this->uimage.channels();
+
   return this->image.channels();
 }
 
 std::string Image::depth() {
+  if (this->GPU)
+    return type2str(this->uimage.depth());
+
   return type2str(this->image.depth());
 }
 
 arma::Cube< float > Image::toR() {
+  if (this->GPU)
+    Rcpp::stop("Conversion to R array is not available when 'image' is on the GPU.");
+
   arma::Cube< float > outputArray;
 
   switch(this->image.channels()) {
@@ -422,11 +438,23 @@ arma::Cube< float > Image::toR() {
 }
 
 void _changeBitDepth(Image& image, int depth, double scale, Image& target) {
-  image.image.convertTo(target.image, depth, scale);
+  if (image.GPU && target.GPU) {
+    image.uimage.convertTo(target.uimage, depth, scale);
+  } else if (!image.GPU && !target.GPU) {
+    image.image.convertTo(target.image, depth, scale);
+  } else {
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+  }
 }
 
 void _changeColorSpace(Image& image, std::string colorSpace, Image& target) {
-  cv::cvtColor(image.image, target.image, string2conv(image.space + "2" + colorSpace));
+  if (image.GPU && target.GPU) {
+    cv::cvtColor(image.uimage, target.uimage, string2conv(image.space + "2" + colorSpace));
+  } else if (!image.GPU && !target.GPU) {
+    cv::cvtColor(image.image, target.image, string2conv(image.space + "2" + colorSpace));
+  } else {
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+  }
   target.space = colorSpace;
 }
 
@@ -436,25 +464,38 @@ Image _cloneImage(Image& image) {
 
 Rcpp::List _split(Image& image) {
   Rcpp::List out(image.nchan());
-  std::vector<cv::Mat> channels(image.nchan());
 
-  cv::split(image.image, channels);
-
-  for (int i = 0; i < image.nchan(); i++) {
-    out[i] = Image(channels[i], "GRAY");
+  if (image.GPU) {
+    std::vector<cv::UMat> channels(image.nchan());
+    cv::split(image.uimage, channels);
+    for (int i = 0; i < image.nchan(); i++) {
+      out[i] = Image(channels[i], "GRAY");
+    }
+  } else {
+    std::vector<cv::Mat> channels(image.nchan());
+    cv::split(image.image, channels);
+    for (int i = 0; i < image.nchan(); i++) {
+      out[i] = Image(channels[i], "GRAY");
+    }
   }
 
   return out;
 }
 
 void _merge(Rcpp::List& channels, Image& target) {
-  std::vector<cv::Mat> tomerge(channels.size());
-
-  for (int i = 0; i < channels.size(); i++) {
-    tomerge[i] = as<Image>(channels[i]).image;
+  if (target.GPU) {
+    std::vector<cv::UMat> tomerge(channels.size());
+    for (int i = 0; i < channels.size(); i++) {
+      tomerge[i] = as<Image>(channels[i]).uimage;
+    }
+    cv::merge(tomerge, target.uimage);
+  } else {
+    std::vector<cv::Mat> tomerge(channels.size());
+    for (int i = 0; i < channels.size(); i++) {
+      tomerge[i] = as<Image>(channels[i]).image;
+    }
+    cv::merge(tomerge, target.image);
   }
-
-  cv::merge(tomerge, target.image);
 }
 
 Rcpp::List _readMulti(std::string file, std::string colorspace) {
@@ -473,18 +514,27 @@ Rcpp::List _readMulti(std::string file, std::string colorspace) {
   return out;
 }
 
-Image _subimage(Image& image, int x, int y, int width, int height) {
-  cv::Mat out;
-  image.image(cv::Rect(x - 1, -(y - 1) + image.nrow() - height, width, height)).copyTo(out);
-  return Image(out, image.space);
+void _subimage(Image& image, int x, int y, int width, int height, Image& target) {
+  if (image.GPU && target.GPU) {
+    image.uimage(cv::Rect(x - 1, -(y - 1) + image.nrow() - height, width, height)).copyTo(target.uimage);
+  } else if (!image.GPU && !target.GPU) {
+    image.image(cv::Rect(x - 1, -(y - 1) + image.nrow() - height, width, height)).copyTo(target.image);
+  } else {
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+  }
 }
 
-Image _copyMakeBorder(Image &image, int top, int bottom, int left, int right,
-                      int borderType, Rcpp::NumericVector borderColor) {
-  cv::Mat out;
-  cv::copyMakeBorder(image.image, out, top, bottom, left, right, borderType,
-                     col2Scalar(borderColor));
-  return Image(out, image.space);
+void _copyMakeBorder(Image &image, int top, int bottom, int left, int right,
+                      int borderType, Rcpp::NumericVector borderColor, Image& target) {
+  if (image.GPU && target.GPU) {
+    cv::copyMakeBorder(image.uimage, target.uimage, top, bottom, left, right,
+                       borderType, col2Scalar(borderColor));
+  } else if (!image.GPU && !target.GPU) {
+    cv::copyMakeBorder(image.image, target.image, top, bottom, left, right,
+                       borderType, col2Scalar(borderColor));
+  } else {
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+  }
 }
 
 Image _zeros(int nrow, int ncol, std::string type, std::string colorspace) {

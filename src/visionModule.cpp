@@ -43,9 +43,9 @@ RCPP_MODULE(class_Image) {
   function("_merge", &_merge, List::create(_["channels"], _["target"]), "");
   function("_readMulti", &_readMulti, List::create(_["file"], _["colorspace"]), "");
   function("_subimage", &_subimage, List::create(_["image"], _["x"], _["y"],
-    _["width"], _["height"]), "");
+    _["width"], _["height"], _["target"]), "");
   function("_copyMakeBorder", &_copyMakeBorder, List::create(_["image"], _["top"],
-    _["bottom"], _["left"], _["right"], _["borderType"], _["borderValue"]), "");
+    _["bottom"], _["left"], _["right"], _["borderType"], _["borderValue"], _["target"]), "");
   function("_zeros", &_zeros, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
   function("_randu", &_randu, List::create(_["image"], _["low"], _["high"]), "");
   function("_randn", &_randn, List::create(_["image"], _["mean"], _["stddev"]), "");

@@ -1367,10 +1367,12 @@ methods::evalqOnLoad({
     type <- object$space
     depth <- object$depth()
     chan <- object$nchan()
+    gpu <- object$GPU
 
     cat("Class: image. \n")
     cat("Dimensions: ", width, "x", height, ".\n", sep = "")
     cat("Type: ", type, ", ", chan, "-channel, ", depth, ".\n", sep = "")
+    cat("GPU: ", gpu, ".", sep = "")
   })
 
   setMethod("show", "Rcpp_Video", function(object) {
@@ -1386,7 +1388,7 @@ methods::evalqOnLoad({
     cat("Class: video file. \n")
     cat("Dimensions: ", width, "x", height, ", ", nframes, " frames.\n", sep = "")
     cat("Frame rate: ", fps, "fps.\n", sep = "")
-    cat("Codec: ", codec, ".\n", sep = "")
+    cat("Codec: ", codec, ".", sep = "")
 
   })
 
@@ -1398,7 +1400,7 @@ methods::evalqOnLoad({
     height <- nrow(object)
 
     cat("Class: video stream.\n")
-    cat("Dimensions: ", width, "x", height, ".\n", sep = "")
+    cat("Dimensions: ", width, "x", height, ".", sep = "")
   })
 
   setMethod("show", "Rcpp_VideoWriter", function(object) {
@@ -1417,7 +1419,7 @@ methods::evalqOnLoad({
     cat("Frame rate: ", fps, "fps.\n", sep = "")
     cat("Codec: ", codec, ".\n", sep = "")
     cat("API: ", api, ".\n", sep = "")
-    cat("Output file: ", output, "\n", sep = "")
+    cat("Output file: ", output, sep = "")
   })
 })
 

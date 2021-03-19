@@ -86,9 +86,17 @@ plot.Rcpp_Image <- function(x, ...) {
     ylim <- c(1, nrow(x))
   }
 
-  img <- x[min(nrow(x), ylim[2]):max(1, ylim[1]),
-           max(1, xlim[1]):min(ncol(x), xlim[2]),,
-           drop = FALSE]
+  if (x$GPU) {
+    y <- cloneImage(x)
+    y$fromGPU()
+    img <- y[min(nrow(y), ylim[2]):max(1, ylim[1]),
+             max(1, xlim[1]):min(ncol(y), xlim[2]),,
+             drop = FALSE]
+  } else {
+    img <- x[min(nrow(x), ylim[2]):max(1, ylim[1]),
+             max(1, xlim[1]):min(ncol(x), xlim[2]),,
+             drop = FALSE]
+  }
 
   if (dim(img)[3] == 3) {
     img <- img[, , 3:1]
@@ -416,7 +424,7 @@ split <- function(x) {
 #'
 #' @param x A list of single channel (grayscale) \code{\link{Image}} objects.
 #'
-#' @param target The location where the results should be stored. It can take 3
+#' @param target The location where the results should be stored. It can take 2
 #'  values:
 #'  \itemize{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
@@ -520,6 +528,9 @@ pget <- function(image, x, y) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
+  if (image$GPU)
+    stop("'pget' is not available when 'image' is on the GPU.")
+
   if (length(x) != length(y) | !is.vector(x) | !is.vector(y))
     stop("x and y should be vector of the same length.")
 
@@ -569,6 +580,9 @@ pset <- function(image, x, y, color) {
   invisible({
     if (!isImage(image))
       stop("This is not an Image object.")
+
+    if (image$GPU)
+      stop("'pset' is not available when 'image' is on the GPU.")
 
     if (length(x) != length(y) | !is.vector(x) | !is.vector(y))
       stop("'x' and 'y' should be vectors of the same length.")
@@ -703,7 +717,26 @@ pset <- function(image, x, y, color) {
 #'  compatible with \code{\link{col2bgr}} representing the color of the border
 #'  (default: "black").
 #'
-#' @return An \code{\link{Image}} object.
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive). \code{image} will be resized accordingly.}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same number of channels and bit depth
+#'    as \code{image}, an error will be thrown. If \code{target} does not have
+#'    the appropriate dimensions, it will be resized accordingly.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -715,7 +748,7 @@ pset <- function(image, x, y, color) {
 #'
 #' @export
 border <- function(image, top, bottom = top, left = top, right = top,
-                   border_type = "constant", border_color = "black") {
+                   border_type = "constant", border_color = "black", target = "new") {
   if (!isImage(image))
     stop("image is not an Image object.")
 
@@ -724,9 +757,24 @@ border <- function(image, top, bottom = top, left = top, right = top,
   if (!(border_type %in% border_types))
     stop("This is not a valid border type.")
 
-  `_copyMakeBorder`(image, top, bottom, left, right,
-                    border_vals[border_type == border_types],
-                    col2bgr(border_color))
+  if (isImage(target)) {
+    if (image$nchan() != target$nchan() | image$depth() != target$depth())
+      stop("'target' must have the same number of channels and bit depth as 'image'.")
+
+    `_copyMakeBorder`(image, top, bottom, left, right, border_vals[border_type == border_types],
+                      col2bgr(border_color), target)
+  } else if (target == "self") {
+    `_copyMakeBorder`(image, top, bottom, left, right, border_vals[border_type == border_types],
+                      col2bgr(border_color), image)
+  } else if (target == "new") {
+    out <- `_zeros`(image$nrow() + top + bottom, image$ncol() + left + right,
+                    paste0(image$depth(), "C", image$nchan()), image$space)
+    `_copyMakeBorder`(image, top, bottom, left, right, border_vals[border_type == border_types],
+                      col2bgr(border_color), out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 
@@ -740,20 +788,27 @@ border <- function(image, top, bottom = top, left = top, right = top,
 #' @param x,y The coordinates of the bottom-left corner of the subimage within
 #'  the original image.
 #'
-#' @param width The width of the subimage.
+#' @param width The width of the subimage. Ignored if \code{target} is an
+#'  \code{\link{Image}} object.
 #'
-#' @param height The height of the subimage.
+#' @param height The height of the subimage. Ignored if \code{target} is an
+#'  \code{\link{Image}} object.
 #'
-#' @param border If the subimage extends beyond the boundaries of the source
-#'  image and \code{border = TRUE} (the default), a border is created to account
-#'  for the missing pixels.
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. Note that if \code{target} does not have the
+#'    same number of channels and bit depth as \code{image}, an error will be
+#'    thrown.}
+#'  }
 #'
-#' @param ... Additional parameters to be passed to \code{\link{border}} if the
-#'  the subimage extends beyond the boundaries of the source image and
-#'  \code{border = TRUE}. These parameters control for the type and color of the
-#'  border.
-#'
-#' @return An \code{\link{Image}} object.
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -764,34 +819,29 @@ border <- function(image, top, bottom = top, left = top, right = top,
 #' balloon_sub <- subImage(balloon, 290, 170, 150, 150)
 #'
 #' @export
-subImage <- function(image, x, y, width, height, border = TRUE, ...) {
+subImage <- function(image, x, y, width, height, target = "new") {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  x_check <- x + width - 1
-  y_check <- y + height - 1
+  if (isImage(target)) {
+    width <- target$ncol()
+    height <- target$nrow()
+  }
 
-  if ((y < 1) | (x < 1) | (y_check > nrow(image)) | (x_check > ncol(image))) {
-    x_top <- min(x_check, ncol(image))
-    y_top <- min(y_check, nrow(image))
-    x_bottom <- max(x, 1)
-    y_bottom <- max(y, 1)
+  if ((y < 1) | (x < 1) | (y + height - 1 > image$nrow()) | (x + width - 1 > image$ncol()))
+    stop("Subscript out of bound.")
 
-    if ((x_bottom > ncol(image)) | (y_bottom > nrow(image)) | (x_top < 1) | (y_top < 1))
-      stop("Subscript out of bound.")
+  if (isImage(target)) {
+    if (image$nchan() != target$nchan() | image$depth() != target$depth())
+      stop("'target' must have the same number of channels and bit depth as 'image'.")
 
-    sub <- `_subimage`(image, x_bottom, y_bottom,
-                       x_top - x_bottom + 1,
-                       y_top - y_bottom + 1)
-
-    if (border) {
-      border(sub, top = y_check - y_top, bottom = y_bottom - y,
-             left = x_bottom - x, right = x_check - x_top, ...)
-    } else {
-      sub
-    }
+    `_subimage`(image, x, y, width, height, target)
+  } else if (target == "new") {
+    out <- `_zeros`(height, width, paste0(image$depth(), "C", image$nchan()), image$space)
+    `_subimage`(image, x, y, width, height, out)
+    out
   } else {
-    `_subimage`(image, x, y, width, height)
+    stop("Invalid target.")
   }
 }
 

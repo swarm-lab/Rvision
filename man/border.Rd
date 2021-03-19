@@ -11,7 +11,8 @@ border(
   left = top,
   right = top,
   border_type = "constant",
-  border_color = "black"
+  border_color = "black",
+  target = "new"
 )
 }
 \arguments{
@@ -37,6 +38,18 @@ any of the following:
 \item{border_color}{A value or vector of any kind of R color specification
 compatible with \code{\link{col2bgr}} representing the color of the border
 (default: "black").}
+
+\item{target}{The location where the results should be stored. It can take 2
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast but will replace the
+  content of \code{target}. Note that if \code{target} does not have the
+  same number of channels and bit depth as \code{image}, an error will be
+  thrown.}
+}}
 }
 \value{
 An \code{\link{Image}} object.

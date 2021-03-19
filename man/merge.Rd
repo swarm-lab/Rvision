@@ -9,7 +9,7 @@ merge(x, target = "new")
 \arguments{
 \item{x}{A list of single channel (grayscale) \code{\link{Image}} objects.}
 
-\item{target}{The location where the results should be stored. It can take 3
+\item{target}{The location where the results should be stored. It can take 2
 values:
 \itemize{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
