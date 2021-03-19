@@ -81,7 +81,11 @@ double VideoWriter::get(std::string propId) {
 }
 
 void VideoWriter::write(Image image) {
-  this->writer << image.image;
+  if (image.GPU) {
+    this->writer << image.uimage;
+  } else {
+    this->writer << image.image;
+  }
 }
 
 int VideoWriter::nrow() {

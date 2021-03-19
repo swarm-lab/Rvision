@@ -63,6 +63,11 @@ int Stream::ncol() {
 }
 
 void Stream::readNext(Image& target) {
-  if (!this->stream.read(target.image))
-    Rcpp::stop("The frame could not be captured.");
+  if (target.GPU) {
+    if (!this->stream.read(target.uimage))
+      Rcpp::stop("The frame could not be captured.");
+  } else {
+    if (!this->stream.read(target.image))
+      Rcpp::stop("No more frames available.");
+  }
 }
