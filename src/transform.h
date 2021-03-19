@@ -1,5 +1,11 @@
 double _computeECC(Image& image1, Image& image2) {
-  return cv::computeECC(image1.image, image2.image, cv::noArray());
+  if (image1.GPU && image2.GPU) {
+    return cv::computeECC(image1.uimage, image2.uimage, cv::noArray());
+  } else if (!image1.GPU && !image2.GPU) {
+    return cv::computeECC(image1.image, image2.image, cv::noArray());
+  } else {
+    Rcpp::stop("'template$GPU' and 'image$GPU' are not equal.");
+  }
 }
 
 arma::Mat< float > _findTransformECC(Image& image1, Image& image2, int warpMode,
@@ -13,13 +19,29 @@ arma::Mat< float > _findTransformECC(Image& image1, Image& image2, int warpMode,
     warpMatrix = cv::Mat::eye(2, 3, CV_32F);
 
   if (gaussFiltSize > 0) {
-    cv::findTransformECC(image1.image, image2.image, warpMatrix, warpMode,
-                         cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                         cv::noArray(), gaussFiltSize);
+    if (image1.GPU && image2.GPU) {
+      cv::findTransformECC(image1.uimage, image2.uimage, warpMatrix, warpMode,
+                           cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
+                           cv::noArray(), gaussFiltSize);
+    } else if (!image1.GPU && !image2.GPU) {
+      cv::findTransformECC(image1.image, image2.image, warpMatrix, warpMode,
+                           cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
+                           cv::noArray(), gaussFiltSize);
+    } else {
+      Rcpp::stop("'template$GPU' and 'image$GPU' are not equal.");
+    }
   } else {
-    cv::findTransformECC(image1.image, image2.image, warpMatrix, warpMode,
-                         cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                         cv::noArray());
+    if (image1.GPU && image2.GPU) {
+      cv::findTransformECC(image1.uimage, image2.uimage, warpMatrix, warpMode,
+                           cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
+                           cv::noArray());
+    } else if (!image1.GPU && !image2.GPU) {
+      cv::findTransformECC(image1.image, image2.image, warpMatrix, warpMode,
+                           cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
+                           cv::noArray());
+    } else {
+      Rcpp::stop("'template$GPU' and 'image$GPU' are not equal.");
+    }
   }
 
   cv2arma(warpMatrix, out);
@@ -36,8 +58,16 @@ arma::Mat< float > _findTransformORB(Image& image1, Image& image2, int warpMode,
   cv::Mat descriptors1, descriptors2;
 
   cv::Ptr<cv::Feature2D> orb = cv::ORB::create(maxFeatures);
-  orb->detectAndCompute(image1.image, cv::Mat(), keypoints1, descriptors1);
-  orb->detectAndCompute(image2.image, cv::Mat(), keypoints2, descriptors2);
+
+  if (image1.GPU && image2.GPU) {
+    orb->detectAndCompute(image1.uimage, cv::Mat(), keypoints1, descriptors1);
+    orb->detectAndCompute(image2.uimage, cv::Mat(), keypoints2, descriptors2);
+  } else if (!image1.GPU && !image2.GPU) {
+    orb->detectAndCompute(image1.image, cv::Mat(), keypoints1, descriptors1);
+    orb->detectAndCompute(image2.image, cv::Mat(), keypoints2, descriptors2);
+  } else {
+    Rcpp::stop("'template$GPU' and 'image$GPU' are not equal.");
+  }
 
   std::vector<cv::DMatch> matches;
   cv::Ptr<cv::DescriptorMatcher> matcher = cv::DescriptorMatcher::create(descriptorMatcher);
@@ -75,8 +105,16 @@ void _warpAffine(Image& image, arma::Mat< float > m, int interpMode, int borderT
                  Rcpp::NumericVector borderColor, Image& target) {
   cv::Mat_< float > warpMatrix;
   arma2cv(m, warpMatrix);
-  cv::warpAffine(image.image, target.image, warpMatrix, target.image.size(),
-                 interpMode, borderType, col2Scalar(borderColor));
+
+  if (image.GPU && target.GPU) {
+    cv::warpAffine(image.uimage, target.uimage, warpMatrix, target.uimage.size(),
+                   interpMode, borderType, col2Scalar(borderColor));
+  } else if (!image.GPU && !target.GPU) {
+    cv::warpAffine(image.image, target.image, warpMatrix, target.image.size(),
+                   interpMode, borderType, col2Scalar(borderColor));
+  } else {
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+  }
 }
 
 arma::Mat< float > _getPerspectiveTransform(arma::Mat< float > from, arma::Mat< float > to) {
@@ -103,38 +141,85 @@ void _warpPerspective(Image& image, arma::Mat< float > m, int interpMode, int bo
                       Rcpp::NumericVector borderColor, Image& target) {
   cv::Mat_< float > warpMatrix;
   arma2cv(m, warpMatrix);
-  cv::warpPerspective(image.image, target.image, warpMatrix, target.image.size(),
-                      interpMode, borderType, col2Scalar(borderColor));
+
+  if (image.GPU && target.GPU) {
+    cv::warpPerspective(image.uimage, target.uimage, warpMatrix, target.uimage.size(),
+                        interpMode, borderType, col2Scalar(borderColor));
+  } else if (!image.GPU && !target.GPU) {
+    cv::warpPerspective(image.image, target.image, warpMatrix, target.image.size(),
+                        interpMode, borderType, col2Scalar(borderColor));
+  } else {
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+  }
 }
 
 void _distanceTransform(Image& image, int distanceType, int maskSize, Image& target) {
-  cv::distanceTransform(image.image, target.image, distanceType, maskSize, target.image.type());
+  if (image.GPU && target.GPU) {
+    cv::distanceTransform(image.uimage, target.uimage, distanceType, maskSize,
+                          target.uimage.type());
+  } else if (!image.GPU && !target.GPU) {
+    cv::distanceTransform(image.image, target.image, distanceType, maskSize,
+                          target.image.type());
+  } else {
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+  }
 }
 
 int _floodFill(Image& image, IntegerVector seedPoint, NumericVector newVal,
                NumericVector loDiff, NumericVector upDiff, int connectivity) {
-  int area = cv::floodFill(image.image, cv::Point(seedPoint(0), seedPoint(1)),
-                           col2Scalar(newVal), 0, col2Scalar(loDiff),
-                           col2Scalar(upDiff), connectivity);
+  int area;
+
+  if (image.GPU) {
+    area = cv::floodFill(image.uimage, cv::Point(seedPoint(0), seedPoint(1)),
+                         col2Scalar(newVal), 0, col2Scalar(loDiff),
+                         col2Scalar(upDiff), connectivity);
+  } else {
+    area = cv::floodFill(image.image, cv::Point(seedPoint(0), seedPoint(1)),
+                         col2Scalar(newVal), 0, col2Scalar(loDiff),
+                         col2Scalar(upDiff), connectivity);
+  }
+
   return area;
 }
 
 void _LUT(Image& image, Image& lut, Image& target) {
-  cv::LUT(image.image, lut.image, target.image);
+  if (image.GPU && target.GPU) {
+    cv::LUT(image.uimage, lut.image, target.uimage);
+  } else if (!image.GPU && !target.GPU) {
+    cv::LUT(image.image, lut.image, target.image);
+  } else {
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+  }
 }
 
 void _histEqGRAY(Image& image, Image& target) {
-  cv::equalizeHist(image.image, target.image);
+  if (image.GPU && target.GPU) {
+    cv::equalizeHist(image.uimage, target.uimage);
+  } else if (!image.GPU && !target.GPU) {
+    cv::equalizeHist(image.image, target.image);
+  } else {
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+  }
 }
 
 void _histEqBGR(Image& image, Image& target) {
-  cv::Mat ycrcb;
-  cv::cvtColor(image.image, ycrcb, cv::COLOR_BGR2YCrCb);
-
-  std::vector< cv::Mat > channels;
-  cv::split(ycrcb, channels);
-  cv::equalizeHist(channels[0], channels[0]);
-  cv::merge(channels, ycrcb);
-
-  cv::cvtColor(ycrcb, target.image, cv::COLOR_YCrCb2BGR);
+  if (image.GPU && target.GPU) {
+    cv::UMat ycrcb;
+    cv::cvtColor(image.uimage, ycrcb, cv::COLOR_BGR2YCrCb);
+    std::vector< cv::UMat > channels;
+    cv::split(ycrcb, channels);
+    cv::equalizeHist(channels[0], channels[0]);
+    cv::merge(channels, ycrcb);
+    cv::cvtColor(ycrcb, target.uimage, cv::COLOR_YCrCb2BGR);
+  } else if (!image.GPU && !target.GPU) {
+    cv::Mat ycrcb;
+    cv::cvtColor(image.image, ycrcb, cv::COLOR_BGR2YCrCb);
+    std::vector< cv::Mat > channels;
+    cv::split(ycrcb, channels);
+    cv::equalizeHist(channels[0], channels[0]);
+    cv::merge(channels, ycrcb);
+    cv::cvtColor(ycrcb, target.image, cv::COLOR_YCrCb2BGR);
+  } else {
+    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+  }
 }
