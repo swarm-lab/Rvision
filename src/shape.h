@@ -53,16 +53,26 @@ Rcpp::List _connectedComponentsTAB(Image& image, int connectivity, int algorithm
   int n;
   Rcpp::NumericMatrix table;
 
-  if (image.GPU && target.GPU) {
-    n = cv::connectedComponents(image.uimage, target.uimage, connectivity,
-                                target.uimage.type(), algorithm);
-    _findNonZeroVAL(target.uimage, table);
-  } else if (!image.GPU && !target.GPU) {
-    n = cv::connectedComponents(image.image, target.image, connectivity,
-                                target.image.type(), algorithm);
-    _findNonZeroVAL(target.image, table);
+  if (image.GPU) {
+    if (target.GPU) {
+      n = cv::connectedComponents(image.uimage, target.uimage, connectivity,
+                                  target.uimage.type(), algorithm);
+      _findNonZeroVAL(target.uimage, table);
+    } else {
+      n = cv::connectedComponents(image.uimage, target.image, connectivity,
+                                  target.image.type(), algorithm);
+      _findNonZeroVAL(target.image, table);
+    }
   } else {
-    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+    if (target.GPU) {
+      n = cv::connectedComponents(image.image, target.uimage, connectivity,
+                                  target.uimage.type(), algorithm);
+      _findNonZeroVAL(target.uimage, table);
+    } else {
+      n = cv::connectedComponents(image.image, target.image, connectivity,
+                                  target.image.type(), algorithm);
+      _findNonZeroVAL(target.image, table);
+    }
   }
 
   colnames(table) = Rcpp::CharacterVector::create("x", "y", "id");
@@ -75,27 +85,39 @@ Rcpp::List _connectedComponentsNOTAB(Image& image, int connectivity, int algorit
                                      Image& target) {
   int n;
 
-  if (image.GPU && target.GPU) {
-    n = cv::connectedComponents(image.uimage, target.uimage, connectivity,
-                                target.uimage.type(), algorithm);
-  } else if (!image.GPU && !target.GPU) {
-    n = cv::connectedComponents(image.image, target.image, connectivity,
-                                target.image.type(), algorithm);
+  if (image.GPU) {
+    if (target.GPU) {
+      n = cv::connectedComponents(image.uimage, target.uimage, connectivity,
+                                  target.uimage.type(), algorithm);
+    } else {
+      n = cv::connectedComponents(image.uimage, target.image, connectivity,
+                                  target.image.type(), algorithm);
+    }
   } else {
-    Rcpp::stop("'image$GPU' and 'target$GPU' are not equal.");
+    if (target.GPU) {
+      n = cv::connectedComponents(image.image, target.uimage, connectivity,
+                                  target.uimage.type(), algorithm);
+    } else {
+      n = cv::connectedComponents(image.image, target.image, connectivity,
+                                  target.image.type(), algorithm);
+    }
   }
 
   return Rcpp::List::create(Rcpp::Named("n") = n - 1);
 }
 
 void _watershed(Image& image, Image& markers) {
-  if (image.GPU && markers.GPU) {
-    cv::watershed(image.uimage, markers.uimage);
-  } else if (!image.GPU && !markers.GPU) {
-    cv::watershed(image.image, markers.image);
-  } else {
-    Rcpp::stop("'image$GPU' and 'markers$GPU' are not equal.");
+  if (image.GPU) {
+    if (markers.GPU)
+      return cv::watershed(image.uimage, markers.uimage);
+
+    return cv::watershed(image.uimage, markers.image);
   }
+
+  if (markers.GPU)
+    return cv::watershed(image.image, markers.uimage);
+
+  cv::watershed(image.image, markers.image);
 }
 
 Rcpp::List _fitEllipse(arma::Mat< float > points) {
