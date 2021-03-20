@@ -529,7 +529,7 @@ drawPolyline <- function(image, line, closed = FALSE, color = "red", thickness =
 
 #' @title Fill Polygon with Color in Image
 #'
-#' @description \code{fillPolygon} fills all the pixels of an image withing a
+#' @description \code{fillPoly} fills all the pixels of an image withing a
 #'  given polygon with a given color.
 #'
 #' @param image An \code{\link{Image}} object.
@@ -734,8 +734,8 @@ inpaint <- function(image, mask, radius = 5, method = "NS", target = "new", in_p
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param mask An 8-bit \code{\link{Image}} object. The region to be colored
-#'  should be white.
+#' @param mask An 8U, single-channel \code{\link{Image}} object. The region to
+#'  be colored should be white.
 #'
 #' @param color A value or vector of any kind of R color specification compatible
 #'  with \code{\link{col2bgr}} representing the color of each rectangle's outline
@@ -783,15 +783,15 @@ setTo <- function(image, mask, color = "red", target = "new", in_place = NULL) {
     stop("image is not an 'Image' object.")
 
   if (missing(mask)) {
-    mask <- ones(nrow(image), ncol(image))
+    mask <- ones(nrow(image), ncol(image), 1)
     mask %i*% 255
   }
 
   if (!isImage(mask))
     stop("mask is not an 'Image' object.")
 
-  if (bitdepth(mask) != "8U")
-    stop("mask is not an 8-bit single-channel (8U).")
+  if (mask$depth() != "8U" | mask$nchan() != 1)
+    stop("mask is not an 8U single-channel 'Image' object")
 
   if (target == "self") {
     `_setTo`(image, mask, col2bgr(color))

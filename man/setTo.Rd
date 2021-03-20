@@ -9,8 +9,8 @@ setTo(image, mask, color = "red", target = "new", in_place = NULL)
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{mask}{An 8-bit \code{\link{Image}} object. The region to be colored
-should be white.}
+\item{mask}{An 8U, single-channel \code{\link{Image}} object. The region to
+be colored should be white.}
 
 \item{color}{A value or vector of any kind of R color specification compatible
 with \code{\link{col2bgr}} representing the color of each rectangle's outline
