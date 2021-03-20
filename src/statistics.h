@@ -6,13 +6,17 @@ Rcpp::NumericVector _sumPx(Image& image) {
 }
 
 Rcpp::NumericVector _meanPx(Image& image, Image& mask) {
-  if (image.GPU && mask.GPU) {
-    return scalar2Col(cv::mean(image.uimage, mask.uimage), image.uimage.channels());
-  } else if (!image.GPU && !mask.GPU) {
-    return scalar2Col(cv::mean(image.image, mask.image), image.image.channels());
+  if (image.GPU) {
+    if (mask.GPU)
+      return scalar2Col(cv::mean(image.uimage, mask.uimage), image.uimage.channels());
+
+    return scalar2Col(cv::mean(image.uimage, mask.image), image.uimage.channels());
   }
 
-  Rcpp::stop("'x$GPU' and 'mask$GPU' are not equal.");
+  if (mask.GPU)
+    return scalar2Col(cv::mean(image.image, mask.uimage), image.image.channels());
+
+  return scalar2Col(cv::mean(image.image, mask.image), image.image.channels());
 }
 
 Rcpp::NumericVector _meanPxNOMASK(Image& image) {
@@ -76,43 +80,91 @@ double _max(Image& image) {
 }
 
 void _bitMin(Image& image1, Image& image2, Image& target) {
-  if (image1.GPU && image2.GPU && target.GPU) {
-    cv::min(image1.uimage, image2.uimage, target.uimage);
-  } else if (!image1.GPU && !image2.GPU && !target.GPU) {
-    cv::min(image1.image, image2.image, target.image);
-  } else {
-    Rcpp::stop("'e1$GPU', 'e2$GPU', and 'target$GPU' are not equal.");
+  if (image1.GPU) {
+    if (image2.GPU) {
+      if (target.GPU)
+        return cv::min(image1.uimage, image2.uimage, target.uimage);
+
+      Rcpp::stop("'target' should be in GPU memory when both 'e1' and 'e2' are.");
+      // return cv::min(image1.uimage, image2.uimage, target.image);
+    }
+
+    if (target.GPU)
+      return cv::min(image1.uimage, image2.image, target.uimage);
+
+    return cv::min(image1.uimage, image2.image, target.image);
   }
+
+  if (image2.GPU) {
+    if (target.GPU)
+      return cv::min(image1.image, image2.uimage, target.uimage);
+
+    return cv::min(image1.image, image2.uimage, target.image);
+  }
+
+  if (target.GPU)
+    Rcpp::stop("'target' should be in CPU memory when both 'e1' and 'e2' are.");
+    //return cv::min(image1.image, image2.image, target.uimage);
+
+  cv::min(image1.image, image2.image, target.image);
 }
 
 void _bitMinScalar(Image& image, Rcpp::NumericVector value, Image& target) {
-  if (image.GPU && target.GPU) {
-    cv::min(image.uimage, col2Scalar(value), target.uimage);
-  } else if (!image.GPU && !target.GPU) {
-    cv::min(image.image, col2Scalar(value), target.image);
-  } else {
-    Rcpp::stop("'e1$GPU' (or 'e2$GPU') and 'target$GPU' are not equal.");
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::min(image.uimage, col2Scalar(value), target.uimage);
+
+    return cv::min(image.uimage, col2Scalar(value), target.image);
   }
+
+  if (target.GPU)
+    return cv::min(image.image, col2Scalar(value), target.uimage);
+
+  cv::min(image.image, col2Scalar(value), target.image);
 }
 
 void _bitMax(Image& image1, Image& image2, Image& target) {
-  if (image1.GPU && image2.GPU && target.GPU) {
-    cv::max(image1.uimage, image2.uimage, target.uimage);
-  } else if (!image1.GPU && !image2.GPU && !target.GPU) {
-    cv::max(image1.image, image2.image, target.image);
-  } else {
-    Rcpp::stop("'image1$GPU', 'image2$GPU', and 'target$GPU' are not equal.");
+  if (image1.GPU) {
+    if (image2.GPU) {
+      if (target.GPU)
+        return cv::max(image1.uimage, image2.uimage, target.uimage);
+
+      Rcpp::stop("'target' should be in GPU memory when both 'e1' and 'e2' are.");
+      // return cv::max(image1.uimage, image2.uimage, target.image);
+    }
+
+    if (target.GPU)
+      return cv::max(image1.uimage, image2.image, target.uimage);
+
+    return cv::max(image1.uimage, image2.image, target.image);
   }
+
+  if (image2.GPU) {
+    if (target.GPU)
+      return cv::max(image1.image, image2.uimage, target.uimage);
+
+    return cv::max(image1.image, image2.uimage, target.image);
+  }
+
+  if (target.GPU)
+    Rcpp::stop("'target' should be in CPU memory when both 'e1' and 'e2' are.");
+    // return cv::max(image1.image, image2.image, target.uimage);
+
+  cv::max(image1.image, image2.image, target.image);
 }
 
 void _bitMaxScalar(Image& image, Rcpp::NumericVector value, Image& target) {
-  if (image.GPU && target.GPU) {
-    cv::max(image.uimage, col2Scalar(value), target.uimage);
-  } else if (!image.GPU && !target.GPU) {
-    cv::max(image.image, col2Scalar(value), target.image);
-  } else {
-    Rcpp::stop("'e1$GPU' (or 'e2$GPU') and 'target$GPU' are not equal.");
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::max(image.uimage, col2Scalar(value), target.uimage);
+
+    return cv::max(image.uimage, col2Scalar(value), target.image);
   }
+
+  if (target.GPU)
+    return cv::max(image.image, col2Scalar(value), target.uimage);
+
+  cv::max(image.image, col2Scalar(value), target.image);
 }
 
 arma::Mat< float > _imhist(Image& image, int nbins, Rcpp::NumericVector range, Image& mask) {
