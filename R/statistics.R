@@ -168,13 +168,13 @@ mean.Rcpp_Image <- function(x, ..., mask = NA) {
 #' @title Mean of Images in a List
 #'
 #' @description Returns the pixelwise mean of \code{\link{Image}} objects stored
-#' in a list.
+#'  in a list.
 #'
 #' @param x A list of \code{\link{Image}} objects. All images must have the same
-#'  dimensions, number of channels, and bitdepth.
+#'  dimensions, number of channels, and bit depth.
 #'
 #' @param target The location where the results should be stored when passing a
-#'  sum of images to the function. It can take 3 values:
+#'  list of images to the function. It can take 3 values:
 #'  \itemize{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}

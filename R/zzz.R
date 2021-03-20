@@ -593,19 +593,19 @@ methods::evalqOnLoad({
 #' @name sum
 #'
 #' @export
-setGeneric("sum", function(x, ...) standardGeneric("sum"),
-           useAsDefault = function(x, ...) base::sum(x, ...),
+setGeneric("sum", function(x, ..., target = "new") standardGeneric("sum"),
+           useAsDefault = function(x, ..., target) base::sum(x, ...),
            group = "Summary")
 
 methods::evalqOnLoad({
   #' @name sum
   #' @rdname sum
   setMethod("sum", "list",
-            function(x, target = "new", ...) {
+            function(x, ..., target = "new") {
               test <- sapply(x, function(x) class(x) == "Rcpp_Image")
               if (all(test)) {
                 if (isImage(target)) {
-                  lapply(x, `_plus`, image2 = target, target = target)
+                  invisible(lapply(x, `_plus`, image2 = target, target = target))
                 } else if (target == "new") {
                   out <- zeros(x[[1]]$nrow(), x[[1]]$ncol(), x[[1]]$nchan(), "32F")
                   lapply(x, `_plus`, image2 = out, target = out)

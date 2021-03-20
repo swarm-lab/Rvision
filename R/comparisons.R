@@ -205,7 +205,7 @@ matchTemplate <- function(image, template, method, mask = NULL, target = "new") 
       if (mask$depth() != "8U" & mask$depth() != "32F")
         stop("'mask' must either be a 8U or 32F Image object.")
 
-      `_matchTemplateNoMask`(image, template, meth, mask, target)
+      `_matchTemplate`(image, template, meth, mask, target)
     }
   } else if (target == "new") {
     out <- zeros(image$nrow() - template$nrow() + 1,
@@ -224,7 +224,7 @@ matchTemplate <- function(image, template, method, mask = NULL, target = "new") 
       if (mask$depth() != "8U" & mask$depth() != "32F")
         stop("'mask' must either be a 8U or 32F Image object.")
 
-      `_matchTemplateNoMask`(image, template, meth, mask, out)
+      `_matchTemplate`(image, template, meth, mask, out)
     }
 
     out

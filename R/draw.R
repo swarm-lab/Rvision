@@ -762,7 +762,7 @@ inpaint <- function(image, mask, radius = 5, method = "NS", target = "new", in_p
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-#' mask <- zeros(nrow(balloon), ncol(balloon))
+#' mask <- zeros(nrow(balloon), ncol(balloon), 1)
 #' poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 #' fillPoly(mask, poly, color = "white")
 #' balloon_painted <- setTo(balloon, mask, "green")

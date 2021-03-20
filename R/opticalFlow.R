@@ -63,7 +63,9 @@
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 #' balloon1 <- readFrame(balloon, 1)
-#' balloon2 <- readFrame(balloon, 25)
+#' changeColorSpace(balloon1, "GRAY", "self")
+#' balloon2 <- readFrame(balloon, 2)
+#' changeColorSpace(balloon2, "GRAY", "self")
 #' of <- farneback(balloon1, balloon2)
 #'
 #' @export

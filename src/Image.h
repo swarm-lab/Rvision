@@ -452,19 +452,26 @@ void _changeBitDepth(Image& image, int depth, double scale, Image& target) {
 }
 
 void _changeColorSpace(Image& image, std::string colorSpace, Image& target) {
-  target.space = colorSpace;
-
   if (image.GPU) {
-    if (target.GPU)
-      return cv::cvtColor(image.uimage, target.uimage, string2conv(image.space + "2" + colorSpace));
+    if (target.GPU) {
+      cv::cvtColor(image.uimage, target.uimage, string2conv(image.space + "2" + colorSpace));
+      target.space = colorSpace;
+      return;
+    }
 
-    return cv::cvtColor(image.uimage, target.image, string2conv(image.space + "2" + colorSpace));
+    cv::cvtColor(image.uimage, target.image, string2conv(image.space + "2" + colorSpace));
+    target.space = colorSpace;
+    return;
   }
 
-  if (target.GPU)
-    return cv::cvtColor(image.image, target.uimage, string2conv(image.space + "2" + colorSpace));
+  if (target.GPU) {
+    cv::cvtColor(image.image, target.uimage, string2conv(image.space + "2" + colorSpace));
+    target.space = colorSpace;
+    return;
+  }
 
   cv::cvtColor(image.image, target.image, string2conv(image.space + "2" + colorSpace));
+  target.space = colorSpace;
 }
 
 Image _cloneImage(Image& image) {
