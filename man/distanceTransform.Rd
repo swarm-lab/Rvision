@@ -63,7 +63,6 @@ balloon <- image(file)
 changeColorSpace(balloon, "GRAY", target = "self")
 bin <- balloon < 200
 dst <- distanceTransform(bin)
-plot(dst)
 
 }
 \author{

@@ -583,12 +583,10 @@ warpPerspective <- function(image, warp_matrix, interp_mode = "linear", inverse_
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @examples
-#' file <- system.file("sample_img/balloon1.png", package = "Rvision")
-#' balloon <- image(file)
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' changeColorSpace(balloon, "GRAY", target = "self")
 #' bin <- balloon < 200
 #' dst <- distanceTransform(bin)
-#' plot(dst)
 #'
 #' @export
 distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
@@ -907,7 +905,6 @@ histmatch <- function(image, reference, target = "new") {
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_eq <- histEq(balloon)
-#' plot(balloon_eq)
 #'
 #' @export
 histEq <- function(image, target = "new") {

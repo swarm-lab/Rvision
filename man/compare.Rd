@@ -45,7 +45,7 @@ Comparison between Images
 \examples{
 balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
-plot(compare(balloon1, balloon2, ">="))
+comp <- compare(balloon1, balloon2, ">=")
 
 }
 \seealso{

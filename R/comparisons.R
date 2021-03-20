@@ -38,7 +38,7 @@
 #' @examples
 #' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
-#' plot(compare(balloon1, balloon2, ">="))
+#' comp <- compare(balloon1, balloon2, ">=")
 #'
 #' @export
 setGeneric("compare", function(e1, e2, comparison, target) { standardGeneric("compare") })
@@ -63,7 +63,6 @@ setGeneric("compare", function(e1, e2, comparison, target) { standardGeneric("co
 #' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
 #' balloon1 %i>% balloon2
-#' plot(balloon1)
 #'
 #' @name inPlaceComparison
 NULL
@@ -280,7 +279,6 @@ matchTemplate <- function(image, template, method, mask = NULL, target = "new") 
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' bw <- inRange(balloon, low = c(10, 20, 30), up = c(120, 130, 140))
-#' plot(bw)
 #'
 #' @export
 inRange <- function(image, low = 0, up = 255, target = "new") {

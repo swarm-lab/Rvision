@@ -45,7 +45,6 @@ If \code{target="new"}, the function returns an \code{\link{Image}}
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 balloon_eq <- histEq(balloon)
-plot(balloon_eq)
 
 }
 \seealso{

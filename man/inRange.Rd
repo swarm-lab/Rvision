@@ -49,7 +49,6 @@ An \code{\link{Image}} object.
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 bw <- inRange(balloon, low = c(10, 20, 30), up = c(120, 130, 140))
-plot(bw)
 
 }
 \seealso{

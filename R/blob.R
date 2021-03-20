@@ -103,8 +103,6 @@
 #' blobs <- simpleBlobDetector(invert(dots), min_threshold = 25, max_threshold = 220,
 #'                             filter_by_area = TRUE, min_area = 200, max_area = Inf,
 #'                             filter_by_color = FALSE)
-#' plot(dots)
-#' plot(blobs, pch = 20)
 #'
 #' @export
 simpleBlobDetector <- function(image, min_threshold = 50, max_threshold = 220,
