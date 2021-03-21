@@ -7,18 +7,17 @@
 
 ## Description
 
-[`Rvision`](https://github.com/swarm-lab/Rvision) is a - small but growing - 
-computer vision library for [`R`](https://cran.r-project.org). It is based on 
-the powerful [`OpenCV`](http://opencv.org/) library for C/C++, the state-of-the-art
-for computer vision in the open source world. 
+[`Rvision`](https://github.com/swarm-lab/Rvision) is a growing computer vision 
+library for [`R`](https://cran.r-project.org). It is based on the powerful 
+[`OpenCV`](http://opencv.org/) library for C/C++, the state-of-the-art for 
+computer vision in the open source world. 
 
 The ultimate goal of [`Rvision`](https://github.com/swarm-lab/Rvision) is to 
-provide [`R`](https://cran.r-project.org) users with all the necessary functions 
-to read and manipulate images, videos and camera streams, with an emphasis on 
-speed (thanks to [`OpenCV`](http://opencv.org/)). In this respect, it is different
-from all the other image manipulations packages for [`R`](https://cran.r-project.org)
-that either can not quickly and directly access frames from videos or camera 
-streams or are limited in their processing speed and/or volume. 
+provide `R` users with all the necessary functions to read and manipulate images, 
+videos and camera streams, with an emphasis on speed (thanks to `OpenCV`). In 
+this respect, it is different from all the other image manipulations packages 
+for `R` that either can not quickly and directly access frames from videos and 
+camera streams or are limited in their processing speed and/or volume. 
 
 ---
 
