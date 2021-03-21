@@ -26,7 +26,14 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
@@ -133,11 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 class="title toc-ignore">1 - Installing Rvision</h1>
 
 
-
-<p><strong>This page describes the installation process of <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a>.</strong></p>
-<p>Installing <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> should go smoothly on all major operating systems (Mac, Windows, and “Ubuntu-like” Linux). There are a few steps to follow before installing the package itself in order to prepare all the necessary dependencies.</p>
-<p>All installation steps are described below.</p>
-<hr />
+<div id="TOC">
 <ul>
 <li><a href="#before-installing">1.1 - Before installing</a>
 <ul>
@@ -147,26 +150,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#installing-rvision">1.2 - Installing Rvision</a></li>
 <li><a href="#loading-rvision">1.3 - Loading Rvision</a></li>
 </ul>
-<hr />
+</div>
+
 <div id="before-installing" class="section level2">
 <h2>1.1 - Before installing</h2>
 <div id="devtools" class="section level3">
 <h3>1.1.1 - Devtools</h3>
-<p>Before installing <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a>, you will need to install the latest version of the <a href="https://CRAN.R-project.org/package=devtools"><code>devtools</code></a> package. You can install <a href="https://CRAN.R-project.org/package=devtools"><code>devtools</code></a> from <a href="https://cran.r-project.org"><code>CRAN</code></a> as follows:</p>
+<p>Before installing <code>Rvision</code>, you will need to install the latest version of the <a href="https://CRAN.R-project.org/package=devtools"><code>devtools</code></a> package. You can install <code>devtools</code> from <a href="https://cran.r-project.org"><code>CRAN</code></a> as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(devtools))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span></code></pre></div>
 </div>
 <div id="ropencvlite" class="section level3">
 <h3>1.1.2 - ROpenCVLite</h3>
-<p>You will also need to install the <a href="https://github.com/swarm-lab/ROpenCVLite"><code>ROpenCVLite</code></a> package. Installation instructions for <a href="https://github.com/swarm-lab/ROpenCVLite"><code>ROpenCVLite</code></a> can be found at <a href="https://swarm-lab.github.io/ROpenCVLite/articles/install.html" class="uri">https://swarm-lab.github.io/ROpenCVLite/articles/install.html</a>.</p>
-<p>This step may take some time as it will download, compile and install <a href="https://opencv.org"><code>OpenCV</code></a> for you. I suggest you go out for a cup of tea or coffee while <a href="https://github.com/swarm-lab/ROpenCVLite"><code>ROpenCVLite</code></a> is being installed (compilation time will depend on your computer).</p>
-<p>Note that you can skip this step and <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> will attempt to install it in the next step. However it might fail if your system is missing one of the external dependencies required by <code>ROpenCVLite</code>.</p>
+<p>You will also need to install the <a href="https://github.com/swarm-lab/ROpenCVLite"><code>ROpenCVLite</code></a> package. Installation instructions for <code>ROpenCVLite</code> can be found at <a href="https://swarm-lab.github.io/ROpenCVLite/articles/install.html" class="uri">https://swarm-lab.github.io/ROpenCVLite/articles/install.html</a>.</p>
+<p>This step may take some time as it will download, compile and install <a href="https://opencv.org"><code>OpenCV</code></a> for you. I suggest you go out for a cup of tea or coffee while <code>ROpenCVLite</code> is being installed (compilation time will depend on your computer).</p>
+<p>Note that you can skip this step and <code>Rvision</code> will attempt to install it in the next step. However it might fail if your system is missing one of the external dependencies required by <code>ROpenCVLite</code>.</p>
 <hr />
 </div>
 </div>
 <div id="installing-rvision" class="section level2">
 <h2>1.2 - Installing Rvision</h2>
-<p>You can install the latest development version of <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> as follows:</p>
+<p>You can install the latest development version of <code>Rvision</code> as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;swarm-lab/Rvision&quot;</span>)</span></code></pre></div>
 <hr />
 </div>

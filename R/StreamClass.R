@@ -9,6 +9,17 @@
 #' @description \code{Stream} objects contains an \href{http://opencv.org/}{OpenCV}
 #'  stream that originates from a camera connected to the computer.
 #'
+#' @slot dim,ncol,nrow Functions returning the dimensions of the object.
+#'
+#' @slot get,set Functions to access and set internal properties of the object.
+#'
+#' @slot open,isOpened Functions to open a new camera stream or check the status
+#'  of the camera stream.
+#'
+#' @slot readNext Functions to access the next frame in the stream.
+#'
+#' @slot release Function to release the object from memory.
+#'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #' @export
 "Stream"

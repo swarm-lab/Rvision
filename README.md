@@ -27,13 +27,6 @@ streams or are limited in their processing speed and/or volume.
 + [1 - Installation instructions](https://swarm-lab.github.io/Rvision/articles/z1_install.html)
 + [2 - Input/output operations](https://swarm-lab.github.io/Rvision/articles/z2_io.html)
 + [3 - Basic operations](https://swarm-lab.github.io/Rvision/articles/z3_basic.html)
-+ 4 - Advanced operations on videos [TODO]
-+ 5 - Advanced operations on streams [TODO]
-+ 6 - Advanced operations on images [TODO]
-    + 6.1 - Drawing operations [TODO]
-    + 6.2 - Arithmetic operations [TODO]
-    + 6.3 - Morphological operations [TODO]
-    + 6.4 - Filtering operations [TODO]
 
 --- 
 

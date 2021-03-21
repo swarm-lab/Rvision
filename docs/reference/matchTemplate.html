@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
@@ -56,8 +56,8 @@
 <meta property="og:description" content="matchTemplate compares a template against overlapping
  image regions using the specified method. After the function finishes
  the comparison, the best matches can be found as global minimums (when
- methods &quot;SQDIFF&quot; or &quot;SQDIFF_NORMED&quot; were used) or maximums (when methods
- &quot;CCORR&quot;, &quot;CCORR_NORMED&quot;, &quot;CCOEFF&quot; or &quot;CCOEF_NORMED&quot; were used) using the
+ methods &quot;SQDIFF&quot; or &quot;SQDIFF_NORMED&quot; are used) or maximums (when methods
+ &quot;CCORR&quot;, &quot;CCORR_NORMED&quot;, &quot;CCOEFF&quot; or &quot;CCOEF_NORMED&quot; are used) using the
  minMaxLoc function." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
@@ -91,7 +91,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.0</span>
       </span>
     </div>
 
@@ -160,12 +160,12 @@
     <p><code>matchTemplate</code> compares a template against overlapping
  image regions using the specified <code>method</code>. After the function finishes
  the comparison, the best matches can be found as global minimums (when
- methods "SQDIFF" or "SQDIFF_NORMED" were used) or maximums (when methods
- "CCORR", "CCORR_NORMED", "CCOEFF" or "CCOEF_NORMED" were used) using the
+ methods "SQDIFF" or "SQDIFF_NORMED" are used) or maximums (when methods
+ "CCORR", "CCORR_NORMED", "CCOEFF" or "CCOEF_NORMED" are used) using the
  <code><a href='minMaxLoc.html'>minMaxLoc</a></code> function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>matchTemplate</span><span class='op'>(</span><span class='va'>image</span>, <span class='va'>template</span>, <span class='va'>method</span>, mask <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>matchTemplate</span><span class='op'>(</span><span class='va'>image</span>, <span class='va'>template</span>, <span class='va'>method</span>, mask <span class='op'>=</span> <span class='cn'>NULL</span>, target <span class='op'>=</span> <span class='st'>"new"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,14 +176,15 @@
     </tr>
     <tr>
       <th>template</th>
-      <td><p>An <code><a href='Image-class.html'>Image</a></code> object of the same type as <code>image</code>.
-<code>template</code> cannot be larger than <code>image</code>.</p></td>
+      <td><p>An <code><a href='Image-class.html'>Image</a></code> object with  the same number of
+channels and bit depth as <code>image</code>. <code>template</code> cannot be greater
+than <code>image</code> in any dimension.</p></td>
     </tr>
     <tr>
       <th>method</th>
       <td><p>A string indicating the comparison method to use. It can be any
-of the following (see <a href='https://bit.ly/2RjELvJ'>https://bit.ly/2RjELvJ</a> for a full description of each
-comparison method):</p><ul>
+of the following (see <a href='https://bit.ly/2RjELvJ'>https://bit.ly/2RjELvJ</a> for a full description of
+each comparison method):</p><ul>
 <li><p>"SQDIFF"</p></li>
 <li><p>"SQDIFF_NORMED"</p></li>
 <li><p>"CCORR"</p></li>
@@ -194,16 +195,38 @@ comparison method):</p><ul>
     </tr>
     <tr>
       <th>mask</th>
-      <td><p>An <code><a href='Image-class.html'>Image</a></code> object of the same type and dimensions as
-<code>template</code> (default: NULL). <code>mask</code> is currently only supported when
-<code>SQDIFF</code> and <code>CCORR_NORMED</code> are used.</p></td>
+      <td><p>An <code><a href='Image-class.html'>Image</a></code> object with the same dimensions as
+<code>template</code> (default: NULL). It can have either one channel or the same
+number of channels as <code>template</code>. It can be an 8U or 32F
+<code><a href='Image-class.html'>Image</a></code> object. If 8U, it is interpreted as a binary mask,
+ meaning only elements where mask is nonzero are used and are kept unchanged
+ independent of the actual mask value. If 32F, then the mask values are used
+ as weights. <code>mask</code> is not supported when <code>method='CCOEFF_NORMED'</code>.</p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p>The location where the results should be stored. It can take 2
+values:</p><ul>
+<li><p>"new":a new <code><a href='Image-class.html'>Image</a></code> object is created and the results
+  are stored inside (the default).</p></li>
+<li><p>An <code><a href='Image-class.html'>Image</a></code> object:the results are stored in another
+  existing <code><a href='Image-class.html'>Image</a></code> object. This is fast but will replace the
+  content of <code>target</code>. Note that <code>target</code> must be a single-channel,
+  32F <code><a href='Image-class.html'>Image</a></code> object with <code>(R-r+1)</code> rows and <code>(C-c+1)</code>
+  columns, where <code>CxR</code> and <code>cxr</code> are the dimensions of <code>image</code>
+  and <code>template</code>, respectively.</p></li>
+</ul></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A 16-bit grayscale <code><a href='Image-class.html'>Image</a></code> object of the same dimensions
- as <code>image</code>.</p>
+    <p>If <code>target="new"</code>, the function returns an <code><a href='Image-class.html'>Image</a></code>
+ object with <code>(R-r+1)</code> rows and <code>(C-c+1)</code> columns, where <code>CxR</code>
+ and <code>cxr</code> are the dimensions of <code>image</code> and <code>template</code>,
+ respectively. If <code>target</code> is an <code><a href='Image-class.html'>Image</a></code> object, the
+ function returns nothing and modifies that <code><a href='Image-class.html'>Image</a></code> object in
+ place.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='minMaxLoc.html'>minMaxLoc</a></code></p></div>
@@ -216,9 +239,7 @@ comparison method):</p><ul>
 <span class='va'>sub</span> <span class='op'>&lt;-</span> <span class='fu'><a href='subImage.html'>subImage</a></span><span class='op'>(</span><span class='va'>balloon</span>, <span class='fl'>290</span>, <span class='fl'>170</span>, <span class='fl'>150</span>, <span class='fl'>150</span><span class='op'>)</span>
 <span class='va'>match</span> <span class='op'>&lt;-</span> <span class='fu'>matchTemplate</span><span class='op'>(</span><span class='va'>balloon</span>, <span class='va'>sub</span>, method <span class='op'>=</span> <span class='st'>"SQDIFF"</span><span class='op'>)</span>
 <span class='va'>mm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='minMaxLoc.html'>minMaxLoc</a></span><span class='op'>(</span><span class='va'>match</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='va'>mm</span><span class='op'>[</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>]</span>, <span class='va'>mm</span><span class='op'>[</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>]</span>, col <span class='op'>=</span> <span class='st'>"red"</span>, pch <span class='op'>=</span> <span class='fl'>20</span>, cex <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-</div><div class='img'><img src='matchTemplate-1.png' alt='' width='700' height='433' /></div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

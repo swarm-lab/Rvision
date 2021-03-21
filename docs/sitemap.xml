@@ -25,9 +25,6 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/VideoWriter-class.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/absdiff.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/adaptiveThreshold.html</loc>
   </url>
   <url>
@@ -98,6 +95,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/convexityDefects.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/countNonZero.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/destroyDisplay.html</loc>
@@ -211,6 +211,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/imageLogic.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/imageMinMax.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/imhist.html</loc>
   </url>
   <url>
@@ -298,13 +301,19 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plot.Image.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plot.OF_array.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plot.blob.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plotOF.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/pset.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/randn.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/randu.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/readFrame.html</loc>

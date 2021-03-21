@@ -1,39 +1,21 @@
 ---
 title: "1 - Installing Rvision"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{1 - Installing Rvision}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-__This page describes the installation process of [`Rvision`](https://github.com/swarm-lab/Rvision).__ 
-
-Installing [`Rvision`](https://github.com/swarm-lab/Rvision) should go smoothly 
-on all major operating systems (Mac, Windows, and "Ubuntu-like" Linux). There 
-are a few steps to follow before installing the package itself in order to 
-prepare all the necessary dependencies. 
-
-All installation steps are described below. 
-
----
-
-+ [1.1 - Before installing ](#before-installing)
-    + [1.1.1 - Devtools](#devtools)
-    + [1.1.2 - ROpenCVLite](#ropencvlite)
-+ [1.2 - Installing Rvision](#installing-rvision)
-+ [1.3 - Loading Rvision](#loading-rvision)
-  
----
-
 ## 1.1 - Before installing
 
 ### 1.1.1 - Devtools
 
-Before installing [`Rvision`](https://github.com/swarm-lab/Rvision), you will 
-need to install the latest version of the [`devtools`](https://CRAN.R-project.org/package=devtools) 
-package. You can install [`devtools`](https://CRAN.R-project.org/package=devtools) 
-from [`CRAN`](https://cran.r-project.org) as follows: 
+Before installing `Rvision`, you will need to install the latest version of the 
+[`devtools`](https://CRAN.R-project.org/package=devtools) package. You can 
+install `devtools` from [`CRAN`](https://cran.r-project.org) as follows: 
 
 ```{r, message=FALSE, eval=FALSE}
 if (!require(devtools))
@@ -43,24 +25,23 @@ if (!require(devtools))
 ### 1.1.2 - ROpenCVLite
 
 You will also need to install the [`ROpenCVLite`](https://github.com/swarm-lab/ROpenCVLite)
-package. Installation instructions for [`ROpenCVLite`](https://github.com/swarm-lab/ROpenCVLite)
-can be found at https://swarm-lab.github.io/ROpenCVLite/articles/install.html.
+package. Installation instructions for `ROpenCVLite` can be found at 
+https://swarm-lab.github.io/ROpenCVLite/articles/install.html.
 
 This step may take some time as it will download, compile and install 
 [`OpenCV`](https://opencv.org) for you. I suggest you go out for a cup of tea or 
-coffee while [`ROpenCVLite`](https://github.com/swarm-lab/ROpenCVLite) is being 
-installed (compilation time will depend on your computer). 
+coffee while `ROpenCVLite` is being installed (compilation time will depend on 
+your computer). 
 
-Note that you can skip this step and [`Rvision`](https://github.com/swarm-lab/Rvision)
-will attempt to install it in the next step. However it might fail if your 
-system is missing one of the external dependencies required by `ROpenCVLite`. 
+Note that you can skip this step and `Rvision` will attempt to install it in the 
+next step. However it might fail if your system is missing one of the external 
+dependencies required by `ROpenCVLite`. 
 
 ---
 
 ## 1.2 - Installing Rvision
 
-You can install the latest development version of 
-[`Rvision`](https://github.com/swarm-lab/Rvision) as follows:
+You can install the latest development version of `Rvision` as follows:
 
 ```{r, message=FALSE, eval=FALSE}
 devtools::install_github("swarm-lab/Rvision")

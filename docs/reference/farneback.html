@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.0</span>
       </span>
     </div>
 
@@ -163,7 +163,10 @@
   winsize <span class='op'>=</span> <span class='fl'>43</span>,
   iterations <span class='op'>=</span> <span class='fl'>3</span>,
   poly_n <span class='op'>=</span> <span class='fl'>7</span>,
-  poly_sigma <span class='op'>=</span> <span class='fl'>1.5</span>
+  poly_sigma <span class='op'>=</span> <span class='fl'>1.5</span>,
+  use_init <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  Gaussian <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  target <span class='op'>=</span> <span class='st'>"new"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -171,11 +174,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>image1</th>
-      <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
+      <td><p>A single-channel, 8U <code><a href='Image-class.html'>Image</a></code> object.</p></td>
     </tr>
     <tr>
       <th>image2</th>
-      <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
+      <td><p>A single-channel, 8U <code><a href='Image-class.html'>Image</a></code> object.</p></td>
     </tr>
     <tr>
       <th>pyr_scale</th>
@@ -211,13 +214,38 @@ field, typically poly_n = 5 or 7.</p></td>
 derivatives used as a basis for the polynomial expansion; for poly_n = 5, you
 can set poly_sigma = 1.1, for poly_n = 7, a good value would be poly_sigma = 1.5.</p></td>
     </tr>
+    <tr>
+      <th>use_init</th>
+      <td><p>A logical indicating whether the content of <code>target</code>
+should be used as an initial flow approximation.</p></td>
+    </tr>
+    <tr>
+      <th>Gaussian</th>
+      <td><p>A logical indicating whether to use a Gaussian filter instead
+of a box filter for optical flow estimation; usually, this option gives a
+more accurate flow than with a box filter, at the cost of lower speed;
+normally, <code>winsize</code> for a Gaussian window should be set to a larger
+value to achieve the same level of robustness.</p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p>The location where the results should be stored. It can take 3
+values:</p><ul>
+<li><p>"new":a new <code><a href='Image-class.html'>Image</a></code> object is created and the results
+  are stored inside (the default).</p></li>
+<li><p>An <code><a href='Image-class.html'>Image</a></code> object:the results are stored in another
+  existing <code><a href='Image-class.html'>Image</a></code> object. This is fast but will replace the
+  content of <code>target</code>. <code>target</code> must be a single-channel, 32F
+  <code><a href='Image-class.html'>Image</a></code> object with the same dimensions as <code>image1</code>.</p></li>
+</ul></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A matrix with the same number of rows and columns as the original
- images, and two layers representing the x and y components of the optical
- flow for each pixel of the image.</p>
+    <p>If <code>target="new"</code>, the function returns an <code><a href='Image-class.html'>Image</a></code>
+ object. If <code>target</code> is an <code><a href='Image-class.html'>Image</a></code> object, the function
+ returns nothing and modifies that <code><a href='Image-class.html'>Image</a></code> object in place.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Farnebäck G. Two-Frame Motion Estimation Based on Polynomial
@@ -225,7 +253,7 @@ can set poly_sigma = 1.1, for poly_n = 7, a good value would be poly_sigma = 1.5
  Berlin Heidelberg; 2003. pp. 363–370. doi:10.1007/3-540-45103-X_50</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='plot.OF_array.html'>plot.OF_array</a></code></p></div>
+    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
@@ -233,7 +261,9 @@ can set poly_sigma = 1.1, for poly_n = 7, a good value would be poly_sigma = 1.5
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='video.html'>video</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_vid/Balloon.mp4"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>balloon1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='readFrame.html'>readFrame</a></span><span class='op'>(</span><span class='va'>balloon</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>balloon2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='readFrame.html'>readFrame</a></span><span class='op'>(</span><span class='va'>balloon</span>, <span class='fl'>25</span><span class='op'>)</span>
+<span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='va'>balloon1</span>, <span class='st'>"GRAY"</span>, <span class='st'>"self"</span><span class='op'>)</span>
+<span class='va'>balloon2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='readFrame.html'>readFrame</a></span><span class='op'>(</span><span class='va'>balloon</span>, <span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='va'>balloon2</span>, <span class='st'>"GRAY"</span>, <span class='st'>"self"</span><span class='op'>)</span>
 <span class='va'>of</span> <span class='op'>&lt;-</span> <span class='fu'>farneback</span><span class='op'>(</span><span class='va'>balloon1</span>, <span class='va'>balloon2</span><span class='op'>)</span>
 
 </div></pre>

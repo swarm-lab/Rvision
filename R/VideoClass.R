@@ -9,6 +9,26 @@
 #' @description \code{Video} objects contains an \href{http://opencv.org/}{OpenCV}
 #'  video that originates from a video file.
 #'
+#' @slot dim,ncol,nrow Functions returning the dimensions of the object.
+#'
+#' @slot nframes Function returning the number of frames in the object.
+#'
+#' @slot codec Function returning the codec of the object.
+#'
+#' @slot fps Function returning the frame rate of the object.
+#'
+#' @slot frame Function returning frame the stream is set at.
+#'
+#' @slot get,set Functions to access and set internal properties of the object.
+#'
+#' @slot open,isOpened Functions to open a new video stream or check the status
+#'  of the video stream.
+#'
+#' @slot readNext,readFrame Functions to access the next or an arbitrary frame
+#'  in the stream.
+#'
+#' @slot release Function to release the object from memory.
+#'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @export

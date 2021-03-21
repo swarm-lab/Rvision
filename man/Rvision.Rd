@@ -3,10 +3,11 @@
 \docType{package}
 \name{Rvision}
 \alias{Rvision}
-\title{Rvision: A basic (for now) computer vision library for R.}
+\title{Rvision: Computer vision library for R}
 \description{
-The \code{Rvision} package uses the OpenCV library to provide R users with
-some basic functions to read and manipulate images, videos and camera streams.
+The \code{Rvision} package contains an OpenCV-based computer vision library
+providing methods to read and manipulate video and image files, as well as
+camera streams.
 }
 \details{
 \tabular{ll}{
@@ -22,6 +23,8 @@ More about OpenCV at \url{http://opencv.org/}.
 }
 \author{
 Simon Garnier <garnier@njit.edu>
+
+John Muschelli <muschellij2@gmail.com>
 
 Maintainer: Simon Garnier <garnier@njit.edu>
 }

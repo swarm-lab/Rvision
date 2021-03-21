@@ -1,26 +1,12 @@
 ---
 title: "3 - Basic operations"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{3 - Basic operations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
----
-
-```{r message=FALSE, warning=FALSE, include=FALSE}
-library(Rvision)
-```
-
-__This page describes all basic operations on videos and images.__
-
----
-
-+ [3.1 - Object properties ](#object-properties)
-+ [3.2 - Displaying images](#displaying-images)
-    + [3.2.1 - Method compatible with base R](#method-compatible-with-base-R)
-    + [3.2.2 - Method incompatible with base R](#method-incompatible-with-base-R)
-+ [3.3 - Accessing/replacing parts of an image](#access-replace)
-
 ---
 
 ## 3.1 - Object properties
@@ -42,40 +28,49 @@ __This page describes all basic operations on videos and images.__
 
 ## 3.2 - Displaying images
 
-There are two methods for displaying images. The first method offers full 
-compatibility with base [`R`](https://cran.r-project.org) plotting methods, which 
-allows for drawing non-destructively over an image using `graphics::lines()`, 
-`garaphics::points()`, etc. This method is however is however rather slow and 
-therefore not suitable for applications requiring quick refresh rates between 
-successive images (e.g. when playing a video). 
-
-The second method uses [`OpenCV`](http://opencv.org/)'s capabilities to display 
-images at high frame rates, making it suitable to play videos for instance. It 
-is however incompatible with base [`R`](https://cran.r-project.org) plotting 
-functions. However you can use the [drawing functions](../drawing.html) provided 
-with [`Rvision`](https://github.com/swarm-lab/Rvision) to draw over images 
-- destructively this time - before displaying them.
-
 ### 3.2.1 - Method compatible with base R
 
-```{r, message=FALSE}
+There are two methods for displaying images. The first method (`plot`) offers 
+full compatibility with base `R` plotting methods, which allows for drawing 
+non-destructively over an image using `graphics::lines()`, `graphics::points()`, 
+etc. For instance: 
+
+```{r eval=FALSE, echo=TRUE}
+# Find the path to the bunny.png image provided with Rvision
 path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+
+# Load the image in memory
 my_image <- image(filename = path_to_image)
 
+# Plot the image using the base R plotting device
 plot(my_image)
+
+# Draw lines over the plotted image
 abline(h = 400, col = "red", lwd = 5)
 abline(h = 550, col = "red", lwd = 5)
 abline(v = 430, col = "red", lwd = 5)
 abline(v = 570, col = "red", lwd = 5)
 ```
 
+Note that this method is rather slow and therefore not suitable for applications 
+requiring quick refresh rates between successive images (e.g. when playing a 
+video). 
+
 ### 3.2.2 - Method incompatible with base R
 
-```{r, message=FALSE, eval=FALSE}
+The second method (`display`) uses [`OpenCV`](http://opencv.org/)'s capabilities 
+to display images at high frame rates, making it suitable to play videos. For 
+instance: 
+
+```{r eval=FALSE, echo=TRUE}
+# Find the path to the Balloon.mp4 video provided with Rvision
 path_to_video <- system.file("sample_vid", "Balloon.mp4", package = "Rvision")
+
+# Open the video file stream
 my_video <- video(filename = path_to_video)
 
-# Create an empty display window (note: it can hide behind other windows)
+# Create an empty display window with width and height half of that of the video 
+# (note: the display can hide behind other windows, especially on Mac)
 newDisplay("My display", nrow(my_video) / 2, ncol(my_video) / 2) 
 
 # Display images (note: it creates the display window if it doesn't exist yet)
@@ -85,61 +80,120 @@ for (i in 1:25) {
   display(readNext(my_video), "My display", 25, nrow(my_video) / 2, ncol(my_video) / 2)
 }
 
-# Close display
+# Close the display window
 destroyDisplay("My display")
-
-# Close all opened displays
-destroyAllDisplays()
 ```
+
+Note that the `display` method is incompatible with base `R` plotting methods. 
+However, you can use the drawing functions provided with `Rvision` to draw over 
+images - destructively this time - before displaying them.
 
 ---
 
-## 3.3 - Accessing/replacing parts of an image
+## 3.3 - Accessing parts of an image
 
-You can access parts of an image in the same way you would do it with arrays in 
-base [`R`](https://cran.r-project.org). 
+You can access the pixel values of an image in exactly the same way you would 
+access the values of a `base::array`. Actually, `Rvision` converts the image to 
+a `base::array` before returning the desired values. For instance: 
 
-```{r, message=FALSE, results=FALSE}
-my_image[]          # Entire image
-my_image[1, 1,]      # Bottom-right pixel
-my_image[1,,]       # Bottom row of pixels
-my_image[, 1,]       # Leftmost column of pixels
-my_image[1:5, 1:5,]  # All pixels between the 1st and 5th row and column
+```{r eval=FALSE, echo=TRUE}
+my_image[]                  # Entire image
+my_image[1, 1,]             # Bottom-left pixel
+my_image[1,,]               # Bottom row of pixels
+my_image[, 1,]              # Leftmost column of pixels
+my_image[1:5, 1:5,]         # All pixels between the 1st and 5th row and column
 my_image[c(TRUE, FALSE), c(TRUE, FALSE),]  # Every other row and column of pixels
 ```
 
-Note that images are not exactly like traditional matrices. Color images have 
-multiple layers, each corresponsing to a dimension in the BGR or BGRA space 
-(Blue, Green, Red, Alpha transparency). Therefore, when accessing a pixel of a
-color image, you will obtain 3 or 4 values in return. Grayscale images, on the 
-other hand, function similarly to regular monolayer matrices in base 
-[`R`](https://cran.r-project.org). 
+The `pget` function can be used to quickly access the values of specific pixels
+by their x/y coordinates in the image. For instance:
 
-To replace parts of an image, you can use the `<-` assignment operator. With 
-grayscale images, it works exactly like in base [`R`](https://cran.r-project.org) 
-with matrices. 
+```{r eval=FALSE, echo=TRUE}
+# Return the pixel values at x/y coordinates (110,190) and (200,100)
+pget(my_image, x = c(110, 200), y = c(190, 100))
+```
 
-```{r, message=FALSE, results=FALSE}
+This function returns a matrix where each column corresponds to one of the 
+desired pixels and each row to the value of the pixels in each of the channels 
+of the image (e.g. Blue, Red, Green).
+
+---
+
+## 3.4 - Replacing parts of an image
+
+Images are not exactly like traditional `R` matrices. In particular, color 
+images are made of multiple layers (also called channels), each corresponding to 
+a dimension in a color space (e.g., the BGRA color space is composed of 4 
+channels: Blue, Green, Red, and Alpha/Transparency). Therefore, when replacing a
+pixel in a color image, it is necessary to provide values for each of these 
+channels at once. This does not apply to grayscale images which have a single 
+channel only and therefore behave similarly to regular monolayer matrices in 
+base `R`. 
+
+### 3.4.1 - Grayscale images
+
+The traditional `<-` assignment operator can be used to replace parts of a 
+grayscale image, like it would be used to replace any parts of a traditional 
+`base::matrix`. For instance:
+
+```{r eval=FALSE, echo=TRUE}
+# Make a grayscale copy of the my_image object created earlier
 my_gray_image <- changeColorSpace(my_image, "GRAY")
-my_gray_image[1:250, 1:250] <- 0  # Turn the corresponding pixels to black
+
+# Turn the bottom-left corner of the image black (0 in the grayscale space)
+my_gray_image[1:250, 1:250] <- 0  
 plot(my_gray_image)
 ```
 
-With color images however, you will need to supply 3 (for BGR images) or 4 (for 
-BGRA images) values (or any multiple of 3 or 4 respectively). 
+Finally, the `pset` function can be used to quickly set the values of specific 
+pixels by their x/y coordinates in the image. For instance:
 
-```{r, message=FALSE}
-my_image[1:250, 1:250] <- c(0, 0, 255, 255) # Turn the corresponding pixels to red
+```{r eval=FALSE, echo=TRUE}
+# Set a few pixels to white inside the black square added earlier
+pset(my_gray_image, 50:100, 50:100, "white")
+plot(my_gray_image)
+```
+
+### 3.4.1 - Color images
+
+The `<-` assignment operator can also be used to replace parts of a color (i.e. 
+multi-channel) image. However, instead of taking in single values for each pixel
+to be replaced, it will take one value per pixel and per channel of the image. 
+For instance: 
+
+```{r eval=FALSE, echo=TRUE}
+# Turn the bottom-left corner of the my_image object created earlier red. This 
+# is a BGRA image, so it has 4 channels which new values need to be specified.
+my_image[1:250, 1:250] <- c(0, 0, 255, 255) 
 plot(my_image)
 ```
 
-The utility function `col2bgr` provided by [`Rvision`](https://github.com/swarm-lab/Rvision)
-(not to be confused with `col2rgb` provided by the `grDevices` package and on 
-which `col2bgr` is based) will conveniently convert any of the 
-[`R`](https://cran.r-project.org)-compatible color specifications to color codes
-compatible with [`Rvision`](https://github.com/swarm-lab/Rvision) images. 
+Note that if values are not specified for each channel, then the provided values
+will be recycled. For instance:
 
-```{r, message=FALSE}
-my_image[1:250, 1:250] <- col2bgr("blue", alpha = TRUE) # Turn the corresponding pixels to blue
+```{r eval=FALSE, echo=TRUE}
+# Turn the bottom-left corner of the my_image object completely transparent. 
+# Transparency will appear as white when the image is plotted. 
+my_image[1:250, 1:250] <- 0
+plot(my_image)
+```
+
+The utility function `col2bgr` provided by `Rvision` (not to be confused with 
+`grDevices::col2rgb` on which `col2bgr` is based) will conveniently convert any 
+of the `R`-compatible color specifications to color codes compatible with 
+`Rvision` images. For instance: 
+
+```{r eval=FALSE, echo=TRUE}
+# Turn the bottom-left corner of the my_image object blue. 
+my_image[1:250, 1:250] <- col2bgr("blue", alpha = TRUE)
+plot(my_image)
+```
+
+Finally, the `pset` function can be used to quickly set the values of specific 
+pixels by their x/y coordinates in the image. For instance:
+
+```{r eval=FALSE, echo=TRUE}
+# Set a few pixels to green inside the black square added earlier
+pset(my_image, 50:100, 50:100, "green")
 plot(my_image)
 ```

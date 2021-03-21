@@ -11,6 +11,24 @@
 #'  originate from an image file, an array, a video file or a video stream.
 #'  This image can be manipulated using the functions of \pkg{\link{Rvision}}.
 #'
+#' @slot depth A function returning the bit depth of the object.
+#'
+#' @slot dim,ncol,nrow,nchan Functions returning the dimensions of the object.
+#'
+#' @slot space A character string indicating the colorspace of the object.
+#'
+#' @slot pget,pset Functions to get and set single pixel values.
+#'
+#' @slot toR A function to convert the object to an R array.
+#'
+#' @slot fromGPU A function retrieving the object from GPU memory.
+#'
+#' @slot toGPU A function sending the object to GPU memory.
+#'
+#' @slot GPU A boolean indicating whether the object is in GPU memory.
+#'
+#' @slot write A function to write the object to a file.
+#'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{image}}, \code{\link{Video}}, \code{\link{Stream}}

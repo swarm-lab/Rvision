@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.0</span>
       </span>
     </div>
 
@@ -162,7 +162,8 @@
   left <span class='op'>=</span> <span class='va'>top</span>,
   right <span class='op'>=</span> <span class='va'>top</span>,
   border_type <span class='op'>=</span> <span class='st'>"constant"</span>,
-  border_color <span class='op'>=</span> <span class='st'>"black"</span>
+  border_color <span class='op'>=</span> <span class='st'>"black"</span>,
+  target <span class='op'>=</span> <span class='st'>"new"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -198,11 +199,31 @@ any of the following:</p><ul>
 compatible with <code><a href='col2bgr.html'>col2bgr</a></code> representing the color of the border
 (default: "black").</p></td>
     </tr>
+    <tr>
+      <th>target</th>
+      <td><p>The location where the results should be stored. It can take 3
+values:</p><ul>
+<li><p>"new":a new <code><a href='Image-class.html'>Image</a></code> object is created and the results
+  are stored inside (the default).</p></li>
+<li><p>"self":the results are stored back into <code>image</code> (faster but
+  destructive). <code>image</code> will be resized accordingly.</p></li>
+<li><p>An <code><a href='Image-class.html'>Image</a></code> object:the results are stored in another
+  existing <code><a href='Image-class.html'>Image</a></code> object. This is fast and will not replace the
+  content of <code>image</code> but will replace that of <code>target</code>. Note that
+  if <code>target</code> does not have the same number of channels and bit depth
+  as <code>image</code>, an error will be thrown. If <code>target</code> does not have
+  the appropriate dimensions, it will be resized accordingly.</p></li>
+</ul></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='Image-class.html'>Image</a></code> object.</p>
+    <p>If <code>target="new"</code>, the function returns an <code><a href='Image-class.html'>Image</a></code>
+ object. If <code>target="self"</code>, the function returns nothing and modifies
+ <code>image</code> in place. If <code>target</code> is an <code><a href='Image-class.html'>Image</a></code> object,
+ the function returns nothing and modifies that <code><a href='Image-class.html'>Image</a></code> object in
+ place.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>

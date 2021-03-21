@@ -16,6 +16,21 @@ Stream
 \code{Stream} objects contains an \href{http://opencv.org/}{OpenCV}
  stream that originates from a camera connected to the computer.
 }
+\section{Slots}{
+
+\describe{
+\item{\code{dim,ncol,nrow}}{Functions returning the dimensions of the object.}
+
+\item{\code{get,set}}{Functions to access and set internal properties of the object.}
+
+\item{\code{open,isOpened}}{Functions to open a new camera stream or check the status
+of the camera stream.}
+
+\item{\code{readNext}}{Functions to access the next frame in the stream.}
+
+\item{\code{release}}{Function to release the object from memory.}
+}}
+
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }

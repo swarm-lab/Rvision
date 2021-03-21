@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.0</span>
       </span>
     </div>
 
@@ -110,112 +110,116 @@
 
     
     
-<p><strong>This page describes how to read and write videos and images with <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a>.</strong></p>
-<hr>
-<ul>
-<li>
-<a href="#reading">2.1 - Reading</a>
-<ul>
-<li><a href="#videos">2.1.1 - Videos</a></li>
-<li><a href="#camera-streams">2.1.2 - Camera streams</a></li>
-<li>
-<a href="#images">2.1.3 - Images</a>
-<ul>
-<li><a href="#from-files">2.1.3.1 - From files</a></li>
-<li><a href="#from-videos">2.1.3.2 - From videos</a></li>
-<li><a href="#from-camera-streams">2.1.3.3 - From streams</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<a href="#writing">2.2 - Writing</a>
-<ul>
-<li><a href="#videos-1">2.2.1 - Videos</a></li>
-<li><a href="#images-1">2.2.2 - Images</a></li>
-</ul>
-</li>
-</ul>
-<hr>
-<div id="reading" class="section level2">
+<div id="creating-video-streams" class="section level2">
 <h2 class="hasAnchor">
-<a href="#reading" class="anchor"></a>2.1 - Reading</h2>
-<div id="videos" class="section level3">
-<h3 class="hasAnchor">
-<a href="#videos" class="anchor"></a>2.1.1 - Videos</h3>
-<p>You can create a <code>Video</code> object from a video file as follows:</p>
+<a href="#creating-video-streams" class="anchor"></a>2.1 - Creating video streams</h2>
+<p><code>Video</code> stream objects are created from video files by passing the path to a video file to the <code>video</code> function. For instance:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span>
+<span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+
+<span class="co"># Open the video file stream</span>
 <span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span></code></pre></div>
-<p><code>Video</code> objects can be released from memory as follows:</p>
+<p>Once a <code>Video</code> object is not required anymore, it can be released from memory as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Stream.html">release</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span></code></pre></div>
-<p>Note that <code>Video</code> objects are wrappers around <a href="http://opencv.org/"><code>OpenCV</code></a> <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html"><code>VideoCapture</code></a> objects. They will not persist between <a href="https://cran.r-project.org"><code>R</code></a> sessions.</p>
+<p>Note that <code>Video</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html"><code>VideoCapture</code></a> pointers. They will not persist between <code>R</code> sessions.</p>
+<hr>
 </div>
-<div id="camera-streams" class="section level3">
-<h3 class="hasAnchor">
-<a href="#camera-streams" class="anchor"></a>2.1.2 - Camera streams</h3>
-<p>You can create a <code>Stream</code> object from a camera stream as follows:</p>
+<div id="creating-camera-streams" class="section level2">
+<h2 class="hasAnchor">
+<a href="#creating-camera-streams" class="anchor"></a>2.2 - Creating camera streams</h2>
+<p>Camera <code>Stream</code> objects are created by starting a camera stream (e.g. from a webcam) using the <code>stream</code> function. For instance:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_stream</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stream.html">stream</a></span><span class="op">(</span>index <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
-<p>The index argument takes an integer number corresponding to the position of the camera in the list of video capturing devices available on your computer. 0 corresponds to the default camera, which is usually the embedded webcam on most computers. Note that the order of the list of video capturing devices might change after each computer restart.</p>
-<p><code>Stream</code> objects can be released from memory as follows:</p>
+<code class="sourceCode R"><span class="co"># Start the default camera stream</span>
+<span class="va">my_stream</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stream.html">stream</a></span><span class="op">(</span>index <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+<p>The index argument takes an integer number corresponding to the position of the camera in the list of video capturing devices available on your computer. 0 corresponds to the default camera, which is usually the embedded webcam on most computers. Note that the order of the list of video capturing devices might change after each computer restart, or if cameras are connected/disconnected during a session.</p>
+<p>Once a <code>Stream</code> object is not required anymore, it can be released from memory as follows:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Stream.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
-<p>Note that <code>Stream</code> objects are wrappers around <a href="http://opencv.org/"><code>OpenCV</code></a> <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html"><code>VideoCapture</code></a> objects. They will not persist between <a href="https://cran.r-project.org"><code>R</code></a> sessions.</p>
+<p>Note that <code>Stream</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html"><code>VideoCapture</code></a> pointers. They will not persist between <code>R</code> sessions.</p>
+<hr>
 </div>
-<div id="images" class="section level3">
+<div id="creating-images" class="section level2">
+<h2 class="hasAnchor">
+<a href="#creating-images" class="anchor"></a>2.3 - Creating images</h2>
+<p>There are multiple ways to create <code>Image</code> objects: from files, from <code>Video</code> objects, from <code>Stream</code> objects, and from <code>R</code> arrays.</p>
+<p>Note that <code>Image</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d3/d63/classcv_1_1Mat.html"><code>Mat</code></a> and <a href="https://docs.opencv.org/4.5.0/d7/d45/classcv_1_1UMat.html"><code>UMat</code></a> objects. They will not persist between <code>R</code> sessions.</p>
+<div id="images-from-files" class="section level3">
 <h3 class="hasAnchor">
-<a href="#images" class="anchor"></a>2.1.3 - Images</h3>
-<p>There are three ways to create <code>Image</code> objects: from files, from <code>Video</code> objects, and from <code>Stream</code> objects.</p>
-<p>Note that <code>Image</code> objects are wrappers around <a href="http://opencv.org/"><code>OpenCV</code></a> <a href="https://docs.opencv.org/4.5.0/d3/d63/classcv_1_1Mat.html"><code>Mat</code></a> objects. They will not persist between <a href="https://cran.r-project.org"><code>R</code></a> sessions.</p>
-<div id="from-files" class="section level4">
-<h4 class="hasAnchor">
-<a href="#from-files" class="anchor"></a>2.1.3.1 - From files</h4>
-<p>You can create an <code>Image</code> object from an image file as follows:</p>
+<a href="#images-from-files" class="anchor"></a>2.3.1 - Images from files</h3>
+<p><code>Image</code> objects are created from image files by passing the path to an image file to the <code>image</code> function. For instance:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># Find the path to the bunny.png image provided with Rvision</span>
+<span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+
+<span class="co"># Load the image in memory</span>
 <span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="from-videos" class="section level4">
-<h4 class="hasAnchor">
-<a href="#from-videos" class="anchor"></a>2.1.3.2 - From videos</h4>
-<p>You can create an <code>Image</code> object from the next available frame of a <code>Video</code> object as follows:</p>
+<div id="images-from-video-streams" class="section level3">
+<h3 class="hasAnchor">
+<a href="#images-from-video-streams" class="anchor"></a>2.3.2 - Images from video streams</h3>
+<p><code>Image</code> objects are created from video streams by capturing frames from them with the <code>readNext</code> and <code>readFrame</code> functions. For instance:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span></code></pre></div>
-<p>You can create an <code>Image</code> object from any arbitrary frame of a <code>Video</code> object as follows (here frame number 100):</p>
+<code class="sourceCode R"><span class="co"># Capture the next available frame from the my_video object created earlier</span>
+<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span>
+
+<span class="co"># Capture frame 100 from the my_video object created earlier</span>
+<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">my_video</span>, <span class="fl">100</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="from-camera-streams" class="section level4">
-<h4 class="hasAnchor">
-<a href="#from-camera-streams" class="anchor"></a>2.1.3.3 - From camera streams</h4>
-<p>You can create an <code>Image</code> object from the next available frame of a <code>Stream</code> object as follows:</p>
+<div id="images-from-camera-streams" class="section level3">
+<h3 class="hasAnchor">
+<a href="#images-from-camera-streams" class="anchor"></a>2.3.3 - Images from camera streams</h3>
+<p><code>Image</code> objects are created from video streams by capturing frames from them with the <code>readNext</code> function. For instance:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Capture the next available frame from the my_stream object created earlier</span>
+<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="images-from-r-arrays" class="section level3">
+<h3 class="hasAnchor">
+<a href="#images-from-r-arrays" class="anchor"></a>2.3.4 - Images from R arrays</h3>
+<p><code>Image</code> objects are created from <code>R</code> arrays files by passing the array directly to the <code>image</code> function. For instance:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Create a 100 x 100 x 3 random array</span>
+<span class="va">my_array</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">30000</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># Load the image in memory</span>
+<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span><span class="va">my_array</span><span class="op">)</span></code></pre></div>
 <hr>
 </div>
 </div>
-</div>
-<div id="writing" class="section level2">
+<div id="writing-video-streams-to-file" class="section level2">
 <h2 class="hasAnchor">
-<a href="#writing" class="anchor"></a>2.2 - Writing</h2>
-<div id="videos-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#videos-1" class="anchor"></a>2.2.1 - Videos</h3>
-<p>Videos can be written to the disk using a <code>VideoWriter</code> object.</p>
-<p>When creating a <code>VideoWriter</code> object, you need to specify the codec of the video, its framerate, its height and its width. For instance, we will here create a <code>VideoWriter</code> object that will save to a temporary <a href="https://en.wikipedia.org/wiki/MPEG-4_Part_14"><code>mp4</code></a> video file using the <a href="https://www.videolan.org/developers/x264.html"><code>x264</code></a> codec at 30fps.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">".mp4"</span><span class="op">)</span>
-<span class="va">my_writer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/videoWriter.html">videoWriter</a></span><span class="op">(</span><span class="va">path_to_video</span>, fourcc <span class="op">=</span> <span class="st">"x264"</span>, fps <span class="op">=</span> <span class="fl">30</span>, height <span class="op">=</span> <span class="fl">720</span>, width <span class="op">=</span> <span class="fl">1280</span><span class="op">)</span></code></pre></div>
-<p>Once a <code>VideoWriter</code> object has been created, you can write individual frames to it. For instance, we will here capture 30 frames from the default webcam and write them to the video file.</p>
-<p><code>VideoWriter</code> objects can be released from memory as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<a href="#writing-video-streams-to-file" class="anchor"></a>2.4 - Writing video streams to file</h2>
+<p>Videos can be written to files using <code>VideoWriter</code> objects. When creating a <code>VideoWriter</code> object, the dimensions, frame rate, and codec of the final video file must be specified. For instance:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Create a 1280x720 video file called file.mp4 on the desktop, using the x264</span>
+<span class="co"># codec at 30 frames per second</span>
+<span class="va">my_writer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/videoWriter.html">videoWriter</a></span><span class="op">(</span><span class="st">"~/Desktop/file.mp4"</span>, fourcc <span class="op">=</span> <span class="st">"x264"</span>, fps <span class="op">=</span> <span class="fl">30</span>, 
+                         height <span class="op">=</span> <span class="fl">720</span>, width <span class="op">=</span> <span class="fl">1280</span><span class="op">)</span></code></pre></div>
+<p>Once a <code>VideoWriter</code> object has been created, individual frames can be written to it sequentially. For instance:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Capture the next 30 frames from the my_stream camera stream created earlier </span>
+<span class="co"># and write them to file.mp4</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="../reference/writeFrame.html">writeFrame</a></span><span class="op">(</span><span class="va">my_writer</span>, <span class="fu"><a href="../reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p>Once all frames have been written to the <code>VideoWriter</code> object, it can be closed and released from memory as follows:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Stream.html">release</a></span><span class="op">(</span><span class="va">my_writer</span><span class="op">)</span></code></pre></div>
-<p>Note that <code>VideoWriter</code> objects are wrappers around <a href="http://opencv.org/"><code>OpenCV</code></a> <a href="https://docs.opencv.org/4.5.0/dd/d9e/classcv_1_1VideoWriter.html"><code>VideoWriter</code></a> objects. They will not persist between <a href="https://cran.r-project.org"><code>R</code></a> sessions.</p>
+<p>Note that if you do not close and release the <code>VideoWriter</code> object prior to exiting the <code>R</code> session, you will not be able to play it with your system’s video player.</p>
+<p>Note that <code>VideoWriter</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/dd/d9e/classcv_1_1VideoWriter.html"><code>VideoWriter</code></a> pointers. They will not persist between <code>R</code> sessions.</p>
+<hr>
 </div>
-<div id="images-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#images-1" class="anchor"></a>2.2.2 - Images</h3>
-<p>Writing an image to a file is straightforward using the <code>write.Image</code> function.</p>
-<p><a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> will guess the format of the image file from the file extension. For instance, we will here capture 1 frame from the default webcam and write it to a temporary png image file.</p>
-</div>
+<div id="writing-images-to-file" class="section level2">
+<h2 class="hasAnchor">
+<a href="#writing-images-to-file" class="anchor"></a>2.4 - Writing images to file</h2>
+<p>Images can be written to files using the <code>write.Image</code> function. For instance:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Write the my_image object created earlier to a PNG file called file.png on the</span>
+<span class="co"># desktop</span>
+<span class="fu"><a href="../reference/write.Image.html">write.Image</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="st">"~/Desktop/file.png"</span><span class="op">)</span></code></pre></div>
+<p><code>Rvision</code> will guess the format of the image file from the file extension. Most common file formats are supported.</p>
 </div>
   </div>
 

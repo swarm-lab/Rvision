@@ -1,60 +1,47 @@
 ---
 title: "2 - Input/output operations"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{2 - Input/output operations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
-library(Rvision)
-```
+## 2.1 - Creating video streams
 
-__This page describes how to read and write videos and images with 
-[`Rvision`](https://github.com/swarm-lab/Rvision).__ 
+`Video` stream objects are created from video files by passing the path to a 
+video file to the `video` function. For instance: 
 
----
-
-+ [2.1 - Reading ](#reading)
-    + [2.1.1 - Videos](#videos)
-    + [2.1.2 - Camera streams](#camera-streams)
-    + [2.1.3 - Images](#images)
-        + [2.1.3.1 - From files](#from-files)
-        + [2.1.3.2 - From videos](#from-videos)
-        + [2.1.3.3 - From streams](#from-camera-streams)
-+ [2.2 - Writing](#writing)
-    + [2.2.1 - Videos](#videos-1)
-    + [2.2.2 - Images](#images-1)
-
----
-
-## 2.1 - Reading
-
-### 2.1.1 - Videos
-
-You can create a `Video` object from a video file as follows: 
-
-```{r, eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
+# Find the path to the Balloon.mp4 video provided with Rvision
 path_to_video <- system.file("sample_vid", "Balloon.mp4", package = "Rvision")
+
+# Open the video file stream
 my_video <- video(filename = path_to_video)
 ```
 
-`Video` objects can be released from memory as follows: 
+Once a `Video` object is not required anymore, it can be released from memory as 
+follows: 
 
-```{r, eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
 release(my_video)
 ```
 
-Note that `Video` objects are wrappers around [`OpenCV`](http://opencv.org/)
+Note that `Video` objects are wrappers around `OpenCV`'s
 [`VideoCapture`](https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html)
-objects. They will not persist between [`R`](https://cran.r-project.org) sessions. 
+pointers. They will not persist between `R` sessions. 
 
-### 2.1.2 - Camera streams
+---
 
-You can create a `Stream` object from a camera stream as follows: 
+## 2.2 - Creating camera streams
 
-```{r, eval=FALSE}
+Camera `Stream` objects are created by starting a camera stream (e.g. from a 
+webcam) using the `stream` function. For instance: 
+
+```{r eval=FALSE, echo=TRUE}
+# Start the default camera stream
 my_stream <- stream(index = 0)
 ```
 
@@ -62,130 +49,133 @@ The index argument takes an integer number corresponding to the position of the
 camera in the list of video capturing devices available on your computer. 0 
 corresponds to the default camera, which is usually the embedded webcam on most 
 computers. Note that the order of the list of video capturing devices might 
-change after each computer restart. 
+change after each computer restart, or if cameras are connected/disconnected 
+during a session. 
 
-`Stream` objects can be released from memory as follows: 
+Once a `Stream` object is not required anymore, it can be released from memory as 
+follows: 
 
-```{r, eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
 release(my_stream)
 ```
 
-Note that `Stream` objects are wrappers around [`OpenCV`](http://opencv.org/)
+Note that `Stream` objects are wrappers around `OpenCV`'s
 [`VideoCapture`](https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html)
-objects. They will not persist between [`R`](https://cran.r-project.org) sessions. 
+pointers. They will not persist between `R` sessions. 
 
-### 2.1.3 - Images
+--- 
 
-There are three ways to create `Image` objects: from files, from `Video` objects,
-and from `Stream` objects. 
+## 2.3 - Creating images
 
-Note that `Image` objects are wrappers around [`OpenCV`](http://opencv.org/)
-[`Mat`](https://docs.opencv.org/4.5.0/d3/d63/classcv_1_1Mat.html) objects. They 
-will not persist between [`R`](https://cran.r-project.org) sessions.
+There are multiple ways to create `Image` objects: from files, from `Video` 
+objects, from `Stream` objects, and from `R` arrays. 
 
-#### 2.1.3.1 - From files
+Note that `Image` objects are wrappers around `OpenCV`'s
+[`Mat`](https://docs.opencv.org/4.5.0/d3/d63/classcv_1_1Mat.html) and 
+[`UMat`](https://docs.opencv.org/4.5.0/d7/d45/classcv_1_1UMat.html) objects. 
+They will not persist between `R` sessions.
 
-You can create an `Image` object from an image file as follows: 
+### 2.3.1 - Images from files
 
-```{r, eval=FALSE}
+`Image` objects are created from image files by passing the path to an image 
+file to the `image` function. For instance: 
+
+```{r eval=FALSE, echo=TRUE}
+# Find the path to the bunny.png image provided with Rvision
 path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+
+# Load the image in memory
 my_image <- image(filename = path_to_image)
 ```
 
-#### 2.1.3.2 - From videos
+### 2.3.2 - Images from video streams
 
-```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
-path_to_video <- system.file("sample_vid", "Balloon.mp4", package = "Rvision")
-my_video <- video(filename = path_to_video)
-```
+`Image` objects are created from video streams by capturing frames from them 
+with the `readNext` and `readFrame` functions. For instance: 
 
-You can create an `Image` object from the next available frame of a `Video` 
-object as follows: 
-
-```{r, eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
+# Capture the next available frame from the my_video object created earlier
 my_image <- readNext(my_video)
-```
 
-You can create an `Image` object from any arbitrary frame of a `Video` object as 
-follows (here frame number 100):
-
-```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
+# Capture frame 100 from the my_video object created earlier
 my_image <- readFrame(my_video, 100)
-
-release(my_video)
 ```
 
-#### 2.1.3.3 - From camera streams
+### 2.3.3 - Images from camera streams
 
-```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
-my_stream <- stream(index = 0)
-```
+`Image` objects are created from video streams by capturing frames from them 
+with the `readNext` function. For instance: 
 
-You can create an `Image` object from the next available frame of a `Stream` 
-object as follows: 
-
-```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
+# Capture the next available frame from the my_stream object created earlier
 my_image <- readNext(my_stream)
+```
 
-release(my_stream)
+### 2.3.4 - Images from R arrays
+
+`Image` objects are created from `R` arrays files by passing the array directly 
+to the `image` function. For instance: 
+
+```{r eval=FALSE, echo=TRUE}
+# Create a 100 x 100 x 3 random array
+my_array <- array(rnorm(30000), dim = c(100, 100, 3))
+
+# Load the image in memory
+my_image <- image(my_array)
 ```
 
 ---
 
-## 2.2 - Writing
+## 2.4 - Writing video streams to file
 
-### 2.2.1 - Videos
+Videos can be written to files using `VideoWriter` objects. When creating a 
+`VideoWriter` object, the dimensions, frame rate, and codec of the final video 
+file must be specified. For instance: 
 
-Videos can be written to the disk using a `VideoWriter` object. 
-
-When creating a `VideoWriter` object, you need to specify the codec of the video, 
-its framerate, its height and its width. For instance, we will here create a 
-`VideoWriter` object that will save to a temporary [`mp4`](https://en.wikipedia.org/wiki/MPEG-4_Part_14) 
-video file using the [`x264`](https://www.videolan.org/developers/x264.html) 
-codec at 30fps. 
-
-```{r, eval=FALSE}
-path_to_video <- paste0(tempfile(), ".mp4")
-my_writer <- videoWriter(path_to_video, fourcc = "x264", fps = 30, height = 720, width = 1280)
+```{r eval=FALSE, echo=TRUE}
+# Create a 1280x720 video file called file.mp4 on the desktop, using the x264
+# codec at 30 frames per second
+my_writer <- videoWriter("~/Desktop/file.mp4", fourcc = "x264", fps = 30, 
+                         height = 720, width = 1280)
 ```
 
-Once a `VideoWriter` object has been created, you can write individual frames to
-it. For instance, we will here capture 30 frames from the default webcam and write
-them to the video file. 
+Once a `VideoWriter` object has been created, individual frames can be written 
+to it sequentially. For instance:
 
-```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
-my_stream <- stream(index = 0)
-
+```{r eval=FALSE, echo=TRUE}
+# Capture the next 30 frames from the my_stream camera stream created earlier 
+# and write them to file.mp4
 for (i in seq_len(30)) {
   writeFrame(my_writer, readNext(my_stream))
 }
-
-release(my_stream)
 ```
 
-`VideoWriter` objects can be released from memory as follows: 
+Once all frames have been written to the `VideoWriter` object, it can be closed 
+and released from memory as follows: 
 
-```{r, eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
 release(my_writer)
 ```
 
-Note that `VideoWriter` objects are wrappers around [`OpenCV`](http://opencv.org/)
+Note that if you do not close and release the `VideoWriter` object prior to 
+exiting the `R` session, you will not be able to play it with your system's 
+video player. 
+
+Note that `VideoWriter` objects are wrappers around `OpenCV`'s
 [`VideoWriter`](https://docs.opencv.org/4.5.0/dd/d9e/classcv_1_1VideoWriter.html)
-objects. They will not persist between [`R`](https://cran.r-project.org) sessions.
+pointers. They will not persist between `R` sessions.
 
-### 2.2.2 - Images
+---
 
-Writing an image to a file is straightforward using the `write.Image` function.
+## 2.4 - Writing images to file
 
-[`Rvision`](https://github.com/swarm-lab/Rvision) will guess the format of the 
-image file from the file extension. For instance, we will here capture 1 frame 
-from the default webcam and write it to a temporary png image file. 
+Images can be written to files using the `write.Image` function. For instance:
 
-```{r message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
-my_stream <- stream(index = 0)
-
-path_to_image <- paste0(tempfile(), ".png")
-write.Image(readNext(my_stream), path_to_image)
-
-release(my_stream)
+```{r eval=FALSE, echo=TRUE}
+# Write the my_image object created earlier to a PNG file called file.png on the
+# desktop
+write.Image(my_image, "~/Desktop/file.png")
 ```
+
+`Rvision` will guess the format of the image file from the file extension. Most 
+common file formats are supported. 

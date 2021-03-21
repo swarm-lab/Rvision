@@ -16,6 +16,30 @@ Video
 \code{Video} objects contains an \href{http://opencv.org/}{OpenCV}
  video that originates from a video file.
 }
+\section{Slots}{
+
+\describe{
+\item{\code{dim,ncol,nrow}}{Functions returning the dimensions of the object.}
+
+\item{\code{nframes}}{Function returning the number of frames in the object.}
+
+\item{\code{codec}}{Function returning the codec of the object.}
+
+\item{\code{fps}}{Function returning the frame rate of the object.}
+
+\item{\code{frame}}{Function returning frame the stream is set at.}
+
+\item{\code{get,set}}{Functions to access and set internal properties of the object.}
+
+\item{\code{open,isOpened}}{Functions to open a new video stream or check the status
+of the video stream.}
+
+\item{\code{readNext,readFrame}}{Functions to access the next or an arbitrary frame
+in the stream.}
+
+\item{\code{release}}{Function to release the object from memory.}
+}}
+
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }

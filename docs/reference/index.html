@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.0</span>
       </span>
     </div>
 
@@ -185,7 +185,7 @@
         <td>
           <p><code><a href="Rvision.html">Rvision</a></code> </p>
         </td>
-        <td><p>Rvision: A basic (for now) computer vision library for R.</p></td>
+        <td><p>Rvision: Computer vision library for R</p></td>
       </tr><tr>
         
         <td>
@@ -210,12 +210,6 @@
           <p><code><a href="VideoWriter-class.html">VideoWriter</a></code> </p>
         </td>
         <td><p>An S4 Class Containing an OpenCV Video Writer</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="absdiff.html">absdiff()</a></code> </p>
-        </td>
-        <td><p>Absolute Difference Between Two Images</p></td>
       </tr><tr>
         
         <td>
@@ -360,6 +354,12 @@
           <p><code><a href="convexityDefects.html">convexityDefects()</a></code> </p>
         </td>
         <td><p>Find the Convexity Defects of a Contour</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="countNonZero.html">countNonZero()</a></code> </p>
+        </td>
+        <td><p>Count Non-Zero Pixels</p></td>
       </tr><tr>
         
         <td>
@@ -573,7 +573,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="imageArithmetic.html">add()</a></code> <code><a href="imageArithmetic.html">subtract()</a></code> <code><a href="imageArithmetic.html">multiply()</a></code> <code><a href="imageArithmetic.html">divide()</a></code> </p>
+          <p><code><a href="imageArithmetic.html">add()</a></code> <code><a href="imageArithmetic.html">subtract()</a></code> <code><a href="imageArithmetic.html">multiply()</a></code> <code><a href="imageArithmetic.html">divide()</a></code> <code><a href="imageArithmetic.html">absdiff()</a></code> </p>
         </td>
         <td><p>Arithmetic Functions for Images</p></td>
       </tr><tr>
@@ -582,6 +582,12 @@
           <p><code><a href="imageLogic.html">bitAnd()</a></code> <code><a href="imageLogic.html">bitOr()</a></code> <code><a href="imageLogic.html">bitNot()</a></code> </p>
         </td>
         <td><p>Logical Functions for Images</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="imageMinMax.html">bitMin()</a></code> <code><a href="imageMinMax.html">bitMax()</a></code> </p>
+        </td>
+        <td><p>Element-Wise Minimums and Maximums</p></td>
       </tr><tr>
         
         <td>
@@ -759,21 +765,33 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="plot.OF_array.html">plot(<i>&lt;OF_array&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot Optical Flow Arrays</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="plot.blob.html">plot(<i>&lt;blob&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot Blobs</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="plotOF.html">plotOF()</a></code> </p>
+        </td>
+        <td><p>Plot Optical Flow Arrays</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="pset.html">pset()</a></code> </p>
         </td>
         <td><p>Set Pixel Value at Specified Locations</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="randn.html">randn()</a></code> </p>
+        </td>
+        <td><p>Random Normal Image</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="randu.html">randu()</a></code> </p>
+        </td>
+        <td><p>Random Uniform Image</p></td>
       </tr><tr>
         
         <td>
