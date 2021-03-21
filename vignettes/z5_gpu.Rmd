@@ -9,3 +9,103 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+## 5.1 - Stupid-fast performances with GPU operations
+
+Since version `0.6.0`, running operations on the GPU (Graphics Processing Units) 
+of a computer is possible and - we want to believe - very easy to implement. 
+GPUs are designed to allow for parallel pixel processing. This can result in 
+significant gains in performance for operations that can benefit from massive 
+parallelization, making them in some cases several orders of magnitude faster 
+than the same operation on the CPU (Central Processing Unit) of the computer. 
+
+[`OpenCV`](https://opencv.org/) - the computer vision library on top of which 
+`Rvision` is built - can handle operations on the GPU using two popular 
+frameworks: [`OpenCL`](https://www.khronos.org/opencl/) and 
+[Nvidia's `CUDA`](https://developer.nvidia.com/cuda-zone). `OpenCL` being open, 
+royalty-free, and cross-platform, it is available to more users' machines (`CUDA` 
+is proprietary and restricted to `Nvidia` graphics cards). We have, therefore,
+chosen to use that framework in `Rvision`. This is not to say that we will never 
+consider adding `CUDA` support to `Rvision`; we probably will - time permitting 
+- because it is reportedly faster than `OpenCL` in many instances. We just 
+decided to start with the framework that is available to more users immediately. 
+
+---
+
+## 5.2 - Enabling GPU operations in `Rvision`
+
+By default (and for good reasons too), `Rvision` loads images it receives in the 
+memory of the CPU. Before using GPU-accelerated functions, the image must first 
+be copied to the GPU memory. This can be done very easily as follows:
+
+```{r eval=FALSE, echo=TRUE}
+# Find the path to the bunny.png image provided with Rvision
+path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+
+# Load the image in memory
+my_image <- image(filename = path_to_image)
+
+# Copy the image to GPU memory
+my_image$toGPU()
+```
+
+Once this is done, `Rvision` (`OpenCV` really) will automatically use the 
+GPU-accelerated version of each operation on the image if it is available. 
+Otherwise, it will default to using the CPU version. That is it, there is 
+nothing more complicated to do to take advantage of the processing speed 
+of the GPU. 
+
+In the case where a function accepts multiple images as arguments (e.g. when 
+using a target image to save the result of an operation on the original image), 
+then it does not matter in most cases if all the images are on the CPU or on the 
+GPU (in the rare cases when it does matter, an error will be thrown and you can 
+adjust your pipeline accordingly). However, better performances will probably be
+achieved if all the images use the memory of the same processor. 
+
+Finally, if you need to copy back the image to the CPU memory (e.g. if you want
+to then transfer the image to a `base::array`), you can simply apply the reverse 
+operation as follows: 
+
+```{r eval=FALSE, echo=TRUE}
+# Copy the image back to CPU memory
+my_image$fromGPU()
+```
+
+---
+
+## 5.3 - Caveats to GPU operations
+
+Nothing comes for free and there are a few caveats to using GPU-accelerated 
+operations. 
+
+First, it will only work if your computer has a GPU (even if a basic one 
+integrated with the CPU) and that the `OpenCL` drivers for the GPU are installed.
+If `OpenCL` is not available on your system, `Rvision` will throw an error when 
+you use the `$toGPU` function. `OpenCL` should be available on most traditional 
+computers (including laptops) with most operating systems. Check the 
+documentation of your computer and operating system to figure out whether `OpenCL` 
+is available/installed on your system and how to install it if necessary (in 
+which case, you will probably need to recompile `OpenCV` using the 
+`ROpenCVLite::installOpenCV` function). `OpenCL` will probably not be available
+on shared servers that do not provide GPU access to their users. Check with your 
+server administrator if that it the case. 
+
+While GPU-accelerated operations will be much faster than their CPU-based 
+equivalent, not all operations can be efficiently run on a GPU. Some operations
+provided by `Rvision`/`OpenCV` will actually be slower on the GPU than the CPU.
+Test your pipeline carefully to decide whether it is worth running all or parts
+of it on the GPU, or to keep everything on the CPU instead. 
+
+Copying an image to/from the GPU comes with a small time penalty. It is best if
+your pipeline avoids performing too many copying operations. Ideally, the GPU/CPU
+copies should all be created/pre-allocated before starting the pipeline for 
+better performances. 
+
+Finally, GPU operations will be slow the first time they are run during a 
+session. This is because `OpenCV` needs to compile the corresponding functions 
+for the specific graphics device it will use to run the operations. Therefore, 
+GPU operations should be avoided if they will only be used a handful of times 
+during a session. They are better suited for heavily repeated operations, on 
+large volumes of images where their speed gains can quickly compensate for the 
+time penalty they incur at the start of the pipeline. Note that a possible way 
+to mitigate this problem is to do a "warm-up" run of all the functions at the 
+start of a session, before the pipeline starts. 

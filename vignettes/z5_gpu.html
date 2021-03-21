@@ -26,6 +26,101 @@
     </style>
 
 
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -45,8 +140,46 @@
 <h1 class="title toc-ignore">5 - GPU operations</h1>
 
 
+<div id="TOC">
+<ul>
+<li><a href="#stupid-fast-performances-with-gpu-operations">5.1 - Stupid-fast performances with GPU operations</a></li>
+<li><a href="#enabling-gpu-operations-in-rvision">5.2 - Enabling GPU operations in <code>Rvision</code></a></li>
+<li><a href="#caveats-to-gpu-operations">5.3 - Caveats to GPU operations</a></li>
+</ul>
+</div>
 
-
+<div id="stupid-fast-performances-with-gpu-operations" class="section level2">
+<h2>5.1 - Stupid-fast performances with GPU operations</h2>
+<p>Since version <code>0.6.0</code>, running operations on the GPU (Graphics Processing Units) of a computer is possible and - we want to believe - very easy to implement. GPUs are designed to allow for parallel pixel processing. This can result in significant gains in performance for operations that can benefit from massive parallelization, making them in some cases several orders of magnitude faster than the same operation on the CPU (Central Processing Unit) of the computer.</p>
+<p><a href="https://opencv.org/"><code>OpenCV</code></a> - the computer vision library on top of which <code>Rvision</code> is built - can handle operations on the GPU using two popular frameworks: <a href="https://www.khronos.org/opencl/"><code>OpenCL</code></a> and <a href="https://developer.nvidia.com/cuda-zone">Nvidia’s <code>CUDA</code></a>. <code>OpenCL</code> being open, royalty-free, and cross-platform, it is available to more users’ machines (<code>CUDA</code> is proprietary and restricted to <code>Nvidia</code> graphics cards). We have, therefore, chosen to use that framework in <code>Rvision</code>. This is not to say that we will never consider adding <code>CUDA</code> support to <code>Rvision</code>; we probably will - time permitting - because it is reportedly faster than <code>OpenCL</code> in many instances. We just decided to start with the framework that is available to more users immediately.</p>
+<hr />
+</div>
+<div id="enabling-gpu-operations-in-rvision" class="section level2">
+<h2>5.2 - Enabling GPU operations in <code>Rvision</code></h2>
+<p>By default (and for good reasons too), <code>Rvision</code> loads images it receives in the memory of the CPU. Before using GPU-accelerated functions, the image must first be copied to the GPU memory. This can be done very easily as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>path_to_image <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_img&quot;</span>, <span class="st">&quot;bunny.png&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the image in memory</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>my_image <span class="ot">&lt;-</span> <span class="fu">image</span>(<span class="at">filename =</span> path_to_image)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy the image to GPU memory</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>my_image<span class="sc">$</span><span class="fu">toGPU</span>()</span></code></pre></div>
+<p>Once this is done, <code>Rvision</code> (<code>OpenCV</code> really) will automatically use the GPU-accelerated version of each operation on the image if it is available. Otherwise, it will default to using the CPU version. That is it, there is nothing more complicated to do to take advantage of the processing speed of the GPU.</p>
+<p>In the case where a function accepts multiple images as arguments (e.g. when using a target image to save the result of an operation on the original image), then it does not matter in most cases if all the images are on the CPU or on the GPU (in the rare cases when it does matter, an error will be thrown and you can adjust your pipeline accordingly). However, better performances will probably be achieved if all the images use the memory of the same processor.</p>
+<p>Finally, if you need to copy back the image to the CPU memory (e.g. if you want to then transfer the image to a <code>base::array</code>), you can simply apply the reverse operation as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy the image back to CPU memory</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>my_image<span class="sc">$</span><span class="fu">fromGPU</span>()</span></code></pre></div>
+<hr />
+</div>
+<div id="caveats-to-gpu-operations" class="section level2">
+<h2>5.3 - Caveats to GPU operations</h2>
+<p>Nothing comes for free and there are a few caveats to using GPU-accelerated operations.</p>
+<p>First, it will only work if your computer has a GPU (even if a basic one integrated with the CPU) and that the <code>OpenCL</code> drivers for the GPU are installed. If <code>OpenCL</code> is not available on your system, <code>Rvision</code> will throw an error when you use the <code>$toGPU</code> function. <code>OpenCL</code> should be available on most traditional computers (including laptops) with most operating systems. Check the documentation of your computer and operating system to figure out whether <code>OpenCL</code> is available/installed on your system and how to install it if necessary (in which case, you will probably need to recompile <code>OpenCV</code> using the <code>ROpenCVLite::installOpenCV</code> function). <code>OpenCL</code> will probably not be available on shared servers that do not provide GPU access to their users. Check with your server administrator if that it the case.</p>
+<p>While GPU-accelerated operations will be much faster than their CPU-based equivalent, not all operations can be efficiently run on a GPU. Some operations provided by <code>Rvision</code>/<code>OpenCV</code> will actually be slower on the GPU than the CPU. Test your pipeline carefully to decide whether it is worth running all or parts of it on the GPU, or to keep everything on the CPU instead.</p>
+<p>Copying an image to/from the GPU comes with a small time penalty. It is best if your pipeline avoids performing too many copying operations. Ideally, the GPU/CPU copies should all be created/pre-allocated before starting the pipeline for better performances.</p>
+<p>Finally, GPU operations will be slow the first time they are run during a session. This is because <code>OpenCV</code> needs to compile the corresponding functions for the specific graphics device it will use to run the operations. Therefore, GPU operations should be avoided if they will only be used a handful of times during a session. They are better suited for heavily repeated operations, on large volumes of images where their speed gains can quickly compensate for the time penalty they incur at the start of the pipeline. Note that a possible way to mitigate this problem is to do a “warm-up” run of all the functions at the start of a session, before the pipeline starts.</p>
+</div>
 
 
 
