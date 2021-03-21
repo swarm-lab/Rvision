@@ -423,4 +423,10 @@
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//articles/z3_basic.html</loc>
   </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//articles/z4_inplace.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//articles/z5_gpu.html</loc>
+  </url>
 </urlset>

@@ -5,7 +5,9 @@ articles:
   z1_install: z1_install.html
   z2_io: z2_io.html
   z3_basic: z3_basic.html
-last_built: 2021-03-21T12:50Z
+  z4_inplace: z4_inplace.html
+  z5_gpu: z5_gpu.html
+last_built: 2021-03-21T18:50Z
 urls:
   reference: https://swarm-lab.github.io/ROpenCVLite//reference
   article: https://swarm-lab.github.io/ROpenCVLite//articles

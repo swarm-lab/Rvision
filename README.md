@@ -26,6 +26,7 @@ camera streams or are limited in their processing speed and/or volume.
 + [1 - Installation instructions](https://swarm-lab.github.io/Rvision/articles/z1_install.html)
 + [2 - Input/output operations](https://swarm-lab.github.io/Rvision/articles/z2_io.html)
 + [3 - Basic operations](https://swarm-lab.github.io/Rvision/articles/z3_basic.html)
++ [4 - In-place, copy, and target operations](https://swarm-lab.github.io/Rvision/articles/z3_basic.html)
 
 --- 
 
