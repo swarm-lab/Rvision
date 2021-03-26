@@ -102,20 +102,20 @@ void Image::init() {
 }
 
 void Image::toGPU() {
-  if (cv::ocl::haveOpenCL()) {
+  if (!this->GPU) {
     this->image.copyTo(this->uimage);
     this->GPU = true;
   } else {
-    stop("OpenCL was not detected on this machine.");
+    Rcpp::warning("The image is already on the GPU.");
   }
 }
 
 void Image::fromGPU() {
-  if (cv::ocl::haveOpenCL()) {
+  if (this->GPU) {
     this->uimage.copyTo(this->image);
     this->GPU = false;
   } else {
-    stop("OpenCL was not detected on this machine.");
+    Rcpp::warning("The image is already on the CPU.");
   }
 }
 

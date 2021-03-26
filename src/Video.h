@@ -135,23 +135,19 @@ std::string Video::codec() {
 }
 
 void Video::readNext(Image& target) {
-  if (target.GPU) {
-    if (!this->video.read(target.uimage))
-      Rcpp::stop("No more frames available.");
-  } else {
-    if (!this->video.read(target.image))
-      Rcpp::stop("No more frames available.");
-  }
+  if (!this->video.read(target.image))
+    Rcpp::stop("No more frames available.");
+
+  if (target.GPU)
+    target.uimage = target.image.getUMat(cv::ACCESS_RW);
 }
 
 void Video::readFrame(int frameId, Image& target) {
   this->video.set(cv::CAP_PROP_POS_FRAMES, frameId - 1);
 
-  if (target.GPU) {
-    if (!this->video.read(target.uimage))
-      Rcpp::stop("The requested frame does not exist. Try with a lower frame number.");
-  } else {
-    if (!this->video.read(target.image))
-      Rcpp::stop("The requested frame does not exist. Try with a lower frame number.");
-  }
+  if (!this->video.read(target.image))
+    Rcpp::stop("The requested frame does not exist. Try with a lower frame number.");
+
+  if (target.GPU)
+    target.uimage = target.image.getUMat(cv::ACCESS_RW);
 }

@@ -63,11 +63,9 @@ int Stream::ncol() {
 }
 
 void Stream::readNext(Image& target) {
-  if (target.GPU) {
-    if (!this->stream.read(target.uimage))
-      Rcpp::stop("The frame could not be captured.");
-  } else {
-    if (!this->stream.read(target.image))
-      Rcpp::stop("No more frames available.");
-  }
+  if (!this->stream.read(target.image))
+    Rcpp::stop("No more frames available.");
+
+  if (target.GPU)
+    target.uimage = target.image.getUMat(cv::ACCESS_RW);
 }

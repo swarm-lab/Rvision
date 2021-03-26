@@ -3,7 +3,6 @@
 using namespace Rcpp;
 
 #include "opencv2/opencv.hpp"
-#include "opencv2/core/ocl.hpp"
 #include "utils.h"
 #include "opencvarma.h"
 
