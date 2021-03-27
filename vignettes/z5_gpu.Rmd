@@ -89,14 +89,17 @@ which case, you will probably need to recompile `OpenCV` using the
 on shared servers that do not provide GPU access to their users. Check with your 
 server administrator if that it the case. 
 
-While GPU-accelerated operations will be much faster than their CPU-based 
+While GPU-accelerated operations can be much faster than their CPU-based 
 equivalent, not all operations can be efficiently run on a GPU. Some operations
 provided by `Rvision`/`OpenCV` will actually be slower on the GPU than the CPU.
-Test your pipeline carefully to decide whether it is worth running all or parts
-of it on the GPU, or to keep everything on the CPU instead. 
+Moreover, performances will highly depend on the abilities of your GPU. A basic,
+integrated GPU will perform a lot slower than a dedicated graphics card for 
+instance, and in many cases not faster than the CPU. Test your pipeline 
+carefully to decide whether it is worth running all or parts of it on the GPU, 
+or to keep everything on the CPU instead. 
 
-Copying an image to/from the GPU comes with a small time penalty. It is best if
-your pipeline avoids performing too many copying operations. Ideally, the GPU/CPU
+Copying an image to/from the GPU comes with a time penalty. It is best if your 
+pipeline avoids performing too many copying operations. Ideally, the GPU/CPU
 copies should all be created/pre-allocated before starting the pipeline for 
 better performances. 
 
