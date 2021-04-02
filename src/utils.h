@@ -16,6 +16,18 @@ bool ImageConst3(SEXP* args, int nargs) {
   return true ;
 }
 
+bool QueueConst1(SEXP* args, int nargs) {
+  if(nargs != 4) return false;
+  if(!Rf_inherits(args[0], "Rcpp_Video")) return false ;
+  return true ;
+}
+
+bool QueueConst2(SEXP* args, int nargs) {
+  if(nargs != 4) return false;
+  if(!Rf_inherits(args[0], "Rcpp_Stream")) return false ;
+  return true ;
+}
+
 int getPropId(std::string propId) {
   int numPropId = 49;
 

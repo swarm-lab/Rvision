@@ -6,15 +6,14 @@
 #'
 #' @docType class
 #'
-#' @description \code{Stream} objects contains an \href{http://opencv.org/}{OpenCV}
+#' @description A \code{Stream} object contains an \href{http://opencv.org/}{OpenCV}
 #'  stream that originates from a camera connected to the computer.
 #'
 #' @slot dim,ncol,nrow Functions returning the dimensions of the object.
 #'
 #' @slot get,set Functions to access and set internal properties of the object.
 #'
-#' @slot open,isOpened Functions to open a new camera stream or check the status
-#'  of the camera stream.
+#' @slot isOpened Function to check the status of the camera stream.
 #'
 #' @slot readNext Functions to access the next frame in the stream.
 #'
@@ -83,9 +82,9 @@ stream <- function(index = 0, api = "ANY") {
 }
 
 
-#' @title Test for a Stream object
+#' @title Test for a Stream Object
 #'
-#' @description Tests whether the object is of class \code{\link{Stream}}
+#' @description Tests whether the object is of class \code{\link{Stream}}.
 #'
 #' @param object Any R object.
 #'

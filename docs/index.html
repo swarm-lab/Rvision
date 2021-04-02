@@ -139,9 +139,9 @@
 <p>You certainly can, but ask yourself first whether you should…</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_stream</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/stream.html">stream</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>   <span class="co"># 0 will start your default webcam in general. </span>
-<span class="va">my_selfie</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span>
+<span class="va">my_selfie</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/readNext.Rcpp_Queue.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_selfie</span><span class="op">)</span>
-<span class="fu"><a href="reference/release.Rcpp_Stream.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="reference/release.Rcpp_Queue.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
 <p>Be careful, this will trigger the explosion of your camera if it detects that you are making a duck face ;-)</p>
 </div>
 </div>

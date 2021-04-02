@@ -10,6 +10,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/LUT.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Queue-class.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Rvision.html</loc>
   </url>
   <url>
@@ -53,6 +56,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/canny.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/capacity.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/cc_table.html</loc>
@@ -104,6 +110,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/dim.Rcpp_Image.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/dim.Rcpp_Queue.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/dim.Rcpp_Stream.html</loc>
@@ -187,6 +196,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/frame.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/full.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/gaussianBlur.html</loc>
   </url>
   <url>
@@ -239,6 +251,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/isImage.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/isQueue.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/isStream.html</loc>
@@ -310,6 +325,12 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/pset.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/queue.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/queue_dimensions.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/randn.html</loc>
   </url>
   <url>
@@ -326,6 +347,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/release.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/reset.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite//reference/resize.html</loc>

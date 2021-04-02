@@ -8,8 +8,7 @@ using namespace Rcpp;
 
 
 RcppExport SEXP _rcpp_module_boot_class_Image();
-RcppExport SEXP _rcpp_module_boot_class_Video();
-RcppExport SEXP _rcpp_module_boot_class_Stream();
+RcppExport SEXP _rcpp_module_boot_class_Capture();
 RcppExport SEXP _rcpp_module_boot_class_VideoWriter();
 RcppExport SEXP _rcpp_module_boot_methods_Arithmetic();
 RcppExport SEXP _rcpp_module_boot_methods_Statistics();
@@ -28,8 +27,7 @@ RcppExport SEXP _rcpp_module_boot_methods_Feature();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_class_Image", (DL_FUNC) &_rcpp_module_boot_class_Image, 0},
-    {"_rcpp_module_boot_class_Video", (DL_FUNC) &_rcpp_module_boot_class_Video, 0},
-    {"_rcpp_module_boot_class_Stream", (DL_FUNC) &_rcpp_module_boot_class_Stream, 0},
+    {"_rcpp_module_boot_class_Capture", (DL_FUNC) &_rcpp_module_boot_class_Capture, 0},
     {"_rcpp_module_boot_class_VideoWriter", (DL_FUNC) &_rcpp_module_boot_class_VideoWriter, 0},
     {"_rcpp_module_boot_methods_Arithmetic", (DL_FUNC) &_rcpp_module_boot_methods_Arithmetic, 0},
     {"_rcpp_module_boot_methods_Statistics", (DL_FUNC) &_rcpp_module_boot_methods_Statistics, 0},

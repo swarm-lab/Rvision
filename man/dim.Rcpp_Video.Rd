@@ -19,7 +19,6 @@ Retrieve the dimensions a \code{\link{Video}} object.
 \examples{
 balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 dim(balloon)
-release(balloon)
 
 }
 \seealso{

@@ -6,7 +6,7 @@
 #'
 #' @docType class
 #'
-#' @description \code{VideoWriter} objects contains an \href{http://opencv.org/}{OpenCV}
+#' @description A \code{VideoWriter} object contains an \href{http://opencv.org/}{OpenCV}
 #'  video writer to an output file.
 #'
 #' @slot dim,ncol,nrow Functions returning the dimensions of the object.
@@ -106,7 +106,7 @@ videoWriter <- function(outputFile, fourcc, fps, height, width, isColor = TRUE,
 }
 
 
-#' @title Test for a VideoWriter object
+#' @title Test for a VideoWriter Object
 #'
 #' @description Tests whether the object is of class \code{\link{VideoWriter}}
 #'

@@ -128,7 +128,7 @@
 <span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span></code></pre></div>
 <p>Once a <code>Video</code> object is not required anymore, it can be released from memory as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Stream.html">release</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Queue.html">release</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span></code></pre></div>
 <p>Note that <code>Video</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html"><code>VideoCapture</code></a> pointers. They will not persist between <code>R</code> sessions.</p>
 <hr>
 </div>
@@ -142,7 +142,7 @@
 <p>The index argument takes an integer number corresponding to the position of the camera in the list of video capturing devices available on your computer. 0 corresponds to the default camera, which is usually the embedded webcam on most computers. Note that the order of the list of video capturing devices might change after each computer restart, or if cameras are connected/disconnected during a session.</p>
 <p>Once a <code>Stream</code> object is not required anymore, it can be released from memory as follows:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Stream.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Queue.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
 <p>Note that <code>Stream</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html"><code>VideoCapture</code></a> pointers. They will not persist between <code>R</code> sessions.</p>
 <hr>
 </div>
@@ -168,7 +168,7 @@
 <p><code>Image</code> objects are created from video streams by capturing frames from them with the <code>readNext</code> and <code>readFrame</code> functions. For instance:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Capture the next available frame from the my_video object created earlier</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span>
+<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.Rcpp_Queue.html">readNext</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span>
 
 <span class="co"># Capture frame 100 from the my_video object created earlier</span>
 <span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">my_video</span>, <span class="fl">100</span><span class="op">)</span></code></pre></div>
@@ -179,7 +179,7 @@
 <p><code>Image</code> objects are created from video streams by capturing frames from them with the <code>readNext</code> function. For instance:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Capture the next available frame from the my_stream object created earlier</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
+<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.Rcpp_Queue.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="images-from-r-arrays" class="section level3">
 <h3 class="hasAnchor">
@@ -208,11 +208,11 @@
 <code class="sourceCode R"><span class="co"># Capture the next 30 frames from the my_stream camera stream created earlier </span>
 <span class="co"># and write them to file.mp4</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/writeFrame.html">writeFrame</a></span><span class="op">(</span><span class="va">my_writer</span>, <span class="fu"><a href="../reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/writeFrame.html">writeFrame</a></span><span class="op">(</span><span class="va">my_writer</span>, <span class="fu"><a href="../reference/readNext.Rcpp_Queue.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>Once all frames have been written to the <code>VideoWriter</code> object, it can be closed and released from memory as follows:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Stream.html">release</a></span><span class="op">(</span><span class="va">my_writer</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Queue.html">release</a></span><span class="op">(</span><span class="va">my_writer</span><span class="op">)</span></code></pre></div>
 <p>Note that if you do not close and release the <code>VideoWriter</code> object prior to exiting the <code>R</code> session, you will not be able to play it with your system’s video player.</p>
 <p>Note that <code>VideoWriter</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/dd/d9e/classcv_1_1VideoWriter.html"><code>VideoWriter</code></a> pointers. They will not persist between <code>R</code> sessions.</p>
 <hr>

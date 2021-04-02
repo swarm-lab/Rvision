@@ -2,7 +2,7 @@
 % Please edit documentation in R/StreamClass.R
 \name{isStream}
 \alias{isStream}
-\title{Test for a Stream object}
+\title{Test for a Stream Object}
 \usage{
 isStream(object)
 }
@@ -14,7 +14,7 @@ A logical indicating whether the object is of class
  \code{\link{Stream}} (TRUE) or not (FALSE).
 }
 \description{
-Tests whether the object is of class \code{\link{Stream}}
+Tests whether the object is of class \code{\link{Stream}}.
 }
 \examples{
 \dontrun{

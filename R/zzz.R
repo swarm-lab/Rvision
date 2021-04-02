@@ -9,8 +9,10 @@
 
 ### Load package module ###
 Rcpp::loadModule("class_Image", TRUE)
-Rcpp::loadModule("class_Video", TRUE)
-Rcpp::loadModule("class_Stream", TRUE)
+Rcpp::loadModule("class_Capture", TRUE)
+# Rcpp::loadModule("class_Video", TRUE)
+# Rcpp::loadModule("class_BufferedVideo", TRUE)
+# Rcpp::loadModule("class_Stream", TRUE)
 Rcpp::loadModule("class_VideoWriter", TRUE)
 Rcpp::loadModule("methods_Arithmetic", TRUE)
 Rcpp::loadModule("methods_Statistics", TRUE)
@@ -1372,7 +1374,7 @@ methods::evalqOnLoad({
     cat("Class: image. \n")
     cat("Dimensions: ", width, "x", height, ".\n", sep = "")
     cat("Type: ", type, ", ", chan, "-channel, ", depth, ".\n", sep = "")
-    cat("GPU: ", gpu, ".", sep = "")
+    cat("GPU: ", gpu, ".\n", sep = "")
   })
 
   setMethod("show", "Rcpp_Video", function(object) {
@@ -1388,7 +1390,7 @@ methods::evalqOnLoad({
     cat("Class: video file. \n")
     cat("Dimensions: ", width, "x", height, ", ", nframes, " frames.\n", sep = "")
     cat("Frame rate: ", fps, "fps.\n", sep = "")
-    cat("Codec: ", codec, ".", sep = "")
+    cat("Codec: ", codec, ".\n", sep = "")
 
   })
 
@@ -1400,7 +1402,7 @@ methods::evalqOnLoad({
     height <- nrow(object)
 
     cat("Class: video stream.\n")
-    cat("Dimensions: ", width, "x", height, ".", sep = "")
+    cat("Dimensions: ", width, "x", height, ".\n", sep = "")
   })
 
   setMethod("show", "Rcpp_VideoWriter", function(object) {
@@ -1419,7 +1421,7 @@ methods::evalqOnLoad({
     cat("Frame rate: ", fps, "fps.\n", sep = "")
     cat("Codec: ", codec, ".\n", sep = "")
     cat("API: ", api, ".\n", sep = "")
-    cat("Output file: ", output, sep = "")
+    cat("Output file: ", output, "\n", sep = "")
   })
 })
 

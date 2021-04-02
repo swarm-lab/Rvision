@@ -1,7 +1,7 @@
 class Image {
 public:
   Image();
-  Image(std::string inputFile, std::string colorspace);
+  Image(std::string filename, std::string colorspace);
   Image(cv::Mat inputImage, std::string colorspace);
   Image(cv::UMat inputImage, std::string colorspace);
   Image(arma::icube inputArray, std::string colorspace);
@@ -35,11 +35,11 @@ Image::Image() {
 
 }
 
-Image::Image(std::string inputFile, std::string colorspace) {
+Image::Image(std::string filename, std::string colorspace) {
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
 
-  this->image = cv::imread(Rcpp::as<std::string>(pathExpand(inputFile)), cv::IMREAD_UNCHANGED);
+  this->image = cv::imread(Rcpp::as<std::string>(pathExpand(filename)), cv::IMREAD_UNCHANGED);
   this->space = colorspace;
 
   if (!this->image.data) {

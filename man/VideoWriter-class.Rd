@@ -13,7 +13,7 @@ An object of class \code{C++Class} of length 1.
 VideoWriter
 }
 \description{
-\code{VideoWriter} objects contains an \href{http://opencv.org/}{OpenCV}
+A \code{VideoWriter} object contains an \href{http://opencv.org/}{OpenCV}
  video writer to an output file.
 }
 \section{Slots}{

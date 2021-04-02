@@ -13,23 +13,24 @@
 codec(x)
 }
 \arguments{
-\item{x}{A \code{\link{Video}} object.}
+\item{x}{A \code{\link{Video}} or \code{\link{VideoWriter}} object.}
 }
 \value{
 A character string corresponding to the
  \href{http://www.fourcc.org/codecs.php}{FOURCC} code of the codec.
 }
 \description{
-Retrieve the codec of a \code{\link{Video}} object.
+Retrieve the codec of a \code{\link{Video}} or
+ \code{\link{VideoWriter}} object.
 }
 \examples{
 balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 codec(balloon)
-release(balloon)
 
 }
 \seealso{
-\code{\link{Video}}, \code{\link{video}}
+\code{\link{Video}}, \code{\link{video}}, \code{\link{VideoWriter}},
+ \code{\link{videoWriter}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

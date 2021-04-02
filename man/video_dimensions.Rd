@@ -27,7 +27,6 @@ balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 nrow(balloon)
 ncol(balloon)
 nframes(balloon)
-release(balloon)
 
 }
 \seealso{

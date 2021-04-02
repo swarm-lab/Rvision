@@ -1,36 +1,37 @@
-#include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
+#include <RcppArmadillo.h>
 using namespace Rcpp;
 
 #include "opencv2/opencv.hpp"
 #include "utils.h"
 #include "opencvarma.h"
+#include <queue>
+#include <thread>
+#include <mutex>
+#include <chrono>
 
 #include "Image.h"
 RCPP_EXPOSED_CLASS(Image)
 RCPP_MODULE(class_Image) {
 
   class_<Image>("Image")
-
-  .constructor()
-  .constructor< std::string, std::string > ("", &ImageConst1)
-  .constructor< arma::icube, std::string > ("", &ImageConst2)
-  .constructor< arma::fcube, std::string > ("", &ImageConst3)
-
-  .field("space", &Image::space)
-  .field("GPU", &Image::GPU)
-
-  .method("write", &Image::write)
-  .method("pget", &Image::pget)
-  .method("pset", &Image::pset)
-  .method("toGPU", &Image::toGPU)
-  .method("fromGPU", &Image::fromGPU)
-  .method("toR", &Image::toR)
-  .method("dim", &Image::dim)
-  .method("nrow", &Image::nrow)
-  .method("ncol", &Image::ncol)
-  .method("nchan", &Image::nchan)
-  .method("depth", &Image::depth)
+    .constructor()
+    .constructor< std::string, std::string > ("", &ImageConst1)
+    .constructor< arma::icube, std::string > ("", &ImageConst2)
+    .constructor< arma::fcube, std::string > ("", &ImageConst3)
+    .field("space", &Image::space)
+    .field("GPU", &Image::GPU)
+    .method("write", &Image::write)
+    .method("pget", &Image::pget)
+    .method("pset", &Image::pset)
+    .method("toGPU", &Image::toGPU)
+    .method("fromGPU", &Image::fromGPU)
+    .method("toR", &Image::toR)
+    .method("dim", &Image::dim)
+    .method("nrow", &Image::nrow)
+    .method("ncol", &Image::ncol)
+    .method("nchan", &Image::nchan)
+    .method("depth", &Image::depth)
   ;
 
   function("_changeBitDepth", &_changeBitDepth, List::create(_["image"], _["depth"],
@@ -50,50 +51,57 @@ RCPP_MODULE(class_Image) {
   function("_randn", &_randn, List::create(_["image"], _["mean"], _["stddev"]), "");
 }
 
+#include "Capture.h"
 #include "Video.h"
-RCPP_EXPOSED_CLASS(Video)
-RCPP_MODULE(class_Video) {
-
-  class_<Video>("Video")
-
-  .constructor()
-  .constructor<std::string, std::string>()
-
-  .method("open", &Video::open)
-  .method("isOpened", &Video::isOpened)
-  .method("release", &Video::release)
-  .method("get", &Video::get)
-  .method("set", &Video::set)
-  .method("dim", &Video::dim)
-  .method("nrow", &Video::nrow)
-  .method("ncol", &Video::ncol)
-  .method("nframes", &Video::nframes)
-  .method("frame", &Video::frame)
-  .method("fps", &Video::fps)
-  .method("codec", &Video::codec)
-  .method("readNext", &Video::readNext)
-  .method("readFrame", &Video::readFrame)
-  ;
-}
-
 #include "Stream.h"
+#include "Queue.h"
+RCPP_EXPOSED_CLASS(Video)
 RCPP_EXPOSED_CLASS(Stream)
-RCPP_MODULE(class_Stream) {
+RCPP_EXPOSED_CLASS(Queue)
+RCPP_MODULE(class_Capture) {
 
-  class_<Stream>("Stream")
+  Rcpp::class_<Capture>("Capture")
+    .constructor()
+    .method("isOpened", &Capture::isOpened)
+    .method("release", &Capture::release)
+    .method("get", &Capture::get)
+    .method("set", &Capture::set)
+    .method("dim", &Capture::dim)
+    .method("nrow", &Capture::nrow)
+    .method("ncol", &Capture::ncol)
+    .method("readNext", &Capture::readNext)
+  ;
 
-  .constructor()
-  .constructor<int, std::string>()
+  Rcpp::class_<Video>("Video")
+    .derives<Capture>("Capture")
+    .constructor<std::string, std::string>()
+    .method("open", &Video::open)
+    .method("nframes", &Video::nframes)
+    .method("frame", &Video::frame)
+    .method("fps", &Video::fps)
+    .method("codec", &Video::codec)
+    .method("readFrame", &Video::readFrame)
+  ;
 
-  .method("open", &Stream::open)
-  .method("isOpened", &Stream::isOpened)
-  .method("release", &Stream::release)
-  .method("get", &Stream::get)
-  .method("set", &Stream::set)
-  .method("dim", &Stream::dim)
-  .method("nrow", &Stream::nrow)
-  .method("ncol", &Stream::ncol)
-  .method("readNext", &Stream::readNext)
+  Rcpp::class_<Stream>("Stream")
+    .derives<Capture>("Capture")
+    .constructor<int, std::string>()
+    .method("open", &Stream::open)
+  ;
+
+  Rcpp::class_<Queue>("Queue")
+    .constructor<Video&, int, int, int> ("", &QueueConst1)
+    .constructor<Stream&, int, int, int> ("", &QueueConst2)
+    .method("full", &Queue::full)
+    .method("empty", &Queue::empty)
+    .method("capacity", &Queue::capacity)
+    .method("length", &Queue::length)
+    .method("dim", &Queue::dim)
+    .method("nrow", &Queue::nrow)
+    .method("ncol", &Queue::ncol)
+    .method("reset", &Queue::reset)
+    .method("frame", &Queue::frame)
+    .method("readNext", &Queue::readNext)
   ;
 }
 
@@ -101,11 +109,9 @@ RCPP_MODULE(class_Stream) {
 RCPP_EXPOSED_CLASS(VideoWriter)
 RCPP_MODULE(class_VideoWriter) {
 
-  class_<VideoWriter>("VideoWriter")
-
+  Rcpp::class_<VideoWriter>("VideoWriter")
   .constructor()
   .constructor<std::string, std::string, double, int, int, bool, std::string>()
-
   .method("open", &VideoWriter::open)
   .method("isOpened", &VideoWriter::isOpened)
   .method("release", &VideoWriter::release)
