@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>6 - Capture queues</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">6 - Capture queues</h1>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#increasing-performances-with-capture-queues">6.1 - Increasing performances with capture queues</a></li>
+<li><a href="#creating-a-queue">6.2 - Creating a queue</a></li>
+<li><a href="#using-a-queue-object">6.3 - Using a <code>Queue</code> object</a></li>
+<li><a href="#caveats-to-using-queue-objects">6.4 - Caveats to using <code>Queue</code> objects</a></li>
+</ul>
+</div>
+
+<div id="increasing-performances-with-capture-queues" class="section level2">
+<h2>6.1 - Increasing performances with capture queues</h2>
+<p>Retrieving a single frame from a video or camera stream is fast, but it is not instantaneous because <code>Rvision</code> (and therefore <code>OpenCV</code> in the background) needs to grab and decode each frame before it can be used for further processing. For most applications, that small time penalty is not an issue; losing a few milliseconds per frame will not be felt by a user processing short videos, low resolution videos for instance.</p>
+<p>However, the frame decoding time will increase significantly with the resolution of the video/camera stream; and for applications requiring the processing of long videos or live camera feeds, the total time lost retrieving frames will quickly increase. Moreover, the process of retrieving frames is blocking: while <code>Rvision</code> grabs and decodes a frame, it cannot work on other frames that were previously captured.</p>
+<p>A solution to this issue is to make use of the multi-tasking ability of most modern computers to perform the frame retrieving process in parallel with the rest of the image processing. The principle is fairly simple: one processing thread (thread 1) is in charge of grabbing, decoding, and storing frames in a shared dynamic queue (or buffer); a second thread (thread 2) is in charge of processing these pre-loaded frames further; while thread 2 is working on a frame, thread 1 can keep filling up the queue with new frames so that thread 2 never has to stop and wait for a new frame to be retrieved. On a multi-core/processor computer (most computers nowadays), thread 1 and 2 can be operated in parallel on separate cores/processors, effectively reducing the frame waiting time to near-zero for thread 2 (but see caveats section below).</p>
+<p>Unfortunately, <code>R</code> is a single-threaded language, meaning that it cannot natively create and operate multiple parallel processing threads. Fortunately, the <a href="https://www.cplusplus.com/"><code>C++</code> language</a> that is used in the background by <code>Rvision</code> can do it. We used that ability - and some precautions to avoid memory access conflicts with <code>R</code> - to create the <code>Queue</code> class of objects which job is to pre-load in memory video and camera stream frames without blocking the execution of the main (and unique) <code>R</code> processing thread, and then give the main <code>R</code> thread near-instantaneous access to these pre-loaded frames when required. Once a frame has been collected by the main <code>R</code> thread, it is removed from the queue to make space for another frame.</p>
+<hr />
+</div>
+<div id="creating-a-queue" class="section level2">
+<h2>6.2 - Creating a queue</h2>
+<p><code>Queue</code> objects are created using the <code>queue()</code> function. For instance:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>path_to_video <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_vid&quot;</span>, <span class="st">&quot;Balloon.mp4&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the video file stream</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>my_video <span class="ot">&lt;-</span> <span class="fu">video</span>(<span class="at">filename =</span> path_to_video)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a queue of frames </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>my_buf <span class="ot">&lt;-</span> <span class="fu">queue</span>(my_video, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">delay =</span> <span class="dv">1000</span>, <span class="at">overflow =</span> <span class="st">&quot;pause&quot;</span>)</span></code></pre></div>
+<p>The <code>queue()</code> function can take 4 parameters:</p>
+<ul>
+<li><code>x</code> corresponds to the source of the frames to be queued. It should either be a <code>Video</code> or a <code>Stream</code> object.</li>
+<li><code>size</code> corresponds to the number of frames that the queue can store at any one time. By default, a <code>Queue</code> object will be able to hold 10 frames at once. If you increase the value of the <code>size</code> parameter, the <code>Queue</code> object will use up more RAM as a result, so be mindful of your computer’s resources.</li>
+<li><code>delay</code> corresponds to the time (in microseconds) between two queue update cycles. During an update cycle, the <code>Queue</code> object checks whether it is full or not and whether frames have been collected by the main <code>R</code> thread. If it is not full, it retrieves a new frame from the source and stores it; if frames have been collected by the main <code>R</code> thread, it removes them from the queue; it then waits the duration set by <code>delay</code> before starting a new update cycle. Reducing the value of <code>delay</code> will increase the frequency of the update cycles but will also increase the computational load of the core/processor running the queuing thread.</li>
+<li><code>overflow</code> corresponds to the behavior the <code>Queue</code> object should adopt once it is full. By default, the queuing process will “pause” (that is stop retrieving new frames from the source and storing them) until a frame is collected by the main <code>R</code> thread. This is the behavior of choice for video processing as it does not skip any frame while ensuring that the queue storage memory does not grow more than what the user wants. The queuing process can also “replace” the oldest frame in the queue with a new one. This is usually a good choice for processing live camera stream as it ensures that the queue storage memory does not grow more than what the user wants. However, frames may be skipped if the main <code>R</code> thread cannot collect and process the frames faster than they can be retrieved and stored by the queuing thread. Finally, the queuing process can “grow” the queue by doubling its size each time it fills up. This behavior allows for not pausing the retrieval process and avoids frame skipping but it is very much NOT recommended unless you know what you are doing. Indeed, this can lead to excessive RAM usage and decreased computing performance across the board.</li>
+</ul>
+<p>Once a <code>Queue</code> object is created, it starts immediately filling up with images retrieved from the <code>Video</code> or a <code>Stream</code> source object. Note that, if you had previously read frames from a <code>Video</code> source object before creating the <code>Queue</code> object, the latter will start retrieving frames from where you left off (e.g. if you have already read the first 10 frames, the queue will start filling up from the 11th).</p>
+<p>Once a <code>Queue</code> object is not required anymore, it can be released from memory as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">release</span>(my_buf)</span></code></pre></div>
+<hr />
+</div>
+<div id="using-a-queue-object" class="section level2">
+<h2>6.3 - Using a <code>Queue</code> object</h2>
+<p>The main purpose of a <code>Queue</code> object is to pre-load and store frames for fast access later on. The pre-loading and storing happens by itself in the background so you do not need to take care of this. Collecting a frame from the queue into the main <code>R</code> thread can be done using the <code>readNext()</code> function. For example:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect the next available frame from the queue and store it in a new </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Image object</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>frame <span class="ot">&lt;-</span> <span class="fu">readNext</span>(my_buf)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect the next available frame from the queue and store it in an existing </span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Image object</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">readNext</span>(my_buf, <span class="at">target =</span> frame)</span></code></pre></div>
+<p>At any time, you can check the state of the queue as follows:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Is the queue empty?</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">empty</span>(my_buf)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Is the queue full?</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">full</span>(my_buf)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the current number of frames in the queue? </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(my_buf)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the maximum number of frames that the queue can hold?</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">capacity</span>(my_buf)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the index of the next frame available? (for video queues only)</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">frame</span>(my_buf)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># What are the dimensions of the queue? </span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(my_buf)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(my_buf)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(my_buf)</span></code></pre></div>
+<hr />
+</div>
+<div id="caveats-to-using-queue-objects" class="section level2">
+<h2>6.4 - Caveats to using <code>Queue</code> objects</h2>
+<p><code>Queue</code> objects can be very useful to speed up the processing of camera streams and long videos, especially if their resolution is high (HD or above). For short videos or low resolution videos and camera streams, the benefits of using a <code>Queue</code> object will be very limited because retrieving frames from such sources is already very fast.</p>
+<p>If the processing of the frames on the main <code>R</code> thread is much faster than the retrieving and storing of the frames inside a <code>Queue</code> object, you risk emptying the queue faster than in can fill up. If that is the case, <code>readNext()</code> will display a warning to this effect but will not return an error (as it would, for instance, when reaching the end of a video file). In addition, it will not create a new image or modify the target image. You will need to make sure that your code can catch these warnings and act accordingly (e.g., wait a turn before trying again). You can reduce the risks of the queue becoming empty by (1) increasing the size of the queue when creating it, (2) making sure the queue has completely filled up before starting the processing of the frames, and (3) reducing the delay between to queue updates. In any case, <code>Queue</code> objects are better suited for and more beneficial in cases where the processing of the frames is as slow or slower than the frame retrieving process.</p>
+<p>Finally, <code>Queue</code> objects read frames from existing <code>Video</code> and <code>Stream</code> objects. This means that they modify the state of these source objects the same way a user would by reading directly from them. This has a few of consequences that require some attention when using <code>Queue</code> object. First, a <code>Queue</code> object will start reading the source object from whichever state you have left it off. For instance, if you have read the first 10 frames of a video before passing it to a <code>Queue</code> object, the <code>Queue</code> object will start reading it from the 11th frame. Conversely, if you pass a newly created <code>Video</code> object to a <code>Queue</code> object with a size of 10, the <code>Queue</code> object will immediately start reading and storing the first 10 frames. If you then decide to read a frame directly from the <code>Video</code> object, it will return its 11th frame, not its first one. Therefore, to avoid competing with a <code>Queue</code> object on a given <code>Video</code> object, it is strongly recommended to avoid creating code that mix reading frames from a <code>Queue</code> object and reading frames from the <code>Video</code> object that <code>Queue</code> object is using.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

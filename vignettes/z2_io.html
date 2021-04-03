@@ -158,7 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="creating-video-streams" class="section level2">
 <h2>2.1 - Creating video streams</h2>
-<p><code>Video</code> stream objects are created from video files by passing the path to a video file to the <code>video</code> function. For instance:</p>
+<p><code>Video</code> stream objects are created from video files by passing the path to a video file to the <code>video()</code> function. For instance:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>path_to_video <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_vid&quot;</span>, <span class="st">&quot;Balloon.mp4&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -171,7 +171,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="creating-camera-streams" class="section level2">
 <h2>2.2 - Creating camera streams</h2>
-<p>Camera <code>Stream</code> objects are created by starting a camera stream (e.g. from a webcam) using the <code>stream</code> function. For instance:</p>
+<p>Camera <code>Stream</code> objects are created by starting a camera stream (e.g. from a webcam) using the <code>stream()</code> function. For instance:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start the default camera stream</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>my_stream <span class="ot">&lt;-</span> <span class="fu">stream</span>(<span class="at">index =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p>The index argument takes an integer number corresponding to the position of the camera in the list of video capturing devices available on your computer. 0 corresponds to the default camera, which is usually the embedded webcam on most computers. Note that the order of the list of video capturing devices might change after each computer restart, or if cameras are connected/disconnected during a session.</p>
@@ -186,7 +186,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Note that <code>Image</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d3/d63/classcv_1_1Mat.html"><code>Mat</code></a> and <a href="https://docs.opencv.org/4.5.0/d7/d45/classcv_1_1UMat.html"><code>UMat</code></a> objects. They will not persist between <code>R</code> sessions.</p>
 <div id="images-from-files" class="section level3">
 <h3>2.3.1 - Images from files</h3>
-<p><code>Image</code> objects are created from image files by passing the path to an image file to the <code>image</code> function. For instance:</p>
+<p><code>Image</code> objects are created from image files by passing the path to an image file to the <code>image()</code> function. For instance:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>path_to_image <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_img&quot;</span>, <span class="st">&quot;bunny.png&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -195,7 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="images-from-video-streams" class="section level3">
 <h3>2.3.2 - Images from video streams</h3>
-<p><code>Image</code> objects are created from video streams by capturing frames from them with the <code>readNext</code> and <code>readFrame</code> functions. For instance:</p>
+<p><code>Image</code> objects are created from video streams by capturing frames from them with the <code>readNext()</code> and <code>readFrame()</code> functions. For instance:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture the next available frame from the my_video object created earlier</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>my_image <span class="ot">&lt;-</span> <span class="fu">readNext</span>(my_video)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -204,13 +204,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="images-from-camera-streams" class="section level3">
 <h3>2.3.3 - Images from camera streams</h3>
-<p><code>Image</code> objects are created from video streams by capturing frames from them with the <code>readNext</code> function. For instance:</p>
+<p><code>Image</code> objects are created from video streams by capturing frames from them with the <code>readNext()</code> function. For instance:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture the next available frame from the my_stream object created earlier</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>my_image <span class="ot">&lt;-</span> <span class="fu">readNext</span>(my_stream)</span></code></pre></div>
 </div>
 <div id="images-from-r-arrays" class="section level3">
 <h3>2.3.4 - Images from R arrays</h3>
-<p><code>Image</code> objects are created from <code>R</code> arrays files by passing the array directly to the <code>image</code> function. For instance:</p>
+<p><code>Image</code> objects are created from <code>R</code> arrays files by passing the array directly to the <code>image()</code> function. For instance:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 100 x 100 x 3 random array</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>my_array <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="fu">rnorm</span>(<span class="dv">30000</span>), <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">3</span>))</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -240,7 +240,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="writing-images-to-file" class="section level2">
 <h2>2.4 - Writing images to file</h2>
-<p>Images can be written to files using the <code>write.Image</code> function. For instance:</p>
+<p>Images can be written to files using the <code>write.Image()</code> function. For instance:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Write the my_image object created earlier to a PNG file called file.png on the</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># desktop</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.Image</span>(my_image, <span class="st">&quot;~/Desktop/file.png&quot;</span>)</span></code></pre></div>

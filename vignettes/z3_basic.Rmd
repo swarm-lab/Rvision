@@ -30,7 +30,7 @@ vignette: >
 
 ### 3.2.1 - Method compatible with base R
 
-There are two methods for displaying images. The first method (`plot`) offers 
+There are two methods for displaying images. The first method (`plot()`) offers 
 full compatibility with base `R` plotting methods, which allows for drawing 
 non-destructively over an image using `graphics::lines()`, `graphics::points()`, 
 etc. For instance: 
@@ -58,7 +58,7 @@ video).
 
 ### 3.2.2 - Method incompatible with base R
 
-The second method (`display`) uses [`OpenCV`](http://opencv.org/)'s capabilities 
+The second method (`display()`) uses [`OpenCV`](http://opencv.org/)'s capabilities 
 to display images at high frame rates, making it suitable to play videos. For 
 instance: 
 
@@ -84,7 +84,7 @@ for (i in 1:25) {
 destroyDisplay("My display")
 ```
 
-Note that the `display` method is incompatible with base `R` plotting methods. 
+Note that the `display()` method is incompatible with base `R` plotting methods. 
 However, you can use the drawing functions provided with `Rvision` to draw over 
 images - destructively this time - before displaying them.
 
@@ -105,7 +105,7 @@ my_image[1:5, 1:5,]         # All pixels between the 1st and 5th row and column
 my_image[c(TRUE, FALSE), c(TRUE, FALSE),]  # Every other row and column of pixels
 ```
 
-The `pget` function can be used to quickly access the values of specific pixels
+The `pget()` function can be used to quickly access the values of specific pixels
 by their x/y coordinates in the image. For instance:
 
 ```{r eval=FALSE, echo=TRUE}
@@ -145,7 +145,7 @@ my_gray_image[1:250, 1:250] <- 0
 plot(my_gray_image)
 ```
 
-Finally, the `pset` function can be used to quickly set the values of specific 
+Finally, the `pset()` function can be used to quickly set the values of specific 
 pixels by their x/y coordinates in the image. For instance:
 
 ```{r eval=FALSE, echo=TRUE}
@@ -178,8 +178,8 @@ my_image[1:250, 1:250] <- 0
 plot(my_image)
 ```
 
-The utility function `col2bgr` provided by `Rvision` (not to be confused with 
-`grDevices::col2rgb` on which `col2bgr` is based) will conveniently convert any 
+The utility function `col2bgr()` provided by `Rvision` (not to be confused with 
+`grDevices::col2rgb` on which `col2bgr()` is based) will conveniently convert any 
 of the `R`-compatible color specifications to color codes compatible with 
 `Rvision` images. For instance: 
 
@@ -189,7 +189,7 @@ my_image[1:250, 1:250] <- col2bgr("blue", alpha = TRUE)
 plot(my_image)
 ```
 
-Finally, the `pset` function can be used to quickly set the values of specific 
+Finally, the `pset()` function can be used to quickly set the values of specific 
 pixels by their x/y coordinates in the image. For instance:
 
 ```{r eval=FALSE, echo=TRUE}

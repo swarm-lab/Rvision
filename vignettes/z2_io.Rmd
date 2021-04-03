@@ -12,7 +12,7 @@ vignette: >
 ## 2.1 - Creating video streams
 
 `Video` stream objects are created from video files by passing the path to a 
-video file to the `video` function. For instance: 
+video file to the `video()` function. For instance: 
 
 ```{r eval=FALSE, echo=TRUE}
 # Find the path to the Balloon.mp4 video provided with Rvision
@@ -38,7 +38,7 @@ pointers. They will not persist between `R` sessions.
 ## 2.2 - Creating camera streams
 
 Camera `Stream` objects are created by starting a camera stream (e.g. from a 
-webcam) using the `stream` function. For instance: 
+webcam) using the `stream()` function. For instance: 
 
 ```{r eval=FALSE, echo=TRUE}
 # Start the default camera stream
@@ -78,7 +78,7 @@ They will not persist between `R` sessions.
 ### 2.3.1 - Images from files
 
 `Image` objects are created from image files by passing the path to an image 
-file to the `image` function. For instance: 
+file to the `image()` function. For instance: 
 
 ```{r eval=FALSE, echo=TRUE}
 # Find the path to the bunny.png image provided with Rvision
@@ -91,7 +91,7 @@ my_image <- image(filename = path_to_image)
 ### 2.3.2 - Images from video streams
 
 `Image` objects are created from video streams by capturing frames from them 
-with the `readNext` and `readFrame` functions. For instance: 
+with the `readNext()` and `readFrame()` functions. For instance: 
 
 ```{r eval=FALSE, echo=TRUE}
 # Capture the next available frame from the my_video object created earlier
@@ -104,7 +104,7 @@ my_image <- readFrame(my_video, 100)
 ### 2.3.3 - Images from camera streams
 
 `Image` objects are created from video streams by capturing frames from them 
-with the `readNext` function. For instance: 
+with the `readNext()` function. For instance: 
 
 ```{r eval=FALSE, echo=TRUE}
 # Capture the next available frame from the my_stream object created earlier
@@ -114,7 +114,7 @@ my_image <- readNext(my_stream)
 ### 2.3.4 - Images from R arrays
 
 `Image` objects are created from `R` arrays files by passing the array directly 
-to the `image` function. For instance: 
+to the `image()` function. For instance: 
 
 ```{r eval=FALSE, echo=TRUE}
 # Create a 100 x 100 x 3 random array
@@ -169,7 +169,7 @@ pointers. They will not persist between `R` sessions.
 
 ## 2.4 - Writing images to file
 
-Images can be written to files using the `write.Image` function. For instance:
+Images can be written to files using the `write.Image()` function. For instance:
 
 ```{r eval=FALSE, echo=TRUE}
 # Write the my_image object created earlier to a PNG file called file.png on the
