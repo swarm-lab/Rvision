@@ -8,9 +8,7 @@
 #' @param operation A string corresponding to the name of a morphological
 #'  operation to apply to the image (see Note).
 #'
-#' @param kernel A binary matrix. If the matrix is not binary, all positive values
-#'  will be automatically converted to 1, all negative values to 0, unless
-#'  \code{operation = "hitmiss"} in which case they will be converted to -1.
+#' @param kernel A binary matrix.
 #'
 #' @param k_shape A string corresponding to the shape of the kernel for the
 #'  morphological operation (see Note; default: "rectangle"). Ignored if a

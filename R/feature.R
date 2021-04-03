@@ -34,6 +34,9 @@
 #' @references Canny J. A computational approach to edge detection. IEEE Trans
 #'  Pattern Anal Mach Intell. 1986;8: 679–698. doi:10.1109/TPAMI.1986.4767851
 #'
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_canny <- canny(balloon, 50, 50)
+#'
 #' @export
 canny <- function(image, threshold1, threshold2, aperture_size = 3,
                   L2_gradient = FALSE, target = "new") {

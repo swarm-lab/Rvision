@@ -1,9 +1,11 @@
-#' Rvision: A basic (for now) computer vision library for R.
+#' Rvision: Computer vision library for R
 #'
-#' The \code{Rvision} package uses the OpenCV library to provide R users with
-#' some basic functions to read and manipulate images, videos and camera streams.
+#' The \code{Rvision} package contains an OpenCV-based computer vision library
+#' providing methods to read and manipulate video and image files, as well as
+#' camera streams.
 #'
 #' @author Simon Garnier <garnier@@njit.edu>
+#' @author John Muschelli <muschellij2@@gmail.com>
 #'
 #' Maintainer: Simon Garnier <garnier@@njit.edu>
 #'

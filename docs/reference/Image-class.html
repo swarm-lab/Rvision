@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.0</span>
       </span>
     </div>
 
@@ -120,7 +120,19 @@
     <li>
       <a href="../articles/z3_basic.html">3 - Basic operations</a>
     </li>
+    <li>
+      <a href="../articles/z4_inplace.html">4 - In-place, copy, and target operations</a>
+    </li>
+    <li>
+      <a href="../articles/z5_gpu.html">5 - GPU operations</a>
+    </li>
+    <li>
+      <a href="../articles/z6_queue.html">6 - Capture queues</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -167,6 +179,30 @@
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>An object of class <code>C++Class</code> of length 1.</p>
+    <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
+
+    
+
+<dl>
+<dt><code>depth</code></dt><dd><p>A function returning the bit depth of the object.</p></dd>
+
+<dt><code>dim,ncol,nrow,nchan</code></dt><dd><p>Functions returning the dimensions of the object.</p></dd>
+
+<dt><code>space</code></dt><dd><p>A character string indicating the colorspace of the object.</p></dd>
+
+<dt><code>pget,pset</code></dt><dd><p>Functions to get and set single pixel values.</p></dd>
+
+<dt><code>toR</code></dt><dd><p>A function to convert the object to an R array.</p></dd>
+
+<dt><code>fromGPU</code></dt><dd><p>A function retrieving the object from GPU memory.</p></dd>
+
+<dt><code>toGPU</code></dt><dd><p>A function sending the object to GPU memory.</p></dd>
+
+<dt><code>GPU</code></dt><dd><p>A boolean indicating whether the object is in GPU memory.</p></dd>
+
+<dt><code>write</code></dt><dd><p>A function to write the object to a file.</p></dd>
+
+</dl>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='image.html'>image</a></code>, <code><a href='Video-class.html'>Video</a></code>, <code><a href='Stream-class.html'>Stream</a></code></p></div>

@@ -1,20 +1,57 @@
-arma::cube _farneback(Image& image1, Image& image2, double pyr_scale, int levels,
-                      int winsize, int iterations, int poly_n, double poly_sigma) {
-  arma::cube outputArray;
-  cv::Mat flow;
+void _farneback(Image& image1, Image& image2, double pyr_scale, int levels,
+                int winsize, int iterations, int poly_n, double poly_sigma,
+                bool use_init, bool Gaussian, Image& target) {
+  int flags = 0;
 
-  calcOpticalFlowFarneback(image1.image, image2.image, flow, pyr_scale, levels,
-                           winsize, iterations, poly_n, poly_sigma,
-                           cv::OPTFLOW_FARNEBACK_GAUSSIAN);
+  if (use_init)
+    flags += cv::OPTFLOW_USE_INITIAL_FLOW;
 
-  outputArray.set_size(image1.image.rows, image1.image.cols, 2);
+  if (Gaussian)
+    flags += cv::OPTFLOW_FARNEBACK_GAUSSIAN;
 
-  for (int i = 0; i < flow.rows; i++) {
-    for (int j = 0; j < flow.cols; j++) {
-      outputArray(i, j, 0) = flow.at<cv::Point2f>(i, j).x;
-      outputArray(i, j, 1) = -flow.at<cv::Point2f>(i, j).y;
+  if (image1.GPU) {
+    if (image2.GPU) {
+      if (target.GPU) {
+        calcOpticalFlowFarneback(image1.uimage, image2.uimage, target.uimage, pyr_scale,
+                                 levels, winsize, iterations, poly_n, poly_sigma, flags);
+        return cv::multiply(target.uimage, cv::Scalar(1, -1), target.uimage, 1, target.uimage.depth());
+      }
+
+      calcOpticalFlowFarneback(image1.uimage, image2.uimage, target.image, pyr_scale,
+                               levels, winsize, iterations, poly_n, poly_sigma, flags);
+      return cv::multiply(target.image, cv::Scalar(1, -1), target.image, 1, target.image.depth());
     }
+
+    if (target.GPU) {
+      calcOpticalFlowFarneback(image1.uimage, image2.image, target.uimage, pyr_scale,
+                               levels, winsize, iterations, poly_n, poly_sigma, flags);
+      return cv::multiply(target.uimage, cv::Scalar(1, -1), target.uimage, 1, target.uimage.depth());
+    }
+
+    calcOpticalFlowFarneback(image1.uimage, image2.image, target.image, pyr_scale,
+                             levels, winsize, iterations, poly_n, poly_sigma, flags);
+    return cv::multiply(target.image, cv::Scalar(1, -1), target.image, 1, target.image.depth());
   }
 
-  return(outputArray);
+  if (image2.GPU) {
+    if (target.GPU) {
+      calcOpticalFlowFarneback(image1.image, image2.uimage, target.uimage, pyr_scale,
+                               levels, winsize, iterations, poly_n, poly_sigma, flags);
+      return cv::multiply(target.uimage, cv::Scalar(1, -1), target.uimage, 1, target.uimage.depth());
+    }
+
+    calcOpticalFlowFarneback(image1.image, image2.uimage, target.image, pyr_scale,
+                             levels, winsize, iterations, poly_n, poly_sigma, flags);
+    return cv::multiply(target.image, cv::Scalar(1, -1), target.image, 1, target.image.depth());
+  }
+
+  if (target.GPU) {
+    calcOpticalFlowFarneback(image1.image, image2.image, target.uimage, pyr_scale,
+                             levels, winsize, iterations, poly_n, poly_sigma, flags);
+    return cv::multiply(target.uimage, cv::Scalar(1, -1), target.uimage, 1, target.uimage.depth());
+  }
+
+  calcOpticalFlowFarneback(image1.image, image2.image, target.image, pyr_scale,
+                           levels, winsize, iterations, poly_n, poly_sigma, flags);
+  return cv::multiply(target.image, cv::Scalar(1, -1), target.image, 1, target.image.depth());
 }

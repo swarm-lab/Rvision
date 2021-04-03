@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.0</span>
       </span>
     </div>
 
@@ -118,7 +118,19 @@
     <li>
       <a href="../articles/z3_basic.html">3 - Basic operations</a>
     </li>
+    <li>
+      <a href="../articles/z4_inplace.html">4 - In-place, copy, and target operations</a>
+    </li>
+    <li>
+      <a href="../articles/z5_gpu.html">5 - GPU operations</a>
+    </li>
+    <li>
+      <a href="../articles/z6_queue.html">6 - Capture queues</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -157,7 +169,7 @@
  objects and lists of <code><a href='Image-class.html'>Image</a></code> objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sum</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>sum</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, target <span class='op'>=</span> <span class='st'>"new"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,11 +221,12 @@ sum of images to the function. It can take 3 values:</p><ul>
 </div><div class='output co'>#&gt;        B        G        R 
 #&gt; 37967180 34473652 29520940 </div><div class='input'>
 <span class='va'>balloon_vid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='video.html'>video</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_vid/Balloon.mp4"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>img_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='readNext.Rcpp_Stream.html'>readNext</a></span><span class='op'>(</span><span class='va'>balloon_vid</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>img_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='readNext.Rcpp_Queue.html'>readNext</a></span><span class='op'>(</span><span class='va'>balloon_vid</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>sum</span><span class='op'>(</span><span class='va'>img_list</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Class: image. 
 #&gt; Dimensions: 640x360.
-#&gt; Type: BGR, 3-channel, 32F.</div><div class='input'>
+#&gt; Type: BGR, 3-channel, 32F.
+#&gt; GPU: FALSE.</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

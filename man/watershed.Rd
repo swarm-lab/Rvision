@@ -34,17 +34,14 @@ Before passing \code{image} to the function, you have to roughly
 }
 \examples{
 dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
-dots_gray <- changeColorSpace(dots, "GRAY")
-dots_bin <- dots_gray < 200
-contours <- findContours(dots_bin)
-rows <- contours$contours[, 3]
-cols <- contours$contours[, 2]
-colors <- contours$contours[, 1] + 2
-markers <- array(0.0, dim = c(nrow(dots_bin), ncol(dots_bin), 1))
-markers[1:2, 1:2, 1] <- 1
-markers[cbind(rows, cols, 1)] <- colors
-markers <- image(markers)
-changeBitDepth(markers, "32S", target = "self")
+bw <- inRange(dots, 0, 250)
+medianBlur(bw, target = "self")
+sure_bg <- morph(bw, "dilate", k_shape = "ellipse", iterations = 3)
+dt <- distanceTransform(bw, "L2")
+sure_fg <- dt > 20
+unknown <- sure_bg - sure_fg
+markers <- connectedComponents(sure_fg, table = FALSE)$labels + 1
+markers <- markers * (invert(unknown) / 255)
 watershed(dots, markers)
 
 }

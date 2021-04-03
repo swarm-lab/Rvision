@@ -1,9 +1,10 @@
 #' @title Read Next Frame of an Object
 #'
-#' @description Read the next frame of a \code{\link{Video}} or
-#'  \code{\link{Stream}} object and returns it as an \code{\link{Image}} object.
+#' @description Read the next frame of a \code{\link{Video}}, \code{\link{Stream}},
+#'  or \code{\link{Queue}} object and returns it as an \code{\link{Image}} object.
 #'
-#' @param x A \code{\link{Video}} or \code{\link{Stream}} object.
+#' @param x A \code{\link{Video}}, \code{\link{Stream}}, or \code{\link{Queue}}
+#'  object.
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
@@ -22,13 +23,12 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Video}}, \code{\link{Stream}},
-#' \code{\link{Image}}, \code{\link{readFrame}}
+#' @seealso \code{\link{Video}}, \code{\link{Stream}}, \code{\link{Queue}},
+#'  \code{\link{Image}}, \code{\link{readFrame}}
 #'
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 #' frame_next <- readNext(balloon)
-#' release(balloon)
 #'
 #' @export
 readNext <- function(x, target = "new") UseMethod("readNext")
@@ -36,16 +36,18 @@ readNext <- function(x, target = "new") UseMethod("readNext")
 
 #' @title Release Object from Memory
 #'
-#' @description Close a \code{\link{Stream}} or \code{\link{Video}} object.
+#' @description Close a \code{\link{Video}}, \code{\link{Stream}},
+#'  \code{\link{VideoWriter}} or \code{\link{Queue}} object.
 #'
-#' @param x A \code{\link{Video}} or \code{\link{Stream}} object.
+#' @param x A \code{\link{Video}}, \code{\link{Stream}}, \code{\link{VideoWriter}},
+#'  or \code{\link{Queue}}, object.
 #'
-#' @return If successful, the \code{\link{Stream}} or
-#' \code{\link{Video}} object is cleared from memory
+#' @return If successful, the object is cleared from memory
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Stream}}, \code{\link{stream}}, \code{\link{Video}}
+#' @seealso \code{\link{Video}}, \code{\link{Stream}}, \code{\link{VideoWriter}},
+#'  \code{\link{Queue}}
 #'
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
@@ -109,7 +111,6 @@ release <- function(x) UseMethod("release")
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 #' getProp(balloon, "FPS")
 #' setProp(balloon, "POS_FRAMES", 25)
-#' release(balloon)
 #'
 #' @export
 setProp <- function(x, property, value) UseMethod("setProp")
@@ -122,43 +123,67 @@ getProp <- function(x, property) UseMethod("getProp")
 
 #' @title Codec of a Video
 #'
-#' @description Retrieve the codec of a \code{\link{Video}} object.
+#' @description Retrieve the codec of a \code{\link{Video}} or
+#'  \code{\link{VideoWriter}} object.
 #'
-#' @param x A \code{\link{Video}} object.
+#' @param x A \code{\link{Video}} or \code{\link{VideoWriter}} object.
 #'
 #' @return A character string corresponding to the
 #'  \href{http://www.fourcc.org/codecs.php}{FOURCC} code of the codec.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Video}}, \code{\link{video}}
+#' @seealso \code{\link{Video}}, \code{\link{video}}, \code{\link{VideoWriter}},
+#'  \code{\link{videoWriter}}
 #'
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 #' codec(balloon)
-#' release(balloon)
 #'
 #' @export
 codec <- function(x) UseMethod("codec")
 
 
-#' @title Framerate of a Video
+#' @title Frame Rate of a Video
 #'
-#' @description Retrieve the framerate (in frames per second) of a
-#'  \code{\link{Video}} object.
+#' @description Retrieve the frame rate (in frames per second) of a
+#'  \code{\link{Video}} or \code{\link{VideoWriter}} object.
 #'
-#' @param x A \code{\link{Video}} object.
+#' @param x A \code{\link{Video}} or \code{\link{VideoWriter}} object.
 #'
 #' @return A numeric value.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Video}}, \code{\link{video}}
+#' @seealso \code{\link{Video}}, \code{\link{video}}, \code{\link{VideoWriter}},
+#'  \code{\link{videoWriter}}
 #'
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 #' fps(balloon)
-#' release(balloon)
 #'
 #' @export
 fps <- function(x) UseMethod("fps")
+
+
+#' @title Reader Head Position
+#'
+#' @description Retrieve the index of the frame to be read next in a
+#'  \code{\link{Video}} or \code{\link{Queue}} object.
+#'
+#' @param x A \code{\link{Video}} or \code{\link{Queue}} object.
+#'
+#' @return A numeric value.
+#'
+#' @note Frame index starts at 0 (i.e. the first image has index 0).
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Video}}, \code{\link{Queue}}
+#'
+#' @examples
+#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+#' frame(balloon)
+#'
+#' @export
+frame <- function(x) UseMethod("frame")

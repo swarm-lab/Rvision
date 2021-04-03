@@ -6,8 +6,27 @@
 #'
 #' @docType class
 #'
-#' @description \code{VideoWriter} objects contains an \href{http://opencv.org/}{OpenCV}
+#' @description A \code{VideoWriter} object contains an \href{http://opencv.org/}{OpenCV}
 #'  video writer to an output file.
+#'
+#' @slot dim,ncol,nrow Functions returning the dimensions of the object.
+#'
+#' @slot codec Function returning the codec of the object.
+#'
+#' @slot fps Function returning the frame rate of the object.
+#'
+#' @slot api Function returning the api use to write frames to the output file.
+#'
+#' @slot output Function returning the path to the output file.
+#'
+#' @slot get,set Functions to access and set internal properties of the object.
+#'
+#' @slot open,isOpened Functions to open a new video write or check the status
+#'  of the video writer.
+#'
+#' @slot write Function to write a frame to the output file.
+#'
+#' @slot release Function to release the object from memory.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #' @export
@@ -87,7 +106,7 @@ videoWriter <- function(outputFile, fourcc, fps, height, width, isColor = TRUE,
 }
 
 
-#' @title Test for a VideoWriter object
+#' @title Test for a VideoWriter Object
 #'
 #' @description Tests whether the object is of class \code{\link{VideoWriter}}
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/VideoWriterClass.R
 \name{isVideoWriter}
 \alias{isVideoWriter}
-\title{Test for a VideoWriter object}
+\title{Test for a VideoWriter Object}
 \usage{
 isVideoWriter(object)
 }

@@ -6,8 +6,27 @@
 #'
 #' @docType class
 #'
-#' @description \code{Video} objects contains an \href{http://opencv.org/}{OpenCV}
+#' @description A \code{Video} object contains an \href{http://opencv.org/}{OpenCV}
 #'  video that originates from a video file.
+#'
+#' @slot dim,ncol,nrow Functions returning the dimensions of the object.
+#'
+#' @slot nframes Function returning the number of frames in the object.
+#'
+#' @slot codec Function returning the codec of the object.
+#'
+#' @slot fps Function returning the frame rate of the object.
+#'
+#' @slot frame Function returning the index of the frame to be read next.
+#'
+#' @slot get,set Functions to access and set internal properties of the object.
+#'
+#' @slot isOpened Function to check the status of the video stream.
+#'
+#' @slot readNext,readFrame Functions to access the next or an arbitrary frame
+#'  in the stream.
+#'
+#' @slot release Function to release the object from memory.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -61,7 +80,6 @@
 #'
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
-#' release(balloon)
 #'
 #' @export
 video <- function(filename, api = "ANY") {
@@ -69,9 +87,9 @@ video <- function(filename, api = "ANY") {
 }
 
 
-#' @title Test for a Video object
+#' @title Test for a Video Object
 #'
-#' @description Tests whether the object is of class \code{\link{Video}}
+#' @description Tests whether the object is of class \code{\link{Video}}.
 #'
 #' @param object Any R object.
 #'
@@ -85,7 +103,6 @@ video <- function(filename, api = "ANY") {
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 #' isVideo(balloon)
-#' release(balloon)
 #'
 #' @export
 isVideo <- function(object) {
@@ -109,7 +126,6 @@ isVideo <- function(object) {
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 #' dim(balloon)
-#' release(balloon)
 #'
 #' @export
 dim.Rcpp_Video <- function(x) {
@@ -139,7 +155,6 @@ dim.Rcpp_Video <- function(x) {
 #' nrow(balloon)
 #' ncol(balloon)
 #' nframes(balloon)
-#' release(balloon)
 #'
 #' @export
 #' @rdname video_dimensions
@@ -163,28 +178,9 @@ nframes <- function(x) {
 }
 
 
-#' @title Video Reader Position
-#'
-#' @description Retrieve the index of the frame to be read next in a
-#'  \code{\link{Video}} object.
-#'
-#' @param x A \code{\link{Video}} object.
-#'
-#' @return A numeric value.
-#'
-#' @note Frame index starts at 0 (i.e. the first image has index 0).
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Video}}, \code{\link{video}}
-#'
-#' @examples
-#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
-#' frame(balloon)
-#' release(balloon)
-#'
 #' @export
-frame <- function(x) {
+#' @rdname frame
+frame.Rcpp_Video <- function(x) {
   if (!isVideo(x))
     stop("This is not a Video object.")
 
@@ -262,8 +258,6 @@ release.Rcpp_Video <- function(x) {
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 #' frame10 <- readFrame(balloon, 10)
-#' frame11 <- readNext(balloon)
-#' release(balloon)
 #'
 #' @export
 readFrame <- function(x, pos, target = "new") {
@@ -287,9 +281,6 @@ readFrame <- function(x, pos, target = "new") {
 readNext.Rcpp_Video <- function(x, target = "new") {
   if (!isVideo(x))
     stop("This is not a Video object.")
-
-  # if (x$frame() >= x$nframes())
-  #   stop("No more frames available.")
 
   if (isImage(target)) {
     x$readNext(target)

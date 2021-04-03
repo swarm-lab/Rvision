@@ -54,7 +54,7 @@ If \code{target="new"}, the function returns an \code{\link{Image}}
 }
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-balloon_sobel <- sobel(balloon, 1, 1, 5)
+balloon_sobel <- sobel(balloon)
 
 }
 \seealso{

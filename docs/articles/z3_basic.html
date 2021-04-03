@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.0</span>
       </span>
     </div>
 
@@ -71,7 +71,19 @@
     <li>
       <a href="../articles/z3_basic.html">3 - Basic operations</a>
     </li>
+    <li>
+      <a href="../articles/z4_inplace.html">4 - In-place, copy, and target operations</a>
+    </li>
+    <li>
+      <a href="../articles/z5_gpu.html">5 - GPU operations</a>
+    </li>
+    <li>
+      <a href="../articles/z6_queue.html">6 - Capture queues</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -110,20 +122,6 @@
 
     
     
-<p><strong>This page describes all basic operations on videos and images.</strong></p>
-<hr>
-<ul>
-<li><a href="#object-properties">3.1 - Object properties</a></li>
-<li>
-<a href="#displaying-images">3.2 - Displaying images</a>
-<ul>
-<li><a href="#method-compatible-with-base-R">3.2.1 - Method compatible with base R</a></li>
-<li><a href="#method-incompatible-with-base-R">3.2.2 - Method incompatible with base R</a></li>
-</ul>
-</li>
-<li><a href="#access-replace">3.3 - Accessing/replacing parts of an image</a></li>
-</ul>
-<hr>
 <div id="object-properties" class="section level2">
 <h2 class="hasAnchor">
 <a href="#object-properties" class="anchor"></a>3.1 - Object properties</h2>
@@ -213,75 +211,120 @@
 <div id="displaying-images" class="section level2">
 <h2 class="hasAnchor">
 <a href="#displaying-images" class="anchor"></a>3.2 - Displaying images</h2>
-<p>There are two methods for displaying images. The first method offers full compatibility with base <a href="https://cran.r-project.org"><code>R</code></a> plotting methods, which allows for drawing non-destructively over an image using <code><a href="https://rdrr.io/r/graphics/lines.html">graphics::lines()</a></code>, <code>garaphics::points()</code>, etc. This method is however is however rather slow and therefore not suitable for applications requiring quick refresh rates between successive images (e.g. when playing a video).</p>
-<p>The second method uses <a href="http://opencv.org/"><code>OpenCV</code></a>’s capabilities to display images at high frame rates, making it suitable to play videos for instance. It is however incompatible with base <a href="https://cran.r-project.org"><code>R</code></a> plotting functions. However you can use the <a href="../drawing.html">drawing functions</a> provided with <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> to draw over images - destructively this time - before displaying them.</p>
 <div id="method-compatible-with-base-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#method-compatible-with-base-r" class="anchor"></a>3.2.1 - Method compatible with base R</h3>
+<p>There are two methods for displaying images. The first method (<code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>) offers full compatibility with base <code>R</code> plotting methods, which allows for drawing non-destructively over an image using <code><a href="https://rdrr.io/r/graphics/lines.html">graphics::lines()</a></code>, <code><a href="https://rdrr.io/r/graphics/points.html">graphics::points()</a></code>, etc. For instance:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># Find the path to the bunny.png image provided with Rvision</span>
+<span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+
+<span class="co"># Load the image in memory</span>
 <span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span>
 
+<span class="co"># Plot the image using the base R plotting device</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span>
+
+<span class="co"># Draw lines over the plotted image</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">400</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">550</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">430</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">570</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
-<p><img src="z3_basic_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p>Note that this method is rather slow and therefore not suitable for applications requiring quick refresh rates between successive images (e.g. when playing a video).</p>
 </div>
 <div id="method-incompatible-with-base-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#method-incompatible-with-base-r" class="anchor"></a>3.2.2 - Method incompatible with base R</h3>
+<p>The second method (<code><a href="../reference/display.html">display()</a></code>) uses <a href="http://opencv.org/"><code>OpenCV</code></a>’s capabilities to display images at high frame rates, making it suitable to play videos. For instance:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span>
+<span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+
+<span class="co"># Open the video file stream</span>
 <span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span>
 
-<span class="co"># Create an empty display window (note: it can hide behind other windows)</span>
+<span class="co"># Create an empty display window with width and height half of that of the video </span>
+<span class="co"># (note: the display can hide behind other windows, especially on Mac)</span>
 <span class="fu"><a href="../reference/newDisplay.html">newDisplay</a></span><span class="op">(</span><span class="st">"My display"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> 
 
 <span class="co"># Display images (note: it creates the display window if it doesn't exist yet)</span>
 <span class="co"># The 3rd argument ('delay') is the minimum time in ms during which the image </span>
 <span class="co"># should be displayed before it can be replaced</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/display.html">display</a></span><span class="op">(</span><span class="fu"><a href="../reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span>, <span class="st">"My display"</span>, <span class="fl">25</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/display.html">display</a></span><span class="op">(</span><span class="fu"><a href="../reference/readNext.Rcpp_Queue.html">readNext</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span>, <span class="st">"My display"</span>, <span class="fl">25</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>
 <span class="op">}</span>
 
-<span class="co"># Close display</span>
-<span class="fu"><a href="../reference/destroyDisplay.html">destroyDisplay</a></span><span class="op">(</span><span class="st">"My display"</span><span class="op">)</span>
-
-<span class="co"># Close all opened displays</span>
-<span class="fu"><a href="../reference/destroyDisplay.html">destroyAllDisplays</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="co"># Close the display window</span>
+<span class="fu"><a href="../reference/destroyDisplay.html">destroyDisplay</a></span><span class="op">(</span><span class="st">"My display"</span><span class="op">)</span></code></pre></div>
+<p>Note that the <code><a href="../reference/display.html">display()</a></code> method is incompatible with base <code>R</code> plotting methods. However, you can use the drawing functions provided with <code>Rvision</code> to draw over images - destructively this time - before displaying them.</p>
 <hr>
 </div>
 </div>
-<div id="accessingreplacing-parts-of-an-image" class="section level2">
+<div id="accessing-parts-of-an-image" class="section level2">
 <h2 class="hasAnchor">
-<a href="#accessingreplacing-parts-of-an-image" class="anchor"></a>3.3 - Accessing/replacing parts of an image</h2>
-<p>You can access parts of an image in the same way you would do it with arrays in base <a href="https://cran.r-project.org"><code>R</code></a>.</p>
+<a href="#accessing-parts-of-an-image" class="anchor"></a>3.3 - Accessing parts of an image</h2>
+<p>You can access the pixel values of an image in exactly the same way you would access the values of a <code><a href="https://rdrr.io/r/base/array.html">base::array</a></code>. Actually, <code>Rvision</code> converts the image to a <code><a href="https://rdrr.io/r/base/array.html">base::array</a></code> before returning the desired values. For instance:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_image</span><span class="op">[</span><span class="op">]</span>          <span class="co"># Entire image</span>
-<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span>,<span class="op">]</span>      <span class="co"># Bottom-right pixel</span>
-<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span>,,<span class="op">]</span>       <span class="co"># Bottom row of pixels</span>
-<span class="va">my_image</span><span class="op">[</span>, <span class="fl">1</span>,<span class="op">]</span>       <span class="co"># Leftmost column of pixels</span>
-<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>  <span class="co"># All pixels between the 1st and 5th row and column</span>
+<code class="sourceCode R"><span class="va">my_image</span><span class="op">[</span><span class="op">]</span>                  <span class="co"># Entire image</span>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span>,<span class="op">]</span>             <span class="co"># Bottom-left pixel</span>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span>,,<span class="op">]</span>               <span class="co"># Bottom row of pixels</span>
+<span class="va">my_image</span><span class="op">[</span>, <span class="fl">1</span>,<span class="op">]</span>              <span class="co"># Leftmost column of pixels</span>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>         <span class="co"># All pixels between the 1st and 5th row and column</span>
 <span class="va">my_image</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,<span class="op">]</span>  <span class="co"># Every other row and column of pixels</span></code></pre></div>
-<p>Note that images are not exactly like traditional matrices. Color images have multiple layers, each corresponsing to a dimension in the BGR or BGRA space (Blue, Green, Red, Alpha transparency). Therefore, when accessing a pixel of a color image, you will obtain 3 or 4 values in return. Grayscale images, on the other hand, function similarly to regular monolayer matrices in base <a href="https://cran.r-project.org"><code>R</code></a>.</p>
-<p>To replace parts of an image, you can use the <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> assignment operator. With grayscale images, it works exactly like in base <a href="https://cran.r-project.org"><code>R</code></a> with matrices.</p>
+<p>The <code><a href="../reference/pget.html">pget()</a></code> function can be used to quickly access the values of specific pixels by their x/y coordinates in the image. For instance:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_gray_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="st">"GRAY"</span><span class="op">)</span>
-<span class="va">my_gray_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">250</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>  <span class="co"># Turn the corresponding pixels to black</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_gray_image</span><span class="op">)</span></code></pre></div>
-<p><img src="z3_basic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<p>With color images however, you will need to supply 3 (for BGR images) or 4 (for BGRA images) values (or any multiple of 3 or 4 respectively).</p>
+<code class="sourceCode R"><span class="co"># Return the pixel values at x/y coordinates (110,190) and (200,100)</span>
+<span class="fu"><a href="../reference/pget.html">pget</a></span><span class="op">(</span><span class="va">my_image</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">110</span>, <span class="fl">200</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">190</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>This function returns a matrix where each column corresponds to one of the desired pixels and each row to the value of the pixels in each of the channels of the image (e.g. Blue, Red, Green).</p>
+<hr>
+</div>
+<div id="replacing-parts-of-an-image" class="section level2">
+<h2 class="hasAnchor">
+<a href="#replacing-parts-of-an-image" class="anchor"></a>3.4 - Replacing parts of an image</h2>
+<p>Images are not exactly like traditional <code>R</code> matrices. In particular, color images are made of multiple layers (also called channels), each corresponding to a dimension in a color space (e.g., the BGRA color space is composed of 4 channels: Blue, Green, Red, and Alpha/Transparency). Therefore, when replacing a pixel in a color image, it is necessary to provide values for each of these channels at once. This does not apply to grayscale images which have a single channel only and therefore behave similarly to regular monolayer matrices in base <code>R</code>.</p>
+<div id="grayscale-images" class="section level3">
+<h3 class="hasAnchor">
+<a href="#grayscale-images" class="anchor"></a>3.4.1 - Grayscale images</h3>
+<p>The traditional <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> assignment operator can be used to replace parts of a grayscale image, like it would be used to replace any parts of a traditional <code><a href="https://rdrr.io/r/base/matrix.html">base::matrix</a></code>. For instance:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">250</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">255</span>, <span class="fl">255</span><span class="op">)</span> <span class="co"># Turn the corresponding pixels to red</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></code></pre></div>
-<p><img src="z3_basic_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<p>The utility function <code>col2bgr</code> provided by <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> (not to be confused with <code>col2rgb</code> provided by the <code>grDevices</code> package and on which <code>col2bgr</code> is based) will conveniently convert any of the <a href="https://cran.r-project.org"><code>R</code></a>-compatible color specifications to color codes compatible with <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> images.</p>
+<code class="sourceCode R"><span class="co"># Make a grayscale copy of the my_image object created earlier</span>
+<span class="va">my_gray_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="st">"GRAY"</span><span class="op">)</span>
+
+<span class="co"># Turn the bottom-left corner of the image black (0 in the grayscale space)</span>
+<span class="va">my_gray_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">250</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>  
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_gray_image</span><span class="op">)</span></code></pre></div>
+<p>Finally, the <code><a href="../reference/pset.html">pset()</a></code> function can be used to quickly set the values of specific pixels by their x/y coordinates in the image. For instance:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">250</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/col2bgr.html">col2bgr</a></span><span class="op">(</span><span class="st">"blue"</span>, alpha <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># Turn the corresponding pixels to blue</span>
+<code class="sourceCode R"><span class="co"># Set a few pixels to white inside the black square added earlier</span>
+<span class="fu"><a href="../reference/pset.html">pset</a></span><span class="op">(</span><span class="va">my_gray_image</span>, <span class="fl">50</span><span class="op">:</span><span class="fl">100</span>, <span class="fl">50</span><span class="op">:</span><span class="fl">100</span>, <span class="st">"white"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_gray_image</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="color-images" class="section level3">
+<h3 class="hasAnchor">
+<a href="#color-images" class="anchor"></a>3.4.1 - Color images</h3>
+<p>The <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> assignment operator can also be used to replace parts of a color (i.e.  multi-channel) image. However, instead of taking in single values for each pixel to be replaced, it will take one value per pixel and per channel of the image. For instance:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Turn the bottom-left corner of the my_image object created earlier red. This </span>
+<span class="co"># is a BGRA image, so it has 4 channels which new values need to be specified.</span>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">250</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">255</span>, <span class="fl">255</span><span class="op">)</span> 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></code></pre></div>
-<p><img src="z3_basic_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>Note that if values are not specified for each channel, then the provided values will be recycled. For instance:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Turn the bottom-left corner of the my_image object completely transparent. </span>
+<span class="co"># Transparency will appear as white when the image is plotted. </span>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">250</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></code></pre></div>
+<p>The utility function <code><a href="../reference/col2bgr.html">col2bgr()</a></code> provided by <code>Rvision</code> (not to be confused with <code><a href="https://rdrr.io/r/grDevices/col2rgb.html">grDevices::col2rgb</a></code> on which <code><a href="../reference/col2bgr.html">col2bgr()</a></code> is based) will conveniently convert any of the <code>R</code>-compatible color specifications to color codes compatible with <code>Rvision</code> images. For instance:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Turn the bottom-left corner of the my_image object blue. </span>
+<span class="va">my_image</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">250</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/col2bgr.html">col2bgr</a></span><span class="op">(</span><span class="st">"blue"</span>, alpha <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></code></pre></div>
+<p>Finally, the <code><a href="../reference/pset.html">pset()</a></code> function can be used to quickly set the values of specific pixels by their x/y coordinates in the image. For instance:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Set a few pixels to green inside the black square added earlier</span>
+<span class="fu"><a href="../reference/pset.html">pset</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="fl">50</span><span class="op">:</span><span class="fl">100</span>, <span class="fl">50</span><span class="op">:</span><span class="fl">100</span>, <span class="st">"green"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></code></pre></div>
+</div>
 </div>
   </div>
 

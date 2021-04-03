@@ -12,13 +12,16 @@ farneback(
   winsize = 43,
   iterations = 3,
   poly_n = 7,
-  poly_sigma = 1.5
+  poly_sigma = 1.5,
+  use_init = FALSE,
+  Gaussian = FALSE,
+  target = "new"
 )
 }
 \arguments{
-\item{image1}{An \code{\link{Image}} object.}
+\item{image1}{A single-channel, 8U \code{\link{Image}} object.}
 
-\item{image2}{An \code{\link{Image}} object.}
+\item{image2}{A single-channel, 8U \code{\link{Image}} object.}
 
 \item{pyr_scale}{Parameter, specifying the image scale (<1) to build pyramids
 for each image; pyr_scale = 0.5 means a classical pyramid, where each next
@@ -41,11 +44,31 @@ field, typically poly_n = 5 or 7.}
 \item{poly_sigma}{Standard deviation of the Gaussian that is used to smooth
 derivatives used as a basis for the polynomial expansion; for poly_n = 5, you
 can set poly_sigma = 1.1, for poly_n = 7, a good value would be poly_sigma = 1.5.}
+
+\item{use_init}{A logical indicating whether the content of \code{target}
+should be used as an initial flow approximation.}
+
+\item{Gaussian}{A logical indicating whether to use a Gaussian filter instead
+of a box filter for optical flow estimation; usually, this option gives a
+more accurate flow than with a box filter, at the cost of lower speed;
+normally, \code{winsize} for a Gaussian window should be set to a larger
+value to achieve the same level of robustness.}
+
+\item{target}{The location where the results should be stored. It can take 3
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast but will replace the
+  content of \code{target}. \code{target} must be a single-channel, 32F
+  \code{\link{Image}} object with the same dimensions as \code{image1}.}
+}}
 }
 \value{
-A matrix with the same number of rows and columns as the original
- images, and two layers representing the x and y components of the optical
- flow for each pixel of the image.
+If \code{target="new"}, the function returns an \code{\link{Image}}
+ object. If \code{target} is an \code{\link{Image}} object, the function
+ returns nothing and modifies that \code{\link{Image}} object in place.
 }
 \description{
 Computes a dense optical flow using the Gunnar Farneback’s algorithm.
@@ -53,7 +76,9 @@ Computes a dense optical flow using the Gunnar Farneback’s algorithm.
 \examples{
 balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 balloon1 <- readFrame(balloon, 1)
-balloon2 <- readFrame(balloon, 25)
+changeColorSpace(balloon1, "GRAY", "self")
+balloon2 <- readFrame(balloon, 2)
+changeColorSpace(balloon2, "GRAY", "self")
 of <- farneback(balloon1, balloon2)
 
 }
@@ -63,7 +88,7 @@ Farnebäck G. Two-Frame Motion Estimation Based on Polynomial
  Berlin Heidelberg; 2003. pp. 363–370. doi:10.1007/3-540-45103-X_50
 }
 \seealso{
-\code{\link{plot.OF_array}}
+\code{\link{Image}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

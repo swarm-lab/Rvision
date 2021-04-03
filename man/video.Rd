@@ -52,7 +52,6 @@ Hereafter is a list of all supported APIs. Note that not all APIs will
 }
 \examples{
 balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
-release(balloon)
 
 }
 \author{

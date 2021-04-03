@@ -58,12 +58,10 @@ An \code{\link{Image}} object.
  zero pixel for each pixel of the source image.
 }
 \examples{
-file <- system.file("sample_img/balloon1.png", package = "Rvision")
-balloon <- image(file)
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 changeColorSpace(balloon, "GRAY", target = "self")
 bin <- balloon < 200
 dst <- distanceTransform(bin)
-plot(dst)
 
 }
 \author{

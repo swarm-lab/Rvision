@@ -41,7 +41,11 @@ Rcpp::DataFrame _simpleBlobDetector(Image image,
   cv::Ptr<cv::SimpleBlobDetector> detector = cv::SimpleBlobDetector::create(params);
   std::vector<cv::KeyPoint> keypoints;
 
-  detector->detect(image.image, keypoints);
+  if (image.GPU) {
+    detector->detect(image.uimage, keypoints);
+  } else {
+    detector->detect(image.image, keypoints);
+  }
 
   Rcpp::IntegerVector id(keypoints.size());
   Rcpp::NumericVector x(keypoints.size());

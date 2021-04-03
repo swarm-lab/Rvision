@@ -4,7 +4,7 @@
 \alias{fps.Rcpp_Video}
 \alias{fps.Rcpp_VideoWriter}
 \alias{fps}
-\title{Framerate of a Video}
+\title{Frame Rate of a Video}
 \usage{
 \method{fps}{Rcpp_Video}(x)
 
@@ -13,23 +13,23 @@
 fps(x)
 }
 \arguments{
-\item{x}{A \code{\link{Video}} object.}
+\item{x}{A \code{\link{Video}} or \code{\link{VideoWriter}} object.}
 }
 \value{
 A numeric value.
 }
 \description{
-Retrieve the framerate (in frames per second) of a
- \code{\link{Video}} object.
+Retrieve the frame rate (in frames per second) of a
+ \code{\link{Video}} or \code{\link{VideoWriter}} object.
 }
 \examples{
 balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 fps(balloon)
-release(balloon)
 
 }
 \seealso{
-\code{\link{Video}}, \code{\link{video}}
+\code{\link{Video}}, \code{\link{video}}, \code{\link{VideoWriter}},
+ \code{\link{videoWriter}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

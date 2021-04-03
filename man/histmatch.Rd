@@ -42,7 +42,6 @@ If \code{target="new"}, the function returns an \code{\link{Image}}
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
 dots_matched <- histmatch(dots, balloon)
-plot(dots_matched)
 
 }
 \seealso{

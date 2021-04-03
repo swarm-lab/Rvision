@@ -9,8 +9,10 @@
 
 ### Load package module ###
 Rcpp::loadModule("class_Image", TRUE)
-Rcpp::loadModule("class_Video", TRUE)
-Rcpp::loadModule("class_Stream", TRUE)
+Rcpp::loadModule("class_Capture", TRUE)
+# Rcpp::loadModule("class_Video", TRUE)
+# Rcpp::loadModule("class_BufferedVideo", TRUE)
+# Rcpp::loadModule("class_Stream", TRUE)
 Rcpp::loadModule("class_VideoWriter", TRUE)
 Rcpp::loadModule("methods_Arithmetic", TRUE)
 Rcpp::loadModule("methods_Statistics", TRUE)
@@ -467,6 +469,83 @@ methods::evalqOnLoad({
             })
 })
 
+methods::evalqOnLoad({
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_absdiff`(e1, e2, target)
+            })
+
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_absdiff`(e1, e2, e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_absdiff`(e1, e2, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_absdiffScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_absdiffScalar`(e1, rep(e2, length.out = e1$nchan()), e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_absdiffScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("absdiff", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              `_absdiffScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("absdiff", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_absdiffScalar`(e2, rep(e1, length.out = e2$nchan()), e2)
+              } else if (target == "new") {
+                out <- cloneImage(e2)
+                `_absdiffScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_absdiff`(e1, e2, out)
+              out
+            })
+
+  setMethod("absdiff", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_absdiffScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+              out
+            })
+
+  setMethod("absdiff", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e2)
+              `_absdiffScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+              out
+            })
+})
+
 
 ### Define generic statistics methods ###
 #' @title Sum Generic for Image objects
@@ -516,22 +595,22 @@ methods::evalqOnLoad({
 #' @name sum
 #'
 #' @export
-setGeneric("sum", function(x, ...) standardGeneric("sum"),
-           useAsDefault = function(x, ...) base::sum(x, ...),
+setGeneric("sum", function(x, ..., target = "new") standardGeneric("sum"),
+           useAsDefault = function(x, ..., target) base::sum(x, ...),
            group = "Summary")
 
 methods::evalqOnLoad({
   #' @name sum
   #' @rdname sum
   setMethod("sum", "list",
-            function(x, target = "new", ...) {
+            function(x, ..., target = "new") {
               test <- sapply(x, function(x) class(x) == "Rcpp_Image")
               if (all(test)) {
                 if (isImage(target)) {
-                  `_sumList`(x, target)
+                  invisible(lapply(x, `_plus`, image2 = target, target = target))
                 } else if (target == "new") {
                   out <- zeros(x[[1]]$nrow(), x[[1]]$ncol(), x[[1]]$nchan(), "32F")
-                  `_sumList`(x, out)
+                  lapply(x, `_plus`, image2 = out, target = out)
                   out
                 } else {
                   stop("Invalid target.")
@@ -551,6 +630,196 @@ methods::evalqOnLoad({
                                    c("B", "G", "R", "A"),
                                    NULL)
               sum
+            })
+})
+
+methods::evalqOnLoad({
+  setMethod("bitMin", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              if (any(dim(e1) != dim(e2)) | e1$depth() != e1$depth())
+                stop("'e1' and 'e2' must be Image objects with same dimensions, number of channels, and bit depth.")
+
+              if (any(dim(e1) != dim(target)) | e1$depth() != target$depth())
+                stop("'target' must have the same dimensions, number of channels, and bit depth as 'e1'.")
+
+              `_bitMin`(e1, e2, target)
+            })
+
+  setMethod("bitMin", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (any(dim(e1) != dim(e2)) | e1$depth() != e1$depth())
+                stop("'e1' and 'e2' must be Image objects with same dimensions, number of channels, and bit depth.")
+
+              if (target == "self") {
+                `_bitMin`(e1, e2, e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_bitMin`(e1, e2, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitMin", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              if (any(dim(e1) != dim(target)) | e1$depth() != target$depth())
+                stop("'target' must have the same dimensions, number of channels, and bit depth as 'e1'.")
+
+              `_bitMinScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("bitMin", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_bitMinScalar`(e1, rep(e2, length.out = e1$nchan()), e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_bitMinScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitMin", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              if (any(dim(e1) != dim(target)) | e1$depth() != target$depth())
+                stop("'target' must have the same dimensions, number of channels, and bit depth as 'e1'.")
+
+              `_bitMinScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("bitMin", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_bitMinScalar`(e2, rep(e1, length.out = e2$nchan()), e2)
+              } else if (target == "new") {
+                out <- cloneImage(e2)
+                `_bitMinScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitMin", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              if (any(dim(e1) != dim(e2)) | e1$depth() != e1$depth())
+                stop("'e1' and 'e2' must be Image objects with same dimensions, number of channels, and bit depth.")
+
+              out <- cloneImage(e1)
+              `_bitMin`(e1, e2, out)
+              out
+            })
+
+  setMethod("bitMin", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_bitMinScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+              out
+            })
+
+  setMethod("bitMin", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e2)
+              `_bitMinScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+              out
+            })
+})
+
+methods::evalqOnLoad({
+  setMethod("bitMax", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              if (any(dim(e1) != dim(e2)) | e1$depth() != e1$depth())
+                stop("'e1' and 'e2' must be Image objects with same dimensions, number of channels, and bit depth.")
+
+              if (any(dim(e1) != dim(target)) | e1$depth() != target$depth())
+                stop("'target' must have the same dimensions, number of channels, and bit depth as 'e1'.")
+
+              `_bitMax`(e1, e2, target)
+            })
+
+  setMethod("bitMax", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (any(dim(e1) != dim(e2)) | e1$depth() != e1$depth())
+                stop("'e1' and 'e2' must be Image objects with same dimensions, number of channels, and bit depth.")
+
+              if (target == "self") {
+                `_bitMax`(e1, e2, e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_bitMax`(e1, e2, out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitMax", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              if (any(dim(e1) != dim(target)) | e1$depth() != target$depth())
+                stop("'target' must have the same dimensions, number of channels, and bit depth as 'e1'.")
+
+              `_bitMaxScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("bitMax", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_bitMaxScalar`(e1, rep(e2, length.out = e1$nchan()), e1)
+              } else if (target == "new") {
+                out <- cloneImage(e1)
+                `_bitMaxScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitMax", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
+            function(e1, e2, target) {
+              if (any(dim(e1) != dim(target)) | e1$depth() != target$depth())
+                stop("'target' must have the same dimensions, number of channels, and bit depth as 'e1'.")
+
+              `_bitMaxScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+            })
+
+  setMethod("bitMax", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
+            function(e1, e2, target) {
+              if (target == "self") {
+                `_bitMaxScalar`(e2, rep(e1, length.out = e2$nchan()), e2)
+              } else if (target == "new") {
+                out <- cloneImage(e2)
+                `_bitMaxScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+                out
+              } else {
+                stop("Invalid target")
+              }
+            })
+
+  setMethod("bitMax", signature(e1 = "Rcpp_Image", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              if (any(dim(e1) != dim(e2)) | e1$depth() != e1$depth())
+                stop("'e1' and 'e2' must be Image objects with same dimensions, number of channels, and bit depth.")
+
+              out <- cloneImage(e1)
+              `_bitMax`(e1, e2, out)
+              out
+            })
+
+  setMethod("bitMax", signature(e1 = "Rcpp_Image", e2 = "numeric", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e1)
+              `_bitMaxScalar`(e1, rep(e2, length.out = e1$nchan()), out)
+              out
+            })
+
+  setMethod("bitMax", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "missing"),
+            function(e1, e2, target) {
+              out <- cloneImage(e2)
+              `_bitMaxScalar`(e2, rep(e1, length.out = e2$nchan()), out)
+              out
             })
 })
 
@@ -1100,10 +1369,12 @@ methods::evalqOnLoad({
     type <- object$space
     depth <- object$depth()
     chan <- object$nchan()
+    gpu <- object$GPU
 
     cat("Class: image. \n")
     cat("Dimensions: ", width, "x", height, ".\n", sep = "")
     cat("Type: ", type, ", ", chan, "-channel, ", depth, ".\n", sep = "")
+    cat("GPU: ", gpu, ".\n", sep = "")
   })
 
   setMethod("show", "Rcpp_Video", function(object) {

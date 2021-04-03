@@ -31,15 +31,9 @@ min.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  switch (x$nchan(),
-          matrix(`_min`(x), nrow = 1, ncol = 1, dimnames = list(c("min"), c("GRAY"))),
-          NA,
-          matrix(sapply(split(x), `_min`), nrow = 1, ncol = 3,
-                 dimnames = list(c("min"), c("B", "G", "R"))),
-          matrix(sapply(split(x), `_min`), nrow = 1, ncol = 4,
-                 dimnames = list(c("min"), c("B", "G", "R", "A"))),
-          NA
-  )
+  mins <- t(sapply(split(x), `_min`))
+  rownames(mins) <- "min"
+  mins
 }
 
 
@@ -49,15 +43,9 @@ max.Rcpp_Image <- function(x, ...) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  switch(x$nchan(),
-         matrix(`_max`(x), nrow = 1, ncol = 1, dimnames = list(c("max"), c("GRAY"))),
-         NA,
-         matrix(sapply(split(x), `_max`), nrow = 1, ncol = 3,
-                dimnames = list(c("max"), c("B", "G", "R"))),
-         matrix(sapply(split(x), `_max`), nrow = 1, ncol = 4,
-                dimnames = list(c("max"), c("B", "G", "R", "A"))),
-         NA
-  )
+  maxs <- t(sapply(split(x), `_max`))
+  rownames(maxs) <- "max"
+  maxs
 }
 
 
@@ -66,6 +54,62 @@ max.Rcpp_Image <- function(x, ...) {
 range.Rcpp_Image <- function(x, ...) {
   rbind(min(x), max(x))
 }
+
+
+#' @title Element-Wise Minimums and Maximums
+#'
+#' @description These functions calculates the per-element minimum or maximum of
+#'  2 \code{\link{Image}} objects or of 1 \code{\link{Image}} object and 1
+#'  numeric value/vector.
+#'
+#' @param e1,e2 Either 2 \code{\link{Image}} objects or 1 \code{\link{Image}}
+#'  object and 1 numeric value/vector. If a vector and its length is less than
+#'  the number of channels of the image, then it is recycled to match it.
+#'
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{e1} if it is an
+#'    \code{\link{Image}} object, otherwise into \code{e2} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{e1} or \code{e2} but will replace that of \code{target}.
+#'    Note that if \code{target} does not have the same dimensions, number of
+#'    channels, and bit depth as \code{e1} (if \code{e1} is an \code{\link{Image}}
+#'    object, \code{e2} otherwise), an error will be thrown.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{e1} in place if it is an \code{\link{Image}} object, otherwise it
+#'  modifies \code{e2} in place. If \code{target} is an \code{\link{Image}}
+#'  object, the function returns nothing and modifies that \code{\link{Image}}
+#'  object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{min.Rcpp_Image}}, \code{\link{max.Rcpp_Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' bitMax(balloon, c(0, 0, 127), "self")
+#' bitMin(balloon, c(127, 255, 255), "self")
+#'
+#' @name imageMinMax
+NULL
+#> NULL
+
+#' @rdname imageMinMax
+#' @export
+setGeneric("bitMin", function(e1, e2, target) { standardGeneric("bitMin") })
+
+#' @rdname imageMinMax
+#' @export
+setGeneric("bitMax", function(e1, e2, target) { standardGeneric("bitMax") })
+
 
 
 #' @title Mean Value of the Pixels in an Image
@@ -124,13 +168,13 @@ mean.Rcpp_Image <- function(x, ..., mask = NA) {
 #' @title Mean of Images in a List
 #'
 #' @description Returns the pixelwise mean of \code{\link{Image}} objects stored
-#' in a list.
+#'  in a list.
 #'
 #' @param x A list of \code{\link{Image}} objects. All images must have the same
-#'  dimensions, number of channels, and bitdepth.
+#'  dimensions, number of channels, and bit depth.
 #'
 #' @param target The location where the results should be stored when passing a
-#'  sum of images to the function. It can take 3 values:
+#'  list of images to the function. It can take 3 values:
 #'  \itemize{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
@@ -162,10 +206,12 @@ mean.list <- function(x, target = "new", ...) {
   test <- sapply(x, function(x) class(x) == "Rcpp_Image")
   if (all(test)) {
     if (isImage(target)) {
-      `_meanList`(x, target)
+      lapply(x, `_plus`, image2 = target, target = target)
+      divide(target, length(x), "self")
     } else if (target == "new") {
       out <- zeros(x[[1]]$nrow(), x[[1]]$ncol(), x[[1]]$nchan(), "32F")
-      `_meanList`(x, out)
+      lapply(x, `_plus`, image2 = out, target = out)
+      divide(out, length(x), "self")
       out
     } else {
       stop("Invalid target.")
@@ -206,6 +252,33 @@ minMaxLoc <- function(x) {
   } else {
     lapply(split(x), `_minMaxLoc`)
   }
+}
+
+
+#' @title Count Non-Zero Pixels
+#'
+#' @description \code{countNonZero} returns the number of non-zero pixels in an
+#'  \code{\link{Image}} object.
+#'
+#' @param image A single-channel \code{\link{Image}} object.
+#'
+#' @return An integer.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' changeColorSpace(balloon, "GRAY", "self")
+#' countNonZero(balloon > 100)
+#'
+#' @export
+countNonZero <- function(image) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  `_countNonZero`(image)
 }
 
 

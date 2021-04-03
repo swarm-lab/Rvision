@@ -1,15 +1,20 @@
 class Image {
 public:
   Image();
-  Image(std::string inputFile, std::string colorspace);
+  Image(std::string filename, std::string colorspace);
   Image(cv::Mat inputImage, std::string colorspace);
+  Image(cv::UMat inputImage, std::string colorspace);
   Image(arma::icube inputArray, std::string colorspace);
   Image(arma::fcube inputArray, std::string colorspace);
+  Image(const Image& image);
   cv::Mat image;
+  cv::UMat uimage;
   bool write(std::string outputFile);
   Rcpp::NumericMatrix pget(Rcpp::IntegerVector x, Rcpp::IntegerVector y);
   void pset(Rcpp::IntegerVector x, Rcpp::IntegerVector y, Rcpp::NumericMatrix color);
   arma::fcube toR();
+  void toGPU(), fromGPU();
+  bool GPU;
   Rcpp::NumericVector dim();
   int nrow(), ncol(), nchan();
   std::string depth(), space;
@@ -30,51 +35,55 @@ Image::Image() {
 
 }
 
-Image::Image(std::string inputFile, std::string colorspace) {
+Image::Image(std::string filename, std::string colorspace) {
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
 
-  this->image = cv::imread(Rcpp::as<std::string>(pathExpand(inputFile)), cv::IMREAD_UNCHANGED);
+  this->image = cv::imread(Rcpp::as<std::string>(pathExpand(filename)), cv::IMREAD_UNCHANGED);
   this->space = colorspace;
 
   if (!this->image.data) {
-    throw std::range_error("Could not open the image file.");
+    Rcpp::stop("Could not open the image file.");
   }
 
+  this->GPU = false;
   this->init();
 }
 
-Image::Image(cv::Mat inputImage, std::string colorspace) {
-  this->image = inputImage;
+Image::Image(cv::Mat inputMat, std::string colorspace) {
+  this->image = inputMat;
   this->space = colorspace;
+  this->GPU = false;
+  this->init();
+}
 
-  if (!this->image.data) {
-    throw std::range_error("Could not read the image matrix.");
-  }
-
+Image::Image(cv::UMat inputMat, std::string colorspace) {
+  this->uimage = inputMat;
+  this->space = colorspace;
+  this->GPU = true;
   this->init();
 }
 
 Image::Image(arma::Cube< int > inputArray, std::string colorspace) {
   arma2cv(inputArray, this->image);
   this->space = colorspace;
-
-  if (!this->image.data) {
-    throw std::range_error("Could not read the input array.");
-  }
-
+  this->GPU = false;
   this->init();
 }
 
 Image::Image(arma::Cube< float > inputArray, std::string colorspace) {
   arma2cv(inputArray, this->image);
   this->space = colorspace;
-
-  if (!this->image.data) {
-    throw std::range_error("Could not read the input array.");
-  }
-
+  this->GPU = false;
   this->init();
+}
+
+// Copy constructor
+Image::Image(const Image& image) {
+  image.image.copyTo(this->image);
+  image.uimage.copyTo(this->uimage);
+  this->GPU = image.GPU;
+  this->space = image.space;
 }
 
 void Image::init() {
@@ -92,9 +101,30 @@ void Image::init() {
   }
 }
 
+void Image::toGPU() {
+  if (!this->GPU) {
+    this->image.copyTo(this->uimage);
+    this->GPU = true;
+  } else {
+    Rcpp::warning("The image is already on the GPU.");
+  }
+}
+
+void Image::fromGPU() {
+  if (this->GPU) {
+    this->uimage.copyTo(this->image);
+    this->GPU = false;
+  } else {
+    Rcpp::warning("The image is already on the CPU.");
+  }
+}
+
 bool Image::write(std::string outputFile) {
   Rcpp::Environment base = Rcpp::Environment::base_env();
   Rcpp::Function pathExpand = base["path.expand"];
+
+  if (this->GPU)
+    return cv::imwrite(Rcpp::as<std::string>(pathExpand(outputFile)), this->uimage);
 
   return cv::imwrite(Rcpp::as<std::string>(pathExpand(outputFile)), this->image);
 }
@@ -121,7 +151,7 @@ Rcpp::NumericVector Image::_get1(int x, int y) {
   if (this->depth() == "64F")
     return Rcpp::NumericVector::create(this->image.at<double>(y, x));
 
-  throw std::range_error("Invalid bit depth.");
+  Rcpp::stop("Invalid bit depth.");
 }
 
 Rcpp::NumericVector Image::_get2(int x, int y) {
@@ -146,7 +176,7 @@ Rcpp::NumericVector Image::_get2(int x, int y) {
   if (this->depth() == "64F")
     return scalar2Col(this->image.at< cv::Vec<double, 2> >(y, x), 2);
 
-  throw std::range_error("Invalid bit depth.");
+  Rcpp::stop("Invalid bit depth.");
 }
 
 Rcpp::NumericVector Image::_get3(int x, int y) {
@@ -171,7 +201,7 @@ Rcpp::NumericVector Image::_get3(int x, int y) {
   if (this->depth() == "64F")
     return scalar2Col(this->image.at< cv::Vec<double, 3> >(y, x), 3);
 
-  throw std::range_error("Invalid bit depth.");
+  Rcpp::stop("Invalid bit depth.");
 }
 
 Rcpp::NumericVector Image::_get4(int x, int y) {
@@ -196,7 +226,7 @@ Rcpp::NumericVector Image::_get4(int x, int y) {
   if (this->depth() == "64F")
     return scalar2Col(this->image.at< cv::Vec<double, 4> >(y, x), 4);
 
-  throw std::range_error("Invalid bit depth.");
+  Rcpp::stop("Invalid bit depth.");
 }
 
 Rcpp::NumericMatrix Image::pget(Rcpp::IntegerVector x, Rcpp::IntegerVector y) {
@@ -217,7 +247,7 @@ Rcpp::NumericMatrix Image::pget(Rcpp::IntegerVector x, Rcpp::IntegerVector y) {
       out(Rcpp::_, i) = this->_get4(x(i) - 1, -y(i) + this->image.rows);
       break;
     default:
-      throw std::range_error("Images with more than 4 channels are not supported yet.");
+      Rcpp::stop("Images with more than 4 channels are not supported yet.");
     }
   }
 
@@ -240,7 +270,7 @@ void Image::_set1(int x, int y, Rcpp::NumericVector color) {
   } else if (this->depth() == "64F") {
     this->image.at< cv::Vec<double, 1> >(y, x) = color(0);
   } else {
-    throw std::range_error("Invalid bit depth.");
+    Rcpp::stop("Invalid bit depth.");
   }
 }
 
@@ -260,7 +290,7 @@ void Image::_set2(int x, int y, Rcpp::NumericVector color) {
   } else if (this->depth() == "64F") {
     this->image.at< cv::Vec<double, 2> >(y, x) = cv::Vec<double, 2>(color(0), color(1));
   } else {
-    throw std::range_error("Invalid bit depth.");
+    Rcpp::stop("Invalid bit depth.");
   }
 }
 
@@ -280,7 +310,7 @@ void Image::_set3(int x, int y, Rcpp::NumericVector color) {
   } else if (this->depth() == "64F") {
     this->image.at< cv::Vec<double, 3> >(y, x) = cv::Vec<double, 3>(color(0), color(1), color(2));
   } else {
-    throw std::range_error("Invalid bit depth.");
+    Rcpp::stop("Invalid bit depth.");
   }
 }
 
@@ -307,7 +337,7 @@ void Image::_set4(int x, int y, Rcpp::NumericVector color) {
     this->image.at< cv::Vec<double, 4> >(y, x) = cv::Vec<double, 4>(color(0),
                                           color(1), color(2), color(3));
   } else {
-    throw std::range_error("Invalid bit depth.");
+    Rcpp::stop("Invalid bit depth.");
   }
 }
 
@@ -327,32 +357,50 @@ void Image::pset(Rcpp::IntegerVector x, Rcpp::IntegerVector y, Rcpp::NumericMatr
       this->_set4(x(i) - 1, -y(i) + this->image.rows, color(Rcpp::_, i));
       break;
     default:
-      throw std::range_error("Images with more than 4 channels are not supported yet.");
+      Rcpp::stop("Images with more than 4 channels are not supported yet.");
     }
   }
 }
 
 Rcpp::NumericVector Image::dim() {
+  if (this->GPU)
+    return Rcpp::NumericVector::create(this->uimage.rows, this->uimage.cols, this->uimage.channels());
+
   return Rcpp::NumericVector::create(this->image.rows, this->image.cols, this->image.channels());
 }
 
 int Image::nrow() {
+  if (this->GPU)
+    return this->uimage.rows;
+
   return this->image.rows;
 }
 
 int Image::ncol() {
+  if (this->GPU)
+    return this->uimage.cols;
+
   return this->image.cols;
 }
 
 int Image::nchan() {
+  if (this->GPU)
+    return this->uimage.channels();
+
   return this->image.channels();
 }
 
 std::string Image::depth() {
+  if (this->GPU)
+    return type2str(this->uimage.depth());
+
   return type2str(this->image.depth());
 }
 
 arma::Cube< float > Image::toR() {
+  if (this->GPU)
+    Rcpp::stop("Conversion to R array is not available when 'image' is on the GPU.");
+
   arma::Cube< float > outputArray;
 
   switch(this->image.channels()) {
@@ -381,7 +429,7 @@ arma::Cube< float > Image::toR() {
     break;
   }
   default: {
-    throw std::range_error("Images with more than 4 channels are not supported yet.");
+    Rcpp::stop("Images with more than 4 channels are not supported yet.");
     break;
   }
   }
@@ -390,41 +438,86 @@ arma::Cube< float > Image::toR() {
 }
 
 void _changeBitDepth(Image& image, int depth, double scale, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return image.uimage.convertTo(target.uimage, depth, scale);
+
+    return image.uimage.convertTo(target.image, depth, scale);;
+  }
+
+  if (target.GPU)
+    return image.image.convertTo(target.uimage, depth, scale);
+
   image.image.convertTo(target.image, depth, scale);
 }
 
 void _changeColorSpace(Image& image, std::string colorSpace, Image& target) {
+  if (image.GPU) {
+    if (target.GPU) {
+      cv::cvtColor(image.uimage, target.uimage, string2conv(image.space + "2" + colorSpace));
+      target.space = colorSpace;
+      return;
+    }
+
+    cv::cvtColor(image.uimage, target.image, string2conv(image.space + "2" + colorSpace));
+    target.space = colorSpace;
+    return;
+  }
+
+  if (target.GPU) {
+    cv::cvtColor(image.image, target.uimage, string2conv(image.space + "2" + colorSpace));
+    target.space = colorSpace;
+    return;
+  }
+
   cv::cvtColor(image.image, target.image, string2conv(image.space + "2" + colorSpace));
   target.space = colorSpace;
 }
 
 Image _cloneImage(Image& image) {
-  cv::Mat copy;
-  image.image.copyTo(copy);
-  return Image(copy, image.space);
+  return Image(image);
 }
 
 Rcpp::List _split(Image& image) {
   Rcpp::List out(image.nchan());
-  std::vector<cv::Mat> channels(image.nchan());
 
-  cv::split(image.image, channels);
-
-  for (int i = 0; i < image.nchan(); i++) {
-    out[i] = Image(channels[i], "GRAY");
+  if (image.GPU) {
+    std::vector<cv::UMat> channels(image.nchan());
+    cv::split(image.uimage, channels);
+    for (int i = 0; i < image.nchan(); i++) {
+      out[i] = Image(channels[i], "GRAY");
+    }
+  } else {
+    std::vector<cv::Mat> channels(image.nchan());
+    cv::split(image.image, channels);
+    for (int i = 0; i < image.nchan(); i++) {
+      out[i] = Image(channels[i], "GRAY");
+    }
   }
 
   return out;
 }
 
 void _merge(Rcpp::List& channels, Image& target) {
-  std::vector<cv::Mat> tomerge(channels.size());
+  if (target.GPU) {
+    std::vector<cv::UMat> tomerge(channels.size());
+    for (int i = 0; i < channels.size(); i++) {
+      if (!as<Image>(channels[i]).GPU)
+        Rcpp::stop("All images in x must be on the GPU.");
 
-  for (int i = 0; i < channels.size(); i++) {
-    tomerge[i] = as<Image>(channels[i]).image;
+      tomerge[i] = as<Image>(channels[i]).uimage;
+    }
+    cv::merge(tomerge, target.uimage);
+  } else {
+    std::vector<cv::Mat> tomerge(channels.size());
+    for (int i = 0; i < channels.size(); i++) {
+      if (as<Image>(channels[i]).GPU)
+        Rcpp::stop("All images in x must be on the CPU.");
+
+      tomerge[i] = as<Image>(channels[i]).image;
+    }
+    cv::merge(tomerge, target.image);
   }
-
-  cv::merge(tomerge, target.image);
 }
 
 Rcpp::List _readMulti(std::string file, std::string colorspace) {
@@ -443,20 +536,53 @@ Rcpp::List _readMulti(std::string file, std::string colorspace) {
   return out;
 }
 
-Image _subimage(Image& image, int x, int y, int width, int height) {
-  cv::Mat out;
-  image.image(cv::Rect(x - 1, -(y - 1) + image.nrow() - height, width, height)).copyTo(out);
-  return Image(out, image.space);
+void _subimage(Image& image, int x, int y, int width, int height, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return image.uimage(cv::Rect(x - 1, -(y - 1) + image.nrow() - height, width, height)).copyTo(target.uimage);
+
+    return image.uimage(cv::Rect(x - 1, -(y - 1) + image.nrow() - height, width, height)).copyTo(target.image);
+  }
+
+  if (target.GPU)
+    return image.image(cv::Rect(x - 1, -(y - 1) + image.nrow() - height, width, height)).copyTo(target.uimage);
+
+  image.image(cv::Rect(x - 1, -(y - 1) + image.nrow() - height, width, height)).copyTo(target.image);
 }
 
-Image _copyMakeBorder(Image &image, int top, int bottom, int left, int right,
-                      int borderType, Rcpp::NumericVector borderColor) {
-  cv::Mat out;
-  cv::copyMakeBorder(image.image, out, top, bottom, left, right, borderType,
-                     col2Scalar(borderColor));
-  return Image(out, image.space);
+void _copyMakeBorder(Image &image, int top, int bottom, int left, int right,
+                      int borderType, Rcpp::NumericVector borderColor, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::copyMakeBorder(image.uimage, target.uimage, top, bottom, left, right,
+                                borderType, col2Scalar(borderColor));
+
+    return cv::copyMakeBorder(image.uimage, target.image, top, bottom, left, right,
+                              borderType, col2Scalar(borderColor));
+  }
+
+  if (target.GPU)
+    return cv::copyMakeBorder(image.image, target.uimage, top, bottom, left, right,
+                              borderType, col2Scalar(borderColor));
+
+  cv::copyMakeBorder(image.image, target.image, top, bottom, left, right,
+                     borderType, col2Scalar(borderColor));
 }
 
 Image _zeros(int nrow, int ncol, std::string type, std::string colorspace) {
   return Image(cv::Mat::zeros(nrow, ncol, str2type(type)), colorspace);
+}
+
+void _randu(Image& image, Rcpp::NumericVector low, Rcpp::NumericVector high) {
+  if (image.GPU)
+    return cv::randu(image.uimage, col2Scalar(low), col2Scalar(high));
+
+  cv::randu(image.image, col2Scalar(low), col2Scalar(high));
+}
+
+void _randn(Image& image, Rcpp::NumericVector mean, Rcpp::NumericVector stddev) {
+  if (image.GPU)
+    return cv::randn(image.uimage, col2Scalar(mean), col2Scalar(stddev));
+
+  cv::randn(image.image, col2Scalar(mean), col2Scalar(stddev));
 }

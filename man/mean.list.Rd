@@ -8,10 +8,10 @@
 }
 \arguments{
 \item{x}{A list of \code{\link{Image}} objects. All images must have the same
-dimensions, number of channels, and bitdepth.}
+dimensions, number of channels, and bit depth.}
 
 \item{target}{The location where the results should be stored when passing a
-sum of images to the function. It can take 3 values:
+list of images to the function. It can take 3 values:
 \itemize{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
@@ -32,7 +32,7 @@ If  \code{target="new"}, the function returns an \code{\link{Image}}
 }
 \description{
 Returns the pixelwise mean of \code{\link{Image}} objects stored
-in a list.
+ in a list.
 }
 \examples{
 balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))

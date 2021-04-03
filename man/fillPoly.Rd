@@ -23,7 +23,7 @@ This function does not return anything. It modifies \code{image} in
  place.
 }
 \description{
-\code{fillPolygon} fills all the pixels of an image withing a
+\code{fillPoly} fills all the pixels of an image withing a
  given polygon with a given color.
 }
 \examples{

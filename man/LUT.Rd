@@ -10,7 +10,7 @@ LUT(image, lut, target = "new")
 \item{image}{An \code{\link{Image}} object.}
 
 \item{lut}{A look-up table. This should be a vector with 256 elements, or a
-\code{256 x n} table, with n corresponding to the number of channels in
+\code{256 x n} matrix, with n corresponding to the number of channels in
 \code{image}. If \code{lut} is a vector and \code{image} has more than one
 channel, then \code{lut} is recycled for each channel.}
 
@@ -43,7 +43,6 @@ If \code{target="new"}, the function returns an \code{\link{Image}}
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 high_contrast_lut <- 255 * pbeta(0:255 / 255, 4, 4)
 high_contrast_balloon <- LUT(balloon, high_contrast_lut)
-plot(high_contrast_balloon)
 
 }
 \seealso{

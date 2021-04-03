@@ -13,9 +13,32 @@ An object of class \code{C++Class} of length 1.
 VideoWriter
 }
 \description{
-\code{VideoWriter} objects contains an \href{http://opencv.org/}{OpenCV}
+A \code{VideoWriter} object contains an \href{http://opencv.org/}{OpenCV}
  video writer to an output file.
 }
+\section{Slots}{
+
+\describe{
+\item{\code{dim,ncol,nrow}}{Functions returning the dimensions of the object.}
+
+\item{\code{codec}}{Function returning the codec of the object.}
+
+\item{\code{fps}}{Function returning the frame rate of the object.}
+
+\item{\code{api}}{Function returning the api use to write frames to the output file.}
+
+\item{\code{output}}{Function returning the path to the output file.}
+
+\item{\code{get,set}}{Functions to access and set internal properties of the object.}
+
+\item{\code{open,isOpened}}{Functions to open a new video write or check the status
+of the video writer.}
+
+\item{\code{write}}{Function to write a frame to the output file.}
+
+\item{\code{release}}{Function to release the object from memory.}
+}}
+
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }

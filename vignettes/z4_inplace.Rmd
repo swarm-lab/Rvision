@@ -1,0 +1,146 @@
+---
+title: "4 - In-place, copy, and target operations"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{4 - In-place, copy, and target operations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## 4.1 - Better performances with in-place operations
+
+While other image processing libraries for `R` are fast enough for most 
+operations on single images and often offer more options than `Rvision` (but we
+are working on closing the gap on that front), `Rvision` really shines in the 
+high-speed processing of large volumes of images (e.g. video and camera streams).
+
+Part of the reason is that [`OpenCV`](https://opencv.org/) - the computer vision
+library on top of which `Rvision` is built - is designed and optimized for 
+in-place operations, that is operations that change directly the content of an 
+object in memory without making a copy of it. Indeed, making copies of objects 
+in memory - especially of large ones like images - can add a significant amount
+of time to an operation. For that reason, most of `Rvision`'s functions offer 
+the option to perform their operations in-place, greatly increasing the 
+processing speed of large volumes of images.
+
+All operations that support in-place operations will have an argument named 
+"target" that can be set to the value "self". For instance:
+
+```{r eval=FALSE, echo=TRUE}
+# Find the path to the bunny.png image provided with Rvision
+path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+
+# Load the image in memory
+my_image <- image(filename = path_to_image)
+
+# Plot the original image
+plot(my_image)
+
+# Apply a Gaussian blur in place. Note that the operation will not return 
+# anything and the result will replace the content of my_image.
+gaussianBlur(my_image, 11, 11, 3, 3, target = "self")
+
+# Plot original image after modification
+plot(my_image)
+```
+
+---
+
+## 4.2 - Preserving originals with copy operations
+
+The downside of in-place operations is that the modification is destructive: the 
+original object in memory is replaced bit for bit by its modified version (we 
+are just talking about the RAM representation of the object here; the original 
+file on your drive is never modified directly). 
+
+However, it may be desirable in some cases to keep the original object in memory
+untouched. For this purpose, all the functions in `Rvision` that can modify 
+images also give users the option to perform their operations on a copy of the 
+original image. This will be slower but resemble the usual behavior of `R` 
+functions.
+
+By default, all operations are copy operations but this can be explicitely 
+specified by setting the "target" argument to "new". For instance:
+
+```{r eval=FALSE, echo=TRUE}
+# Find the path to the bunny.png image provided with Rvision
+path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+
+# Load the image in memory
+my_image <- image(filename = path_to_image)
+
+# Apply a Gaussian blur to a copy of the image. 
+my_blurred_copy <- gaussianBlur(my_image, 11, 11, 3, 3, target = "new")
+
+# Plot original image
+plot(my_image)
+
+# Plot blurred copy 
+plot(my_blurred_copy)
+```
+
+---
+
+## 4.3 - The best of both worlds: target operations
+
+But what if I want to preserve the original object AND be fast at the same time? 
+
+Then you are in luck. `Rvision` - still thanks to `OpenCV` - also offers "target" 
+operations, that is operations which results can be stored in another image in
+memory (the target) as long as that image was pre-allocated before the operation
+takes place and that it has the same memory footprint as the original image. 
+This is as fast as in-place operations and it does not modify the original image;
+instead, it modifies a separate image that serves as a placeholder for the 
+results. 
+ 
+All operations that support target operations will have an argument named 
+"target" that can be set to the name of the target image. For instance:
+
+```{r eval=FALSE, echo=TRUE}
+# Find the path to the bunny.png image provided with Rvision
+path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+
+# Load the image in memory
+my_image <- image(filename = path_to_image)
+
+# Create a zero-filled target image with the memory footprint of the original
+my_target <- zeros(nrow(my_image), ncol(my_image), nchan(my_image), bitdepth(my_image))
+
+# Apply a Gaussian blur to the original image but store the results in the 
+# target. Note that the operation will not return anything and the result will 
+# replace the content of my_target.
+gaussianBlur(my_image, 11, 11, 3, 3, target = my_target)
+
+# Plot original image
+plot(my_image)
+
+# Plot target
+plot(my_target)
+```
+
+---
+
+## 4.4 - When to use in-place, copy, and target operations? 
+
+If you are going to process a single image (or a small batch of images) with 
+only one or a few simple operations, then copy operations are probably the best
+choice. They will be fast enough (a fraction of a second at most) and more 
+familiar to `R` users since they essentially mimic the behavior of traditional 
+`R` functions by always returning a new object. They are also very useful when 
+troubleshooting your pipeline since every step will be saved in a separate 
+object and can therefore be inspected individually for problems. 
+
+If you are going to process a large number of images (typically, when processing
+a video or camera stream) and you only care about preserving the final result of 
+the pipeline, then in-place operations will be the best choice. They will 
+provide the best performance both in terms of speed and overall memory footprint. 
+
+Finally, if you are going to process a large number of images but need to 
+preserve the original image or the result of an intermediary step in your 
+pipeline (e.g. in order to reuse it later in your pipeline), then target 
+operations should be preferred. 
+
+Note that the different operation types are not mutually exclusive and can be 
+used together in the same processing pipeline for increased flexibility.

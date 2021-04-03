@@ -30,7 +30,7 @@ void arma2cv(const arma::Cube<T> &src, cv::Mat &dst) {
   cv::flip(dst, dst, 0);
 }
 
-// Convert an Armadillo cube to OpenCV matrix. A copy is made (I think).
+// Convert an Armadillo matrix to OpenCV matrix. A copy is made (I think).
 template <typename T>
 void arma2cv(const arma::Mat<T> &src, cv::Mat_<T> &dst) {
   dst = cv::Mat_<T>{int(src.n_cols), int(src.n_rows), const_cast<T*>(src.memptr())};

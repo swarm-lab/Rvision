@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rvision: A basic (for now) computer vision library for R. — Rvision • Rvision</title>
+<title>Rvision: Computer vision library for R — Rvision • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
@@ -52,9 +52,10 @@
 
 
 
-<meta property="og:title" content="Rvision: A basic (for now) computer vision library for R. — Rvision" />
-<meta property="og:description" content="The Rvision package uses the OpenCV library to provide R users with
-some basic functions to read and manipulate images, videos and camera streams." />
+<meta property="og:title" content="Rvision: Computer vision library for R — Rvision" />
+<meta property="og:description" content="The Rvision package contains an OpenCV-based computer vision library
+providing methods to read and manipulate video and image files, as well as
+camera streams." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
 
@@ -87,7 +88,7 @@ some basic functions to read and manipulate images, videos and camera streams." 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.0</span>
       </span>
     </div>
 
@@ -118,7 +119,19 @@ some basic functions to read and manipulate images, videos and camera streams." 
     <li>
       <a href="../articles/z3_basic.html">3 - Basic operations</a>
     </li>
+    <li>
+      <a href="../articles/z4_inplace.html">4 - In-place, copy, and target operations</a>
+    </li>
+    <li>
+      <a href="../articles/z5_gpu.html">5 - GPU operations</a>
+    </li>
+    <li>
+      <a href="../articles/z6_queue.html">6 - Capture queues</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -147,14 +160,15 @@ some basic functions to read and manipulate images, videos and camera streams." 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Rvision: A basic (for now) computer vision library for R.</h1>
+    <h1>Rvision: Computer vision library for R</h1>
     <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/Rvision-package.R'><code>R/Rvision-package.R</code></a></small>
     <div class="hidden name"><code>Rvision.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>Rvision</code> package uses the OpenCV library to provide R users with
-some basic functions to read and manipulate images, videos and camera streams.</p>
+    <p>The <code>Rvision</code> package contains an OpenCV-based computer vision library
+providing methods to read and manipulate video and image files, as well as
+camera streams.</p>
     </div>
 
 
@@ -177,6 +191,7 @@ some basic functions to read and manipulate images, videos and camera streams.</
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Simon Garnier &lt;garnier@njit.edu&gt;</p>
+<p>John Muschelli &lt;muschellij2@gmail.com&gt;</p>
 <p>Maintainer: Simon Garnier &lt;garnier@njit.edu&gt;</p>
 
   </div>

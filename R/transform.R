@@ -583,12 +583,10 @@ warpPerspective <- function(image, warp_matrix, interp_mode = "linear", inverse_
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @examples
-#' file <- system.file("sample_img/balloon1.png", package = "Rvision")
-#' balloon <- image(file)
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' changeColorSpace(balloon, "GRAY", target = "self")
 #' bin <- balloon < 200
 #' dst <- distanceTransform(bin)
-#' plot(dst)
 #'
 #' @export
 distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
@@ -646,15 +644,17 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
 #'
 #' @param lo_diff Maximal lower brightness/color difference between the
 #'  currently observed pixel and one of its neighbors belonging to the component,
-#'  or a seed pixel being added to the component (see Details). This should be a
-#'  vector of length 4. If it is has less than 4 elements, they will be recycled.
-#'  If it has more, only the first 4 will be used.
+#'  or a seed pixel being added to the component (see Details). It can be a
+#'  single value or a vector of the same length as the number \code{n} of
+#'  channels in \code{image}. If it is shorter, its elements will be recycled.
+#'  If it has more, only the first \code{n} elements will be used.
 #'
 #' @param up_diff Maximal upper brightness/color difference between the
 #'  currently observed pixel and one of its neighbors belonging to the component,
-#'  or a seed pixel being added to the component (see Details). This should be a
-#'  vector of length 4. If it is has less than 4 elements, they will be recycled.
-#'  If it has more, only the first 4 will be used.
+#'  or a seed pixel being added to the component (see Details). It can be a
+#'  single value or a vector of the same length as the number \code{n} of
+#'  channels in \code{image}. If it is shorter, its elements will be recycled.
+#'  If it has more, only the first \code{n} elements will be used.
 #'
 #' @param connectivity The connetivity neighborhood to decide whether 2 pixels
 #'  are contiguous. This parameter can take two values:
@@ -699,14 +699,11 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
 #'
 #' @examples
 #' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
-#' dots_gray <- changeColorSpace(dots, "GRAY")
-#' dots_bin <- dots_gray < 200
 #' floodFill(dots, color = "green")
-#' plot(dots)
 #'
 #' @export
-floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = rep(0, 4),
-                      up_diff = rep(0, 4), connectivity = 4) {
+floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = 0,
+                      up_diff = 0, connectivity = 4) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
@@ -716,11 +713,10 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = rep(0, 4
   if (!(connectivity %in% c(4, 8)))
     stop("'connectivity' must be either 4 or 8.")
 
-  lo_diff <- rep(lo_diff, length.out = 4)
-  up_diff <- rep(up_diff, length.out = 4)
-
-  `_floodFill`(image, seed - 1, col2bgr(color, alpha = TRUE), lo_diff,
-               up_diff, connectivity)
+  `_floodFill`(image, seed - 1, col2bgr(color, alpha = TRUE),
+               rep(lo_diff, length.out = image$nchan()),
+               rep(up_diff, length.out = image$nchan()),
+               connectivity)
 }
 
 
@@ -732,7 +728,7 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = rep(0, 4
 #' @param image An \code{\link{Image}} object.
 #'
 #' @param lut A look-up table. This should be a vector with 256 elements, or a
-#'  \code{256 x n} table, with n corresponding to the number of channels in
+#'  \code{256 x n} matrix, with n corresponding to the number of channels in
 #'  \code{image}. If \code{lut} is a vector and \code{image} has more than one
 #'  channel, then \code{lut} is recycled for each channel.
 #'
@@ -764,7 +760,6 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = rep(0, 4
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' high_contrast_lut <- 255 * pbeta(0:255 / 255, 4, 4)
 #' high_contrast_balloon <- LUT(balloon, high_contrast_lut)
-#' plot(high_contrast_balloon)
 #'
 #' @export
 LUT <- function(image, lut, target = "new") {
@@ -844,7 +839,6 @@ LUT <- function(image, lut, target = "new") {
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
 #' dots_matched <- histmatch(dots, balloon)
-#' plot(dots_matched)
 #'
 #' @export
 histmatch <- function(image, reference, target = "new") {
@@ -911,14 +905,16 @@ histmatch <- function(image, reference, target = "new") {
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon_eq <- histEq(balloon)
-#' plot(balloon_eq)
 #'
 #' @export
 histEq <- function(image, target = "new") {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
-  if (image$space == "GRAY") {
+  if (image$depth() != "8U")
+    stop("'image' depth must be 8U.")
+
+  if (image$nchan() == 1) {
     if (isImage(target)) {
       `_histEqGRAY`(image, target)
     } else if (target == "self") {
@@ -930,7 +926,7 @@ histEq <- function(image, target = "new") {
     } else {
       stop("Invalid target.")
     }
-  } else if (image$space == "BGR") {
+  } else if (image$nchan() >= 3) {
     if (isImage(target)) {
       `_histEqBGR`(image, target)
     } else if (target == "self") {
@@ -943,6 +939,6 @@ histEq <- function(image, target = "new") {
       stop("Invalid target.")
     }
   } else {
-    stop("The colorspace of 'image' must be either GRAY or BGR.")
+    stop("'image' must have 1 or 3 or more channels.")
   }
 }

@@ -2,9 +2,9 @@
 #'
 #' @description Computes a dense optical flow using the Gunnar Farneback’s algorithm.
 #'
-#' @param image1 An \code{\link{Image}} object.
+#' @param image1 A single-channel, 8U \code{\link{Image}} object.
 #'
-#' @param image2 An \code{\link{Image}} object.
+#' @param image2 A single-channel, 8U \code{\link{Image}} object.
 #'
 #' @param pyr_scale Parameter, specifying the image scale (<1) to build pyramids
 #'  for each image; pyr_scale = 0.5 means a classical pyramid, where each next
@@ -28,9 +28,29 @@
 #'  derivatives used as a basis for the polynomial expansion; for poly_n = 5, you
 #'  can set poly_sigma = 1.1, for poly_n = 7, a good value would be poly_sigma = 1.5.
 #'
-#' @return A matrix with the same number of rows and columns as the original
-#'  images, and two layers representing the x and y components of the optical
-#'  flow for each pixel of the image.
+#' @param use_init A logical indicating whether the content of \code{target}
+#'  should be used as an initial flow approximation.
+#'
+#' @param Gaussian A logical indicating whether to use a Gaussian filter instead
+#'  of a box filter for optical flow estimation; usually, this option gives a
+#'  more accurate flow than with a box filter, at the cost of lower speed;
+#'  normally, \code{winsize} for a Gaussian window should be set to a larger
+#'  value to achieve the same level of robustness.
+#'
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. \code{target} must be a single-channel, 32F
+#'    \code{\link{Image}} object with the same dimensions as \code{image1}.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -38,50 +58,53 @@
 #'  Expansion. In: Bigun J, Gustavsson T, editors. Image Analysis. Springer
 #'  Berlin Heidelberg; 2003. pp. 363–370. doi:10.1007/3-540-45103-X_50
 #'
-#' @seealso \code{\link{plot.OF_array}}
+#' @seealso \code{\link{Image}}
 #'
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 #' balloon1 <- readFrame(balloon, 1)
-#' balloon2 <- readFrame(balloon, 25)
+#' changeColorSpace(balloon1, "GRAY", "self")
+#' balloon2 <- readFrame(balloon, 2)
+#' changeColorSpace(balloon2, "GRAY", "self")
 #' of <- farneback(balloon1, balloon2)
 #'
 #' @export
 farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
-                      iterations = 3, poly_n = 7, poly_sigma = 1.5) {
+                      iterations = 3, poly_n = 7, poly_sigma = 1.5, use_init = FALSE,
+                      Gaussian = FALSE, target = "new") {
   if (pyr_scale >= 1)
-    stop("pyr_scale must be < 1.")
+    stop("'pyr_scale' must be < 1.")
 
   if (!isImage(image1) | !isImage(image2))
-    stop("image1 and image2 must be Image objects.")
+    stop("'image1' and 'image2' must be Image objects.")
 
-  img1 <- cloneImage(image1)
-  img2 <- cloneImage(image2)
+  if (image1$nchan() != 1 | image2$nchan() != 1)
+    stop("'image1' and 'image2' must be single-channel Image objects.")
 
-  if (colorspace(img1) != "GRAY")
-    changeColorSpace(img1, "GRAY", target = "self")
+  if (image1$depth() != "8U" | image2$depth() != "8U")
+    stop("'image1' and 'image2' must be 8U Image objects.")
 
-  if (colorspace(img2) != "GRAY")
-    changeColorSpace(img2, "GRAY", target = "self")
-
-  if (bitdepth(img1) != "8U")
-    changeBitDepth(img1, 8, target = "self")
-
-  if (bitdepth(img2) != "8U")
-    changeBitDepth(img2, 8, target = "self")
-
-  out <- `_farneback`(img1, img2, pyr_scale, levels, winsize, iterations, poly_n, poly_sigma)
-  class(out) <- "OF_array"
-  out
+  if (isImage(target)) {
+    `_farneback`(image1, image2, pyr_scale, levels, winsize, iterations, poly_n,
+                 poly_sigma, use_init, Gaussian, target)
+  } else if (target == "new") {
+    out <- zeros(image1$nrow(), image1$ncol(), 2, "32F")
+    `_farneback`(image1, image2, pyr_scale, levels, winsize, iterations, poly_n,
+                 poly_sigma, use_init, Gaussian, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 
 #' @title Plot Optical Flow Arrays
 #'
-#' @description Plotting method for objects of class \code{OF_array} as produced
-#'  by the \code{\link{farneback}} function.
+#' @description Plotting method for \code{\link{Image}} objects produced by the
+#'  \code{\link{farneback}} function.
 #'
-#' @param x An object of class \code{OF_array}.
+#' @param of An \code{\link{Image}} produced by the \code{\link{farneback}}
+#'  function.
 #'
 #' @param gridsize A 2-element vector indicating the number of optical flow
 #'  vectors to plot in each x-y dimension (default: c(25, 25)). Alternatively, a
@@ -101,7 +124,7 @@ farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
 #'  default is not to clip.
 #'
 #' @param ... Graphics arguments passed to the \code{\link{arrows}} function that
-#'  can change the color or arrow sizes. See help on this for details.
+#'  can change the color or arrow sizes. See \code{\link{arrows}} help for details.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -110,16 +133,23 @@ farneback <- function(image1, image2, pyr_scale = 0.5, levels = 3, winsize = 43,
 #' @examples
 #' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 #' balloon1 <- readFrame(balloon, 1)
-#' balloon2 <- readFrame(balloon, 25)
+#' balloon2 <- readFrame(balloon, 2)
+#' changeColorSpace(balloon1, "GRAY", "self")
+#' changeColorSpace(balloon2, "GRAY", "self")
 #' of <- farneback(balloon1, balloon2)
-#' plot(balloon2)
-#' plot(of, length = 0.05)
+#' plot(of)
+#' plotOF(of, length = 0.05)
 #'
 #' @export
-plot.OF_array <- function(x, gridsize = c(25, 25), thresh = 0,
-                          add = TRUE, arrow.ex = 0.05, xpd = TRUE, ...) {
-  if (class(x) != "OF_array")
-    stop("array must be an object of class OF_array as produced by the farneback function.")
+plotOF <- function(of, gridsize = c(25, 25), thresh = 0, add = TRUE,
+                   arrow.ex = 0.05, xpd = TRUE, ...) {
+  if (!isImage(of))
+    stop("'of' must be an Image object.")
+
+  if (of$nchan() != 2 | of$depth() != "32F")
+    stop("'of' must be a single-channel, 32F Image object as produced by the farneback function.")
+
+  x <- of$toR()
 
   if (length(gridsize) == 1)
     gridsize <- c(gridsize, gridsize)
@@ -131,7 +161,6 @@ plot.OF_array <- function(x, gridsize = c(25, 25), thresh = 0,
                       y = floor(seq(1, nrow(x), length.out = gridsize[2])))
 
   id <- (locs$x - 1) * nrow(x) + locs$y
-  locs$y <- max(locs$y) - locs$y
   u <- x[, , 1][id]
   v <- x[, , 2][id]
 

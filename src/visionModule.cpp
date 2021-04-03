@@ -1,33 +1,37 @@
-#include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
+#include <RcppArmadillo.h>
 using namespace Rcpp;
 
 #include "opencv2/opencv.hpp"
 #include "utils.h"
 #include "opencvarma.h"
+#include <queue>
+#include <thread>
+#include <mutex>
+#include <chrono>
 
 #include "Image.h"
 RCPP_EXPOSED_CLASS(Image)
 RCPP_MODULE(class_Image) {
 
   class_<Image>("Image")
-
-  .constructor()
-  .constructor< std::string, std::string > ("", &ImageConst1)
-  .constructor< arma::icube, std::string > ("", &ImageConst2)
-  .constructor< arma::fcube, std::string > ("", &ImageConst3)
-
-  .field("space", &Image::space)
-
-  .method("write", &Image::write)
-  .method("pget", &Image::pget)
-  .method("pset", &Image::pset)
-  .method("toR", &Image::toR)
-  .method("dim", &Image::dim)
-  .method("nrow", &Image::nrow)
-  .method("ncol", &Image::ncol)
-  .method("nchan", &Image::nchan)
-  .method("depth", &Image::depth)
+    .constructor()
+    .constructor< std::string, std::string > ("", &ImageConst1)
+    .constructor< arma::icube, std::string > ("", &ImageConst2)
+    .constructor< arma::fcube, std::string > ("", &ImageConst3)
+    .field("space", &Image::space)
+    .field("GPU", &Image::GPU)
+    .method("write", &Image::write)
+    .method("pget", &Image::pget)
+    .method("pset", &Image::pset)
+    .method("toGPU", &Image::toGPU)
+    .method("fromGPU", &Image::fromGPU)
+    .method("toR", &Image::toR)
+    .method("dim", &Image::dim)
+    .method("nrow", &Image::nrow)
+    .method("ncol", &Image::ncol)
+    .method("nchan", &Image::nchan)
+    .method("depth", &Image::depth)
   ;
 
   function("_changeBitDepth", &_changeBitDepth, List::create(_["image"], _["depth"],
@@ -39,57 +43,65 @@ RCPP_MODULE(class_Image) {
   function("_merge", &_merge, List::create(_["channels"], _["target"]), "");
   function("_readMulti", &_readMulti, List::create(_["file"], _["colorspace"]), "");
   function("_subimage", &_subimage, List::create(_["image"], _["x"], _["y"],
-    _["width"], _["height"]), "");
+    _["width"], _["height"], _["target"]), "");
   function("_copyMakeBorder", &_copyMakeBorder, List::create(_["image"], _["top"],
-    _["bottom"], _["left"], _["right"], _["borderType"], _["borderValue"]), "");
+    _["bottom"], _["left"], _["right"], _["borderType"], _["borderValue"], _["target"]), "");
   function("_zeros", &_zeros, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
-  // function("_ones", &_ones, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
+  function("_randu", &_randu, List::create(_["image"], _["low"], _["high"]), "");
+  function("_randn", &_randn, List::create(_["image"], _["mean"], _["stddev"]), "");
 }
 
+#include "Capture.h"
 #include "Video.h"
-RCPP_EXPOSED_CLASS(Video)
-RCPP_MODULE(class_Video) {
-
-  class_<Video>("Video")
-
-  .constructor()
-  .constructor<std::string, std::string>()
-
-  .method("open", &Video::open)
-  .method("isOpened", &Video::isOpened)
-  .method("release", &Video::release)
-  .method("get", &Video::get)
-  .method("set", &Video::set)
-  .method("dim", &Video::dim)
-  .method("nrow", &Video::nrow)
-  .method("ncol", &Video::ncol)
-  .method("nframes", &Video::nframes)
-  .method("frame", &Video::frame)
-  .method("fps", &Video::fps)
-  .method("codec", &Video::codec)
-  .method("readNext", &Video::readNext)
-  .method("readFrame", &Video::readFrame)
-  ;
-}
-
 #include "Stream.h"
+#include "Queue.h"
+RCPP_EXPOSED_CLASS(Video)
 RCPP_EXPOSED_CLASS(Stream)
-RCPP_MODULE(class_Stream) {
+RCPP_EXPOSED_CLASS(Queue)
+RCPP_MODULE(class_Capture) {
 
-  class_<Stream>("Stream")
+  Rcpp::class_<Capture>("Capture")
+    .constructor()
+    .method("isOpened", &Capture::isOpened)
+    .method("release", &Capture::release)
+    .method("get", &Capture::get)
+    .method("set", &Capture::set)
+    .method("dim", &Capture::dim)
+    .method("nrow", &Capture::nrow)
+    .method("ncol", &Capture::ncol)
+    .method("readNext", &Capture::readNext)
+  ;
 
-  .constructor()
-  .constructor<int, std::string>()
+  Rcpp::class_<Video>("Video")
+    .derives<Capture>("Capture")
+    .constructor<std::string, std::string>()
+    .method("open", &Video::open)
+    .method("nframes", &Video::nframes)
+    .method("frame", &Video::frame)
+    .method("fps", &Video::fps)
+    .method("codec", &Video::codec)
+    .method("readFrame", &Video::readFrame)
+  ;
 
-  .method("open", &Stream::open)
-  .method("isOpened", &Stream::isOpened)
-  .method("release", &Stream::release)
-  .method("get", &Stream::get)
-  .method("set", &Stream::set)
-  .method("dim", &Stream::dim)
-  .method("nrow", &Stream::nrow)
-  .method("ncol", &Stream::ncol)
-  .method("readNext", &Stream::readNext)
+  Rcpp::class_<Stream>("Stream")
+    .derives<Capture>("Capture")
+    .constructor<int, std::string>()
+    .method("open", &Stream::open)
+  ;
+
+  Rcpp::class_<Queue>("Queue")
+    .constructor<Video&, int, int, int> ("", &QueueConst1)
+    .constructor<Stream&, int, int, int> ("", &QueueConst2)
+    .method("full", &Queue::full)
+    .method("empty", &Queue::empty)
+    .method("capacity", &Queue::capacity)
+    .method("length", &Queue::length)
+    .method("dim", &Queue::dim)
+    .method("nrow", &Queue::nrow)
+    .method("ncol", &Queue::ncol)
+    .method("reset", &Queue::reset)
+    .method("frame", &Queue::frame)
+    .method("readNext", &Queue::readNext)
   ;
 }
 
@@ -97,11 +109,9 @@ RCPP_MODULE(class_Stream) {
 RCPP_EXPOSED_CLASS(VideoWriter)
 RCPP_MODULE(class_VideoWriter) {
 
-  class_<VideoWriter>("VideoWriter")
-
+  Rcpp::class_<VideoWriter>("VideoWriter")
   .constructor()
   .constructor<std::string, std::string, double, int, int, bool, std::string>()
-
   .method("open", &VideoWriter::open)
   .method("isOpened", &VideoWriter::isOpened)
   .method("release", &VideoWriter::release)
@@ -135,6 +145,7 @@ RCPP_MODULE(methods_Arithmetic) {
   function("_divideScalar", &_divideScalar, List::create(_["image"], _["value"],
     _["order"], _["target"]), "");
   function("_absdiff", &_absdiff, List::create(_["image1"], _["image2"], _["target"]), "");
+  function("_absdiffScalar", &_absdiffScalar, List::create(_["image"], _["value"], _["target"]), "");
   function("_addWeighted", &_addWeighted, List::create(_["image1"], _["alpha"],
     _["image2"], _["beta"], _["target"]), "");
 }
@@ -142,16 +153,19 @@ RCPP_MODULE(methods_Arithmetic) {
 #include "statistics.h"
 RCPP_MODULE(methods_Statistics) {
 
-  function("_sumList", &_sumList, List::create(_["images"], _["target"]), "");
   function("_sumPx", &_sumPx, List::create(_["image"]), "");
-  function("_meanList", &_meanList, List::create(_["images"], _["target"]), "");
   function("_meanPx", &_meanPx, List::create(_["image"], _["mask"]), "");
   function("_meanPxNOMASK", &_meanPxNOMASK, List::create(_["image"]), "");
+  function("_countNonZero", &_countNonZero, List::create(_["image"]), "");
   function("_min", &_min, List::create(_["image"]), "");
   function("_max", &_max, List::create(_["image"]), "");
   function("_minMaxLoc", &_minMaxLoc, List::create(_["image"]), "");
   function("_imhist", &_imhist, List::create(_["image"], _["nbins"],
     _["range"], _["mask"]), "");
+  function("_bitMin", &_bitMin, List::create(_["image1"], _["image2"], _["target"]), "");
+  function("_bitMax", &_bitMax, List::create(_["image1"], _["image2"], _["target"]), "");
+  function("_bitMinScalar", &_bitMinScalar, List::create(_["image"], _["value"], _["target"]), "");
+  function("_bitMaxScalar", &_bitMaxScalar, List::create(_["image"], _["value"], _["target"]), "");
 }
 
 #include "comparisons.h"
@@ -162,9 +176,9 @@ RCPP_MODULE(methods_Comparisons) {
   function("_compareScalar", &_compareScalar, List::create(_["image"], _["value"],
     _["comp"], _["target"]), "");
   function("_matchTemplate", &_matchTemplate, List::create(_["image"], _["templ"],
-    _["method"], _["mask"]), "");
+    _["method"], _["mask"], _["target"]), "");
   function("_matchTemplateNoMask", &_matchTemplateNoMask, List::create(_["image"],
-    _["templ"], _["method"]), "");
+    _["templ"], _["method"], _["target"]), "");
   function("_inRange", &_inRange, List::create(_["image"], _["low"], _["up"],
     _["target"]), "");
 }
@@ -177,8 +191,7 @@ RCPP_MODULE(methods_Logical) {
   function("_or", &_or, List::create(_["image1"], _["image2"], _["target"]), "");
   function("_orScalar", &_orScalar, List::create(_["image"], _["value"], _["target"]), "");
   function("_not", &_not, List::create(_["image"], _["target"]), "");
-  function("_findNonZero", &_findNonZero, List::create(_["image"]), "");
-  function("_findNonZeroVAL", &_findNonZeroVAL, List::create(_["image"]), "");
+  function("_findNonZero", &_findNonZero, List::create(_["image"], _["values"]), "");
 }
 
 #include "opticalFlow.h"
@@ -186,7 +199,7 @@ RCPP_MODULE(methods_OpticalFlow) {
 
   function("_farneback", &_farneback, List::create(_["image1"], _["image2"],
     _["pyr_scale"], _["levels"], _["winsize"], _["iterations"], _["poly_n"],
-    _["poly_sigma"]), "");
+    _["poly_sigma"], _["use_init"], _["Gaussian"], _["target"]), "");
 }
 
 #include "blob.h"
@@ -218,6 +231,8 @@ RCPP_MODULE(methods_Filters) {
     _["kernel_y"], _["target"]), "");
   function("_gaussianBlur", &_gaussianBlur, List::create(_["image"], _["k_height"],
     _["k_width"], _["sigma_x"], _["sigma_y"], _["target"]), "");
+  // function("_ugaussianBlur", &_ugaussianBlur, List::create(_["image"], _["k_height"],
+  //   _["k_width"], _["sigma_x"], _["sigma_y"], _["target"]), "");
   function("_boxFilter", &_boxFilter, List::create(_["image"], _["k_height"],
     _["k_width"], _["target"]), "");
   function("_blur", &_blur, List::create(_["image"], _["k_height"], _["k_width"],

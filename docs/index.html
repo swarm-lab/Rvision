@@ -5,21 +5,21 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Computer vision library for R • Rvision</title>
+<title>Computer Vision Library for R • Rvision</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><!-- docsearch --><script src="docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Computer vision library for R">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Computer Vision Library for R">
 <meta property="og:description" content="An OpenCV-based computer vision library providing methods to read 
     and manipulate video and image files, as well as camera streams.">
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg">
@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.0</span>
       </span>
     </div>
 
@@ -72,7 +72,19 @@
     <li>
       <a href="articles/z3_basic.html">3 - Basic operations</a>
     </li>
+    <li>
+      <a href="articles/z4_inplace.html">4 - In-place, copy, and target operations</a>
+    </li>
+    <li>
+      <a href="articles/z5_gpu.html">5 - GPU operations</a>
+    </li>
+    <li>
+      <a href="articles/z6_queue.html">6 - Capture queues</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -108,8 +120,8 @@
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"></a>Description</h2>
-<p><a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> is a - small but growing - computer vision library for <a href="https://cran.r-project.org"><code>R</code></a>. It is based on the powerful <a href="http://opencv.org/"><code>OpenCV</code></a> library for C/C++, the state-of-the-art for computer vision in the open source world.</p>
-<p>The ultimate goal of <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> is to provide <a href="https://cran.r-project.org"><code>R</code></a> users with all the necessary functions to read and manipulate images, videos and camera streams, with an emphasis on speed (thanks to <a href="http://opencv.org/"><code>OpenCV</code></a>). In this respect, it is different from all the other image manipulations packages for <a href="https://cran.r-project.org"><code>R</code></a> that either can not quickly and directly access frames from videos or camera streams or are limited in their processing speed and/or volume.</p>
+<p><a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> is a growing computer vision library for <a href="https://cran.r-project.org"><code>R</code></a>. It is based on the powerful <a href="http://opencv.org/"><code>OpenCV</code></a> library for C/C++, the state-of-the-art for computer vision in the open source world.</p>
+<p>The ultimate goal of <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> is to provide <code>R</code> users with all the necessary functions to read and manipulate images, videos and camera streams, with an emphasis on speed (thanks to <code>OpenCV</code>). In this respect, it is different from all the other image manipulations packages for <code>R</code> that either can not quickly and directly access frames from videos and camera streams or are limited in their processing speed and/or volume.</p>
 <hr>
 </div>
 <div id="quick-start-guides" class="section level2">
@@ -119,16 +131,9 @@
 <li><a href="https://swarm-lab.github.io/Rvision/articles/z1_install.html">1 - Installation instructions</a></li>
 <li><a href="https://swarm-lab.github.io/Rvision/articles/z2_io.html">2 - Input/output operations</a></li>
 <li><a href="https://swarm-lab.github.io/Rvision/articles/z3_basic.html">3 - Basic operations</a></li>
-<li>4 - Advanced operations on videos [TODO]</li>
-<li>5 - Advanced operations on streams [TODO]</li>
-<li>6 - Advanced operations on images [TODO]
-<ul>
-<li>6.1 - Drawing operations [TODO]</li>
-<li>6.2 - Arithmetic operations [TODO]</li>
-<li>6.3 - Morphological operations [TODO]</li>
-<li>6.4 - Filtering operations [TODO]</li>
-</ul>
-</li>
+<li><a href="https://swarm-lab.github.io/Rvision/articles/z4_inplace.html">4 - In-place, copy, and target operations</a></li>
+<li><a href="https://swarm-lab.github.io/Rvision/articles/z5_gpu.html">5 - GPU operations</a></li>
+<li><a href="https://swarm-lab.github.io/Rvision/articles/z6_queue.html">6 - Capture queues</a></li>
 </ul>
 <hr>
 </div>
@@ -141,9 +146,9 @@
 <p>You certainly can, but ask yourself first whether you should…</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_stream</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/stream.html">stream</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>   <span class="co"># 0 will start your default webcam in general. </span>
-<span class="va">my_selfie</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/readNext.Rcpp_Stream.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span>
+<span class="va">my_selfie</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/readNext.Rcpp_Queue.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_selfie</span><span class="op">)</span>
-<span class="fu"><a href="reference/release.Rcpp_Stream.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="reference/release.Rcpp_Queue.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
 <p>Be careful, this will trigger the explosion of your camera if it detects that you are making a duck face ;-)</p>
 </div>
 </div>

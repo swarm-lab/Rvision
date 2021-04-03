@@ -18,6 +18,28 @@ Image
  originate from an image file, an array, a video file or a video stream.
  This image can be manipulated using the functions of \pkg{\link{Rvision}}.
 }
+\section{Slots}{
+
+\describe{
+\item{\code{depth}}{A function returning the bit depth of the object.}
+
+\item{\code{dim,ncol,nrow,nchan}}{Functions returning the dimensions of the object.}
+
+\item{\code{space}}{A character string indicating the colorspace of the object.}
+
+\item{\code{pget,pset}}{Functions to get and set single pixel values.}
+
+\item{\code{toR}}{A function to convert the object to an R array.}
+
+\item{\code{fromGPU}}{A function retrieving the object from GPU memory.}
+
+\item{\code{toGPU}}{A function sending the object to GPU memory.}
+
+\item{\code{GPU}}{A boolean indicating whether the object is in GPU memory.}
+
+\item{\code{write}}{A function to write the object to a file.}
+}}
+
 \seealso{
 \code{\link{image}}, \code{\link{Video}}, \code{\link{Stream}}
 }

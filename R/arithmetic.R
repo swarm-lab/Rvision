@@ -35,6 +35,7 @@
 #' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
 #' balloon_sum <- add(balloon1, balloon2)
+#' balloon_absdiff <- absdiff(balloon1, balloon2)
 #'
 #' @name imageArithmetic
 NULL
@@ -55,6 +56,10 @@ setGeneric("multiply", function(e1, e2, target) { standardGeneric("multiply") })
 #' @rdname imageArithmetic
 #' @export
 setGeneric("divide", function(e1, e2, target) { standardGeneric("divide") })
+
+#' @rdname imageArithmetic
+#' @export
+setGeneric("absdiff", function(e1, e2, target) { standardGeneric("absdiff") })
 
 
 #' @title In Place Arithmetic Operators for Images
@@ -96,63 +101,6 @@ setGeneric("%i*%", function(e1, e2) { standardGeneric("%i*%") })
 #' @rdname inPlaceArithmetic
 #' @export
 setGeneric("%i/%", function(e1, e2) { standardGeneric("%i/%") })
-
-
-#' @title Absolute Difference Between Two Images
-#'
-#' @description This function computes the absolute difference between two
-#'  \code{\link{Image}} objects.
-#'
-#' @param e1 An \code{\link{Image}} object.
-#'
-#' @param e2 An \code{\link{Image}} object.
-#'
-#' @param target The location where the results should be stored. It can take 3
-#'  values:
-#'  \itemize{
-#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
-#'    are stored inside (the default).}
-#'   \item{"self":}{the results are stored back into \code{e1} (faster but
-#'    destructive).}
-#'   \item{An \code{\link{Image}} object:}{the results are stored in another
-#'    existing \code{\link{Image}} object. This is fast and will not replace the
-#'    content of \code{e1} but will replace that of \code{target}. Note that
-#'    if \code{target} does not have the same dimensions, number of channels, and
-#'    bit depth as \code{e1}, nothing will be stored.}
-#'  }
-#'
-#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
-#'  object. If \code{target="self"}, the function returns nothing and modifies
-#'  \code{e1} in place. If \code{target} is an \code{\link{Image}} object,
-#'  the function returns nothing and modifies that \code{\link{Image}} object in
-#'  place.
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Image}}
-#'
-#' @examples
-#' balloon1 <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-#' balloon2 <- image(system.file("sample_img/balloon2.png", package = "Rvision"))
-#' balloon_diff <- absdiff(balloon1, balloon2)
-#'
-#' @export
-absdiff <- function(e1, e2, target = "new") {
-  if (!isImage(e1) | !isImage(e2))
-    stop("Both 'e1' and 'e2' must be Image objects.")
-
-  if (isImage(target)) {
-    `_absdiff`(e1, e2, target)
-  } else if (target == "self") {
-    `_absdiff`(e1, e2, e1)
-  } else if (target == "new") {
-    out <- `_cloneImage`(e1)
-    `_absdiff`(e1, e2, out)
-    out
-  } else {
-    stop("Invalid target.")
-  }
-}
 
 
 #' @title Weighted Sum of Two Images

@@ -35,8 +35,6 @@ Read a specific frame of a \code{\link{Video}} object and
 \examples{
 balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
 frame10 <- readFrame(balloon, 10)
-frame11 <- readNext(balloon)
-release(balloon)
 
 }
 \seealso{

@@ -9,8 +9,8 @@ setTo(image, mask, color = "red", target = "new", in_place = NULL)
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
 
-\item{mask}{An 8-bit \code{\link{Image}} object. The region to be colored
-should be white.}
+\item{mask}{An 8U, single-channel \code{\link{Image}} object. The region to
+be colored should be white.}
 
 \item{color}{A value or vector of any kind of R color specification compatible
 with \code{\link{col2bgr}} representing the color of each rectangle's outline
@@ -39,7 +39,7 @@ If a mask is specified, \code{setTo} sets the color of the
 }
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-mask <- zeros(nrow(balloon), ncol(balloon))
+mask <- zeros(nrow(balloon), ncol(balloon), 1)
 poly <- data.frame(x = c(290, 290, 440, 440), y = c(170, 325, 325, 170))
 fillPoly(mask, poly, color = "white")
 balloon_painted <- setTo(balloon, mask, "green")

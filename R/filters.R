@@ -519,14 +519,16 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE,
 
 #' @title Calculates an Image Derivatives Using a Scharr Operator
 #'
-#' @description \code{scharr} calculates the derivatives of an image using a
-#'  Scharr operator.
+#' @description \code{scharr} calculates the x or y derivative of an image using
+#'  a Scharr operator.
 #'
 #' @param image An \code{\link{Image}} object.
 #'
-#' @param dx Order of the x derivative (default: 1).
+#' @param dx Order of the x derivative. It can only take 2 values: 1 (the
+#'  default) or 0. If \code{dx=1} then \code{dy} must be zero.
 #'
-#' @param dy Order of the y derivative (default: 1),
+#' @param dy Order of the y derivative. It can only take 2 values: 1 or 0 (the
+#'  default). If \code{dy=1} then \code{dx} must be zero.
 #'
 #' @param scale The scale factor for the computed derivative values (default: 1).
 #'
@@ -558,10 +560,10 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE,
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-#' balloon_scharr <- scharr(balloon, 1, 1, 1)
+#' balloon_scharr <- scharr(balloon)
 #'
 #' @export
-scharr <- function(image, dx = 1, dy = 1, scale = 1, target = "new", in_place = NULL) {
+scharr <- function(image, dx = 1, dy = 0, scale = 1, target = "new", in_place = NULL) {
   if (!missing(in_place)) {
     if (in_place) {
       warning("in_place is deprecated. Use target='self' instead.")
@@ -574,6 +576,9 @@ scharr <- function(image, dx = 1, dy = 1, scale = 1, target = "new", in_place = 
 
   if (!isImage(image))
     stop("This is not an Image object.")
+
+  if (!(dx >= 0 & dy >= 0 & dx+dy == 1))
+    stop("One of dx and dy must be 1. The other must be 0.")
 
   if (isImage(target)) {
     `_scharr`(image, dx, dy, scale, target)
@@ -632,7 +637,7 @@ scharr <- function(image, dx = 1, dy = 1, scale = 1, target = "new", in_place = 
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
-#' balloon_sobel <- sobel(balloon, 1, 1, 5)
+#' balloon_sobel <- sobel(balloon)
 #'
 #' @export
 sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1, target = "new",

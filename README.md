@@ -7,18 +7,17 @@
 
 ## Description
 
-[`Rvision`](https://github.com/swarm-lab/Rvision) is a - small but growing - 
-computer vision library for [`R`](https://cran.r-project.org). It is based on 
-the powerful [`OpenCV`](http://opencv.org/) library for C/C++, the state-of-the-art
-for computer vision in the open source world. 
+[`Rvision`](https://github.com/swarm-lab/Rvision) is a growing computer vision 
+library for [`R`](https://cran.r-project.org). It is based on the powerful 
+[`OpenCV`](http://opencv.org/) library for C/C++, the state-of-the-art for 
+computer vision in the open source world. 
 
 The ultimate goal of [`Rvision`](https://github.com/swarm-lab/Rvision) is to 
-provide [`R`](https://cran.r-project.org) users with all the necessary functions 
-to read and manipulate images, videos and camera streams, with an emphasis on 
-speed (thanks to [`OpenCV`](http://opencv.org/)). In this respect, it is different
-from all the other image manipulations packages for [`R`](https://cran.r-project.org)
-that either can not quickly and directly access frames from videos or camera 
-streams or are limited in their processing speed and/or volume. 
+provide `R` users with all the necessary functions to read and manipulate images, 
+videos and camera streams, with an emphasis on speed (thanks to `OpenCV`). In 
+this respect, it is different from all the other image manipulations packages 
+for `R` that either can not quickly and directly access frames from videos and 
+camera streams or are limited in their processing speed and/or volume. 
 
 ---
 
@@ -27,13 +26,9 @@ streams or are limited in their processing speed and/or volume.
 + [1 - Installation instructions](https://swarm-lab.github.io/Rvision/articles/z1_install.html)
 + [2 - Input/output operations](https://swarm-lab.github.io/Rvision/articles/z2_io.html)
 + [3 - Basic operations](https://swarm-lab.github.io/Rvision/articles/z3_basic.html)
-+ 4 - Advanced operations on videos [TODO]
-+ 5 - Advanced operations on streams [TODO]
-+ 6 - Advanced operations on images [TODO]
-    + 6.1 - Drawing operations [TODO]
-    + 6.2 - Arithmetic operations [TODO]
-    + 6.3 - Morphological operations [TODO]
-    + 6.4 - Filtering operations [TODO]
++ [4 - In-place, copy, and target operations](https://swarm-lab.github.io/Rvision/articles/z4_inplace.html)
++ [5 - GPU operations](https://swarm-lab.github.io/Rvision/articles/z5_gpu.html)
++ [6 - Capture queues](https://swarm-lab.github.io/Rvision/articles/z6_queue.html)
 
 --- 
 

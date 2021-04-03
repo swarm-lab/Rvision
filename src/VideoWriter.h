@@ -33,7 +33,7 @@ VideoWriter::VideoWriter(std::string outputFile, std::string fourcc, double fps,
   if (!this->writer.open(outputFile, getAPIId(api),
                     cv::VideoWriter::fourcc(fourcc[0], fourcc[1], fourcc[2], fourcc[3]),
                     fps, cv::Size(width, height), isColor)) {
-    throw std::range_error("Could not open the output.");
+    Rcpp::stop("Could not open the output.");
   }
 
   this->my_nrow = height;
@@ -51,7 +51,7 @@ bool VideoWriter::open(std::string outputFile, std::string fourcc, double fps,
   if (!this->writer.open(outputFile, getAPIId(api),
                          cv::VideoWriter::fourcc(fourcc[0], fourcc[1], fourcc[2], fourcc[3]),
                          fps, cv::Size(width, height), isColor)) {
-    throw std::range_error("Could not open the output.");
+    Rcpp::stop("Could not open the output.");
   } else {
     return true;
   }
@@ -81,7 +81,11 @@ double VideoWriter::get(std::string propId) {
 }
 
 void VideoWriter::write(Image image) {
-  this->writer << image.image;
+  if (image.GPU) {
+    this->writer << image.uimage;
+  } else {
+    this->writer << image.image;
+  }
 }
 
 int VideoWriter::nrow() {

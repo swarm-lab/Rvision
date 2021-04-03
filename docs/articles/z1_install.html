@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.0</span>
       </span>
     </div>
 
@@ -71,7 +71,19 @@
     <li>
       <a href="../articles/z3_basic.html">3 - Basic operations</a>
     </li>
+    <li>
+      <a href="../articles/z4_inplace.html">4 - In-place, copy, and target operations</a>
+    </li>
+    <li>
+      <a href="../articles/z5_gpu.html">5 - GPU operations</a>
+    </li>
+    <li>
+      <a href="../articles/z6_queue.html">6 - Capture queues</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -110,29 +122,13 @@
 
     
     
-<p><strong>This page describes the installation process of <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a>.</strong></p>
-<p>Installing <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> should go smoothly on all major operating systems (Mac, Windows, and “Ubuntu-like” Linux). There are a few steps to follow before installing the package itself in order to prepare all the necessary dependencies.</p>
-<p>All installation steps are described below.</p>
-<hr>
-<ul>
-<li>
-<a href="#before-installing">1.1 - Before installing</a>
-<ul>
-<li><a href="#devtools">1.1.1 - Devtools</a></li>
-<li><a href="#ropencvlite">1.1.2 - ROpenCVLite</a></li>
-</ul>
-</li>
-<li><a href="#installing-rvision">1.2 - Installing Rvision</a></li>
-<li><a href="#loading-rvision">1.3 - Loading Rvision</a></li>
-</ul>
-<hr>
 <div id="before-installing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#before-installing" class="anchor"></a>1.1 - Before installing</h2>
 <div id="devtools" class="section level3">
 <h3 class="hasAnchor">
 <a href="#devtools" class="anchor"></a>1.1.1 - Devtools</h3>
-<p>Before installing <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a>, you will need to install the latest version of the <a href="https://CRAN.R-project.org/package=devtools"><code>devtools</code></a> package. You can install <a href="https://CRAN.R-project.org/package=devtools"><code>devtools</code></a> from <a href="https://cran.r-project.org"><code>CRAN</code></a> as follows:</p>
+<p>Before installing <code>Rvision</code>, you will need to install the latest version of the <a href="https://CRAN.R-project.org/package=devtools"><code>devtools</code></a> package. You can install <code>devtools</code> from <a href="https://cran.r-project.org"><code>CRAN</code></a> as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></code></pre></div>
@@ -140,16 +136,16 @@
 <div id="ropencvlite" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ropencvlite" class="anchor"></a>1.1.2 - ROpenCVLite</h3>
-<p>You will also need to install the <a href="https://github.com/swarm-lab/ROpenCVLite"><code>ROpenCVLite</code></a> package. Installation instructions for <a href="https://github.com/swarm-lab/ROpenCVLite"><code>ROpenCVLite</code></a> can be found at <a href="https://swarm-lab.github.io/ROpenCVLite/articles/install.html" class="uri">https://swarm-lab.github.io/ROpenCVLite/articles/install.html</a>.</p>
-<p>This step may take some time as it will download, compile and install <a href="https://opencv.org"><code>OpenCV</code></a> for you. I suggest you go out for a cup of tea or coffee while <a href="https://github.com/swarm-lab/ROpenCVLite"><code>ROpenCVLite</code></a> is being installed (compilation time will depend on your computer).</p>
-<p>Note that you can skip this step and <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> will attempt to install it in the next step. However it might fail if your system is missing one of the external dependencies required by <code>ROpenCVLite</code>.</p>
+<p>You will also need to install the <a href="https://github.com/swarm-lab/ROpenCVLite"><code>ROpenCVLite</code></a> package. Installation instructions for <code>ROpenCVLite</code> can be found at <a href="https://swarm-lab.github.io/ROpenCVLite/articles/install.html" class="uri">https://swarm-lab.github.io/ROpenCVLite/articles/install.html</a>.</p>
+<p>This step may take some time as it will download, compile and install <a href="https://opencv.org"><code>OpenCV</code></a> for you. I suggest you go out for a cup of tea or coffee while <code>ROpenCVLite</code> is being installed (compilation time will depend on your computer).</p>
+<p>Note that you can skip this step and <code>Rvision</code> will attempt to install it in the next step. However it might fail if your system is missing one of the external dependencies required by <code>ROpenCVLite</code>.</p>
 <hr>
 </div>
 </div>
 <div id="installing-rvision" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installing-rvision" class="anchor"></a>1.2 - Installing Rvision</h2>
-<p>You can install the latest development version of <a href="https://github.com/swarm-lab/Rvision"><code>Rvision</code></a> as follows:</p>
+<p>You can install the latest development version of <code>Rvision</code> as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"swarm-lab/Rvision"</span><span class="op">)</span></code></pre></div>
 <hr>
