@@ -1,6 +1,6 @@
 void _newDisplay(std::string window_name, int height, int width) {
   cv::Mat blank = cv::Mat::zeros(height, width, CV_8UC3);
-  cv::namedWindow(window_name, cv::WINDOW_OPENGL | cv::WINDOW_AUTOSIZE);
+  cv::namedWindow(window_name);
   cv::imshow(window_name, blank);
   cv::waitKey(1);
 }
