@@ -258,7 +258,7 @@ RCPP_MODULE(methods_Display) {
   function("_newDisplay", &_newDisplay, List::create(_["window_name"], _["height"],
     _["width"]), "");
   function("_display", &_display, List::create(_["image"], _["window_name"],
-    _["delay"], _["height"], _["width"]), "");
+    _["delay"], _["height"], _["width"], _["interpolation"]), "");
   function("_destroyDisplay", &_destroyDisplay, List::create(_["window_name"]), "");
   function("_destroyAllDisplays", &_destroyAllDisplays, "", "");
   function("_selectBoundingBoxes", &_selectBoundingBoxes, List::create(_["image"],

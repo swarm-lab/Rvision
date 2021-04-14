@@ -51,6 +51,10 @@ newDisplay <- function(window_name = "Display", height = 480, width = 640) {
 #' @param width An integer representing the width in pixels of the display
 #'  window.
 #'
+#' @param interpolation A character string representing the type of interpolation
+#'  to use if the display size is different from the image size (default: "linear").
+#'  See notes in \code{\link{resize}} for all accepted interpolation methods.
+#'
 #' @return This function does not return anything.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -65,8 +69,21 @@ newDisplay <- function(window_name = "Display", height = 480, width = 640) {
 #' }
 #'
 #' @export
-display <- function(image, window_name = "Display", delay = 25, height = 480, width = 640) {
-  invisible(`_display`(image, window_name, delay, height, width))
+display <- function(image, window_name = "Display", delay = 25, height = 480,
+                    width = 640, interpolation = "linear") {
+  if (!isImage(image))
+    stop("'image' must be an Image object.")
+
+  interp <- switch(interpolation,
+                   nearest = 0,
+                   linear = 1,
+                   cubic = 2,
+                   area = 3,
+                   Lanczos = 4,
+                   exact = 5,
+                   stop("This is not a valid interpolation method."))
+
+  invisible(`_display`(image, window_name, delay, height, width, interp))
 }
 
 
