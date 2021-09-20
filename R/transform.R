@@ -324,7 +324,7 @@ rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, s
 #' @export
 warpAffine <- function(image, warp_matrix, interp_mode = "linear", inverse_map = TRUE,
                        border_type = "constant", border_color = "black",
-                       target = "new", output_size = dim(image)[2:1]) {
+                       target = "new", output_size = dim(image)) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
@@ -493,7 +493,7 @@ getPerspectiveTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #' @export
 warpPerspective <- function(image, warp_matrix, interp_mode = "linear", inverse_map = TRUE,
                             border_type = "constant", border_color = "black",
-                            target = "new", output_size = dim(image)[2:1]) {
+                            target = "new", output_size = dim(image)) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
