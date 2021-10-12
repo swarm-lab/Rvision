@@ -49,6 +49,7 @@ RCPP_MODULE(class_Image) {
   function("_zeros", &_zeros, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
   function("_randu", &_randu, List::create(_["image"], _["low"], _["high"]), "");
   function("_randn", &_randn, List::create(_["image"], _["mean"], _["stddev"]), "");
+  function("_readHIS", &_readHIS, List::create(_["filename"]), "");
 }
 
 #include "Capture.h"

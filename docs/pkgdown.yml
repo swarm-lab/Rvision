@@ -1,4 +1,4 @@
-pandoc: 2.11.4
+pandoc: 2.14.0.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
@@ -8,7 +8,7 @@ articles:
   z4_inplace: z4_inplace.html
   z5_gpu: z5_gpu.html
   z6_queue: z6_queue.html
-last_built: 2021-04-14T18:26Z
+last_built: 2021-10-12T16:25Z
 urls:
   reference: https://swarm-lab.github.io/ROpenCVLite//reference
   article: https://swarm-lab.github.io/ROpenCVLite//articles

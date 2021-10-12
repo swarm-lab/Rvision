@@ -586,3 +586,32 @@ void _randn(Image& image, Rcpp::NumericVector mean, Rcpp::NumericVector stddev) 
 
   cv::randn(image.image, col2Scalar(mean), col2Scalar(stddev));
 }
+
+Image _readHIS(std::string filename) {
+  std::ifstream his(filename.c_str(), std::ios::in|std::ios::binary);
+
+  if (!his.is_open()) {
+    stop("Error: File cannot be opened.");
+  }
+
+  int16_t nrow(0);
+  int16_t ncol(0);
+  his.seekg(8 * sizeof(int16_t), his.beg);
+  his.read(reinterpret_cast<char*>(&nrow), sizeof(int16_t));
+  his.seekg(9 * sizeof(int16_t), his.beg);
+  his.read(reinterpret_cast<char*>(&ncol), sizeof(int16_t));
+
+  Image out = _zeros(nrow, ncol, "16UC1", "GRAY");
+  his.seekg(49 * sizeof(int16_t), his.beg);
+
+  for (int i = 0; i < nrow; ++i) {
+    ushort* row_ptr = out.image.ptr<ushort>(nrow - 1 - i);
+    for (int j = 0; j < ncol; ++j) {
+      his.read(reinterpret_cast<char*>(&row_ptr[j]), sizeof(int16_t));
+    }
+  }
+
+  his.close();
+
+  return out;
+}

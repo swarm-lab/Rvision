@@ -12,7 +12,7 @@ warpAffine(
   border_type = "constant",
   border_color = "black",
   target = "new",
-  output_size = dim(image)[2:1]
+  output_size = dim(image)[1:2]
 )
 }
 \arguments{

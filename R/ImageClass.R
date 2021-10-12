@@ -1006,3 +1006,26 @@ randn <- function(image, mean = 127, sd = 1) {
 
   `_randn`(image, rep(mean, length.out = image$nchan()), rep(sd, length.out = image$nchan()))
 }
+
+
+#' @title Read HIS Image from Varex Imaging X-ray Panels
+#'
+#' @description \code{readHIS} reads HIS binary files produced by the X-ray
+#'  panels from Varex Imaging and returns \code{\link{Image}} objects that can
+#'  be processed by this package.
+#'
+#' @param x A character string naming the path to a HIS binary image file.
+#'
+#' @return A 16U grayscale \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' #TODO
+#'
+#' @export
+readHIS <- function(x) {
+  `_readHIS`(x)
+}
