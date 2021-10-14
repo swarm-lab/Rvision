@@ -352,4 +352,6 @@ RCPP_MODULE(methods_Transform) {
 RCPP_MODULE(methods_Feature) {
   function("_canny", &_canny, List::create(_["image"], _["threshold1"],
     _["threshold2"], _["apertureSize"], _["L2gradient"], _["target"]), "");
+  function("_houghCircles", &_houghCircles, List::create(_["image"], _["method"],
+    _["dp"], _["minDist"], _["param1"], _["param2"], _["minRadius"], _["maxRadius"]), "");
 }
