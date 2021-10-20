@@ -55,8 +55,7 @@ balloon_edge <- sepFilter2D(balloon, k_edge_detection_x, k_edge_detection_y)
 
 }
 \seealso{
-\code{\link{Image}}, \code{\link{filter2D}}, \code{\link{split}},
- \code{\link{merge}}
+\code{\link{Image}}, \code{\link{filter2D}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

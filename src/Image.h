@@ -520,6 +520,20 @@ void _merge(Rcpp::List& channels, Image& target) {
   }
 }
 
+void _extractChannel(Image& image, int channel, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::extractChannel(image.uimage, target.uimage, channel);
+
+    return cv::extractChannel(image.uimage, target.image, channel);
+  }
+
+  if (target.GPU)
+    return cv::extractChannel(image.image, target.uimage, channel);
+
+  cv::extractChannel(image.image, target.image, channel);
+}
+
 Rcpp::List _readMulti(std::string file, std::string colorspace) {
   std::vector<cv::Mat> mats;
   Rcpp::Environment base = Rcpp::Environment::base_env();

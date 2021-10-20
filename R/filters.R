@@ -35,7 +35,7 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}, \code{\link{split}}, \code{\link{merge}}
+#' @seealso \code{\link{Image}}
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
@@ -115,8 +115,7 @@ filter2D <- function(image, kernel, target = "new", in_place = NULL) {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}, \code{\link{filter2D}}, \code{\link{split}},
-#'  \code{\link{merge}}
+#' @seealso \code{\link{Image}}, \code{\link{filter2D}}
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))

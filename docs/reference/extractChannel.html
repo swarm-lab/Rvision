@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>The Number of Rows/Columns and Length of a Queue — nrow.Rcpp_Queue • Rvision</title>
+<title>Extract Single Channel from Image — extractChannel • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,9 @@
 
 
 
-<meta property="og:title" content="The Number of Rows/Columns and Length of a Queue — nrow.Rcpp_Queue" />
-<meta property="og:description" content="nrow, ncol and nframes return the number of rows, columns or
- frames present in a Queue object." />
+<meta property="og:title" content="Extract Single Channel from Image — extractChannel" />
+<meta property="og:description" content="extractChannel extracts a single color channel from the
+ source image." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
 
@@ -159,50 +159,65 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>The Number of Rows/Columns and Length of a Queue</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/Queue.R'><code>R/Queue.R</code></a></small>
-    <div class="hidden name"><code>queue_dimensions.Rd</code></div>
+    <h1>Extract Single Channel from Image</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/ImageClass.R'><code>R/ImageClass.R</code></a></small>
+    <div class="hidden name"><code>extractChannel.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>nrow, ncol and nframes return the number of rows, columns or
- frames present in a <code><a href='Queue-class.html'>Queue</a></code> object.</p>
+    <p><code>extractChannel</code> extracts a single color channel from the
+ source image.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nrow.Rcpp_Queue</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>ncol.Rcpp_Queue</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='co'># S3 method for Rcpp_Queue</span>
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>extractChannel</span><span class='op'>(</span><span class='va'>image</span>, <span class='va'>channel</span>, target <span class='op'>=</span> <span class='st'>"new"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A <code><a href='Queue-class.html'>Queue</a></code> object.</p></td>
+      <th>image</th>
+      <td><p>An <code><a href='Image-class.html'>Image</a></code> object.</p></td>
+    </tr>
+    <tr>
+      <th>channel</th>
+      <td><p>An integer specifying the index of the channel to extract.</p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p>The location where the results should be stored. It can take 2
+values:</p><ul>
+<li><p>"new":a new <code><a href='Image-class.html'>Image</a></code> object is created and the results
+  are stored inside (the default).</p></li>
+<li><p>An <code><a href='Image-class.html'>Image</a></code> object:the results are stored in another
+  existing <code><a href='Image-class.html'>Image</a></code> object. This is fast and will not replace the
+  content of <code>image</code> but will replace that of <code>target</code>. Note that
+  if <code>target</code> does not have the same dimensions and bit depth as
+  <code>image</code>, an error may be thrown. <code>target</code> should also be a
+  single-channel <code><a href='Image-class.html'>Image</a></code> object or an error will be thrown.</p></li>
+</ul></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A numeric value.</p>
+    <p>If <code>target="new"</code>, the function returns a single-channel
+ <code><a href='Image-class.html'>Image</a></code> object. If <code>target</code> is an <code><a href='Image-class.html'>Image</a></code>
+ object, the function returns nothing and modifies that <code><a href='Image-class.html'>Image</a></code>
+ object in place.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='dim.Rcpp_Queue.html'>dim</a></code> which returns <em>all</em>
- dimensions.</p></div>
+    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='split.html'>split</a></code>, <code><a href='merge.html'>merge</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='video.html'>video</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_vid/Balloon.mp4"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>buf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='queue.html'>queue</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>buf</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 360</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>buf</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 640</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>buf</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 3</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>extractChannel</span><span class='op'>(</span><span class='va'>balloon</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Class: image. 
+#&gt; Dimensions: 640x360.
+#&gt; Type: GRAY, 1-channel, 8U.
+#&gt; GPU: FALSE.</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

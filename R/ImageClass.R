@@ -492,6 +492,68 @@ merge <- function(x, target = "new") {
   }
 }
 
+
+#' @title Extract Single Channel from Image
+#'
+#' @description \code{extractChannel} extracts a single color channel from the
+#'  source image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param channel An integer specifying the index of the channel to extract.
+#'
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions and bit depth as
+#'    \code{image}, an error may be thrown. \code{target} should also be a
+#'    single-channel \code{\link{Image}} object or an error will be thrown.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns a single-channel
+#'  \code{\link{Image}} object. If \code{target} is an \code{\link{Image}}
+#'  object, the function returns nothing and modifies that \code{\link{Image}}
+#'  object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{split}}, \code{\link{merge}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' extractChannel(balloon, 2)
+#'
+#' @export
+extractChannel <- function(image, channel, target = "new") {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  if (!(channel %in% 1:image$nchan()))
+    stop("Invalid channel number.")
+
+  if (isImage(target)) {
+    if (target$nchan() > 1)
+      stop("target must be a single-channel image.")
+
+    if (target$depth() != image$depth())
+      stop("target must have the same bitdepth as image.")
+
+    `_extractChannel`(image, channel - 1L, target)
+  } else if (target == "new") {
+    out <- zeros(image$nrow(), image$ncol(), 1, image$depth())
+    `_extractChannel`(image, channel - 1L, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
 #' @title Read a Multi-Page Image
 #'
 #' @description \code{readMulti} reads a multi-page image and returns a list of
