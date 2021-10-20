@@ -851,8 +851,8 @@ histmatch <- function(image, reference, target = "new") {
   if (reference$depth() != image$depth())
     stop("'image' and 'reference' must have the same bit depth.")
 
-  cdf_target <- apply(imhist(reference)[, 1:reference$nchan() + 1], 2, cumsum)
-  cdf_image <- apply(imhist(image)[, 1:image$nchan() + 1], 2, cumsum)
+  cdf_target <- apply(imhist(reference)[, 1:reference$nchan() + 1, drop = FALSE], 2, cumsum)
+  cdf_image <- apply(imhist(image)[, 1:image$nchan() + 1, drop = FALSE], 2, cumsum)
 
   map <- matrix(0, nrow = 256, ncol = image$nchan())
   for (j in 1:reference$nchan()) {
