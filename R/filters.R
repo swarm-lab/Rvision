@@ -789,8 +789,6 @@ spatialGradient <- function(image, k_size = 5) {
 #'  \itemize{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
-#'   \item{"self":}{the results are stored back into \code{image} (faster but
-#'    destructive).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
 #'    existing \code{\link{Image}} object. This is fast and will not replace the
 #'    content of \code{image} but will replace that of \code{target}. Note that
@@ -798,13 +796,9 @@ spatialGradient <- function(image, k_size = 5) {
 #'    bit depth as \code{image}, an error may be thrown.}
 #'  }
 #'
-#' @param in_place Deprecated. Use \code{target} instead.
-#'
 #' @return If \code{target="new"}, the function returns an \code{\link{Image}}
-#'  object. If \code{target="self"}, the function returns nothing and modifies
-#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
-#'  the function returns nothing and modifies that \code{\link{Image}} object in
-#'  place.
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
 #'
 #' @note A larger value of \code{sigma_color} means that farther colors within
 #'  the pixel neighborhood will be mixed together, resulting in larger areas of
@@ -829,17 +823,7 @@ spatialGradient <- function(image, k_size = 5) {
 #'
 #' @export
 bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25,
-                            target = "new", in_place = NULL) {
-  if (!missing(in_place)) {
-    if (in_place) {
-      warning("in_place is deprecated. Use target='self' instead.")
-      target <- "self"
-    } else {
-      warning("in_place is deprecated. Use target='new' instead.")
-      target <- "new"
-    }
-  }
-
+                            target = "new") {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
@@ -848,8 +832,6 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25,
 
   if (isImage(target)) {
     `_bilateralFilter`(image, d, sigma_color, sigma_space, target)
-  } else if (target == "self") {
-    `_bilateralFilter`(image, d, sigma_color, sigma_space, image)
   } else if (target == "new") {
     out <- `_cloneImage`(image)
     `_bilateralFilter`(image, d, sigma_color, sigma_space, out)
