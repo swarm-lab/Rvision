@@ -8,7 +8,7 @@ articles:
   z4_inplace: z4_inplace.html
   z5_gpu: z5_gpu.html
   z6_queue: z6_queue.html
-last_built: 2021-10-21T13:54Z
+last_built: 2021-11-05T13:14Z
 urls:
   reference: https://swarm-lab.github.io/ROpenCVLite//reference
   article: https://swarm-lab.github.io/ROpenCVLite//articles

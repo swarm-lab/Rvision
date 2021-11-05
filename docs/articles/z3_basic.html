@@ -136,10 +136,10 @@
 <tbody>
 <tr class="odd">
 <td align="left"><strong>Testing for</strong></td>
-<td align="left"><code><a href="../reference/isVideo.html">isVideo(x)</a></code></td>
-<td align="left"><code><a href="../reference/isStream.html">isStream(x)</a></code></td>
-<td align="left"><code><a href="../reference/isImage.html">isImage(x)</a></code></td>
-<td align="left"><code><a href="../reference/isVideoWriter.html">isVideoWriter(x)</a></code></td>
+<td align="left"><code>isVideo(x)</code></td>
+<td align="left"><code>isStream(x)</code></td>
+<td align="left"><code>isImage(x)</code></td>
+<td align="left"><code>isVideoWriter(x)</code></td>
 </tr>
 <tr class="even">
 <td align="left"><strong>Dimensions</strong></td>
@@ -166,7 +166,7 @@
 <td align="left"><strong>Number of channels</strong></td>
 <td align="left">-</td>
 <td align="left">-</td>
-<td align="left"><code><a href="../reference/nrow.Rcpp_Image.html">nchan(x)</a></code></td>
+<td align="left"><code>nchan(x)</code></td>
 <td align="left">-</td>
 </tr>
 <tr class="even">
@@ -178,14 +178,14 @@
 </tr>
 <tr class="odd">
 <td align="left"><strong>Framerate</strong></td>
-<td align="left"><code><a href="../reference/fps.Rcpp_Video.html">fps(x)</a></code></td>
+<td align="left"><code>fps(x)</code></td>
 <td align="left">-</td>
 <td align="left">-</td>
 <td align="left">-</td>
 </tr>
 <tr class="even">
 <td align="left"><strong>Codec</strong></td>
-<td align="left"><code><a href="../reference/codec.Rcpp_Video.html">codec(x)</a></code></td>
+<td align="left"><code>codec(x)</code></td>
 <td align="left">-</td>
 <td align="left">-</td>
 <td align="left">-</td>
@@ -194,14 +194,14 @@
 <td align="left"><strong>Bit depth</strong></td>
 <td align="left">-</td>
 <td align="left">-</td>
-<td align="left"><code><a href="../reference/bitdepth.html">bitdepth(x)</a></code></td>
+<td align="left"><code>bitdepth(x)</code></td>
 <td align="left">-</td>
 </tr>
 <tr class="even">
 <td align="left"><strong>Color space</strong></td>
 <td align="left">-</td>
 <td align="left">-</td>
-<td align="left"><code><a href="../reference/colorspace.html">colorspace(x)</a></code></td>
+<td align="left"><code>colorspace(x)</code></td>
 <td align="left">-</td>
 </tr>
 </tbody>
@@ -285,7 +285,7 @@
 <div id="grayscale-images" class="section level3">
 <h3 class="hasAnchor">
 <a href="#grayscale-images" class="anchor"></a>3.4.1 - Grayscale images</h3>
-<p>The traditional <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> assignment operator can be used to replace parts of a grayscale image, like it would be used to replace any parts of a traditional <code><a href="https://rdrr.io/r/base/matrix.html">base::matrix</a></code>. For instance:</p>
+<p>The traditional <code>&lt;-</code> assignment operator can be used to replace parts of a grayscale image, like it would be used to replace any parts of a traditional <code><a href="https://rdrr.io/r/base/matrix.html">base::matrix</a></code>. For instance:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Make a grayscale copy of the my_image object created earlier</span>
 <span class="va">my_gray_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="st">"GRAY"</span><span class="op">)</span>
@@ -302,7 +302,7 @@
 <div id="color-images" class="section level3">
 <h3 class="hasAnchor">
 <a href="#color-images" class="anchor"></a>3.4.1 - Color images</h3>
-<p>The <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> assignment operator can also be used to replace parts of a color (i.e.  multi-channel) image. However, instead of taking in single values for each pixel to be replaced, it will take one value per pixel and per channel of the image. For instance:</p>
+<p>The <code>&lt;-</code> assignment operator can also be used to replace parts of a color (i.e.  multi-channel) image. However, instead of taking in single values for each pixel to be replaced, it will take one value per pixel and per channel of the image. For instance:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Turn the bottom-left corner of the my_image object created earlier red. This </span>
 <span class="co"># is a BGRA image, so it has 4 channels which new values need to be specified.</span>

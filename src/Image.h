@@ -534,6 +534,20 @@ void _extractChannel(Image& image, int channel, Image& target) {
   cv::extractChannel(image.image, target.image, channel);
 }
 
+void _insertChannel(Image& image, int channel, Image& insert) {
+  if (image.GPU) {
+    if (insert.GPU)
+      return cv::insertChannel(insert.uimage, image.uimage, channel);
+
+    return cv::insertChannel(insert.image, image.uimage, channel);
+  }
+
+  if (insert.GPU)
+    return cv::insertChannel(insert.uimage, image.image, channel);
+
+  cv::insertChannel(insert.image, image.image, channel);
+}
+
 Rcpp::List _readMulti(std::string file, std::string colorspace) {
   std::vector<cv::Mat> mats;
   Rcpp::Environment base = Rcpp::Environment::base_env();

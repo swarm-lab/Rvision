@@ -340,12 +340,12 @@ discarded. (default: Inf).</p></td>
     <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>dots</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/dots.jpg"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>blobs</span> <span class='op'>&lt;-</span> <span class='fu'>simpleBlobDetector</span><span class='op'>(</span><span class='fu'><a href='invert.html'>invert</a></span><span class='op'>(</span><span class='va'>dots</span><span class='op'>)</span>, min_threshold <span class='op'>=</span> <span class='fl'>25</span>, max_threshold <span class='op'>=</span> <span class='fl'>220</span>,
-                            filter_by_area <span class='op'>=</span> <span class='cn'>TRUE</span>, min_area <span class='op'>=</span> <span class='fl'>200</span>, max_area <span class='op'>=</span> <span class='cn'>Inf</span>,
-                            filter_by_color <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>dots</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/dots.jpg"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>blobs</span> <span class='op'>&lt;-</span> <span class='fu'>simpleBlobDetector</span><span class='op'>(</span><span class='fu'><a href='invert.html'>invert</a></span><span class='op'>(</span><span class='va'>dots</span><span class='op'>)</span>, min_threshold <span class='op'>=</span> <span class='fl'>25</span>, max_threshold <span class='op'>=</span> <span class='fl'>220</span>,</span>
+<span class='r-in'>                            filter_by_area <span class='op'>=</span> <span class='cn'>TRUE</span>, min_area <span class='op'>=</span> <span class='fl'>200</span>, max_area <span class='op'>=</span> <span class='cn'>Inf</span>,</span>
+<span class='r-in'>                            filter_by_color <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

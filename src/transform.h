@@ -73,8 +73,8 @@ arma::Mat< float > _findTransformECC(Image& image1, Image& image2, int warpMode,
 }
 
 arma::Mat< float > _findTransformORB(Image& image1, Image& image2, int warpMode,
-                            int maxFeatures, String descriptorMatcher,
-                            double matchFrac, int homographyMethod) {
+                                     int maxFeatures, String descriptorMatcher,
+                                     double matchFrac, int homographyMethod) {
   arma::Mat< float > out;
   cv::Mat_< float > warpMatrix;
 
@@ -286,4 +286,25 @@ void _histEqBGR(Image& image, Image& target) {
     return cv::cvtColor(ycrcb, target.uimage, cv::COLOR_YCrCb2BGR);
 
   cv::cvtColor(ycrcb, target.image, cv::COLOR_YCrCb2BGR);
+}
+
+void _grabCut(Image& image, Image& mask, Rcpp::NumericVector rect, Image& bgdModel,
+              Image& fgdModel, int iterCount, int mode) {
+  cv::Rect r;
+  r.x = rect(0) - 1;
+  r.y = -(rect(1) + rect(3)) + image.nrow();
+  r.width = rect(2);
+  r.height = rect(3);
+
+  if (image.GPU) {
+    if (!mask.GPU | !bgdModel.GPU | !fgdModel.GPU)
+      Rcpp::stop("'image' is on the GPU. 'mask', 'bgdModel', and 'fgdModel' should be as well.");
+
+    cv::grabCut(image.uimage, mask.uimage, r, bgdModel.uimage, fgdModel.uimage, iterCount, mode);
+  } else {
+    if (mask.GPU | bgdModel.GPU | fgdModel.GPU)
+      Rcpp::stop("'image' is on the CPU. 'mask', 'bgdModel', and 'fgdModel' should be as well.");
+
+    cv::grabCut(image.image, mask.image, r, bgdModel.image, fgdModel.image, iterCount, mode);
+  }
 }

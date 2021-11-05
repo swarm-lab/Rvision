@@ -42,6 +42,7 @@ RCPP_MODULE(class_Image) {
   function("_split", &_split, List::create(_["image"]), "");
   function("_merge", &_merge, List::create(_["channels"], _["target"]), "");
   function("_extractChannel", &_extractChannel, List::create(_["image"], _["channel"], _["target"]), "");
+  function("_insertChannel", &_insertChannel, List::create(_["image"], _["channel"], _["target"]), "");
   function("_readMulti", &_readMulti, List::create(_["file"], _["colorspace"]), "");
   function("_subimage", &_subimage, List::create(_["image"], _["x"], _["y"],
     _["width"], _["height"], _["target"]), "");
@@ -347,6 +348,8 @@ RCPP_MODULE(methods_Transform) {
   function("_LUT", &_LUT, List::create(_["image"], _["lut"], _["target"]), "");
   function("_histEqGRAY", &_histEqGRAY, List::create(_["image"], _["target"]), "");
   function("_histEqBGR", &_histEqBGR, List::create(_["image"], _["target"]), "");
+  function("_grabCut", &_grabCut, List::create(_["image"], _["mask"], _["rect"],
+    _["bgdModel"], _["fgdModel"], _["iterCount"], _["mode"]), "");
 }
 
 #include "feature.h"

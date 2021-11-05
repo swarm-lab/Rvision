@@ -942,3 +942,27 @@ histEq <- function(image, target = "new") {
     stop("'image' must have 1 or 3 or more channels.")
   }
 }
+
+
+#' @export
+grabCut <- function(image, mask, rect = rep(1, 4), bgdModel, fgdModel, iter = 1,
+                    mode = "eval") {
+  if (!isImage(image) | !isImage(mask) | !isImage(bgdModel) | !isImage(fgdModel))
+    stop("'image', 'mask', 'bgdModel', and 'fgdModel' should all be Image objects.")
+
+  if (image$depth() != "8U" | mask$depth() != "8U")
+    stop("'image' and 'mask' must have an 8U bit depth.")
+
+  if (bgdModel$depth() != "64F" | fgdModel$depth() != "64F")
+    stop("'bgdModel' and 'fgdModel' must have an 64F bit depth.")
+
+  if (image$nchan() != 3)
+    stop("'image' must have 3 channels.")
+
+  if (mask$nchan() != 1 | bgdModel$nchan() != 1 | fgdModel$nchan() != 1)
+    stop("''mask', 'bgdModel', and 'fgdModel' must have 1 channel only.")
+
+  `_grabCut`(image, mask, rect, bgdModel, fgdModel, iter,
+             switch(mode, RECT = 0, MASK = 1, EVAL = 2, FREEZE = 3,
+                    stop("This is not a valid mode.")))
+}

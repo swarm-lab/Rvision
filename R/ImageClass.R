@@ -554,6 +554,52 @@ extractChannel <- function(image, channel, target = "new") {
 }
 
 
+#' @title Insert Single Channel into Image
+#'
+#' @description \code{insertChannel} insert a single color channel into the
+#'  target image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param channel An integer specifying the index of the channel that will be
+#'  replaced by \code{insert}
+#'
+#' @param insert A single-channel \code{\link{Image}} object with the same bit
+#'  depth as \code{image}.
+#'
+#' @return The function returns nothing and modifies \code{image} in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{split}}, \code{\link{merge}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' red <- extractChannel(balloon, 3)
+#' insertChannel(balloon, 1, red)
+#'
+#' @export
+insertChannel <- function(image, channel, insert) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  if (!(channel %in% 1:image$nchan()))
+    stop("Invalid channel number.")
+
+  if (isImage(insert)) {
+    if (insert$nchan() > 1)
+      stop("insert must be a single-channel image.")
+
+    if (insert$depth() != image$depth())
+      stop("target must have the same bitdepth as image.")
+
+    `_insertChannel`(image, channel - 1L, insert)
+  } else {
+    stop("Invalid insert.")
+  }
+}
+
+
 #' @title Read a Multi-Page Image
 #'
 #' @description \code{readMulti} reads a multi-page image and returns a list of

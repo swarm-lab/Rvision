@@ -180,215 +180,216 @@
     <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code>, <code><a href='changeColorSpace.html'>changeColorSpace</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cc_table</span><span class='op'>)</span>
-<span class='va'>cc_table</span>
-</div><div class='output co'>#&gt;         From        To
-#&gt; 1        BGR      BGRA
-#&gt; 2        RGB      RGBA
-#&gt; 3       BGRA       BGR
-#&gt; 4       RGBA       RGB
-#&gt; 5        BGR      RGBA
-#&gt; 6        RGB      BGRA
-#&gt; 7       RGBA       BGR
-#&gt; 8       BGRA       RGB
-#&gt; 9        BGR       RGB
-#&gt; 10       RGB       BGR
-#&gt; 11      BGRA      RGBA
-#&gt; 12      RGBA      BGRA
-#&gt; 13       BGR      GRAY
-#&gt; 14       RGB      GRAY
-#&gt; 15      GRAY       BGR
-#&gt; 16      GRAY       RGB
-#&gt; 17      GRAY      BGRA
-#&gt; 18      GRAY      RGBA
-#&gt; 19      BGRA      GRAY
-#&gt; 20      RGBA      GRAY
-#&gt; 21       BGR    BGR565
-#&gt; 22       RGB    BGR565
-#&gt; 23    BGR565       BGR
-#&gt; 24    BGR565       RGB
-#&gt; 25      BGRA    BGR565
-#&gt; 26      RGBA    BGR565
-#&gt; 27    BGR565      BGRA
-#&gt; 28    BGR565      RGBA
-#&gt; 29      GRAY    BGR565
-#&gt; 30    BGR565      GRAY
-#&gt; 31       BGR    BGR555
-#&gt; 32       RGB    BGR555
-#&gt; 33    BGR555       BGR
-#&gt; 34    BGR555       RGB
-#&gt; 35      BGRA    BGR555
-#&gt; 36      RGBA    BGR555
-#&gt; 37    BGR555      BGRA
-#&gt; 38    BGR555      RGBA
-#&gt; 39      GRAY    BGR555
-#&gt; 40    BGR555      GRAY
-#&gt; 41       BGR       XYZ
-#&gt; 42       RGB       XYZ
-#&gt; 43       XYZ       BGR
-#&gt; 44       XYZ       RGB
-#&gt; 45       BGR     YCrCb
-#&gt; 46       RGB     YCrCb
-#&gt; 47     YCrCb       BGR
-#&gt; 48     YCrCb       RGB
-#&gt; 49       BGR       HSV
-#&gt; 50       RGB       HSV
-#&gt; 51       BGR       Lab
-#&gt; 52       RGB       Lab
-#&gt; 53       BGR       Luv
-#&gt; 54       RGB       Luv
-#&gt; 55       BGR       HLS
-#&gt; 56       RGB       HLS
-#&gt; 57       HSV       BGR
-#&gt; 58       HSV       RGB
-#&gt; 59       Lab       BGR
-#&gt; 60       Lab       RGB
-#&gt; 61       Luv       BGR
-#&gt; 62       Luv       RGB
-#&gt; 63       HLS       BGR
-#&gt; 64       HLS       RGB
-#&gt; 65       BGR  HSV_FULL
-#&gt; 66       RGB  HSV_FULL
-#&gt; 67       BGR  HLS_FULL
-#&gt; 68       RGB  HLS_FULL
-#&gt; 69       HSV  BGR_FULL
-#&gt; 70       HSV  RGB_FULL
-#&gt; 71       HLS  BGR_FULL
-#&gt; 72       HLS  RGB_FULL
-#&gt; 73      LBGR       Lab
-#&gt; 74      LRGB       Lab
-#&gt; 75      LBGR       Luv
-#&gt; 76      LRGB       Luv
-#&gt; 77       Lab      LBGR
-#&gt; 78       Lab      LRGB
-#&gt; 79       Luv      LBGR
-#&gt; 80       Luv      LRGB
-#&gt; 81       BGR       YUV
-#&gt; 82       RGB       YUV
-#&gt; 83       YUV       BGR
-#&gt; 84       YUV       RGB
-#&gt; 85       YUV  RGB_NV12
-#&gt; 86       YUV  BGR_NV12
-#&gt; 87       YUV  RGB_NV21
-#&gt; 88       YUV  BGR_NV21
-#&gt; 89  YUV420sp       RGB
-#&gt; 90  YUV420sp       BGR
-#&gt; 91       YUV RGBA_NV12
-#&gt; 92       YUV BGRA_NV12
-#&gt; 93       YUV RGBA_NV21
-#&gt; 94       YUV BGRA_NV21
-#&gt; 95  YUV420sp      RGBA
-#&gt; 96  YUV420sp      BGRA
-#&gt; 97       YUV  RGB_YV12
-#&gt; 98       YUV  BGR_YV12
-#&gt; 99       YUV  RGB_IYUV
-#&gt; 100      YUV  BGR_IYUV
-#&gt; 101      YUV  RGB_I420
-#&gt; 102      YUV  BGR_I420
-#&gt; 103  YUV420p       RGB
-#&gt; 104  YUV420p       BGR
-#&gt; 105      YUV RGBA_YV12
-#&gt; 106      YUV BGRA_YV12
-#&gt; 107      YUV RGBA_IYUV
-#&gt; 108      YUV BGRA_IYUV
-#&gt; 109      YUV RGBA_I420
-#&gt; 110      YUV BGRA_I420
-#&gt; 111  YUV420p      RGBA
-#&gt; 112  YUV420p      BGRA
-#&gt; 113      YUV  GRAY_420
-#&gt; 114      YUV GRAY_NV21
-#&gt; 115      YUV GRAY_NV12
-#&gt; 116      YUV GRAY_YV12
-#&gt; 117      YUV GRAY_IYUV
-#&gt; 118      YUV GRAY_I420
-#&gt; 119 YUV420sp      GRAY
-#&gt; 120  YUV420p      GRAY
-#&gt; 121      YUV  RGB_UYVY
-#&gt; 122      YUV  BGR_UYVY
-#&gt; 123      YUV  RGB_Y422
-#&gt; 124      YUV  BGR_Y422
-#&gt; 125      YUV  RGB_UYNV
-#&gt; 126      YUV  BGR_UYNV
-#&gt; 127      YUV RGBA_UYVY
-#&gt; 128      YUV BGRA_UYVY
-#&gt; 129      YUV RGBA_Y422
-#&gt; 130      YUV BGRA_Y422
-#&gt; 131      YUV RGBA_UYNV
-#&gt; 132      YUV BGRA_UYNV
-#&gt; 133      YUV  RGB_YUY2
-#&gt; 134      YUV  BGR_YUY2
-#&gt; 135      YUV  RGB_YVYU
-#&gt; 136      YUV  BGR_YVYU
-#&gt; 137      YUV  RGB_YUYV
-#&gt; 138      YUV  BGR_YUYV
-#&gt; 139      YUV  RGB_YUNV
-#&gt; 140      YUV  BGR_YUNV
-#&gt; 141      YUV RGBA_YUY2
-#&gt; 142      YUV BGRA_YUY2
-#&gt; 143      YUV RGBA_YVYU
-#&gt; 144      YUV BGRA_YVYU
-#&gt; 145      YUV RGBA_YUYV
-#&gt; 146      YUV BGRA_YUYV
-#&gt; 147      YUV RGBA_YUNV
-#&gt; 148      YUV BGRA_YUNV
-#&gt; 149      YUV GRAY_UYVY
-#&gt; 150      YUV GRAY_YUY2
-#&gt; 151      YUV GRAY_Y422
-#&gt; 152      YUV GRAY_UYNV
-#&gt; 153      YUV GRAY_YVYU
-#&gt; 154      YUV GRAY_YUYV
-#&gt; 155      YUV GRAY_YUNV
-#&gt; 156     RGBA     mRGBA
-#&gt; 157    mRGBA      RGBA
-#&gt; 158      RGB  YUV_I420
-#&gt; 159      BGR  YUV_I420
-#&gt; 160      RGB  YUV_IYUV
-#&gt; 161      BGR  YUV_IYUV
-#&gt; 162     RGBA  YUV_I420
-#&gt; 163     BGRA  YUV_I420
-#&gt; 164     RGBA  YUV_IYUV
-#&gt; 165     BGRA  YUV_IYUV
-#&gt; 166      RGB  YUV_YV12
-#&gt; 167      BGR  YUV_YV12
-#&gt; 168     RGBA  YUV_YV12
-#&gt; 169     BGRA  YUV_YV12
-#&gt; 170  BayerBG       BGR
-#&gt; 171  BayerGB       BGR
-#&gt; 172  BayerRG       BGR
-#&gt; 173  BayerGR       BGR
-#&gt; 174  BayerBG       RGB
-#&gt; 175  BayerGB       RGB
-#&gt; 176  BayerRG       RGB
-#&gt; 177  BayerGR       RGB
-#&gt; 178  BayerBG      GRAY
-#&gt; 179  BayerGB      GRAY
-#&gt; 180  BayerRG      GRAY
-#&gt; 181  BayerGR      GRAY
-#&gt; 182  BayerBG   BGR_VNG
-#&gt; 183  BayerGB   BGR_VNG
-#&gt; 184  BayerRG   BGR_VNG
-#&gt; 185  BayerGR   BGR_VNG
-#&gt; 186  BayerBG   RGB_VNG
-#&gt; 187  BayerGB   RGB_VNG
-#&gt; 188  BayerRG   RGB_VNG
-#&gt; 189  BayerGR   RGB_VNG
-#&gt; 190  BayerBG    BGR_EA
-#&gt; 191  BayerGB    BGR_EA
-#&gt; 192  BayerRG    BGR_EA
-#&gt; 193  BayerGR    BGR_EA
-#&gt; 194  BayerBG    RGB_EA
-#&gt; 195  BayerGB    RGB_EA
-#&gt; 196  BayerRG    RGB_EA
-#&gt; 197  BayerGR    RGB_EA
-#&gt; 198  BayerBG      BGRA
-#&gt; 199  BayerGB      BGRA
-#&gt; 200  BayerRG      BGRA
-#&gt; 201  BayerGR      BGRA
-#&gt; 202  BayerBG      RGBA
-#&gt; 203  BayerGB      RGBA
-#&gt; 204  BayerRG      RGBA
-#&gt; 205  BayerGR      RGBA</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cc_table</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>cc_table</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         From        To</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1        BGR      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2        RGB      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       BGRA       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4       RGBA       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5        BGR      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6        RGB      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7       RGBA       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8       BGRA       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9        BGR       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10       RGB       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11      BGRA      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12      RGBA      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13       BGR      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14       RGB      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15      GRAY       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16      GRAY       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17      GRAY      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18      GRAY      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19      BGRA      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20      RGBA      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21       BGR    BGR565</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22       RGB    BGR565</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23    BGR565       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24    BGR565       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25      BGRA    BGR565</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26      RGBA    BGR565</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27    BGR565      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28    BGR565      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29      GRAY    BGR565</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30    BGR565      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31       BGR    BGR555</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32       RGB    BGR555</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 33    BGR555       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 34    BGR555       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 35      BGRA    BGR555</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 36      RGBA    BGR555</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 37    BGR555      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 38    BGR555      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 39      GRAY    BGR555</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40    BGR555      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 41       BGR       XYZ</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 42       RGB       XYZ</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 43       XYZ       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 44       XYZ       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 45       BGR     YCrCb</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 46       RGB     YCrCb</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 47     YCrCb       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 48     YCrCb       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 49       BGR       HSV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 50       RGB       HSV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 51       BGR       Lab</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 52       RGB       Lab</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 53       BGR       Luv</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 54       RGB       Luv</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 55       BGR       HLS</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 56       RGB       HLS</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 57       HSV       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 58       HSV       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 59       Lab       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60       Lab       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 61       Luv       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 62       Luv       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 63       HLS       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 64       HLS       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 65       BGR  HSV_FULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 66       RGB  HSV_FULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 67       BGR  HLS_FULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 68       RGB  HLS_FULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 69       HSV  BGR_FULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 70       HSV  RGB_FULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 71       HLS  BGR_FULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 72       HLS  RGB_FULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 73      LBGR       Lab</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 74      LRGB       Lab</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 75      LBGR       Luv</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 76      LRGB       Luv</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 77       Lab      LBGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 78       Lab      LRGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 79       Luv      LBGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 80       Luv      LRGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 81       BGR       YUV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 82       RGB       YUV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 83       YUV       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 84       YUV       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 85       YUV  RGB_NV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 86       YUV  BGR_NV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 87       YUV  RGB_NV21</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 88       YUV  BGR_NV21</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 89  YUV420sp       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 90  YUV420sp       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 91       YUV RGBA_NV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 92       YUV BGRA_NV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 93       YUV RGBA_NV21</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 94       YUV BGRA_NV21</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95  YUV420sp      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 96  YUV420sp      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 97       YUV  RGB_YV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 98       YUV  BGR_YV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 99       YUV  RGB_IYUV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 100      YUV  BGR_IYUV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 101      YUV  RGB_I420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 102      YUV  BGR_I420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 103  YUV420p       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 104  YUV420p       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 105      YUV RGBA_YV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 106      YUV BGRA_YV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 107      YUV RGBA_IYUV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 108      YUV BGRA_IYUV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 109      YUV RGBA_I420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 110      YUV BGRA_I420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 111  YUV420p      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 112  YUV420p      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 113      YUV  GRAY_420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 114      YUV GRAY_NV21</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 115      YUV GRAY_NV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 116      YUV GRAY_YV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 117      YUV GRAY_IYUV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 118      YUV GRAY_I420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 119 YUV420sp      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 120  YUV420p      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 121      YUV  RGB_UYVY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 122      YUV  BGR_UYVY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 123      YUV  RGB_Y422</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 124      YUV  BGR_Y422</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 125      YUV  RGB_UYNV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 126      YUV  BGR_UYNV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 127      YUV RGBA_UYVY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 128      YUV BGRA_UYVY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 129      YUV RGBA_Y422</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 130      YUV BGRA_Y422</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 131      YUV RGBA_UYNV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 132      YUV BGRA_UYNV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 133      YUV  RGB_YUY2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 134      YUV  BGR_YUY2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 135      YUV  RGB_YVYU</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 136      YUV  BGR_YVYU</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 137      YUV  RGB_YUYV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 138      YUV  BGR_YUYV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 139      YUV  RGB_YUNV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 140      YUV  BGR_YUNV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 141      YUV RGBA_YUY2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 142      YUV BGRA_YUY2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 143      YUV RGBA_YVYU</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 144      YUV BGRA_YVYU</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 145      YUV RGBA_YUYV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 146      YUV BGRA_YUYV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 147      YUV RGBA_YUNV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 148      YUV BGRA_YUNV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 149      YUV GRAY_UYVY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 150      YUV GRAY_YUY2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 151      YUV GRAY_Y422</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 152      YUV GRAY_UYNV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 153      YUV GRAY_YVYU</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 154      YUV GRAY_YUYV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 155      YUV GRAY_YUNV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 156     RGBA     mRGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 157    mRGBA      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 158      RGB  YUV_I420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 159      BGR  YUV_I420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 160      RGB  YUV_IYUV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 161      BGR  YUV_IYUV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 162     RGBA  YUV_I420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 163     BGRA  YUV_I420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 164     RGBA  YUV_IYUV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 165     BGRA  YUV_IYUV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 166      RGB  YUV_YV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 167      BGR  YUV_YV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 168     RGBA  YUV_YV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 169     BGRA  YUV_YV12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 170  BayerBG       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 171  BayerGB       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 172  BayerRG       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 173  BayerGR       BGR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 174  BayerBG       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 175  BayerGB       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 176  BayerRG       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 177  BayerGR       RGB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 178  BayerBG      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 179  BayerGB      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 180  BayerRG      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 181  BayerGR      GRAY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 182  BayerBG   BGR_VNG</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 183  BayerGB   BGR_VNG</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 184  BayerRG   BGR_VNG</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 185  BayerGR   BGR_VNG</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 186  BayerBG   RGB_VNG</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 187  BayerGB   RGB_VNG</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 188  BayerRG   RGB_VNG</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 189  BayerGR   RGB_VNG</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 190  BayerBG    BGR_EA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 191  BayerGB    BGR_EA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 192  BayerRG    BGR_EA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 193  BayerGR    BGR_EA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 194  BayerBG    RGB_EA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 195  BayerGB    RGB_EA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 196  BayerRG    RGB_EA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 197  BayerGR    RGB_EA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 198  BayerBG      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 199  BayerGB      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 200  BayerRG      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 201  BayerGR      BGRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 202  BayerBG      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 203  BayerGB      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 204  BayerRG      RGBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 205  BayerGR      RGBA</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
