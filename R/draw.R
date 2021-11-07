@@ -717,7 +717,7 @@ inpaint <- function(image, mask, radius = 5, method = "NS", target = "new", in_p
   } else if (target == "self") {
     `_inpaint`(image, mask, radius, meth, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_inpaint`(image, mask, radius, meth, out)
     out
   } else {
@@ -796,7 +796,7 @@ setTo <- function(image, mask, color = "red", target = "new", in_place = NULL) {
   if (target == "self") {
     `_setTo`(image, mask, col2bgr(color))
   } else {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_setTo`(out, mask, col2bgr(color))
     out
   }

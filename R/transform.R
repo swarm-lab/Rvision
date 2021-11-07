@@ -791,7 +791,7 @@ LUT <- function(image, lut, target = "new") {
   } else if (target == "self") {
     `_LUT`(image, im_lut, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_LUT`(image, im_lut, out)
     out
   } else {
@@ -920,7 +920,7 @@ histEq <- function(image, target = "new") {
     } else if (target == "self") {
       `_histEqGRAY`(image, image)
     } else if (target == "new") {
-      out <- `_cloneImage`(image)
+      out <- cloneImage(image)
       `_histEqGRAY`(image, out)
       out
     } else {
@@ -932,7 +932,7 @@ histEq <- function(image, target = "new") {
     } else if (target == "self") {
       `_histEqBGR`(image, image)
     } else if (target == "new") {
-      out <- `_cloneImage`(image)
+      out <- cloneImage(image)
       `_histEqBGR`(image, out)
       out
     } else {

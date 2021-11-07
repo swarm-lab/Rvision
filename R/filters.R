@@ -65,7 +65,7 @@ filter2D <- function(image, kernel, target = "new", in_place = NULL) {
   } else if (target == "self") {
     `_filter2D`(image, kernel, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_filter2D`(image, kernel, out)
     out
   } else {
@@ -143,7 +143,7 @@ sepFilter2D <- function(image, kernel_x, kernel_y, target = "new", in_place = NU
   } else if (target == "self") {
     `_sepFilter2D`(image, kernel_x, kernel_y, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_sepFilter2D`(image, kernel_x, kernel_y, out)
     out
   } else {
@@ -221,7 +221,7 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1,
   } else if (target == "self") {
     `_gaussianBlur`(image, k_height, k_width, sigma_x, sigma_y, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_gaussianBlur`(image, k_height, k_width, sigma_x, sigma_y, out)
     out
   } else {
@@ -292,7 +292,7 @@ boxFilter <- function(image, k_height = 5, k_width = 5, target = "new", in_place
   } else if (target == "self") {
     `_boxFilter`(image, k_height, k_width, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_boxFilter`(image, k_height, k_width, out)
     out
   } else {
@@ -363,7 +363,7 @@ blur <- function(image, k_height = 5, k_width = 5, target = "new", in_place = NU
   } else if (target == "self") {
     `_blur`(image, k_height, k_width, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_blur`(image, k_height, k_width, out)
     out
   } else {
@@ -432,7 +432,7 @@ medianBlur <- function(image, k_size = 5, target = "new", in_place = NULL) {
   } else if (target == "self") {
     `_medianBlur`(image, k_size, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_medianBlur`(image, k_size, out)
     out
   } else {
@@ -507,7 +507,7 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE,
   } else if (target == "self") {
     `_sqrBoxFilter`(image, k_height, k_width, normalize, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_sqrBoxFilter`(image, k_height, k_width, normalize, out)
     out
   } else {
@@ -584,7 +584,7 @@ scharr <- function(image, dx = 1, dy = 0, scale = 1, target = "new", in_place = 
   } else if (target == "self") {
     `_scharr`(image, dx, dy, scale, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_scharr`(image, dx, dy, scale, out)
     out
   } else {
@@ -659,7 +659,7 @@ sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1, target = "new",
   } else if (target == "self") {
     `_sobel`(image, dx, dy, k_size, scale, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_sobel`(image, dx, dy, k_size, scale, out)
     out
   } else {
@@ -729,7 +729,7 @@ laplacian <- function(image, k_size = 5, scale = 1, target = "new", in_place = N
   } else if (target == "self") {
     `_laplacian`(image, k_size, scale, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_laplacian`(image, k_size, scale, out)
     out
   } else {
@@ -833,7 +833,7 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25,
   if (isImage(target)) {
     `_bilateralFilter`(image, d, sigma_color, sigma_space, target)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_bilateralFilter`(image, d, sigma_color, sigma_space, out)
     out
   } else {
@@ -935,7 +935,7 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
                          if (threshold_type == "binary") 0 else 1,
                          block_size, C, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_adaptiveThreshold`(image, max_value, if (method == "mean") 0 else 1,
                          if (threshold_type == "binary") 0 else 1,
                          block_size, C, out)
@@ -1003,7 +1003,7 @@ invert <- function(image, target = "new", in_place = NULL) {
   } else if (target == "self") {
     `_not`(image, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_not`(image, out)
     out
   } else {

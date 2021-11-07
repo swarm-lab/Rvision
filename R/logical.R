@@ -120,7 +120,7 @@ not <- function(image, target = "new") {
   } else if (target == "self") {
     `_not`(image, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_not`(image, out)
     out
   } else {

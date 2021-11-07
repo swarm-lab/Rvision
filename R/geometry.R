@@ -186,7 +186,7 @@ flip <- function(image, type = 0, target = "new", in_place = NULL) {
   } else if (target == "self") {
     `_flip`(image, type, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_flip`(image, type, out)
     out
   } else {

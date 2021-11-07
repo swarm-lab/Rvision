@@ -47,7 +47,7 @@ canny <- function(image, threshold1, threshold2, aperture_size = 3,
   if (isImage(target)) {
     `_canny`(image, threshold1, threshold2, aperture_size, L2_gradient, target)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_canny`(image, threshold1, threshold2, aperture_size, L2_gradient, out)
     out
   } else {
