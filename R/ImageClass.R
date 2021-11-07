@@ -380,6 +380,18 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #'
 #' @param x An \code{\link{Image}} object.
 #'
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, number of channels,
+#'    and bit depth as \code{image}, an error may be thrown.}
+#'  }
+#'
 #' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -391,11 +403,19 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #' balloon_clone <- cloneImage(balloon)
 #'
 #' @export
-cloneImage <- function(x) {
+cloneImage <- function(x, target = "new") {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  `_cloneImage`(x)
+  if (isImage(target)) {
+    `_cloneImage`(x, target)
+  } else if (target == "new") {
+    out <- `_zeros`(x$nrow(), x$ncol(), paste0(x$depth(), "C", x$nchan()), x$space)
+    `_cloneImage`(x, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 

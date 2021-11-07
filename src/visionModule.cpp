@@ -38,7 +38,7 @@ RCPP_MODULE(class_Image) {
     _["scale"], _["target"]), "");
   function("_changeColorSpace", &_changeColorSpace, List::create(_["image"],
     _["colorspace"], _["target"]), "");
-  function("_cloneImage", &_cloneImage, List::create(_["image"]), "");
+  function("_cloneImage", &_cloneImage, List::create(_["image"], _["target"]), "");
   function("_split", &_split, List::create(_["image"]), "");
   function("_merge", &_merge, List::create(_["channels"], _["target"]), "");
   function("_extractChannel", &_extractChannel, List::create(_["image"], _["channel"], _["target"]), "");

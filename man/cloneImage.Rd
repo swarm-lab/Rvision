@@ -4,10 +4,22 @@
 \alias{cloneImage}
 \title{Make a copy of an Image object}
 \usage{
-cloneImage(x)
+cloneImage(x, target = "new")
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object.}
+
+\item{target}{The location where the results should be stored. It can take 2
+values:
+\itemize{
+ \item{"new":}{a new \code{\link{Image}} object is created and the results
+  are stored inside (the default).}
+ \item{An \code{\link{Image}} object:}{the results are stored in another
+  existing \code{\link{Image}} object. This is fast and will not replace the
+  content of \code{image} but will replace that of \code{target}. Note that
+  if \code{target} does not have the same dimensions, number of channels,
+  and bit depth as \code{image}, an error may be thrown.}
+}}
 }
 \value{
 An \code{\link{Image}} object.

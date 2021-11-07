@@ -474,8 +474,15 @@ void _changeColorSpace(Image& image, std::string colorSpace, Image& target) {
   target.space = colorSpace;
 }
 
-Image _cloneImage(Image& image) {
-  return Image(image);
+// Image _cloneImage(Image& image) {
+//   return Image(image);
+// }
+
+void _cloneImage(Image& image, Image& target) {
+  image.image.copyTo(target.image);
+  image.uimage.copyTo(target.uimage);
+  target.GPU = image.GPU;
+  target.space = image.space;
 }
 
 Rcpp::List _split(Image& image) {

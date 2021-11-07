@@ -244,11 +244,11 @@ compute a homography matrix. It can be one of the followings: "LS"
     <pre class="examples"><span class='r-in'><span class='va'>file1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>file2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon2.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>balloon1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='va'>file1</span><span class='op'>)</span>, <span class='st'>"GRAY"</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in `_cloneImage`(image):</span> argument "target" is missing, with no default</span>
 <span class='r-in'><span class='va'>balloon2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='va'>file2</span><span class='op'>)</span>, <span class='st'>"GRAY"</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in `_cloneImage`(image):</span> argument "target" is missing, with no default</span>
 <span class='r-in'><span class='fu'>findTransformORB</span><span class='op'>(</span><span class='va'>balloon1</span>, <span class='va'>balloon2</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>            [,1]     [,2]      [,3]</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,]  1.1929843 0.154035 -212.9814</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,] -0.2644756 1.137650  152.6791</span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in isImage(template):</span> object 'balloon1' not found</span>
 <span class='r-in'></span>
 </pre>
   </div>

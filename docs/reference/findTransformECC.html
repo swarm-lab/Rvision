@@ -237,11 +237,11 @@ filtering is applied.</p></td>
     <pre class="examples"><span class='r-in'><span class='va'>file1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>file2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon2.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>balloon1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='va'>file1</span><span class='op'>)</span>, <span class='st'>"GRAY"</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in `_cloneImage`(image):</span> argument "target" is missing, with no default</span>
 <span class='r-in'><span class='va'>balloon2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='va'>file2</span><span class='op'>)</span>, <span class='st'>"GRAY"</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in `_cloneImage`(image):</span> argument "target" is missing, with no default</span>
 <span class='r-in'><span class='fu'>findTransformECC</span><span class='op'>(</span><span class='va'>balloon1</span>, <span class='va'>balloon2</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>            [,1]     [,2]      [,3]</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,]  1.0909468 0.128925 -67.90497</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,] -0.1418501 1.148562  17.78894</span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in isImage(template):</span> object 'balloon1' not found</span>
 <span class='r-in'></span>
 </pre>
   </div>
