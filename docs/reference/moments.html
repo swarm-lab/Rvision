@@ -214,13 +214,58 @@ where \((\bar{x}, \bar{y})\) is the mass center:
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='r-in'><span class='va'>dots</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/dots.jpg"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>dots_gray</span> <span class='op'>&lt;-</span> <span class='fu'><a href='changeColorSpace.html'>changeColorSpace</a></span><span class='op'>(</span><span class='va'>dots</span>, <span class='st'>"GRAY"</span><span class='op'>)</span></span>
-<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in `_cloneImage`(image):</span> argument "target" is missing, with no default</span>
 <span class='r-in'><span class='va'>dots_bin</span> <span class='op'>&lt;-</span> <span class='va'>dots_gray</span> <span class='op'>&lt;</span> <span class='fl'>200</span></span>
-<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in eval(expr, envir, enclos):</span> object 'dots_gray' not found</span>
 <span class='r-in'><span class='va'>contours</span> <span class='op'>&lt;-</span> <span class='fu'><a href='findContours.html'>findContours</a></span><span class='op'>(</span><span class='va'>dots_bin</span><span class='op'>)</span></span>
-<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in isImage(image):</span> object 'dots_bin' not found</span>
 <span class='r-in'><span class='fu'>moments</span><span class='op'>(</span><span class='va'>contours</span>, id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in moments(contours, id = c(3, 5)):</span> object 'contours' not found</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      id moment         value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.1   3    m00  8.290500e+03</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.2   3    m10  5.846871e+06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.3   3    m01  7.960358e+05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.4   3    m20  4.128506e+09</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.5   3    m11  5.610887e+08</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.6   3    m02  8.243463e+07</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.7   3    m30  2.918683e+12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.8   3    m21  3.959663e+11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.9   3    m12  5.807725e+10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.10  3    m03  9.066588e+09</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.11  3   mu20  5.002732e+06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.12  3   mu11 -3.152508e+05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.13  3   mu02  6.000996e+06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.14  3   mu30 -7.443355e+05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.15  3   mu21  7.637233e+05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.16  3   mu12  8.001813e+05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.17  3   mu03 -1.012028e+06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.18  3   nu20  7.278566e-02</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.19  3   nu11 -4.586642e-03</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.20  3   nu02  8.730957e-02</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.21  3   nu30 -1.189370e-04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.22  3   nu21  1.220350e-04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.23  3   nu12  1.278606e-04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.24  3   nu03 -1.617115e-04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.1   5    m00  5.059000e+03</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.2   5    m10  5.517633e+06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.3   5    m01  6.791772e+05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.4   5    m20  6.019317e+09</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.5   5    m11  7.411701e+08</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.6   5    m02  9.411835e+07</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.7   5    m30  6.568222e+12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.8   5    m21  8.090197e+11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.9   5    m12  1.027642e+11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.10  5    m03  1.342318e+10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.11  5   mu20  1.473124e+06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.12  5   mu11  4.209014e+05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.13  5   mu02  2.937954e+06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.14  5   mu30  1.266930e+04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.15  5   mu21  7.011204e+05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.16  5   mu12  3.794716e+05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.17  5   mu03 -1.176398e+06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.18  5   nu20  5.755855e-02</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.19  5   nu11  1.644565e-02</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.20  5   nu02  1.147931e-01</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.21  5   nu30  6.959707e-06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.22  5   nu21  3.851509e-04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.23  5   nu12  2.084575e-04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5.24  5   nu03 -6.462379e-04</span>
 <span class='r-in'></span>
 </pre>
   </div>

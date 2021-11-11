@@ -223,7 +223,7 @@ values:</p><ul>
     <pre class="examples"><span class='r-in'><span class='va'>balloon1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon1.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>balloon2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/balloon2.png"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>balloon_weighted</span> <span class='op'>&lt;-</span> <span class='fu'>addWeighted</span><span class='op'>(</span><span class='va'>balloon1</span>, <span class='va'>balloon2</span><span class='op'>)</span></span>
-<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in `_cloneImage`(e1):</span> argument "target" is missing, with no default</span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in cloneImage(image):</span> This is not an Image object.</span>
 <span class='r-in'></span>
 </pre>
   </div>

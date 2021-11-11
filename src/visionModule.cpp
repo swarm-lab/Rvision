@@ -328,7 +328,7 @@ RCPP_MODULE(methods_Shape) {
 #include "transform.h"
 RCPP_MODULE(methods_Transform) {
   function("_findTransformECC", &_findTransformECC, List::create(_["image1"], _["image2"],
-    _["motionType"], _["count"], _["eps"], _["gaussFiltSize"]), "");
+    _["warpMatrix"], _["warpMode"], _["count"], _["eps"], _["gaussFiltSize"]), "");
   function("_computeECC", &_computeECC, List::create(_["image1"], _["image2"]), "");
   function("_findTransformORB", &_findTransformORB, List::create(_["image1"], _["image2"],
     _["warpMode"], _["maxFeatures"], _["descriptorMatcher"], _["matchFrac"],

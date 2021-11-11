@@ -53,6 +53,11 @@ computeECC <- function(template, image) {
 #' @param image A grayscale \code{\link{Image}} object of the same dimensions as
 #'  \code{template}.
 #'
+#' @param warp_matrix An initial mapping (warp) matrix. It must be a 3x3 matrix
+#'  when \code{warp_mode} is set to "homography", a 2x3 matrix otherwise. If set
+#'  to \code{NULL} (the default), it will be automatically initialized as an
+#'  identity matrix with the appropriate dimensions.
+#'
 #' @param warp_mode A character string indicating the type of warping required
 #'  to transform \code{image} into \code{template}. It can be any of the following:
 #'  \itemize{
@@ -90,8 +95,8 @@ computeECC <- function(template, image) {
 #' findTransformECC(balloon1, balloon2)
 #'
 #' @export
-findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200,
-                             epsilon = 1e-3, filt_size = 0) {
+findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "affine",
+                             max_it = 200, epsilon = 1e-3, filt_size = 0) {
   if (!isImage(template))
     stop("'template' is not an Image object.")
 
@@ -104,7 +109,21 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
   if (!all(template$dim() == image$dim()))
     stop("'template' and 'image' must have the same dimensions.")
 
-  `_findTransformECC`(template, image,
+  if (is.null(warp_matrix)) {
+    if (warp_mode == "homography") {
+      warp_matrix <- diag(1, 3, 3)
+    } else {
+      warp_matrix <- diag(1, 2, 3)
+    }
+  } else {
+    if (warp_mode == "homography" & !all(dim(warp_matrix) == c(3, 3))) {
+      stop("warp_matrix must be a 3x3 matrix.")
+    } else if (!all(dim(warp_matrix) == c(2, 3))) {
+      stop("warp_matrix must be a 2x3 matrix.")
+    }
+  }
+
+  `_findTransformECC`(template, image, warp_matrix,
                       switch(warp_mode,
                              "translation" = 0,
                              "euclidean" = 1,
