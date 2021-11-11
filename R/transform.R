@@ -109,18 +109,21 @@ findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "a
   if (!all(template$dim() == image$dim()))
     stop("'template' and 'image' must have the same dimensions.")
 
-  if (is.null(warp_matrix)) {
-    if (warp_mode == "homography") {
+  if (warp_mode == "homography") {
+    if (is.null(warp_matrix)) {
       warp_matrix <- diag(1, 3, 3)
     } else {
-      warp_matrix <- diag(1, 2, 3)
+      if (!all(dim(warp_matrix) == c(3, 3)))
+        stop("warp_matrix must be a 3x3 matrix.")
     }
   } else {
-    if (warp_mode == "homography" & !all(dim(warp_matrix) == c(3, 3))) {
-      stop("warp_matrix must be a 3x3 matrix.")
-    } else if (!all(dim(warp_matrix) == c(2, 3))) {
-      stop("warp_matrix must be a 2x3 matrix.")
+    if (is.null(warp_matrix)) {
+      warp_matrix <- diag(1, 2, 3)
+    } else {
+      if (!all(dim(warp_matrix) == c(2, 3)))
+        stop("warp_matrix must be a 2x3 matrix.")
     }
+
   }
 
   `_findTransformECC`(template, image, warp_matrix,
