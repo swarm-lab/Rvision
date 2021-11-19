@@ -968,7 +968,7 @@ histEq <- function(image, target = "new") {
 
 #' @export
 grabCut <- function(image, mask, rect = rep(1, 4), bgdModel, fgdModel, iter = 1,
-                    mode = "eval") {
+                    mode = "EVAL") {
   if (!isImage(image) | !isImage(mask) | !isImage(bgdModel) | !isImage(fgdModel))
     stop("'image', 'mask', 'bgdModel', and 'fgdModel' should all be Image objects.")
 

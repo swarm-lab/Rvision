@@ -44,6 +44,7 @@ RCPP_MODULE(class_Image) {
   function("_extractChannel", &_extractChannel, List::create(_["image"], _["channel"], _["target"]), "");
   function("_insertChannel", &_insertChannel, List::create(_["image"], _["channel"], _["target"]), "");
   function("_readMulti", &_readMulti, List::create(_["file"], _["colorspace"]), "");
+  function("_writeMulti", &_writeMulti, List::create(_["file"], _["imgList"]), "");
   function("_subimage", &_subimage, List::create(_["image"], _["x"], _["y"],
     _["width"], _["height"], _["target"]), "");
   function("_copyMakeBorder", &_copyMakeBorder, List::create(_["image"], _["top"],

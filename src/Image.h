@@ -571,6 +571,18 @@ Rcpp::List _readMulti(std::string file, std::string colorspace) {
   return out;
 }
 
+bool _writeMulti(std::string file, Rcpp::List imgList) {
+  std::vector<cv::Mat> mats;
+  Rcpp::Environment base = Rcpp::Environment::base_env();
+  Rcpp::Function pathExpand = base["path.expand"];
+
+  for (unsigned int i = 0; i < imgList.size(); i++) {
+    mats.push_back(as<Image>(imgList[i]).image);
+  }
+
+  return cv::imwritemulti(Rcpp::as<std::string>(pathExpand(file)), mats);
+}
+
 void _subimage(Image& image, int x, int y, int width, int height, Image& target) {
   if (image.GPU) {
     if (target.GPU)

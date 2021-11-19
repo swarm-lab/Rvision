@@ -176,8 +176,10 @@ isImage <- function(object) {
 #'
 #' @param file A character string naming the path to a file.
 #'
-#' @return A logical indicating whether writing was successful (TRUE) or not
-#'  (FALSE).
+#' @param overwrite Should the file be overwritten if it already exists?
+#'  (default: FALSE)
+#'
+#' @return A message indicating whether writing was successful or not.
 #'
 #' @note The function will guess the format of the output file using the file
 #'  extension provided by the user.
@@ -193,9 +195,12 @@ isImage <- function(object) {
 #' }
 #'
 #' @export
-write.Image <- function(x, file) {
+write.Image <- function(x, file, overwrite = FALSE) {
   if (!isImage(x))
     stop("This is not an Image object.")
+
+  if (file.exists(x) & !overwrite)
+    stop("A file with the same name already exists at that location.")
 
   if (x$write(file)) {
     message("Image saved successfully.")
@@ -644,6 +649,49 @@ readMulti <- function(x, colorspace = "BGR") {
     stop("File not found.")
 
   `_readMulti`(x, colorspace = "BGR")
+}
+
+
+#' @title Wrtie a Multi-Page Image
+#'
+#' @description \code{writeMulti} writes a list of \code{\link{Image}} objects
+#'  to a multi-page image.
+#'
+#' @param x A character string naming the path to a multi-page image file.
+#'
+#' @param img_list A list of \code{\link{Image}} objects.
+#'
+#' @param overwrite Should the file be overwritten if it already exists?
+#'  (default: FALSE)
+#'
+#' @return A message indicating whether writing was successful or not.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- readMulti(system.file("sample_img/multipage.tif", package = "Rvision"))
+#' \dontrun{
+#' writeMulti("~/Desktop/balloon.tiff", balloon)
+#' }
+#'
+#'
+#' @export
+writeMulti <- function(x, img_list, overwrite = FALSE) {
+  if (file.exists(x) & !overwrite)
+    stop("A file with the same name already exists at that location.")
+
+  if (!all(sapply(img_list, isImage)))
+    stop("All elements of the list should be images.")
+
+  out <- `_writeMulti`(x, img_list)
+
+  if (out) {
+    message("Image saved successfully.")
+  } else {
+    stop("The image could not be saved.")
+  }
 }
 
 

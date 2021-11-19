@@ -167,7 +167,7 @@
     <p>Writes the content of an <code><a href='Image-class.html'>Image</a></code> object to a file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>write.Image</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>file</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>write.Image</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>file</span>, overwrite <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,12 +180,16 @@
       <th>file</th>
       <td><p>A character string naming the path to a file.</p></td>
     </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>Should the file be overwritten if it already exists?
+(default: FALSE)</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A logical indicating whether writing was successful (TRUE) or not
- (FALSE).</p>
+    <p>A message indicating whether writing was successful or not.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The function will guess the format of the output file using the file

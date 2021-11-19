@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>The Number of Rows/Columns and Length of a Queue — nrow.Rcpp_Queue • Rvision</title>
+<title>Wrtie a Multi-Page Image — writeMulti • Rvision</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,9 @@
 
 
 
-<meta property="og:title" content="The Number of Rows/Columns and Length of a Queue — nrow.Rcpp_Queue" />
-<meta property="og:description" content="nrow, ncol and nframes return the number of rows, columns or
- frames present in a Queue object." />
+<meta property="og:title" content="Wrtie a Multi-Page Image — writeMulti" />
+<meta property="og:description" content="writeMulti writes a list of Image objects
+ to a multi-page image." />
 <meta property="og:image" content="https://swarm-lab.github.io/ROpenCVLite/logo.svg" />
 
 
@@ -159,52 +159,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>The Number of Rows/Columns and Length of a Queue</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/Queue.R'><code>R/Queue.R</code></a></small>
-    <div class="hidden name"><code>queue_dimensions.Rd</code></div>
+    <h1>Wrtie a Multi-Page Image</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swarm-lab/Rvision/blob/master/R/ImageClass.R'><code>R/ImageClass.R</code></a></small>
+    <div class="hidden name"><code>writeMulti.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>nrow, ncol and nframes return the number of rows, columns or
- frames present in a <code><a href='Queue-class.html'>Queue</a></code> object.</p>
+    <p><code>writeMulti</code> writes a list of <code><a href='Image-class.html'>Image</a></code> objects
+ to a multi-page image.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nrow.Rcpp_Queue</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>ncol.Rcpp_Queue</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='co'># S3 method for Rcpp_Queue</span>
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>writeMulti</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>img_list</span>, overwrite <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A <code><a href='Queue-class.html'>Queue</a></code> object.</p></td>
+      <td><p>A character string naming the path to a multi-page image file.</p></td>
+    </tr>
+    <tr>
+      <th>img_list</th>
+      <td><p>A list of <code><a href='Image-class.html'>Image</a></code> objects.</p></td>
+    </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>Should the file be overwritten if it already exists?
+(default: FALSE)</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A numeric value.</p>
+    <p>A message indicating whether writing was successful or not.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='dim.Rcpp_Queue.html'>dim</a></code> which returns <em>all</em>
- dimensions.</p></div>
+    <div class='dont-index'><p><code><a href='Image-class.html'>Image</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Simon Garnier, <a href='mailto:garnier@njit.edu'>garnier@njit.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='video.html'>video</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_vid/Balloon.mp4"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>buf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='queue.html'>queue</a></span><span class='op'>(</span><span class='va'>balloon</span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>buf</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 360</span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>buf</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 640</span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>buf</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2</span>
+    <pre class="examples"><span class='r-in'><span class='va'>balloon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='readMulti.html'>readMulti</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sample_img/multipage.tif"</span>, package <span class='op'>=</span> <span class='st'>"Rvision"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='fu'>writeMulti</span><span class='op'>(</span><span class='st'>"~/Desktop/balloon.tiff"</span>, <span class='va'>balloon</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
 <span class='r-in'></span>
 </pre>
   </div>
