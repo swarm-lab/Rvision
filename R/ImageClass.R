@@ -199,7 +199,7 @@ write.Image <- function(x, file, overwrite = FALSE) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  if (file.exists(x) & !overwrite)
+  if (file.exists(file) & !overwrite)
     stop("A file with the same name already exists at that location.")
 
   if (x$write(file)) {
