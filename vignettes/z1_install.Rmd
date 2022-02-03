@@ -11,15 +11,15 @@ vignette: >
 
 ## 1.1 - Before installing
 
-### 1.1.1 - Devtools
+### 1.1.1 - remotes
 
 Before installing `Rvision`, you will need to install the latest version of the 
-[`devtools`](https://CRAN.R-project.org/package=devtools) package. You can 
-install `devtools` from [`CRAN`](https://cran.r-project.org) as follows: 
+[`remotes`](https://CRAN.R-project.org/package=remotes) package. You can 
+install `remotes` from [`CRAN`](https://cran.r-project.org) as follows: 
 
 ```{r, message=FALSE, eval=FALSE}
-if (!require(devtools))
-  install.packages("devtools")
+if (!require(remotes))
+  install.packages("remotes")
 ```
 
 ### 1.1.2 - ROpenCVLite
@@ -44,7 +44,7 @@ dependencies required by `ROpenCVLite`.
 You can install the latest development version of `Rvision` as follows:
 
 ```{r, message=FALSE, eval=FALSE}
-devtools::install_github("swarm-lab/Rvision")
+remotes::install_github("swarm-lab/Rvision")
 ```
 
 ---
