@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -46,12 +48,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -88,7 +84,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/swarm-lab/Rvision/">
+  <a href="https://github.com/swarm-lab/Rvision/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -109,35 +105,35 @@
 
       
 
-      </header><script src="z6_queue_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>6 - Capture queues</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/master/vignettes/z6_queue.Rmd"><code>vignettes/z6_queue.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/HEAD/vignettes/z6_queue.Rmd" class="external-link"><code>vignettes/z6_queue.Rmd</code></a></small>
       <div class="hidden name"><code>z6_queue.Rmd</code></div>
 
     </div>
 
     
     
-<div id="increasing-performances-with-capture-queues" class="section level2">
-<h2 class="hasAnchor">
-<a href="#increasing-performances-with-capture-queues" class="anchor"></a>6.1 - Increasing performances with capture queues</h2>
+<div class="section level2">
+<h2 id="increasing-performances-with-capture-queues">6.1 - Increasing performances with capture queues<a class="anchor" aria-label="anchor" href="#increasing-performances-with-capture-queues"></a>
+</h2>
 <p>Retrieving a single frame from a video or camera stream is fast, but it is not instantaneous because <code>Rvision</code> (and therefore <code>OpenCV</code> in the background) needs to grab and decode each frame before it can be used for further processing. For most applications, that small time penalty is not an issue; losing a few milliseconds per frame will not be felt by a user processing short videos, low resolution videos for instance.</p>
 <p>However, the frame decoding time will increase significantly with the resolution of the video/camera stream; and for applications requiring the processing of long videos or live camera feeds, the total time lost retrieving frames will quickly increase. Moreover, the process of retrieving frames is blocking: while <code>Rvision</code> grabs and decodes a frame, it cannot work on other frames that were previously captured.</p>
 <p>A solution to this issue is to make use of the multi-tasking ability of most modern computers to perform the frame retrieving process in parallel with the rest of the image processing. The principle is fairly simple: one processing thread (thread 1) is in charge of grabbing, decoding, and storing frames in a shared dynamic queue (or buffer); a second thread (thread 2) is in charge of processing these pre-loaded frames further; while thread 2 is working on a frame, thread 1 can keep filling up the queue with new frames so that thread 2 never has to stop and wait for a new frame to be retrieved. On a multi-core/processor computer (most computers nowadays), thread 1 and 2 can be operated in parallel on separate cores/processors, effectively reducing the frame waiting time to near-zero for thread 2 (but see caveats section below).</p>
-<p>Unfortunately, <code>R</code> is a single-threaded language, meaning that it cannot natively create and operate multiple parallel processing threads. Fortunately, the <a href="https://www.cplusplus.com/"><code>C++</code> language</a> that is used in the background by <code>Rvision</code> can do it. We used that ability - and some precautions to avoid memory access conflicts with <code>R</code> - to create the <code>Queue</code> class of objects which job is to pre-load in memory video and camera stream frames without blocking the execution of the main (and unique) <code>R</code> processing thread, and then give the main <code>R</code> thread near-instantaneous access to these pre-loaded frames when required. Once a frame has been collected by the main <code>R</code> thread, it is removed from the queue to make space for another frame.</p>
+<p>Unfortunately, <code>R</code> is a single-threaded language, meaning that it cannot natively create and operate multiple parallel processing threads. Fortunately, the <a href="https://www.cplusplus.com/" class="external-link"><code>C++</code> language</a> that is used in the background by <code>Rvision</code> can do it. We used that ability - and some precautions to avoid memory access conflicts with <code>R</code> - to create the <code>Queue</code> class of objects which job is to pre-load in memory video and camera stream frames without blocking the execution of the main (and unique) <code>R</code> processing thread, and then give the main <code>R</code> thread near-instantaneous access to these pre-loaded frames when required. Once a frame has been collected by the main <code>R</code> thread, it is removed from the queue to make space for another frame.</p>
 <hr>
 </div>
-<div id="creating-a-queue" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-a-queue" class="anchor"></a>6.2 - Creating a queue</h2>
+<div class="section level2">
+<h2 id="creating-a-queue">6.2 - Creating a queue<a class="anchor" aria-label="anchor" href="#creating-a-queue"></a>
+</h2>
 <p><code>Queue</code> objects are created using the <code><a href="../reference/queue.html">queue()</a></code> function. For instance:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span>
-<span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+<span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
 
 <span class="co"># Open the video file stream</span>
 <span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span>
@@ -158,21 +154,21 @@
 <p>Once a <code>Queue</code> object is created, it starts immediately filling up with images retrieved from the <code>Video</code> or a <code>Stream</code> source object. Note that, if you had previously read frames from a <code>Video</code> source object before creating the <code>Queue</code> object, the latter will start retrieving frames from where you left off (e.g. if you have already read the first 10 frames, the queue will start filling up from the 11th).</p>
 <p>Once a <code>Queue</code> object is not required anymore, it can be released from memory as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Queue.html">release</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></code></pre></div>
 <hr>
 </div>
-<div id="using-a-queue-object" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-a-queue-object" class="anchor"></a>6.3 - Using a <code>Queue</code> object</h2>
-<p>The main purpose of a <code>Queue</code> object is to pre-load and store frames for fast access later on. The pre-loading and storing happens by itself in the background so you do not need to take care of this. Collecting a frame from the queue into the main <code>R</code> thread can be done using the <code><a href="../reference/readNext.Rcpp_Queue.html">readNext()</a></code> function. For example:</p>
+<div class="section level2">
+<h2 id="using-a-queue-object">6.3 - Using a <code>Queue</code> object<a class="anchor" aria-label="anchor" href="#using-a-queue-object"></a>
+</h2>
+<p>The main purpose of a <code>Queue</code> object is to pre-load and store frames for fast access later on. The pre-loading and storing happens by itself in the background so you do not need to take care of this. Collecting a frame from the queue into the main <code>R</code> thread can be done using the <code><a href="../reference/readNext.html">readNext()</a></code> function. For example:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Collect the next available frame from the queue and store it in a new </span>
 <span class="co"># Image object</span>
-<span class="va">frame</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.Rcpp_Queue.html">readNext</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
+<span class="va">frame</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
 
 <span class="co"># Collect the next available frame from the queue and store it in an existing </span>
 <span class="co"># Image object</span>
-<span class="fu"><a href="../reference/readNext.Rcpp_Queue.html">readNext</a></span><span class="op">(</span><span class="va">my_buf</span>, target <span class="op">=</span> <span class="va">frame</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_buf</span>, target <span class="op">=</span> <span class="va">frame</span><span class="op">)</span></code></pre></div>
 <p>At any time, you can check the state of the queue as follows:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Is the queue empty?</span>
@@ -182,25 +178,25 @@
 <span class="fu"><a href="../reference/full.html">full</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
 
 <span class="co"># What is the current number of frames in the queue? </span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
 
 <span class="co"># What is the maximum number of frames that the queue can hold?</span>
 <span class="fu"><a href="../reference/capacity.html">capacity</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
 
 <span class="co"># What is the index of the next frame available? (for video queues only)</span>
-<span class="fu"><a href="../reference/frame.Rcpp_Queue.html">frame</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
+<span class="fu"><a href="../reference/frame.html">frame</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
 
 <span class="co"># What are the dimensions of the queue? </span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></code></pre></div>
 <hr>
 </div>
-<div id="caveats-to-using-queue-objects" class="section level2">
-<h2 class="hasAnchor">
-<a href="#caveats-to-using-queue-objects" class="anchor"></a>6.4 - Caveats to using <code>Queue</code> objects</h2>
+<div class="section level2">
+<h2 id="caveats-to-using-queue-objects">6.4 - Caveats to using <code>Queue</code> objects<a class="anchor" aria-label="anchor" href="#caveats-to-using-queue-objects"></a>
+</h2>
 <p><code>Queue</code> objects can be very useful to speed up the processing of camera streams and long videos, especially if their resolution is high (HD or above). For short videos or low resolution videos and camera streams, the benefits of using a <code>Queue</code> object will be very limited because retrieving frames from such sources is already very fast.</p>
-<p>If the processing of the frames on the main <code>R</code> thread is much faster than the retrieving and storing of the frames inside a <code>Queue</code> object, you risk emptying the queue faster than in can fill up. If that is the case, <code><a href="../reference/readNext.Rcpp_Queue.html">readNext()</a></code> will display a warning to this effect but will not return an error (as it would, for instance, when reaching the end of a video file). In addition, it will not create a new image or modify the target image. You will need to make sure that your code can catch these warnings and act accordingly (e.g., wait a turn before trying again). You can reduce the risks of the queue becoming empty by (1) increasing the size of the queue when creating it, (2) making sure the queue has completely filled up before starting the processing of the frames, and (3) reducing the delay between to queue updates. In any case, <code>Queue</code> objects are better suited for and more beneficial in cases where the processing of the frames is as slow or slower than the frame retrieving process.</p>
+<p>If the processing of the frames on the main <code>R</code> thread is much faster than the retrieving and storing of the frames inside a <code>Queue</code> object, you risk emptying the queue faster than in can fill up. If that is the case, <code><a href="../reference/readNext.html">readNext()</a></code> will display a warning to this effect but will not return an error (as it would, for instance, when reaching the end of a video file). In addition, it will not create a new image or modify the target image. You will need to make sure that your code can catch these warnings and act accordingly (e.g., wait a turn before trying again). You can reduce the risks of the queue becoming empty by (1) increasing the size of the queue when creating it, (2) making sure the queue has completely filled up before starting the processing of the frames, and (3) reducing the delay between to queue updates. In any case, <code>Queue</code> objects are better suited for and more beneficial in cases where the processing of the frames is as slow or slower than the frame retrieving process.</p>
 <p>Finally, <code>Queue</code> objects read frames from existing <code>Video</code> and <code>Stream</code> objects. This means that they modify the state of these source objects the same way a user would by reading directly from them. This has a few of consequences that require some attention when using <code>Queue</code> object. First, a <code>Queue</code> object will start reading the source object from whichever state you have left it off. For instance, if you have read the first 10 frames of a video before passing it to a <code>Queue</code> object, the <code>Queue</code> object will start reading it from the 11th frame. Conversely, if you pass a newly created <code>Video</code> object to a <code>Queue</code> object with a size of 10, the <code>Queue</code> object will immediately start reading and storing the first 10 frames. If you then decide to read a frame directly from the <code>Video</code> object, it will return its 11th frame, not its first one. Therefore, to avoid competing with a <code>Queue</code> object on a given <code>Video</code> object, it is strongly recommended to avoid creating code that mix reading frames from a <code>Queue</code> object and reading frames from the <code>Video</code> object that <code>Queue</code> object is using.</p>
 </div>
   </div>
@@ -216,11 +212,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://www.theswarmlab.com">Simon Garnier</a>.</p>
+  <p></p>
+<p>Developed by <a href="http://www.theswarmlab.com" class="external-link">Simon Garnier</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

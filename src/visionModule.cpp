@@ -255,6 +255,8 @@ RCPP_MODULE(methods_Filters) {
     _["sigma_color"], _["sigma_space"], _["target"]), "");
   function("_adaptiveThreshold", &_adaptiveThreshold, List::create(_["image"], _["max_value"],
     _["method"], _["threshold_type"], _["block_size"], _["C"], _["target"]), "");
+  function("_threshold", &_threshold, List::create(_["image"], _["thresh"], _["max_value"],
+    _["threshold_type"], _["target"]), "");
 }
 
 #include "display.h"

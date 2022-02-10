@@ -849,8 +849,8 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25,
 #'
 #' @param image An an 8-bit (8U) single-channel \code{\link{Image}} object.
 #'
-#' @param max_value Non-zero numerical value assigned to the pixels above the
-#'  adaptive threshold (default: 255).
+#' @param max_value Non-zero value assigned to the pixels for which the
+#'  condition determined by `threshold_type` is satisfied (default: 255).
 #'
 #' @param method The name of the adaptive thresholding algorithm to use. It can
 #'  be either 'mean' - mean of the block_size * block_size neighborhood - or
@@ -858,7 +858,10 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25,
 #'  neighborhood (default: 'mean').
 #'
 #' @param threshold_type The name of the threshold type to use. It can be either
-#'  'binary' or 'inverse' (default: 'inverse').
+#'  'binary' or 'inverse' (default: 'inverse'). If 'binary', each pixel is replaced
+#'  by `max_value` if its value is above the adaptive threshold, and by zero
+#'  otherwise. If 'inverse' each pixel is replaced by zero if its value is above
+#'  the adaptive threshold, and by `max_value` otherwise.
 #'
 #' @param block_size Size of a pixel neighborhood that is used to calculate a
 #'  threshold value for the pixel (default: 31).
@@ -939,6 +942,130 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
     `_adaptiveThreshold`(image, max_value, if (method == "mean") 0 else 1,
                          if (threshold_type == "binary") 0 else 1,
                          block_size, C, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
+#' @title Thresholding
+#'
+#' @description \code{threshold} transforms an image to a binary image.
+#'
+#' @param image An an 8-bit (8U) or 32-bit floating (32F) \code{\link{Image}}
+#'  object.
+#'
+#' @param thresh A numeric threshold value (default: 127).
+#'
+#' @param max_value Non-zero value assigned to the pixels for which the
+#'  condition determined by `threshold_type` is satisfied (default: 255).
+#'
+#' @param method The name of the automated thresholding algorithm to use. It can
+#'  be any of the following:
+#'  \itemize{
+#'   \item{"none":}{the user-defined `threshold` value is used (the default).}
+#'   \item{"Otsu":}{use Otsu algorithm to choose the optimal threshold value.
+#'    Only works for 8-bit (8U) single-channel \code{\link{Image}} objects.}
+#'   \item{"triangle":}{use triangle algorithm to choose the optimal threshold
+#'    value. Only works for 8-bit (8U) single-channel \code{\link{Image}} objects.}
+#'  }
+#'
+#' @param threshold_type The name of the threshold type to use. It can be any of
+#'  the following:
+#'  \itemize{
+#'   \item{"binary":}{each pixel is replaced by `max_value` if its value is above
+#'    the threshold, and by zero otherwise.}
+#'   \item{"inverse":}{each pixel is replaced by zero if its value is above the
+#'    threshold, and by `max_value` otherwise.}
+#'   \item{"truncate":}{each pixel is replaced by `threshold` if its value is
+#'    above the threshold, and is unchanged otherwise.}
+#'   \item{"to_zero":}{each pixel is replaced by zero if its value is below the
+#'   threshold, and is unchanged otherwise.}
+#'   \item{"to_zero_inverse":}{each pixel is replaced by zero if its value is
+#'    above the threshold, and is unchanged otherwise.}
+#'  }
+#'
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, number of channels, and
+#'    bit depth as \code{image}, an error may be thrown.}
+#'  }
+#'
+#' @param in_place Deprecated. Use \code{target} instead.
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_gray <- changeColorSpace(balloon, "GRAY")
+#' balloon_th <- threshold(balloon_gray)
+#'
+#' @export
+threshold <- function(image, thresh = 127, max_value = 255, method = "none",
+                      threshold_type = "inverse", target = "new", in_place = NULL) {
+  if (!missing(in_place)) {
+    if (in_place) {
+      warning("in_place is deprecated. Use target='self' instead.")
+      target <- "self"
+    } else {
+      warning("in_place is deprecated. Use target='new' instead.")
+      target <- "new"
+    }
+  }
+
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  if (!(image$depth() %in% c("8U", "32F")))
+    stop("'image' must be an 8-bit (8U) or 32-bit floating (32F) Image object.")
+
+  if (max_value <= 0)
+    stop("'max_value' must be a positive, non-zero value.")
+
+  if (!is.numeric(thresh))
+    stop("'thresh' must be a numeric value.")
+
+  meth <- switch(method,
+                 none = 0,
+                 Otsu = 8,
+                 triangle = 16,
+                 stop("This is not a valid method."))
+
+  if (method != "none" & (image$depth() != "8U" || image$nchan() != 1))
+    stop("This method can only be used with 8-bit (8U) single-channel Image objects.")
+
+  t_type <- switch(threshold_type,
+                  binary = 0,
+                  inverse = 1,
+                  truncate = 2,
+                  to_zero = 3,
+                  to_zero_inverse = 4,
+                  stop("This is not a valid threshold type."))
+
+  if (isImage(target)) {
+    void <- `_threshold`(image, thresh, max_value, t_type + meth, target)
+  } else if (target == "self") {
+    void <- `_threshold`(image, thresh, max_value, t_type + meth, image)
+  } else if (target == "new") {
+    out <- cloneImage(image)
+    void <- `_threshold`(image, thresh, max_value, t_type + meth, out)
     out
   } else {
     stop("Invalid target.")
