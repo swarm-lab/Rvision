@@ -213,7 +213,7 @@ void _adaptiveThreshold(Image& image, double max_value, int method,
 }
 
 double _threshold(Image& image, double thresh, double max_value, int threshold_type,
-                Image& target) {
+                  Image& target) {
   if (image.GPU) {
     if (target.GPU)
       return cv::threshold(image.uimage, target.uimage, thresh, max_value,
@@ -227,6 +227,6 @@ double _threshold(Image& image, double thresh, double max_value, int threshold_t
     return cv::threshold(image.image, target.uimage, thresh, max_value,
                          threshold_type);
 
-  cv::threshold(image.image, target.image, thresh, max_value,
-                threshold_type);
+  return cv::threshold(image.image, target.image, thresh, max_value,
+                       threshold_type);
 }
