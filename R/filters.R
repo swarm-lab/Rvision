@@ -965,17 +965,38 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #'  be any of the following:
 #'  \itemize{
 #'   \item{"none":}{the user-defined `threshold` value is used (the default).}
-#'   \item{"Otsu":}{use Otsu algorithm to choose the optimal threshold value.
-#'    Only works for 8-bit (8U) single-channel \code{\link{Image}} objects.}
-#'   \item{"triangle":}{use triangle algorithm to choose the optimal threshold
-#'    value. Only works for 8-bit (8U) single-channel \code{\link{Image}} objects.}
+#'   \item{"ImageJ":}{the default auto thresholding algorithm of ImageJ.}
+#'   \item{"Huang":}{Huang’s fuzzy thresholding method.}
+#'   \item{"Huang2":}{alternative implementation of Huang’s method by J. Schindelin.}
+#'   \item{"Intermodes":}{assuming a bimodal histogram, the threshold is the
+#'    halfway point between the two modes.}
+#'   \item{"IsoData":}{iterative procedure based on the isodata algorithm of
+#'    Ridler and Calvar.}
+#'   \item{"Li":}{Li’s Minimum Cross Entropy thresholding method based on the
+#'    iterative version of the algorithm.}
+#'   \item{"MaxEntropy":}{Kapur-Sahoo-Wong (Maximum Entropy) thresholding method.}
+#'   \item{"Mean":}{the mean of grey levels of the image is used as the threshold.}
+#'   \item{"MinErrorI":}{an iterative implementation of Kittler and Illingworth’s
+#'    Minimum Error thresholding.}
+#'   \item{"Minimum":}{similar to the Intermodes method but the threshold is the
+#'    minimum value between the two modes after iterative smoothing.}
+#'   \item{"Moments":}{Tsai’s moment-preserving thresolding method.}
+#'   \item{"Otsu":}{Otsu’s threshold clustering method.}
+#'   \item{"Percentile":}{assumes the fraction of foreground pixels to be 0.5.}
+#'   \item{"RenyiEntropy":}{similar to the MaxEntropy method, but using Renyi’s
+#'    entropy instead.}
+#'   \item{"Shanbhag":}{Shanbhag's information-based thresolding method.}
+#'   \item{"Triangle":}{the triangle thresholding method by Zack, Rogers, and Latt.}
+#'   \item{"Yen":}{Yen’s thresholding method.}
 #'  }
+#' Details about the functioning of each method can be found at
+#'  \link{https://imagej.net/plugins/auto-threshold}.
 #'
 #' @param threshold_type The name of the threshold type to use. It can be any of
 #'  the following:
 #'  \itemize{
 #'   \item{"binary":}{each pixel is replaced by `max_value` if its value is above
-#'    the threshold, and by zero otherwise.}
+#'    the threshold, and by zero otherwise (the default).}
 #'   \item{"inverse":}{each pixel is replaced by zero if its value is above the
 #'    threshold, and by `max_value` otherwise.}
 #'   \item{"truncate":}{each pixel is replaced by `threshold` if its value is
@@ -985,6 +1006,11 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #'   \item{"to_zero_inverse":}{each pixel is replaced by zero if its value is
 #'    above the threshold, and is unchanged otherwise.}
 #'  }
+#'
+#' @param mask A single-channel (GRAY) 8-bit (8U) \code{\link{Image}} object
+#'  with the same dimensions as \code{image}. This can be used to mask out
+#'  pixels that should not be considered when calculating the threshold (pixels
+#'  set to 0 in the mask will be ignored during the threshold calculation).
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
@@ -1010,6 +1036,49 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
+#' @references \itemize{ \item{Huang, L-K & Wang, M-J J (1995), "Image
+#'   thresholding by minimizing the measure of fuzziness", Pattern Recognition
+#'   28(1): 41-51} \item{Prewitt, JMS & Mendelsohn, ML (1966), "The analysis of
+#'   cell images", Annals of the New York Academy of Sciences 128: 1035-1053}
+#'   \item{Ridler, TW & Calvard, S (1978), "Picture thresholding using an
+#'   iterative selection method", IEEE Transactions on Systems, Man and
+#'   Cybernetics 8: 630-632} \item{Li, CH & Lee, CK (1993), "Minimum Cross
+#'   Entropy Thresholding", Pattern Recognition 26(4): 617-625} \item{Li, CH &
+#'   Tam, PKS (1998), "An Iterative Algorithm for Minimum Cross Entropy
+#'   Thresholding", Pattern Recognition Letters 18(8): 771-776} \item{Sezgin, M
+#'   & Sankur, B (2004), "Survey over Image Thresholding Techniques and
+#'   Quantitative Performance Evaluation", Journal of Electronic Imaging 13(1):
+#'   146-165} \item{Kapur, JN; Sahoo, PK & Wong, ACK (1985), "A New Method for
+#'   Gray-Level Picture Thresholding Using the Entropy of the Histogram",
+#'   Graphical Models and Image Processing 29(3): 273-285} \item{Glasbey, CA
+#'   (1993), "An analysis of histogram-based thresholding algorithms", CVGIP:
+#'   Graphical Models and Image Processing 55: 532-537} \item{Kittler, J &
+#'   Illingworth, J (1986), "Minimum error thresholding", Pattern Recognition
+#'   19: 41-47} \item{Prewitt, JMS & Mendelsohn, ML (1966), "The analysis of
+#'   cell images", Annals of the New York Academy of Sciences 128: 1035-1053}
+#'   \item{Tsai, W (1985), "Moment-preserving thresholding: a new approach",
+#'   Computer Vision, Graphics, and Image Processing 29: 377-393} \item{Otsu, N
+#'   (1979), "A threshold selection method from gray-level histograms", IEEE
+#'   Trans. Sys., Man., Cyber. 9: 62-66, doi:10.1109/TSMC.1979.4310076}
+#'   \item{Doyle, W (1962), "Operation useful for similarity-invariant pattern
+#'   recognition", Journal of the Association for Computing Machinery 9:
+#'   259-267, doi:10.1145/321119.321123} \item{Kapur, JN; Sahoo, PK & Wong, ACK
+#'   (1985), "A New Method for Gray-Level Picture Thresholding Using the Entropy
+#'   of the Histogram", Graphical Models and Image Processing 29(3): 273-285}
+#'   \item{Shanbhag, Abhijit G. (1994), "Utilization of information measure as a
+#'   means of image thresholding", Graph. Models Image Process. (Academic Press,
+#'   Inc.) 56 (5): 414--419, ISSN 1049-9652} \item{Zack GW, Rogers WE, Latt SA
+#'   (1977), "Automatic measurement of sister chromatid exchange frequency", J.
+#'   Histochem. Cytochem. 25 (7): 74153, PMID 70454} \item{Yen JC, Chang FJ,
+#'   Chang S (1995), "A New Criterion for Automatic Multilevel Thresholding",
+#'   IEEE Trans. on Image Processing 4 (3): 370-378, ISSN 1057-7149,
+#'   doi:10.1109/83.366472} \item{Sezgin, M & Sankur, B (2004), "Survey over
+#'   Image Thresholding Techniques and Quantitative Performance Evaluation",
+#'   Journal of Electronic Imaging 13(1): 146-165} }
+#'
+#' @section Acknowledgements: Gabriel Landini coded all of these functions in
+#'   Java. These java functions were then translated to C++ by Rory Nolan.
+#'
 #' @seealso \code{\link{Image}}
 #'
 #' @examples
@@ -1019,7 +1088,8 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #'
 #' @export
 threshold <- function(image, thresh = 127, max_value = 255, method = "none",
-                      threshold_type = "inverse", target = "new", in_place = NULL) {
+                      threshold_type = "binary", mask = NULL, target = "new",
+                      in_place = NULL) {
   if (!missing(in_place)) {
     if (in_place) {
       warning("in_place is deprecated. Use target='self' instead.")
@@ -1042,14 +1112,35 @@ threshold <- function(image, thresh = 127, max_value = 255, method = "none",
   if (!is.numeric(thresh))
     stop("'thresh' must be a numeric value.")
 
-  meth <- switch(method,
-                 none = 0,
-                 Otsu = 8,
-                 triangle = 16,
-                 stop("This is not a valid method."))
+  if (method != "none") {
+    r <- c(min(min(image)), max(max(image)) + 1)
+    n <- diff(r) + 1
+    m <- imhist(image, mask = mask, nbins = n, range = r)
+    dt <- apply(m[, 2:ncol(m), drop = FALSE], 1, sum)
+    minimum <- m[min(which(dt != 0)), 1]
+    dt <- dt[min(which(dt != 0)):max(which(dt != 0))]
+  }
 
-  if (method != "none" & (image$depth() != "8U" || image$nchan() != 1))
-    stop("This method can only be used with 8-bit (8U) single-channel Image objects.")
+  thresh <- switch(method,
+                   none = thresh,
+                   ImageJ = Rvision:::`_autothreshIJ`(dt) + minimum,
+                   Huang = Rvision:::`_autothreshHuang`(dt) + minimum,
+                   Huang2 = Rvision:::`_autothreshHuang2`(dt) + minimum,
+                   Intermodes = Rvision:::`_autothreshIM`(dt) + minimum,
+                   IsoData = Rvision:::`_autothreshIsoData`(dt) + minimum,
+                   Li = Rvision:::`_autothreshLi`(dt) + minimum,
+                   MaxEntropy = Rvision:::`_autothreshME`(dt) + minimum,
+                   Mean = Rvision:::`_autothreshMean`(dt) + minimum,
+                   MinErrorI = Rvision:::`_autothreshMinErrorI`(dt) + minimum,
+                   Minimum = Rvision:::`_autothreshMinimum`(dt) + minimum,
+                   Moments = Rvision:::`_autothreshMoments`(dt) + minimum,
+                   Otsu = Rvision:::`_autothreshOtsu`(dt) + minimum,
+                   Percentile = Rvision:::`_autothreshPercentile`(dt) + minimum,
+                   RenyiEntropy = Rvision:::`_autothreshRenyiEntropy`(dt) + minimum,
+                   Shanbhag = Rvision:::`_autothreshShanbhag`(dt) + minimum,
+                   Triangle = Rvision:::`_autothreshTriangle`(dt) + minimum,
+                   Yen = Rvision:::`_autothreshYen`(dt) + minimum,
+                   stop("This is not a valid method."))
 
   t_type <- switch(threshold_type,
                   binary = 0,
@@ -1060,12 +1151,12 @@ threshold <- function(image, thresh = 127, max_value = 255, method = "none",
                   stop("This is not a valid threshold type."))
 
   if (isImage(target)) {
-    void <- `_threshold`(image, thresh, max_value, t_type + meth, target)
+    void <- `_threshold`(image, thresh, max_value, t_type, target)
   } else if (target == "self") {
-    void <- `_threshold`(image, thresh, max_value, t_type + meth, image)
+    void <- `_threshold`(image, thresh, max_value, t_type, image)
   } else if (target == "new") {
     out <- cloneImage(image)
-    void <- `_threshold`(image, thresh, max_value, t_type + meth, out)
+    void <- `_threshold`(image, thresh, max_value, t_type, out)
     out
   } else {
     stop("Invalid target.")

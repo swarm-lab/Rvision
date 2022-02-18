@@ -179,7 +179,7 @@ arma::Mat< float > _imhist(Image& image, int nbins, Rcpp::NumericVector range, I
   cv::split(image.image, channels);
 
   for (int i = 0; i < image.nchan(); i++) {
-    calcHist(&channels[i], 1, 0, mask.image, hist.col(i), 1, &nbins, &histRange, true, false);
+    cv::calcHist(&channels[i], 1, 0, mask.image, hist.col(i), 1, &nbins, &histRange, true, false);
   }
 
   cv2arma(hist, out);

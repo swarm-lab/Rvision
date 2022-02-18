@@ -362,3 +362,24 @@ RCPP_MODULE(methods_Feature) {
   function("_houghCircles", &_houghCircles, List::create(_["image"], _["method"],
     _["dp"], _["minDist"], _["param1"], _["param2"], _["minRadius"], _["maxRadius"]), "");
 }
+
+#include "autothresh.h"
+RCPP_MODULE(methods_Autothresh) {
+  function("_autothreshIJ", &_autothreshIJ, List::create(_["data"]), "");
+  function("_autothreshHuang", &_autothreshHuang, List::create(_["data"]), "");
+  function("_autothreshHuang2", &_autothreshHuang2, List::create(_["data"]), "");
+  function("_autothreshIM", &_autothreshIM, List::create(_["data"]), "");
+  function("_autothreshIsoData", &_autothreshIsoData, List::create(_["data"]), "");
+  function("_autothreshLi", &_autothreshLi, List::create(_["data"]), "");
+  function("_autothreshME", &_autothreshME, List::create(_["data"]), "");
+  function("_autothreshMean", &_autothreshMean, List::create(_["data"]), "");
+  function("_autothreshMinErrorI", &_autothreshMinErrorI, List::create(_["data"]), "");
+  function("_autothreshMinimum", &_autothreshMinimum, List::create(_["data"]), "");
+  function("_autothreshMoments", &_autothreshMoments, List::create(_["data"]), "");
+  function("_autothreshOtsu", &_autothreshOtsu, List::create(_["data"]), "");
+  function("_autothreshPercentile", &_autothreshPercentile, List::create(_["data"]), "");
+  function("_autothreshRenyiEntropy", &_autothreshRenyiEntropy, List::create(_["data"]), "");
+  function("_autothreshShanbhag", &_autothreshShanbhag, List::create(_["data"]), "");
+  function("_autothreshTriangle", &_autothreshTriangle, List::create(_["data"]), "");
+  function("_autothreshYen", &_autothreshYen, List::create(_["data"]), "");
+}
