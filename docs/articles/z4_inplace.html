@@ -121,9 +121,22 @@
 <div class="section level2">
 <h2 id="better-performances-with-in-place-operations">4.1 - Better performances with in-place operations<a class="anchor" aria-label="anchor" href="#better-performances-with-in-place-operations"></a>
 </h2>
-<p>While other image processing libraries for <code>R</code> are fast enough for most operations on single images and often offer more options than <code>Rvision</code> (but we are working on closing the gap on that front), <code>Rvision</code> really shines in the high-speed processing of large volumes of images (e.g. video and camera streams).</p>
-<p>Part of the reason is that <a href="https://opencv.org/" class="external-link"><code>OpenCV</code></a> - the computer vision library on top of which <code>Rvision</code> is built - is designed and optimized for in-place operations, that is operations that change directly the content of an object in memory without making a copy of it. Indeed, making copies of objects in memory - especially of large ones like images - can add a significant amount of time to an operation. For that reason, most of <code>Rvision</code>’s functions offer the option to perform their operations in-place, greatly increasing the processing speed of large volumes of images.</p>
-<p>All operations that support in-place operations will have an argument named “target” that can be set to the value “self”. For instance:</p>
+<p>While other image processing libraries for <code>R</code> are fast
+enough for most operations on single images and often offer more options
+than <code>Rvision</code> (but we are working on closing the gap on that
+front), <code>Rvision</code> really shines in the high-speed processing
+of large volumes of images (e.g. video and camera streams).</p>
+<p>Part of the reason is that <a href="https://opencv.org/" class="external-link"><code>OpenCV</code></a> - the computer vision
+library on top of which <code>Rvision</code> is built - is designed and
+optimized for in-place operations, that is operations that change
+directly the content of an object in memory without making a copy of it.
+Indeed, making copies of objects in memory - especially of large ones
+like images - can add a significant amount of time to an operation. For
+that reason, most of <code>Rvision</code>’s functions offer the option
+to perform their operations in-place, greatly increasing the processing
+speed of large volumes of images.</p>
+<p>All operations that support in-place operations will have an argument
+named “target” that can be set to the value “self”. For instance:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Find the path to the bunny.png image provided with Rvision</span>
 <span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
@@ -145,9 +158,20 @@
 <div class="section level2">
 <h2 id="preserving-originals-with-copy-operations">4.2 - Preserving originals with copy operations<a class="anchor" aria-label="anchor" href="#preserving-originals-with-copy-operations"></a>
 </h2>
-<p>The downside of in-place operations is that the modification is destructive: the original object in memory is replaced bit for bit by its modified version (we are just talking about the RAM representation of the object here; the original file on your drive is never modified directly).</p>
-<p>However, it may be desirable in some cases to keep the original object in memory untouched. For this purpose, all the functions in <code>Rvision</code> that can modify images also give users the option to perform their operations on a copy of the original image. This will be slower but resemble the usual behavior of <code>R</code> functions.</p>
-<p>By default, all operations are copy operations but this can be explicitely specified by setting the “target” argument to “new”. For instance:</p>
+<p>The downside of in-place operations is that the modification is
+destructive: the original object in memory is replaced bit for bit by
+its modified version (we are just talking about the RAM representation
+of the object here; the original file on your drive is never modified
+directly).</p>
+<p>However, it may be desirable in some cases to keep the original
+object in memory untouched. For this purpose, all the functions in
+<code>Rvision</code> that can modify images also give users the option
+to perform their operations on a copy of the original image. This will
+be slower but resemble the usual behavior of <code>R</code>
+functions.</p>
+<p>By default, all operations are copy operations but this can be
+explicitely specified by setting the “target” argument to “new”. For
+instance:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Find the path to the bunny.png image provided with Rvision</span>
 <span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
@@ -168,9 +192,19 @@
 <div class="section level2">
 <h2 id="the-best-of-both-worlds-target-operations">4.3 - The best of both worlds: target operations<a class="anchor" aria-label="anchor" href="#the-best-of-both-worlds-target-operations"></a>
 </h2>
-<p>But what if I want to preserve the original object AND be fast at the same time?</p>
-<p>Then you are in luck. <code>Rvision</code> - still thanks to <code>OpenCV</code> - also offers “target” operations, that is operations which results can be stored in another image in memory (the target) as long as that image was pre-allocated before the operation takes place and that it has the same memory footprint as the original image. This is as fast as in-place operations and it does not modify the original image; instead, it modifies a separate image that serves as a placeholder for the results.</p>
-<p>All operations that support target operations will have an argument named “target” that can be set to the name of the target image. For instance:</p>
+<p>But what if I want to preserve the original object AND be fast at the
+same time?</p>
+<p>Then you are in luck. <code>Rvision</code> - still thanks to
+<code>OpenCV</code> - also offers “target” operations, that is
+operations which results can be stored in another image in memory (the
+target) as long as that image was pre-allocated before the operation
+takes place and that it has the same memory footprint as the original
+image. This is as fast as in-place operations and it does not modify the
+original image; instead, it modifies a separate image that serves as a
+placeholder for the results.</p>
+<p>All operations that support target operations will have an argument
+named “target” that can be set to the name of the target image. For
+instance:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Find the path to the bunny.png image provided with Rvision</span>
 <span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
@@ -196,10 +230,27 @@
 <div class="section level2">
 <h2 id="when-to-use-in-place-copy-and-target-operations">4.4 - When to use in-place, copy, and target operations?<a class="anchor" aria-label="anchor" href="#when-to-use-in-place-copy-and-target-operations"></a>
 </h2>
-<p>If you are going to process a single image (or a small batch of images) with only one or a few simple operations, then copy operations are probably the best choice. They will be fast enough (a fraction of a second at most) and more familiar to <code>R</code> users since they essentially mimic the behavior of traditional <code>R</code> functions by always returning a new object. They are also very useful when troubleshooting your pipeline since every step will be saved in a separate object and can therefore be inspected individually for problems.</p>
-<p>If you are going to process a large number of images (typically, when processing a video or camera stream) and you only care about preserving the final result of the pipeline, then in-place operations will be the best choice. They will provide the best performance both in terms of speed and overall memory footprint.</p>
-<p>Finally, if you are going to process a large number of images but need to preserve the original image or the result of an intermediary step in your pipeline (e.g. in order to reuse it later in your pipeline), then target operations should be preferred.</p>
-<p>Note that the different operation types are not mutually exclusive and can be used together in the same processing pipeline for increased flexibility.</p>
+<p>If you are going to process a single image (or a small batch of
+images) with only one or a few simple operations, then copy operations
+are probably the best choice. They will be fast enough (a fraction of a
+second at most) and more familiar to <code>R</code> users since they
+essentially mimic the behavior of traditional <code>R</code> functions
+by always returning a new object. They are also very useful when
+troubleshooting your pipeline since every step will be saved in a
+separate object and can therefore be inspected individually for
+problems.</p>
+<p>If you are going to process a large number of images (typically, when
+processing a video or camera stream) and you only care about preserving
+the final result of the pipeline, then in-place operations will be the
+best choice. They will provide the best performance both in terms of
+speed and overall memory footprint.</p>
+<p>Finally, if you are going to process a large number of images but
+need to preserve the original image or the result of an intermediary
+step in your pipeline (e.g. in order to reuse it later in your
+pipeline), then target operations should be preferred.</p>
+<p>Note that the different operation types are not mutually exclusive
+and can be used together in the same processing pipeline for increased
+flexibility.</p>
 </div>
   </div>
 
@@ -215,12 +266,14 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="http://www.theswarmlab.com" class="external-link">Simon Garnier</a>.</p>
+<p>Developed by <a href="http://www.theswarmlab.com" class="external-link">Simon
+Garnier</a>.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>

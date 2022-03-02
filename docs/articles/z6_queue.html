@@ -121,16 +121,52 @@
 <div class="section level2">
 <h2 id="increasing-performances-with-capture-queues">6.1 - Increasing performances with capture queues<a class="anchor" aria-label="anchor" href="#increasing-performances-with-capture-queues"></a>
 </h2>
-<p>Retrieving a single frame from a video or camera stream is fast, but it is not instantaneous because <code>Rvision</code> (and therefore <code>OpenCV</code> in the background) needs to grab and decode each frame before it can be used for further processing. For most applications, that small time penalty is not an issue; losing a few milliseconds per frame will not be felt by a user processing short videos, low resolution videos for instance.</p>
-<p>However, the frame decoding time will increase significantly with the resolution of the video/camera stream; and for applications requiring the processing of long videos or live camera feeds, the total time lost retrieving frames will quickly increase. Moreover, the process of retrieving frames is blocking: while <code>Rvision</code> grabs and decodes a frame, it cannot work on other frames that were previously captured.</p>
-<p>A solution to this issue is to make use of the multi-tasking ability of most modern computers to perform the frame retrieving process in parallel with the rest of the image processing. The principle is fairly simple: one processing thread (thread 1) is in charge of grabbing, decoding, and storing frames in a shared dynamic queue (or buffer); a second thread (thread 2) is in charge of processing these pre-loaded frames further; while thread 2 is working on a frame, thread 1 can keep filling up the queue with new frames so that thread 2 never has to stop and wait for a new frame to be retrieved. On a multi-core/processor computer (most computers nowadays), thread 1 and 2 can be operated in parallel on separate cores/processors, effectively reducing the frame waiting time to near-zero for thread 2 (but see caveats section below).</p>
-<p>Unfortunately, <code>R</code> is a single-threaded language, meaning that it cannot natively create and operate multiple parallel processing threads. Fortunately, the <a href="https://www.cplusplus.com/" class="external-link"><code>C++</code> language</a> that is used in the background by <code>Rvision</code> can do it. We used that ability - and some precautions to avoid memory access conflicts with <code>R</code> - to create the <code>Queue</code> class of objects which job is to pre-load in memory video and camera stream frames without blocking the execution of the main (and unique) <code>R</code> processing thread, and then give the main <code>R</code> thread near-instantaneous access to these pre-loaded frames when required. Once a frame has been collected by the main <code>R</code> thread, it is removed from the queue to make space for another frame.</p>
+<p>Retrieving a single frame from a video or camera stream is fast, but
+it is not instantaneous because <code>Rvision</code> (and therefore
+<code>OpenCV</code> in the background) needs to grab and decode each
+frame before it can be used for further processing. For most
+applications, that small time penalty is not an issue; losing a few
+milliseconds per frame will not be felt by a user processing short
+videos, low resolution videos for instance.</p>
+<p>However, the frame decoding time will increase significantly with the
+resolution of the video/camera stream; and for applications requiring
+the processing of long videos or live camera feeds, the total time lost
+retrieving frames will quickly increase. Moreover, the process of
+retrieving frames is blocking: while <code>Rvision</code> grabs and
+decodes a frame, it cannot work on other frames that were previously
+captured.</p>
+<p>A solution to this issue is to make use of the multi-tasking ability
+of most modern computers to perform the frame retrieving process in
+parallel with the rest of the image processing. The principle is fairly
+simple: one processing thread (thread 1) is in charge of grabbing,
+decoding, and storing frames in a shared dynamic queue (or buffer); a
+second thread (thread 2) is in charge of processing these pre-loaded
+frames further; while thread 2 is working on a frame, thread 1 can keep
+filling up the queue with new frames so that thread 2 never has to stop
+and wait for a new frame to be retrieved. On a multi-core/processor
+computer (most computers nowadays), thread 1 and 2 can be operated in
+parallel on separate cores/processors, effectively reducing the frame
+waiting time to near-zero for thread 2 (but see caveats section
+below).</p>
+<p>Unfortunately, <code>R</code> is a single-threaded language, meaning
+that it cannot natively create and operate multiple parallel processing
+threads. Fortunately, the <a href="https://www.cplusplus.com/" class="external-link"><code>C++</code> language</a> that is
+used in the background by <code>Rvision</code> can do it. We used that
+ability - and some precautions to avoid memory access conflicts with
+<code>R</code> - to create the <code>Queue</code> class of objects which
+job is to pre-load in memory video and camera stream frames without
+blocking the execution of the main (and unique) <code>R</code>
+processing thread, and then give the main <code>R</code> thread
+near-instantaneous access to these pre-loaded frames when required. Once
+a frame has been collected by the main <code>R</code> thread, it is
+removed from the queue to make space for another frame.</p>
 <hr>
 </div>
 <div class="section level2">
 <h2 id="creating-a-queue">6.2 - Creating a queue<a class="anchor" aria-label="anchor" href="#creating-a-queue"></a>
 </h2>
-<p><code>Queue</code> objects are created using the <code><a href="../reference/queue.html">queue()</a></code> function. For instance:</p>
+<p><code>Queue</code> objects are created using the <code><a href="../reference/queue.html">queue()</a></code>
+function. For instance:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span>
 <span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
@@ -143,16 +179,56 @@
 <p>The <code><a href="../reference/queue.html">queue()</a></code> function can take 4 parameters:</p>
 <ul>
 <li>
-<code>x</code> corresponds to the source of the frames to be queued. It should either be a <code>Video</code> or a <code>Stream</code> object.</li>
+<code>x</code> corresponds to the source of the frames to be queued.
+It should either be a <code>Video</code> or a <code>Stream</code>
+object.</li>
 <li>
-<code>size</code> corresponds to the number of frames that the queue can store at any one time. By default, a <code>Queue</code> object will be able to hold 10 frames at once. If you increase the value of the <code>size</code> parameter, the <code>Queue</code> object will use up more RAM as a result, so be mindful of your computer’s resources.</li>
+<code>size</code> corresponds to the number of frames that the queue
+can store at any one time. By default, a <code>Queue</code> object will
+be able to hold 10 frames at once. If you increase the value of the
+<code>size</code> parameter, the <code>Queue</code> object will use up
+more RAM as a result, so be mindful of your computer’s resources.</li>
 <li>
-<code>delay</code> corresponds to the time (in microseconds) between two queue update cycles. During an update cycle, the <code>Queue</code> object checks whether it is full or not and whether frames have been collected by the main <code>R</code> thread. If it is not full, it retrieves a new frame from the source and stores it; if frames have been collected by the main <code>R</code> thread, it removes them from the queue; it then waits the duration set by <code>delay</code> before starting a new update cycle. Reducing the value of <code>delay</code> will increase the frequency of the update cycles but will also increase the computational load of the core/processor running the queuing thread.</li>
+<code>delay</code> corresponds to the time (in microseconds) between
+two queue update cycles. During an update cycle, the <code>Queue</code>
+object checks whether it is full or not and whether frames have been
+collected by the main <code>R</code> thread. If it is not full, it
+retrieves a new frame from the source and stores it; if frames have been
+collected by the main <code>R</code> thread, it removes them from the
+queue; it then waits the duration set by <code>delay</code> before
+starting a new update cycle. Reducing the value of <code>delay</code>
+will increase the frequency of the update cycles but will also increase
+the computational load of the core/processor running the queuing
+thread.</li>
 <li>
-<code>overflow</code> corresponds to the behavior the <code>Queue</code> object should adopt once it is full. By default, the queuing process will “pause” (that is stop retrieving new frames from the source and storing them) until a frame is collected by the main <code>R</code> thread. This is the behavior of choice for video processing as it does not skip any frame while ensuring that the queue storage memory does not grow more than what the user wants. The queuing process can also “replace” the oldest frame in the queue with a new one. This is usually a good choice for processing live camera stream as it ensures that the queue storage memory does not grow more than what the user wants. However, frames may be skipped if the main <code>R</code> thread cannot collect and process the frames faster than they can be retrieved and stored by the queuing thread. Finally, the queuing process can “grow” the queue by doubling its size each time it fills up. This behavior allows for not pausing the retrieval process and avoids frame skipping but it is very much NOT recommended unless you know what you are doing. Indeed, this can lead to excessive RAM usage and decreased computing performance across the board.</li>
+<code>overflow</code> corresponds to the behavior the
+<code>Queue</code> object should adopt once it is full. By default, the
+queuing process will “pause” (that is stop retrieving new frames from
+the source and storing them) until a frame is collected by the main
+<code>R</code> thread. This is the behavior of choice for video
+processing as it does not skip any frame while ensuring that the queue
+storage memory does not grow more than what the user wants. The queuing
+process can also “replace” the oldest frame in the queue with a new one.
+This is usually a good choice for processing live camera stream as it
+ensures that the queue storage memory does not grow more than what the
+user wants. However, frames may be skipped if the main <code>R</code>
+thread cannot collect and process the frames faster than they can be
+retrieved and stored by the queuing thread. Finally, the queuing process
+can “grow” the queue by doubling its size each time it fills up. This
+behavior allows for not pausing the retrieval process and avoids frame
+skipping but it is very much NOT recommended unless you know what you
+are doing. Indeed, this can lead to excessive RAM usage and decreased
+computing performance across the board.</li>
 </ul>
-<p>Once a <code>Queue</code> object is created, it starts immediately filling up with images retrieved from the <code>Video</code> or a <code>Stream</code> source object. Note that, if you had previously read frames from a <code>Video</code> source object before creating the <code>Queue</code> object, the latter will start retrieving frames from where you left off (e.g. if you have already read the first 10 frames, the queue will start filling up from the 11th).</p>
-<p>Once a <code>Queue</code> object is not required anymore, it can be released from memory as follows:</p>
+<p>Once a <code>Queue</code> object is created, it starts immediately
+filling up with images retrieved from the <code>Video</code> or a
+<code>Stream</code> source object. Note that, if you had previously read
+frames from a <code>Video</code> source object before creating the
+<code>Queue</code> object, the latter will start retrieving frames from
+where you left off (e.g. if you have already read the first 10 frames,
+the queue will start filling up from the 11th).</p>
+<p>Once a <code>Queue</code> object is not required anymore, it can be
+released from memory as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></code></pre></div>
 <hr>
@@ -160,7 +236,12 @@
 <div class="section level2">
 <h2 id="using-a-queue-object">6.3 - Using a <code>Queue</code> object<a class="anchor" aria-label="anchor" href="#using-a-queue-object"></a>
 </h2>
-<p>The main purpose of a <code>Queue</code> object is to pre-load and store frames for fast access later on. The pre-loading and storing happens by itself in the background so you do not need to take care of this. Collecting a frame from the queue into the main <code>R</code> thread can be done using the <code><a href="../reference/readNext.html">readNext()</a></code> function. For example:</p>
+<p>The main purpose of a <code>Queue</code> object is to pre-load and
+store frames for fast access later on. The pre-loading and storing
+happens by itself in the background so you do not need to take care of
+this. Collecting a frame from the queue into the main <code>R</code>
+thread can be done using the <code><a href="../reference/readNext.html">readNext()</a></code> function. For
+example:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Collect the next available frame from the queue and store it in a new </span>
 <span class="co"># Image object</span>
@@ -195,9 +276,46 @@
 <div class="section level2">
 <h2 id="caveats-to-using-queue-objects">6.4 - Caveats to using <code>Queue</code> objects<a class="anchor" aria-label="anchor" href="#caveats-to-using-queue-objects"></a>
 </h2>
-<p><code>Queue</code> objects can be very useful to speed up the processing of camera streams and long videos, especially if their resolution is high (HD or above). For short videos or low resolution videos and camera streams, the benefits of using a <code>Queue</code> object will be very limited because retrieving frames from such sources is already very fast.</p>
-<p>If the processing of the frames on the main <code>R</code> thread is much faster than the retrieving and storing of the frames inside a <code>Queue</code> object, you risk emptying the queue faster than in can fill up. If that is the case, <code><a href="../reference/readNext.html">readNext()</a></code> will display a warning to this effect but will not return an error (as it would, for instance, when reaching the end of a video file). In addition, it will not create a new image or modify the target image. You will need to make sure that your code can catch these warnings and act accordingly (e.g., wait a turn before trying again). You can reduce the risks of the queue becoming empty by (1) increasing the size of the queue when creating it, (2) making sure the queue has completely filled up before starting the processing of the frames, and (3) reducing the delay between to queue updates. In any case, <code>Queue</code> objects are better suited for and more beneficial in cases where the processing of the frames is as slow or slower than the frame retrieving process.</p>
-<p>Finally, <code>Queue</code> objects read frames from existing <code>Video</code> and <code>Stream</code> objects. This means that they modify the state of these source objects the same way a user would by reading directly from them. This has a few of consequences that require some attention when using <code>Queue</code> object. First, a <code>Queue</code> object will start reading the source object from whichever state you have left it off. For instance, if you have read the first 10 frames of a video before passing it to a <code>Queue</code> object, the <code>Queue</code> object will start reading it from the 11th frame. Conversely, if you pass a newly created <code>Video</code> object to a <code>Queue</code> object with a size of 10, the <code>Queue</code> object will immediately start reading and storing the first 10 frames. If you then decide to read a frame directly from the <code>Video</code> object, it will return its 11th frame, not its first one. Therefore, to avoid competing with a <code>Queue</code> object on a given <code>Video</code> object, it is strongly recommended to avoid creating code that mix reading frames from a <code>Queue</code> object and reading frames from the <code>Video</code> object that <code>Queue</code> object is using.</p>
+<p><code>Queue</code> objects can be very useful to speed up the
+processing of camera streams and long videos, especially if their
+resolution is high (HD or above). For short videos or low resolution
+videos and camera streams, the benefits of using a <code>Queue</code>
+object will be very limited because retrieving frames from such sources
+is already very fast.</p>
+<p>If the processing of the frames on the main <code>R</code> thread is
+much faster than the retrieving and storing of the frames inside a
+<code>Queue</code> object, you risk emptying the queue faster than in
+can fill up. If that is the case, <code><a href="../reference/readNext.html">readNext()</a></code> will display a
+warning to this effect but will not return an error (as it would, for
+instance, when reaching the end of a video file). In addition, it will
+not create a new image or modify the target image. You will need to make
+sure that your code can catch these warnings and act accordingly (e.g.,
+wait a turn before trying again). You can reduce the risks of the queue
+becoming empty by (1) increasing the size of the queue when creating it,
+(2) making sure the queue has completely filled up before starting the
+processing of the frames, and (3) reducing the delay between to queue
+updates. In any case, <code>Queue</code> objects are better suited for
+and more beneficial in cases where the processing of the frames is as
+slow or slower than the frame retrieving process.</p>
+<p>Finally, <code>Queue</code> objects read frames from existing
+<code>Video</code> and <code>Stream</code> objects. This means that they
+modify the state of these source objects the same way a user would by
+reading directly from them. This has a few of consequences that require
+some attention when using <code>Queue</code> object. First, a
+<code>Queue</code> object will start reading the source object from
+whichever state you have left it off. For instance, if you have read the
+first 10 frames of a video before passing it to a <code>Queue</code>
+object, the <code>Queue</code> object will start reading it from the
+11th frame. Conversely, if you pass a newly created <code>Video</code>
+object to a <code>Queue</code> object with a size of 10, the
+<code>Queue</code> object will immediately start reading and storing the
+first 10 frames. If you then decide to read a frame directly from the
+<code>Video</code> object, it will return its 11th frame, not its first
+one. Therefore, to avoid competing with a <code>Queue</code> object on a
+given <code>Video</code> object, it is strongly recommended to avoid
+creating code that mix reading frames from a <code>Queue</code> object
+and reading frames from the <code>Video</code> object that
+<code>Queue</code> object is using.</p>
 </div>
   </div>
 
@@ -213,12 +331,14 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="http://www.theswarmlab.com" class="external-link">Simon Garnier</a>.</p>
+<p>Developed by <a href="http://www.theswarmlab.com" class="external-link">Simon
+Garnier</a>.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>
