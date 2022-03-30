@@ -1113,7 +1113,7 @@ threshold <- function(image, thresh = 127, max_value = 255, method = "none",
     stop("'thresh' must be a numeric value.")
 
   if (method != "none") {
-    r <- c(min(min(image)), max(max(image)) + 1)
+    r <- c(floor(min(min(image))), ceiling(max(max(image)) + 1))
     n <- diff(r) + 1
     m <- imhist(image, mask = mask, nbins = n, range = r)
     dt <- apply(m[, 2:ncol(m), drop = FALSE], 1, sum)
@@ -1270,7 +1270,7 @@ autothreshold <- function(image, method = "ImageJ", mask = NULL) {
   if (!(image$depth() %in% c("8U", "32F")))
     stop("'image' must be an 8-bit (8U) or 32-bit floating (32F) Image object.")
 
-  r <- c(min(min(image)), max(max(image)) + 1)
+  r <- c(floor(min(min(image))), ceiling(max(max(image)) + 1))
   n <- diff(r) + 1
   m <- imhist(image, mask = mask, nbins = n, range = r)
   dt <- apply(m[, 2:ncol(m), drop = FALSE], 1, sum)
