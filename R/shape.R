@@ -176,8 +176,11 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'    connectivity.}
 #'  }
 #'
-#' @param table A boolean indicatinng whether the coordinates of the pixels of
+#' @param table A boolean indicating whether the coordinates of the pixels of
 #'  each component should be returned.
+#'
+#' @param stats A boolean indicating whether the statistics of the connected
+#'  components should be returned.
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
@@ -190,13 +193,18 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'    replace the content of \code{target}. }
 #'  }
 #'
-#' @return A list with 1 to 3 items:
+#' @return A list with 1 to 4 items:
 #'  \itemize{
 #'   \item{n: }{the number of connected components in the image. It is always
 #'    returned.}
 #'   \item{table: }{if \code{table=TRUE}, a matrix with 3 columns representing
-#'    the identity of the connected components (id), and the x-y coordinates of
-#'    the pixels they are composed of.}
+#'    the identity of the connected components (label), and the x-y coordinates
+#'    of the pixels they are composed of.}
+#'   \item{stats: }{if \code{stats=TRUE}, a matrix with 8 columns representing
+#'    the identity of the connected components (label), the x-y coordinates of
+#'    their centroidd, the left and top coordinates of their bounding boxes,
+#'    the width and height of their bounding boxes, and their surface areas in
+#'    pixels.}
 #'   \item{labels: }{if \code{target="new"} a 32S single-channel image in which
 #'    each pixel of each connected component is represented by the identity
 #'    number of the component, and the background pixels by zero.}
@@ -214,7 +222,7 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'
 #' @export
 connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
-                                table = TRUE, target = "new") {
+                                table = TRUE, stats = TRUE, target = "new") {
   if (!isImage(image))
     stop("'image' must be an Image object.")
 
@@ -224,27 +232,43 @@ connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
   if (!(connectivity %in% c(4, 8)))
     stop("'connectivity' must be either 4 or 8.")
 
-  algo <- switch (algorithm,
-                  "grana" = 1,
-                  "wu" = 0,
-                  stop("This is not a valid algorithm."))
+  algo <- switch(algorithm,
+                 "grana" = 1,
+                 "wu" = 0,
+                 stop("This is not a valid algorithm."))
 
   if (isImage(target)) {
     if (!(target$nchan() == 1 && (target$depth() == "32S" || target$depth() == "16U")))
       stop("'target' must be a 16U or 32S single-channel (GRAY) Image object.")
 
     if (table) {
-      `_connectedComponentsTAB`(image, connectivity, algo, target)
+      if (stats) {
+        `_connectedComponentsWithStatsTAB`(image, connectivity, algo, target)
+      } else {
+        `_connectedComponentsTAB`(image, connectivity, algo, target)
+      }
     } else {
-      `_connectedComponentsNOTAB`(image, connectivity, algo, target)
+      if (stats) {
+        `_connectedComponentsWithStatsNOTAB`(image, connectivity, algo, target)
+      } else {
+        `_connectedComponentsNOTAB`(image, connectivity, algo, target)
+      }
     }
   } else if (target == "new") {
     out <- zeros(nrow(image), ncol(image), 1, "32S", "GRAY")
 
     if (table) {
-      l <- `_connectedComponentsTAB`(image, connectivity, algo, out)
+      if (stats) {
+        l <- `_connectedComponentsWithStatsTAB`(image, connectivity, algo, out)
+      } else {
+        l <- `_connectedComponentsTAB`(image, connectivity, algo, out)
+      }
     } else {
-      l <- `_connectedComponentsNOTAB`(image, connectivity, algo, out)
+      if (stats) {
+        l <- `_connectedComponentsWithStatsNOTAB`(image, connectivity, algo, out)
+      } else {
+        l <- `_connectedComponentsNOTAB`(image, connectivity, algo, out)
+      }
     }
 
     l$labels <- out

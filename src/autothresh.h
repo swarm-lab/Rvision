@@ -222,7 +222,7 @@ int _autothreshIM(Rcpp::IntegerVector data ) {
     iter++;
     if (iter>10000) {
       threshold = -1;
-      Rcpp::Rcout << "Intermodes Threshold not found after 10000 iterations.";
+      Rcpp::Rcout << "Intermodes Threshold not found after 10000 iterations." << std::endl;
       return threshold;
     }
   }
@@ -294,7 +294,7 @@ int _autothreshIsoData(Rcpp::IntegerVector data ) {
     }
     g++;
     if (g >data.size()-2){
-      Rcpp::Rcout << "IsoData Threshold not found.";
+      Rcpp::Rcout << "IsoData Threshold not found." << std::endl;
       return -1;
     }
   }
@@ -533,7 +533,7 @@ int _autothreshMinErrorI(Rcpp::IntegerVector data ) {
     //If the next threshold would be imaginary, return with the current one.
     sqterm = (w1*w1)-w0*w2;
     if (sqterm < 0) {
-      Rcpp::Rcout << "MinError(I): not converging. Try \'Ignore black/white\' options";
+      Rcpp::Rcout << "MinError(I): not converging. Try \'Ignore black/white\' options" << std::endl;
       return threshold;
     }
 
@@ -542,7 +542,7 @@ int _autothreshMinErrorI(Rcpp::IntegerVector data ) {
     temp = (w1+sqrt(sqterm))/w0;
 
     if (Rcpp::NumericVector::is_na(temp)) {
-      Rcpp::Rcout << "MinError(I): NaN, not converging. Try \'Ignore black/white\' options";
+      Rcpp::Rcout << "MinError(I): NaN, not converging. Try \'Ignore black/white\' options" << std::endl;
       threshold = Tprev;
     }
     else
@@ -587,7 +587,7 @@ int _autothreshMinimum(Rcpp::IntegerVector data ) {
     iter++;
     if (iter>10000) {
       threshold = -1;
-      Rcpp::Rcout << "Minimum Threshold not found after 10000 iterations.";
+      Rcpp::Rcout << "Minimum Threshold not found after 10000 iterations." << std::endl;
       return threshold;
     }
   }

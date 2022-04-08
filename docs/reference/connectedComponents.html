@@ -27,7 +27,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -90,6 +90,7 @@
   connectivity <span class="op">=</span> <span class="fl">8</span>,
   algorithm <span class="op">=</span> <span class="st">"grana"</span>,
   table <span class="op">=</span> <span class="cn">TRUE</span>,
+  stats <span class="op">=</span> <span class="cn">TRUE</span>,
   target <span class="op">=</span> <span class="st">"new"</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -114,8 +115,11 @@ labeling algorithm to use. This parameter can take two values:</p><ul><li><p>"gr
   connectivity.</p></li>
 </ul></dd>
 <dt>table</dt>
-<dd><p>A boolean indicatinng whether the coordinates of the pixels of
+<dd><p>A boolean indicating whether the coordinates of the pixels of
 each component should be returned.</p></dd>
+<dt>stats</dt>
+<dd><p>A boolean indicating whether the statistics of the connected
+components should be returned.</p></dd>
 <dt>target</dt>
 <dd><p>The location where the results should be stored. It can take 2
 values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
@@ -128,11 +132,16 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list with 1 to 3 items:</p><ul><li><p>n: the number of connected components in the image. It is always
+    <p>A list with 1 to 4 items:</p><ul><li><p>n: the number of connected components in the image. It is always
    returned.</p></li>
 <li><p>table: if <code>table=TRUE</code>, a matrix with 3 columns representing
-   the identity of the connected components (id), and the x-y coordinates of
-   the pixels they are composed of.</p></li>
+   the identity of the connected components (label), and the x-y coordinates
+   of the pixels they are composed of.</p></li>
+<li><p>stats: if <code>stats=TRUE</code>, a matrix with 8 columns representing
+   the identity of the connected components (label), the x-y coordinates of
+   their centroidd, the left and top coordinates of their bounding boxes,
+   the width and height of their bounding boxes, and their surface areas in
+   pixels.</p></li>
 <li><p>labels: if <code>target="new"</code> a 32S single-channel image in which
    each pixel of each connected component is represented by the identity
    number of the component, and the background pixels by zero.</p></li>

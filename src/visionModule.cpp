@@ -317,6 +317,10 @@ RCPP_MODULE(methods_Shape) {
     _["connectivity"], _["algorithm"], _["target"]), "");
   function("_connectedComponentsNOTAB", &_connectedComponentsNOTAB, List::create(_["image"],
     _["connectivity"], _["algorithm"], _["target"]), "");
+  function("_connectedComponentsWithStatsTAB", &_connectedComponentsWithStatsTAB,
+           List::create(_["image"], _["connectivity"], _["algorithm"], _["target"]), "");
+  function("_connectedComponentsWithStatsNOTAB", &_connectedComponentsWithStatsNOTAB,
+           List::create(_["image"], _["connectivity"], _["algorithm"], _["target"]), "");
   function("_watershed", &_watershed, List::create(_["image"], _["markers"]), "");
   function("_fitEllipse", &_fitEllipse, List::create(_["points"]), "");
   function("_fitEllipseAMS", &_fitEllipseAMS, List::create(_["points"]), "");
