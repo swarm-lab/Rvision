@@ -25,6 +25,7 @@ jobs:
           - {os: ubuntu-latest,   r: 'oldrel-1'}
 
     env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: false
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
@@ -53,10 +54,5 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
           extra-packages: rcmdcheck
-
-      - name: Compile OpenCV
-        run: |
-          ROpenCVLite::installOpenCV(batch=TRUE)
-        shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v1
