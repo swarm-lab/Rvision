@@ -5,12 +5,13 @@ void _newDisplay(std::string window_name, int height, int width) {
   cv::waitKey(1);
 }
 
-void _display(Image& image, std::string window_name, int delay, int height, int width) {
+void _display(Image& image, std::string window_name, int delay, int height,
+              int width, int interpolation) {
   if (image.GPU) {
     if ((image.uimage.rows != height) || (image.uimage.cols != width)) {
       cv::UMat screen;
       image.uimage.copyTo(screen);
-      cv::resize(screen, screen, cv::Size(width, height));
+      cv::resize(screen, screen, cv::Size(width, height), 0, 0, interpolation);
       cv::imshow(window_name, screen);
     } else {
       cv::imshow(window_name, image.uimage);
@@ -19,7 +20,7 @@ void _display(Image& image, std::string window_name, int delay, int height, int 
     if ((image.image.rows != height) || (image.image.cols != width)) {
       cv::Mat screen;
       image.image.copyTo(screen);
-      cv::resize(screen, screen, cv::Size(width, height));
+      cv::resize(screen, screen, cv::Size(width, height), 0, 0, interpolation);
       cv::imshow(window_name, screen);
     } else {
       cv::imshow(window_name, image.image);

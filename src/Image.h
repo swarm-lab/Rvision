@@ -474,8 +474,15 @@ void _changeColorSpace(Image& image, std::string colorSpace, Image& target) {
   target.space = colorSpace;
 }
 
-Image _cloneImage(Image& image) {
-  return Image(image);
+// Image _cloneImage(Image& image) {
+//   return Image(image);
+// }
+
+void _cloneImage(Image& image, Image& target) {
+  image.image.copyTo(target.image);
+  image.uimage.copyTo(target.uimage);
+  target.GPU = image.GPU;
+  target.space = image.space;
 }
 
 Rcpp::List _split(Image& image) {
@@ -520,6 +527,34 @@ void _merge(Rcpp::List& channels, Image& target) {
   }
 }
 
+void _extractChannel(Image& image, int channel, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::extractChannel(image.uimage, target.uimage, channel);
+
+    return cv::extractChannel(image.uimage, target.image, channel);
+  }
+
+  if (target.GPU)
+    return cv::extractChannel(image.image, target.uimage, channel);
+
+  cv::extractChannel(image.image, target.image, channel);
+}
+
+void _insertChannel(Image& image, int channel, Image& insert) {
+  if (image.GPU) {
+    if (insert.GPU)
+      return cv::insertChannel(insert.uimage, image.uimage, channel);
+
+    return cv::insertChannel(insert.image, image.uimage, channel);
+  }
+
+  if (insert.GPU)
+    return cv::insertChannel(insert.uimage, image.image, channel);
+
+  cv::insertChannel(insert.image, image.image, channel);
+}
+
 Rcpp::List _readMulti(std::string file, std::string colorspace) {
   std::vector<cv::Mat> mats;
   Rcpp::Environment base = Rcpp::Environment::base_env();
@@ -534,6 +569,18 @@ Rcpp::List _readMulti(std::string file, std::string colorspace) {
   }
 
   return out;
+}
+
+bool _writeMulti(std::string file, Rcpp::List imgList) {
+  std::vector<cv::Mat> mats;
+  Rcpp::Environment base = Rcpp::Environment::base_env();
+  Rcpp::Function pathExpand = base["path.expand"];
+
+  for (unsigned int i = 0; i < imgList.size(); i++) {
+    mats.push_back(as<Image>(imgList[i]).image);
+  }
+
+  return cv::imwritemulti(Rcpp::as<std::string>(pathExpand(file)), mats);
 }
 
 void _subimage(Image& image, int x, int y, int width, int height, Image& target) {
@@ -585,4 +632,33 @@ void _randn(Image& image, Rcpp::NumericVector mean, Rcpp::NumericVector stddev) 
     return cv::randn(image.uimage, col2Scalar(mean), col2Scalar(stddev));
 
   cv::randn(image.image, col2Scalar(mean), col2Scalar(stddev));
+}
+
+Image _readHIS(std::string filename) {
+  std::ifstream his(filename.c_str(), std::ios::in|std::ios::binary);
+
+  if (!his.is_open()) {
+    stop("Error: File cannot be opened.");
+  }
+
+  int16_t nrow(0);
+  int16_t ncol(0);
+  his.seekg(8 * sizeof(int16_t), his.beg);
+  his.read(reinterpret_cast<char*>(&nrow), sizeof(int16_t));
+  his.seekg(9 * sizeof(int16_t), his.beg);
+  his.read(reinterpret_cast<char*>(&ncol), sizeof(int16_t));
+
+  Image out = _zeros(nrow, ncol, "16UC1", "GRAY");
+  his.seekg(49 * sizeof(int16_t), his.beg);
+
+  for (int i = 0; i < nrow; ++i) {
+    ushort* row_ptr = out.image.ptr<ushort>(nrow - 1 - i);
+    for (int j = 0; j < ncol; ++j) {
+      his.read(reinterpret_cast<char*>(&row_ptr[j]), sizeof(int16_t));
+    }
+  }
+
+  his.close();
+
+  return out;
 }

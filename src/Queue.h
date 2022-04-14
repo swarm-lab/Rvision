@@ -182,7 +182,8 @@ int Queue::readNext(Image& target) {
   }
 
   if (target.GPU) {
-    target.uimage = this->_buffer[this->_head].getUMat(cv::ACCESS_READ);
+    // target.uimage = this->_buffer[this->_head].getUMat(cv::ACCESS_READ);
+    this->_buffer[this->_head].copyTo(target.uimage);
   } else {
     target.image = this->_buffer[this->_head];
   }

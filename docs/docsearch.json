@@ -2,21 +2,21 @@
   "index_name": "swarm-lab-rvision",
   "start_urls": [
     {
-      "url": "https://swarm-lab.github.io/ROpenCVLite//index.html",
+      "url": "https://swarm-lab.github.io/ROpenCVLite/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "https://swarm-lab.github.io/ROpenCVLite//reference",
+      "url": "https://swarm-lab.github.io/ROpenCVLite/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "https://swarm-lab.github.io/ROpenCVLite//articles",
+      "url": "https://swarm-lab.github.io/ROpenCVLite/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "https://swarm-lab.github.io/ROpenCVLite//sitemap.xml"
+    "https://swarm-lab.github.io/ROpenCVLite/sitemap.xml"
   ],
   "selectors": {
     "homepage": {

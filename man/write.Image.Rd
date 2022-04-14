@@ -4,16 +4,18 @@
 \alias{write.Image}
 \title{Image Output}
 \usage{
-write.Image(x, file)
+write.Image(x, file, overwrite = FALSE)
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object.}
 
 \item{file}{A character string naming the path to a file.}
+
+\item{overwrite}{Should the file be overwritten if it already exists?
+(default: FALSE)}
 }
 \value{
-A logical indicating whether writing was successful (TRUE) or not
- (FALSE).
+A message indicating whether writing was successful or not.
 }
 \description{
 Writes the content of an \code{\link{Image}} object to a file.

@@ -4,7 +4,14 @@
 \alias{display}
 \title{Display \code{\link{Image}} Object}
 \usage{
-display(image, window_name = "Display", delay = 25, height = 480, width = 640)
+display(
+  image,
+  window_name = "Display",
+  delay = 25,
+  height = 480,
+  width = 640,
+  interpolation = "linear"
+)
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object.}
@@ -20,6 +27,10 @@ window.}
 
 \item{width}{An integer representing the width in pixels of the display
 window.}
+
+\item{interpolation}{A character string representing the type of interpolation
+to use if the display size is different from the image size (default: "linear").
+See notes in \code{\link{resize}} for all accepted interpolation methods.}
 }
 \value{
 This function does not return anything.

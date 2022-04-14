@@ -18,8 +18,8 @@ adaptiveThreshold(
 \arguments{
 \item{image}{An an 8-bit (8U) single-channel \code{\link{Image}} object.}
 
-\item{max_value}{Non-zero numerical value assigned to the pixels above the
-adaptive threshold (default: 255).}
+\item{max_value}{Non-zero value assigned to the pixels for which the
+condition determined by `threshold_type` is satisfied (default: 255).}
 
 \item{method}{The name of the adaptive thresholding algorithm to use. It can
 be either 'mean' - mean of the block_size * block_size neighborhood - or
@@ -27,7 +27,10 @@ be either 'mean' - mean of the block_size * block_size neighborhood - or
 neighborhood (default: 'mean').}
 
 \item{threshold_type}{The name of the threshold type to use. It can be either
-'binary' or 'inverse' (default: 'inverse').}
+'binary' or 'inverse' (default: 'inverse'). If 'binary', each pixel is replaced
+by `max_value` if its value is above the adaptive threshold, and by zero
+otherwise. If 'inverse' each pixel is replaced by zero if its value is above
+the adaptive threshold, and by `max_value` otherwise.}
 
 \item{block_size}{Size of a pixel neighborhood that is used to calculate a
 threshold value for the pixel (default: 31).}

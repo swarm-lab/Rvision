@@ -53,6 +53,11 @@ computeECC <- function(template, image) {
 #' @param image A grayscale \code{\link{Image}} object of the same dimensions as
 #'  \code{template}.
 #'
+#' @param warp_matrix An initial mapping (warp) matrix. It must be a 3x3 matrix
+#'  when \code{warp_mode} is set to "homography", a 2x3 matrix otherwise. If set
+#'  to \code{NULL} (the default), it will be automatically initialized as an
+#'  identity matrix with the appropriate dimensions.
+#'
 #' @param warp_mode A character string indicating the type of warping required
 #'  to transform \code{image} into \code{template}. It can be any of the following:
 #'  \itemize{
@@ -90,8 +95,8 @@ computeECC <- function(template, image) {
 #' findTransformECC(balloon1, balloon2)
 #'
 #' @export
-findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200,
-                             epsilon = 1e-3, filt_size = 0) {
+findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "affine",
+                             max_it = 200, epsilon = 1e-3, filt_size = 0) {
   if (!isImage(template))
     stop("'template' is not an Image object.")
 
@@ -104,7 +109,24 @@ findTransformECC <- function(template, image, warp_mode = "affine", max_it = 200
   if (!all(template$dim() == image$dim()))
     stop("'template' and 'image' must have the same dimensions.")
 
-  `_findTransformECC`(template, image,
+  if (warp_mode == "homography") {
+    if (is.null(warp_matrix)) {
+      warp_matrix <- diag(1, 3, 3)
+    } else {
+      if (!all(dim(warp_matrix) == c(3, 3)))
+        stop("warp_matrix must be a 3x3 matrix.")
+    }
+  } else {
+    if (is.null(warp_matrix)) {
+      warp_matrix <- diag(1, 2, 3)
+    } else {
+      if (!all(dim(warp_matrix) == c(2, 3)))
+        stop("warp_matrix must be a 2x3 matrix.")
+    }
+
+  }
+
+  `_findTransformECC`(template, image, warp_matrix,
                       switch(warp_mode,
                              "translation" = 0,
                              "euclidean" = 1,
@@ -324,7 +346,7 @@ rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, s
 #' @export
 warpAffine <- function(image, warp_matrix, interp_mode = "linear", inverse_map = TRUE,
                        border_type = "constant", border_color = "black",
-                       target = "new", output_size = dim(image)[2:1]) {
+                       target = "new", output_size = dim(image)[1:2]) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
@@ -493,7 +515,7 @@ getPerspectiveTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #' @export
 warpPerspective <- function(image, warp_matrix, interp_mode = "linear", inverse_map = TRUE,
                             border_type = "constant", border_color = "black",
-                            target = "new", output_size = dim(image)[2:1]) {
+                            target = "new", output_size = dim(image)[1:2]) {
   if (!isImage(image))
     stop("'image' is not an Image object.")
 
@@ -713,7 +735,7 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = 0,
   if (!(connectivity %in% c(4, 8)))
     stop("'connectivity' must be either 4 or 8.")
 
-  `_floodFill`(image, seed - 1, col2bgr(color, alpha = TRUE),
+  `_floodFill`(image, c(seed[1] - 1, -seed[2] + nrow(image)), col2bgr(color, alpha = TRUE),
                rep(lo_diff, length.out = image$nchan()),
                rep(up_diff, length.out = image$nchan()),
                connectivity)
@@ -791,7 +813,7 @@ LUT <- function(image, lut, target = "new") {
   } else if (target == "self") {
     `_LUT`(image, im_lut, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_LUT`(image, im_lut, out)
     out
   } else {
@@ -851,8 +873,8 @@ histmatch <- function(image, reference, target = "new") {
   if (reference$depth() != image$depth())
     stop("'image' and 'reference' must have the same bit depth.")
 
-  cdf_target <- apply(imhist(reference)[, 1:reference$nchan() + 1], 2, cumsum)
-  cdf_image <- apply(imhist(image)[, 1:image$nchan() + 1], 2, cumsum)
+  cdf_target <- apply(imhist(reference)[, 1:reference$nchan() + 1, drop = FALSE], 2, cumsum)
+  cdf_image <- apply(imhist(image)[, 1:image$nchan() + 1, drop = FALSE], 2, cumsum)
 
   map <- matrix(0, nrow = 256, ncol = image$nchan())
   for (j in 1:reference$nchan()) {
@@ -920,7 +942,7 @@ histEq <- function(image, target = "new") {
     } else if (target == "self") {
       `_histEqGRAY`(image, image)
     } else if (target == "new") {
-      out <- `_cloneImage`(image)
+      out <- cloneImage(image)
       `_histEqGRAY`(image, out)
       out
     } else {
@@ -932,7 +954,7 @@ histEq <- function(image, target = "new") {
     } else if (target == "self") {
       `_histEqBGR`(image, image)
     } else if (target == "new") {
-      out <- `_cloneImage`(image)
+      out <- cloneImage(image)
       `_histEqBGR`(image, out)
       out
     } else {
@@ -941,4 +963,28 @@ histEq <- function(image, target = "new") {
   } else {
     stop("'image' must have 1 or 3 or more channels.")
   }
+}
+
+
+#' @export
+grabCut <- function(image, mask, rect = rep(1, 4), bgdModel, fgdModel, iter = 1,
+                    mode = "EVAL") {
+  if (!isImage(image) | !isImage(mask) | !isImage(bgdModel) | !isImage(fgdModel))
+    stop("'image', 'mask', 'bgdModel', and 'fgdModel' should all be Image objects.")
+
+  if (image$depth() != "8U" | mask$depth() != "8U")
+    stop("'image' and 'mask' must have an 8U bit depth.")
+
+  if (bgdModel$depth() != "64F" | fgdModel$depth() != "64F")
+    stop("'bgdModel' and 'fgdModel' must have an 64F bit depth.")
+
+  if (image$nchan() != 3)
+    stop("'image' must have 3 channels.")
+
+  if (mask$nchan() != 1 | bgdModel$nchan() != 1 | fgdModel$nchan() != 1)
+    stop("''mask', 'bgdModel', and 'fgdModel' must have 1 channel only.")
+
+  `_grabCut`(image, mask, rect, bgdModel, fgdModel, iter,
+             switch(mode, RECT = 0, MASK = 1, EVAL = 2, FREEZE = 3,
+                    stop("This is not a valid mode.")))
 }

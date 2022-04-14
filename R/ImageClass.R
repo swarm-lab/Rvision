@@ -176,8 +176,10 @@ isImage <- function(object) {
 #'
 #' @param file A character string naming the path to a file.
 #'
-#' @return A logical indicating whether writing was successful (TRUE) or not
-#'  (FALSE).
+#' @param overwrite Should the file be overwritten if it already exists?
+#'  (default: FALSE)
+#'
+#' @return A message indicating whether writing was successful or not.
 #'
 #' @note The function will guess the format of the output file using the file
 #'  extension provided by the user.
@@ -193,9 +195,12 @@ isImage <- function(object) {
 #' }
 #'
 #' @export
-write.Image <- function(x, file) {
+write.Image <- function(x, file, overwrite = FALSE) {
   if (!isImage(x))
     stop("This is not an Image object.")
+
+  if (file.exists(file) & !overwrite)
+    stop("A file with the same name already exists at that location.")
 
   if (x$write(file)) {
     message("Image saved successfully.")
@@ -380,6 +385,18 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #'
 #' @param x An \code{\link{Image}} object.
 #'
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions, number of channels,
+#'    and bit depth as \code{image}, an error may be thrown.}
+#'  }
+#'
 #' @return An \code{\link{Image}} object.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -391,11 +408,19 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #' balloon_clone <- cloneImage(balloon)
 #'
 #' @export
-cloneImage <- function(x) {
+cloneImage <- function(x, target = "new") {
   if (!isImage(x))
     stop("This is not an Image object.")
 
-  `_cloneImage`(x)
+  if (isImage(target)) {
+    `_cloneImage`(x, target)
+  } else if (target == "new") {
+    out <- `_zeros`(x$nrow(), x$ncol(), paste0(x$depth(), "C", x$nchan()), x$space)
+    `_cloneImage`(x, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }
 
 
@@ -492,6 +517,114 @@ merge <- function(x, target = "new") {
   }
 }
 
+
+#' @title Extract Single Channel from Image
+#'
+#' @description \code{extractChannel} extracts a single color channel from the
+#'  source image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param channel An integer specifying the index of the channel to extract.
+#'
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same dimensions and bit depth as
+#'    \code{image}, an error may be thrown. \code{target} should also be a
+#'    single-channel \code{\link{Image}} object or an error will be thrown.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns a single-channel
+#'  \code{\link{Image}} object. If \code{target} is an \code{\link{Image}}
+#'  object, the function returns nothing and modifies that \code{\link{Image}}
+#'  object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{split}}, \code{\link{merge}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' extractChannel(balloon, 2)
+#'
+#' @export
+extractChannel <- function(image, channel, target = "new") {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  if (!(channel %in% 1:image$nchan()))
+    stop("Invalid channel number.")
+
+  if (isImage(target)) {
+    if (target$nchan() > 1)
+      stop("target must be a single-channel image.")
+
+    if (target$depth() != image$depth())
+      stop("target must have the same bitdepth as image.")
+
+    `_extractChannel`(image, channel - 1L, target)
+  } else if (target == "new") {
+    out <- zeros(image$nrow(), image$ncol(), 1, image$depth())
+    `_extractChannel`(image, channel - 1L, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
+#' @title Insert Single Channel into Image
+#'
+#' @description \code{insertChannel} insert a single color channel into the
+#'  target image.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param channel An integer specifying the index of the channel that will be
+#'  replaced by \code{insert}
+#'
+#' @param insert A single-channel \code{\link{Image}} object with the same bit
+#'  depth as \code{image}.
+#'
+#' @return The function returns nothing and modifies \code{image} in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{split}}, \code{\link{merge}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' red <- extractChannel(balloon, 3)
+#' insertChannel(balloon, 1, red)
+#'
+#' @export
+insertChannel <- function(image, channel, insert) {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  if (!(channel %in% 1:image$nchan()))
+    stop("Invalid channel number.")
+
+  if (isImage(insert)) {
+    if (insert$nchan() > 1)
+      stop("insert must be a single-channel image.")
+
+    if (insert$depth() != image$depth())
+      stop("target must have the same bitdepth as image.")
+
+    `_insertChannel`(image, channel - 1L, insert)
+  } else {
+    stop("Invalid insert.")
+  }
+}
+
+
 #' @title Read a Multi-Page Image
 #'
 #' @description \code{readMulti} reads a multi-page image and returns a list of
@@ -516,6 +649,49 @@ readMulti <- function(x, colorspace = "BGR") {
     stop("File not found.")
 
   `_readMulti`(x, colorspace = "BGR")
+}
+
+
+#' @title Wrtie a Multi-Page Image
+#'
+#' @description \code{writeMulti} writes a list of \code{\link{Image}} objects
+#'  to a multi-page image.
+#'
+#' @param x A character string naming the path to a multi-page image file.
+#'
+#' @param img_list A list of \code{\link{Image}} objects.
+#'
+#' @param overwrite Should the file be overwritten if it already exists?
+#'  (default: FALSE)
+#'
+#' @return A message indicating whether writing was successful or not.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- readMulti(system.file("sample_img/multipage.tif", package = "Rvision"))
+#' \dontrun{
+#' writeMulti("~/Desktop/balloon.tiff", balloon)
+#' }
+#'
+#'
+#' @export
+writeMulti <- function(x, img_list, overwrite = FALSE) {
+  if (file.exists(x) & !overwrite)
+    stop("A file with the same name already exists at that location.")
+
+  if (!all(sapply(img_list, isImage)))
+    stop("All elements of the list should be images.")
+
+  out <- `_writeMulti`(x, img_list)
+
+  if (out) {
+    message("Image saved successfully.")
+  } else {
+    stop("The image could not be saved.")
+  }
 }
 
 
@@ -1005,4 +1181,27 @@ randn <- function(image, mean = 127, sd = 1) {
     stop("This is not an Image object.")
 
   `_randn`(image, rep(mean, length.out = image$nchan()), rep(sd, length.out = image$nchan()))
+}
+
+
+#' @title Read HIS Image from Varex Imaging X-ray Panels
+#'
+#' @description \code{readHIS} reads HIS binary files produced by the X-ray
+#'  panels from Varex Imaging and returns \code{\link{Image}} objects that can
+#'  be processed by this package.
+#'
+#' @param x A character string naming the path to a HIS binary image file.
+#'
+#' @return A 16U grayscale \code{\link{Image}} object.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' #TODO
+#'
+#' @export
+readHIS <- function(x) {
+  `_readHIS`(x)
 }

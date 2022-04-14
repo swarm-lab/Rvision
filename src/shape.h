@@ -75,7 +75,7 @@ Rcpp::List _connectedComponentsTAB(Image& image, int connectivity, int algorithm
     }
   }
 
-  colnames(table) = Rcpp::CharacterVector::create("x", "y", "id");
+  colnames(table) = Rcpp::CharacterVector::create("x", "y", "label");
 
   return Rcpp::List::create(Rcpp::Named("n") = n - 1,
                             Rcpp::Named("table") = table);
@@ -104,6 +104,106 @@ Rcpp::List _connectedComponentsNOTAB(Image& image, int connectivity, int algorit
   }
 
   return Rcpp::List::create(Rcpp::Named("n") = n - 1);
+}
+
+Rcpp::List _connectedComponentsWithStatsTAB(Image& image, int connectivity,
+                                            int algorithm, Image& target) {
+  int n;
+  Rcpp::NumericMatrix table;
+  cv::Mat stats;
+  cv::Mat centroids;
+
+  if (image.GPU) {
+    if (target.GPU) {
+      n = cv::connectedComponentsWithStats(image.uimage, target.uimage, stats,
+                                           centroids, connectivity,
+                                           target.uimage.type(), algorithm);
+      _findNonZeroVAL(target.uimage, table);
+    } else {
+      n = cv::connectedComponentsWithStats(image.uimage, target.image, stats,
+                                           centroids, connectivity,
+                                           target.image.type(), algorithm);
+      _findNonZeroVAL(target.image, table);
+    }
+  } else {
+    if (target.GPU) {
+      n = cv::connectedComponentsWithStats(image.image, target.uimage, stats,
+                                           centroids, connectivity,
+                                           target.uimage.type(), algorithm);
+      _findNonZeroVAL(target.uimage, table);
+    } else {
+      n = cv::connectedComponentsWithStats(image.image, target.image, stats,
+                                           centroids, connectivity,
+                                           target.image.type(), algorithm);
+      _findNonZeroVAL(target.image, table);
+    }
+  }
+
+  colnames(table) = Rcpp::CharacterVector::create("x", "y", "label");
+
+  Rcpp::NumericMatrix statsTable = Rcpp::NumericMatrix(n, 8);
+  colnames(statsTable) = Rcpp::CharacterVector::create("label", """x", "y", "left",
+           "top", "width", "height", "area");
+  for (int i = 0; i < stats.rows; i++) {
+    statsTable(i, 0) = i;
+    statsTable(i, 1) = centroids.at<double>(cv::Point(0, i)) + 1;
+    statsTable(i, 2) = -centroids.at<double>(cv::Point(1, i)) + image.nrow();
+    statsTable(i, 3) = stats.at<int>(cv::Point(0, i)) + 1;
+    statsTable(i, 4) = -stats.at<int>(cv::Point(1, i)) + image.nrow();
+    statsTable(i, 5) = stats.at<int>(cv::Point(2, i));
+    statsTable(i, 6) = stats.at<int>(cv::Point(3, i));
+    statsTable(i, 7) = stats.at<int>(cv::Point(4, i));
+  }
+
+  return Rcpp::List::create(Rcpp::Named("n") = n - 1,
+                            Rcpp::Named("table") = table,
+                            Rcpp::Named("stats") = statsTable);
+}
+
+Rcpp::List _connectedComponentsWithStatsNOTAB(Image& image, int connectivity,
+                                              int algorithm, Image& target) {
+  int n;
+  cv::Mat stats;
+  cv::Mat centroids;
+
+  if (image.GPU) {
+    if (target.GPU) {
+      n = cv::connectedComponentsWithStats(image.uimage, target.uimage, stats,
+                                           centroids, connectivity,
+                                           target.uimage.type(), algorithm);
+    } else {
+      n = cv::connectedComponentsWithStats(image.uimage, target.image, stats,
+                                           centroids, connectivity,
+                                           target.image.type(), algorithm);
+    }
+  } else {
+    if (target.GPU) {
+      n = cv::connectedComponentsWithStats(image.image, target.uimage, stats,
+                                           centroids, connectivity,
+                                           target.uimage.type(), algorithm);
+    } else {
+      n = cv::connectedComponentsWithStats(image.image, target.image, stats,
+                                           centroids, connectivity,
+                                           target.image.type(), algorithm);
+    }
+  }
+
+  Rcpp::NumericMatrix statsTable = Rcpp::NumericMatrix(n, 8);
+  colnames(statsTable) = Rcpp::CharacterVector::create("label", """x", "y", "left",
+           "top", "width", "height", "area");
+  for (int i = 0; i < stats.rows; i++) {
+    statsTable(i, 0) = i;
+    statsTable(i, 1) = centroids.at<double>(cv::Point(0, i)) + 1;
+    statsTable(i, 2) = -centroids.at<double>(cv::Point(1, i)) + image.nrow();
+    statsTable(i, 3) = stats.at<int>(cv::Point(0, i)) + 1;
+    statsTable(i, 4) = -stats.at<int>(cv::Point(1, i)) + image.nrow();
+    statsTable(i, 5) = stats.at<int>(cv::Point(2, i));
+    statsTable(i, 6) = stats.at<int>(cv::Point(3, i));
+    statsTable(i, 7) = stats.at<int>(cv::Point(4, i));
+  }
+
+  return Rcpp::List::create(Rcpp::Named("n") = n - 1,
+                            Rcpp::Named("stats") = statsTable);
 }
 
 void _watershed(Image& image, Image& markers) {

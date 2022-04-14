@@ -38,10 +38,13 @@ RCPP_MODULE(class_Image) {
     _["scale"], _["target"]), "");
   function("_changeColorSpace", &_changeColorSpace, List::create(_["image"],
     _["colorspace"], _["target"]), "");
-  function("_cloneImage", &_cloneImage, List::create(_["image"]), "");
+  function("_cloneImage", &_cloneImage, List::create(_["image"], _["target"]), "");
   function("_split", &_split, List::create(_["image"]), "");
   function("_merge", &_merge, List::create(_["channels"], _["target"]), "");
+  function("_extractChannel", &_extractChannel, List::create(_["image"], _["channel"], _["target"]), "");
+  function("_insertChannel", &_insertChannel, List::create(_["image"], _["channel"], _["target"]), "");
   function("_readMulti", &_readMulti, List::create(_["file"], _["colorspace"]), "");
+  function("_writeMulti", &_writeMulti, List::create(_["file"], _["imgList"]), "");
   function("_subimage", &_subimage, List::create(_["image"], _["x"], _["y"],
     _["width"], _["height"], _["target"]), "");
   function("_copyMakeBorder", &_copyMakeBorder, List::create(_["image"], _["top"],
@@ -49,6 +52,7 @@ RCPP_MODULE(class_Image) {
   function("_zeros", &_zeros, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
   function("_randu", &_randu, List::create(_["image"], _["low"], _["high"]), "");
   function("_randn", &_randn, List::create(_["image"], _["mean"], _["stddev"]), "");
+  function("_readHIS", &_readHIS, List::create(_["filename"]), "");
 }
 
 #include "Capture.h"
@@ -251,6 +255,8 @@ RCPP_MODULE(methods_Filters) {
     _["sigma_color"], _["sigma_space"], _["target"]), "");
   function("_adaptiveThreshold", &_adaptiveThreshold, List::create(_["image"], _["max_value"],
     _["method"], _["threshold_type"], _["block_size"], _["C"], _["target"]), "");
+  function("_threshold", &_threshold, List::create(_["image"], _["thresh"], _["max_value"],
+    _["threshold_type"], _["target"]), "");
 }
 
 #include "display.h"
@@ -258,7 +264,7 @@ RCPP_MODULE(methods_Display) {
   function("_newDisplay", &_newDisplay, List::create(_["window_name"], _["height"],
     _["width"]), "");
   function("_display", &_display, List::create(_["image"], _["window_name"],
-    _["delay"], _["height"], _["width"]), "");
+    _["delay"], _["height"], _["width"], _["interpolation"]), "");
   function("_destroyDisplay", &_destroyDisplay, List::create(_["window_name"]), "");
   function("_destroyAllDisplays", &_destroyAllDisplays, "", "");
   function("_selectBoundingBoxes", &_selectBoundingBoxes, List::create(_["image"],
@@ -311,6 +317,10 @@ RCPP_MODULE(methods_Shape) {
     _["connectivity"], _["algorithm"], _["target"]), "");
   function("_connectedComponentsNOTAB", &_connectedComponentsNOTAB, List::create(_["image"],
     _["connectivity"], _["algorithm"], _["target"]), "");
+  function("_connectedComponentsWithStatsTAB", &_connectedComponentsWithStatsTAB,
+           List::create(_["image"], _["connectivity"], _["algorithm"], _["target"]), "");
+  function("_connectedComponentsWithStatsNOTAB", &_connectedComponentsWithStatsNOTAB,
+           List::create(_["image"], _["connectivity"], _["algorithm"], _["target"]), "");
   function("_watershed", &_watershed, List::create(_["image"], _["markers"]), "");
   function("_fitEllipse", &_fitEllipse, List::create(_["points"]), "");
   function("_fitEllipseAMS", &_fitEllipseAMS, List::create(_["points"]), "");
@@ -325,7 +335,7 @@ RCPP_MODULE(methods_Shape) {
 #include "transform.h"
 RCPP_MODULE(methods_Transform) {
   function("_findTransformECC", &_findTransformECC, List::create(_["image1"], _["image2"],
-    _["motionType"], _["count"], _["eps"], _["gaussFiltSize"]), "");
+    _["warpMatrix"], _["warpMode"], _["count"], _["eps"], _["gaussFiltSize"]), "");
   function("_computeECC", &_computeECC, List::create(_["image1"], _["image2"]), "");
   function("_findTransformORB", &_findTransformORB, List::create(_["image1"], _["image2"],
     _["warpMode"], _["maxFeatures"], _["descriptorMatcher"], _["matchFrac"],
@@ -345,10 +355,35 @@ RCPP_MODULE(methods_Transform) {
   function("_LUT", &_LUT, List::create(_["image"], _["lut"], _["target"]), "");
   function("_histEqGRAY", &_histEqGRAY, List::create(_["image"], _["target"]), "");
   function("_histEqBGR", &_histEqBGR, List::create(_["image"], _["target"]), "");
+  function("_grabCut", &_grabCut, List::create(_["image"], _["mask"], _["rect"],
+    _["bgdModel"], _["fgdModel"], _["iterCount"], _["mode"]), "");
 }
 
 #include "feature.h"
 RCPP_MODULE(methods_Feature) {
   function("_canny", &_canny, List::create(_["image"], _["threshold1"],
     _["threshold2"], _["apertureSize"], _["L2gradient"], _["target"]), "");
+  function("_houghCircles", &_houghCircles, List::create(_["image"], _["method"],
+    _["dp"], _["minDist"], _["param1"], _["param2"], _["minRadius"], _["maxRadius"]), "");
+}
+
+#include "autothresh.h"
+RCPP_MODULE(methods_Autothresh) {
+  function("_autothreshIJ", &_autothreshIJ, List::create(_["data"]), "");
+  function("_autothreshHuang", &_autothreshHuang, List::create(_["data"]), "");
+  function("_autothreshHuang2", &_autothreshHuang2, List::create(_["data"]), "");
+  function("_autothreshIM", &_autothreshIM, List::create(_["data"]), "");
+  function("_autothreshIsoData", &_autothreshIsoData, List::create(_["data"]), "");
+  function("_autothreshLi", &_autothreshLi, List::create(_["data"]), "");
+  function("_autothreshME", &_autothreshME, List::create(_["data"]), "");
+  function("_autothreshMean", &_autothreshMean, List::create(_["data"]), "");
+  function("_autothreshMinErrorI", &_autothreshMinErrorI, List::create(_["data"]), "");
+  function("_autothreshMinimum", &_autothreshMinimum, List::create(_["data"]), "");
+  function("_autothreshMoments", &_autothreshMoments, List::create(_["data"]), "");
+  function("_autothreshOtsu", &_autothreshOtsu, List::create(_["data"]), "");
+  function("_autothreshPercentile", &_autothreshPercentile, List::create(_["data"]), "");
+  function("_autothreshRenyiEntropy", &_autothreshRenyiEntropy, List::create(_["data"]), "");
+  function("_autothreshShanbhag", &_autothreshShanbhag, List::create(_["data"]), "");
+  function("_autothreshTriangle", &_autothreshTriangle, List::create(_["data"]), "");
+  function("_autothreshYen", &_autothreshYen, List::create(_["data"]), "");
 }

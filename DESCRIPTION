@@ -29,8 +29,8 @@ RcppModules: class_Image, class_Capture, class_VideoWriter,
     methods_Arithmetic, methods_Statistics, methods_Comparisons, methods_Logical, 
     methods_OpticalFlow, methods_Blob, methods_Morphology, methods_Filters, 
     methods_Display, methods_Draw, methods_Geometry, methods_Shape, methods_Transform,
-    methods_Feature
-RoxygenNote: 7.1.1
+    methods_Feature, methods_Autothresh
+RoxygenNote: 7.1.2
 Biarch: true
 StagedInstall: false
 Encoding: UTF-8

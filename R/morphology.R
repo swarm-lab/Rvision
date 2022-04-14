@@ -121,7 +121,7 @@ morph <- function(image, operation, kernel = NULL, k_shape = "rectangle",
     } else if (target == "self") {
       `_morph`(image, op, sh, k_height, k_width, iterations, image)
     } else if (target == "new") {
-      out <- `_cloneImage`(image)
+      out <- cloneImage(image)
       `_morph`(image, op, sh, k_height, k_width, iterations, out)
       out
     } else {
@@ -136,7 +136,7 @@ morph <- function(image, operation, kernel = NULL, k_shape = "rectangle",
     } else if (target == "self") {
       `_morphCustom`(image, op, kernel, iterations, image)
     } else if (target == "new") {
-      out <- `_cloneImage`(image)
+      out <- cloneImage(image)
       `_morphCustom`(image, op, kernel, iterations, out)
       out
     } else {

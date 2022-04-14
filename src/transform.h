@@ -12,34 +12,35 @@ double _computeECC(Image& image1, Image& image2) {
   return cv::computeECC(image1.image, image2.image, cv::noArray());
 }
 
-arma::Mat< float > _findTransformECC(Image& image1, Image& image2, int warpMode,
-                                     int count, double eps, int gaussFiltSize) {
-  arma::Mat< float > out;
-  cv::Mat_< float > warpMatrix;
+arma::Mat< float > _findTransformECC(Image& image1, Image& image2, arma::Mat< float > warpMatrix,
+                                     int warpMode, int count, double eps, int gaussFiltSize) {
+  // arma::Mat< float > out;
+  cv::Mat_< float > CVwarpMatrix;
+  arma2cv(warpMatrix, CVwarpMatrix);
 
-  if (warpMode == 3)
-    warpMatrix = cv::Mat::eye(3, 3, CV_32F);
-  else
-    warpMatrix = cv::Mat::eye(2, 3, CV_32F);
+  // if (warpMode == 3)
+  //   warpMatrix = cv::Mat::eye(3, 3, CV_32F);
+  // else
+  //   warpMatrix = cv::Mat::eye(2, 3, CV_32F);
 
   if (gaussFiltSize > 0) {
     if (image1.GPU) {
       if (image2.GPU) {
-        cv::findTransformECC(image1.uimage, image2.uimage, warpMatrix, warpMode,
+        cv::findTransformECC(image1.uimage, image2.uimage, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
                              cv::noArray(), gaussFiltSize);
       } else {
-        cv::findTransformECC(image1.uimage, image2.image, warpMatrix, warpMode,
+        cv::findTransformECC(image1.uimage, image2.image, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
                              cv::noArray(), gaussFiltSize);
       }
     } else {
       if (image2.GPU) {
-        cv::findTransformECC(image1.image, image2.uimage, warpMatrix, warpMode,
+        cv::findTransformECC(image1.image, image2.uimage, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
                              cv::noArray(), gaussFiltSize);
       } else {
-        cv::findTransformECC(image1.image, image2.image, warpMatrix, warpMode,
+        cv::findTransformECC(image1.image, image2.image, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
                              cv::noArray(), gaussFiltSize);
       }
@@ -47,34 +48,34 @@ arma::Mat< float > _findTransformECC(Image& image1, Image& image2, int warpMode,
   } else {
     if (image1.GPU) {
       if (image2.GPU) {
-        cv::findTransformECC(image1.uimage, image2.uimage, warpMatrix, warpMode,
+        cv::findTransformECC(image1.uimage, image2.uimage, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
                              cv::noArray());
       } else {
-        cv::findTransformECC(image1.uimage, image2.image, warpMatrix, warpMode,
+        cv::findTransformECC(image1.uimage, image2.image, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
                              cv::noArray());
       }
     } else {
       if (image2.GPU) {
-        cv::findTransformECC(image1.image, image2.uimage, warpMatrix, warpMode,
+        cv::findTransformECC(image1.image, image2.uimage, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
                              cv::noArray());
       } else {
-        cv::findTransformECC(image1.image, image2.image, warpMatrix, warpMode,
+        cv::findTransformECC(image1.image, image2.image, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
                              cv::noArray());
       }
     }
   }
 
-  cv2arma(warpMatrix, out);
-  return out;
+  cv2arma(CVwarpMatrix, warpMatrix);
+  return warpMatrix;
 }
 
 arma::Mat< float > _findTransformORB(Image& image1, Image& image2, int warpMode,
-                            int maxFeatures, String descriptorMatcher,
-                            double matchFrac, int homographyMethod) {
+                                     int maxFeatures, String descriptorMatcher,
+                                     double matchFrac, int homographyMethod) {
   arma::Mat< float > out;
   cv::Mat_< float > warpMatrix;
 
@@ -286,4 +287,25 @@ void _histEqBGR(Image& image, Image& target) {
     return cv::cvtColor(ycrcb, target.uimage, cv::COLOR_YCrCb2BGR);
 
   cv::cvtColor(ycrcb, target.image, cv::COLOR_YCrCb2BGR);
+}
+
+void _grabCut(Image& image, Image& mask, Rcpp::NumericVector rect, Image& bgdModel,
+              Image& fgdModel, int iterCount, int mode) {
+  cv::Rect r;
+  r.x = rect(0) - 1;
+  r.y = -(rect(1) + rect(3)) + image.nrow();
+  r.width = rect(2);
+  r.height = rect(3);
+
+  if (image.GPU) {
+    if (!mask.GPU | !bgdModel.GPU | !fgdModel.GPU)
+      Rcpp::stop("'image' is on the GPU. 'mask', 'bgdModel', and 'fgdModel' should be as well.");
+
+    cv::grabCut(image.uimage, mask.uimage, r, bgdModel.uimage, fgdModel.uimage, iterCount, mode);
+  } else {
+    if (mask.GPU | bgdModel.GPU | fgdModel.GPU)
+      Rcpp::stop("'image' is on the CPU. 'mask', 'bgdModel', and 'fgdModel' should be as well.");
+
+    cv::grabCut(image.image, mask.image, r, bgdModel.image, fgdModel.image, iterCount, mode);
+  }
 }

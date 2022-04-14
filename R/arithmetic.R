@@ -158,7 +158,7 @@ addWeighted <- function(e1, e2, weight = c(0.5, 0.5), target = "new") {
   } else if (target == "self") {
     `_addWeighted`(e1, weight[1], e2, weight[2], e1)
   } else if (target == "new") {
-    out <- `_cloneImage`(e1)
+    out <- cloneImage(e1)
     `_addWeighted`(e1, weight[1], e2, weight[2], out)
     out
   } else {

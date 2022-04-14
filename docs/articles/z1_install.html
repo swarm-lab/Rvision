@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -47,16 +49,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -88,7 +84,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/swarm-lab/Rvision/">
+  <a href="https://github.com/swarm-lab/Rvision/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -109,52 +105,63 @@
 
       
 
-      </header><script src="z1_install_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>1 - Installing Rvision</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/master/vignettes/z1_install.Rmd"><code>vignettes/z1_install.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/HEAD/vignettes/z1_install.Rmd" class="external-link"><code>vignettes/z1_install.Rmd</code></a></small>
       <div class="hidden name"><code>z1_install.Rmd</code></div>
 
     </div>
 
     
     
-<div id="before-installing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#before-installing" class="anchor"></a>1.1 - Before installing</h2>
-<div id="devtools" class="section level3">
-<h3 class="hasAnchor">
-<a href="#devtools" class="anchor"></a>1.1.1 - Devtools</h3>
-<p>Before installing <code>Rvision</code>, you will need to install the latest version of the <a href="https://CRAN.R-project.org/package=devtools"><code>devtools</code></a> package. You can install <code>devtools</code> from <a href="https://cran.r-project.org"><code>CRAN</code></a> as follows:</p>
+<div class="section level2">
+<h2 id="before-installing">1.1 - Before installing<a class="anchor" aria-label="anchor" href="#before-installing"></a>
+</h2>
+<div class="section level3">
+<h3 id="devtools">1.1.1 - Devtools<a class="anchor" aria-label="anchor" href="#devtools"></a>
+</h3>
+<p>Before installing <code>Rvision</code>, you will need to install the
+latest version of the <a href="https://CRAN.R-project.org/package=devtools" class="external-link"><code>devtools</code></a>
+package. You can install <code>devtools</code> from <a href="https://cran.r-project.org" class="external-link"><code>CRAN</code></a> as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="ropencvlite" class="section level3">
-<h3 class="hasAnchor">
-<a href="#ropencvlite" class="anchor"></a>1.1.2 - ROpenCVLite</h3>
-<p>You will also need to install the <a href="https://github.com/swarm-lab/ROpenCVLite"><code>ROpenCVLite</code></a> package. Installation instructions for <code>ROpenCVLite</code> can be found at <a href="https://swarm-lab.github.io/ROpenCVLite/articles/install.html" class="uri">https://swarm-lab.github.io/ROpenCVLite/articles/install.html</a>.</p>
-<p>This step may take some time as it will download, compile and install <a href="https://opencv.org"><code>OpenCV</code></a> for you. I suggest you go out for a cup of tea or coffee while <code>ROpenCVLite</code> is being installed (compilation time will depend on your computer).</p>
-<p>Note that you can skip this step and <code>Rvision</code> will attempt to install it in the next step. However it might fail if your system is missing one of the external dependencies required by <code>ROpenCVLite</code>.</p>
+<div class="section level3">
+<h3 id="ropencvlite">1.1.2 - ROpenCVLite<a class="anchor" aria-label="anchor" href="#ropencvlite"></a>
+</h3>
+<p>You will also need to install the <a href="https://github.com/swarm-lab/ROpenCVLite" class="external-link"><code>ROpenCVLite</code></a>
+package. Installation instructions for <code>ROpenCVLite</code> can be
+found at <a href="https://swarm-lab.github.io/ROpenCVLite/articles/install.html" class="uri">https://swarm-lab.github.io/ROpenCVLite/articles/install.html</a>.</p>
+<p>This step may take some time as it will download, compile and install
+<a href="https://opencv.org" class="external-link"><code>OpenCV</code></a> for you. I suggest
+you go out for a cup of tea or coffee while <code>ROpenCVLite</code> is
+being installed (compilation time will depend on your computer).</p>
+<p>Note that you can skip this step and <code>Rvision</code> will
+attempt to install it in the next step. However it might fail if your
+system is missing one of the external dependencies required by
+<code>ROpenCVLite</code>.</p>
 <hr>
 </div>
 </div>
-<div id="installing-rvision" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installing-rvision" class="anchor"></a>1.2 - Installing Rvision</h2>
-<p>You can install the latest development version of <code>Rvision</code> as follows:</p>
+<div class="section level2">
+<h2 id="installing-rvision">1.2 - Installing Rvision<a class="anchor" aria-label="anchor" href="#installing-rvision"></a>
+</h2>
+<p>You can install the latest development version of
+<code>Rvision</code> as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"swarm-lab/Rvision"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"swarm-lab/Rvision"</span><span class="op">)</span></code></pre></div>
 <hr>
 </div>
-<div id="loading-rvision" class="section level2">
-<h2 class="hasAnchor">
-<a href="#loading-rvision" class="anchor"></a>1.3 - Loading Rvision</h2>
+<div class="section level2">
+<h2 id="loading-rvision">1.3 - Loading Rvision<a class="anchor" aria-label="anchor" href="#loading-rvision"></a>
+</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://swarm-lab.github.io/Rvision/">Rvision</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://swarm-lab.github.io/Rvision/" class="external-link">Rvision</a></span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
@@ -169,11 +176,15 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://www.theswarmlab.com">Simon Garnier</a>.</p>
+  <p></p>
+<p>Developed by <a href="http://www.theswarmlab.com" class="external-link">Simon
+Garnier</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>

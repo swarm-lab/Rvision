@@ -7,6 +7,7 @@
 findTransformECC(
   template,
   image,
+  warp_matrix = NULL,
   warp_mode = "affine",
   max_it = 200,
   epsilon = 0.001,
@@ -18,6 +19,11 @@ findTransformECC(
 
 \item{image}{A grayscale \code{\link{Image}} object of the same dimensions as
 \code{template}.}
+
+\item{warp_matrix}{An initial mapping (warp) matrix. It must be a 3x3 matrix
+when \code{warp_mode} is set to "homography", a 2x3 matrix otherwise. If set
+to \code{NULL} (the default), it will be automatically initialized as an
+identity matrix with the appropriate dimensions.}
 
 \item{warp_mode}{A character string indicating the type of warping required
 to transform \code{image} into \code{template}. It can be any of the following:

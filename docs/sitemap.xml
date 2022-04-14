@@ -1,459 +1,540 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//index.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/404.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Image-class.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/LUT.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Queue-class.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/README.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Rvision.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/1_install.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/RvisionAck.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/2_io.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Stream-class.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/3_basic.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/Video-class.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/basic.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/VideoWriter-class.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/adaptiveThreshold.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/install.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/addWeighted.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/io.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/api.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/old/rsconnect/documents/Rvision-vignette.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/as.array.Rcpp_Image.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/z1_install.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/bilateralFilter.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/z2_io.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/bitdepth.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/z3_basic.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/blur.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/z4_inplace.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/border.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/z5_gpu.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/boxFilter.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/articles/z6_queue.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/canny.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/authors.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/capacity.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/index.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/cc_table.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/news/index.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/changeBitDepth.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/changeColorSpace.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/LUT.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/click.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/Queue-class.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/cloneImage.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/Rvision.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/codec.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/RvisionAck.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/col2bgr.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/Stream-class.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/colorspace.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/Video-class.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/compare.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/VideoWriter-class.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/computeECC.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/absdiff.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/connectedComponents.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/adaptiveThreshold.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/contourArea.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/addWeighted.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/convexHull.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/api.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/convexityDefects.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/as.array.Rcpp_Image.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/countNonZero.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/autothreshold.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/destroyDisplay.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/bilateralFilter.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/dim.Rcpp_Image.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/bitdepth.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/dim.Rcpp_Queue.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/blur.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/dim.Rcpp_Stream.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/border.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/dim.Rcpp_Video.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/boxFilter.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/dim.Rcpp_VideoWriter.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/canny.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/display.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/capacity.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/distanceTransform.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/cc_table.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/drawArrow.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/changeBitDepth.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/drawCircle.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/changeColorSpace.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/drawEllipse.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/click.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/drawLine.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/cloneImage.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/drawPolyline.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/codec.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/drawRectangle.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/col2bgr.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/drawRotatedRectangle.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/colorspace.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/drawText.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/compare.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/farneback.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/computeECC.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/fillConvexPoly.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/connectedComponents.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/fillPoly.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/contourArea.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/filter2D.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/convexHull.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/findContours.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/convexityDefects.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/findNonZero.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/countNonZero.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/findTransformECC.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/destroyDisplay.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/findTransformORB.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/dim.Rcpp_Image.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/fitEllipse.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/dim.Rcpp_Queue.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/flip.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/dim.Rcpp_Stream.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/floodFill.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/dim.Rcpp_Video.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/fourcc.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/dim.Rcpp_VideoWriter.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/fps.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/display.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/frame.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/distanceTransform.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/full.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/drawArrow.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/gaussianBlur.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/drawCircle.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/getPerspectiveTransform.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/drawEllipse.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/getTextSize.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/drawLine.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/histEq.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/drawPolyline.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/histmatch.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/drawRectangle.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/image.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/drawRotatedRectangle.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/imageArithmetic.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/drawText.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/imageLogic.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/extractChannel.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/imageMinMax.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/farneback.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/imhist.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/fillConvexPoly.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/inPlaceArithmetic.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/fillPoly.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/inPlaceComparison.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/filter2D.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/inPlaceLogical.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/findContours.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/inRange.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/findNonZero.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/inpaint.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/findTransformECC.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/invert.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/findTransformORB.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/isBlob.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/fitEllipse.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/isImage.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/flip.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/isQueue.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/floodFill.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/isStream.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/fourcc.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/isVideo.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/fps.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/isVideoWriter.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/frame.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/laplacian.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/full.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/matchTemplate.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/gaussianBlur.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/mean.Rcpp_Image.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/getPerspectiveTransform.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/mean.list.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/getRotationMatrix2D.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/medianBlur.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/getTextSize.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/merge.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/histEq.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/min.Rcpp_Image.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/histmatch.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/minAreaRect.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/houghCircles.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/minMaxLoc.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/image.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/moments.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/imageArithmetic.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/morph.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/imageLogic.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/newDisplay.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/imageMinMax.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/nrow.Rcpp_Image.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/imhist.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/ones.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/inPlaceArithmetic.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/pget.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/inPlaceComparison.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/pixelsInContour.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/inPlaceLogical.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plot.Image.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/inRange.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plot.blob.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/plotOF.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/inpaint.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/pset.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/insertChannel.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/queue.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/invert.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/queue_dimensions.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/isBlob.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/randn.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/isImage.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/randu.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/isQueue.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/readFrame.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/isStream.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/readMulti.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/isVideo.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/readNext.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/isVideoWriter.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/release.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/laplacian.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/reset.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/matchTemplate.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/resize.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/mean.Rcpp_Image.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/rotateScale.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/mean.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/scharr.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/mean.list.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/selectROI.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/medianBlur.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/sepFilter2D.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/merge.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/setProp.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/min.Rcpp_Image.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/setTo.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/minAreaRect.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/simpleBlobDetector.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/minMaxLoc.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/sobel.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/moments.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/spatialGradient.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/morph.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/split.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/newDisplay.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/sqrBoxFilter.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/nrow.Rcpp_Image.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/stream.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/ones.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/stream_dimensions.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/pget.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/sub-.Rcpp_Image.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/pixelsInContour.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/subImage.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/plot.Image.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/sum.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/plot.OF_array.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/timelapse.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/plot.blob.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/video.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/plotOF.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/videoWriter.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/pset.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/video_dimensions.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/queue.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/videowriter_dimensions.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/queue_dimensions.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/warpAffine.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/randn.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/warpPerspective.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/randu.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/watershed.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/readFrame.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/write.Image.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/readHIS.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/writeFrame.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/readMulti.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/writerOuput.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/readNext.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//reference/zeros.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/readStream.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//articles/z1_install.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/release.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//articles/z2_io.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/reset.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//articles/z3_basic.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/resize.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//articles/z4_inplace.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/rotateScale.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//articles/z5_gpu.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/scharr.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/ROpenCVLite//articles/z6_queue.html</loc>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/selectROI.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/sepFilter2D.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/setProp.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/setTo.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/simpleBlobDetector.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/sobel.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/spatialGradient.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/split.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/sqrBoxFilter.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/stream.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/stream_dimensions.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/sub-.Rcpp_Image.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/subImage.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/sum.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/threshold.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/timelapse.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/video.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/videoWriter.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/video_dimensions.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/videowriter_dimensions.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/warpAffine.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/warpPerspective.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/watershed.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/write.Image.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/writeFrame.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/writeMulti.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/writerOuput.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/zeros.html</loc>
   </url>
 </urlset>

@@ -80,7 +80,7 @@ changeColorSpace <- function(image, colorspace, target = "new", in_place = NULL)
   } else if (target == "self") {
     `_changeColorSpace`(image, colorspace, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_changeColorSpace`(image, colorspace, out)
     out
   } else {
@@ -162,7 +162,7 @@ changeBitDepth <- function(image, bitdepth, scale = 1, target = "new", in_place 
   } else if (target == "self") {
     `_changeBitDepth`(image, bitdepth, scale, image)
   } else if (target == "new") {
-    out <- `_cloneImage`(image)
+    out <- cloneImage(image)
     `_changeBitDepth`(image, bitdepth, scale, out)
     out
   } else {

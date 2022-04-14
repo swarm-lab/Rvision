@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -47,16 +49,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -88,7 +84,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/swarm-lab/Rvision/">
+  <a href="https://github.com/swarm-lab/Rvision/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -109,129 +105,169 @@
 
       
 
-      </header><script src="z2_io_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>2 - Input/output operations</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/master/vignettes/z2_io.Rmd"><code>vignettes/z2_io.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/HEAD/vignettes/z2_io.Rmd" class="external-link"><code>vignettes/z2_io.Rmd</code></a></small>
       <div class="hidden name"><code>z2_io.Rmd</code></div>
 
     </div>
 
     
     
-<div id="creating-video-streams" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-video-streams" class="anchor"></a>2.1 - Creating video streams</h2>
-<p><code>Video</code> stream objects are created from video files by passing the path to a video file to the <code><a href="../reference/video.html">video()</a></code> function. For instance:</p>
+<div class="section level2">
+<h2 id="creating-video-streams">2.1 - Creating video streams<a class="anchor" aria-label="anchor" href="#creating-video-streams"></a>
+</h2>
+<p><code>Video</code> stream objects are created from video files by
+passing the path to a video file to the <code><a href="../reference/video.html">video()</a></code> function.
+For instance:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span>
-<span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+<span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
 
 <span class="co"># Open the video file stream</span>
 <span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span></code></pre></div>
-<p>Once a <code>Video</code> object is not required anymore, it can be released from memory as follows:</p>
+<p>Once a <code>Video</code> object is not required anymore, it can be
+released from memory as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Queue.html">release</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span></code></pre></div>
-<p>Note that <code>Video</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html"><code>VideoCapture</code></a> pointers. They will not persist between <code>R</code> sessions.</p>
+<code class="sourceCode R"><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span></code></pre></div>
+<p>Note that <code>Video</code> objects are wrappers around
+<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html" class="external-link"><code>VideoCapture</code></a>
+pointers. They will not persist between <code>R</code> sessions.</p>
 <hr>
 </div>
-<div id="creating-camera-streams" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-camera-streams" class="anchor"></a>2.2 - Creating camera streams</h2>
-<p>Camera <code>Stream</code> objects are created by starting a camera stream (e.g. from a webcam) using the <code><a href="../reference/stream.html">stream()</a></code> function. For instance:</p>
+<div class="section level2">
+<h2 id="creating-camera-streams">2.2 - Creating camera streams<a class="anchor" aria-label="anchor" href="#creating-camera-streams"></a>
+</h2>
+<p>Camera <code>Stream</code> objects are created by starting a camera
+stream (e.g. from a webcam) using the <code><a href="../reference/stream.html">stream()</a></code> function.
+For instance:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Start the default camera stream</span>
 <span class="va">my_stream</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stream.html">stream</a></span><span class="op">(</span>index <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
-<p>The index argument takes an integer number corresponding to the position of the camera in the list of video capturing devices available on your computer. 0 corresponds to the default camera, which is usually the embedded webcam on most computers. Note that the order of the list of video capturing devices might change after each computer restart, or if cameras are connected/disconnected during a session.</p>
-<p>Once a <code>Stream</code> object is not required anymore, it can be released from memory as follows:</p>
+<p>The index argument takes an integer number corresponding to the
+position of the camera in the list of video capturing devices available
+on your computer. 0 corresponds to the default camera, which is usually
+the embedded webcam on most computers. Note that the order of the list
+of video capturing devices might change after each computer restart, or
+if cameras are connected/disconnected during a session.</p>
+<p>Once a <code>Stream</code> object is not required anymore, it can be
+released from memory as follows:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Queue.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
-<p>Note that <code>Stream</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html"><code>VideoCapture</code></a> pointers. They will not persist between <code>R</code> sessions.</p>
+<code class="sourceCode R"><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
+<p>Note that <code>Stream</code> objects are wrappers around
+<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html" class="external-link"><code>VideoCapture</code></a>
+pointers. They will not persist between <code>R</code> sessions.</p>
 <hr>
 </div>
-<div id="creating-images" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-images" class="anchor"></a>2.3 - Creating images</h2>
-<p>There are multiple ways to create <code>Image</code> objects: from files, from <code>Video</code> objects, from <code>Stream</code> objects, and from <code>R</code> arrays.</p>
-<p>Note that <code>Image</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d3/d63/classcv_1_1Mat.html"><code>Mat</code></a> and <a href="https://docs.opencv.org/4.5.0/d7/d45/classcv_1_1UMat.html"><code>UMat</code></a> objects. They will not persist between <code>R</code> sessions.</p>
-<div id="images-from-files" class="section level3">
-<h3 class="hasAnchor">
-<a href="#images-from-files" class="anchor"></a>2.3.1 - Images from files</h3>
-<p><code>Image</code> objects are created from image files by passing the path to an image file to the <code><a href="../reference/image.html">image()</a></code> function. For instance:</p>
+<div class="section level2">
+<h2 id="creating-images">2.3 - Creating images<a class="anchor" aria-label="anchor" href="#creating-images"></a>
+</h2>
+<p>There are multiple ways to create <code>Image</code> objects: from
+files, from <code>Video</code> objects, from <code>Stream</code>
+objects, and from <code>R</code> arrays.</p>
+<p>Note that <code>Image</code> objects are wrappers around
+<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d3/d63/classcv_1_1Mat.html" class="external-link"><code>Mat</code></a>
+and <a href="https://docs.opencv.org/4.5.0/d7/d45/classcv_1_1UMat.html" class="external-link"><code>UMat</code></a>
+objects. They will not persist between <code>R</code> sessions.</p>
+<div class="section level3">
+<h3 id="images-from-files">2.3.1 - Images from files<a class="anchor" aria-label="anchor" href="#images-from-files"></a>
+</h3>
+<p><code>Image</code> objects are created from image files by passing
+the path to an image file to the <code><a href="../reference/image.html">image()</a></code> function. For
+instance:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Find the path to the bunny.png image provided with Rvision</span>
-<span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
+<span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
 
 <span class="co"># Load the image in memory</span>
 <span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="images-from-video-streams" class="section level3">
-<h3 class="hasAnchor">
-<a href="#images-from-video-streams" class="anchor"></a>2.3.2 - Images from video streams</h3>
-<p><code>Image</code> objects are created from video streams by capturing frames from them with the <code><a href="../reference/readNext.Rcpp_Queue.html">readNext()</a></code> and <code><a href="../reference/readFrame.html">readFrame()</a></code> functions. For instance:</p>
+<div class="section level3">
+<h3 id="images-from-video-streams">2.3.2 - Images from video streams<a class="anchor" aria-label="anchor" href="#images-from-video-streams"></a>
+</h3>
+<p><code>Image</code> objects are created from video streams by
+capturing frames from them with the <code><a href="../reference/readNext.html">readNext()</a></code> and
+<code><a href="../reference/readFrame.html">readFrame()</a></code> functions. For instance:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Capture the next available frame from the my_video object created earlier</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.Rcpp_Queue.html">readNext</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span>
+<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span>
 
 <span class="co"># Capture frame 100 from the my_video object created earlier</span>
 <span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">my_video</span>, <span class="fl">100</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="images-from-camera-streams" class="section level3">
-<h3 class="hasAnchor">
-<a href="#images-from-camera-streams" class="anchor"></a>2.3.3 - Images from camera streams</h3>
-<p><code>Image</code> objects are created from video streams by capturing frames from them with the <code><a href="../reference/readNext.Rcpp_Queue.html">readNext()</a></code> function. For instance:</p>
+<div class="section level3">
+<h3 id="images-from-camera-streams">2.3.3 - Images from camera streams<a class="anchor" aria-label="anchor" href="#images-from-camera-streams"></a>
+</h3>
+<p><code>Image</code> objects are created from video streams by
+capturing frames from them with the <code><a href="../reference/readNext.html">readNext()</a></code> function.
+For instance:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Capture the next available frame from the my_stream object created earlier</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.Rcpp_Queue.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
+<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="images-from-r-arrays" class="section level3">
-<h3 class="hasAnchor">
-<a href="#images-from-r-arrays" class="anchor"></a>2.3.4 - Images from R arrays</h3>
-<p><code>Image</code> objects are created from <code>R</code> arrays files by passing the array directly to the <code><a href="../reference/image.html">image()</a></code> function. For instance:</p>
+<div class="section level3">
+<h3 id="images-from-r-arrays">2.3.4 - Images from R arrays<a class="anchor" aria-label="anchor" href="#images-from-r-arrays"></a>
+</h3>
+<p><code>Image</code> objects are created from <code>R</code> arrays
+files by passing the array directly to the <code><a href="../reference/image.html">image()</a></code>
+function. For instance:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create a 100 x 100 x 3 random array</span>
-<span class="va">my_array</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">30000</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
+<span class="va">my_array</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">30000</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Load the image in memory</span>
 <span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span><span class="va">my_array</span><span class="op">)</span></code></pre></div>
 <hr>
 </div>
 </div>
-<div id="writing-video-streams-to-file" class="section level2">
-<h2 class="hasAnchor">
-<a href="#writing-video-streams-to-file" class="anchor"></a>2.4 - Writing video streams to file</h2>
-<p>Videos can be written to files using <code>VideoWriter</code> objects. When creating a <code>VideoWriter</code> object, the dimensions, frame rate, and codec of the final video file must be specified. For instance:</p>
+<div class="section level2">
+<h2 id="writing-video-streams-to-file">2.4 - Writing video streams to file<a class="anchor" aria-label="anchor" href="#writing-video-streams-to-file"></a>
+</h2>
+<p>Videos can be written to files using <code>VideoWriter</code>
+objects. When creating a <code>VideoWriter</code> object, the
+dimensions, frame rate, and codec of the final video file must be
+specified. For instance:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create a 1280x720 video file called file.mp4 on the desktop, using the x264</span>
 <span class="co"># codec at 30 frames per second</span>
 <span class="va">my_writer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/videoWriter.html">videoWriter</a></span><span class="op">(</span><span class="st">"~/Desktop/file.mp4"</span>, fourcc <span class="op">=</span> <span class="st">"x264"</span>, fps <span class="op">=</span> <span class="fl">30</span>, 
                          height <span class="op">=</span> <span class="fl">720</span>, width <span class="op">=</span> <span class="fl">1280</span><span class="op">)</span></code></pre></div>
-<p>Once a <code>VideoWriter</code> object has been created, individual frames can be written to it sequentially. For instance:</p>
+<p>Once a <code>VideoWriter</code> object has been created, individual
+frames can be written to it sequentially. For instance:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Capture the next 30 frames from the my_stream camera stream created earlier </span>
 <span class="co"># and write them to file.mp4</span>
-<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/writeFrame.html">writeFrame</a></span><span class="op">(</span><span class="va">my_writer</span>, <span class="fu"><a href="../reference/readNext.Rcpp_Queue.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="../reference/writeFrame.html">writeFrame</a></span><span class="op">(</span><span class="va">my_writer</span>, <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
-<p>Once all frames have been written to the <code>VideoWriter</code> object, it can be closed and released from memory as follows:</p>
+<p>Once all frames have been written to the <code>VideoWriter</code>
+object, it can be closed and released from memory as follows:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/release.Rcpp_Queue.html">release</a></span><span class="op">(</span><span class="va">my_writer</span><span class="op">)</span></code></pre></div>
-<p>Note that if you do not close and release the <code>VideoWriter</code> object prior to exiting the <code>R</code> session, you will not be able to play it with your system’s video player.</p>
-<p>Note that <code>VideoWriter</code> objects are wrappers around <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/dd/d9e/classcv_1_1VideoWriter.html"><code>VideoWriter</code></a> pointers. They will not persist between <code>R</code> sessions.</p>
+<code class="sourceCode R"><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_writer</span><span class="op">)</span></code></pre></div>
+<p>Note that if you do not close and release the
+<code>VideoWriter</code> object prior to exiting the <code>R</code>
+session, you will not be able to play it with your system’s video
+player.</p>
+<p>Note that <code>VideoWriter</code> objects are wrappers around
+<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/dd/d9e/classcv_1_1VideoWriter.html" class="external-link"><code>VideoWriter</code></a>
+pointers. They will not persist between <code>R</code> sessions.</p>
 <hr>
 </div>
-<div id="writing-images-to-file" class="section level2">
-<h2 class="hasAnchor">
-<a href="#writing-images-to-file" class="anchor"></a>2.4 - Writing images to file</h2>
-<p>Images can be written to files using the <code><a href="../reference/write.Image.html">write.Image()</a></code> function. For instance:</p>
+<div class="section level2">
+<h2 id="writing-images-to-file">2.4 - Writing images to file<a class="anchor" aria-label="anchor" href="#writing-images-to-file"></a>
+</h2>
+<p>Images can be written to files using the <code><a href="../reference/write.Image.html">write.Image()</a></code>
+function. For instance:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Write the my_image object created earlier to a PNG file called file.png on the</span>
 <span class="co"># desktop</span>
 <span class="fu"><a href="../reference/write.Image.html">write.Image</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="st">"~/Desktop/file.png"</span><span class="op">)</span></code></pre></div>
-<p><code>Rvision</code> will guess the format of the image file from the file extension. Most common file formats are supported.</p>
+<p><code>Rvision</code> will guess the format of the image file from the
+file extension. Most common file formats are supported.</p>
 </div>
   </div>
 
@@ -246,11 +282,15 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://www.theswarmlab.com">Simon Garnier</a>.</p>
+  <p></p>
+<p>Developed by <a href="http://www.theswarmlab.com" class="external-link">Simon
+Garnier</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>

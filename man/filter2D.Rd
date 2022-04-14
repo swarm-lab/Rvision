@@ -50,7 +50,7 @@ balloon_edge <- filter2D(balloon, k_edge_detection)
 
 }
 \seealso{
-\code{\link{Image}}, \code{\link{split}}, \code{\link{merge}}
+\code{\link{Image}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}
