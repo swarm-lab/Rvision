@@ -23,7 +23,7 @@ Rcpp::NumericMatrix _houghCircles(Image& image, int method, double dp, double mi
   Rcpp::NumericMatrix out = Rcpp::NumericMatrix(circles.size(), 5);
   colnames(out) = Rcpp::CharacterVector::create("id", "x", "y", "radius", "votes");
 
-  for (int i = 0; i < circles.size(); i++) {
+  for (uint i = 0; i < circles.size(); i++) {
     out(i, 0) = i;
     out(i, 1) = circles[i][0] + 1;
     out(i, 2) = -circles[i][1] + image.nrow();
