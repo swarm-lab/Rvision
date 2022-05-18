@@ -1,3 +1,15 @@
+# Rvision 0.6.1
+
+## New features
+
+* N/A.
+
+## Minor improvements and fixes
+
+* Compatible with new RTools 4.2 toolchain.
+
+---
+
 # Rvision 0.6.0
 
 ## New features
