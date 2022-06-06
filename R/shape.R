@@ -357,8 +357,8 @@ watershed <- function(image, markers) {
 #'  }
 #'
 #' @return A list containing the height and width (in pixels) of the ellipse,
-#'  the angle (in degrees) of its main axis with respect to the x axis, and the
-#'  x and y coordinates of its center.
+#'  the angle (in degrees) of its main axis with respect to the vertical axis,
+#'  and the x and y coordinates of its center.
 #'
 #' @references Taubin G. Estimation of planar curves, surfaces, and nonplanar
 #'  space curves defined by implicit equations with applications to edge and
