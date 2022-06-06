@@ -630,3 +630,37 @@ pixelsInContour <- function(contours, id = NULL) {
   )
 }
 
+#' @title Calculate a Contour Perimeter or a Curve Length
+#'
+#' @description \code{arcLength} estimates a closed contour perimeter or a curve
+#'  length from a set of 2D coordinates.
+#'
+#' @param curve An m x 2 matrix of 2D coordinates.
+#'
+#' @param closed A boolean indicating whether the curve is closed (perimeter) or
+#'  not (default: TRUE).
+#'
+#' @return A numerical value.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{findContours}}
+#'
+#' @examples
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_gray <- changeColorSpace(dots, "GRAY")
+#' dots_bin <- dots_gray < 200
+#' contours <- findContours(dots_bin)
+#' ix <- contours$contours[, 1] == 0
+#' arcLength(contours$contours[ix, 2:3])
+#'
+#' @export
+arcLength <- function(curve, closed = TRUE) {
+  if (!is.matrix(curve))
+    stop("curve must be a m x 2 matrix.")
+
+  if (ncol(curve) != 2)
+    stop("curve must be a m x 2 matrix.")
+
+  `_arcLength`(curve, closed)
+}
