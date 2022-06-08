@@ -330,6 +330,7 @@ RCPP_MODULE(methods_Shape) {
   function("_convexityDefects", &_convexityDefects, List::create(_["contour"], _["convexHull"]), "");
   function("_moments", &_moments, List::create(_["contour"]), "");
   function("_minAreaRect", &_minAreaRect, List::create(_["points"]), "");
+  function("_arcLength", &_arcLength, List::create(_["curve"], _["closed"]), "");
 }
 
 #include "transform.h"

@@ -321,3 +321,14 @@ Rcpp::List _minAreaRect(arma::Mat< float > points) {
                             Rcpp::Named("width") = box.size.width,
                             Rcpp::Named("center") = Rcpp::NumericVector::create(box.center.x, box.center.y));
 }
+
+double _arcLength(Rcpp::NumericMatrix curve, bool closed) {
+  std::vector< cv::Point > contourpoints(curve.nrow());
+
+  for (int i = 0; i < curve.nrow(); i++) {
+    contourpoints[i].x = curve(i, 0);
+    contourpoints[i].y = curve(i, 1);
+  }
+
+  return cv::arcLength(contourpoints, closed);
+}

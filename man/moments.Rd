@@ -15,7 +15,7 @@ for which to run the function.}
 \value{
 A data frame with 3 columns:
  \itemize{
-   \item{"id": }{the contour identity (indicates the set of points belonging
+   \item{"id": }{the contour identity (indicates the set of moments belonging
     to the same contour).}
    \item{"moment": }{the name of the moment. See Note below.}
    \item{"value": }{the value of the moment.}
@@ -26,16 +26,16 @@ A data frame with 3 columns:
  order of a polygon or rasterized shape.
 }
 \note{
-The spatial moments \eqn{\texttt{m} _{ji}} are computed as:
- \deqn{\texttt{m} _{ji}= \sum _{x,y} \left ( \texttt{contour} (x,y) \cdot x^j \cdot y^i \right )}
+The spatial moments \eqn{m_{ji}} are computed as:
+ \deqn{m_{ji}= \sum _{x,y} \left ( \texttt{contour} (x,y) \cdot x^j \cdot y^i \right )}
 
-The central moments \eqn{mu_ij} are computed as:
- \deqn{\texttt{mu} _{ji}= \sum _{x,y} \left ( \texttt{contour} (x,y) \cdot (x - \bar{x} )^j \cdot (y - \bar{y} )^i \right )}
+The central moments \eqn{\mu_{ji}} are computed as:
+ \deqn{{\mu_{ji}}= \sum _{x,y} \left ( \texttt{contour} (x,y) \cdot (x - \bar{x} )^j \cdot (y - \bar{y} )^i \right )}
 where \eqn{(\bar{x}, \bar{y})} is the mass center:
- \deqn{\bar{x} = \frac{\texttt{m}_{10}}{\texttt{m}_{00}} , \; \bar{y} = \frac{\texttt{m}_{01}}{\texttt{m}_{00}}}
+ \deqn{\bar{x} = \frac{m_{10}}{m_{00}} , \; \bar{y} = \frac{m_{01}}{m_{00}}}
 
-The normalized central moments moments \eqn{nu_ij} are computed as:
- \deqn{\texttt{nu} _{ji}= \frac{\texttt{mu}_{ji}}{\texttt{m}_{00}^{(i+j)/2+1}} .}
+The normalized central moments \eqn{\eta_{ji}} are computed as:
+ \deqn{\eta_{ji}= \frac{\mu_{ji}}{m_{00}^{(i+j)/2+1}} .}
 }
 \examples{
 dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
@@ -46,7 +46,7 @@ moments(contours, id = c(3, 5))
 
 }
 \seealso{
-\code{\link{findContours}}
+\code{\link{findContours}}, \code{\link{huInvariants}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}
