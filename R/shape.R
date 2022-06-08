@@ -523,26 +523,26 @@ convexityDefects <- function(contours, id = NULL) {
 #'
 #' @return A data frame with 3 columns:
 #'  \itemize{
-#'    \item{"id": }{the contour identity (indicates the set of points belonging
+#'    \item{"id": }{the contour identity (indicates the set of moments belonging
 #'     to the same contour).}
 #'    \item{"moment": }{the name of the moment. See Note below.}
 #'    \item{"value": }{the value of the moment.}
 #' }
 #'
-#' @note The spatial moments \eqn{\texttt{m} _{ji}} are computed as:
-#'  \deqn{\texttt{m} _{ji}= \sum _{x,y} \left ( \texttt{contour} (x,y) \cdot x^j \cdot y^i \right )}
+#' @note The spatial moments \eqn{m_{ji}} are computed as:
+#'  \deqn{m_{ji}= \sum _{x,y} \left ( \texttt{contour} (x,y) \cdot x^j \cdot y^i \right )}
 #'
-#' @note The central moments \eqn{mu_ij} are computed as:
-#'  \deqn{\texttt{mu} _{ji}= \sum _{x,y} \left ( \texttt{contour} (x,y) \cdot (x - \bar{x} )^j \cdot (y - \bar{y} )^i \right )}
+#' @note The central moments \eqn{\mu_{ji}} are computed as:
+#'  \deqn{{\mu_{ji}}= \sum _{x,y} \left ( \texttt{contour} (x,y) \cdot (x - \bar{x} )^j \cdot (y - \bar{y} )^i \right )}
 #' where \eqn{(\bar{x}, \bar{y})} is the mass center:
-#'  \deqn{\bar{x} = \frac{\texttt{m}_{10}}{\texttt{m}_{00}} , \; \bar{y} = \frac{\texttt{m}_{01}}{\texttt{m}_{00}}}
+#'  \deqn{\bar{x} = \frac{m_{10}}{m_{00}} , \; \bar{y} = \frac{m_{01}}{m_{00}}}
 #'
-#' @note The normalized central moments moments \eqn{nu_ij} are computed as:
-#'  \deqn{\texttt{nu} _{ji}= \frac{\texttt{mu}_{ji}}{\texttt{m}_{00}^{(i+j)/2+1}} .}
+#' @note The normalized central moments \eqn{\eta_{ji}} are computed as:
+#'  \deqn{\eta_{ji}= \frac{\mu_{ji}}{m_{00}^{(i+j)/2+1}} .}
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{findContours}}
+#' @seealso \code{\link{findContours}}, \code{\link{huInvariants}}
 #'
 #' @examples
 #' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
@@ -554,7 +554,7 @@ convexityDefects <- function(contours, id = NULL) {
 #' @export
 moments <- function(contours, id = NULL) {
   if (!all(names(contours) == c("contours", "hierarchy")))
-    stop("contours must be a list of two data frames as produced by `findContours`.")
+    stop("contours must be a list of two matrices as produced by `findContours`.")
 
   if (!is.null(id))
     contours$contours <- contours$contours[contours$contours[, 1] %in% id, ]
@@ -569,6 +569,88 @@ moments <- function(contours, id = NULL) {
                                 "mu12", "mu03", "nu20", "nu11", "nu02", "nu30", "nu21",
                                 "nu12", "nu03"),
                      value = `_moments`(contour))
+                 })
+  )
+}
+
+
+#' @title Calculate Seven Hu Invariants
+#'
+#' @description \code{huInvariants} calculates seven Hu invariants from the
+#'  moments of a polygon or rasterized shape.
+#'
+#' @param moments A data frame as produced by \code{\link{moments}}.
+#'
+#' @param id An optional vector indicating the identity of the specific contours
+#'  for which to run the function.
+#'
+#' @return A data frame with 3 columns:
+#'  \itemize{
+#'    \item{"id": }{the contour identity (indicates the set of invariants belonging
+#'     to the same contour).}
+#'    \item{"invariant": }{the name of the invariant See Note below.}
+#'    \item{"value": }{the value of the invariant.}
+#' }
+#'
+#' @note The Hu invariants are defined as:
+#'  \itemize{
+#'    \item{\eqn{\texttt{Hu1}= \eta _{20}+ \eta _{02}}}
+#'    \item{\eqn{\texttt{Hu2}= ( \eta _{20}- \eta _{02})^{2}+4 \eta _{11}^{2}}}
+#'    \item{\eqn{\texttt{Hu3}= ( \eta _{30}-3 \eta _{12})^{2}+ (3 \eta _{21}- \eta _{03})^{2}}}
+#'    \item{\eqn{\texttt{Hu4}= ( \eta _{30}+ \eta _{12})^{2}+ ( \eta _{21}+ \eta _{03})^{2}}}
+#'    \item{\eqn{\texttt{Hu5}= ( \eta _{30}-3 \eta _{12})( \eta _{30}+ \eta _{12})[( \eta _{30}+ \eta _{12})^{2}-3( \eta _{21}+ \eta _{03})^{2}]+(3 \eta _{21}- \eta _{03})( \eta _{21}+ \eta _{03})[3( \eta _{30}+ \eta _{12})^{2}-( \eta _{21}+ \eta _{03})^{2}]}}
+#'    \item{\eqn{\texttt{Hu6}= ( \eta _{20}- \eta _{02})[( \eta _{30}+ \eta _{12})^{2}- ( \eta _{21}+ \eta _{03})^{2}]+4 \eta _{11}( \eta _{30}+ \eta _{12})( \eta _{21}+ \eta _{03})}}
+#'    \item{\eqn{\texttt{Hu7}= (3 \eta _{21}- \eta _{03})( \eta _{21}+ \eta _{03})[3( \eta _{30}+ \eta _{12})^{2}-( \eta _{21}+ \eta _{03})^{2}]-( \eta _{30}-3 \eta _{12})( \eta _{21}+ \eta _{03})[3( \eta _{30}+ \eta _{12})^{2}-( \eta _{21}+ \eta _{03})^{2}]}}
+#' }
+#'
+#'  where \eqn{\eta_{ji}} corresponds to the normalized central moments as
+#'  computed by \code{\link{moments}}.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{findContours}}, \code{\link{moments}}
+#'
+#' @examples
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_gray <- changeColorSpace(dots, "GRAY")
+#' dots_bin <- dots_gray < 200
+#' contours <- findContours(dots_bin)
+#' m <- moments(contours)
+#' huInvariants(m, id = c(3, 5))
+#'
+#' @export
+huInvariants <- function(moments, id = NULL) {
+  if (!all(names(moments) == c("id", "moment", "value")))
+    stop("moments must be a data frame as produced by `moments`.")
+
+  if (!is.null(id))
+    moments <- moments[moments[, 1] %in% id, ]
+
+  do.call(rbind,
+          lapply(split.data.frame(moments, moments[, 1]),
+                 function(m) {
+                   data.frame(
+                     id = rep(m[1, 1], 7),
+                     invariant = paste0("Hu", 1:7),
+                     value = c(
+                       m$value[18] + m$value[20],
+                       (m$value[18] - m$value[20]) ^ 2 + 4 * m$value[19] ^ 2,
+                       (m$value[21] - 3 * m$value[23]) ^ 2 + (3 * m$value[22] - m$value[24]) ^ 2,
+                       (m$value[21] + m$value[23]) ^ 2 + (m$value[22] + m$value[24]) ^ 2,
+                       (m$value[21] - 3 * m$value[23]) * (m$value[21] + m$value[23]) *
+                         ((m$value[21] + m$value[23]) ^ 2 - 3 * (m$value[22] + m$value[24]) ^ 2) +
+                         (3 * m$value[22] - m$value[24]) * (m$value[22] + m$value[24]) *
+                         (3 * (m$value[21] + m$value[23]) ^ 2 - (m$value[22] + m$value[24]) ^ 2),
+                       (m$value[18] - m$value[20]) *
+                         ((m$value[21] + m$value[23]) ^ 2 - (m$value[22] + m$value[24]) ^ 2) +
+                         4 * m$value[19] * (m$value[21] + m$value[23]) * (m$value[22] + m$value[24]),
+                       (3 * m$value[22] - m$value[24]) * (m$value[22] + m$value[24]) *
+                         (3 * (m$value[21] + m$value[23]) ^ 2 - (m$value[22] + m$value[24]) ^ 2) -
+                         (m$value[21] - 3 * m$value[23]) * (m$value[22] + m$value[24]) *
+                         (3 * (m$value[21] + m$value[23]) ^ 2 - (m$value[22] + m$value[24]) ^ 2)
+                     )
+                   )
+
                  })
   )
 }

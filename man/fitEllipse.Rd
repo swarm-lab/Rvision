@@ -22,8 +22,8 @@ the ellipse. It can take the following values:
 }
 \value{
 A list containing the height and width (in pixels) of the ellipse,
- the angle (in degrees) of its main axis with respect to the x axis, and the
- x and y coordinates of its center.
+ the angle (in degrees) of its main axis with respect to the vertical axis,
+ and the x and y coordinates of its center.
 }
 \description{
 \code{fitEllipse} calculates the ellipse that fits a set of 2D
