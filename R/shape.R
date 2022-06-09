@@ -640,6 +640,90 @@ huInvariants <- function(moments) {
 }
 
 
+#' @title Compare Two Shapes
+#'
+#' @description \code{matchShapes} computes the difference between two shapes
+#'  using the Hu invariants.
+#'
+#' @param x1 Either a Nx2 matrix of the X-Y coordinates of a polygon (e.g., a
+#'  contour produced by \code{\link{findContours}}), or a single-channel
+#'  \code{\link{Image}} object.
+#'
+#' @param x2 Either a Nx2 matrix of the X-Y coordinates of a polygon (e.g., a
+#'  contour produced by \code{\link{findContours}}), or a single-channel
+#'  \code{\link{Image}} object.
+#'
+#' @param method The comparison method to compute the difference between the two
+#'  shapes (see Notes; default: "I1").
+#'
+#' @return A numerical value.
+#'
+#' @note The available shape matching methods are defined as follows:
+#' \itemize{
+#'    \item{\eqn{I_1(A,B) = \sum _{i=1...7} \left | \frac{1}{m^A_i} - \frac{1}{m^B_i} \right |}}
+#'    \item{\eqn{I_2(A,B) = \sum _{i=1...7} \left | m^A_i - m^B_i \right |}}
+#'    \item{\eqn{I_3(A,B) = \max _{i=1...7} \frac{ \left| m^A_i - m^B_i \right| }{ \left| m^A_i \right| }}}
+#' }
+#'
+#' where
+#'
+#' \itemize{
+#'    \item{\eqn{A} denotes x1, \eqn{B} denotes x2.}
+#'    \item{\eqn{m^A_i = \mathrm{sign} (h^A_i) \cdot \log{h^A_i}}}
+#'    \item{\eqn{m^B_i = \mathrm{sign} (h^B_i) \cdot \log{h^B_i}}}
+#'    \item{and \eqn{h^A_i, h^B_i} are the Hu invariants of \eqn{A} and \eqn{B}, respectively.}
+#' }
+#'
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{findContours}}, \code{\link{huInvariants}}
+#'
+#' @examples
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_gray <- changeColorSpace(dots, "GRAY")
+#' dots_bin <- dots_gray < 200
+#' contours <- findContours(dots_bin)
+#' contour0 <- contours$contours[contours$contours[, 1] == 0, 2:3]
+#' contour1 <- contours$contours[contours$contours[, 1] == 1, 2:3]
+#' matchShapes(contour0, contour1)
+#'
+#' @export
+matchShapes <- function(x1, x2, method = "I1") {
+  if (isImage(x1)) {
+    if (!isImage(x2))
+      stop("x2 must be an image.")
+
+    if (nchan(x1) != 1 | nchan(x2) != 1)
+      stop("x1 and x2 must be single-channel images.")
+
+    `_matchShapesIMG`(x1, x2,
+                      switch (method,
+                              "I1" = 1,
+                              "I2" = 2,
+                              "I3" = 3,
+                              stop("This is not a valid mode.")
+                      ))
+  } else if (is.matrix(x1)) {
+    if (!is.matrix(x2))
+      stop("x2 must be a matrix.")
+
+    if (ncol(x1) != 2 | ncol(x2) != 2)
+      stop("x1 and x2 must be 2-column matrices.")
+
+    `_matchShapesCT`(x1, x2,
+                     switch (method,
+                             "I1" = 1,
+                             "I2" = 2,
+                             "I3" = 3,
+                             stop("This is not a valid mode.")
+                     ))
+  } else {
+    stop("x1 and x2 must either be 2-column matrices or images.")
+  }
+}
+
+
 #' @title Which Pixels are Inside a Contour
 #'
 #' @description \code{pixelsInContour} determines the pixels that are inside a

@@ -320,6 +320,27 @@ Rcpp::NumericVector _momentsIMG(Image& image, bool binary) {
   return out;
 }
 
+double _matchShapesCT(Rcpp::NumericMatrix contour1, Rcpp::NumericMatrix contour2, int method) {
+  std::vector< cv::Point > contourpoints1(contour1.nrow());
+  std::vector< cv::Point > contourpoints2(contour2.nrow());
+
+  for (int i = 0; i < contour1.nrow(); i++) {
+    contourpoints1[i].x = contour1(i, 0);
+    contourpoints1[i].y = contour1(i, 1);
+  }
+
+  for (int i = 0; i < contour2.nrow(); i++) {
+    contourpoints2[i].x = contour2(i, 0);
+    contourpoints2[i].y = contour2(i, 1);
+  }
+
+  return cv::matchShapes(contourpoints1, contourpoints2, method, 0);
+}
+
+double _matchShapesIMG(Image& image1, Image& image2, int method) {
+  return cv::matchShapes(image1.image, image2.image, method, 0);
+}
+
 Rcpp::List _minAreaRect(arma::Mat< float > points) {
   cv::Mat_< float > cvpoints;
   arma2cv(points, cvpoints);

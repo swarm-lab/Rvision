@@ -11,10 +11,8 @@ convexityDefects(x)
 produced by \code{\link{findContours}})}
 }
 \value{
-A matrix with 5 columns:
+A matrix with 4 columns:
  \itemize{
-   \item{"id": }{the contour identity (indicates the set of points belonging
-    to the same contour).}
    \item{"start_index": }{index of the first point of the contour belonging to
     a convexity defect.}
    \item{"end_index": }{index of the last point of the contour belonging to

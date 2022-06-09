@@ -330,6 +330,8 @@ RCPP_MODULE(methods_Shape) {
   function("_convexityDefects", &_convexityDefects, List::create(_["contour"], _["convexHull"]), "");
   function("_momentsCT", &_momentsCT, List::create(_["contour"]), "");
   function("_momentsIMG", &_momentsIMG, List::create(_["image"], _["binary"]), "");
+  function("_matchShapesCT", &_matchShapesCT, List::create(_["contour1"], _["contour2"], _["method"]), "");
+  function("_matchShapesIMG", &_matchShapesIMG, List::create(_["image1"], _["image2"], _["method"]), "");
   function("_minAreaRect", &_minAreaRect, List::create(_["points"]), "");
   function("_arcLength", &_arcLength, List::create(_["curve"], _["closed"]), "");
 }
