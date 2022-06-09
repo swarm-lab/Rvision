@@ -2,15 +2,13 @@
 % Please edit documentation in R/shape.R
 \name{convexityDefects}
 \alias{convexityDefects}
-\title{Find the Convexity Defects of a Contour}
+\title{Find the Convexity Defects of a Polygon}
 \usage{
-convexityDefects(contours, id = NULL)
+convexityDefects(x)
 }
 \arguments{
-\item{contours}{A list of two matrices as produced by \code{\link{findContours}}.}
-
-\item{id}{An optional vector indicating the identity of the specific contours
-for which to run the function.}
+\item{x}{A Nx2 matrix of the X-Y coordinates of a polygon (e.g., a contour
+produced by \code{\link{findContours}})}
 }
 \value{
 A matrix with 5 columns:
@@ -28,16 +26,17 @@ A matrix with 5 columns:
 }
 }
 \description{
-\code{convexityDefects} finds the convexity defects of a contour,
- that is area that do not belong to an object but are located inside of its
- convex hull.
+\code{convexityDefects} finds the convexity defects of a polygon,
+ that is the area that do not belong to an object but are located inside of
+ its convex hull.
 }
 \examples{
 dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
 dots_gray <- changeColorSpace(dots, "GRAY")
 dots_bin <- dots_gray < 200
 contours <- findContours(dots_bin)
-convexityDefects(contours, id = c(3, 5))
+contour0 <- contours$contours[contours$contours[, 1] == 0, 2:3]
+convexityDefects(contour0)
 
 }
 \seealso{

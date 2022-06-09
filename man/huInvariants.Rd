@@ -4,19 +4,14 @@
 \alias{huInvariants}
 \title{Calculate Seven Hu Invariants}
 \usage{
-huInvariants(moments, id = NULL)
+huInvariants(moments)
 }
 \arguments{
 \item{moments}{A data frame as produced by \code{\link{moments}}.}
-
-\item{id}{An optional vector indicating the identity of the specific contours
-for which to run the function.}
 }
 \value{
-A data frame with 3 columns:
+A data frame with 2 columns:
  \itemize{
-   \item{"id": }{the contour identity (indicates the set of invariants belonging
-    to the same contour).}
    \item{"invariant": }{the name of the invariant See Note below.}
    \item{"value": }{the value of the invariant.}
 }
@@ -45,8 +40,9 @@ dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
 dots_gray <- changeColorSpace(dots, "GRAY")
 dots_bin <- dots_gray < 200
 contours <- findContours(dots_bin)
-m <- moments(contours)
-huInvariants(m, id = c(3, 5))
+contour0 <- contours$contours[contours$contours[, 1] == 0, 2:3]
+m <- moments(contour0)
+huInvariants(m)
 
 }
 \seealso{

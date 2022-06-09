@@ -269,8 +269,8 @@ Rcpp::IntegerMatrix _convexityDefects(Rcpp::NumericMatrix contour, std::vector< 
   std::vector< cv::Vec4i > defects;
 
   for (int i = 0; i < contour.nrow(); i++) {
-    contourpoints[i].x = contour(i, 1);
-    contourpoints[i].y = contour(i, 2);
+    contourpoints[i].x = contour(i, 0);
+    contourpoints[i].y = contour(i, 1);
   }
 
   cv::convexityDefects(contourpoints, convexhull, defects);
@@ -293,15 +293,25 @@ Rcpp::IntegerMatrix _convexityDefects(Rcpp::NumericMatrix contour, std::vector< 
   return defects_mat;
 }
 
-Rcpp::NumericVector _moments(Rcpp::NumericMatrix contour) {
+Rcpp::NumericVector _momentsCT(Rcpp::NumericMatrix contour) {
   std::vector< cv::Point > contourpoints(contour.nrow());
 
   for (int i = 0; i < contour.nrow(); i++) {
-    contourpoints[i].x = contour(i, 1);
-    contourpoints[i].y = contour(i, 2);
+    contourpoints[i].x = contour(i, 0);
+    contourpoints[i].y = contour(i, 1);
   }
 
   cv::Moments m = cv::moments(contourpoints);
+
+  Rcpp::NumericVector out = { m.m00, m.m10, m.m01, m.m20, m.m11, m.m02, m.m30,
+                              m.m21, m.m12, m.m03, m.mu20, m.mu11, m.mu02, m.mu30, m.mu21, m.mu12, m.mu03,
+                              m.nu20, m.nu11, m.nu02, m.nu30, m.nu21, m.nu12, m.nu03 };
+
+  return out;
+}
+
+Rcpp::NumericVector _momentsIMG(Image& image, bool binary) {
+  cv::Moments m = cv::moments(image.image, binary);
 
   Rcpp::NumericVector out = { m.m00, m.m10, m.m01, m.m20, m.m11, m.m02, m.m30,
                               m.m21, m.m12, m.m03, m.mu20, m.mu11, m.mu02, m.mu30, m.mu21, m.mu12, m.mu03,
