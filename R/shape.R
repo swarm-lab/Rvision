@@ -617,7 +617,6 @@ huInvariants <- function(moments) {
     stop("moments must be a data frame as produced by `moments`.")
 
   data.frame(
-    id = rep(m[1, 1], 7),
     invariant = paste0("Hu", 1:7),
     value = c(
       moments$value[18] + moments$value[20],
