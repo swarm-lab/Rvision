@@ -283,6 +283,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/getTextSize.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/grabCut.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/histEq.html</loc>
   </url>
   <url>
@@ -290,6 +293,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/houghCircles.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/huInvariants.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/image.html</loc>
@@ -350,6 +356,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/laplacian.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/matchShapes.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/matchTemplate.html</loc>
