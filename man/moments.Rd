@@ -4,19 +4,19 @@
 \alias{moments}
 \title{Calculate the Moments of a Shape}
 \usage{
-moments(contours, id = NULL)
+moments(x, binary = FALSE)
 }
 \arguments{
-\item{contours}{A list of two matrices as produced by \code{\link{findContours}}.}
+\item{x}{Either a Nx2 matrix of the X-Y coordinates of a polygon (e.g., a
+contour produced by \code{\link{findContours}}), or a single-channel
+\code{\link{Image}} object.}
 
-\item{id}{An optional vector indicating the identity of the specific contours
-for which to run the function.}
+\item{binary}{If set to TRUE (default: FALSE), all non-zero image pixels are
+treated as 1's. The parameter is used for images only.}
 }
 \value{
-A data frame with 3 columns:
+A data frame with 2 columns:
  \itemize{
-   \item{"id": }{the contour identity (indicates the set of moments belonging
-    to the same contour).}
    \item{"moment": }{the name of the moment. See Note below.}
    \item{"value": }{the value of the moment.}
 }
@@ -42,7 +42,8 @@ dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
 dots_gray <- changeColorSpace(dots, "GRAY")
 dots_bin <- dots_gray < 200
 contours <- findContours(dots_bin)
-moments(contours, id = c(3, 5))
+contour0 <- contours$contours[contours$contours[, 1] == 0, 2:3]
+moments(contour0)
 
 }
 \seealso{

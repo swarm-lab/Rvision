@@ -269,8 +269,8 @@ Rcpp::IntegerMatrix _convexityDefects(Rcpp::NumericMatrix contour, std::vector< 
   std::vector< cv::Vec4i > defects;
 
   for (int i = 0; i < contour.nrow(); i++) {
-    contourpoints[i].x = contour(i, 1);
-    contourpoints[i].y = contour(i, 2);
+    contourpoints[i].x = contour(i, 0);
+    contourpoints[i].y = contour(i, 1);
   }
 
   cv::convexityDefects(contourpoints, convexhull, defects);
@@ -293,12 +293,12 @@ Rcpp::IntegerMatrix _convexityDefects(Rcpp::NumericMatrix contour, std::vector< 
   return defects_mat;
 }
 
-Rcpp::NumericVector _moments(Rcpp::NumericMatrix contour) {
+Rcpp::NumericVector _momentsCT(Rcpp::NumericMatrix contour) {
   std::vector< cv::Point > contourpoints(contour.nrow());
 
   for (int i = 0; i < contour.nrow(); i++) {
-    contourpoints[i].x = contour(i, 1);
-    contourpoints[i].y = contour(i, 2);
+    contourpoints[i].x = contour(i, 0);
+    contourpoints[i].y = contour(i, 1);
   }
 
   cv::Moments m = cv::moments(contourpoints);
@@ -308,6 +308,37 @@ Rcpp::NumericVector _moments(Rcpp::NumericMatrix contour) {
                               m.nu20, m.nu11, m.nu02, m.nu30, m.nu21, m.nu12, m.nu03 };
 
   return out;
+}
+
+Rcpp::NumericVector _momentsIMG(Image& image, bool binary) {
+  cv::Moments m = cv::moments(image.image, binary);
+
+  Rcpp::NumericVector out = { m.m00, m.m10, m.m01, m.m20, m.m11, m.m02, m.m30,
+                              m.m21, m.m12, m.m03, m.mu20, m.mu11, m.mu02, m.mu30, m.mu21, m.mu12, m.mu03,
+                              m.nu20, m.nu11, m.nu02, m.nu30, m.nu21, m.nu12, m.nu03 };
+
+  return out;
+}
+
+double _matchShapesCT(Rcpp::NumericMatrix contour1, Rcpp::NumericMatrix contour2, int method) {
+  std::vector< cv::Point > contourpoints1(contour1.nrow());
+  std::vector< cv::Point > contourpoints2(contour2.nrow());
+
+  for (int i = 0; i < contour1.nrow(); i++) {
+    contourpoints1[i].x = contour1(i, 0);
+    contourpoints1[i].y = contour1(i, 1);
+  }
+
+  for (int i = 0; i < contour2.nrow(); i++) {
+    contourpoints2[i].x = contour2(i, 0);
+    contourpoints2[i].y = contour2(i, 1);
+  }
+
+  return cv::matchShapes(contourpoints1, contourpoints2, method, 0);
+}
+
+double _matchShapesIMG(Image& image1, Image& image2, int method) {
+  return cv::matchShapes(image1.image, image2.image, method, 0);
 }
 
 Rcpp::List _minAreaRect(arma::Mat< float > points) {
