@@ -1,12 +1,36 @@
+# Rvision 0.6.2
+
+## New features
+
+* New arcLength function. 
+* New Hu moment invariants function. 
+* New grabCut function. 
+* New matchShapes function. 
+
+## Minor improvements and fixes
+
+* The documentation has been fixed/improved in several places.
+* Minor bug fixes here and there.
+* The function moments and convexityDefects have been changed to follow OpenCV usage. This will break older code.  
+
+---
+
 # Rvision 0.6.1
 
 ## New features
 
-* N/A.
+* Compatible with the new RTools 4.2 toolchain on Windows.
+* Autothresholding.
+* Hough circle detection.
+* Can read HIS files.
+* Extract/insert single channels from/into images.
+* Write multi-images.
+* Connected components returns statistics.
 
 ## Minor improvements and fixes
 
-* Compatible with new RTools 4.2 toolchain.
+* The documentation has been fixed/improved in several places.
+* Minor bug fixes here and there.
 
 ---
 
