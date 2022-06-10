@@ -966,6 +966,66 @@ histEq <- function(image, target = "new") {
 }
 
 
+#' @title Segmentation with GrabCut Algorithm
+#'
+#' @description \code{grabCut} performs image segmentation (i.e., partition of
+#'  the image into coherent regions) using the GrabCut method.
+#'
+#' @param image An 8-bit (8U), 3-channel \code{\link{Image}} object to segment.
+#'
+#' @param mask An 8-bit (8U), single-channel \code{\link{Image}} object. Each
+#'  pixel can take any of the following 4 values:
+#'  \itemize{
+#'     \item{0: }{an obvious background pixels.}
+#'     \item{1: }{an obvious foreground (object) pixel.}
+#'     \item{2: }{a possible background pixel.}
+#'     \item{3: }{a possible foreground pixel.}
+#'  }
+#'
+#' @param rect A vector defining the region of interest containing a segmented
+#'  object. The pixels outside of the region of interest are marked as "obvious
+#'  background". \code{rect} must be a 4-element numeric vector which elements
+#'  correspond to - in this order - the x and y coordinates of the bottom left
+#'  corner of the region of interest, and to its width and height. The parameter
+#'  is only used when \code{mode="RECT"} (default: rep(1, 4)).
+#'
+#' @param bgdModel A 1x65, single-channel, 64-bit (64F) \code{\link{Image}}
+#'  object to set and store the parameters of the background model.
+#'
+#' @param fgdModel A 1x65, single-channel, 64-bit (64F) \code{\link{Image}}
+#'  object to set and store the parameters of the foreground model.
+#'
+#' @param iter Number of iterations (default: 1) the algorithm should make
+#'  before returning the result. Note that the result can be refined with
+#'  further calls with \code{mode="MASK"} or \code{mode="MASK"}.
+#'
+#' @param mode A character string indicating the operation mode of the function.
+#'  It can be any of the following:
+#'  \itemize{
+#'     \item{"RECT": }{The function initializes the state and the mask using the
+#'      provided \code{rect}. After that it runs \code{iter} iterations of the
+#'      algorithm.}
+#'     \item{"MASK":}{The function initializes the state using the provided
+#'      \code{mask}.}
+#'     \item{"EVAL":}{The value means that the function should just resume.}
+#'     \item{"FREEZE":}{The value means that the function should just run the
+#'      grabCut algorithm (a single iteration) with the fixed model.}
+#'  }
+#'
+#' @return This function returns nothing. It modifies in place \code{mask},
+#'  \code{bgdModel}, and \code{fgdModel}.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' mask <- zeros(nrow(balloon), ncol(balloon), 1)
+#' bgdModel <- zeros(1, 65, 1, "64F")
+#' fgdModel <- zeros(1, 65, 1, "64F")
+#' grabCut(balloon, mask, c(290, 170, 160, 160), bgdModel, fgdModel, iter = 5, mode = "RECT")
+#'
 #' @export
 grabCut <- function(image, mask, rect = rep(1, 4), bgdModel, fgdModel, iter = 1,
                     mode = "EVAL") {
