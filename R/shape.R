@@ -571,10 +571,11 @@ moments <- function(x, binary = FALSE) {
 }
 
 
-#' @title Calculate Seven Hu Invariants
+#' @title Calculate Seven Hu Moments Invariants
 #'
-#' @description \code{huInvariants} calculates seven Hu invariants from the
-#'  moments of a polygon or rasterized shape.
+#' @description \code{huInvariants} calculates the seven original Hu moments
+#'  invariants plus an additional one discovered by Suk & Flusser (2011), from
+#'  the moments of a polygon or rasterized shape.
 #'
 #' @param moments A data frame as produced by \code{\link{moments}}.
 #'
@@ -593,7 +594,10 @@ moments <- function(x, binary = FALSE) {
 #'    \item{\eqn{\texttt{Hu5}= ( \eta _{30}-3 \eta _{12})( \eta _{30}+ \eta _{12})[( \eta _{30}+ \eta _{12})^{2}-3( \eta _{21}+ \eta _{03})^{2}]+(3 \eta _{21}- \eta _{03})( \eta _{21}+ \eta _{03})[3( \eta _{30}+ \eta _{12})^{2}-( \eta _{21}+ \eta _{03})^{2}]}}
 #'    \item{\eqn{\texttt{Hu6}= ( \eta _{20}- \eta _{02})[( \eta _{30}+ \eta _{12})^{2}- ( \eta _{21}+ \eta _{03})^{2}]+4 \eta _{11}( \eta _{30}+ \eta _{12})( \eta _{21}+ \eta _{03})}}
 #'    \item{\eqn{\texttt{Hu7}= (3 \eta _{21}- \eta _{03})( \eta _{21}+ \eta _{03})[3( \eta _{30}+ \eta _{12})^{2}-( \eta _{21}+ \eta _{03})^{2}]-( \eta _{30}-3 \eta _{12})( \eta _{21}+ \eta _{03})[3( \eta _{30}+ \eta _{12})^{2}-( \eta _{21}+ \eta _{03})^{2}]}}
+#'    \item{\eqn{\texttt{Hu8}= \eta_ {11}[(\eta_ {30}+ \eta_ {12})^{2}-(\eta_ {03}+ \eta_ {21})^{2}]- (\eta_ {20}+ \eta_ {02})(\eta_ {30}+ \eta_ {12})(\eta_ {03}+ \eta_ {21}) }}
 #' }
+#'
+#'
 #'
 #'  where \eqn{\eta_{ji}} corresponds to the normalized central moments as
 #'  computed by \code{\link{moments}}.
@@ -617,7 +621,7 @@ huInvariants <- function(moments) {
     stop("moments must be a data frame as produced by `moments`.")
 
   data.frame(
-    invariant = paste0("Hu", 1:7),
+    invariant = paste0("Hu", 1:8),
     value = c(
       moments$value[18] + moments$value[20],
       (moments$value[18] - moments$value[20]) ^ 2 + 4 * moments$value[19] ^ 2,
@@ -633,7 +637,10 @@ huInvariants <- function(moments) {
       (3 * moments$value[22] - moments$value[24]) * (moments$value[22] + moments$value[24]) *
         (3 * (moments$value[21] + moments$value[23]) ^ 2 - (moments$value[22] + moments$value[24]) ^ 2) -
         (moments$value[21] - 3 * moments$value[23]) * (moments$value[22] + moments$value[24]) *
-        (3 * (moments$value[21] + moments$value[23]) ^ 2 - (moments$value[22] + moments$value[24]) ^ 2)
+        (3 * (moments$value[21] + moments$value[23]) ^ 2 - (moments$value[22] + moments$value[24]) ^ 2),
+      moments$value[19] * ((moments$value[21] + moments$value[23]) ^2 - (moments$value[24] + moments$value[23]) ^ 2) -
+        (moments$value[18] - moments$value[20]) * (moments$value[21] + moments$value[23]) *
+        (moments$value[24] + moments$value[22])
     )
   )
 }
