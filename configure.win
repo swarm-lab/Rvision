@@ -8,7 +8,8 @@ ${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe -e "if (!ROpenCVLite::isOpenCVInstalled()
 ${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe -e "
   dest <- file.path('$R_PACKAGE_DIR', paste0('libs', '$R_ARCH'))
   dir.create(dest, recursive = TRUE, showWarnings = FALSE)
-  opencv_DLLs <- list.files(paste0(ROpenCVLite::OpenCVPath(), '/', '$R_ARCH', '/mingw/bin'), '.dll', full.names = TRUE)
+  arch <- switch('$R_ARCH', i386 = 'x86', 'x64')
+  opencv_DLLs <- list.files(paste0(ROpenCVLite::OpenCVPath(), '/', arch, '/mingw/bin'), '.dll', full.names = TRUE)
   void <- lapply(opencv_DLLs, function(x) {
     file.copy(x, dest)
   })
