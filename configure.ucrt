@@ -5,11 +5,16 @@ set -e
 ${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe -e "if (nzchar(Sys.getenv('CI')) & !ROpenCVLite::isOpenCVInstalled()) ROpenCVLite::installOpenCV(batch = TRUE)"
 ${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe -e "if (nzchar(Sys.getenv('CI')) & ROpenCVLite::isOpenCVInstalled() & unlist(strsplit(as.character(utils::packageVersion('ROpenCVLite')), '[.]'))[3] != gsub('[^0-9]', '', ROpenCVLite::opencvVersion())) ROpenCVLite::installOpenCV(batch = TRUE)"
 ${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe -e "if (!ROpenCVLite::isOpenCVInstalled()) { cat('------------------ OPENCV NOT FOUND --------------------\n') ; cat('\n') ; cat('OpenCV was not found in your library. Please install OpenCV as follows:') ; cat('\n') ; cat('\n') ; cat('ROpenCVLite::installOpenCV(batch = TRUE)\n') ; cat('\n') ; cat('--------------------------------------------------------\n') ; cat('\n') ; stop('OpenCV not found.') }"
-${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe -e "if (R.Version()\$major >= '4' & R.Version()\$minor >= '2') {
-  dest <- file.path('$R_PACKAGE_DIR', paste0('libs', '$R_ARCH'))
-  dir.create(dest, recursive = TRUE, showWarnings = FALSE)
-  opencv_DLLs <- list.files(paste0(ROpenCVLite::OpenCVPath(), '/x64/mingw/bin'), '.dll', full.names = TRUE)
-  void <- lapply(opencv_DLLs, function(x) {
+${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe -e "
+  r_arch <- list.dirs(paste0(R.home(), '/bin'), FALSE, FALSE)
+  opencv_arch <- ifelse(r_arch == 'i386', 'x86', 'x64')
+
+  for (i in 1:length(opencv_arch)) {
+    dest <- file.path('$R_PACKAGE_DIR', paste0('libs/', r_arch[i]))
+    dir.create(dest, recursive = TRUE, showWarnings = FALSE)
+    opencv_DLLs <- list.files(paste0(ROpenCVLite::OpenCVPath(), '/', opencv_arch[i], '/mingw/bin'), '.dll', full.names = TRUE)
+    void <- lapply(opencv_DLLs, function(x) {
     file.copy(x, dest)
-  })
-}"
+    })
+  }
+"
