@@ -152,6 +152,14 @@ RCPP_MODULE(methods_Arithmetic) {
   function("_absdiffScalar", &_absdiffScalar, List::create(_["image"], _["value"], _["target"]), "");
   function("_addWeighted", &_addWeighted, List::create(_["image1"], _["alpha"],
     _["image2"], _["beta"], _["target"]), "");
+  function("_cartToPolar", &_cartToPolar, List::create(_["x"], _["y"], _["magnitude"],
+    _["angle"], _["angleInDegrees"]), "");
+  function("_polarToCart", &_polarToCart, List::create(_["magnitude"], _["angle"],
+    _["x"], _["y"], _["angleInDegrees"]), "");
+  function("_sqrt", &_sqrt, List::create(_["image1"], _["target"]), "");
+  function("_exp", &_exp, List::create(_["image1"], _["target"]), "");
+  function("_log", &_log, List::create(_["image1"], _["target"]), "");
+  function("_pow", &_pow, List::create(_["image1"], _["power"], _["target"]), "");
 }
 
 #include "statistics.h"
