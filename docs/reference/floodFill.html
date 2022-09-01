@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,27 +85,33 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">floodFill</span><span class="op">(</span>
-  <span class="va">image</span>,
-  seed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,
-  color <span class="op">=</span> <span class="st">"white"</span>,
-  lo_diff <span class="op">=</span> <span class="fl">0</span>,
-  up_diff <span class="op">=</span> <span class="fl">0</span>,
-  connectivity <span class="op">=</span> <span class="fl">4</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">floodFill</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>  lo_diff <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  up_diff <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  connectivity <span class="op">=</span> <span class="fl">4</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>A 2-element vector indicating the x and y coordinates of the seed
 point from where to start the filling.</p></dd>
+
+
 <dt>color</dt>
 <dd><p>A value or vector of any kind of R color specification
 compatible with <code><a href="col2bgr.html">col2bgr</a></code> representing the color of the border
 (default: "white").</p></dd>
+
+
 <dt>lo_diff</dt>
 <dd><p>Maximal lower brightness/color difference between the
 currently observed pixel and one of its neighbors belonging to the component,
@@ -113,6 +119,8 @@ or a seed pixel being added to the component (see Details). It can be a
 single value or a vector of the same length as the number <code>n</code> of
 channels in <code>image</code>. If it is shorter, its elements will be recycled.
 If it has more, only the first <code>n</code> elements will be used.</p></dd>
+
+
 <dt>up_diff</dt>
 <dd><p>Maximal upper brightness/color difference between the
 currently observed pixel and one of its neighbors belonging to the component,
@@ -120,6 +128,8 @@ or a seed pixel being added to the component (see Details). It can be a
 single value or a vector of the same length as the number <code>n</code> of
 channels in <code>image</code>. If it is shorter, its elements will be recycled.
 If it has more, only the first <code>n</code> elements will be used.</p></dd>
+
+
 <dt>connectivity</dt>
 <dd><p>The connetivity neighborhood to decide whether 2 pixels
 are contiguous. This parameter can take two values:</p><ul><li><p>4: the neighborhood of a pixel are the four pixels located above
@@ -128,10 +138,13 @@ are contiguous. This parameter can take two values:</p><ul><li><p>4: the neighbo
   4-neighbors and the four pixels along the diagonal directions (northeast,
   northwest, southeast, and southwest).</p></li>
 </ul></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>This function returns the number of pixels that were filled and
+    
+
+<p>This function returns the number of pixels that were filled and
  modifies <code>image</code> in place.</p>
     </div>
     <div id="details">
@@ -161,10 +174,10 @@ are contiguous. This parameter can take two values:</p><ul><li><p>4: the neighbo
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">floodFill</span><span class="op">(</span><span class="va">dots</span>, color <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">floodFill</span><span class="op">(</span><span class="va">dots</span>, color <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 128564</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -179,7 +192,7 @@ are contiguous. This parameter can take two values:</p><ul><li><p>4: the neighbo
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -2,7 +2,7 @@
 #'
 #' @name Image-class
 #'
-#' @aliases Rcpp_Image2
+#' @aliases Rcpp_Image
 #'
 #' @docType class
 #'
@@ -32,6 +32,7 @@
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{image}}, \code{\link{Video}}, \code{\link{Stream}}
+#'
 #' @export
 "Image"
 

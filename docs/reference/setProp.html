@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,44 +85,53 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for Rcpp_Stream</span>
-<span class="fu">setProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span>, <span class="va">value</span><span class="op">)</span>
-
-<span class="co"># S3 method for Rcpp_Stream</span>
-<span class="fu">getProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span><span class="op">)</span>
-
-<span class="co"># S3 method for Rcpp_Video</span>
-<span class="fu">setProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span>, <span class="va">value</span><span class="op">)</span>
-
-<span class="co"># S3 method for Rcpp_Video</span>
-<span class="fu">getProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span><span class="op">)</span>
-
-<span class="co"># S3 method for Rcpp_VideoWriter</span>
-<span class="fu">setProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span>, <span class="va">value</span><span class="op">)</span>
-
-<span class="co"># S3 method for Rcpp_VideoWriter</span>
-<span class="fu">getProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span><span class="op">)</span>
-
-<span class="fu">setProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span>, <span class="va">value</span><span class="op">)</span>
-
-<span class="fu">getProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for Rcpp_Stream</span></span>
+<span><span class="fu">setProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span>, <span class="va">value</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for Rcpp_Stream</span></span>
+<span><span class="fu">getProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for Rcpp_Video</span></span>
+<span><span class="fu">setProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span>, <span class="va">value</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for Rcpp_Video</span></span>
+<span><span class="fu">getProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for Rcpp_VideoWriter</span></span>
+<span><span class="fu">setProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span>, <span class="va">value</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for Rcpp_VideoWriter</span></span>
+<span><span class="fu">getProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">setProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span>, <span class="va">value</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">getProp</span><span class="op">(</span><span class="va">x</span>, <span class="va">property</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A <code><a href="Video-class.html">Video</a></code> or <code><a href="Stream-class.html">Stream</a></code> object.</p></dd>
+
+
 <dt>property</dt>
 <dd><p>A character string specifying the name of the property to
 modify (see details below for a complete list).</p></dd>
+
+
 <dt>value</dt>
 <dd><p>The new value of the property.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>setProp</code> returns TRUE is the property was set successfully.
-<code>getProp</code> returns a numeric value or a character string depending on
-<code>property</code>.</p>
+    
+
+<p><code>setProp</code> returns TRUE is the property was set successfully.</p>
+<p></p>
+<p><code>getProp</code> returns a numeric value or a character string depending on</p>
+<p></p>
+<p><code>property</code>.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -159,12 +168,12 @@ modify (see details below for a complete list).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">getProp</span><span class="op">(</span><span class="va">balloon</span>, <span class="st">"FPS"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">getProp</span><span class="op">(</span><span class="va">balloon</span>, <span class="st">"FPS"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 30</span>
-<span class="r-in"><span class="fu">setProp</span><span class="op">(</span><span class="va">balloon</span>, <span class="st">"POS_FRAMES"</span>, <span class="fl">25</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">setProp</span><span class="op">(</span><span class="va">balloon</span>, <span class="st">"POS_FRAMES"</span>, <span class="fl">25</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -179,7 +188,7 @@ modify (see details below for a complete list).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

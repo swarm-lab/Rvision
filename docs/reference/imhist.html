@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,57 +85,77 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">imhist</span><span class="op">(</span>
-  <span class="va">image</span>,
-  nbins <span class="op">=</span> <span class="fl">256</span>,
-  range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">255</span><span class="op">)</span>,
-  mask <span class="op">=</span> <span class="cn">NULL</span>,
-  plot <span class="op">=</span> <span class="cn">FALSE</span>,
-  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"black"</span><span class="op">)</span>,
-  xlab <span class="op">=</span> <span class="st">"Pixel value"</span>,
-  ylab <span class="op">=</span> <span class="st">"Counts"</span>,
-  lty <span class="op">=</span> <span class="fl">1</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">imhist</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  nbins <span class="op">=</span> <span class="fl">256</span>,</span>
+<span>  range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">255</span><span class="op">)</span>,</span>
+<span>  mask <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="st">"Pixel value"</span>,</span>
+<span>  ylab <span class="op">=</span> <span class="st">"Counts"</span>,</span>
+<span>  lty <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>nbins</dt>
 <dd><p>An integer indicating the number of bins of the histogram
 (default: 256).</p></dd>
+
+
 <dt>range</dt>
 <dd><p>The range of pixel values to include in the histogram (default:
 c(0, 256)). The lower boundary is inclusive but the higher one is exclusive.</p></dd>
+
+
 <dt>mask</dt>
 <dd><p>A single-channel (GRAY) 8-bit (8U) <code><a href="Image-class.html">Image</a></code> object
 with the same dimensions as <code>image</code>. This can be used to mask out
 pixels that should not be considered when calculating the histogram (pixels
 set to 0 in the mask will be ignored during the histogram calculation).</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>A logical indicating whether to plot the histogram (default:
 FALSE).</p></dd>
+
+
 <dt>col</dt>
 <dd><p>A value or vector of any kind of R color specification
 compatible with <code><a href="https://rdrr.io/r/grDevices/col2rgb.html" class="external-link">col2rgb</a></code> representing the color of the
 histogram for each image channel (default:
 c("blue", "green", "red", "black")).</p></dd>
+
+
 <dt>xlab, ylab</dt>
 <dd><p>Character strings for the axis labels (default: "Pixel
 value" for the x axis and "Counts" for the y axis).</p></dd>
+
+
 <dt>lty</dt>
 <dd><p>A vector of line types, see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Further arguments passed to <code><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If <code>plot=FALSE</code>, the function returns a <code>m x n</code> matrix,
+    
+
+<p>If <code>plot=FALSE</code>, the function returns a <code>m x n</code> matrix,
  with <code>m = nbins</code> and <code>n</code> equal to the number of channels in the
- image + 1. The first column corresponds to the bin values. If
-<code>plot=TRUE</code>, the function plots the histogram and returned the
+ image + 1. The first column corresponds to the bin values. If</p>
+<p></p>
+<p><code>plot=TRUE</code>, the function plots the histogram and returned the
  aforementioned matrix silently.</p>
     </div>
     <div id="see-also">
@@ -149,10 +169,10 @@ value" for the x axis and "Counts" for the y axis).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">imhist</span><span class="op">(</span><span class="va">balloon</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">imhist</span><span class="op">(</span><span class="va">balloon</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="imhist-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -167,7 +187,7 @@ value" for the x axis and "Counts" for the y axis).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -37,6 +37,8 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
+#' @seealso \code{\link{Image}}, \code{\link{Video}}, \code{\link{Stream}}
+#'
 #' @export
 "Queue"
 

@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -87,27 +87,38 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">selectROI</span><span class="op">(</span><span class="va">image</span>, window_name <span class="op">=</span> <span class="st">"Display"</span>, scale <span class="op">=</span> <span class="fl">1</span>, return_mask <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">selectROI</span><span class="op">(</span><span class="va">image</span>, window_name <span class="op">=</span> <span class="st">"Display"</span>, scale <span class="op">=</span> <span class="fl">1</span>, return_mask <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>window_name</dt>
 <dd><p>A character string representing the name of the display
 window (default: "Display").</p></dd>
+
+
 <dt>scale</dt>
 <dd><p>The scaling of the display relative to the image size (default: 1).</p></dd>
+
+
 <dt>return_mask</dt>
 <dd><p>Should the function return a mask of the ROI. The mask is
 an 8-bit single-channel image with the pixels inside the ROI painted white
 and the pixels outside the ROI painted black (default: TRUE).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If <code>return_mask == FALSE</code>, a data frame with the following two
- columns:</p><ul><li><p>x: the x coordinates of the ROI polygon.</p></li>
+    
+
+<p>If <code>return_mask == FALSE</code>, a data frame with the following two
+ columns:</p>
+<p></p>
+<ul><li><p>x: the x coordinates of the ROI polygon.</p></li>
 <li><p>y: the y coordinates of the ROI polygon.</p></li>
 </ul><p>If <code>return_mask == TRUE</code>, a list containing the data frame containing
  the coordinates of the ROIand an 8-bit single-channel image corresponding to
@@ -125,11 +136,11 @@ and the pixels outside the ROI painted black (default: TRUE).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">selectROI</span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">selectROI</span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -144,7 +155,7 @@ and the pixels outside the ROI painted black (default: TRUE).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

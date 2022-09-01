@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,23 +85,30 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">insertChannel</span><span class="op">(</span><span class="va">image</span>, <span class="va">channel</span>, <span class="va">insert</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">insertChannel</span><span class="op">(</span><span class="va">image</span>, <span class="va">channel</span>, <span class="va">insert</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>channel</dt>
 <dd><p>An integer specifying the index of the channel that will be
 replaced by <code>insert</code></p></dd>
+
+
 <dt>insert</dt>
 <dd><p>A single-channel <code><a href="Image-class.html">Image</a></code> object with the same bit
 depth as <code>image</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The function returns nothing and modifies <code>image</code> in place.</p>
+    
+
+<p>The function returns nothing and modifies <code>image</code> in place.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -114,10 +121,10 @@ depth as <code>image</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">red</span> <span class="op">&lt;-</span> <span class="fu"><a href="extractChannel.html">extractChannel</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">insertChannel</span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">1</span>, <span class="va">red</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">red</span> <span class="op">&lt;-</span> <span class="fu"><a href="extractChannel.html">extractChannel</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">insertChannel</span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">1</span>, <span class="va">red</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -132,7 +139,7 @@ depth as <code>image</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

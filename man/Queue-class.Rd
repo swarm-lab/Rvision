@@ -46,6 +46,9 @@ neither).}
 \item{\code{reset}}{Function to empty the queue and start collecting new frames.}
 }}
 
+\seealso{
+\code{\link{Image}}, \code{\link{Video}}, \code{\link{Stream}}
+}
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }

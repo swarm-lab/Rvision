@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -168,14 +168,14 @@ removed from the queue to make space for another frame.</p>
 <p><code>Queue</code> objects are created using the <code><a href="../reference/queue.html">queue()</a></code>
 function. For instance:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span>
-<span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
-
-<span class="co"># Open the video file stream</span>
-<span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span>
-
-<span class="co"># Create a queue of frames </span>
-<span class="va">my_buf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/queue.html">queue</a></span><span class="op">(</span><span class="va">my_video</span>, size <span class="op">=</span> <span class="fl">10</span>, delay <span class="op">=</span> <span class="fl">1000</span>, overflow <span class="op">=</span> <span class="st">"pause"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span></span>
+<span><span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Open the video file stream</span></span>
+<span><span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a queue of frames </span></span>
+<span><span class="va">my_buf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/queue.html">queue</a></span><span class="op">(</span><span class="va">my_video</span>, size <span class="op">=</span> <span class="fl">10</span>, delay <span class="op">=</span> <span class="fl">1000</span>, overflow <span class="op">=</span> <span class="st">"pause"</span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="../reference/queue.html">queue()</a></code> function can take 4 parameters:</p>
 <ul>
 <li>
@@ -230,7 +230,7 @@ the queue will start filling up from the 11th).</p>
 <p>Once a <code>Queue</code> object is not required anymore, it can be
 released from memory as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -243,34 +243,34 @@ this. Collecting a frame from the queue into the main <code>R</code>
 thread can be done using the <code><a href="../reference/readNext.html">readNext()</a></code> function. For
 example:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Collect the next available frame from the queue and store it in a new </span>
-<span class="co"># Image object</span>
-<span class="va">frame</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
-
-<span class="co"># Collect the next available frame from the queue and store it in an existing </span>
-<span class="co"># Image object</span>
-<span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_buf</span>, target <span class="op">=</span> <span class="va">frame</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Collect the next available frame from the queue and store it in a new </span></span>
+<span><span class="co"># Image object</span></span>
+<span><span class="va">frame</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Collect the next available frame from the queue and store it in an existing </span></span>
+<span><span class="co"># Image object</span></span>
+<span><span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_buf</span>, target <span class="op">=</span> <span class="va">frame</span><span class="op">)</span></span></code></pre></div>
 <p>At any time, you can check the state of the queue as follows:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Is the queue empty?</span>
-<span class="fu"><a href="../reference/full.html">empty</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
-
-<span class="co"># Is the queue full?</span>
-<span class="fu"><a href="../reference/full.html">full</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
-
-<span class="co"># What is the current number of frames in the queue? </span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
-
-<span class="co"># What is the maximum number of frames that the queue can hold?</span>
-<span class="fu"><a href="../reference/capacity.html">capacity</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
-
-<span class="co"># What is the index of the next frame available? (for video queues only)</span>
-<span class="fu"><a href="../reference/frame.html">frame</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
-
-<span class="co"># What are the dimensions of the queue? </span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Is the queue empty?</span></span>
+<span><span class="fu"><a href="../reference/full.html">empty</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Is the queue full?</span></span>
+<span><span class="fu"><a href="../reference/full.html">full</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># What is the current number of frames in the queue? </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># What is the maximum number of frames that the queue can hold?</span></span>
+<span><span class="fu"><a href="../reference/capacity.html">capacity</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># What is the index of the next frame available? (for video queues only)</span></span>
+<span><span class="fu"><a href="../reference/frame.html">frame</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># What are the dimensions of the queue? </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">my_buf</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -336,7 +336,7 @@ and reading frames from the <code>Video</code> object that
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

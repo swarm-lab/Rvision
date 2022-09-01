@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,20 +85,22 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">connectedComponents</span><span class="op">(</span>
-  <span class="va">image</span>,
-  connectivity <span class="op">=</span> <span class="fl">8</span>,
-  algorithm <span class="op">=</span> <span class="st">"grana"</span>,
-  table <span class="op">=</span> <span class="cn">TRUE</span>,
-  stats <span class="op">=</span> <span class="cn">TRUE</span>,
-  target <span class="op">=</span> <span class="st">"new"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">connectedComponents</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  connectivity <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>  algorithm <span class="op">=</span> <span class="st">"grana"</span>,</span>
+<span>  table <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  stats <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  target <span class="op">=</span> <span class="st">"new"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>An an 8-bit (8U) single-channel <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>connectivity</dt>
 <dd><p>The connetivity neighborhood to decide whether 2 pixels
 are contiguous. This parameter can take two values:</p><ul><li><p>4: the neighborhood of a pixel are the four pixels located above
@@ -107,6 +109,8 @@ are contiguous. This parameter can take two values:</p><ul><li><p>4: the neighbo
   4-neighbors and the four pixels along the diagonal directions (northeast,
   northwest, southeast, and southwest).</p></li>
 </ul></dd>
+
+
 <dt>algorithm</dt>
 <dd><p>A character string specifying the connected components
 labeling algorithm to use. This parameter can take two values:</p><ul><li><p>"grana" (the default): Block-based connected-component labeling for
@@ -114,12 +118,18 @@ labeling algorithm to use. This parameter can take two values:</p><ul><li><p>"gr
 <li><p>"wu": Scan array union find labeling for both 8-way and 4-way
   connectivity.</p></li>
 </ul></dd>
+
+
 <dt>table</dt>
 <dd><p>A boolean indicating whether the coordinates of the pixels of
 each component should be returned.</p></dd>
+
+
 <dt>stats</dt>
 <dd><p>A boolean indicating whether the statistics of the connected
 components should be returned.</p></dd>
+
+
 <dt>target</dt>
 <dd><p>The location where the results should be stored. It can take 2
 values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
@@ -129,10 +139,15 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
   single channel image with a 16U or 32S bit depth. Note that this will
   replace the content of <code>target</code>.</p></li>
 </ul></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list with 1 to 4 items:</p><ul><li><p>n: the number of connected components in the image. It is always
+    
+
+<p>A list with 1 to 4 items:</p>
+<p></p>
+<ul><li><p>n: the number of connected components in the image. It is always
    returned.</p></li>
 <li><p>table: if <code>table=TRUE</code>, a matrix with 3 columns representing
    the identity of the connected components (label), and the x-y coordinates
@@ -157,11 +172,11 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dots_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">dots</span>, <span class="st">"GRAY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dots_bin</span> <span class="op">&lt;-</span> <span class="va">dots_gray</span> <span class="op">&lt;</span> <span class="fl">200</span></span>
-<span class="r-in"><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu">connectedComponents</span><span class="op">(</span><span class="va">dots_bin</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dots_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">dots</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dots_bin</span> <span class="op">&lt;-</span> <span class="va">dots_gray</span> <span class="op">&lt;</span> <span class="fl">200</span></span></span>
+<span class="r-in"><span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu">connectedComponents</span><span class="op">(</span><span class="va">dots_bin</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -176,7 +191,7 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,16 +85,20 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">readFrame</span><span class="op">(</span><span class="va">x</span>, <span class="va">pos</span>, target <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">readFrame</span><span class="op">(</span><span class="va">x</span>, <span class="va">pos</span>, target <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A <code><a href="Video-class.html">Video</a></code> object.</p></dd>
+
+
 <dt>pos</dt>
 <dd><p>An integer corresponding to the position of the frame to read in
 the video.</p></dd>
+
+
 <dt>target</dt>
 <dd><p>The location where the results should be stored. It can take 2
 values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
@@ -104,10 +108,16 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
   <code>target</code>. Note that <code>target</code> must have the same dimensions as
   <code>x</code>.</p></li>
 </ul></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If <code>target="new"</code>, the function returns an <code><a href="Image-class.html">Image</a></code> object. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object, the function
+    
+
+<p>If <code>target="new"</code>, the function returns an <code><a href="Image-class.html">Image</a></code></p>
+
+
+<p>object. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object, the function
  returns nothing and modifies that <code><a href="Image-class.html">Image</a></code> object in place.</p>
     </div>
     <div id="see-also">
@@ -121,9 +131,9 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">frame10</span> <span class="op">&lt;-</span> <span class="fu">readFrame</span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">frame10</span> <span class="op">&lt;-</span> <span class="fu">readFrame</span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -138,7 +148,7 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

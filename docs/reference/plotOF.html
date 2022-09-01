@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,15 +85,15 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotOF</span><span class="op">(</span>
-  <span class="va">of</span>,
-  gridsize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">25</span><span class="op">)</span>,
-  thresh <span class="op">=</span> <span class="fl">0</span>,
-  add <span class="op">=</span> <span class="cn">TRUE</span>,
-  arrow.ex <span class="op">=</span> <span class="fl">0.05</span>,
-  xpd <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotOF</span><span class="op">(</span></span>
+<span>  <span class="va">of</span>,</span>
+<span>  gridsize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">25</span><span class="op">)</span>,</span>
+<span>  thresh <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  add <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  arrow.ex <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  xpd <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -101,26 +101,39 @@
     <dl><dt>of</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> produced by the <code><a href="farneback.html">farneback</a></code>
 function.</p></dd>
+
+
 <dt>gridsize</dt>
 <dd><p>A 2-element vector indicating the number of optical flow
 vectors to plot in each x-y dimension (default: c(25, 25)). Alternatively, a
 numeric value that will be used for both dimensions.</p></dd>
+
+
 <dt>thresh</dt>
 <dd><p>The minimal length of optical flow vectors that should be
 plotted (default: 0).</p></dd>
+
+
 <dt>add</dt>
 <dd><p>A logical indicating whether to plot the vector field over an
 existing plot (default: FALSE).</p></dd>
+
+
 <dt>arrow.ex</dt>
 <dd><p>Controls the length of the arrows. The length is in terms of
 the fraction of the shorter axis in the plot. So with a default of .05, 20
 arrows of maximum length can line up end to end along the shorter axis.</p></dd>
+
+
 <dt>xpd</dt>
 <dd><p>If true does not clip arrows to fit inside the plot region,
 default is not to clip.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Graphics arguments passed to the <code><a href="https://rdrr.io/r/graphics/arrows.html" class="external-link">arrows</a></code> function that
 can change the color or arrow sizes. See <code><a href="https://rdrr.io/r/graphics/arrows.html" class="external-link">arrows</a></code> help for details.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -133,17 +146,14 @@ can change the color or arrow sizes. See <code><a href="https://rdrr.io/r/graphi
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon1</span> <span class="op">&lt;-</span> <span class="fu"><a href="readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon1</span>, <span class="st">"GRAY"</span>, <span class="st">"self"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon2</span>, <span class="st">"GRAY"</span>, <span class="st">"self"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">of</span> <span class="op">&lt;-</span> <span class="fu"><a href="farneback.html">farneback</a></span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">of</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plotOF</span><span class="op">(</span><span class="va">of</span>, length <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>zero-length arrow is of indeterminate angle and so skipped</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>zero-length arrow is of indeterminate angle and so skipped</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>zero-length arrow is of indeterminate angle and so skipped</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon1</span> <span class="op">&lt;-</span> <span class="fu"><a href="readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon1</span>, <span class="st">"GRAY"</span>, <span class="st">"self"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon2</span>, <span class="st">"GRAY"</span>, <span class="st">"self"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">of</span> <span class="op">&lt;-</span> <span class="fu"><a href="farneback.html">farneback</a></span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">of</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plotOF</span><span class="op">(</span><span class="va">of</span>, length <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>zero-length arrow is of indeterminate angle and so skipped</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>zero-length arrow is of indeterminate angle and so skipped</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>zero-length arrow is of indeterminate angle and so skipped</span>
@@ -435,7 +445,7 @@ can change the color or arrow sizes. See <code><a href="https://rdrr.io/r/graphi
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>zero-length arrow is of indeterminate angle and so skipped</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>zero-length arrow is of indeterminate angle and so skipped</span>
 <span class="r-plt img"><img src="plotOF-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -450,7 +460,7 @@ can change the color or arrow sizes. See <code><a href="https://rdrr.io/r/graphi
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,13 +85,15 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">randn</span><span class="op">(</span><span class="va">image</span>, mean <span class="op">=</span> <span class="fl">127</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">randn</span><span class="op">(</span><span class="va">image</span>, mean <span class="op">=</span> <span class="fl">127</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>mean</dt>
 <dd><p>A vector indicating the mean value (expectation) of the generated
 random numbers. It can have as many elements as the number of channels in
@@ -99,6 +101,8 @@ the image. If it has less elements than the number of channels, it is
 recycled to match the number of channels. If it has more elements than the
 number of channels, the extra elements are ignored without warning (default:
 0).</p></dd>
+
+
 <dt>sd</dt>
 <dd><p>A vector indicating the standard deviation  of the generated
 random numbers. It can have as many elements as the number of channels in
@@ -106,10 +110,13 @@ the image. If it has less elements than the number of channels, it is
 recycled to match the number of channels. If it has more elements than the
 number of channels, the extra elements are ignored without warning (default:
 256).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>This function returns nothing and modifies image in place.</p>
+    
+
+<p>This function returns nothing and modifies image in place.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -122,9 +129,9 @@ number of channels, the extra elements are ignored without warning (default:
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">rnd</span> <span class="op">&lt;-</span> <span class="fu"><a href="zeros.html">zeros</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">randn</span><span class="op">(</span><span class="va">rnd</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">rnd</span> <span class="op">&lt;-</span> <span class="fu"><a href="zeros.html">zeros</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">randn</span><span class="op">(</span><span class="va">rnd</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -139,7 +146,7 @@ number of channels, the extra elements are ignored without warning (default:
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

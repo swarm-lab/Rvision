@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,22 +85,28 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">findNonZero</span><span class="op">(</span><span class="va">image</span>, values <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">findNonZero</span><span class="op">(</span><span class="va">image</span>, values <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>A single-channel <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>values</dt>
 <dd><p>A logical indicating whether the values of the non-zero pixels
 should also be returned (default: FALSE).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If <code>values=FALSE</code>, a matrix with two columns, corresponding to
- the x (columns) and y (rows) coordinates of the non-zero pixels. If
-<code>values=TRUE</code>, an additional column corresponding to the pixel values
+    
+
+<p>If <code>values=FALSE</code>, a matrix with two columns, corresponding to
+ the x (columns) and y (rows) coordinates of the non-zero pixels. If</p>
+<p></p>
+<p><code>values=TRUE</code>, an additional column corresponding to the pixel values
  will also be returned.</p>
     </div>
     <div id="see-also">
@@ -114,9 +120,9 @@ should also be returned (default: FALSE).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="st">"GRAY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">findNonZero</span><span class="op">(</span><span class="va">balloon_gray</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">findNonZero</span><span class="op">(</span><span class="va">balloon_gray</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             x   y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [1,]   1 360</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [2,]   2 360</span>
@@ -50118,7 +50124,7 @@ should also be returned (default: FALSE).</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [49998,]  78 282</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [49999,]  79 282</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [ reached getOption("max.print") -- omitted 180401 rows ]</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -50133,7 +50139,7 @@ should also be returned (default: FALSE).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

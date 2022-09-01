@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,29 +85,35 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">findTransformECC</span><span class="op">(</span>
-  <span class="va">template</span>,
-  <span class="va">image</span>,
-  warp_matrix <span class="op">=</span> <span class="cn">NULL</span>,
-  warp_mode <span class="op">=</span> <span class="st">"affine"</span>,
-  max_it <span class="op">=</span> <span class="fl">200</span>,
-  epsilon <span class="op">=</span> <span class="fl">0.001</span>,
-  filt_size <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">findTransformECC</span><span class="op">(</span></span>
+<span>  <span class="va">template</span>,</span>
+<span>  <span class="va">image</span>,</span>
+<span>  warp_matrix <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  warp_mode <span class="op">=</span> <span class="st">"affine"</span>,</span>
+<span>  max_it <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>  epsilon <span class="op">=</span> <span class="fl">0.001</span>,</span>
+<span>  filt_size <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>template</dt>
 <dd><p>A grayscale <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>image</dt>
 <dd><p>A grayscale <code><a href="Image-class.html">Image</a></code> object of the same dimensions as
 <code>template</code>.</p></dd>
+
+
 <dt>warp_matrix</dt>
 <dd><p>An initial mapping (warp) matrix. It must be a 3x3 matrix
 when <code>warp_mode</code> is set to "homography", a 2x3 matrix otherwise. If set
 to <code>NULL</code> (the default), it will be automatically initialized as an
 identity matrix with the appropriate dimensions.</p></dd>
+
+
 <dt>warp_mode</dt>
 <dd><p>A character string indicating the type of warping required
 to transform <code>image</code> into <code>template</code>. It can be any of the following:</p><ul><li><p>"translation":simple translational transformation.</p></li>
@@ -117,18 +123,27 @@ to transform <code>image</code> into <code>template</code>. It can be any of the
 <li><p>"homography":homography transformation (affine + perspective; this
   transformation does not preserve parallelism between lines).</p></li>
 </ul></dd>
+
+
 <dt>max_it</dt>
 <dd><p>The maximum number of iterations (default: 200).</p></dd>
+
+
 <dt>epsilon</dt>
 <dd><p>The convergene tolerance (default: 1e-3).</p></dd>
+
+
 <dt>filt_size</dt>
 <dd><p>The size in pixels of a gaussian blur filter applied to the
 images before computation of the transform. When set to 0 (the default), no
 filtering is applied.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A 2x3 or 3x3 (if <code>warp_mode = "homography"</code>) matrix.</p>
+    
+
+<p>A 2x3 or 3x3 (if <code>warp_mode = "homography"</code>) matrix.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -147,15 +162,15 @@ filtering is applied.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">file1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">file2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon2.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon1</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="va">file1</span><span class="op">)</span>, <span class="st">"GRAY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="va">file2</span><span class="op">)</span>, <span class="st">"GRAY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">findTransformECC</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">file1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">file2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon2.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon1</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="va">file1</span><span class="op">)</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="va">file2</span><span class="op">)</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">findTransformECC</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]      [,2]      [,3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0909585 0.1289127 -67.90714</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.1418543 1.1485574  17.79107</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -170,7 +185,7 @@ filtering is applied.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

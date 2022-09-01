@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,23 +85,29 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">queue</span><span class="op">(</span><span class="va">x</span>, size <span class="op">=</span> <span class="fl">10</span>, delay <span class="op">=</span> <span class="fl">1000</span>, overflow <span class="op">=</span> <span class="st">"pause"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">queue</span><span class="op">(</span><span class="va">x</span>, size <span class="op">=</span> <span class="fl">10</span>, delay <span class="op">=</span> <span class="fl">1000</span>, overflow <span class="op">=</span> <span class="st">"pause"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>Either a <code><a href="Video-class.html">Video</a></code> or a <code><a href="Stream-class.html">Stream</a></code> object.</p></dd>
+
+
 <dt>size</dt>
 <dd><p>The number of frames that the <code><a href="Queue-class.html">Queue</a></code> object can
 store (default: 10). This number is fixed if <code>overflow</code> is set to
 <code>"pause"</code> or <code>"replace"</code>. This number may increase if
 <code>overflow</code> is set to <code>"grow"</code> and the queue becomes full.</p></dd>
+
+
 <dt>delay</dt>
 <dd><p>Time in microseconds between two queue updates (default: 1000).
 Increasing the delay will slow down the speed at which the queue fills up.
 Decreasing it will fill up the queue faster but will use up more processing
 resources.</p></dd>
+
+
 <dt>overflow</dt>
 <dd><p>A character string indicating what the <code><a href="Queue-class.html">Queue</a></code>
 object should do when it is full. Three methods are available:</p><ul><li><p>"pause": the queue will stop retrieving and storing new frames
@@ -112,10 +118,13 @@ object should do when it is full. Three methods are available:</p><ul><li><p>"pa
   This should be used with extreme caution as it can lead to excessive
   memory usage.</p></li>
 </ul></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code><a href="Queue-class.html">Queue</a></code> object.</p>
+    
+
+<p>A <code><a href="Queue-class.html">Queue</a></code> object.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -124,9 +133,9 @@ object should do when it is full. Three methods are available:</p><ul><li><p>"pa
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">buf</span> <span class="op">&lt;-</span> <span class="fu">queue</span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">buf</span> <span class="op">&lt;-</span> <span class="fu">queue</span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -141,7 +150,7 @@ object should do when it is full. Three methods are available:</p><ul><li><p>"pa
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -19,7 +19,7 @@ Image object. This operation is destructive: it changes
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -87,33 +87,44 @@ Image object. This operation is destructive: it changes
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">drawPolyline</span><span class="op">(</span><span class="va">image</span>, <span class="va">line</span>, closed <span class="op">=</span> <span class="cn">FALSE</span>, color <span class="op">=</span> <span class="st">"red"</span>, thickness <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">drawPolyline</span><span class="op">(</span><span class="va">image</span>, <span class="va">line</span>, closed <span class="op">=</span> <span class="cn">FALSE</span>, color <span class="op">=</span> <span class="st">"red"</span>, thickness <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>line</dt>
 <dd><p>An m x 2 matrix (or an object that can be converted to an
 m x 2 matrix) or a list of m x 2 matrices, with the first column containing
 the x coordinates of the polygonal lines and the second column containing
 the y coordinates of the polygonal lines.</p></dd>
+
+
 <dt>closed</dt>
 <dd><p>A boolean indicating whether the drawn polylines are closed or
 not (default: FALSE). If they are closed, the function draws a line from the
 last vertex of each curve to its first vertex.</p></dd>
+
+
 <dt>color</dt>
 <dd><p>A value or vector of any kind of R color specification compatible
 with <code><a href="col2bgr.html">col2bgr</a></code> representing the color to fill the polygon with
 (default: "white").</p></dd>
+
+
 <dt>thickness</dt>
 <dd><p>A numeric value representing the thickness in pixels of the
 line (default: 1).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>This function does not return anything. It modifies <code>image</code> in
+    
+
+<p>This function does not return anything. It modifies <code>image</code> in
  place.</p>
     </div>
     <div id="see-also">
@@ -127,10 +138,10 @@ line (default: 1).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">290</span>, <span class="fl">290</span>, <span class="fl">440</span>, <span class="fl">440</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">170</span>, <span class="fl">325</span>, <span class="fl">325</span>, <span class="fl">170</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">drawPolyline</span><span class="op">(</span><span class="va">balloon</span>, <span class="va">poly</span>, closed <span class="op">=</span> <span class="cn">FALSE</span>, color <span class="op">=</span> <span class="st">"red"</span>, thickness <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">290</span>, <span class="fl">290</span>, <span class="fl">440</span>, <span class="fl">440</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">170</span>, <span class="fl">325</span>, <span class="fl">325</span>, <span class="fl">170</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">drawPolyline</span><span class="op">(</span><span class="va">balloon</span>, <span class="va">poly</span>, closed <span class="op">=</span> <span class="cn">FALSE</span>, color <span class="op">=</span> <span class="st">"red"</span>, thickness <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -145,7 +156,7 @@ line (default: 1).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

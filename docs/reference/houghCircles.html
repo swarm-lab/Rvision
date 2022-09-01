@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,16 +85,16 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">houghCircles</span><span class="op">(</span>
-  <span class="va">image</span>,
-  <span class="va">method</span>,
-  <span class="va">dp</span>,
-  <span class="va">min_dist</span>,
-  param1 <span class="op">=</span> <span class="fl">100</span>,
-  param2 <span class="op">=</span> <span class="fl">100</span>,
-  min_radius <span class="op">=</span> <span class="fl">0</span>,
-  max_radius <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">houghCircles</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  <span class="va">method</span>,</span>
+<span>  <span class="va">dp</span>,</span>
+<span>  <span class="va">min_dist</span>,</span>
+<span>  param1 <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  param2 <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  min_radius <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  max_radius <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -102,19 +102,27 @@
     <dl><dt>image</dt>
 <dd><p>An 8-bit (8U) single-channel (grayscale) <code><a href="Image-class.html">Image</a></code>
 object.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>A character string indicating the detection method to be used.
 The available methods are "GRADIENT" and "ALT" (generally more accurate).</p></dd>
+
+
 <dt>dp</dt>
 <dd><p>Inverse ratio of the accumulator resolution to the image resolution.
 For example, if <code>dp = 1</code>, the accumulator has the same resolution as
 the input image. If <code>dp = 2</code>, the accumulator has half the resolution.
 Etc. For <code>method = "GRADIENT"</code> the recommended value is <code>dp = 1.5</code>,
 unless some small very circles need to be detected.</p></dd>
+
+
 <dt>min_dist</dt>
 <dd><p>Minimum distance between the centers of the detected circles.
 If the parameter is too small, multiple neighbor circles may be falsely
 detected. If it is too large, some circles may be missed.</p></dd>
+
+
 <dt>param1</dt>
 <dd><p>First method-specific parameter. In this case, it is the higher
 threshold of the two passed to the Canny edge detector (the lower one is
@@ -122,6 +130,8 @@ twice smaller). The default value is 100 but note that <code>method = "ALT"</cod
 uses the Scharr algorithm to compute the image derivatives and, therefore,
 the threshold value should normally be higher, such as 300 for normally
 exposed and contrasty images.</p></dd>
+
+
 <dt>param2</dt>
 <dd><p>Second method-specific parameter. In case of
 <code>method = "GRADIENT"</code>, it is the accumulator threshold for the circle
@@ -133,27 +143,34 @@ algorithm will select. In most cases 0.9 should be fine. If you want get
 better detection of small circles, you may decrease it to 0.85, 0.8 or even
 less. But then also try to limit the search range
 <code>[min_radius, max_radius]</code> to avoid too many false circles.</p></dd>
+
+
 <dt>min_radius</dt>
 <dd><p>The minimum acceptable circle radius.</p></dd>
+
+
 <dt>max_radius</dt>
 <dd><p>The maximum acceptable circle radius. If
 <code>max_radius &lt;= 0</code>, the function uses the maximum image dimension. If
 <code>max_radius &lt; 0</code> and  <code>method = "GRADIENT"</code>, the function returns
 the centers without the radiuses.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A matrix with 5 columns corresponding to the unique id of each circle,
+    
+
+<p>A matrix with 5 columns corresponding to the unique id of each circle,
  the x and y coordinates of their centers, the estimates of their radius, and
  the estimated relative reliability of the detected circles ("votes").</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dots_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">dots</span>, <span class="st">"GRAY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">circ</span> <span class="op">&lt;-</span> <span class="fu">houghCircles</span><span class="op">(</span><span class="va">dots_gray</span>, <span class="st">"ALT"</span>, <span class="fl">1.5</span>, <span class="fl">25</span>, <span class="fl">300</span>, <span class="fl">0.9</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dots_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">dots</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">circ</span> <span class="op">&lt;-</span> <span class="fu">houghCircles</span><span class="op">(</span><span class="va">dots_gray</span>, <span class="st">"ALT"</span>, <span class="fl">1.5</span>, <span class="fl">25</span>, <span class="fl">300</span>, <span class="fl">0.9</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -168,7 +185,7 @@ the centers without the radiuses.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

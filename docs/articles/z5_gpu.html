@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -151,14 +151,14 @@ images it receives in the memory of the CPU. Before using
 GPU-accelerated functions, the image must first be copied to the GPU
 memory. This can be done very easily as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Find the path to the bunny.png image provided with Rvision</span>
-<span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
-
-<span class="co"># Load the image in memory</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span>
-
-<span class="co"># Copy the image to GPU memory</span>
-<span class="va">my_image</span><span class="op">$</span><span class="fu">toGPU</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
+<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load the image in memory</span></span>
+<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Copy the image to GPU memory</span></span>
+<span><span class="va">my_image</span><span class="op">$</span><span class="fu">toGPU</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Once this is done, <code>Rvision</code> (<code>OpenCV</code> really)
 will automatically use the GPU-accelerated version of each operation on
 the image if it is available. Otherwise, it will default to using the
@@ -176,8 +176,8 @@ all the images use the memory of the same processor.</p>
 <code><a href="https://rdrr.io/r/base/array.html" class="external-link">base::array</a></code>), you can simply apply the reverse operation as
 follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Copy the image back to CPU memory</span>
-<span class="va">my_image</span><span class="op">$</span><span class="fu">fromGPU</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Copy the image back to CPU memory</span></span>
+<span><span class="va">my_image</span><span class="op">$</span><span class="fu">fromGPU</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -243,7 +243,7 @@ functions at the start of a session, before the pipeline starts.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,8 +85,8 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for list</span>
-<span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, target <span class="op">=</span> <span class="st">"new"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for list</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, target <span class="op">=</span> <span class="st">"new"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,6 +94,8 @@
     <dl><dt>x</dt>
 <dd><p>A list of <code><a href="Image-class.html">Image</a></code> objects. All images must have the same
 dimensions, number of channels, and bit depth.</p></dd>
+
+
 <dt>target</dt>
 <dd><p>The location where the results should be stored when passing a
 list of images to the function. It can take 3 values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
@@ -104,13 +106,21 @@ list of images to the function. It can take 3 values:</p><ul><li><p>"new":a new 
   dimensions and number of channels as the images in the list, otherwise an
   error will be thrown.</p></li>
 </ul></dd>
+
+
 <dt>...</dt>
 <dd><p>Further arguments passed to summary methods. Unused if <code>x</code> is
 a list of images.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If  <code>target="new"</code>, the function returns an <code><a href="Image-class.html">Image</a></code> object. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object, the function
+    
+
+<p>If  <code>target="new"</code>, the function returns an <code><a href="Image-class.html">Image</a></code></p>
+
+
+<p>object. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object, the function
  returns nothing and modifies that <code><a href="Image-class.html">Image</a></code> object in place.</p>
     </div>
     <div id="see-also">
@@ -124,10 +134,10 @@ a list of images.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">img_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="readNext.html">readNext</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mean_img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">img_list</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">img_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="readNext.html">readNext</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mean_img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">img_list</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -142,7 +152,7 @@ a list of images.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
