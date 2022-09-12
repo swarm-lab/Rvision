@@ -2,7 +2,7 @@
 % Please edit documentation in R/ImageClass.R
 \name{writeMulti}
 \alias{writeMulti}
-\title{Wrtie a Multi-Page Image}
+\title{Write a Multi-Page Image}
 \usage{
 writeMulti(x, img_list, overwrite = FALSE)
 }

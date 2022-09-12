@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -83,20 +83,27 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for blob</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, col <span class="op">=</span> <span class="st">"red"</span>, asp <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for blob</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, col <span class="op">=</span> <span class="st">"red"</span>, asp <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A <code>blob</code> object.</p></dd>
+
+
 <dt>col</dt>
 <dd><p>The color of the <code>blob</code> center and box (default: "red").</p></dd>
+
+
 <dt>asp</dt>
 <dd><p>The y/x aspect ratio of the plotting window (default: 1).</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to be passed to <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></code>.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -109,14 +116,14 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">blobs</span> <span class="op">&lt;-</span> <span class="fu"><a href="simpleBlobDetector.html">simpleBlobDetector</a></span><span class="op">(</span><span class="fu"><a href="invert.html">invert</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span>, min_threshold <span class="op">=</span> <span class="fl">25</span>, max_threshold <span class="op">=</span> <span class="fl">220</span>,</span>
-<span class="r-in">                            filter_by_area <span class="op">=</span> <span class="cn">TRUE</span>, min_area <span class="op">=</span> <span class="fl">200</span>, max_area <span class="op">=</span> <span class="cn">Inf</span>,</span>
-<span class="r-in">                            filter_by_color <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">blobs</span>, pch <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">blobs</span> <span class="op">&lt;-</span> <span class="fu"><a href="simpleBlobDetector.html">simpleBlobDetector</a></span><span class="op">(</span><span class="fu"><a href="invert.html">invert</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span>, min_threshold <span class="op">=</span> <span class="fl">25</span>, max_threshold <span class="op">=</span> <span class="fl">220</span>,</span></span>
+<span class="r-in"><span>                            filter_by_area <span class="op">=</span> <span class="cn">TRUE</span>, min_area <span class="op">=</span> <span class="fl">200</span>, max_area <span class="op">=</span> <span class="cn">Inf</span>,</span></span>
+<span class="r-in"><span>                            filter_by_color <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">blobs</span>, pch <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.blob-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -131,7 +138,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

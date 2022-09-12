@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,15 +85,19 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">extractChannel</span><span class="op">(</span><span class="va">image</span>, <span class="va">channel</span>, target <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extractChannel</span><span class="op">(</span><span class="va">image</span>, <span class="va">channel</span>, target <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>channel</dt>
 <dd><p>An integer specifying the index of the channel to extract.</p></dd>
+
+
 <dt>target</dt>
 <dd><p>The location where the results should be stored. It can take 2
 values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
@@ -105,11 +109,21 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
   <code>image</code>, an error may be thrown. <code>target</code> should also be a
   single-channel <code><a href="Image-class.html">Image</a></code> object or an error will be thrown.</p></li>
 </ul></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If <code>target="new"</code>, the function returns a single-channel
-<code><a href="Image-class.html">Image</a></code> object. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object, the function returns nothing and modifies that <code><a href="Image-class.html">Image</a></code> object in place.</p>
+    
+
+<p>If <code>target="new"</code>, the function returns a single-channel</p>
+<p></p>
+<p><code><a href="Image-class.html">Image</a></code> object. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code></p>
+
+
+<p>object, the function returns nothing and modifies that <code><a href="Image-class.html">Image</a></code></p>
+
+
+<p>object in place.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -122,13 +136,13 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">extractChannel</span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">2</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">extractChannel</span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class: image. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimensions: 640x360.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Type: GRAY, 1-channel, 8U.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GPU: FALSE.</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -143,7 +157,7 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

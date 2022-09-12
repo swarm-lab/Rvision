@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -125,15 +125,15 @@
 passing the path to a video file to the <code><a href="../reference/video.html">video()</a></code> function.
 For instance:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span>
-<span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
-
-<span class="co"># Open the video file stream</span>
-<span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span></span>
+<span><span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Open the video file stream</span></span>
+<span><span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span></span></code></pre></div>
 <p>Once a <code>Video</code> object is not required anymore, it can be
 released from memory as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span></span></code></pre></div>
 <p>Note that <code>Video</code> objects are wrappers around
 <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html" class="external-link"><code>VideoCapture</code></a>
 pointers. They will not persist between <code>R</code> sessions.</p>
@@ -146,8 +146,8 @@ pointers. They will not persist between <code>R</code> sessions.</p>
 stream (e.g. from a webcam) using the <code><a href="../reference/stream.html">stream()</a></code> function.
 For instance:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Start the default camera stream</span>
-<span class="va">my_stream</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stream.html">stream</a></span><span class="op">(</span>index <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Start the default camera stream</span></span>
+<span><span class="va">my_stream</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stream.html">stream</a></span><span class="op">(</span>index <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <p>The index argument takes an integer number corresponding to the
 position of the camera in the list of video capturing devices available
 on your computer. 0 corresponds to the default camera, which is usually
@@ -157,7 +157,7 @@ if cameras are connected/disconnected during a session.</p>
 <p>Once a <code>Stream</code> object is not required anymore, it can be
 released from memory as follows:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></span></code></pre></div>
 <p>Note that <code>Stream</code> objects are wrappers around
 <code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html" class="external-link"><code>VideoCapture</code></a>
 pointers. They will not persist between <code>R</code> sessions.</p>
@@ -180,11 +180,11 @@ objects. They will not persist between <code>R</code> sessions.</p>
 the path to an image file to the <code><a href="../reference/image.html">image()</a></code> function. For
 instance:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Find the path to the bunny.png image provided with Rvision</span>
-<span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
-
-<span class="co"># Load the image in memory</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
+<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load the image in memory</span></span>
+<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="images-from-video-streams">2.3.2 - Images from video streams<a class="anchor" aria-label="anchor" href="#images-from-video-streams"></a>
@@ -193,11 +193,11 @@ instance:</p>
 capturing frames from them with the <code><a href="../reference/readNext.html">readNext()</a></code> and
 <code><a href="../reference/readFrame.html">readFrame()</a></code> functions. For instance:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Capture the next available frame from the my_video object created earlier</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span>
-
-<span class="co"># Capture frame 100 from the my_video object created earlier</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">my_video</span>, <span class="fl">100</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Capture the next available frame from the my_video object created earlier</span></span>
+<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Capture frame 100 from the my_video object created earlier</span></span>
+<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">my_video</span>, <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="images-from-camera-streams">2.3.3 - Images from camera streams<a class="anchor" aria-label="anchor" href="#images-from-camera-streams"></a>
@@ -206,8 +206,8 @@ capturing frames from them with the <code><a href="../reference/readNext.html">r
 capturing frames from them with the <code><a href="../reference/readNext.html">readNext()</a></code> function.
 For instance:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Capture the next available frame from the my_stream object created earlier</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Capture the next available frame from the my_stream object created earlier</span></span>
+<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="images-from-r-arrays">2.3.4 - Images from R arrays<a class="anchor" aria-label="anchor" href="#images-from-r-arrays"></a>
@@ -216,11 +216,11 @@ For instance:</p>
 files by passing the array directly to the <code><a href="../reference/image.html">image()</a></code>
 function. For instance:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Create a 100 x 100 x 3 random array</span>
-<span class="va">my_array</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">30000</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># Load the image in memory</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span><span class="va">my_array</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Create a 100 x 100 x 3 random array</span></span>
+<span><span class="va">my_array</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">30000</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load the image in memory</span></span>
+<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span><span class="va">my_array</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 </div>
@@ -232,22 +232,22 @@ objects. When creating a <code>VideoWriter</code> object, the
 dimensions, frame rate, and codec of the final video file must be
 specified. For instance:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Create a 1280x720 video file called file.mp4 on the desktop, using the x264</span>
-<span class="co"># codec at 30 frames per second</span>
-<span class="va">my_writer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/videoWriter.html">videoWriter</a></span><span class="op">(</span><span class="st">"~/Desktop/file.mp4"</span>, fourcc <span class="op">=</span> <span class="st">"x264"</span>, fps <span class="op">=</span> <span class="fl">30</span>, 
-                         height <span class="op">=</span> <span class="fl">720</span>, width <span class="op">=</span> <span class="fl">1280</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Create a 1280x720 video file called file.mp4 on the desktop, using the x264</span></span>
+<span><span class="co"># codec at 30 frames per second</span></span>
+<span><span class="va">my_writer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/videoWriter.html">videoWriter</a></span><span class="op">(</span><span class="st">"~/Desktop/file.mp4"</span>, fourcc <span class="op">=</span> <span class="st">"x264"</span>, fps <span class="op">=</span> <span class="fl">30</span>, </span>
+<span>                         height <span class="op">=</span> <span class="fl">720</span>, width <span class="op">=</span> <span class="fl">1280</span><span class="op">)</span></span></code></pre></div>
 <p>Once a <code>VideoWriter</code> object has been created, individual
 frames can be written to it sequentially. For instance:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Capture the next 30 frames from the my_stream camera stream created earlier </span>
-<span class="co"># and write them to file.mp4</span>
-<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/writeFrame.html">writeFrame</a></span><span class="op">(</span><span class="va">my_writer</span>, <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Capture the next 30 frames from the my_stream camera stream created earlier </span></span>
+<span><span class="co"># and write them to file.mp4</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/writeFrame.html">writeFrame</a></span><span class="op">(</span><span class="va">my_writer</span>, <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>Once all frames have been written to the <code>VideoWriter</code>
 object, it can be closed and released from memory as follows:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_writer</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_writer</span><span class="op">)</span></span></code></pre></div>
 <p>Note that if you do not close and release the
 <code>VideoWriter</code> object prior to exiting the <code>R</code>
 session, you will not be able to play it with your system’s video
@@ -263,9 +263,9 @@ pointers. They will not persist between <code>R</code> sessions.</p>
 <p>Images can be written to files using the <code><a href="../reference/write.Image.html">write.Image()</a></code>
 function. For instance:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Write the my_image object created earlier to a PNG file called file.png on the</span>
-<span class="co"># desktop</span>
-<span class="fu"><a href="../reference/write.Image.html">write.Image</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="st">"~/Desktop/file.png"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Write the my_image object created earlier to a PNG file called file.png on the</span></span>
+<span><span class="co"># desktop</span></span>
+<span><span class="fu"><a href="../reference/write.Image.html">write.Image</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="st">"~/Desktop/file.png"</span><span class="op">)</span></span></code></pre></div>
 <p><code>Rvision</code> will guess the format of the image file from the
 file extension. Most common file formats are supported.</p>
 </div>
@@ -288,7 +288,7 @@ file extension. Most common file formats are supported.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

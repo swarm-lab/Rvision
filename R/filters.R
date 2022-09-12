@@ -1363,3 +1363,42 @@ invert <- function(image, target = "new", in_place = NULL) {
     stop("Invalid target.")
   }
 }
+
+
+#' @title Gabor Filter Kernels
+#'
+#' @description \code{getGaborKernel} is a convenience function to create Gabor
+#'  kernels that can be used to filter images with \code{\link{filter2D}}.
+#'
+#' @param width The width in pixels of the kernel (default: 31).
+#'
+#' @param height The height in pixels of the kernel (default: 31).
+#'
+#' @param sigma The standard deviation of the Gaussian envelope (default: 5).
+#'
+#' @param theta The orientation of the normal to the parallel stripes of a Gabor
+#'  function (default: \code{\link{pi}}).
+#'
+#' @param lambda The wavelength of the sinusoidal factor (default: 31).
+#'
+#' @param gamma The spatial aspect ratio (default: 5).
+#'
+#' @param psi A phase offset (default: 0).
+#'
+#' @return A matrix of Gabor coefficients.
+#'
+#' @note For more details about Gabor filter equations and parameters,
+#'  see: \href{https://en.wikipedia.org/wiki/Gabor_filter}{Gabor filter}.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{filter2D}}
+#'
+#' @examples
+#' getGaborKernel()
+#'
+#' @export
+getGaborKernel <- function(width = 31, height = 31, sigma = 5, theta = pi,
+                           lambda = 31, gamma = 5, psi = 0) {
+  `_getGaborKernel`(width, height, sigma, theta, lambda, gamma, psi)
+}

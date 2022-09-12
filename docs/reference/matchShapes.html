@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">matchShapes</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, method <span class="op">=</span> <span class="st">"I1"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">matchShapes</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, method <span class="op">=</span> <span class="st">"I1"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,17 +94,24 @@
 <dd><p>Either a Nx2 matrix of the X-Y coordinates of a polygon (e.g., a
 contour produced by <code><a href="findContours.html">findContours</a></code>), or a single-channel
 <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>x2</dt>
 <dd><p>Either a Nx2 matrix of the X-Y coordinates of a polygon (e.g., a
 contour produced by <code><a href="findContours.html">findContours</a></code>), or a single-channel
 <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>The comparison method to compute the difference between the two
 shapes (see Notes; default: "I1").</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A numerical value.</p>
+    
+
+<p>A numerical value.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -128,15 +135,15 @@ shapes (see Notes; default: "I1").</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dots_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">dots</span>, <span class="st">"GRAY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dots_bin</span> <span class="op">&lt;-</span> <span class="va">dots_gray</span> <span class="op">&lt;</span> <span class="fl">200</span></span>
-<span class="r-in"><span class="va">contours</span> <span class="op">&lt;-</span> <span class="fu"><a href="findContours.html">findContours</a></span><span class="op">(</span><span class="va">dots_bin</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">contour0</span> <span class="op">&lt;-</span> <span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span><span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">0</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
-<span class="r-in"><span class="va">contour1</span> <span class="op">&lt;-</span> <span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span><span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
-<span class="r-in"><span class="fu">matchShapes</span><span class="op">(</span><span class="va">contour0</span>, <span class="va">contour1</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dots_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">dots</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dots_bin</span> <span class="op">&lt;-</span> <span class="va">dots_gray</span> <span class="op">&lt;</span> <span class="fl">200</span></span></span>
+<span class="r-in"><span><span class="va">contours</span> <span class="op">&lt;-</span> <span class="fu"><a href="findContours.html">findContours</a></span><span class="op">(</span><span class="va">dots_bin</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">contour0</span> <span class="op">&lt;-</span> <span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span><span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">0</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">contour1</span> <span class="op">&lt;-</span> <span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span><span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="fu">matchShapes</span><span class="op">(</span><span class="va">contour0</span>, <span class="va">contour1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1503717</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -151,7 +158,7 @@ shapes (see Notes; default: "I1").</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

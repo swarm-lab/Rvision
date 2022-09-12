@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -83,58 +83,78 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">farneback</span><span class="op">(</span>
-  <span class="va">image1</span>,
-  <span class="va">image2</span>,
-  pyr_scale <span class="op">=</span> <span class="fl">0.5</span>,
-  levels <span class="op">=</span> <span class="fl">3</span>,
-  winsize <span class="op">=</span> <span class="fl">43</span>,
-  iterations <span class="op">=</span> <span class="fl">3</span>,
-  poly_n <span class="op">=</span> <span class="fl">7</span>,
-  poly_sigma <span class="op">=</span> <span class="fl">1.5</span>,
-  use_init <span class="op">=</span> <span class="cn">FALSE</span>,
-  Gaussian <span class="op">=</span> <span class="cn">FALSE</span>,
-  target <span class="op">=</span> <span class="st">"new"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">farneback</span><span class="op">(</span></span>
+<span>  <span class="va">image1</span>,</span>
+<span>  <span class="va">image2</span>,</span>
+<span>  pyr_scale <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  levels <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  winsize <span class="op">=</span> <span class="fl">43</span>,</span>
+<span>  iterations <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  poly_n <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>  poly_sigma <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>  use_init <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  Gaussian <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  target <span class="op">=</span> <span class="st">"new"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image1</dt>
 <dd><p>A single-channel, 8U <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>image2</dt>
 <dd><p>A single-channel, 8U <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>pyr_scale</dt>
 <dd><p>Parameter, specifying the image scale (&lt;1) to build pyramids
 for each image; pyr_scale = 0.5 means a classical pyramid, where each next
 layer is twice smaller than the previous one.</p></dd>
+
+
 <dt>levels</dt>
 <dd><p>Number of pyramid layers including the initial image; levels = 1
 means that no extra layers are created and only the original images are used.</p></dd>
+
+
 <dt>winsize</dt>
 <dd><p>Averaging window size; larger values increase the algorithm
 robustness to image noise and give more chances for fast motion detection,
 but yield more blurred motion field.</p></dd>
+
+
 <dt>iterations</dt>
 <dd><p>Number of iterations the algorithm does at each pyramid level.</p></dd>
+
+
 <dt>poly_n</dt>
 <dd><p>Size of the pixel neighborhood used to find polynomial expansion
 in each pixel; larger values mean that the image will be approximated with
 smoother surfaces, yielding more robust algorithm and more blurred motion
 field, typically poly_n = 5 or 7.</p></dd>
+
+
 <dt>poly_sigma</dt>
 <dd><p>Standard deviation of the Gaussian that is used to smooth
 derivatives used as a basis for the polynomial expansion; for poly_n = 5, you
 can set poly_sigma = 1.1, for poly_n = 7, a good value would be poly_sigma = 1.5.</p></dd>
+
+
 <dt>use_init</dt>
 <dd><p>A logical indicating whether the content of <code>target</code>
 should be used as an initial flow approximation.</p></dd>
+
+
 <dt>Gaussian</dt>
 <dd><p>A logical indicating whether to use a Gaussian filter instead
 of a box filter for optical flow estimation; usually, this option gives a
 more accurate flow than with a box filter, at the cost of lower speed;
 normally, <code>winsize</code> for a Gaussian window should be set to a larger
 value to achieve the same level of robustness.</p></dd>
+
+
 <dt>target</dt>
 <dd><p>The location where the results should be stored. It can take 3
 values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
@@ -144,10 +164,16 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
   content of <code>target</code>. <code>target</code> must be a single-channel, 32F
   <code><a href="Image-class.html">Image</a></code> object with the same dimensions as <code>image1</code>.</p></li>
 </ul></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If <code>target="new"</code>, the function returns an <code><a href="Image-class.html">Image</a></code> object. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object, the function
+    
+
+<p>If <code>target="new"</code>, the function returns an <code><a href="Image-class.html">Image</a></code></p>
+
+
+<p>object. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object, the function
  returns nothing and modifies that <code><a href="Image-class.html">Image</a></code> object in place.</p>
     </div>
     <div id="references">
@@ -167,13 +193,13 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon1</span> <span class="op">&lt;-</span> <span class="fu"><a href="readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon1</span>, <span class="st">"GRAY"</span>, <span class="st">"self"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon2</span>, <span class="st">"GRAY"</span>, <span class="st">"self"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">of</span> <span class="op">&lt;-</span> <span class="fu">farneback</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon1</span> <span class="op">&lt;-</span> <span class="fu"><a href="readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon1</span>, <span class="st">"GRAY"</span>, <span class="st">"self"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="readFrame.html">readFrame</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon2</span>, <span class="st">"GRAY"</span>, <span class="st">"self"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">of</span> <span class="op">&lt;-</span> <span class="fu">farneback</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -188,7 +214,7 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

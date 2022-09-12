@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -138,21 +138,21 @@ speed of large volumes of images.</p>
 <p>All operations that support in-place operations will have an argument
 named “target” that can be set to the value “self”. For instance:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Find the path to the bunny.png image provided with Rvision</span>
-<span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
-
-<span class="co"># Load the image in memory</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span>
-
-<span class="co"># Plot the original image</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span>
-
-<span class="co"># Apply a Gaussian blur in place. Note that the operation will not return </span>
-<span class="co"># anything and the result will replace the content of my_image.</span>
-<span class="fu"><a href="../reference/gaussianBlur.html">gaussianBlur</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="fl">11</span>, <span class="fl">11</span>, <span class="fl">3</span>, <span class="fl">3</span>, target <span class="op">=</span> <span class="st">"self"</span><span class="op">)</span>
-
-<span class="co"># Plot original image after modification</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
+<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load the image in memory</span></span>
+<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot the original image</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Apply a Gaussian blur in place. Note that the operation will not return </span></span>
+<span><span class="co"># anything and the result will replace the content of my_image.</span></span>
+<span><span class="fu"><a href="../reference/gaussianBlur.html">gaussianBlur</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="fl">11</span>, <span class="fl">11</span>, <span class="fl">3</span>, <span class="fl">3</span>, target <span class="op">=</span> <span class="st">"self"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot original image after modification</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -173,20 +173,20 @@ functions.</p>
 explicitely specified by setting the “target” argument to “new”. For
 instance:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Find the path to the bunny.png image provided with Rvision</span>
-<span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
-
-<span class="co"># Load the image in memory</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span>
-
-<span class="co"># Apply a Gaussian blur to a copy of the image. </span>
-<span class="va">my_blurred_copy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gaussianBlur.html">gaussianBlur</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="fl">11</span>, <span class="fl">11</span>, <span class="fl">3</span>, <span class="fl">3</span>, target <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span>
-
-<span class="co"># Plot original image</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span>
-
-<span class="co"># Plot blurred copy </span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_blurred_copy</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
+<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load the image in memory</span></span>
+<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Apply a Gaussian blur to a copy of the image. </span></span>
+<span><span class="va">my_blurred_copy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gaussianBlur.html">gaussianBlur</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="fl">11</span>, <span class="fl">11</span>, <span class="fl">3</span>, <span class="fl">3</span>, target <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot original image</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot blurred copy </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_blurred_copy</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -206,25 +206,25 @@ placeholder for the results.</p>
 named “target” that can be set to the name of the target image. For
 instance:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Find the path to the bunny.png image provided with Rvision</span>
-<span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span>
-
-<span class="co"># Load the image in memory</span>
-<span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span>
-
-<span class="co"># Create a zero-filled target image with the memory footprint of the original</span>
-<span class="va">my_target</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/zeros.html">zeros</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span>, <span class="fu"><a href="../reference/nrow.Rcpp_Image.html">nchan</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span>, <span class="fu"><a href="../reference/bitdepth.html">bitdepth</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># Apply a Gaussian blur to the original image but store the results in the </span>
-<span class="co"># target. Note that the operation will not return anything and the result will </span>
-<span class="co"># replace the content of my_target.</span>
-<span class="fu"><a href="../reference/gaussianBlur.html">gaussianBlur</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="fl">11</span>, <span class="fl">11</span>, <span class="fl">3</span>, <span class="fl">3</span>, target <span class="op">=</span> <span class="va">my_target</span><span class="op">)</span>
-
-<span class="co"># Plot original image</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span>
-
-<span class="co"># Plot target</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_target</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
+<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load the image in memory</span></span>
+<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a zero-filled target image with the memory footprint of the original</span></span>
+<span><span class="va">my_target</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/zeros.html">zeros</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span>, <span class="fu"><a href="../reference/nrow.Rcpp_Image.html">nchan</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span>, <span class="fu"><a href="../reference/bitdepth.html">bitdepth</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Apply a Gaussian blur to the original image but store the results in the </span></span>
+<span><span class="co"># target. Note that the operation will not return anything and the result will </span></span>
+<span><span class="co"># replace the content of my_target.</span></span>
+<span><span class="fu"><a href="../reference/gaussianBlur.html">gaussianBlur</a></span><span class="op">(</span><span class="va">my_image</span>, <span class="fl">11</span>, <span class="fl">11</span>, <span class="fl">3</span>, <span class="fl">3</span>, target <span class="op">=</span> <span class="va">my_target</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot original image</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot target</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_target</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -271,7 +271,7 @@ flexibility.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

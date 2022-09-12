@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -83,15 +83,15 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">add</span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span>, <span class="va">target</span><span class="op">)</span>
-
-<span class="fu">subtract</span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span>, <span class="va">target</span><span class="op">)</span>
-
-<span class="fu">multiply</span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span>, <span class="va">target</span><span class="op">)</span>
-
-<span class="fu">divide</span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span>, <span class="va">target</span><span class="op">)</span>
-
-<span class="fu">absdiff</span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span>, <span class="va">target</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add</span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span>, <span class="va">target</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">subtract</span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span>, <span class="va">target</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">multiply</span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span>, <span class="va">target</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">divide</span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span>, <span class="va">target</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">absdiff</span><span class="op">(</span><span class="va">e1</span>, <span class="va">e2</span>, <span class="va">target</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -100,6 +100,8 @@
 <dd><p>Either 2 <code><a href="Image-class.html">Image</a></code> objects or 1 <code><a href="Image-class.html">Image</a></code>
 object and 1 numeric value/vector. If a vector and its length is less than
 the number of channels of the image, then it is recycled to match it.</p></dd>
+
+
 <dt>target</dt>
 <dd><p>The location where the results should be stored. It can take 3
 values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
@@ -114,12 +116,25 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
   channels, and bit depth as <code>e1</code> (if <code>e1</code> is an <code><a href="Image-class.html">Image</a></code>
   object, <code>e2</code> otherwise), an error will be thrown.</p></li>
 </ul></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If <code>target="new"</code>, the function returns an <code><a href="Image-class.html">Image</a></code> object. If <code>target="self"</code>, the function returns nothing and modifies
-<code>e1</code> in place if it is an <code><a href="Image-class.html">Image</a></code> object, otherwise it
- modifies <code>e2</code> in place. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object, the function returns nothing and modifies that <code><a href="Image-class.html">Image</a></code> object in place.</p>
+    
+
+<p>If <code>target="new"</code>, the function returns an <code><a href="Image-class.html">Image</a></code></p>
+
+
+<p>object. If <code>target="self"</code>, the function returns nothing and modifies</p>
+<p></p>
+<p><code>e1</code> in place if it is an <code><a href="Image-class.html">Image</a></code> object, otherwise it
+ modifies <code>e2</code> in place. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code></p>
+
+
+<p>object, the function returns nothing and modifies that <code><a href="Image-class.html">Image</a></code></p>
+
+
+<p>object in place.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -132,11 +147,11 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon1</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon2.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon_sum</span> <span class="op">&lt;-</span> <span class="fu">add</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon_absdiff</span> <span class="op">&lt;-</span> <span class="fu">absdiff</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon1</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon2.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon_sum</span> <span class="op">&lt;-</span> <span class="fu">add</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon_absdiff</span> <span class="op">&lt;-</span> <span class="fu">absdiff</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -151,7 +166,7 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

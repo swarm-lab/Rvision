@@ -152,6 +152,14 @@ RCPP_MODULE(methods_Arithmetic) {
   function("_absdiffScalar", &_absdiffScalar, List::create(_["image"], _["value"], _["target"]), "");
   function("_addWeighted", &_addWeighted, List::create(_["image1"], _["alpha"],
     _["image2"], _["beta"], _["target"]), "");
+  function("_cartToPolar", &_cartToPolar, List::create(_["x"], _["y"], _["magnitude"],
+    _["angle"], _["angleInDegrees"]), "");
+  function("_polarToCart", &_polarToCart, List::create(_["magnitude"], _["angle"],
+    _["x"], _["y"], _["angleInDegrees"]), "");
+  function("_sqrt", &_sqrt, List::create(_["image1"], _["target"]), "");
+  function("_exp", &_exp, List::create(_["image1"], _["target"]), "");
+  function("_log", &_log, List::create(_["image1"], _["target"]), "");
+  function("_pow", &_pow, List::create(_["image1"], _["power"], _["target"]), "");
 }
 
 #include "statistics.h"
@@ -257,6 +265,10 @@ RCPP_MODULE(methods_Filters) {
     _["method"], _["threshold_type"], _["block_size"], _["C"], _["target"]), "");
   function("_threshold", &_threshold, List::create(_["image"], _["thresh"], _["max_value"],
     _["threshold_type"], _["target"]), "");
+  function("_getGaborKernel", &_getGaborKernel, List::create(_["width"], _["height"],
+    _["sigma"], _["theta"], _["lambda"], _["gamma"], _["psi"]), "");
+  // function("_getGaussianKernel", &_getGaussianKernel, List::create(_["ksize"],
+  //   _["sigma"]), "");
 }
 
 #include "display.h"

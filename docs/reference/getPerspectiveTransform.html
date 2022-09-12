@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">getPerspectiveTransform</span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span>, <span class="va">from_dim</span>, to_dim <span class="op">=</span> <span class="va">from_dim</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getPerspectiveTransform</span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span>, <span class="va">from_dim</span>, to_dim <span class="op">=</span> <span class="va">from_dim</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -95,21 +95,30 @@
     <dl><dt>from</dt>
 <dd><p>A 4x2 matrix indicating the location (x, y) of 4 points in the
 source image.</p></dd>
+
+
 <dt>to</dt>
 <dd><p>A 4x2 matrix indicating the location (x, y) of 4 points in the
 destination image. The order of the points must correspond to the order in
 <code>from</code>.</p></dd>
+
+
 <dt>from_dim</dt>
 <dd><p>A vector which first two elements indicate the number of rows
 and columns of the source image.</p></dd>
+
+
 <dt>to_dim</dt>
 <dd><p>A vector which first two elements indicate the number of rows
 and columns of the destination image. If not specified, <code>from_dim</code> will
 be used as a default.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A 3x3 matrix.</p>
+    
+
+<p>A 3x3 matrix.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -122,14 +131,14 @@ be used as a default.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">from</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">4</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">to</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">4</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">getPerspectiveTransform</span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1080</span>, <span class="fl">1920</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1080</span>, <span class="fl">1920</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">from</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">4</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">to</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">4</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">getPerspectiveTransform</span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1080</span>, <span class="fl">1920</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1080</span>, <span class="fl">1920</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               [,1]         [,2]          [,3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.000000e+00 2.500000e-01 -2.697500e+02</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  3.023970e-14 1.000000e+00 -8.048597e-12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -1.972152e-31 6.938894e-18  1.000000e+00</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -144,7 +153,7 @@ be used as a default.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

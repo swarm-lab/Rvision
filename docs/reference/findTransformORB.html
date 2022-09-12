@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,24 +85,28 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">findTransformORB</span><span class="op">(</span>
-  <span class="va">template</span>,
-  <span class="va">image</span>,
-  warp_mode <span class="op">=</span> <span class="st">"affine"</span>,
-  max_features <span class="op">=</span> <span class="fl">500</span>,
-  descriptor_matcher <span class="op">=</span> <span class="st">"BruteForce-Hamming"</span>,
-  match_frac <span class="op">=</span> <span class="fl">0.15</span>,
-  homography_method <span class="op">=</span> <span class="st">"RANSAC"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">findTransformORB</span><span class="op">(</span></span>
+<span>  <span class="va">template</span>,</span>
+<span>  <span class="va">image</span>,</span>
+<span>  warp_mode <span class="op">=</span> <span class="st">"affine"</span>,</span>
+<span>  max_features <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  descriptor_matcher <span class="op">=</span> <span class="st">"BruteForce-Hamming"</span>,</span>
+<span>  match_frac <span class="op">=</span> <span class="fl">0.15</span>,</span>
+<span>  homography_method <span class="op">=</span> <span class="st">"RANSAC"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>template</dt>
 <dd><p>A grayscale <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>image</dt>
 <dd><p>A grayscale <code><a href="Image-class.html">Image</a></code> object of the same dimensions as
 <code>template</code>.</p></dd>
+
+
 <dt>warp_mode</dt>
 <dd><p>A character string indicating the type of warping required
 to transform <code>image</code> into <code>template</code>. It can be any of the following:</p><ul><li><p>"affine" (default):affine transformation (Euclidean + shear; this
@@ -110,24 +114,35 @@ to transform <code>image</code> into <code>template</code>. It can be any of the
 <li><p>"homography":homography transformation (affine + perspective; this
   transformation does not preserve parallelism between lines).</p></li>
 </ul></dd>
+
+
 <dt>max_features</dt>
 <dd><p>The maximum number of features to extract (default: 500).</p></dd>
+
+
 <dt>descriptor_matcher</dt>
 <dd><p>A character string indicating the type of the
 descriptor matcher to use. It can be one of the followings: "BruteForce",
 "BruteForce-L1", "BruteForce-Hamming" (the default), or
 "BruteForce-Hamming(2)".</p></dd>
+
+
 <dt>match_frac</dt>
 <dd><p>The fraction of top matches to keep (default: 0.15).</p></dd>
+
+
 <dt>homography_method</dt>
 <dd><p>A character string indicating the method used to
 compute a homography matrix. It can be one of the followings: "LS"
 (least-square), "RANSAC" (RANSAC-based robust method; the default), "LMEDS"
 (Least-Median robust method), or "RHO" (PROSAC-based robust method).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A 2x3 or 3x3 (if <code>warp_mode = "homography"</code>) matrix.</p>
+    
+
+<p>A 2x3 or 3x3 (if <code>warp_mode = "homography"</code>) matrix.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -146,15 +161,15 @@ compute a homography matrix. It can be one of the followings: "LS"
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">file1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">file2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon2.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon1</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="va">file1</span><span class="op">)</span>, <span class="st">"GRAY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="va">file2</span><span class="op">)</span>, <span class="st">"GRAY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">findTransformORB</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">file1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">file2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon2.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon1</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="va">file1</span><span class="op">)</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="va">file2</span><span class="op">)</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">findTransformORB</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]     [,2]      [,3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.1929843 0.154035 -212.9814</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.2644756 1.137650  152.6791</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -169,7 +184,7 @@ compute a homography matrix. It can be one of the followings: "LS"
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">col2bgr</span><span class="op">(</span><span class="va">col</span>, alpha <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">col2bgr</span><span class="op">(</span><span class="va">col</span>, alpha <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -93,13 +93,18 @@
 either a color name (as listed by <code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">colors</a></code>()), a hexadecimal
 string of the form "<code>#rrggbb</code>" or "<code>#rrggbbaa</code>" (see <code><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></code>),
 or a positive integer <code>i</code> meaning <code><a href="https://rdrr.io/r/grDevices/palette.html" class="external-link">palette</a>()[i]</code>.</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>Logical value indicating whether the alpha channel (opacity)
 values should be returned.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An integer matrix with three or four (for <code>alpha = TRUE</code>) rows
+    
+
+<p>An integer matrix with three or four (for <code>alpha = TRUE</code>) rows
  and number of columns the length of <code>col</code>. If col has names these are
  used as the column names of the return value.</p>
     </div>
@@ -122,17 +127,17 @@ values should be returned.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">col2bgr</span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">col2bgr</span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> blue     0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> green    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> red    255</span>
-<span class="r-in"><span class="fu">col2bgr</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">col2bgr</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> blue     0  107   79  230  229  188   16  158    0   107</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> green    0   83  208  151  226   11  199  158    0    83</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> red      0  223   97   34   40  205  245  158    0   223</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -147,7 +152,7 @@ values should be returned.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

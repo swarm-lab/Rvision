@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,19 +85,24 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">writeFrame</span><span class="op">(</span><span class="va">x</span>, <span class="va">frame</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">writeFrame</span><span class="op">(</span><span class="va">x</span>, <span class="va">frame</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A <code><a href="VideoWriter-class.html">VideoWriter</a></code> object.</p></dd>
+
+
 <dt>frame</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>This function does not return anything.</p>
+    
+
+<p>This function does not return anything.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -110,15 +115,15 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">live</span> <span class="op">&lt;-</span> <span class="fu"><a href="stream.html">stream</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">writer</span> <span class="op">&lt;-</span> <span class="fu"><a href="videoWriter.html">videoWriter</a></span><span class="op">(</span><span class="st">"test.mp4"</span>, <span class="st">"H264"</span>, <span class="fl">25</span>, <span class="fl">1080</span>, <span class="fl">1920</span><span class="op">)</span></span>
-<span class="r-in"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">writeFrame</span><span class="op">(</span><span class="va">writer</span>, <span class="fu"><a href="readNext.html">readNext</a></span><span class="op">(</span><span class="va">live</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="fu"><a href="release.html">release</a></span><span class="op">(</span><span class="va">writer</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="release.html">release</a></span><span class="op">(</span><span class="va">live</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">live</span> <span class="op">&lt;-</span> <span class="fu"><a href="stream.html">stream</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">writer</span> <span class="op">&lt;-</span> <span class="fu"><a href="videoWriter.html">videoWriter</a></span><span class="op">(</span><span class="st">"test.mp4"</span>, <span class="st">"H264"</span>, <span class="fl">25</span>, <span class="fl">1080</span>, <span class="fl">1920</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">250</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">writeFrame</span><span class="op">(</span><span class="va">writer</span>, <span class="fu"><a href="readNext.html">readNext</a></span><span class="op">(</span><span class="va">live</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="release.html">release</a></span><span class="op">(</span><span class="va">writer</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="release.html">release</a></span><span class="op">(</span><span class="va">live</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -133,7 +138,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -83,16 +83,16 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">threshold</span><span class="op">(</span>
-  <span class="va">image</span>,
-  thresh <span class="op">=</span> <span class="fl">127</span>,
-  max_value <span class="op">=</span> <span class="fl">255</span>,
-  method <span class="op">=</span> <span class="st">"none"</span>,
-  threshold_type <span class="op">=</span> <span class="st">"binary"</span>,
-  mask <span class="op">=</span> <span class="cn">NULL</span>,
-  target <span class="op">=</span> <span class="st">"new"</span>,
-  in_place <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">threshold</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  thresh <span class="op">=</span> <span class="fl">127</span>,</span>
+<span>  max_value <span class="op">=</span> <span class="fl">255</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  threshold_type <span class="op">=</span> <span class="st">"binary"</span>,</span>
+<span>  mask <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  target <span class="op">=</span> <span class="st">"new"</span>,</span>
+<span>  in_place <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -100,11 +100,17 @@
     <dl><dt>image</dt>
 <dd><p>An an 8-bit (8U) or 32-bit floating (32F) <code><a href="Image-class.html">Image</a></code>
 object.</p></dd>
+
+
 <dt>thresh</dt>
 <dd><p>A numeric threshold value (default: 127).</p></dd>
+
+
 <dt>max_value</dt>
 <dd><p>Non-zero value assigned to the pixels for which the
 condition determined by `threshold_type` is satisfied (default: 255).</p></dd>
+
+
 <dt>method</dt>
 <dd><p>The name of the automated thresholding algorithm to use. It can
  be any of the following:</p><ul><li><p>"none":the user-defined `threshold` value is used (the default).</p></li>
@@ -133,6 +139,8 @@ condition determined by `threshold_type` is satisfied (default: 255).</p></dd>
 <li><p>"Yen":Yen’s thresholding method.</p></li>
 </ul><p>Details about the functioning of each method can be found at
  <a href="https://imagej.net/plugins/auto-threshold" class="external-link">https://imagej.net/plugins/auto-threshold</a>.</p></dd>
+
+
 <dt>threshold_type</dt>
 <dd><p>The name of the threshold type to use. It can be any of
 the following:</p><ul><li><p>"binary":each pixel is replaced by `max_value` if its value is above
@@ -146,11 +154,15 @@ the following:</p><ul><li><p>"binary":each pixel is replaced by `max_value` if i
 <li><p>"to_zero_inverse":each pixel is replaced by zero if its value is
   above the threshold, and is unchanged otherwise.</p></li>
 </ul></dd>
+
+
 <dt>mask</dt>
 <dd><p>A single-channel (GRAY) 8-bit (8U) <code><a href="Image-class.html">Image</a></code> object
 with the same dimensions as <code>image</code>. This can be used to mask out
 pixels that should not be considered when calculating the threshold (pixels
 set to 0 in the mask will be ignored during the threshold calculation).</p></dd>
+
+
 <dt>target</dt>
 <dd><p>The location where the results should be stored. It can take 3
 values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
@@ -163,13 +175,22 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
   if <code>target</code> does not have the same dimensions, number of channels, and
   bit depth as <code>image</code>, an error may be thrown.</p></li>
 </ul></dd>
+
+
 <dt>in_place</dt>
 <dd><p>Deprecated. Use <code>target</code> instead.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If <code>target="new"</code>, the function returns an <code><a href="Image-class.html">Image</a></code> object. If <code>target="self"</code>, the function returns nothing and modifies
-<code>image</code> in place. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object,
+    
+
+<p>If <code>target="new"</code>, the function returns an <code><a href="Image-class.html">Image</a></code></p>
+
+
+<p>object. If <code>target="self"</code>, the function returns nothing and modifies</p>
+<p></p>
+<p><code>image</code> in place. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object,
  the function returns nothing and modifies that <code><a href="Image-class.html">Image</a></code> object in
  place.</p>
     </div>
@@ -245,10 +266,10 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="st">"GRAY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon_th</span> <span class="op">&lt;-</span> <span class="fu">threshold</span><span class="op">(</span><span class="va">balloon_gray</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon_th</span> <span class="op">&lt;-</span> <span class="fu">threshold</span><span class="op">(</span><span class="va">balloon_gray</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -263,7 +284,7 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

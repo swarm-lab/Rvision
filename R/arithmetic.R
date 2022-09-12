@@ -102,6 +102,10 @@ setGeneric("%i*%", function(e1, e2) { standardGeneric("%i*%") })
 #' @export
 setGeneric("%i/%", function(e1, e2) { standardGeneric("%i/%") })
 
+#' @rdname inPlaceArithmetic
+#' @export
+setGeneric("%i^%", function(e1, e2) { standardGeneric("%i^%") })
+
 
 #' @title Weighted Sum of Two Images
 #'
@@ -148,10 +152,10 @@ setGeneric("%i/%", function(e1, e2) { standardGeneric("%i/%") })
 #' @export
 addWeighted <- function(e1, e2, weight = c(0.5, 0.5), target = "new") {
   if (!isImage(e1) | !isImage(e2))
-    stop("Both arguments need to be Image object.")
+    stop("Both e1 and e2 must be Image objects.")
 
   if (length(weight) != 2)
-    stop("Exactly two weigths need to be supplied.")
+    stop("Exactly two weigths must be supplied.")
 
   if (isImage(target)) {
     `_addWeighted`(e1, weight[1], e2, weight[2], target)
@@ -160,6 +164,227 @@ addWeighted <- function(e1, e2, weight = c(0.5, 0.5), target = "new") {
   } else if (target == "new") {
     out <- cloneImage(e1)
     `_addWeighted`(e1, weight[1], e2, weight[2], out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
+#' @export
+cartToPolar <- function(x, y, magnitude = "new", angle = "new", degree = FALSE) {
+  if (!isImage(x) | !isImage(y))
+    stop("x and y must be Image objects.")
+
+  if (x$nchan() != 1 | y$nchan() != 1)
+    stop("x and y must be single-channel Image objects.")
+
+  if (x$depth() != "32F" & x$depth() != "64F")
+    stop("x must be a 32F or 64F image object.")
+
+  if (y$depth() != "32F" & y$depth() != "64F")
+    stop("y must be a 32F or 64F image object.")
+
+  if (isImage(magnitude)) {
+    if (magnitude$nchan() != x$nchan() | magnitude$depth() != x$depth() |
+        magnitude$nrow() != x$nrow() | magnitude$ncol() != x$ncol())
+      stop("magnitude should have the same depth, number of channels, and dimensions as x.")
+  }
+
+  if (isImage(angle)) {
+    if (angle$nchan() != x$nchan() | angle$depth() != x$depth() |
+        angle$nrow() != x$nrow() | angle$ncol() != x$ncol())
+      stop("angle should have the same depth, number of channels, and dimensions as x.")
+  }
+
+  if (isImage(magnitude)) {
+    if (isImage(angle)) {
+      `_cartToPolar`(x, y, magnitude, angle, degree)
+    } else {
+      angle <- cloneImage(x)
+      `_cartToPolar`(x, y, magnitude, angle, degree)
+      list(angle = angle)
+    }
+  } else {
+    magnitude <- cloneImage(x)
+    if (isImage(angle)) {
+      `_cartToPolar`(x, y, magnitude, angle, degree)
+      list(magnitude = magnitude)
+    } else {
+      angle <- cloneImage(x)
+      `_cartToPolar`(x, y, magnitude, angle, degree)
+      list(magnitude = magnitude, angle = angle)
+    }
+  }
+}
+
+
+#' @export
+polarToCart <- function(magnitude, angle, x = "new", y = "new", degree = FALSE) {
+  if (!isImage(magnitude) | !isImage(angle))
+    stop("magnitude and angle must be Image objects.")
+
+  if (magnitude$nchan() != 1 | angle$nchan() != 1)
+    stop("magnitude and angle must be single-channel Image objects.")
+
+  if (magnitude$depth() != "32F" & magnitude$depth() != "64F")
+    stop("magnitude must be a 32F or 64F image object.")
+
+  if (angle$depth() != "32F" & angle$depth() != "64F")
+    stop("angle must be a 32F or 64F image object.")
+
+  if (isImage(x)) {
+    if (magnitude$nchan() != x$nchan() | magnitude$depth() != x$depth() |
+        magnitude$nrow() != x$nrow() | magnitude$ncol() != x$ncol())
+      stop("x should have the same depth, number of channels, and dimensions as magnitude.")
+  }
+
+  if (isImage(y)) {
+    if (magnitude$nchan() != y$nchan() | magnitude$depth() != y$depth() |
+        magnitude$nrow() != y$nrow() | magnitude$ncol() != y$ncol())
+      stop("y should have the same depth, number of channels, and dimensions as magnitude.")
+  }
+
+  if (isImage(x)) {
+    if (isImage(y)) {
+      `_polarToCart`(magnitude, angle, x, y, degree)
+    } else {
+      y <- cloneImage(magnitude)
+      `_polarToCart`(magnitude, angle, x, y, degree)
+      list(y = y)
+    }
+  } else {
+    x <- cloneImage(magnitude)
+    if (isImage(y)) {
+      `_polarToCart`(magnitude, angle, x, y, degree)
+      list(x = x)
+    } else {
+      y <- cloneImage(magnitude)
+      `_polarToCart`(magnitude, angle, x, y, degree)
+      list(x = x, y = y)
+    }
+  }
+}
+
+
+#' @export
+sqrt.Rcpp_Image <- function(x, target = "new") {
+  if (!isImage(x))
+    stop("x must be an Image object.")
+
+  if (x$depth() != "32F" & x$depth() != "64F")
+    stop("x must be a 32F or 64F image object.")
+
+  if (isImage(target)) {
+    if (target$depth() != "32F" & target$depth() != "64F")
+      stop("target must be a 32F or 64F image object.")
+
+    `_sqrt`(x, target)
+  } else if (target == "self") {
+    `_sqrt`(x, x)
+  } else if (target == "new") {
+    out <- cloneImage(x)
+    `_sqrt`(x, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
+#' @export
+exp.Rcpp_Image <- function(x, target = "new") {
+  if (!isImage(x))
+    stop("x must be an Image object.")
+
+  if (x$depth() != "32F" & x$depth() != "64F")
+    stop("x must be a 32F or 64F image object.")
+
+  if (isImage(target)) {
+    if (target$depth() != "32F" & target$depth() != "64F")
+      stop("target must be a 32F or 64F image object.")
+
+    `_exp`(x, target)
+  } else if (target == "self") {
+    `_exp`(x, x)
+  } else if (target == "new") {
+    out <- cloneImage(x)
+    `_exp`(x, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
+#' @export
+log.Rcpp_Image <- function(x, target = "new") {
+  if (!isImage(x))
+    stop("x must be an Image object.")
+
+  if (x$depth() != "32F" & x$depth() != "64F")
+    stop("x must be a 32F or 64F image object.")
+
+  if (isImage(target)) {
+    if (target$depth() != "32F" & target$depth() != "64F")
+      stop("target must be a 32F or 64F image object.")
+
+    `_log`(x, target)
+  } else if (target == "self") {
+    `_log`(x, x)
+  } else if (target == "new") {
+    out <- cloneImage(x)
+    `_log`(x, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
+#' @export
+log.Rcpp_Image <- function(x, target = "new") {
+  if (!isImage(x))
+    stop("x must be an Image object.")
+
+  if (x$depth() != "32F" & x$depth() != "64F")
+    stop("x must be a 32F or 64F image object.")
+
+  if (isImage(target)) {
+    if (target$depth() != "32F" & target$depth() != "64F")
+      stop("target must be a 32F or 64F image object.")
+
+    `_log`(x, target)
+  } else if (target == "self") {
+    `_log`(x, x)
+  } else if (target == "new") {
+    out <- cloneImage(x)
+    `_log`(x, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
+#' @export
+pow <- function(x, y = 2, target = "new") {
+  if (!isImage(x))
+    stop("x must be an Image object.")
+
+  if (x$depth() != "32F" & x$depth() != "64F")
+    stop("x must be a 32F or 64F image object.")
+
+  if (isImage(target)) {
+    if (target$depth() != "32F" & target$depth() != "64F")
+      stop("target must be a 32F or 64F image object.")
+
+    `_pow`(x, y, target)
+  } else if (target == "self") {
+    `_pow`(x, y, x)
+  } else if (target == "new") {
+    out <- cloneImage(x)
+    `_pow`(x, y, out)
     out
   } else {
     stop("Invalid target.")

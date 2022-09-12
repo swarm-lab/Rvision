@@ -21,7 +21,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -91,40 +91,53 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">display</span><span class="op">(</span>
-  <span class="va">image</span>,
-  window_name <span class="op">=</span> <span class="st">"Display"</span>,
-  delay <span class="op">=</span> <span class="fl">25</span>,
-  height <span class="op">=</span> <span class="fl">480</span>,
-  width <span class="op">=</span> <span class="fl">640</span>,
-  interpolation <span class="op">=</span> <span class="st">"linear"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">display</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  window_name <span class="op">=</span> <span class="st">"Display"</span>,</span>
+<span>  delay <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>  height <span class="op">=</span> <span class="fl">480</span>,</span>
+<span>  width <span class="op">=</span> <span class="fl">640</span>,</span>
+<span>  interpolation <span class="op">=</span> <span class="st">"linear"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>window_name</dt>
 <dd><p>A character string representing the name of the display
 window (default: "Display").</p></dd>
+
+
 <dt>delay</dt>
 <dd><p>The delay in milliseconds during which an image is displayed
 before it can be replaced by another image.</p></dd>
+
+
 <dt>height</dt>
 <dd><p>An integer representing the height in pixels of the display
 window.</p></dd>
+
+
 <dt>width</dt>
 <dd><p>An integer representing the width in pixels of the display
 window.</p></dd>
+
+
 <dt>interpolation</dt>
 <dd><p>A character string representing the type of interpolation
 to use if the display size is different from the image size (default: "linear").
 See notes in <code><a href="resize.html">resize</a></code> for all accepted interpolation methods.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>This function does not return anything.</p>
+    
+
+<p>This function does not return anything.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -138,11 +151,11 @@ See notes in <code><a href="resize.html">resize</a></code> for all accepted inte
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">display</span><span class="op">(</span><span class="va">balloon</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span>, width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">display</span><span class="op">(</span><span class="va">balloon</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span>, width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -157,7 +170,7 @@ See notes in <code><a href="resize.html">resize</a></code> for all accepted inte
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

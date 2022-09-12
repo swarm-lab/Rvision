@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -89,104 +89,145 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">simpleBlobDetector</span><span class="op">(</span>
-  <span class="va">image</span>,
-  min_threshold <span class="op">=</span> <span class="fl">50</span>,
-  max_threshold <span class="op">=</span> <span class="fl">220</span>,
-  threshold_step <span class="op">=</span> <span class="fl">10</span>,
-  min_repeatability <span class="op">=</span> <span class="fl">2</span>,
-  min_dist_between_blobs <span class="op">=</span> <span class="fl">10</span>,
-  filter_by_area <span class="op">=</span> <span class="cn">TRUE</span>,
-  min_area <span class="op">=</span> <span class="fl">25</span>,
-  max_area <span class="op">=</span> <span class="fl">5000</span>,
-  filter_by_color <span class="op">=</span> <span class="cn">TRUE</span>,
-  blob_color <span class="op">=</span> <span class="fl">0</span>,
-  filter_by_circularity <span class="op">=</span> <span class="cn">FALSE</span>,
-  min_circularity <span class="op">=</span> <span class="fl">0.8</span>,
-  max_circularity <span class="op">=</span> <span class="cn">Inf</span>,
-  filter_by_convexity <span class="op">=</span> <span class="cn">TRUE</span>,
-  min_convexity <span class="op">=</span> <span class="fl">0.95</span>,
-  max_convexity <span class="op">=</span> <span class="cn">Inf</span>,
-  filter_by_inertia <span class="op">=</span> <span class="cn">TRUE</span>,
-  min_inertia_ratio <span class="op">=</span> <span class="fl">0.1</span>,
-  max_inertia_ratio <span class="op">=</span> <span class="cn">Inf</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simpleBlobDetector</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  min_threshold <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  max_threshold <span class="op">=</span> <span class="fl">220</span>,</span>
+<span>  threshold_step <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  min_repeatability <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  min_dist_between_blobs <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  filter_by_area <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  min_area <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>  max_area <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>  filter_by_color <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  blob_color <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  filter_by_circularity <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  min_circularity <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>  max_circularity <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  filter_by_convexity <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  min_convexity <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  max_convexity <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  filter_by_inertia <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  min_inertia_ratio <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  max_inertia_ratio <span class="op">=</span> <span class="cn">Inf</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>min_threshold</dt>
 <dd><p>A numeric value representing the starting thresholding
 value (see Note; default: 50).</p></dd>
+
+
 <dt>max_threshold</dt>
 <dd><p>A numeric value representing the ending thresholding
 value (see Note; default: 220).</p></dd>
+
+
 <dt>threshold_step</dt>
 <dd><p>A numeric value representing the step size to go from
 <code>min_threshold</code> to <code>max_treshold</code> (see Note; default: 10).</p></dd>
+
+
 <dt>min_repeatability</dt>
 <dd><p>A numeric value representing the number of threshold
 values a blob has to be detected at to be considered stable (see Note;
 default: 2).</p></dd>
+
+
 <dt>min_dist_between_blobs</dt>
 <dd><p>A numeric value representing the minimum
 distance in pixels between pixel group centers from several binary
 (thresholded) images above which they are considered as distinct blobs
 (default: 10).</p></dd>
+
+
 <dt>filter_by_area</dt>
 <dd><p>A logical indicating whether blobs should be filtered
 based on their area in pixels (default: TRUE).</p></dd>
+
+
 <dt>min_area</dt>
 <dd><p>A numeric value representing the smallest acceptable area for
 blobs (in pixels). Blobs smaller than this value are discarded (default: 25).</p></dd>
+
+
 <dt>max_area</dt>
 <dd><p>A numeric value representing the largest acceptable area for
 blobs (in pixels). Blobs larger than this value are discarded. (default: 5000).</p></dd>
+
+
 <dt>filter_by_color</dt>
 <dd><p>A logical indicating whether blobs should be filtered
 based on color (default: TRUE).</p></dd>
+
+
 <dt>blob_color</dt>
 <dd><p>An integer between 0 and 255 representing the color of the
 blobs. 0 will select dark blobs, 255 will select bright blobs (default: 0).</p></dd>
+
+
 <dt>filter_by_circularity</dt>
 <dd><p>A logical indicating whether blobs should be filtered
 based on circularity (default: FALSE).</p></dd>
+
+
 <dt>min_circularity</dt>
 <dd><p>A numeric value representing the smallest acceptable
 circularity for blobs. Blobs with smaller circularity than this value are
 discarded. (default: 0.8).</p></dd>
+
+
 <dt>max_circularity</dt>
 <dd><p>A numeric value representing the largest acceptable
 circularity for blobs. Blobs with larger circularity than this value are
 discarded. (default: Inf).</p></dd>
+
+
 <dt>filter_by_convexity</dt>
 <dd><p>A logical indicating whether blobs should be filtered
 based on convexity (default: TRUE).</p></dd>
+
+
 <dt>min_convexity</dt>
 <dd><p>A numeric value representing the smallest acceptable
 convexity for blobs. Blobs with smaller convexity than this value are
 discarded. (default: 0.95).</p></dd>
+
+
 <dt>max_convexity</dt>
 <dd><p>A numeric value representing the largest acceptable
 convexity for blobs. Blobs with larger convexity than this value are
 discarded. (default: Inf).</p></dd>
+
+
 <dt>filter_by_inertia</dt>
 <dd><p>A logical indicating whether blobs should be filtered
 based on their inertia ratio (default: TRUE).</p></dd>
+
+
 <dt>min_inertia_ratio</dt>
 <dd><p>A numeric value representing the smallest acceptable
 inertia ratio for blobs. Blobs with smaller ratio than this value are
 discarded. (default: 0.1).</p></dd>
+
+
 <dt>max_inertia_ratio</dt>
 <dd><p>A numeric value representing the largest acceptable
 inertia ratio for blobs. Blobs with larger ratio than this value are
 discarded. (default: Inf).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame of class <code>blob</code> with the following columns:</p><ul><li><p>"id":a unique identifier for each blob in the image.</p></li>
+    
+
+<p>A data frame of class <code>blob</code> with the following columns:</p><ul><li><p>"id":a unique identifier for each blob in the image.</p></li>
 <li><p>"x":the x coordinate of each blob in the image.</p></li>
 <li><p>"y":the y coordinate of each blob in the image.</p></li>
 <li><p>"size":the diameter of the circle containing the blob.</p></li>
@@ -214,11 +255,11 @@ discarded. (default: Inf).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">blobs</span> <span class="op">&lt;-</span> <span class="fu">simpleBlobDetector</span><span class="op">(</span><span class="fu"><a href="invert.html">invert</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span>, min_threshold <span class="op">=</span> <span class="fl">25</span>, max_threshold <span class="op">=</span> <span class="fl">220</span>,</span>
-<span class="r-in">                            filter_by_area <span class="op">=</span> <span class="cn">TRUE</span>, min_area <span class="op">=</span> <span class="fl">200</span>, max_area <span class="op">=</span> <span class="cn">Inf</span>,</span>
-<span class="r-in">                            filter_by_color <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">blobs</span> <span class="op">&lt;-</span> <span class="fu">simpleBlobDetector</span><span class="op">(</span><span class="fu"><a href="invert.html">invert</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span>, min_threshold <span class="op">=</span> <span class="fl">25</span>, max_threshold <span class="op">=</span> <span class="fl">220</span>,</span></span>
+<span class="r-in"><span>                            filter_by_area <span class="op">=</span> <span class="cn">TRUE</span>, min_area <span class="op">=</span> <span class="fl">200</span>, max_area <span class="op">=</span> <span class="cn">Inf</span>,</span></span>
+<span class="r-in"><span>                            filter_by_color <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -233,7 +274,7 @@ discarded. (default: Inf).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

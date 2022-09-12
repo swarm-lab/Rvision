@@ -266,3 +266,171 @@ void _addWeighted(Image& image1, double alpha, Image& image2, double beta, Image
 
   cv::addWeighted(image1.image, alpha, image2.image, beta, 0, target.image, target.image.depth());
 }
+
+void _cartToPolar(Image& x, Image& y, Image& magnitude, Image& angle, bool angleInDegrees) {
+  if (x.GPU) {
+    if (y.GPU) {
+      if (magnitude.GPU) {
+        if (angle.GPU)
+          return cv::cartToPolar(x.uimage, y.uimage, magnitude.uimage, angle.uimage, angleInDegrees);
+
+        return cv::cartToPolar(x.uimage, y.uimage, magnitude.uimage, angle.image, angleInDegrees);
+      }
+
+      if (angle.GPU)
+        return cv::cartToPolar(x.uimage, y.uimage, magnitude.image, angle.uimage, angleInDegrees);
+
+      return cv::cartToPolar(x.uimage, y.uimage, magnitude.image, angle.image, angleInDegrees);
+    }
+
+    if (magnitude.GPU) {
+      if (angle.GPU)
+        return cv::cartToPolar(x.uimage, y.image, magnitude.uimage, angle.uimage, angleInDegrees);
+
+      return cv::cartToPolar(x.uimage, y.image, magnitude.uimage, angle.image, angleInDegrees);
+    }
+
+    if (angle.GPU)
+      return cv::cartToPolar(x.uimage, y.image, magnitude.image, angle.uimage, angleInDegrees);
+
+    return cv::cartToPolar(x.uimage, y.image, magnitude.image, angle.image, angleInDegrees);
+  }
+
+  if (y.GPU) {
+    if (magnitude.GPU) {
+      if (angle.GPU)
+        return cv::cartToPolar(x.image, y.uimage, magnitude.uimage, angle.uimage, angleInDegrees);
+
+      return cv::cartToPolar(x.image, y.uimage, magnitude.uimage, angle.image, angleInDegrees);
+    }
+
+    if (angle.GPU)
+      return cv::cartToPolar(x.image, y.uimage, magnitude.image, angle.uimage, angleInDegrees);
+
+    return cv::cartToPolar(x.image, y.uimage, magnitude.image, angle.image, angleInDegrees);
+  }
+
+  if (magnitude.GPU) {
+    if (angle.GPU)
+      return cv::cartToPolar(x.image, y.image, magnitude.uimage, angle.uimage, angleInDegrees);
+
+    return cv::cartToPolar(x.image, y.image, magnitude.uimage, angle.image, angleInDegrees);
+  }
+
+  if (angle.GPU)
+    return cv::cartToPolar(x.image, y.image, magnitude.image, angle.uimage, angleInDegrees);
+
+  cv::cartToPolar(x.image, y.image, magnitude.image, angle.image, angleInDegrees);
+}
+
+void _polarToCart(Image& magnitude, Image& angle, Image& x, Image& y, bool angleInDegrees) {
+  if (magnitude.GPU) {
+    if (angle.GPU) {
+      if (x.GPU) {
+        if (y.GPU)
+          return cv::cartToPolar(magnitude.uimage, angle.uimage, x.uimage, y.uimage, angleInDegrees);
+
+        return cv::cartToPolar(magnitude.uimage, angle.uimage, x.uimage, y.image, angleInDegrees);
+      }
+
+      if (y.GPU)
+        return cv::cartToPolar(magnitude.uimage, angle.uimage, x.image, y.uimage, angleInDegrees);
+
+      return cv::cartToPolar(magnitude.uimage, angle.uimage, x.image, y.image, angleInDegrees);
+    }
+
+    if (x.GPU) {
+      if (y.GPU)
+        return cv::cartToPolar(magnitude.uimage, angle.image, x.uimage, y.uimage, angleInDegrees);
+
+      return cv::cartToPolar(magnitude.uimage, angle.image, x.uimage, y.image, angleInDegrees);
+    }
+
+    if (y.GPU)
+      return cv::cartToPolar(magnitude.uimage, angle.image, x.image, y.uimage, angleInDegrees);
+
+    return cv::cartToPolar(magnitude.uimage, y.image, x.image, y.image, angleInDegrees);
+  }
+
+  if (angle.GPU) {
+    if (x.GPU) {
+      if (y.GPU)
+        return cv::cartToPolar(magnitude.image, angle.uimage, x.uimage, y.uimage, angleInDegrees);
+
+      return cv::cartToPolar(magnitude.image, angle.uimage, x.uimage, y.image, angleInDegrees);
+    }
+
+    if (y.GPU)
+      return cv::cartToPolar(magnitude.image, angle.uimage, x.image, y.uimage, angleInDegrees);
+
+    return cv::cartToPolar(magnitude.image, angle.uimage, x.image, y.image, angleInDegrees);
+  }
+
+  if (x.GPU) {
+    if (y.GPU)
+      return cv::cartToPolar(magnitude.image, angle.image, x.uimage, y.uimage, angleInDegrees);
+
+    return cv::cartToPolar(magnitude.image, angle.image, x.uimage, y.image, angleInDegrees);
+  }
+
+  if (y.GPU)
+    return cv::cartToPolar(magnitude.image, angle.image, x.image, y.uimage, angleInDegrees);
+
+  cv::cartToPolar(magnitude.image, angle.image, x.image, y.image, angleInDegrees);
+}
+
+void _sqrt(Image& image, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::sqrt(image.uimage, target.uimage);
+
+    return cv::sqrt(image.uimage, target.image);
+  }
+
+  if (target.GPU)
+    return cv::sqrt(image.image, target.uimage);
+
+  cv::sqrt(image.image, target.image);
+}
+
+void _exp(Image& image, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::exp(image.uimage, target.uimage);
+
+    return cv::exp(image.uimage, target.image);
+  }
+
+  if (target.GPU)
+    return cv::exp(image.image, target.uimage);
+
+  cv::exp(image.image, target.image);
+}
+
+void _log(Image& image, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::log(image.uimage, target.uimage);
+
+    return cv::log(image.uimage, target.image);
+  }
+
+  if (target.GPU)
+    return cv::log(image.image, target.uimage);
+
+  cv::log(image.image, target.image);
+}
+
+void _pow(Image& image, double power, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::pow(image.uimage, power, target.uimage);
+
+    return cv::pow(image.uimage, power, target.image);
+  }
+
+  if (target.GPU)
+    return cv::pow(image.image, power, target.uimage);
+
+  cv::pow(image.image, power, target.image);
+}

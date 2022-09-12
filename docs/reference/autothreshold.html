@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">autothreshold</span><span class="op">(</span><span class="va">image</span>, method <span class="op">=</span> <span class="st">"ImageJ"</span>, mask <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">autothreshold</span><span class="op">(</span><span class="va">image</span>, method <span class="op">=</span> <span class="st">"ImageJ"</span>, mask <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -93,6 +93,8 @@
     <dl><dt>image</dt>
 <dd><p>An an 8-bit (8U) or 32-bit floating (32F) <code><a href="Image-class.html">Image</a></code>
 object.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>The name of the automated thresholding algorithm to use. It can
  be any of the following:</p><ul><li><p>"none":the user-defined `threshold` value is used (the default).</p></li>
@@ -121,15 +123,20 @@ object.</p></dd>
 <li><p>"Yen":Yen’s thresholding method.</p></li>
 </ul><p>Details about the functioning of each method can be found at
  <a href="https://imagej.net/plugins/auto-threshold" class="external-link">https://imagej.net/plugins/auto-threshold</a>.</p></dd>
+
+
 <dt>mask</dt>
 <dd><p>A single-channel (GRAY) 8-bit (8U) <code><a href="Image-class.html">Image</a></code> object
 with the same dimensions as <code>image</code>. This can be used to mask out
 pixels that should not be considered when calculating the threshold (pixels
 set to 0 in the mask will be ignored during the threshold calculation).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A numerical value.</p>
+    
+
+<p>A numerical value.</p>
     </div>
     <div id="acknowledgements">
     <h2>Acknowledgements</h2>
@@ -203,10 +210,10 @@ set to 0 in the mask will be ignored during the threshold calculation).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">balloon_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="st">"GRAY"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">th</span> <span class="op">&lt;-</span> <span class="fu">autothreshold</span><span class="op">(</span><span class="va">balloon_gray</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">balloon</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">th</span> <span class="op">&lt;-</span> <span class="fu">autothreshold</span><span class="op">(</span><span class="va">balloon_gray</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -221,7 +228,7 @@ set to 0 in the mask will be ignored during the threshold calculation).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

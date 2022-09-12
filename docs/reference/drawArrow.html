@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rvision</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -87,48 +87,65 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">drawArrow</span><span class="op">(</span>
-  <span class="va">image</span>,
-  <span class="va">pt1_x</span>,
-  <span class="va">pt1_y</span>,
-  <span class="va">pt2_x</span>,
-  <span class="va">pt2_y</span>,
-  tip_length <span class="op">=</span> <span class="fl">0.1</span>,
-  color <span class="op">=</span> <span class="st">"red"</span>,
-  thickness <span class="op">=</span> <span class="fl">1</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">drawArrow</span><span class="op">(</span></span>
+<span>  <span class="va">image</span>,</span>
+<span>  <span class="va">pt1_x</span>,</span>
+<span>  <span class="va">pt1_y</span>,</span>
+<span>  <span class="va">pt2_x</span>,</span>
+<span>  <span class="va">pt2_y</span>,</span>
+<span>  tip_length <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  color <span class="op">=</span> <span class="st">"red"</span>,</span>
+<span>  thickness <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>image</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
 <dt>pt1_x</dt>
 <dd><p>A numeric value or vector representing the x coordinates of the
 first end of each arrow.</p></dd>
+
+
 <dt>pt1_y</dt>
 <dd><p>A numeric value or vector representing the y coordinates of the
 first end of each arrow.</p></dd>
+
+
 <dt>pt2_x</dt>
 <dd><p>A numeric value or vector representing the x coordinates of the
 second end of each arrow.</p></dd>
+
+
 <dt>pt2_y</dt>
 <dd><p>A numeric value or vector representing the y coordinates of the
 second end of each arrow.</p></dd>
+
+
 <dt>tip_length</dt>
 <dd><p>A numeric value or vector representing the length of each
 arrow's tip as a fraction of each arrow's length (default: 0.1).</p></dd>
+
+
 <dt>color</dt>
 <dd><p>A value or vector of any kind of R color specification compatible
 with <code><a href="col2bgr.html">col2bgr</a></code> representing the color of each arrow (default:
 "red").</p></dd>
+
+
 <dt>thickness</dt>
 <dd><p>A numeric value or vector representing the thickness in
 pixels of each arrow (default: 1).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>This function does not return anything. It modifies <code>image</code> in
+    
+
+<p>This function does not return anything. It modifies <code>image</code> in
  place.</p>
     </div>
     <div id="see-also">
@@ -142,9 +159,9 @@ pixels of each arrow (default: 1).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">drawArrow</span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, thickness <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">drawArrow</span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, thickness <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -159,7 +176,7 @@ pixels of each arrow (default: 1).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

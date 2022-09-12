@@ -6,6 +6,7 @@
 \alias{\%i-\%}
 \alias{\%i*\%}
 \alias{\%i/\%}
+\alias{\%i^\%}
 \title{In Place Arithmetic Operators for Images}
 \usage{
 e1 \%i+\% e2
@@ -15,6 +16,8 @@ e1 \%i-\% e2
 e1 \%i*\% e2
 
 e1 \%i/\% e2
+
+e1 \%i^\% e2
 }
 \arguments{
 \item{e1, e2}{Either 2 \code{\link{Image}} objects or 1 \code{\link{Image}}
