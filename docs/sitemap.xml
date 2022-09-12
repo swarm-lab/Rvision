@@ -130,6 +130,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/capacity.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/cartToPolar.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/cc_table.html</loc>
   </url>
   <url>
@@ -422,6 +425,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/plotOF.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/polarToCart.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/pset.html</loc>
