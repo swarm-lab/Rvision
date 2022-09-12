@@ -265,6 +265,10 @@ RCPP_MODULE(methods_Filters) {
     _["method"], _["threshold_type"], _["block_size"], _["C"], _["target"]), "");
   function("_threshold", &_threshold, List::create(_["image"], _["thresh"], _["max_value"],
     _["threshold_type"], _["target"]), "");
+  function("_getGaborKernel", &_getGaborKernel, List::create(_["width"], _["height"],
+    _["sigma"], _["theta"], _["lambda"], _["gamma"], _["psi"]), "");
+  // function("_getGaussianKernel", &_getGaussianKernel, List::create(_["ksize"],
+  //   _["sigma"]), "");
 }
 
 #include "display.h"

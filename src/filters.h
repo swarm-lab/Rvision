@@ -230,3 +230,20 @@ double _threshold(Image& image, double thresh, double max_value, int threshold_t
   return cv::threshold(image.image, target.image, thresh, max_value,
                        threshold_type);
 }
+
+arma::Mat< float > _getGaborKernel(int width, int height, double sigma, double theta,
+                                   double lambda, double gamma, double psi) {
+  arma::Mat< float > out;
+  cv::Mat_< float > k;
+  k = cv::getGaborKernel(cv::Size(width, height), sigma, theta, lambda, gamma, psi, 6);
+  cv2arma(k, out);
+  return out;
+}
+
+// arma::Mat< float > _getGaussianKernel(int ksize, double sigma) {
+//   arma::Mat< float > out;
+//   cv::Mat_< float > k;
+//   k = cv::getGaussianKernel(ksize, sigma, 6);
+//   cv2arma(k, out);
+//   return out;
+// }

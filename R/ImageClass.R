@@ -653,7 +653,7 @@ readMulti <- function(x, colorspace = "BGR") {
 }
 
 
-#' @title Wrtie a Multi-Page Image
+#' @title Write a Multi-Page Image
 #'
 #' @description \code{writeMulti} writes a list of \code{\link{Image}} objects
 #'  to a multi-page image.
