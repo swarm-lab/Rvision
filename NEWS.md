@@ -1,3 +1,20 @@
+# Rvision 0.6.3
+
+## New features
+
+* Some Hu moment invariants were missing. 
+* OpenCV DLLs are now copied from ROpenCVLite on installation on Windows. 
+* New functions to compute square root, logarithm, exponential, and powers. 
+* New function to compute Gabor kernels for image filtering. 
+* New function to convert vector fields to polar coordinates and back. 
+
+## Minor improvements and fixes
+
+* The documentation has been fixed/improved in several places.
+* Minor bug fixes here and there.
+
+---
+
 # Rvision 0.6.2
 
 ## New features
