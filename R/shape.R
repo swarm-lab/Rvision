@@ -157,7 +157,7 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'
 #' @param image An an 8-bit (8U) single-channel \code{\link{Image}} object.
 #'
-#' @param connectivity The connetivity neighborhood to decide whether 2 pixels
+#' @param connectivity The connectivity neighborhood to decide whether 2 pixels
 #'  are contiguous. This parameter can take two values:
 #'  \itemize{
 #'   \item{4: }{the neighborhood of a pixel are the four pixels located above
@@ -819,4 +819,56 @@ arcLength <- function(curve, closed = TRUE) {
     stop("curve must be a m x 2 matrix.")
 
   `_arcLength`(curve, closed)
+}
+
+
+#' @title Pixel Values Along a Line Segment
+#'
+#' @description \code{improfile} finds all pixels intersected by a line segment
+#'  and returns their coordinates and color values.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param xi,yi Two-element vectors containing the x and y coordinates of the
+#'  start and end points of a line segment. The points can lie outside of the
+#'  image boundaries but then the line will be clipped on the image boundaries.
+#'
+#' @param connectivity The connectivity neighborhood to decide whether 2 pixels
+#'  are contiguous. This parameter can take two values:
+#'  \itemize{
+#'   \item{4: }{the neighborhood of a pixel are the four pixels located above
+#'    (north), below (south), to the left (west) and right (east) of the pixel.}
+#'   \item{8 (the default): }{the neighborhood of a pixel includes the four
+#'    4-neighbors and the four pixels along the diagonal directions (northeast,
+#'    northwest, southeast, and southwest).}
+#'  }
+#'
+#' @param left_to_right If `TRUE`, the line segment is traversed from the
+#'  leftmost endpoint to the rightmost endpoint, regardless of the order in
+#'  which they are specified in \code{xi} and \code{yi}. Otherwise (the default),
+#'  the line is traversed in the order in which the points are specified in
+#'  \code{xi} and \code{yi}.
+#'
+#' @return A matrix in which the first two columns indicate the coordinates of
+#'  the points traversed by the line segment, and the other columns indicate the
+#'  color values at each location.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @examples
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' improfile(dots, c(1, ncol(dots)), c(nrow(dots) / 2, nrow(dots) / 2))
+#'
+#' @export
+improfile <- function(image, xi, yi, connectivity = 8, left_to_right = FALSE) {
+  if (!isImage(image))
+    stop("'image' must be an Image object.")
+
+  pos <- `_pline`(image, xi - 1, -yi + nrow(image), connectivity, left_to_right)
+  pos[, 1] <- pos[, 1] + 1
+  pos[, 2] <- -pos[, 2] + nrow(image)
+
+  out <- cbind(pos, t(pget(image, pos[, 1], pos[, 2])))
+  colnames(out)[1:2] <- c("X", "Y")
+  out
 }

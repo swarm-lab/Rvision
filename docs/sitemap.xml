@@ -286,6 +286,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/getRotationMatrix2D.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/getStructuringElement.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/getTextSize.html</loc>
   </url>
   <url>
@@ -317,6 +320,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/imhist.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/improfile.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/inPlaceArithmetic.html</loc>

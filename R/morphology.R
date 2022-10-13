@@ -114,7 +114,7 @@ morph <- function(image, operation, kernel = NULL, k_shape = "rectangle",
                  "rectangle" = 0,
                  "cross" = 1,
                  "ellipse" = 2,
-                 stop("This is not a valid kernel."))
+                 stop("This is not a valid kernel shape."))
 
     if (isImage(target)) {
       `_morph`(image, op, sh, k_height, k_width, iterations, target)
