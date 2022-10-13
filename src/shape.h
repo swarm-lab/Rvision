@@ -363,3 +363,18 @@ double _arcLength(Rcpp::NumericMatrix curve, bool closed) {
 
   return cv::arcLength(contourpoints, closed);
 }
+
+Rcpp::NumericMatrix _pline(Image& image, Rcpp::NumericVector xi,
+                           Rcpp::NumericVector yi, int connectivity,
+                           bool leftToRight) {
+  cv::LineIterator lineit(image.image, cv::Point(xi(0), yi(0)),
+                          cv::Point(xi(1), yi(1)), connectivity, leftToRight);
+  Rcpp::NumericMatrix out(lineit.count, 2);
+
+  for(int i = 0; i < lineit.count; i++, ++lineit) {
+    out(i, 0) = lineit.pos().x;
+    out(i, 1) = lineit.pos().y;
+  }
+
+  return out;
+}

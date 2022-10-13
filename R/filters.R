@@ -1402,3 +1402,47 @@ getGaborKernel <- function(width = 31, height = 31, sigma = 5, theta = pi,
                            lambda = 31, gamma = 5, psi = 0) {
   `_getGaborKernel`(width, height, sigma, theta, lambda, gamma, psi)
 }
+
+
+#' @title Structuring Elements
+#'
+#' @description \code{getStructuringElement} is a convenience function to create
+#'  structuring elements with defined shapes that can be used to filter images
+#'  with \code{\link{filter2D}}.
+#'
+#' @param k_shape A string corresponding to the shape of the structuring element.
+#'  Valid kernel shapes are:
+#'  \itemize{
+#'    \item{"rectangle" (the default):}{}
+#'    \item{"cross"}{}
+#'    \item{"ellipse"}{}
+#'  }
+#'
+#' @param k_height The half-height in pixels of the structuring element.
+#'
+#' @param k_width The half-width in pixels of the structuring element.
+#'
+#' @param anchor A 2-element numeric vector defining the anchor position within
+#'  the cross-shaped structuring element. The default value (−1,−1) means that
+#'  the anchor is at the center. Note that only the shape of a cross-shaped
+#'  kernel depends on the anchor position.
+#'
+#' @return A matrix of 0s and 1s.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{filter2D}}
+#'
+#' @examples
+#' getStructuringElement()
+#'
+#' @export
+getStructuringElement <- function(k_shape = "rectangle", k_height = 5, k_width = 5,
+                                  anchor = c(-1, -1)) {
+  sh <- switch(k_shape,
+               "rectangle" = 0,
+               "cross" = 1,
+               "ellipse" = 2,
+               stop("This is not a valid kernel shape"))
+  `_getStructuringElement`(sh, k_width, k_height, anchor[1], anchor[2])
+}

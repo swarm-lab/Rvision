@@ -240,6 +240,16 @@ arma::Mat< float > _getGaborKernel(int width, int height, double sigma, double t
   return out;
 }
 
+arma::Mat< float > _getStructuringElement(int k_shape, int k_width, int k_height,
+                                          double anchor_x, double anchor_y) {
+  arma::Mat< float > out;
+  cv::Mat_< float > k;
+  k = cv::getStructuringElement(k_shape, cv::Size(2 * k_width + 1, 2 * k_height + 1),
+                                cv::Point(anchor_x, anchor_y));
+  cv2arma(k, out);
+  return out;
+}
+
 // arma::Mat< float > _getGaussianKernel(int ksize, double sigma) {
 //   arma::Mat< float > out;
 //   cv::Mat_< float > k;

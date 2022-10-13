@@ -104,7 +104,7 @@ void _bitMin(Image& image1, Image& image2, Image& target) {
 
   if (target.GPU)
     Rcpp::stop("'target' should be in CPU memory when both 'e1' and 'e2' are.");
-    //return cv::min(image1.image, image2.image, target.uimage);
+  //return cv::min(image1.image, image2.image, target.uimage);
 
   cv::min(image1.image, image2.image, target.image);
 }
@@ -148,7 +148,7 @@ void _bitMax(Image& image1, Image& image2, Image& target) {
 
   if (target.GPU)
     Rcpp::stop("'target' should be in CPU memory when both 'e1' and 'e2' are.");
-    // return cv::max(image1.image, image2.image, target.uimage);
+  // return cv::max(image1.image, image2.image, target.uimage);
 
   cv::max(image1.image, image2.image, target.image);
 }

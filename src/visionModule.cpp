@@ -267,6 +267,9 @@ RCPP_MODULE(methods_Filters) {
     _["threshold_type"], _["target"]), "");
   function("_getGaborKernel", &_getGaborKernel, List::create(_["width"], _["height"],
     _["sigma"], _["theta"], _["lambda"], _["gamma"], _["psi"]), "");
+  function("_getStructuringElement", &_getStructuringElement,
+           List::create(_["k_shape"], _["k_width"], _["k_height"],
+                        _["anchor_x"], _["anchor_y"]), "");
   // function("_getGaussianKernel", &_getGaussianKernel, List::create(_["ksize"],
   //   _["sigma"]), "");
 }
@@ -339,13 +342,18 @@ RCPP_MODULE(methods_Shape) {
   function("_fitEllipseDirect", &_fitEllipseDirect, List::create(_["points"]), "");
   function("_contourArea", &_contourArea, List::create(_["x"], _["y"], _["oriented"]), "");
   function("_convexHull", &_convexHull, List::create(_["points"], _["clockwise"]), "");
-  function("_convexityDefects", &_convexityDefects, List::create(_["contour"], _["convexHull"]), "");
+  function("_convexityDefects", &_convexityDefects, List::create(_["contour"],
+           _["convexHull"]), "");
   function("_momentsCT", &_momentsCT, List::create(_["contour"]), "");
   function("_momentsIMG", &_momentsIMG, List::create(_["image"], _["binary"]), "");
-  function("_matchShapesCT", &_matchShapesCT, List::create(_["contour1"], _["contour2"], _["method"]), "");
-  function("_matchShapesIMG", &_matchShapesIMG, List::create(_["image1"], _["image2"], _["method"]), "");
+  function("_matchShapesCT", &_matchShapesCT, List::create(_["contour1"],
+            _["contour2"], _["method"]), "");
+  function("_matchShapesIMG", &_matchShapesIMG, List::create(_["image1"],
+           _["image2"], _["method"]), "");
   function("_minAreaRect", &_minAreaRect, List::create(_["points"]), "");
   function("_arcLength", &_arcLength, List::create(_["curve"], _["closed"]), "");
+  function("_pline", &_pline, List::create(_["image"], _["xi"], _["yi"],
+           _["connectivity"], _["leftToRight"]), "");
 }
 
 #include "transform.h"

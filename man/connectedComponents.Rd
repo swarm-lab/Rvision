@@ -16,7 +16,7 @@ connectedComponents(
 \arguments{
 \item{image}{An an 8-bit (8U) single-channel \code{\link{Image}} object.}
 
-\item{connectivity}{The connetivity neighborhood to decide whether 2 pixels
+\item{connectivity}{The connectivity neighborhood to decide whether 2 pixels
 are contiguous. This parameter can take two values:
 \itemize{
  \item{4: }{the neighborhood of a pixel are the four pixels located above
