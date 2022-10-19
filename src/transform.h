@@ -309,3 +309,11 @@ void _grabCut(Image& image, Image& mask, Rcpp::NumericVector rect, Image& bgdMod
     cv::grabCut(image.image, mask.image, r, bgdModel.image, fgdModel.image, iterCount, mode);
   }
 }
+
+void _vconcat(Image& image1, Image& image2, Image& target) {
+  cv::vconcat(image1.image, image2.image, target.image);
+}
+
+void _hconcat(Image& image1, Image& image2, Image& target) {
+  cv::hconcat(image1.image, image2.image, target.image);
+}
