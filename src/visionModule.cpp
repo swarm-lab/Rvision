@@ -381,6 +381,8 @@ RCPP_MODULE(methods_Transform) {
   function("_histEqBGR", &_histEqBGR, List::create(_["image"], _["target"]), "");
   function("_grabCut", &_grabCut, List::create(_["image"], _["mask"], _["rect"],
     _["bgdModel"], _["fgdModel"], _["iterCount"], _["mode"]), "");
+  function("_vconcat", &_vconcat, List::create(_["image1"], _["image2"], _["target"]), "");
+  function("_hconcat", &_hconcat, List::create(_["image1"], _["image2"], _["target"]), "");
 }
 
 #include "feature.h"

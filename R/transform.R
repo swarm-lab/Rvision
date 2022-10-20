@@ -1048,3 +1048,112 @@ grabCut <- function(image, mask, rect = rep(1, 4), bgdModel, fgdModel, iter = 1,
              switch(mode, RECT = 0, MASK = 1, EVAL = 2, FREEZE = 3,
                     stop("This is not a valid mode.")))
 }
+
+
+#' @title Concatenate Images
+#'
+#' @description \code{concatenate} concatenates two images into one, either
+#'  vertically or horizontally.
+#'
+#' @param image1,image2 \code{\link{Image}} objects with the same bitdepth and
+#'  number of channels, and either the same width (if \code{direction = "vertical"})
+#'  or the same height (if \code{direction = "horizontal"}).
+#'
+#' @param direction A character string indicating the direction of concatenation.
+#'  It can be either \code{"vertical"} (the default) or \code{"horizontal"}.
+#'
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    \code{target} must have the same bitdepth and number of channels as
+#'    \code{image1} and \code{image2}. If \code{direction = "vertical"}, the
+#'    height of \code{target} must be the sum of the heights of \code{image1}
+#'    and \code{image2}. If \code{direction = "horizontal"}, the width of \code{target}
+#'    must be the sum of the widths of \code{image1} and \code{image2}.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' two_balloons <- concatenate(balloon, balloon)
+#'
+#' @export
+concatenate <- function(image1, image2, direction = "vertical", target = "new") {
+  if (!isImage(image1))
+    stop("'image1' is not an Image object.")
+
+  if (!isImage(image2))
+    stop("'image2' is not an Image object.")
+
+  if (image1$depth() != image2$depth())
+    stop("'image1' and 'image2' must have the same depth.")
+
+  if (image1$nchan() != image2$nchan())
+    stop("'image1' and 'image2' must have the same number of channels.")
+
+  if (direction == "vertical") {
+    if (image1$ncol() != image2$ncol())
+      stop("'image1' and 'image2' must have the same width.")
+
+    if (isImage(target)) {
+      if (target$depth() != image1$depth())
+        stop("'target' must have the same depth as 'image1' and 'image2'.")
+
+      if (target$nchan() != image1$nchan())
+        stop("'target' must have the same number of channels as 'image1' and 'image2'.")
+
+      if (target$ncol() != image1$ncol())
+        stop("'target' must have the same width as 'image1' and 'image2'.")
+
+      if (target$nrow() != (image1$nrow() + image2$nrow()))
+        stop("The height of 'target' must be the sum of the heights of 'image1' and 'image2'.")
+
+      `_vconcat`(image1, image2, target)
+    }  else if (target == "new") {
+      out <- zeros(image1$nrow() + image2$nrow(), image1$ncol(), image1$nchan(), image1$depth())
+      `_vconcat`(image1, image2, out)
+      out
+    } else {
+      stop("Invalid target.")
+    }
+  } else if (direction == "horizontal") {
+    if (image1$nrow() != image2$nrow())
+      stop("'image1' and 'image2' must have the same height.")
+
+    if (isImage(target)) {
+      if (target$depth() != image1$depth())
+        stop("'target' must have the same depth as 'image1' and 'image2'.")
+
+      if (target$nchan() != image1$nchan())
+        stop("'target' must have the same number of channels as 'image1' and 'image2'.")
+
+      if (target$nrow() != image1$nrow())
+        stop("'target' must have the same height as 'image1' and 'image2'.")
+
+      if (target$ncol() != (image1$ncol() + image2$ncol()))
+        stop("The width of 'target' must be the sum of the widths of 'image1' and 'image2'.")
+
+      `_hconcat`(image1, image2, target)
+    }  else if (target == "new") {
+      out <- zeros(image1$nrow(), image1$ncol() + image2$ncol(), image1$nchan(), image1$depth())
+      `_hconcat`(image1, image2, out)
+      out
+    } else {
+      stop("Invalid target.")
+    }
+  } else {
+    stop("Invalid direction.")
+  }
+}
