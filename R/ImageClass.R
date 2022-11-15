@@ -1110,6 +1110,8 @@ ones <- function(nrow, ncol, nchan = 3, bitdepth = "8U", colorspace = "BGR") {
 #' @description \code{tile} duplicates an \code{\link{Image}} object one or more
 #'  times along each of its two axes.
 #'
+#' @param image An \code{\link{Image}} object.
+#'
 #' @param ny A non-zero, positive integer specifying how many times the image is
 #'  repeated along the vertical axis.
 #'

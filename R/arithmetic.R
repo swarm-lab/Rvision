@@ -365,106 +365,46 @@ polarToCart <- function(magnitude, angle, x = "new", y = "new", degree = FALSE) 
 }
 
 
-#' @export
-sqrt.Rcpp_Image <- function(x, target = "new") {
-  if (!isImage(x))
-    stop("x must be an Image object.")
-
-  if (x$depth() != "32F" & x$depth() != "64F")
-    stop("x must be a 32F or 64F image object.")
-
-  if (isImage(target)) {
-    if (target$depth() != "32F" & target$depth() != "64F")
-      stop("target must be a 32F or 64F image object.")
-
-    `_sqrt`(x, target)
-  } else if (target == "self") {
-    `_sqrt`(x, x)
-  } else if (target == "new") {
-    out <- cloneImage(x)
-    `_sqrt`(x, out)
-    out
-  } else {
-    stop("Invalid target.")
-  }
-}
-
-
-#' @export
-exp.Rcpp_Image <- function(x, target = "new") {
-  if (!isImage(x))
-    stop("x must be an Image object.")
-
-  if (x$depth() != "32F" & x$depth() != "64F")
-    stop("x must be a 32F or 64F image object.")
-
-  if (isImage(target)) {
-    if (target$depth() != "32F" & target$depth() != "64F")
-      stop("target must be a 32F or 64F image object.")
-
-    `_exp`(x, target)
-  } else if (target == "self") {
-    `_exp`(x, x)
-  } else if (target == "new") {
-    out <- cloneImage(x)
-    `_exp`(x, out)
-    out
-  } else {
-    stop("Invalid target.")
-  }
-}
-
-
-#' @export
-log.Rcpp_Image <- function(x, target = "new") {
-  if (!isImage(x))
-    stop("x must be an Image object.")
-
-  if (x$depth() != "32F" & x$depth() != "64F")
-    stop("x must be a 32F or 64F image object.")
-
-  if (isImage(target)) {
-    if (target$depth() != "32F" & target$depth() != "64F")
-      stop("target must be a 32F or 64F image object.")
-
-    `_log`(x, target)
-  } else if (target == "self") {
-    `_log`(x, x)
-  } else if (target == "new") {
-    out <- cloneImage(x)
-    `_log`(x, out)
-    out
-  } else {
-    stop("Invalid target.")
-  }
-}
-
-
-#' @export
-log.Rcpp_Image <- function(x, target = "new") {
-  if (!isImage(x))
-    stop("x must be an Image object.")
-
-  if (x$depth() != "32F" & x$depth() != "64F")
-    stop("x must be a 32F or 64F image object.")
-
-  if (isImage(target)) {
-    if (target$depth() != "32F" & target$depth() != "64F")
-      stop("target must be a 32F or 64F image object.")
-
-    `_log`(x, target)
-  } else if (target == "self") {
-    `_log`(x, x)
-  } else if (target == "new") {
-    out <- cloneImage(x)
-    `_log`(x, out)
-    out
-  } else {
-    stop("Invalid target.")
-  }
-}
-
-
+#' @title Power Function
+#'
+#' @description \code{pow} raises every element of an \code{\link{Image}} object
+#'  to a power.
+#'
+#' @param x A 32- or 64-bit (32F or 64F) \code{\link{Image}} object.
+#'
+#' @param y A numeric value representing the exponent of power. Note that for
+#'  a non-integer power exponent, the absolute values of the \code{\link{Image}}
+#'  object are used.
+#'
+#' @param target The location where the results should be stored when passing a
+#'  sum of images to the function. It can take 3 values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{x} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. Note that \code{target} should have the same
+#'    dimensions, bitdepth, and number of channels as \code{x}, otherwise an
+#'    error will be thrown.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{x} in place. If \code{target} is an \code{\link{Image}} object, the
+#'  function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{exp}}, \code{\link{log}}, \code{\link{sqrt}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' changeBitDepth(balloon, "32F", 1 , "self")
+#' pow(balloon, 2)
+#'
 #' @export
 pow <- function(x, y = 2, target = "new") {
   if (!isImage(x))

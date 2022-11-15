@@ -548,6 +548,224 @@ methods::evalqOnLoad({
 })
 
 
+
+### Define generic math methods ###
+#' @title Exponential Generic for Image objects
+#'
+#' @description Overloaded \code{\link[base]{exp}} to handle \code{\link{Image}}
+#'  objects.
+#'
+#' @param x A 32- or 64-bit (32F or 64F) \code{\link{Image}} object.
+#'
+#' @param target The location where the results should be stored when passing a
+#'  sum of images to the function. It can take 3 values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{x} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. Note that \code{target} should have the same
+#'    dimensions, bitdepth, and number of channels as \code{x}, otherwise an
+#'    error will be thrown.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{x} in place. If \code{target} is an \code{\link{Image}} object, the
+#'  function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{log}}, \code{\link{pow}}, \code{\link{sqrt}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' changeBitDepth(balloon, "32F", 1 / 255, "self")
+#' exp(balloon)
+#'
+#' @name exp
+#'
+#' @export
+setGeneric("exp", function(x, target = "new") standardGeneric("exp"),
+           useAsDefault = function(x, target) base::exp(x),
+           group = "Math")
+
+methods::evalqOnLoad({
+  #' @name exp
+  #' @rdname exp
+  setMethod("exp", "Rcpp_Image",
+            function(x, target = "new") {
+              if (!isImage(x))
+                stop("x must be an Image object.")
+
+              if (x$depth() != "32F" & x$depth() != "64F")
+                stop("x must be a 32F or 64F image object.")
+
+              if (isImage(target)) {
+                if (target$depth() != "32F" & target$depth() != "64F")
+                  stop("target must be a 32F or 64F image object.")
+
+                `_exp`(x, target)
+              } else if (target == "self") {
+                `_exp`(x, x)
+              } else if (target == "new") {
+                out <- cloneImage(x)
+                `_exp`(x, out)
+                out
+              } else {
+                stop("Invalid target.")
+              }
+            })
+})
+
+
+#' @title Logarithm Generic for Image objects
+#'
+#' @description Overloaded \code{\link[base]{log}} to handle \code{\link{Image}}
+#'  objects.
+#'
+#' @param x A 32- or 64-bit (32F or 64F) \code{\link{Image}} object.
+#'
+#' @param target The location where the results should be stored when passing a
+#'  sum of images to the function. It can take 3 values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{x} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. Note that \code{target} should have the same
+#'    dimensions, bitdepth, and number of channels as \code{x}, otherwise an
+#'    error will be thrown.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{x} in place. If \code{target} is an \code{\link{Image}} object, the
+#'  function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{exp}}, \code{\link{pow}}, \code{\link{sqrt}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' changeBitDepth(balloon, "32F", 1 , "self")
+#' log(balloon)
+#'
+#' @name log
+#'
+#' @export
+setGeneric("log", function(x, target = "new") standardGeneric("log"),
+           useAsDefault = function(x, target) base::log(x, base = exp(1)),
+           group = "Math")
+
+methods::evalqOnLoad({
+  #' @name log
+  #' @rdname log
+  setMethod("log", "Rcpp_Image",
+            function(x, target = "new") {
+              if (!isImage(x))
+                stop("x must be an Image object.")
+
+              if (x$depth() != "32F" & x$depth() != "64F")
+                stop("x must be a 32F or 64F image object.")
+
+              if (isImage(target)) {
+                if (target$depth() != "32F" & target$depth() != "64F")
+                  stop("target must be a 32F or 64F image object.")
+
+                `_log`(x, target)
+              } else if (target == "self") {
+                `_log`(x, x)
+              } else if (target == "new") {
+                out <- cloneImage(x)
+                `_log`(x, out)
+                out
+              } else {
+                stop("Invalid target.")
+              }
+            })
+})
+
+
+#' @title Square Root Generic for Image objects
+#'
+#' @description Overloaded \code{\link[base]{sqrt}} to handle \code{\link{Image}}
+#'  objects.
+#'
+#' @param x A 32- or 64-bit (32F or 64F) \code{\link{Image}} object.
+#'
+#' @param target The location where the results should be stored when passing a
+#'  sum of images to the function. It can take 3 values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{x} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. Note that \code{target} should have the same
+#'    dimensions, bitdepth, and number of channels as \code{x}, otherwise an
+#'    error will be thrown.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{x} in place. If \code{target} is an \code{\link{Image}} object, the
+#'  function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{exp}}, \code{\link{log}}, \code{\link{pow}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' changeBitDepth(balloon, "32F", 1 , "self")
+#' sqrt(balloon)
+#'
+#' @name sqrt
+#'
+#' @export
+setGeneric("sqrt", function(x, target = "new") standardGeneric("sqrt"),
+           useAsDefault = function(x, target) base::sqrt(x),
+           group = "Math")
+
+methods::evalqOnLoad({
+  #' @name sqrt
+  #' @rdname sqrt
+  setMethod("sqrt", "Rcpp_Image",
+            function(x, target = "new") {
+              if (!isImage(x))
+                stop("x must be an Image object.")
+
+              if (x$depth() != "32F" & x$depth() != "64F")
+                stop("x must be a 32F or 64F image object.")
+
+              if (isImage(target)) {
+                if (target$depth() != "32F" & target$depth() != "64F")
+                  stop("target must be a 32F or 64F image object.")
+
+                `_sqrt`(x, target)
+              } else if (target == "self") {
+                `_sqrt`(x, x)
+              } else if (target == "new") {
+                out <- cloneImage(x)
+                `_sqrt`(x, out)
+                out
+              } else {
+                stop("Invalid target.")
+              }
+            })
+})
+
+
 ### Define generic statistics methods ###
 #' @title Sum Generic for Image objects
 #'
@@ -558,7 +776,7 @@ methods::evalqOnLoad({
 #'  objects.
 #'
 #' @param target The location where the results should be stored when passing a
-#'  sum of images to the function. It can take 3 values:
+#'  sum of images to the function. It can take 2 values:
 #'  \itemize{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}

@@ -229,6 +229,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/drawText.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/exp.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/extractChannel.html</loc>
   </url>
   <url>
@@ -373,6 +376,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/laplacian.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/log.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/matchShapes.html</loc>
   </url>
   <url>
@@ -437,6 +443,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/polarToCart.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/pow.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/pset.html</loc>
@@ -512,6 +521,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/sqrBoxFilter.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/sqrt.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/stream.html</loc>

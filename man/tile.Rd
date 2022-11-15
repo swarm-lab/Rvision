@@ -7,6 +7,8 @@
 tile(image, ny = 1, nx = 1, target = "new")
 }
 \arguments{
+\item{image}{An \code{\link{Image}} object.}
+
 \item{ny}{A non-zero, positive integer specifying how many times the image is
 repeated along the vertical axis.}
 
