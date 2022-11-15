@@ -1,4 +1,4 @@
-#' @useDynLib Rvision
+#' @useDynLib Rvision, .registration = TRUE
 #' @import Rcpp
 #' @import methods
 #' @importFrom graphics arrows par plot rasterImage points symbols
