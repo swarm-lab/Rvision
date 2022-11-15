@@ -36,7 +36,7 @@ randn(rnd)
 
 }
 \seealso{
-\code{\link{Image}}, \code{\link{randn}}
+\code{\link{Image}}, \code{\link{randu}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

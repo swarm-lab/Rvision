@@ -469,6 +469,9 @@
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/readStream.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/reduce.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/release.html</loc>
   </url>
   <url>
@@ -527,6 +530,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/threshold.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/ROpenCVLite/reference/tile.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/ROpenCVLite/reference/timelapse.html</loc>

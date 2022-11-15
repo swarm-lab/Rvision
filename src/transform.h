@@ -317,3 +317,17 @@ void _vconcat(Image& image1, Image& image2, Image& target) {
 void _hconcat(Image& image1, Image& image2, Image& target) {
   cv::hconcat(image1.image, image2.image, target.image);
 }
+
+void _reduce(Image& image, int dim, int rtype, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::reduce(image.uimage, target.uimage, dim, rtype, target.uimage.depth());
+
+    return cv::reduce(image.uimage, target.image, dim, rtype, target.image.depth());
+  }
+
+  if (target.GPU)
+    return cv::reduce(image.image, target.uimage, dim, rtype, target.uimage.depth());
+
+  cv::reduce(image.image, target.image, dim, rtype, target.image.depth());
+}

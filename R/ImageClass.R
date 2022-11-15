@@ -1105,6 +1105,65 @@ ones <- function(nrow, ncol, nchan = 3, bitdepth = "8U", colorspace = "BGR") {
 }
 
 
+#' @title Repeat Image
+#'
+#' @description \code{tile} duplicates an \code{\link{Image}} object one or more
+#'  times along each of its two axes.
+#'
+#' @param ny A non-zero, positive integer specifying how many times the image is
+#'  repeated along the vertical axis.
+#'
+#' @param nx A non-zero, positive integer specifying how many times the image is
+#'  repeated along the horizontal axis.
+#'
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not the appropriate dimensions, number of channels,
+#'    or bitdepth, it will be coerced automatically into the appropriate format.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{reduce}}
+#'
+#' @examples
+#' rnd <- zeros(360, 1, 1)
+#' randu(rnd)
+#' rnd_tiled <- tile(rnd, 1, 640)
+#'
+#' @export
+tile <- function(image, ny = 1, nx = 1, target = "new") {
+  if (!isImage(image))
+    stop("'image' is not an Image object.")
+
+  if ((ny %% 1) != 0 | (nx %% 1) != 0 | ny < 1 | nx < 1)
+    stop("'ny' and 'nx' must strictly positive integer numbers.")
+
+  if (isImage(target)) {
+    if (image$space != target$space)
+      changeColorSpace(target, image$space, "self")
+
+    `_repeat`(image, ny, nx, target)
+  } else if (target == "new") {
+    out <- zeros(image$nrow() * ny, image$ncol() * nx, image$nchan(), image$depth())
+    `_repeat`(image, ny, nx, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
 #' @title Random Uniform Image
 #'
 #' @description \code{randu} replaces the content of an \code{\link{Image}}
@@ -1170,7 +1229,7 @@ randu <- function(image, low = 0, high = 256) {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}, \code{\link{randn}}
+#' @seealso \code{\link{Image}}, \code{\link{randu}}
 #'
 #' @examples
 #' rnd <- zeros(100, 100)
