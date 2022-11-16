@@ -18,9 +18,9 @@ public:
   Rcpp::NumericVector dim();
   int nrow(), ncol(), nchan();
   std::string depth(), space;
+  void init();
 
 private:
-  void init();
   Rcpp::NumericVector _get1(int x, int y);
   Rcpp::NumericVector _get2(int x, int y);
   Rcpp::NumericVector _get3(int x, int y);
@@ -87,6 +87,19 @@ Image::Image(const Image& image) {
 }
 
 void Image::init() {
+  if (this->space == "GRAY" && this->nchan() != 1) {
+    switch(this->nchan()) {
+    case 3:
+      this->space = "BGR";
+      break;
+    case 4:
+      this->space = "BGRA";
+      break;
+    default:
+      this->space = "UNKNOWN";
+    }
+  }
+
   if (this->space == "BGR" && this->nchan() != 3) {
     switch(this->nchan()) {
     case 1:
@@ -94,6 +107,19 @@ void Image::init() {
       break;
     case 4:
       this->space = "BGRA";
+      break;
+    default:
+      this->space = "UNKNOWN";
+    }
+  }
+
+  if (this->space == "BGRA" && this->nchan() != 4) {
+    switch(this->nchan()) {
+    case 1:
+      this->space = "GRAY";
+      break;
+    case 3:
+      this->space = "BGR";
       break;
     default:
       this->space = "UNKNOWN";
@@ -618,6 +644,20 @@ void _copyMakeBorder(Image &image, int top, int bottom, int left, int right,
 
 Image _zeros(int nrow, int ncol, std::string type, std::string colorspace) {
   return Image(cv::Mat::zeros(nrow, ncol, str2type(type)), colorspace);
+}
+
+void _repeat(Image& image, int ny, int nx, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::repeat(image.uimage, ny, nx, target.uimage);
+
+    return cv::repeat(image.uimage, ny, nx, target.image);
+  }
+
+  if (target.GPU)
+    return cv::repeat(image.image, ny, nx, target.uimage);
+
+  cv::repeat(image.image, ny, nx, target.image);
 }
 
 void _randu(Image& image, Rcpp::NumericVector low, Rcpp::NumericVector high) {

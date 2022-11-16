@@ -32,6 +32,7 @@ RCPP_MODULE(class_Image) {
     .method("ncol", &Image::ncol)
     .method("nchan", &Image::nchan)
     .method("depth", &Image::depth)
+    .method("init", &Image::init)
   ;
 
   function("_changeBitDepth", &_changeBitDepth, List::create(_["image"], _["depth"],
@@ -50,6 +51,7 @@ RCPP_MODULE(class_Image) {
   function("_copyMakeBorder", &_copyMakeBorder, List::create(_["image"], _["top"],
     _["bottom"], _["left"], _["right"], _["borderType"], _["borderValue"], _["target"]), "");
   function("_zeros", &_zeros, List::create(_["nrow"], _["ncol"], _["type"], _["colorspace"]), "");
+  function("_repeat", &_repeat, List::create(_["image"], _["nx"], _["ny"], _["target"]), "");
   function("_randu", &_randu, List::create(_["image"], _["low"], _["high"]), "");
   function("_randn", &_randn, List::create(_["image"], _["mean"], _["stddev"]), "");
   function("_readHIS", &_readHIS, List::create(_["filename"]), "");
@@ -383,6 +385,7 @@ RCPP_MODULE(methods_Transform) {
     _["bgdModel"], _["fgdModel"], _["iterCount"], _["mode"]), "");
   function("_vconcat", &_vconcat, List::create(_["image1"], _["image2"], _["target"]), "");
   function("_hconcat", &_hconcat, List::create(_["image1"], _["image2"], _["target"]), "");
+  function("_reduce", &_reduce, List::create(_["image"], _["dim"], _["rtype"], _["target"]), "");
 }
 
 #include "feature.h"

@@ -1157,3 +1157,99 @@ concatenate <- function(image1, image2, direction = "vertical", target = "new") 
     stop("Invalid direction.")
   }
 }
+
+
+#' @title Reduces a 2D Image to a 1D Image
+#'
+#' @description \code{reduce} reduces a 2D \code{\link{Image}} object to a 1D
+#'  \code{\link{Image}} object by treating the image rows/columns as a set of 1D
+#'  vectors and performing the specified operation on the vectors until a single
+#'  row/column is obtained. For example, the function can be used to compute
+#'  horizontal and vertical projections of a raster image. It is similar in
+#'  spirit to the \code{\link{apply}} function in base R.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param dim The dimension of the image which the function will be applied over.
+#'  1 indicates rows (i.e., the image is reduced to a single column), 2
+#'  indicates columns (i.e., the image is reduced to a single row).
+#'
+#' @param fun The function to be applied. It can take the following values:
+#'  \itemize{
+#'   \item{"sum"}
+#'   \item{"mean"}
+#'   \item{"max"}
+#'   \item{"min"}
+#'  }
+#'
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    \code{target} must have the same number of channels as \code{image},
+#'    otherwise it will be coerced to the same number of channels. It must also
+#'    have the same bitdepth as \code{image} if \code{fun} is equal to \code{max}
+#'    or \code{min}. If \code{fun} is equal to \code{sum} or \code{mean} the
+#'    bitdepth can be larger to preserve accuracy. If \code{dim=1}, \code{target}
+#'    must have 1 column and the same number of rows as \code{image}. If
+#'    \code{dim=2}, \code{target} must have 1 row and the same number of columns
+#'    as \code{image}.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{repeat}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' sum_by_row <- reduce(balloon, 1, "sum")
+#'
+#' @export
+reduce <- function(image, dim, fun = "sum", target = "new") {
+  if (!isImage(image))
+    stop("'image' is not an Image object.")
+
+  if (!(dim %in% 1:2))
+    stop("Invalid 'dim'")
+
+  dim <- abs(2 - dim)
+
+  rtype <- switch(
+    fun,
+    "sum" = 0,
+    "mean" = 1,
+    "max" = 2,
+    "min" = 3,
+    stop("Invalid reduction function."))
+
+  if (isImage(target)) {
+    `_reduce`(image, dim, rtype, target)
+  } else if (target == "new") {
+    if (dim == 0) {
+      nrow <- 1
+      ncol <- image$ncol()
+    } else {
+      nrow <- image$nrow()
+      ncol <- 1
+    }
+
+    if (rtype == 2 | rtype == 3) {
+      out <- zeros(nrow, ncol, image$nchan(), image$depth())
+    } else {
+      out <- zeros(nrow, ncol, image$nchan(), "32F")
+    }
+
+    `_reduce`(image, dim, rtype, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
