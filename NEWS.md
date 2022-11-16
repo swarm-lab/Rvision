@@ -1,3 +1,20 @@
+# Rvision 0.6.4
+
+## New features
+
+* New function mimicking Matlab "improfile"" function for measuring pixel values along a line segment.
+* New function for image concatenation.
+* New function for reducing 2D images object to a 1D image (apply-like). 
+* New function for tiling/repeating images. 
+* Square root, logarithm, exponential, and power functions are now proper generics. 
+
+## Minor improvements and fixes
+
+* The documentation has been fixed/improved in several places.
+* Minor bug fixes here and there.
+
+---
+
 # Rvision 0.6.3
 
 ## New features
