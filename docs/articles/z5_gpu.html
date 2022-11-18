@@ -151,8 +151,8 @@ images it receives in the memory of the CPU. Before using
 GPU-accelerated functions, the image must first be copied to the GPU
 memory. This can be done very easily as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
-<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Find the path to the balloon1.png image provided with Rvision</span></span>
+<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load the image in memory</span></span>
 <span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>
@@ -162,7 +162,7 @@ memory. This can be done very easily as follows:</p>
 <p>Once this is done, <code>Rvision</code> (<code>OpenCV</code> really)
 will automatically use the GPU-accelerated version of each operation on
 the image if it is available. Otherwise, it will default to using the
-CPU version. That is it, there is nothing more complicated to do to take
+CPU version. And that’s it, there is nothing more to do to take
 advantage of the processing speed of the GPU.</p>
 <p>In the case where a function accepts multiple images as arguments
 (e.g. when using a target image to save the result of an operation on
@@ -185,20 +185,20 @@ follows:</p>
 </h2>
 <p>Nothing comes for free and there are a few caveats to using
 GPU-accelerated operations.</p>
-<p>First, it will only work if your computer has a GPU (even if a basic
-one integrated with the CPU) and that the <code>OpenCL</code> drivers
-for the GPU are installed. If <code>OpenCL</code> is not available on
-your system, <code>Rvision</code> will throw an error when you use the
-<code>$toGPU</code> function. <code>OpenCL</code> should be available on
-most traditional computers (including laptops) with most operating
-systems. Check the documentation of your computer and operating system
-to figure out whether <code>OpenCL</code> is available/installed on your
-system and how to install it if necessary (in which case, you will
-probably need to recompile <code>OpenCV</code> using the
-<code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/installOpenCV.html">ROpenCVLite::installOpenCV</a></code> function). <code>OpenCL</code>
-will probably not be available on shared servers that do not provide GPU
-access to their users. Check with your server administrator if that it
-the case.</p>
+<p>First, it will only work if your computer has a GPU (even if only a
+basic one integrated with the CPU) and that the <code>OpenCL</code>
+drivers for the GPU are installed. If <code>OpenCL</code> is not
+available on your system, <code>Rvision</code> will throw an error when
+you use the <code>$toGPU</code> function. <code>OpenCL</code> should be
+available on most traditional computers (including laptops) with most
+operating systems. Check the documentation of your computer and
+operating system to figure out whether <code>OpenCL</code> is
+available/installed on your system and how to install it if necessary
+(in which case, you will probably need to recompile <code>OpenCV</code>
+using the <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/installOpenCV.html">ROpenCVLite::installOpenCV</a></code> function).
+<code>OpenCL</code> will probably not be available on shared servers
+that do not provide GPU access to their users. Check with your server
+administrator if that it the case.</p>
 <p>While GPU-accelerated operations can be much faster than their
 CPU-based equivalent, not all operations can be efficiently run on a
 GPU. Some operations provided by

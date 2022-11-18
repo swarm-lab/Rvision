@@ -38,8 +38,8 @@ memory of the CPU. Before using GPU-accelerated functions, the image must first
 be copied to the GPU memory. This can be done very easily as follows:
 
 ```{r eval=FALSE, echo=TRUE}
-# Find the path to the bunny.png image provided with Rvision
-path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+# Find the path to the balloon1.png image provided with Rvision
+path_to_image <- system.file("sample_img", "balloon1.png", package = "Rvision")
 
 # Load the image in memory
 my_image <- image(filename = path_to_image)
@@ -50,9 +50,8 @@ my_image$toGPU()
 
 Once this is done, `Rvision` (`OpenCV` really) will automatically use the 
 GPU-accelerated version of each operation on the image if it is available. 
-Otherwise, it will default to using the CPU version. That is it, there is 
-nothing more complicated to do to take advantage of the processing speed 
-of the GPU. 
+Otherwise, it will default to using the CPU version. And that's it, there is 
+nothing more to do to take advantage of the processing speed of the GPU. 
 
 In the case where a function accepts multiple images as arguments (e.g. when 
 using a target image to save the result of an operation on the original image), 
@@ -77,7 +76,7 @@ my_image$fromGPU()
 Nothing comes for free and there are a few caveats to using GPU-accelerated 
 operations. 
 
-First, it will only work if your computer has a GPU (even if a basic one 
+First, it will only work if your computer has a GPU (even if only a basic one 
 integrated with the CPU) and that the `OpenCL` drivers for the GPU are installed.
 If `OpenCL` is not available on your system, `Rvision` will throw an error when 
 you use the `$toGPU` function. `OpenCL` should be available on most traditional 

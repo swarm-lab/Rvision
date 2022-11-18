@@ -15,7 +15,7 @@ Retrieving a single frame from a video or camera stream is fast, but it is not
 instantaneous because `Rvision` (and therefore `OpenCV` in the background) needs
 to grab and decode each frame before it can be used for further processing. For 
 most applications, that small time penalty is not an issue; losing a few 
-milliseconds per frame will not be felt by a user processing short videos, low 
+milliseconds per frame will not be felt by a user processing short and/or low 
 resolution videos for instance. 
 
 However, the frame decoding time will increase significantly with the resolution 
