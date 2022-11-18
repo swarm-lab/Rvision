@@ -36,8 +36,8 @@ non-destructively over an image using `graphics::lines()`, `graphics::points()`,
 etc. For instance: 
 
 ```{r eval=FALSE, echo=TRUE}
-# Find the path to the bunny.png image provided with Rvision
-path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+# Find the path to the balloon1.png image provided with Rvision
+path_to_image <- system.file("sample_img", "balloon1.png", package = "Rvision")
 
 # Load the image in memory
 my_image <- image(filename = path_to_image)
@@ -46,10 +46,10 @@ my_image <- image(filename = path_to_image)
 plot(my_image)
 
 # Draw lines over the plotted image
-abline(h = 400, col = "red", lwd = 5)
-abline(h = 550, col = "red", lwd = 5)
-abline(v = 430, col = "red", lwd = 5)
-abline(v = 570, col = "red", lwd = 5)
+abline(h = 170, col = "red", lwd = 5)
+abline(h = 325, col = "red", lwd = 5)
+abline(v = 290, col = "red", lwd = 5)
+abline(v = 440, col = "red", lwd = 5)
 ```
 
 Note that this method is rather slow and therefore not suitable for applications 

@@ -1,6 +1,6 @@
-## ----eval=FALSE, echo=TRUE----------------------------------------------------
-#  # Find the path to the bunny.png image provided with Rvision
-#  path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+## ----eval=FALSE, echo=TRUE----------------------------------------------
+#  # Find the path to the balloon1.png image provided with Rvision
+#  path_to_image <- system.file("sample_img", "balloon1.png", package = "Rvision")
 #  
 #  # Load the image in memory
 #  my_image <- image(filename = path_to_image)
@@ -15,9 +15,9 @@
 #  # Plot original image after modification
 #  plot(my_image)
 
-## ----eval=FALSE, echo=TRUE----------------------------------------------------
-#  # Find the path to the bunny.png image provided with Rvision
-#  path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+## ----eval=FALSE, echo=TRUE----------------------------------------------
+#  # Find the path to the balloon1.png image provided with Rvision
+#  path_to_image <- system.file("sample_img", "balloon1.png", package = "Rvision")
 #  
 #  # Load the image in memory
 #  my_image <- image(filename = path_to_image)
@@ -31,9 +31,9 @@
 #  # Plot blurred copy
 #  plot(my_blurred_copy)
 
-## ----eval=FALSE, echo=TRUE----------------------------------------------------
-#  # Find the path to the bunny.png image provided with Rvision
-#  path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+## ----eval=FALSE, echo=TRUE----------------------------------------------
+#  # Find the path to the balloon1.png image provided with Rvision
+#  path_to_image <- system.file("sample_img", "balloon1.png", package = "Rvision")
 #  
 #  # Load the image in memory
 #  my_image <- image(filename = path_to_image)

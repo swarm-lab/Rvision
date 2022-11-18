@@ -135,7 +135,7 @@ released from memory as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_video</span><span class="op">)</span></span></code></pre></div>
 <p>Note that <code>Video</code> objects are wrappers around
-<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html" class="external-link"><code>VideoCapture</code></a>
+<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.6.0/d8/dfe/classcv_1_1VideoCapture.html" class="external-link"><code>VideoCapture</code></a>
 pointers. They will not persist between <code>R</code> sessions.</p>
 <hr>
 </div>
@@ -159,7 +159,7 @@ released from memory as follows:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></span></code></pre></div>
 <p>Note that <code>Stream</code> objects are wrappers around
-<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html" class="external-link"><code>VideoCapture</code></a>
+<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.6.0/d8/dfe/classcv_1_1VideoCapture.html" class="external-link"><code>VideoCapture</code></a>
 pointers. They will not persist between <code>R</code> sessions.</p>
 <hr>
 </div>
@@ -170,8 +170,8 @@ pointers. They will not persist between <code>R</code> sessions.</p>
 files, from <code>Video</code> objects, from <code>Stream</code>
 objects, and from <code>R</code> arrays.</p>
 <p>Note that <code>Image</code> objects are wrappers around
-<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/d3/d63/classcv_1_1Mat.html" class="external-link"><code>Mat</code></a>
-and <a href="https://docs.opencv.org/4.5.0/d7/d45/classcv_1_1UMat.html" class="external-link"><code>UMat</code></a>
+<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.6.0/d3/d63/classcv_1_1Mat.html" class="external-link"><code>Mat</code></a>
+and <a href="https://docs.opencv.org/4.6.0/d7/d45/classcv_1_1UMat.html" class="external-link"><code>UMat</code></a>
 objects. They will not persist between <code>R</code> sessions.</p>
 <div class="section level3">
 <h3 id="images-from-files">2.3.1 - Images from files<a class="anchor" aria-label="anchor" href="#images-from-files"></a>
@@ -180,8 +180,8 @@ objects. They will not persist between <code>R</code> sessions.</p>
 the path to an image file to the <code><a href="../reference/image.html">image()</a></code> function. For
 instance:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
-<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Find the path to the balloon1.png image provided with Rvision</span></span>
+<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load the image in memory</span></span>
 <span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span></code></pre></div>
@@ -253,7 +253,7 @@ object, it can be closed and released from memory as follows:</p>
 session, you will not be able to play it with your system’s video
 player.</p>
 <p>Note that <code>VideoWriter</code> objects are wrappers around
-<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.5.0/dd/d9e/classcv_1_1VideoWriter.html" class="external-link"><code>VideoWriter</code></a>
+<code>OpenCV</code>’s <a href="https://docs.opencv.org/4.6.0/dd/d9e/classcv_1_1VideoWriter.html" class="external-link"><code>VideoWriter</code></a>
 pointers. They will not persist between <code>R</code> sessions.</p>
 <hr>
 </div>

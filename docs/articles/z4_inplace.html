@@ -138,8 +138,8 @@ speed of large volumes of images.</p>
 <p>All operations that support in-place operations will have an argument
 named “target” that can be set to the value “self”. For instance:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
-<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Find the path to the balloon1.png image provided with Rvision</span></span>
+<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load the image in memory</span></span>
 <span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>
@@ -170,11 +170,11 @@ to perform their operations on a copy of the original image. This will
 be slower but resemble the usual behavior of <code>R</code>
 functions.</p>
 <p>By default, all operations are copy operations but this can be
-explicitely specified by setting the “target” argument to “new”. For
+explicitly specified by setting the “target” argument to “new”. For
 instance:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
-<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Find the path to the balloon1.png image provided with Rvision</span></span>
+<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load the image in memory</span></span>
 <span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>
@@ -199,15 +199,15 @@ same time?</p>
 operations which results can be stored in another image in memory (the
 target) as long as that image was pre-allocated before the operation
 takes place and that it has the same memory footprint as the original
-image. This is as fast as in-place operations and it does not modify the
+image. This is as fast as in-place operations but it does not modify the
 original image; instead, it modifies a separate image that serves as a
 placeholder for the results.</p>
 <p>All operations that support target operations will have an argument
 named “target” that can be set to the name of the target image. For
 instance:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Find the path to the bunny.png image provided with Rvision</span></span>
-<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"bunny.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Find the path to the balloon1.png image provided with Rvision</span></span>
+<span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load the image in memory</span></span>
 <span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>

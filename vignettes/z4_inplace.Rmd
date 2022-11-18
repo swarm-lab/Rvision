@@ -29,8 +29,8 @@ All operations that support in-place operations will have an argument named
 "target" that can be set to the value "self". For instance:
 
 ```{r eval=FALSE, echo=TRUE}
-# Find the path to the bunny.png image provided with Rvision
-path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+# Find the path to the balloon1.png image provided with Rvision
+path_to_image <- system.file("sample_img", "balloon1.png", package = "Rvision")
 
 # Load the image in memory
 my_image <- image(filename = path_to_image)
@@ -61,12 +61,12 @@ images also give users the option to perform their operations on a copy of the
 original image. This will be slower but resemble the usual behavior of `R` 
 functions.
 
-By default, all operations are copy operations but this can be explicitely 
+By default, all operations are copy operations but this can be explicitly 
 specified by setting the "target" argument to "new". For instance:
 
 ```{r eval=FALSE, echo=TRUE}
-# Find the path to the bunny.png image provided with Rvision
-path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+# Find the path to the balloon1.png image provided with Rvision
+path_to_image <- system.file("sample_img", "balloon1.png", package = "Rvision")
 
 # Load the image in memory
 my_image <- image(filename = path_to_image)
@@ -91,7 +91,7 @@ Then you are in luck. `Rvision` - still thanks to `OpenCV` - also offers "target
 operations, that is operations which results can be stored in another image in
 memory (the target) as long as that image was pre-allocated before the operation
 takes place and that it has the same memory footprint as the original image. 
-This is as fast as in-place operations and it does not modify the original image;
+This is as fast as in-place operations but it does not modify the original image;
 instead, it modifies a separate image that serves as a placeholder for the 
 results. 
  
@@ -99,8 +99,8 @@ All operations that support target operations will have an argument named
 "target" that can be set to the name of the target image. For instance:
 
 ```{r eval=FALSE, echo=TRUE}
-# Find the path to the bunny.png image provided with Rvision
-path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+# Find the path to the balloon1.png image provided with Rvision
+path_to_image <- system.file("sample_img", "balloon1.png", package = "Rvision")
 
 # Load the image in memory
 my_image <- image(filename = path_to_image)

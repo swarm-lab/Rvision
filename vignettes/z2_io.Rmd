@@ -30,7 +30,7 @@ release(my_video)
 ```
 
 Note that `Video` objects are wrappers around `OpenCV`'s
-[`VideoCapture`](https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html)
+[`VideoCapture`](https://docs.opencv.org/4.6.0/d8/dfe/classcv_1_1VideoCapture.html)
 pointers. They will not persist between `R` sessions. 
 
 ---
@@ -60,7 +60,7 @@ release(my_stream)
 ```
 
 Note that `Stream` objects are wrappers around `OpenCV`'s
-[`VideoCapture`](https://docs.opencv.org/4.5.0/d8/dfe/classcv_1_1VideoCapture.html)
+[`VideoCapture`](https://docs.opencv.org/4.6.0/d8/dfe/classcv_1_1VideoCapture.html)
 pointers. They will not persist between `R` sessions. 
 
 --- 
@@ -71,8 +71,8 @@ There are multiple ways to create `Image` objects: from files, from `Video`
 objects, from `Stream` objects, and from `R` arrays. 
 
 Note that `Image` objects are wrappers around `OpenCV`'s
-[`Mat`](https://docs.opencv.org/4.5.0/d3/d63/classcv_1_1Mat.html) and 
-[`UMat`](https://docs.opencv.org/4.5.0/d7/d45/classcv_1_1UMat.html) objects. 
+[`Mat`](https://docs.opencv.org/4.6.0/d3/d63/classcv_1_1Mat.html) and 
+[`UMat`](https://docs.opencv.org/4.6.0/d7/d45/classcv_1_1UMat.html) objects. 
 They will not persist between `R` sessions.
 
 ### 2.3.1 - Images from files
@@ -81,8 +81,8 @@ They will not persist between `R` sessions.
 file to the `image()` function. For instance: 
 
 ```{r eval=FALSE, echo=TRUE}
-# Find the path to the bunny.png image provided with Rvision
-path_to_image <- system.file("sample_img", "bunny.png", package = "Rvision")
+# Find the path to the balloon1.png image provided with Rvision
+path_to_image <- system.file("sample_img", "balloon1.png", package = "Rvision")
 
 # Load the image in memory
 my_image <- image(filename = path_to_image)
@@ -162,7 +162,7 @@ exiting the `R` session, you will not be able to play it with your system's
 video player. 
 
 Note that `VideoWriter` objects are wrappers around `OpenCV`'s
-[`VideoWriter`](https://docs.opencv.org/4.5.0/dd/d9e/classcv_1_1VideoWriter.html)
+[`VideoWriter`](https://docs.opencv.org/4.6.0/dd/d9e/classcv_1_1VideoWriter.html)
 pointers. They will not persist between `R` sessions.
 
 ---
