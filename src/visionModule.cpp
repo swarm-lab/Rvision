@@ -19,6 +19,8 @@ RCPP_MODULE(class_Image) {
     .constructor< std::string, std::string > ("", &ImageConst1)
     .constructor< arma::icube, std::string > ("", &ImageConst2)
     .constructor< arma::fcube, std::string > ("", &ImageConst3)
+    .constructor< Rcpp::IntegerMatrix, std::string > ("", &ImageConst4)
+    .constructor< Rcpp::NumericMatrix, std::string > ("", &ImageConst5)
     .field("space", &Image::space)
     .field("GPU", &Image::GPU)
     .method("write", &Image::write)
