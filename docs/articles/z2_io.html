@@ -210,11 +210,11 @@ For instance:</p>
 <span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readNext.html">readNext</a></span><span class="op">(</span><span class="va">my_stream</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="images-from-r-arrays">2.3.4 - Images from R arrays<a class="anchor" aria-label="anchor" href="#images-from-r-arrays"></a>
+<h3 id="images-from-r-arrays-and-matrices">2.3.4 - Images from R arrays and matrices<a class="anchor" aria-label="anchor" href="#images-from-r-arrays-and-matrices"></a>
 </h3>
-<p><code>Image</code> objects are created from <code>R</code> arrays
-files by passing the array directly to the <code><a href="../reference/image.html">image()</a></code>
-function. For instance:</p>
+<p><code>Image</code> objects are created from <code>R</code> arrays and
+matrices by passing the array or matrix directly to the
+<code><a href="../reference/image.html">image()</a></code> function. For instance:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a 100 x 100 x 3 random array</span></span>
 <span><span class="va">my_array</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">30000</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
