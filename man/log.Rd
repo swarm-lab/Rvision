@@ -4,10 +4,12 @@
 \alias{log}
 \title{Logarithm Generic for Image objects}
 \usage{
-log(x, target = "new")
+log(x, ..., target = "new")
 }
 \arguments{
 \item{x}{A 32- or 64-bit (32F or 64F) \code{\link{Image}} object.}
+
+\item{...}{Ignored.}
 
 \item{target}{The location where the results should be stored when passing a
 sum of images to the function. It can take 3 values:

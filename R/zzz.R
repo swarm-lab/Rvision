@@ -619,6 +619,11 @@ methods::evalqOnLoad({
                 stop("Invalid target.")
               }
             })
+
+  setMethod("exp", "array",
+            function(x) {
+              base::exp(x)
+            })
 })
 
 
@@ -628,6 +633,8 @@ methods::evalqOnLoad({
 #'  objects.
 #'
 #' @param x A 32- or 64-bit (32F or 64F) \code{\link{Image}} object.
+#'
+#' @param ... Ignored.
 #'
 #' @param target The location where the results should be stored when passing a
 #'  sum of images to the function. It can take 3 values:
@@ -661,8 +668,8 @@ methods::evalqOnLoad({
 #' @name log
 #'
 #' @export
-setGeneric("log", function(x, target = "new") standardGeneric("log"),
-           useAsDefault = function(x, target) base::log(x, base = exp(1)),
+setGeneric("log", function(x, ..., target = "new") standardGeneric("log"),
+           useAsDefault = function(x, ..., target) base::log(x, ...),
            group = "Math")
 
 methods::evalqOnLoad({
@@ -690,6 +697,11 @@ methods::evalqOnLoad({
               } else {
                 stop("Invalid target.")
               }
+            })
+
+  setMethod("log", "array",
+            function(x, base = exp(1)) {
+              base::log(x, base)
             })
 })
 
@@ -762,6 +774,11 @@ methods::evalqOnLoad({
               } else {
                 stop("Invalid target.")
               }
+            })
+
+  setMethod("sqrt", "array",
+            function(x) {
+              base::sqrt(x)
             })
 })
 
