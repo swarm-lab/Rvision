@@ -352,8 +352,8 @@ Images from files</a></li>
 streams</a></li>
 <li><a href="#images-from-camera-streams" id="toc-images-from-camera-streams">2.3.3 - Images from camera
 streams</a></li>
-<li><a href="#images-from-r-arrays" id="toc-images-from-r-arrays">2.3.4
-- Images from R arrays</a></li>
+<li><a href="#images-from-r-arrays-and-matrices" id="toc-images-from-r-arrays-and-matrices">2.3.4 - Images from R arrays
+and matrices</a></li>
 </ul></li>
 <li><a href="#writing-video-streams-to-file" id="toc-writing-video-streams-to-file">2.4 - Writing video streams to
 file</a></li>
@@ -439,11 +439,11 @@ For instance:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture the next available frame from the my_stream object created earlier</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>my_image <span class="ot">&lt;-</span> <span class="fu">readNext</span>(my_stream)</span></code></pre></div>
 </div>
-<div id="images-from-r-arrays" class="section level3">
-<h3>2.3.4 - Images from R arrays</h3>
-<p><code>Image</code> objects are created from <code>R</code> arrays
-files by passing the array directly to the <code>image()</code>
-function. For instance:</p>
+<div id="images-from-r-arrays-and-matrices" class="section level3">
+<h3>2.3.4 - Images from R arrays and matrices</h3>
+<p><code>Image</code> objects are created from <code>R</code> arrays and
+matrices by passing the array or matrix directly to the
+<code>image()</code> function. For instance:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 100 x 100 x 3 random array</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>my_array <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="fu">rnorm</span>(<span class="dv">30000</span>), <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">3</span>))</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>

@@ -111,10 +111,10 @@ with the `readNext()` function. For instance:
 my_image <- readNext(my_stream)
 ```
 
-### 2.3.4 - Images from R arrays
+### 2.3.4 - Images from R arrays and matrices
 
-`Image` objects are created from `R` arrays files by passing the array directly 
-to the `image()` function. For instance: 
+`Image` objects are created from `R` arrays and matrices by passing the array or 
+matrix directly to the `image()` function. For instance: 
 
 ```{r eval=FALSE, echo=TRUE}
 # Create a 100 x 100 x 3 random array
