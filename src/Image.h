@@ -6,6 +6,8 @@ public:
   Image(cv::UMat inputImage, std::string colorspace);
   Image(arma::icube inputArray, std::string colorspace);
   Image(arma::fcube inputArray, std::string colorspace);
+  Image(Rcpp::IntegerMatrix inputArray, std::string colorspace);
+  Image(Rcpp::NumericMatrix inputArray, std::string colorspace);
   Image(const Image& image);
   cv::Mat image;
   cv::UMat uimage;
@@ -64,15 +66,33 @@ Image::Image(cv::UMat inputMat, std::string colorspace) {
   this->init();
 }
 
-Image::Image(arma::Cube< int > inputArray, std::string colorspace) {
+Image::Image(arma::icube inputArray, std::string colorspace) {
   arma2cv(inputArray, this->image);
   this->space = colorspace;
   this->GPU = false;
   this->init();
 }
 
-Image::Image(arma::Cube< float > inputArray, std::string colorspace) {
+Image::Image(arma::fcube inputArray, std::string colorspace) {
   arma2cv(inputArray, this->image);
+  this->space = colorspace;
+  this->GPU = false;
+  this->init();
+}
+
+Image::Image(Rcpp::IntegerMatrix inputArray, std::string colorspace) {
+  arma::icube tmp = arma::icube(inputArray.begin(), inputArray.nrow(),
+                                inputArray.ncol(), 1, false);
+  arma2cv(tmp, this->image);
+  this->space = colorspace;
+  this->GPU = false;
+  this->init();
+}
+
+Image::Image(Rcpp::NumericMatrix inputArray, std::string colorspace) {
+  arma::cube tmp = arma::cube(inputArray.begin(), inputArray.nrow(),
+                              inputArray.ncol(), 1, false);
+  arma2cv(tmp, this->image);
   this->space = colorspace;
   this->GPU = false;
   this->init();
@@ -343,25 +363,25 @@ void Image::_set3(int x, int y, Rcpp::NumericVector color) {
 void Image::_set4(int x, int y, Rcpp::NumericVector color) {
   if (this->depth() == "8U") {
     this->image.at< cv::Vec<uchar, 4> >(y, x) = cv::Vec<uchar, 4>(color(0),
-                                         color(1), color(2), color(3));
+                                        color(1), color(2), color(3));
   } else if (this->depth() == "16U") {
     this->image.at< cv::Vec<ushort, 4> >(y, x) = cv::Vec<ushort, 4>(color(0),
-                                          color(1), color(2), color(3));
+                                         color(1), color(2), color(3));
   } else if (this->depth() == "32S") {
     this->image.at< cv::Vec<int, 4> >(y, x) = cv::Vec<int, 4>(color(0),
-                                       color(1), color(2), color(3));
+                                      color(1), color(2), color(3));
   } else if (this->depth() == "32F") {
     this->image.at< cv::Vec<float, 4> >(y, x) = cv::Vec<float, 4>(color(0),
-                                         color(1), color(2), color(3));
+                                        color(1), color(2), color(3));
   } else if (this->depth() == "8S") {
     this->image.at< cv::Vec<schar, 4> >(y, x) = cv::Vec<schar, 4>(color(0),
-                                         color(1), color(2), color(3));
+                                        color(1), color(2), color(3));
   } else if (this->depth() == "16S") {
     this->image.at< cv::Vec<short, 4> >(y, x) = cv::Vec<short, 4>(color(0),
-                                         color(1), color(2), color(3));
+                                        color(1), color(2), color(3));
   } else if (this->depth() == "64F") {
     this->image.at< cv::Vec<double, 4> >(y, x) = cv::Vec<double, 4>(color(0),
-                                          color(1), color(2), color(3));
+                                         color(1), color(2), color(3));
   } else {
     Rcpp::stop("Invalid bit depth.");
   }
@@ -624,7 +644,7 @@ void _subimage(Image& image, int x, int y, int width, int height, Image& target)
 }
 
 void _copyMakeBorder(Image &image, int top, int bottom, int left, int right,
-                      int borderType, Rcpp::NumericVector borderColor, Image& target) {
+                     int borderType, Rcpp::NumericVector borderColor, Image& target) {
   if (image.GPU) {
     if (target.GPU)
       return cv::copyMakeBorder(image.uimage, target.uimage, top, bottom, left, right,

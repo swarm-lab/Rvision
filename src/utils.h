@@ -7,10 +7,24 @@ bool ImageConst1(SEXP* args, int nargs) {
 bool ImageConst2(SEXP* args, int nargs) {
   if(nargs != 2) return false;
   if(TYPEOF(args[0]) != INTSXP) return false ;
+  if(Rcpp::is<Rcpp::IntegerMatrix>(args[0])) return false ;
   return true ;
 }
 
 bool ImageConst3(SEXP* args, int nargs) {
+  if(nargs != 2) return false;
+  if(TYPEOF(args[0]) != REALSXP) return false ;
+  if(Rcpp::is<Rcpp::NumericMatrix>(args[0])) return false ;
+  return true ;
+}
+
+bool ImageConst4(SEXP* args, int nargs) {
+  if(nargs != 2) return false;
+  if(TYPEOF(args[0]) != INTSXP) return false ;
+  return true ;
+}
+
+bool ImageConst5(SEXP* args, int nargs) {
   if(nargs != 2) return false;
   if(TYPEOF(args[0]) != REALSXP) return false ;
   return true ;
