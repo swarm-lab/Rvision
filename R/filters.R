@@ -864,7 +864,8 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25,
 #'  the adaptive threshold, and by `max_value` otherwise.
 #'
 #' @param block_size Size of a pixel neighborhood that is used to calculate a
-#'  threshold value for the pixel (default: 31).
+#'  threshold value for the pixel (default: 31). It must be an odd number
+#'  greater than 1.
 #'
 #' @param C Constant subtracted from the mean or weighted mean. Normally, it is
 #'  positive but may be zero or negative as well (default: 25).
@@ -929,6 +930,9 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
   if (!(threshold_type %in% c("binary", "inverse")))
     stop("'threshold_type' must be either 'binary' or 'inverse'.")
 
+  if ((block_size %% 2 != 1) | (block_size < 2))
+    stop("'block_size' must be an odd number greater than 1.")
+
   if (isImage(target)) {
     `_adaptiveThreshold`(image, max_value, if (method == "mean") 0 else 1,
                          if (threshold_type == "binary") 0 else 1,
@@ -959,7 +963,8 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #' @param thresh A numeric threshold value (default: 127).
 #'
 #' @param max_value Non-zero value assigned to the pixels for which the
-#'  condition determined by `threshold_type` is satisfied (default: 255).
+#'  condition determined by `threshold_type` is satisfied (default: 255). It is
+#'  used only if \code{threshold_type} is set to "binary" or "inverse".
 #'
 #' @param method The name of the automated thresholding algorithm to use. It can
 #'  be any of the following:
@@ -1079,7 +1084,8 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #' @section Acknowledgements: Gabriel Landini coded all of these functions in
 #'   Java. These java functions were then translated to C++ by Rory Nolan.
 #'
-#' @seealso \code{\link{Image}}
+#' @seealso \code{\link{Image}}, \code{\link{autothreshold}},
+#'  \code{\link{niBlackThreshold}}
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))

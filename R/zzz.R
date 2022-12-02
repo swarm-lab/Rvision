@@ -29,6 +29,7 @@ Rcpp::loadModule("methods_Shape", TRUE)
 Rcpp::loadModule("methods_Transform", TRUE)
 Rcpp::loadModule("methods_Feature", TRUE)
 Rcpp::loadModule("methods_Autothresh", TRUE)
+Rcpp::loadModule("methods_Ximgproc", TRUE)
 
 
 ### Define generic arithmetic methods ###
