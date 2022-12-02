@@ -18,7 +18,7 @@ Depends:
     R (>= 3.5.0)
 Imports:
     Rcpp (>= 1.0.1),
-    ROpenCVLite (>= 4.55.2),
+    ROpenCVLite (>= 4.60.3),
     methods,
     pbapply,
     stats,
