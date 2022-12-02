@@ -3,6 +3,7 @@
 using namespace Rcpp;
 
 #include "opencv2/opencv.hpp"
+#include "opencv2/ximgproc.hpp"
 #include "utils.h"
 #include "opencvarma.h"
 #include <queue>
@@ -417,4 +418,17 @@ RCPP_MODULE(methods_Autothresh) {
   function("_autothreshShanbhag", &_autothreshShanbhag, List::create(_["data"]), "");
   function("_autothreshTriangle", &_autothreshTriangle, List::create(_["data"]), "");
   function("_autothreshYen", &_autothreshYen, List::create(_["data"]), "");
+}
+
+#include "ximgproc.h"
+RCPP_MODULE(methods_Ximgproc) {
+  function("_anisotropicDiffusion", &_anisotropicDiffusion,
+           List::create(_["image"], _["alpha"], _["K"], _["niters"], _["target"]), "");
+  function("_edgePreservingFilter", &_edgePreservingFilter,
+           List::create(_["image"], _["d"], _["threshold"], _["target"]), "");
+  function("_niBlackThreshold", &_niBlackThreshold,
+           List::create(_["image"], _["maxValue"], _["type"], _["blockSize"],
+                        _["k"], _["binarizationMethod"], _["r"], _["target"]), "");
+  function("_thinning", &_thinning,
+           List::create(_["image"], _["thinningType"], _["target"]), "");
 }

@@ -22,7 +22,8 @@ object.}
 \item{thresh}{A numeric threshold value (default: 127).}
 
 \item{max_value}{Non-zero value assigned to the pixels for which the
-condition determined by `threshold_type` is satisfied (default: 255).}
+condition determined by `threshold_type` is satisfied (default: 255). It is
+used only if \code{threshold_type} is set to "binary" or "inverse".}
 
 \item{method}{The name of the automated thresholding algorithm to use. It can
  be any of the following:
@@ -154,7 +155,8 @@ balloon_th <- threshold(balloon_gray)
   Journal of Electronic Imaging 13(1): 146-165} }
 }
 \seealso{
-\code{\link{Image}}
+\code{\link{Image}}, \code{\link{autothreshold}},
+ \code{\link{niBlackThreshold}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

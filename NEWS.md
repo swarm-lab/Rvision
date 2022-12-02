@@ -1,3 +1,19 @@
+# Rvision 0.6.5
+
+## New features
+
+* New function for smoothing by anisotropic diffusion.
+* New function for edge preserving smoothing. 
+* New function for thresholding with Niblack and Niblack-derived method.
+* New function for skeletonization by thinning. 
+
+## Minor improvements and fixes
+
+* The documentation has been fixed/improved in several places.
+* Minor bug fixes here and there.
+
+---
+
 # Rvision 0.6.4
 
 ## New features

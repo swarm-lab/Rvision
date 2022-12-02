@@ -33,7 +33,8 @@ otherwise. If 'inverse' each pixel is replaced by zero if its value is above
 the adaptive threshold, and by `max_value` otherwise.}
 
 \item{block_size}{Size of a pixel neighborhood that is used to calculate a
-threshold value for the pixel (default: 31).}
+threshold value for the pixel (default: 31). It must be an odd number
+greater than 1.}
 
 \item{C}{Constant subtracted from the mean or weighted mean. Normally, it is
 positive but may be zero or negative as well (default: 25).}
