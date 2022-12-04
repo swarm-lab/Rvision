@@ -43,6 +43,8 @@ jobs:
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
         run: |
+          sudo apt update -y
+          sudo apt install -y libunwind-dev
           sudo apt install -y cmake make libicu-dev
           sudo apt install -y libavcodec-dev libavformat-dev libswscale-dev
           sudo apt install -y libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev
