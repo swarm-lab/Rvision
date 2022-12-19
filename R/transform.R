@@ -1253,3 +1253,86 @@ reduce <- function(image, dim, fun = "sum", target = "new") {
     stop("Invalid target.")
   }
 }
+
+#' @title Contrast Limited Adaptive Histogram Equalization
+#'
+#' @description \code{CLAHE} performs adaptive histogram equalization to enhance
+#'  the contrast of an image. Unlike regular histogram equalization
+#'  (\code{\link{histEq}}), CLAHE first divides the image into small blocks
+#'  called "tiles" and performs histogram equalization on each of these tiles.
+#'  To reduce noise amplification contrast limiting is also applied: if any
+#'  histogram bin is above the specified contrast limit, those pixels are
+#'  clipped and distributed uniformly to other bins before applying histogram
+#'  equalization. After equalization, to remove artifacts in tile borders,
+#'  bilinear interpolation is applied.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param clip_limit A numeric value representing the contrast limit above which
+#'  pixels are clipped and distributed uniformly to other bins before applying
+#'  histogram equalization on the tiles.
+#'
+#' @param n_tiles A vector with 2 elements representing the number of tiles
+#'  along the width and height of the image (default: \code{c(8, 8)}).
+#'
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{"self":}{the results are stored back into \code{image} (faster but
+#'    destructive).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same number of channels and bit depth
+#'    as \code{image}, an error will be thrown.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target="self"}, the function returns nothing and modifies
+#'  \code{image} in place. If \code{target} is an \code{\link{Image}} object,
+#'  the function returns nothing and modifies that \code{\link{Image}} object in
+#'  place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{Image}}, \code{\link{histEq}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_Lab <- changeColorSpace(balloon, "Lab")
+#' L <- extractChannel(balloon_Lab, 1)
+#' clahe <- CLAHE(L, 1, c(2, 2))
+#' insertChannel(balloon_Lab, 1, clahe)
+#' balloon_contrast <- changeColorSpace(balloon_Lab, "BGR")
+#'
+#' @export
+CLAHE <- function(image, clip_limit = 40, n_tiles = c(8, 8), target = "new") {
+  if (!isImage(image))
+    stop("'image' is not an Image object.")
+
+  if (image$depth() != "8U" | image$depth() != "8U")
+    stop("'image' is not an 8U or a 16U 'Image' object")
+
+  if (image$nchan() != 1)
+    stop("'image' is not a single-channel 'Image' object")
+
+  if (isImage(target)) {
+    if (image$depth() != target$depth())
+      stop("'image' and 'target' do not have the same bit depth.")
+
+    if (image$nchan() != target$nchan())
+      stop("'image' and 'target' do not have the same number of channels.")
+
+    `_CLAHE`(image, clip_limit, n_tiles, target)
+  } else if (target == "self") {
+    `_CLAHE`(image, clip_limit, n_tiles, image)
+  } else if (target == "new") {
+    out <- cloneImage(image)
+    `_CLAHE`(image, clip_limit, n_tiles, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
