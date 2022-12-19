@@ -331,3 +331,22 @@ void _reduce(Image& image, int dim, int rtype, Image& target) {
 
   cv::reduce(image.image, target.image, dim, rtype, target.image.depth());
 }
+
+void _CLAHE(Image& image, double clipLimit, Rcpp::IntegerVector nTiles,
+            Image& target) {
+  cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
+  clahe->setClipLimit(clipLimit);
+  clahe->setTilesGridSize(cv::Size(nTiles[0], nTiles[1]));
+
+  if (image.GPU) {
+    if (target.GPU)
+      return clahe->apply(image.uimage, image.uimage);
+
+    return clahe->apply(image.uimage, target.image);
+  }
+
+  if (target.GPU)
+    return clahe->apply(image.image, target.uimage);
+
+  clahe->apply(image.image, target.image);
+}

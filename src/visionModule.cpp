@@ -389,6 +389,8 @@ RCPP_MODULE(methods_Transform) {
   function("_vconcat", &_vconcat, List::create(_["image1"], _["image2"], _["target"]), "");
   function("_hconcat", &_hconcat, List::create(_["image1"], _["image2"], _["target"]), "");
   function("_reduce", &_reduce, List::create(_["image"], _["dim"], _["rtype"], _["target"]), "");
+  function("_CLAHE", &_CLAHE, List::create(_["image"], _["clipLimit"],
+    _["nTiles"], _["target"]), "");
 }
 
 #include "feature.h"
