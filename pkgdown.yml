@@ -1,0 +1,15 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  z1_install: z1_install.html
+  z2_io: z2_io.html
+  z3_basic: z3_basic.html
+  z4_inplace: z4_inplace.html
+  z5_gpu: z5_gpu.html
+  z6_queue: z6_queue.html
+last_built: 2022-12-29T12:49Z
+urls:
+  reference: https://swarm-lab.github.io/Rvision/reference
+  article: https://swarm-lab.github.io/Rvision/articles
+
