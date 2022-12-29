@@ -1,0 +1,9 @@
+url: https://swarm-lab.github.io/Rvision/
+
+template:
+  bootstrap: 5
+  bootswatch: simplex
+
+authors:
+  Simon Garnier:
+    href: https://www.theswarmlab.com
