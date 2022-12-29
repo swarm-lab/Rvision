@@ -35,8 +35,10 @@ Biarch: true
 StagedInstall: false
 Encoding: UTF-8
 Suggests: 
+    covr,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-URL: https://swarm-lab.github.io/Rvision/, https://github.com/swarm-lab/Rvision
+URL: https://swarm-lab.github.io/Rvision/,
+    https://github.com/swarm-lab/Rvision
 BugReports: https://github.com/swarm-lab/Rvision/issues

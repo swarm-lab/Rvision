@@ -11,3 +11,7 @@ index.Rmd
 logo.*
 ci_script
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^codecov\.yml$

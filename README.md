@@ -1,9 +1,12 @@
 # Rvision - A computer vision library for R <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
-[![R-CMD-check](https://github.com/swarm-lab/Rvision/workflows/R-CMD-check/badge.svg)](https://github.com/swarm-lab/Rvision/actions)
-![CRAN](https://www.r-pkg.org/badges/version/Rvision)
-![CRANLOGS](https://cranlogs.r-pkg.org/badges/Rvision)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/swarm-lab/Rvision/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/swarm-lab/Rvision/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/swarm-lab/Rvision/branch/master/graph/badge.svg)](https://app.codecov.io/gh/swarm-lab/Rvision?branch=master)
+[![CRAN status](https://www.r-pkg.org/badges/version/Rvision)](https://CRAN.R-project.org/package=Rvision)
+[![CRANLOGS downloads](https://cranlogs.r-pkg.org/badges/Rvision)](https://cran.r-project.org/package=Rvision)
 [![DOI](https://zenodo.org/badge/62589719.svg)](https://zenodo.org/badge/latestdoi/62589719)
+<!-- badges: end -->
 
 ## Description
 
