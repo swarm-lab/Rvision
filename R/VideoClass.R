@@ -135,11 +135,10 @@ dim.Rcpp_Video <- function(x) {
 
 #' @title The Number of Rows/Columns/Frames of a Video
 #'
-#' @aliases ncol.Rcpp_Video nframes
+#' @aliases ncol.Rcpp_Video nframes.Rcpp_Video
 #'
 #' @description nrow, ncol and nframes return the number of rows, columns or
 #'  frames present in a \code{\link{Video}} object.
-#'
 #'
 #' @param x A \code{\link{Video}} object.
 #'
@@ -162,15 +161,17 @@ nrow.Rcpp_Video <- function(x) {
   x$nrow()
 }
 
-#' @rdname video_dimensions
+
 #' @export
+#' @rdname video_dimensions
 ncol.Rcpp_Video <- function(x) {
   x$ncol()
 }
 
-#' @rdname video_dimensions
+
 #' @export
-nframes <- function(x) {
+#' @rdname video_dimensions
+nframes.Rcpp_Video <- function(x) {
   if (!isVideo(x))
     stop("This is not a Video object.")
 
@@ -226,41 +227,9 @@ release.Rcpp_Video <- function(x) {
 }
 
 
-#' @title Read Specific Video Frame
-#'
-#' @description Read a specific frame of a \code{\link{Video}} object and
-#'  returns it as an \code{\link{Image}} object.
-#'
-#' @param x A \code{\link{Video}} object.
-#'
-#' @param pos An integer corresponding to the position of the frame to read in
-#'  the video.
-#'
-#' @param target The location where the results should be stored. It can take 2
-#'  values:
-#'  \itemize{
-#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
-#'    are stored inside (the default).}
-#'   \item{An \code{\link{Image}} object:}{the results are stored in another
-#'    existing \code{\link{Image}} object. This will replace the content of
-#'    \code{target}. Note that \code{target} must have the same dimensions as
-#'    \code{x}.}
-#'  }
-#'
-#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
-#'  object. If \code{target} is an \code{\link{Image}} object, the function
-#'  returns nothing and modifies that \code{\link{Image}} object in place.
-#'
-#' @author Simon Garnier, \email{garnier@@njit.edu}
-#'
-#' @seealso \code{\link{Video}}, \code{\link{Image}}, \code{\link{readNext}}
-#'
-#' @examples
-#' balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
-#' frame10 <- readFrame(balloon, 10)
-#'
 #' @export
-readFrame <- function(x, pos, target = "new") {
+#' @rdname readFrame
+readFrame.Rcpp_Video <- function(x, pos, target = "new") {
   if (!isVideo(x))
     stop("This is not a Video object.")
 

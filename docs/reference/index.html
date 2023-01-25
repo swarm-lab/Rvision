@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">Rvision</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,6 +105,11 @@
           <code><a href="Video-class.html">Video</a></code> 
         </dt>
         <dd>An S4 Class Containing an OpenCV Video</dd>
+      </dl><dl><dt>
+          
+          <code><a href="VideoStack-class.html">VideoStack-class</a></code> <code><a href="VideoStack-class.html">VideoStack</a></code> 
+        </dt>
+        <dd>An S4 Class Containing a Video Stack</dd>
       </dl><dl><dt>
           
           <code><a href="VideoWriter-class.html">VideoWriter</a></code> 
@@ -269,7 +274,7 @@
           
           <code><a href="destroyDisplay.html">destroyDisplay()</a></code> <code><a href="destroyDisplay.html">destroyAllDisplays()</a></code> 
         </dt>
-        <dd>Destroy <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code> Display</dd>
+        <dd>Destroy <code>Image</code> Display</dd>
       </dl><dl><dt>
           
           <code><a href="dim.Rcpp_Image.html">dim(<i>&lt;Rcpp_Image&gt;</i>)</a></code> 
@@ -297,9 +302,14 @@
         <dd>Dimensions of a Video Writer</dd>
       </dl><dl><dt>
           
+          <code><a href="dim.VideoStack.html">dim(<i>&lt;VideoStack&gt;</i>)</a></code> 
+        </dt>
+        <dd>Dimensions of a VideoStack</dd>
+      </dl><dl><dt>
+          
           <code><a href="display.html">display()</a></code> 
         </dt>
-        <dd>Display <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code> Object</dd>
+        <dd>Display <code>Image</code> Object</dd>
       </dl><dl><dt>
           
           <code><a href="distanceTransform.html">distanceTransform()</a></code> 
@@ -309,22 +319,22 @@
           
           <code><a href="drawArrow.html">drawArrow()</a></code> 
         </dt>
-        <dd>Draw Arrows on an <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code></dd>
+        <dd>Draw Arrows on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawCircle.html">drawCircle()</a></code> 
         </dt>
-        <dd>Draw Circles on an <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code></dd>
+        <dd>Draw Circles on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawEllipse.html">drawEllipse()</a></code> 
         </dt>
-        <dd>Draw Ellipses on an <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code></dd>
+        <dd>Draw Ellipses on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawLine.html">drawLine()</a></code> 
         </dt>
-        <dd>Draw Lines on an <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code></dd>
+        <dd>Draw Lines on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawPolyline.html">drawPolyline()</a></code> 
@@ -334,17 +344,17 @@
           
           <code><a href="drawRectangle.html">drawRectangle()</a></code> 
         </dt>
-        <dd>Draw Rectangles on an <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code></dd>
+        <dd>Draw Rectangles on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawRotatedRectangle.html">drawRotatedRectangle()</a></code> 
         </dt>
-        <dd>Draw Rotated Rectangles on an <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code></dd>
+        <dd>Draw Rotated Rectangles on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawText.html">drawText()</a></code> 
         </dt>
-        <dd>Draw Text on an <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code></dd>
+        <dd>Draw Text on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="edgePreservingFilter.html">edgePreservingFilter()</a></code> 
@@ -409,7 +419,7 @@
           
           <code><a href="flip.html">flip()</a></code> 
         </dt>
-        <dd>Flip an <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code></dd>
+        <dd>Flip an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="floodFill.html">floodFill()</a></code> 
@@ -577,6 +587,11 @@
         <dd>Test for a Video Object</dd>
       </dl><dl><dt>
           
+          <code><a href="isVideoStack.html">isVideoStack()</a></code> 
+        </dt>
+        <dd>Test for a VideoStack Object</dd>
+      </dl><dl><dt>
+          
           <code><a href="isVideoWriter.html">isVideoWriter()</a></code> 
         </dt>
         <dd>Test for a VideoWriter Object</dd>
@@ -649,7 +664,7 @@
           
           <code><a href="newDisplay.html">newDisplay()</a></code> 
         </dt>
-        <dd>Open New <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code> Display</dd>
+        <dd>Open New <code>Image</code> Display</dd>
       </dl><dl><dt>
           
           <code><a href="niBlackThreshold.html">niBlackThreshold()</a></code> 
@@ -764,7 +779,7 @@
           
           <code><a href="resize.html">resize()</a></code> 
         </dt>
-        <dd>Resize an <code><a href="https://swarm-lab.github.io/ROpenCVLite/reference/Image-class.html" class="external-link">Image</a></code></dd>
+        <dd>Resize an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="rotateScale.html">rotateScale()</a></code> 
@@ -877,6 +892,11 @@
         <dd>Create an Object of Class <code>Video</code></dd>
       </dl><dl><dt>
           
+          <code><a href="videoStack.html">videoStack()</a></code> 
+        </dt>
+        <dd>Create an Object of Class <code>VideoStack</code></dd>
+      </dl><dl><dt>
+          
           <code><a href="videoWriter.html">videoWriter()</a></code> 
         </dt>
         <dd>Create an object of class <code>VideoWriter</code></dd>
@@ -885,6 +905,11 @@
           <code><a href="video_dimensions.html">nrow.Rcpp_Video()</a></code> <code><a href="video_dimensions.html">ncol.Rcpp_Video()</a></code> <code><a href="video_dimensions.html">nframes()</a></code> 
         </dt>
         <dd>The Number of Rows/Columns/Frames of a Video</dd>
+      </dl><dl><dt>
+          
+          <code><a href="videostack_dimensions.html">nrow.VideoStack()</a></code> <code><a href="videostack_dimensions.html">nrow.VideoStack()</a></code> <code><a href="videostack_dimensions.html">nframes(<i>&lt;VideoStack&gt;</i>)</a></code> 
+        </dt>
+        <dd>The Number of Rows/Columns/Frames of a VideoStack</dd>
       </dl><dl><dt>
           
           <code><a href="videowriter_dimensions.html">nrow.Rcpp_VideoWriter()</a></code> <code><a href="videowriter_dimensions.html">ncol.Rcpp_VideoWriter()</a></code> 

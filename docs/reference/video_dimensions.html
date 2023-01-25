@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">Rvision</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>The Number of Rows/Columns/Frames of a Video</h1>
-      <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/HEAD/R/VideoClass.R" class="external-link"><code>R/VideoClass.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/HEAD/R/VideoClass.R" class="external-link"><code>R/VideoClass.R</code></a>, <a href="https://github.com/swarm-lab/Rvision/blob/HEAD/R/generic.R" class="external-link"><code>R/generic.R</code></a></small>
       <div class="d-none name"><code>video_dimensions.Rd</code></div>
     </div>
 
@@ -68,6 +68,9 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nrow.Rcpp_Video</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ncol.Rcpp_Video</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for Rcpp_Video</span></span>
+<span><span class="fu">nframes</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">nframes</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>

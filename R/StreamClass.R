@@ -164,8 +164,9 @@ nrow.Rcpp_Stream <- function(x) {
   x$nrow()
 }
 
-#' @rdname stream_dimensions
+
 #' @export
+#' @rdname stream_dimensions
 ncol.Rcpp_Stream <- function(x) {
   x$ncol()
 }

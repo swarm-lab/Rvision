@@ -61,6 +61,9 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/Video-class.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/VideoStack-class.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/VideoWriter-class.html</loc>
   </url>
   <url>
@@ -173,6 +176,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/dim.Rcpp_VideoWriter.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/dim.VideoStack.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/display.html</loc>
@@ -344,6 +350,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/isVideo.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/isVideoStack.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/isVideoWriter.html</loc>
@@ -526,10 +535,16 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/video.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/videoStack.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/videoWriter.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/video_dimensions.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/videostack_dimensions.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/videowriter_dimensions.html</loc>
