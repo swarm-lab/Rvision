@@ -12,6 +12,8 @@ A \code{VideoStack} object contains a stack of
 \section{Slots}{
 
 \describe{
+\item{\code{.Data}}{A list of \code{\link{Video}} objects.}
+
 \item{\code{nframes}}{A vector of the number of frames in each video of the stack.}
 }}
 

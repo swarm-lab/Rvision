@@ -9,6 +9,8 @@
 #' @description A \code{VideoStack} object contains a stack of
 #'  \code{\link{Video}} objects with similar dimensions and frame rate.
 #'
+#' @slot .Data A list of \code{\link{Video}} objects.
+#'
 #' @slot nframes A vector of the number of frames in each video of the stack.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -112,7 +114,7 @@ videoStack <- function(..., api = "ANY") {
 #'
 #' @export
 isVideoStack <- function(object) {
-  inherits(object, "VideoStack") & all(sapply(x, isVideo))
+  inherits(object, "VideoStack") & all(sapply(object, isVideo))
 }
 
 
