@@ -32,11 +32,12 @@ setClass("VideoStack",
 #' @description Function for creating \code{\link{VideoStack}} objects from
 #'  multiple video files.
 #'
-#' @param ... Character strings, each corresponding to the path to a video file.
-#'  All video files must have the same dimensions and frame rate.
+#' @param ... Character strings, each corresponding to the path to a video file,
+#'  or \code{\link{Video}} objects. All videos must have the same dimensions and
+#'  frame rate.
 #'
 #' @param api A character string corresponding to the API to use for reading the
-#'  video from the file (see Note; default: "ANY").
+#'  video from a file (see Note; default: "ANY").
 #'
 #' @return A \code{\link{VideoStack}} object.
 #'
@@ -80,7 +81,16 @@ setClass("VideoStack",
 #'
 #' @export
 videoStack <- function(..., api = "ANY") {
-  stack <- lapply(list(...), function(x) video(x, api = api))
+  stack <- lapply(list(...), function(x) {
+    if (is.character(x)) {
+      video(x, api = api)
+    } else if (isVideo(x)) {
+      setProp(x, "POS_FRAMES", 0)
+      x
+    } else {
+      stop("Only video objects and character strings are authorized as inputs.")
+    }
+  })
 
   if (length(unique(lapply(stack, fps))) > 1)
     stop("All videos should have the same frame rate.")
@@ -91,8 +101,164 @@ videoStack <- function(..., api = "ANY") {
   if (length(unique(lapply(stack, col))) > 1)
     stop("All videos should have the dimensions.")
 
-  new("VideoStack", stack, nframes = sapply(stack, nframes))
+  new("VideoStack", stack, nframes = sapply(stack, function(x) x$nframes()))
 }
+
+
+#' @title Extract or Replace Videos in Video Stacks
+#'
+#' @description Operators acting on \code{\link{VideoStack}} objects to extract
+#'  or replace the \code{\link{Video}} objects they contain.
+#'
+#' @aliases [[.VideoStack [[<-.VideoStack [.VideoStack [<-.VideoStack
+#'
+#' @method [[ VideoStack
+#'
+#' @param x An \code{\link{VideoStack}} object.
+#'
+#' @param i An index specifying the element to extract or replace. Indices are
+#'  numeric vectors which values are coerced to integer as by
+#'  \code{\link{as.integer}} (and hence truncated towards zero) or logical
+#'  vectors which are recycled if necessary to match the dimensions of the stack.
+#'
+#' @param value A \code{\link{Video}} object or a vector of \code{\link{Video}}
+#'  objects to replace the \code{\link{Video}} objects in the stack, or a
+#'  \code{NULL} value to remove the \code{\link{Video}} objects in the stack.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{VideoStack}}, \code{\link{Video}}
+#'
+#' @examples
+#' path <- system.file("sample_vid/Balloon.mp4", package = "Rvision")
+#' vid <- video(path)
+#' balloonStack <- videoStack(path)
+#' balloonStack[[2]] <- vid
+#'
+#' @rdname sub-.VideoStack
+#' @export
+`[[.VideoStack` <- function(x, i) {
+  x@.Data[[i]]
+}
+
+
+#' @rdname sub-.VideoStack
+#' @method [[<- VideoStack
+#' @export
+`[[<-.VideoStack` <- function(x, i, value) {
+  if (!isVideo(value) & !is.null(value))
+    stop("This is not a Video or a null object.")
+
+  if (missing(i))
+    stop("[[ ]] with missing subscript.")
+
+  if (any(i > (length(x) + 1)))
+    stop("Subscript out of bound.")
+
+  if (length(x@.Data) > 0) {
+    pos <- frame(x) - 1
+  } else {
+    pos <- 0
+  }
+
+  x@.Data[[i]] <- value
+
+  if (length(unique(lapply(x, fps))) > 1)
+    stop("All videos should have the same frame rate.")
+
+  if (length(unique(lapply(x, nrow))) > 1)
+    stop("All videos should have the dimensions.")
+
+  if (length(unique(lapply(x, col))) > 1)
+    stop("All videos should have the dimensions.")
+
+  nf <- sapply(x, function(x) x$nframes())
+
+  if (length(nf) > 0) {
+    x@nframes <- nf
+    test <- which(pos <= cumsum(x@nframes))
+    vid <- test[1]
+    before <- which(1:length(x) < vid)
+    after <- which(1:length(x) > vid)
+    pos <- pos - sum(x@nframes[before])
+    void <- setProp(x[[vid]], "POS_FRAMES", pos)
+    void <- lapply(x[before], function(x) setProp(x, "POS_FRAMES", x$nframes()))
+    void <- lapply(x[after], function(x) setProp(x, "POS_FRAMES", 0))
+  } else {
+    x@nframes <- NA_real_
+  }
+
+  x
+}
+
+
+#' @rdname sub-.VideoStack
+#' @method [ VideoStack
+#' @export
+`[.VideoStack` <- function(x, i) {
+  x@.Data[i]
+}
+
+
+#' @rdname sub-.VideoStack
+#' @method [<- VideoStack
+#' @export
+`[<-.VideoStack` <- function(x, i, value) {
+  if (!all(sapply(c(vid, vid), isVideo)) & !is.null(value))
+    stop("This is not a Video or a null object.")
+
+  value <- c(value)
+
+  if (length(x@.Data) > 0) {
+    pos <- frame(x) - 1
+  } else {
+    pos <- 0
+  }
+
+  if (missing(i)) {
+    x@.Data[] <- value
+  } else if (is.null(value)) {
+    x@.Data[i] <- value
+  } else {
+    if (is.logical(i))
+      i <- which(i)
+
+    if (any(i > (length(x) + 1)))
+      stop("Subscript out of bound.")
+
+    for (j in 1:length(i)) {
+      x@.Data[[i[j]]] <- value[[((j - 1) %% length(value)) + 1]]
+    }
+  }
+
+  if (length(unique(lapply(x, fps))) > 1)
+    stop("All videos should have the same frame rate.")
+
+  if (length(unique(lapply(x, nrow))) > 1)
+    stop("All videos should have the dimensions.")
+
+  if (length(unique(lapply(x, col))) > 1)
+    stop("All videos should have the dimensions.")
+
+  nf <- sapply(x, function(x) x$nframes())
+
+  if (length(nf) > 0) {
+    x@nframes <- nf
+    test <- which(pos <= cumsum(x@nframes))
+    vid <- test[1]
+    before <- which(1:length(x) < vid)
+    after <- which(1:length(x) > vid)
+    pos <- pos - sum(x@nframes[before])
+    void <- setProp(x[[vid]], "POS_FRAMES", pos)
+    void <- lapply(x[before], function(x) setProp(x, "POS_FRAMES", x$nframes()))
+    void <- lapply(x[after], function(x) setProp(x, "POS_FRAMES", 0))
+  } else {
+    x@nframes <- NA_real_
+  }
+
+  x
+}
+
 
 #' @title Test for a VideoStack Object
 #'

@@ -7,11 +7,12 @@
 videoStack(..., api = "ANY")
 }
 \arguments{
-\item{...}{Character strings, each corresponding to the path to a video file.
-All video files must have the same dimensions and frame rate.}
+\item{...}{Character strings, each corresponding to the path to a video file,
+or \code{\link{Video}} objects. All videos must have the same dimensions and
+frame rate.}
 
 \item{api}{A character string corresponding to the API to use for reading the
-video from the file (see Note; default: "ANY").}
+video from a file (see Note; default: "ANY").}
 }
 \value{
 A \code{\link{VideoStack}} object.
