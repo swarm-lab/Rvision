@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">Rvision</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Create an Object of Class <code>Queue</code></h1>
-      <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/HEAD/R/Queue.R" class="external-link"><code>R/Queue.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/HEAD/R/QueueClass.R" class="external-link"><code>R/QueueClass.R</code></a></small>
       <div class="d-none name"><code>queue.Rd</code></div>
     </div>
 
@@ -114,7 +114,7 @@ object should do when it is full. Three methods are available:</p><ul><li><p>"pa
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in new_CppObject_xp(fields$.module, fields$.pointer, ...):</span> Could not open the video.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Could not open the video.</span>
 <span class="r-in"><span><span class="va">buf</span> <span class="op">&lt;-</span> <span class="fu">queue</span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in new_CppObject_xp(fields$.module, fields$.pointer, ...):</span> object 'balloon' not found</span>
 <span class="r-in"><span></span></span>
