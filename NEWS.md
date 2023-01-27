@@ -6,6 +6,7 @@
 
 ## Minor improvements and fixes
 
+* New logo. 
 * The documentation has been fixed/improved in several places.
 * Minor bug fixes here and there.
 
