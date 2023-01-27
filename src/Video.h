@@ -75,7 +75,7 @@ int Video::nframes() {
 }
 
 int Video::frame() {
-  return this->cap.get(cv::CAP_PROP_POS_FRAMES);
+  return this->cap.get(cv::CAP_PROP_POS_FRAMES) + 1;
 }
 
 double Video::fps() {

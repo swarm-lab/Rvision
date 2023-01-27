@@ -1,3 +1,17 @@
+# Rvision 0.7.0
+
+## New features
+
+* Introducing video stacks.
+
+## Minor improvements and fixes
+
+* New logo. 
+* The documentation has been fixed/improved in several places.
+* Minor bug fixes here and there.
+
+---
+
 # Rvision 0.6.5
 
 ## New features
