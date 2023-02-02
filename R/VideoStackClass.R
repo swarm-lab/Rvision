@@ -32,9 +32,11 @@ setClass("VideoStack",
 #' @description Function for creating \code{\link{VideoStack}} objects from
 #'  multiple video files.
 #'
-#' @param ... Character strings, each corresponding to the path to a video file,
-#'  or \code{\link{Video}} objects. All videos must have the same dimensions and
-#'  frame rate.
+#' @param ... Character strings (separately or in a vector or list), each
+#'  corresponding to the path to a video file, or \code{\link{Video}} objects
+#'  (separately or in a vector or list). All videos must have the same
+#'  dimensions and frame rate. If left empty, an empty \code{\link{VideoStack}}
+#'  object will be created and videos can be added to it later.
 #'
 #' @param api A character string corresponding to the API to use for reading the
 #'  video from a file (see Note; default: "ANY").
@@ -81,7 +83,7 @@ setClass("VideoStack",
 #'
 #' @export
 videoStack <- function(..., api = "ANY") {
-  stack <- lapply(list(...), function(x) {
+  stack <- lapply(as.list(unlist(list(...))), function(x) {
     if (is.character(x)) {
       video(x, api = api)
     } else if (isVideo(x)) {
@@ -101,7 +103,8 @@ videoStack <- function(..., api = "ANY") {
   if (length(unique(lapply(stack, col))) > 1)
     stop("All videos should have the dimensions.")
 
-  new("VideoStack", stack, nframes = sapply(stack, function(x) x$nframes()))
+  new("VideoStack", stack,
+      nframes = if (length(stack) > 0) sapply(stack, function(x) x$nframes()) else 0)
 }
 
 
