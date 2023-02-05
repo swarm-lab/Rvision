@@ -190,6 +190,14 @@ frame.Rcpp_Video <- function(x) {
 
 
 #' @export
+#' @rdname frame
+`frame<-.Rcpp_Video` <- function(x, value) {
+  setProp(x, "POS_FRAMES", value - 1)
+  x
+}
+
+
+#' @export
 #' @rdname fps
 fps.Rcpp_Video <- function(x) {
   if (!isVideo(x))

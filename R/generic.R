@@ -218,15 +218,17 @@ nframes <- function(x) UseMethod("nframes")
 
 #' @title Reader Head Position
 #'
-#' @description Retrieve the index of the frame to be read next in a
+#' @description Retrieve or set the index of the frame to be read next in a
 #'  \code{\link{Video}}, \code{\link{VideoStack}} or \code{\link{Queue}} object.
 #'
 #' @param x A \code{\link{Video}}, \code{\link{VideoStack}} or
 #'  \code{\link{Queue}} object.
 #'
-#' @return A numeric value.
+#' @param value The index of the frame to be read next.
 #'
-#' @note Frame index starts at 0 (i.e. the first image has index 0).
+#' @return A numeric value or `x` with a new head position.
+#'
+#' @note Frame index starts at 1 (i.e. the first image has index 1).
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -238,3 +240,8 @@ nframes <- function(x) UseMethod("nframes")
 #'
 #' @export
 frame <- function(x) UseMethod("frame")
+
+
+#' @export
+#' @rdname frame
+`frame<-` <- function(x, value) UseMethod("frame<-")

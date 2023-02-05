@@ -363,6 +363,21 @@ frame.VideoStack <- function(x) {
 
 
 #' @export
+#' @rdname frame
+`frame<-.VideoStack` <- function(x, value) {
+  test <- which(value <= cumsum(x@nframes))
+  vid <- test[1]
+  before <- which(1:length(x) < vid)
+  after <- which(1:length(x) > vid)
+  pos <- value - sum(x@nframes[before])
+  void <- lapply(x[before], function(x) setProp(x, "POS_FRAMES", x$nframes()))
+  void <- lapply(x[after], function(x) setProp(x, "POS_FRAMES", 0))
+  setProp(x[[vid]], "POS_FRAMES", pos - 1)
+  x
+}
+
+
+#' @export
 #' @rdname fps
 fps.VideoStack <- function(x) {
   x[[1]]$fps()
