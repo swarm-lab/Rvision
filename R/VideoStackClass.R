@@ -32,9 +32,11 @@ setClass("VideoStack",
 #' @description Function for creating \code{\link{VideoStack}} objects from
 #'  multiple video files.
 #'
-#' @param ... Character strings, each corresponding to the path to a video file,
-#'  or \code{\link{Video}} objects. All videos must have the same dimensions and
-#'  frame rate.
+#' @param ... Character strings (separately or in a vector or list), each
+#'  corresponding to the path to a video file, or \code{\link{Video}} objects
+#'  (separately or in a vector or list). All videos must have the same
+#'  dimensions and frame rate. If left empty, an empty \code{\link{VideoStack}}
+#'  object will be created and videos can be added to it later.
 #'
 #' @param api A character string corresponding to the API to use for reading the
 #'  video from a file (see Note; default: "ANY").
@@ -81,7 +83,7 @@ setClass("VideoStack",
 #'
 #' @export
 videoStack <- function(..., api = "ANY") {
-  stack <- lapply(list(...), function(x) {
+  stack <- lapply(as.list(unlist(list(...))), function(x) {
     if (is.character(x)) {
       video(x, api = api)
     } else if (isVideo(x)) {
@@ -101,7 +103,8 @@ videoStack <- function(..., api = "ANY") {
   if (length(unique(lapply(stack, col))) > 1)
     stop("All videos should have the dimensions.")
 
-  new("VideoStack", stack, nframes = sapply(stack, function(x) x$nframes()))
+  new("VideoStack", stack,
+      nframes = if (length(stack) > 0) sapply(stack, function(x) x$nframes()) else 0)
 }
 
 
@@ -356,6 +359,21 @@ nframes.VideoStack <- function(x) {
 #' @rdname frame
 frame.VideoStack <- function(x) {
   sum(sapply(x, function(x) x$frame()) - 1) + 1
+}
+
+
+#' @export
+#' @rdname frame
+`frame<-.VideoStack` <- function(x, value) {
+  test <- which(value <= cumsum(x@nframes))
+  vid <- test[1]
+  before <- which(1:length(x) < vid)
+  after <- which(1:length(x) > vid)
+  pos <- value - sum(x@nframes[before])
+  void <- lapply(x[before], function(x) setProp(x, "POS_FRAMES", x$nframes()))
+  void <- lapply(x[after], function(x) setProp(x, "POS_FRAMES", 0))
+  setProp(x[[vid]], "POS_FRAMES", pos - 1)
+  x
 }
 
 
