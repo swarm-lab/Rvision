@@ -2,7 +2,8 @@
 
 ## New features
 
-* Introducing video stacks.
+* Introduces video stacks.
+* Adds frame setters for Video and VideoStack objects. 
 
 ## Minor improvements and fixes
 
