@@ -35,8 +35,8 @@ setClass("VideoStack",
 #' @param ... Character strings (separately or in a vector or list), each
 #'  corresponding to the path to a video file, or \code{\link{Video}} objects
 #'  (separately or in a vector or list). All videos must have the same
-#'  dimensions and frame rate. If left empty, an empty \code{\link{VideoStack}}
-#'  object will be created and videos can be added to it later.
+#'  dimensions. If left empty, an empty \code{\link{VideoStack}} object will be
+#'  created and videos can be added to it later.
 #'
 #' @param api A character string corresponding to the API to use for reading the
 #'  video from a file (see Note; default: "ANY").
@@ -94,8 +94,8 @@ videoStack <- function(..., api = "ANY") {
     }
   })
 
-  if (length(unique(lapply(stack, fps))) > 1)
-    stop("All videos should have the same frame rate.")
+  # if (length(unique(lapply(stack, fps))) > 1)
+  #   stop("All videos should have the same frame rate.")
 
   if (length(unique(lapply(stack, nrow))) > 1)
     stop("All videos should have the dimensions.")
@@ -166,8 +166,8 @@ videoStack <- function(..., api = "ANY") {
 
   x@.Data[[i]] <- value
 
-  if (length(unique(lapply(x, fps))) > 1)
-    stop("All videos should have the same frame rate.")
+  # if (length(unique(lapply(x, fps))) > 1)
+  #   stop("All videos should have the same frame rate.")
 
   if (length(unique(lapply(x, nrow))) > 1)
     stop("All videos should have the dimensions.")
@@ -234,8 +234,8 @@ videoStack <- function(..., api = "ANY") {
     }
   }
 
-  if (length(unique(lapply(x, fps))) > 1)
-    stop("All videos should have the same frame rate.")
+  # if (length(unique(lapply(x, fps))) > 1)
+  #   stop("All videos should have the same frame rate.")
 
   if (length(unique(lapply(x, nrow))) > 1)
     stop("All videos should have the dimensions.")
@@ -380,7 +380,7 @@ frame.VideoStack <- function(x) {
 #' @export
 #' @rdname fps
 fps.VideoStack <- function(x) {
-  x[[1]]$fps()
+  sapply(x, function(x) x$fps())
 }
 
 

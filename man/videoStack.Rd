@@ -10,8 +10,8 @@ videoStack(..., api = "ANY")
 \item{...}{Character strings (separately or in a vector or list), each
 corresponding to the path to a video file, or \code{\link{Video}} objects
 (separately or in a vector or list). All videos must have the same
-dimensions and frame rate. If left empty, an empty \code{\link{VideoStack}}
-object will be created and videos can be added to it later.}
+dimensions. If left empty, an empty \code{\link{VideoStack}} object will be
+created and videos can be added to it later.}
 
 \item{api}{A character string corresponding to the API to use for reading the
 video from a file (see Note; default: "ANY").}

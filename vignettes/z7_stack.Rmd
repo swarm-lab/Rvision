@@ -1,0 +1,122 @@
+---
+title: "7 - Video stacks"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{7 - Video stacks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## 7.1 - Introducting video stacks
+
+Starting with `Rvision` version 0.7.0, users can create video stacks. A video 
+stack (`VideoStack`) is essentially a list of videos with similar properties (in 
+particular, the same dimensions) that behaves almost entirely like a single 
+continuous `Video` object. For that reason, `VideoStack` objects are 
+particularly useful for applications requiring the combination of multiple video
+files and/or `Video` objects. For instance, video stacks can greatly simplify 
+the merging of two separate video files into a single one, or the processing of 
+a continuous sequence that was split into multiple files during recording.
+
+In this vignette, we will briefly describe how to create and manipulate 
+`VideoStack` objects. Since their operation is very similar to that of `Video` 
+objects, using `VideoStack` objects should not require much additional learning
+for a regular user of `Rvision`.
+
+---
+
+## 7.2 - Creating video stacks
+
+You can create a video stack by passing to the `videoStack` function a 
+combination of existing `Video` objects and/or character strings pointing toward 
+the location of video files on your computer. For instance: 
+
+```{r eval=FALSE, echo=TRUE}
+# Find the path to the Balloon.mp4 video provided with Rvision
+path_to_video <- system.file("sample_vid/Balloon.mp4", package = "Rvision")
+
+# Open the video file stream
+my_video <- video(filename = path_to_video)
+
+# Create a video stack from a character string and a Video object
+my_video_stack <- videoStack(path_to_video, my_video)
+```
+
+The paths to video files and the existing `Video` objects can be passed as 
+separate arguments, or as a list or a vector. If a path is provided, the 
+corresponding video will be opened before being added to the stack. If a `Video`
+object is provided, a pointer to the original `Video` object will be added to 
+the stack (i.e., they will share the same reader head and any modification to 
+the position of the reader head in the stack will be applied to the original 
+object, and vice versa). 
+
+A video stack can contain as many videos as desired, with the only restriction
+that they should all have the same dimensions. 
+
+Once a `VideoStack` object is not required anymore, it can be released from 
+memory as follows: 
+
+```{r eval=FALSE, echo=TRUE}
+release(my_video_stack)
+```
+
+---
+
+## 7.3 - Using video stacks
+
+Once a `VideoStack` object is created, it can be used as a `Video` object with 
+the same number of frames as the sum of the frames in the `Video` objects that 
+it contains. For instance, to read a specific frame of the stack, you can use 
+the `readNext()` and `readFrame()` functions, as you would normally do with 
+`Video` objects: 
+
+```{r eval=FALSE, echo=TRUE}
+# Capture the next available frame from the my_video_stack object created earlier
+my_image <- readNext(my_video_stack)
+
+# Capture frame 100 from the my_video_stack object created earlier
+my_image <- readFrame(my_video_stack, 100)
+```
+
+At any time, you can check the state of the video stack as follows: 
+
+```{r eval=FALSE, echo=TRUE}
+# What is the current number of videos in the stack? 
+length(my_video_stack)
+
+# What is the number of frames in the stack? 
+nframes(my_video_stack)
+
+# What is the index of the next frame available? 
+frame(my_video_stack)
+
+# What are the dimensions of the queue? 
+dim(my_video_stack)
+nrow(my_video_stack)
+ncol(my_video_stack)
+
+# What are the frame rates of the videos in the stack?
+fps(my_video_stack)
+
+# What are the codecs of the videos in the stack?
+codec(my_video_stack)
+```
+
+Finally, you can access individually, add, or replace videos in the stack as 
+follows:
+
+```{r eval=FALSE, echo=TRUE}
+# Access the first video in the stack individually
+my_video_stack[[1]]
+
+# Replace the first video in the stack 
+my_video_stack[[1]] <- my_video
+
+# Add a video at the end of the stack 
+my_video_stack[[length(my_video_stack) + 1]] <- my_video
+
+# Remove a video from the stack
+my_video_stack[[2]] <- NULL
+```
