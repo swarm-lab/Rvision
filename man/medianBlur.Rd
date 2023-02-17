@@ -7,7 +7,7 @@
 medianBlur(image, k_size = 5, target = "new", in_place = NULL)
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{image}{An 8-bit (8U) \code{\link{Image}} object.}
 
 \item{k_size}{The half-size in pixels of the kernel (default: 5).}
 

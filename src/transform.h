@@ -1,48 +1,43 @@
-double _computeECC(Image& image1, Image& image2) {
+double _computeECC(Image& image1, Image& image2, Image& mask) {
   if (image1.GPU) {
     if (image2.GPU)
-      return cv::computeECC(image1.uimage, image2.uimage, cv::noArray());
+      return cv::computeECC(image1.uimage, image2.uimage, mask.image);
 
-    return cv::computeECC(image1.uimage, image2.image, cv::noArray());
+    return cv::computeECC(image1.uimage, image2.image, mask.image);
   }
 
   if (image2.GPU)
-    return cv::computeECC(image1.image, image2.uimage, cv::noArray());
+    return cv::computeECC(image1.image, image2.uimage, mask.image);
 
-  return cv::computeECC(image1.image, image2.image, cv::noArray());
+  return cv::computeECC(image1.image, image2.image, mask.image);
 }
 
 arma::Mat< float > _findTransformECC(Image& image1, Image& image2, arma::Mat< float > warpMatrix,
-                                     int warpMode, int count, double eps, int gaussFiltSize) {
-  // arma::Mat< float > out;
+                                     int warpMode, int count, double eps, Image& mask,
+                                     int gaussFiltSize) {
   cv::Mat_< float > CVwarpMatrix;
   arma2cv(warpMatrix, CVwarpMatrix);
-
-  // if (warpMode == 3)
-  //   warpMatrix = cv::Mat::eye(3, 3, CV_32F);
-  // else
-  //   warpMatrix = cv::Mat::eye(2, 3, CV_32F);
 
   if (gaussFiltSize > 0) {
     if (image1.GPU) {
       if (image2.GPU) {
         cv::findTransformECC(image1.uimage, image2.uimage, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             cv::noArray(), gaussFiltSize);
+                             mask.image, gaussFiltSize);
       } else {
         cv::findTransformECC(image1.uimage, image2.image, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             cv::noArray(), gaussFiltSize);
+                             mask.image, gaussFiltSize);
       }
     } else {
       if (image2.GPU) {
         cv::findTransformECC(image1.image, image2.uimage, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             cv::noArray(), gaussFiltSize);
+                             mask.image, gaussFiltSize);
       } else {
         cv::findTransformECC(image1.image, image2.image, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             cv::noArray(), gaussFiltSize);
+                             mask.image, gaussFiltSize);
       }
     }
   } else {
@@ -50,21 +45,21 @@ arma::Mat< float > _findTransformECC(Image& image1, Image& image2, arma::Mat< fl
       if (image2.GPU) {
         cv::findTransformECC(image1.uimage, image2.uimage, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             cv::noArray());
+                             mask.image);
       } else {
         cv::findTransformECC(image1.uimage, image2.image, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             cv::noArray());
+                             mask.image);
       }
     } else {
       if (image2.GPU) {
         cv::findTransformECC(image1.image, image2.uimage, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             cv::noArray());
+                             mask.image);
       } else {
         cv::findTransformECC(image1.image, image2.image, CVwarpMatrix, warpMode,
                              cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             cv::noArray());
+                             mask.image);
       }
     }
   }

@@ -1,4 +1,4 @@
-pandoc: 3.0.1
+pandoc: '3.1'
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
@@ -9,7 +9,7 @@ articles:
   z5_gpu: z5_gpu.html
   z6_queue: z6_queue.html
   z7_stack: z7_stack.html
-last_built: 2023-02-06T22:33Z
+last_built: 2023-02-17T22:10Z
 urls:
   reference: https://swarm-lab.github.io/Rvision/reference
   article: https://swarm-lab.github.io/Rvision/articles

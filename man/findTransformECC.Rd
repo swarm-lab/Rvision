@@ -11,6 +11,7 @@ findTransformECC(
   warp_mode = "affine",
   max_it = 200,
   epsilon = 0.001,
+  mask = NULL,
   filt_size = 0
 )
 }
@@ -39,6 +40,10 @@ to transform \code{image} into \code{template}. It can be any of the following:
 \item{max_it}{The maximum number of iterations (default: 200).}
 
 \item{epsilon}{The convergene tolerance (default: 1e-3).}
+
+\item{mask}{A binary \code{\link{Image}} object of the same dimensions as
+\code{template}. Only the pixels of \code{image} where \code{mask} is
+nonzero are used in the computation. If \code{NULL}, all pixels are used.}
 
 \item{filt_size}{The size in pixels of a gaussian blur filter applied to the
 images before computation of the transform. When set to 0 (the default), no

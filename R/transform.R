@@ -8,6 +8,10 @@
 #' @param image A grayscale \code{\link{Image}} object of the same dimensions as
 #'  \code{template}.
 #'
+#' @param mask A binary \code{\link{Image}} object of the same dimensions as
+#'  \code{template}. Only the pixels of \code{image} where \code{mask} is
+#'  nonzero are used in the computation. If \code{NULL}, all pixels are used.
+#'
 #' @return A numerical value.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -26,7 +30,7 @@
 #' computeECC(balloon1, balloon2)
 #'
 #' @export
-computeECC <- function(template, image) {
+computeECC <- function(template, image, mask = NULL) {
   if (!isImage(template))
     stop("'template' is not an Image object.")
 
@@ -39,7 +43,11 @@ computeECC <- function(template, image) {
   if (!all(template$dim() == image$dim()))
     stop("'template' and 'image' must have the same dimensions.")
 
-  `_computeECC`(template, image)
+  if (is.null(mask)) {
+    mask <- ones(template$nrow(), template$ncol(), 1, template$depth())
+  }
+
+  `_computeECC`(template, image, mask)
 }
 
 
@@ -73,6 +81,10 @@ computeECC <- function(template, image) {
 #'
 #' @param epsilon The convergene tolerance (default: 1e-3).
 #'
+#' @param mask A binary \code{\link{Image}} object of the same dimensions as
+#'  \code{template}. Only the pixels of \code{image} where \code{mask} is
+#'  nonzero are used in the computation. If \code{NULL}, all pixels are used.
+#'
 #' @param filt_size The size in pixels of a gaussian blur filter applied to the
 #'  images before computation of the transform. When set to 0 (the default), no
 #'  filtering is applied.
@@ -96,7 +108,7 @@ computeECC <- function(template, image) {
 #'
 #' @export
 findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "affine",
-                             max_it = 200, epsilon = 1e-3, filt_size = 0) {
+                             max_it = 200, epsilon = 1e-3, mask = NULL, filt_size = 0) {
   if (!isImage(template))
     stop("'template' is not an Image object.")
 
@@ -123,7 +135,10 @@ findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "a
       if (!all(dim(warp_matrix) == c(2, 3)))
         stop("warp_matrix must be a 2x3 matrix.")
     }
+  }
 
+  if (is.null(mask)) {
+    mask <- ones(template$nrow(), template$ncol(), 1, template$depth())
   }
 
   `_findTransformECC`(template, image, warp_matrix,
@@ -133,7 +148,7 @@ findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "a
                              "affine" = 2,
                              "homography" = 3,
                              stop("This is not a valid transformation. 'warp_mode' must be one of 'translation', 'euclidean', 'affine', or 'homography'.")),
-                      max_it, epsilon, filt_size)
+                      max_it, epsilon, mask, filt_size)
 }
 
 
