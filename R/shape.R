@@ -458,18 +458,27 @@ boxPoints <- function(rect) {
   if (length(rect$angle) != 1 | length(rect$height) != 1 | length(rect$width) != 1 | length(rect$center) != 2)
     stop("rect must be a list as created by minAreaRect and fitEllipse.")
 
-  angle <- rect$angle * pi / 180
+  if (rect$width > rect$height) {
+    angle <- (rect$angle + 90) * pi / 180
+    h <- rect$width
+    w <- rect$height
+  } else {
+    angle <- rect$angle * pi / 180
+    h <- rect$height
+    w <- rect$width
+  }
+
   a <- sin(angle) * 0.5
   b <- cos(angle) * 0.5
 
-  x <- c(rect$center[1] - a * rect$height - b * rect$width,
-         rect$center[1] - a * rect$height + b * rect$width,
-         rect$center[1] + a * rect$height + b * rect$width,
-         rect$center[1] + a * rect$height - b * rect$width)
-  y <- c(rect$center[2] + b * rect$height - a * rect$width,
-         rect$center[2] + b * rect$height + a * rect$width,
-         rect$center[2] - b * rect$height + a * rect$width,
-         rect$center[2] - b * rect$height - a * rect$width)
+  x <- c(rect$center[1] - a * h - b * w,
+         rect$center[1] - a * h + b * w,
+         rect$center[1] + a * h + b * w,
+         rect$center[1] + a * h - b * w)
+  y <- c(rect$center[2] + b * h - a * w,
+         rect$center[2] + b * h + a * w,
+         rect$center[2] - b * h + a * w,
+         rect$center[2] - b * h - a * w)
   cbind(x, y)
 }
 
