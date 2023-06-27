@@ -463,13 +463,13 @@ boxPoints <- function(rect) {
   b <- cos(angle) * 0.5
 
   x <- c(rect$center[1] - a * rect$height - b * rect$width,
-         rect$center[1] + a * rect$height - b * rect$width,
+         rect$center[1] - a * rect$height + b * rect$width,
          rect$center[1] + a * rect$height + b * rect$width,
-         rect$center[1] - a * rect$height + b * rect$width)
+         rect$center[1] + a * rect$height - b * rect$width)
   y <- c(rect$center[2] + b * rect$height - a * rect$width,
-         rect$center[2] - b * rect$height - a * rect$width,
+         rect$center[2] + b * rect$height + a * rect$width,
          rect$center[2] - b * rect$height + a * rect$width,
-         rect$center[2] + b * rect$height + a * rect$width)
+         rect$center[2] - b * rect$height - a * rect$width)
   cbind(x, y)
 }
 
