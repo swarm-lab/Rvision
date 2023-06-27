@@ -44,7 +44,7 @@ Fitzgibbon A, Pilu M, Fisher RB. Direct least square fitting of
  doi:10.1109/34.765658
 }
 \seealso{
-\code{\link{minAreaRect}}
+\code{\link{minAreaRect}}, \code{\link{boxPoints}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

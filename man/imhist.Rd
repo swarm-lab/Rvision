@@ -7,7 +7,7 @@
 imhist(
   image,
   nbins = 256,
-  range = c(0, 255),
+  range = c(0, 256),
   mask = NULL,
   plot = FALSE,
   col = c("blue", "green", "red", "black"),

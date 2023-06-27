@@ -25,7 +25,7 @@ minAreaRect(rnorm(100), rnorm(100))
 
 }
 \seealso{
-\code{\link{fitEllipse}}
+\code{\link{fitEllipse}}, \code{\link{boxPoints}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}
