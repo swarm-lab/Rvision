@@ -4,13 +4,15 @@
 \alias{histmatch}
 \title{Histogram Matching/Specification}
 \usage{
-histmatch(image, reference, target = "new")
+histmatch(image, reference, ..., target = "new")
 }
 \arguments{
 \item{image}{An \code{\link{Image}} object to transform.}
 
 \item{reference}{An \code{\link{Image}} object which histogram will be used
 as a reference to transform \code{image}.}
+
+\item{...}{Further arguments passed to \code{\link{imhist}}.}
 
 \item{target}{The location where the results should be stored. It can take 3
 values:

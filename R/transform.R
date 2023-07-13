@@ -848,6 +848,8 @@ LUT <- function(image, lut, target = "new") {
 #' @param reference An \code{\link{Image}} object which histogram will be used
 #'  as a reference to transform \code{image}.
 #'
+#' @param ... Further arguments passed to \code{\link{imhist}}.
+#'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
 #'  \itemize{
@@ -878,7 +880,7 @@ LUT <- function(image, lut, target = "new") {
 #' dots_matched <- histmatch(dots, balloon)
 #'
 #' @export
-histmatch <- function(image, reference, target = "new") {
+histmatch <- function(image, reference, ..., target = "new") {
   if (!isImage(image) | !isImage(reference))
     stop("'image' and 'reference' must be Image objects.")
 
@@ -888,8 +890,8 @@ histmatch <- function(image, reference, target = "new") {
   if (reference$depth() != image$depth())
     stop("'image' and 'reference' must have the same bit depth.")
 
-  cdf_target <- apply(imhist(reference)[, 1:reference$nchan() + 1, drop = FALSE], 2, cumsum)
-  cdf_image <- apply(imhist(image)[, 1:image$nchan() + 1, drop = FALSE], 2, cumsum)
+  cdf_target <- apply(imhist(reference, ...)[, 1:reference$nchan() + 1, drop = FALSE], 2, cumsum)
+  cdf_image <- apply(imhist(image, ...)[, 1:image$nchan() + 1, drop = FALSE], 2, cumsum)
 
   map <- matrix(0, nrow = 256, ncol = image$nchan())
   for (j in 1:reference$nchan()) {
