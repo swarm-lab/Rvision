@@ -6,7 +6,7 @@
 \usage{
 imhist(
   image,
-  nbins = 256,
+  nbins = 257,
   range = c(0, 256),
   mask = NULL,
   plot = FALSE,

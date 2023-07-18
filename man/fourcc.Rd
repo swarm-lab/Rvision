@@ -8,15 +8,16 @@ fourcc(x)
 }
 \arguments{
 \item{x}{A 4-element character chain corresponding to the name of a valid
-video codec. A list of valid codec names can be found at
-\href{http://www.fourcc.org/codecs.php}{http://www.fourcc.org/codecs.php}.}
+video codec. A list of valid codec names can be found at this archived
+page of the fourcc site
+\href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{http://www.fourcc.org/codecs.php}.}
 }
 \value{
 An integer value corresponding to the FOURCC code of the video codec.
 }
 \description{
 \code{fource} translates the 4-character name of a video codec
- into its corresponding \href{http://www.fourcc.org/codecs.php}{FOURCC} code.
+ into its corresponding \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{FOURCC} code.
 }
 \examples{
 fourcc("xvid")

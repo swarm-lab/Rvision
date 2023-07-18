@@ -54,7 +54,7 @@ Video properties are:
  \item{\code{FRAME_WIDTH}: Width in pixels of the frames in the video stream.}
  \item{\code{FRAME_HEIGHT}: Height in pixels of the frames in the video stream.}
  \item{\code{FPS}: Frame rate in frames per second.}
- \item{\code{FOURCC}: 4-character \href{http://www.fourcc.org/codecs.php}{FOURCC} code of the codec}
+ \item{\code{FOURCC}: 4-character \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{FOURCC} code of the codec}
  \item{\code{FRAME_COUNT}: Number of frames in the video file.}
 }
 

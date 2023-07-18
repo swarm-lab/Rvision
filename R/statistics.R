@@ -330,7 +330,7 @@ countNonZero <- function(image) {
 #' imhist(balloon, plot = TRUE)
 #'
 #' @export
-imhist <- function(image, nbins = 256, range = c(0, 256), mask = NULL,
+imhist <- function(image, nbins = 257, range = c(0, 256), mask = NULL,
                    plot = FALSE, col = c("blue", "green", "red", "black"),
                    xlab = "Pixel value", ylab = "Counts", lty = 1, ...) {
   if (!isImage(image))
