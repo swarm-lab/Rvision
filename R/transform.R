@@ -762,7 +762,7 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = 0,
 #' @description \code{LUT} performs a look-up table transform of an
 #'  \code{\link{Image}} object.
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param image An 8-bit (8U) \code{\link{Image}} object.
 #'
 #' @param lut A look-up table. This should be a vector with 256 elements, or a
 #'  \code{256 x n} matrix, with n corresponding to the number of channels in
@@ -802,6 +802,9 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = 0,
 LUT <- function(image, lut, target = "new") {
   if (!isImage(image))
     stop("'image' is not an Image object.")
+
+  if (image$depth() != "8U")
+    stop("The 'image' depth must be 8U.")
 
   if (is.vector(lut)) {
     if (length(lut) != 256)
@@ -843,12 +846,10 @@ LUT <- function(image, lut, target = "new") {
 #'  that its histogram matches (approximately) that of another
 #'  \code{\link{Image}} object.
 #'
-#' @param image An \code{\link{Image}} object to transform.
+#' @param image An 8-bit (8U) \code{\link{Image}} object to transform.
 #'
-#' @param reference An \code{\link{Image}} object which histogram will be used
-#'  as a reference to transform \code{image}.
-#'
-#' @param ... Further arguments passed to \code{\link{imhist}}.
+#' @param reference An 8-bit (8U) \code{\link{Image}} object which histogram
+#'  will be used as a reference to transform \code{image}.
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
@@ -880,9 +881,12 @@ LUT <- function(image, lut, target = "new") {
 #' dots_matched <- histmatch(dots, balloon)
 #'
 #' @export
-histmatch <- function(image, reference, ..., target = "new") {
+histmatch <- function(image, reference, target = "new") {
   if (!isImage(image) | !isImage(reference))
     stop("'image' and 'reference' must be Image objects.")
+
+  if (image$depth() != "8U" | reference$depth() != "8U")
+    stop("The 'image' and 'reference' depths must be 8U.")
 
   if (reference$nchan() != image$nchan())
     stop("'image' and 'reference' must have the same number of channels.")
@@ -890,10 +894,10 @@ histmatch <- function(image, reference, ..., target = "new") {
   if (reference$depth() != image$depth())
     stop("'image' and 'reference' must have the same bit depth.")
 
-  cdf_target <- apply(imhist(reference, ...)[, 1:reference$nchan() + 1, drop = FALSE], 2, cumsum)
-  cdf_image <- apply(imhist(image, ...)[, 1:image$nchan() + 1, drop = FALSE], 2, cumsum)
+  cdf_target <- apply(imhist(reference)[, 1:reference$nchan() + 1, drop = FALSE], 2, cumsum)[1:256, ]
+  cdf_image <- apply(imhist(image)[, 1:image$nchan() + 1, drop = FALSE], 2, cumsum)[1:256, ]
 
-  map <- matrix(0, nrow = 256, ncol = image$nchan())
+  map <- matrix(0, nrow = nrow(cdf_target), ncol = image$nchan())
   for (j in 1:reference$nchan()) {
     map[, j] <- apply(abs(outer(cdf_image[, j], cdf_target[, j], "-")), 1, which.min) - 1
   }
@@ -915,7 +919,7 @@ histmatch <- function(image, reference, ..., target = "new") {
 #'    table.}
 #'  }
 #'
-#' @param image An \code{\link{Image}} object to transform.
+#' @param image An 8-bit (8U) \code{\link{Image}} object to transform.
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
@@ -951,7 +955,7 @@ histEq <- function(image, target = "new") {
     stop("'image' is not an Image object.")
 
   if (image$depth() != "8U")
-    stop("'image' depth must be 8U.")
+    stop("The 'image' depth must be 8U.")
 
   if (image$nchan() == 1) {
     if (isImage(target)) {
