@@ -66,7 +66,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">computeECC</span><span class="op">(</span><span class="va">template</span>, <span class="va">image</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">computeECC</span><span class="op">(</span><span class="va">template</span>, <span class="va">image</span>, mask <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -78,6 +78,12 @@
 <dt>image</dt>
 <dd><p>A grayscale <code><a href="Image-class.html">Image</a></code> object of the same dimensions as
 <code>template</code>.</p></dd>
+
+
+<dt>mask</dt>
+<dd><p>A binary <code><a href="Image-class.html">Image</a></code> object of the same dimensions as
+<code>template</code>. Only the pixels of <code>image</code> where <code>mask</code> is
+nonzero are used in the computation. If <code>NULL</code>, all pixels are used.</p></dd>
 
 </dl></div>
     <div class="section level2">

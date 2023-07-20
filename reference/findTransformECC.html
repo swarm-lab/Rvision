@@ -73,6 +73,7 @@
 <span>  warp_mode <span class="op">=</span> <span class="st">"affine"</span>,</span>
 <span>  max_it <span class="op">=</span> <span class="fl">200</span>,</span>
 <span>  epsilon <span class="op">=</span> <span class="fl">0.001</span>,</span>
+<span>  mask <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  filt_size <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -112,6 +113,12 @@ to transform <code>image</code> into <code>template</code>. It can be any of the
 
 <dt>epsilon</dt>
 <dd><p>The convergene tolerance (default: 1e-3).</p></dd>
+
+
+<dt>mask</dt>
+<dd><p>A binary <code><a href="Image-class.html">Image</a></code> object of the same dimensions as
+<code>template</code>. Only the pixels of <code>image</code> where <code>mask</code> is
+nonzero are used in the computation. If <code>NULL</code>, all pixels are used.</p></dd>
 
 
 <dt>filt_size</dt>
