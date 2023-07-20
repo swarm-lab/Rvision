@@ -371,7 +371,7 @@ watershed <- function(image, markers) {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{minAreaRect}}
+#' @seealso \code{\link{minAreaRect}}, \code{\link{boxPoints}}
 #'
 #' @examples
 #' fitEllipse(rnorm(100), rnorm(100))
@@ -407,7 +407,7 @@ fitEllipse <- function(x, y, method = "original") {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{fitEllipse}}
+#' @seealso \code{\link{fitEllipse}}, \code{\link{boxPoints}}
 #'
 #' @examples
 #' minAreaRect(rnorm(100), rnorm(100))
@@ -421,6 +421,65 @@ minAreaRect <- function(x, y) {
     stop("x and y must have the same length.")
 
   `_minAreaRect`(cbind(x, y))
+}
+
+
+#' @title Find Vertices of a Rotated Rectangle
+#'
+#' @description \code{boxPoints} finds the four vertices of a rotated rectangle
+#'  computed by \code{\link{minAreaRect}} or \code{\link{fitEllipse}}.
+#'
+#' @param rect A list describing a rotated rectangle as created by
+#'  \code{\link{minAreaRect}} and \code{\link{fitEllipse}}.
+#'
+#' @return A matrix containing the coordinates of the four vertices of the
+#'  rotated rectangle in the following order: bottom left, top left, top right,
+#'  and bottom right.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{minAreaRect}}, \code{\link{fitEllipse}}
+#'
+#' @examples
+#' rect <- minAreaRect(rnorm(100), rnorm(100))
+#' boxPoints(rect)
+#'
+#' @export
+boxPoints <- function(rect) {
+  if (!is.list(rect))
+    stop("rect must be a list as created by minAreaRect and fitEllipse.")
+
+  if (!all(c("angle", "height", "width", "center") %in% names(rect)))
+    stop("rect must be a list as created by minAreaRect and fitEllipse.")
+
+  if (!is.numeric(rect$angle) | !is.numeric(rect$height) | !is.numeric(rect$width) | !is.numeric(rect$center))
+    stop("rect must be a list as created by minAreaRect and fitEllipse.")
+
+  if (length(rect$angle) != 1 | length(rect$height) != 1 | length(rect$width) != 1 | length(rect$center) != 2)
+    stop("rect must be a list as created by minAreaRect and fitEllipse.")
+
+  if (rect$width > rect$height) {
+    angle <- (rect$angle + 90) * pi / 180
+    h <- rect$width
+    w <- rect$height
+  } else {
+    angle <- rect$angle * pi / 180
+    h <- rect$height
+    w <- rect$width
+  }
+
+  a <- sin(angle) * 0.5
+  b <- cos(angle) * 0.5
+
+  x <- c(rect$center[1] - a * h - b * w,
+         rect$center[1] - a * h + b * w,
+         rect$center[1] + a * h + b * w,
+         rect$center[1] + a * h - b * w)
+  y <- c(rect$center[2] + b * h - a * w,
+         rect$center[2] + b * h + a * w,
+         rect$center[2] - b * h + a * w,
+         rect$center[2] - b * h - a * w)
+  cbind(x, y)
 }
 
 

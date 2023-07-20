@@ -7,7 +7,7 @@
 histEq(image, target = "new")
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object to transform.}
+\item{image}{An 8-bit (8U) \code{\link{Image}} object to transform.}
 
 \item{target}{The location where the results should be stored. It can take 3
 values:

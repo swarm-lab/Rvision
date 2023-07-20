@@ -4,13 +4,17 @@
 \alias{computeECC}
 \title{Enhanced Correlation Coefficient Value}
 \usage{
-computeECC(template, image)
+computeECC(template, image, mask = NULL)
 }
 \arguments{
 \item{template}{A grayscale \code{\link{Image}} object.}
 
 \item{image}{A grayscale \code{\link{Image}} object of the same dimensions as
 \code{template}.}
+
+\item{mask}{A binary \code{\link{Image}} object of the same dimensions as
+\code{template}. Only the pixels of \code{image} where \code{mask} is
+nonzero are used in the computation. If \code{NULL}, all pixels are used.}
 }
 \value{
 A numerical value.

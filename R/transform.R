@@ -8,6 +8,10 @@
 #' @param image A grayscale \code{\link{Image}} object of the same dimensions as
 #'  \code{template}.
 #'
+#' @param mask A binary \code{\link{Image}} object of the same dimensions as
+#'  \code{template}. Only the pixels of \code{image} where \code{mask} is
+#'  nonzero are used in the computation. If \code{NULL}, all pixels are used.
+#'
 #' @return A numerical value.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -26,7 +30,7 @@
 #' computeECC(balloon1, balloon2)
 #'
 #' @export
-computeECC <- function(template, image) {
+computeECC <- function(template, image, mask = NULL) {
   if (!isImage(template))
     stop("'template' is not an Image object.")
 
@@ -39,7 +43,11 @@ computeECC <- function(template, image) {
   if (!all(template$dim() == image$dim()))
     stop("'template' and 'image' must have the same dimensions.")
 
-  `_computeECC`(template, image)
+  if (is.null(mask)) {
+    mask <- ones(template$nrow(), template$ncol(), 1, template$depth())
+  }
+
+  `_computeECC`(template, image, mask)
 }
 
 
@@ -73,6 +81,10 @@ computeECC <- function(template, image) {
 #'
 #' @param epsilon The convergene tolerance (default: 1e-3).
 #'
+#' @param mask A binary \code{\link{Image}} object of the same dimensions as
+#'  \code{template}. Only the pixels of \code{image} where \code{mask} is
+#'  nonzero are used in the computation. If \code{NULL}, all pixels are used.
+#'
 #' @param filt_size The size in pixels of a gaussian blur filter applied to the
 #'  images before computation of the transform. When set to 0 (the default), no
 #'  filtering is applied.
@@ -96,7 +108,7 @@ computeECC <- function(template, image) {
 #'
 #' @export
 findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "affine",
-                             max_it = 200, epsilon = 1e-3, filt_size = 0) {
+                             max_it = 200, epsilon = 1e-3, mask = NULL, filt_size = 0) {
   if (!isImage(template))
     stop("'template' is not an Image object.")
 
@@ -123,7 +135,10 @@ findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "a
       if (!all(dim(warp_matrix) == c(2, 3)))
         stop("warp_matrix must be a 2x3 matrix.")
     }
+  }
 
+  if (is.null(mask)) {
+    mask <- ones(template$nrow(), template$ncol(), 1, template$depth())
   }
 
   `_findTransformECC`(template, image, warp_matrix,
@@ -133,7 +148,7 @@ findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "a
                              "affine" = 2,
                              "homography" = 3,
                              stop("This is not a valid transformation. 'warp_mode' must be one of 'translation', 'euclidean', 'affine', or 'homography'.")),
-                      max_it, epsilon, filt_size)
+                      max_it, epsilon, mask, filt_size)
 }
 
 
@@ -747,7 +762,7 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = 0,
 #' @description \code{LUT} performs a look-up table transform of an
 #'  \code{\link{Image}} object.
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param image An 8-bit (8U) \code{\link{Image}} object.
 #'
 #' @param lut A look-up table. This should be a vector with 256 elements, or a
 #'  \code{256 x n} matrix, with n corresponding to the number of channels in
@@ -787,6 +802,9 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = 0,
 LUT <- function(image, lut, target = "new") {
   if (!isImage(image))
     stop("'image' is not an Image object.")
+
+  if (image$depth() != "8U")
+    stop("The 'image' depth must be 8U.")
 
   if (is.vector(lut)) {
     if (length(lut) != 256)
@@ -828,10 +846,10 @@ LUT <- function(image, lut, target = "new") {
 #'  that its histogram matches (approximately) that of another
 #'  \code{\link{Image}} object.
 #'
-#' @param image An \code{\link{Image}} object to transform.
+#' @param image An 8-bit (8U) \code{\link{Image}} object to transform.
 #'
-#' @param reference An \code{\link{Image}} object which histogram will be used
-#'  as a reference to transform \code{image}.
+#' @param reference An 8-bit (8U) \code{\link{Image}} object which histogram
+#'  will be used as a reference to transform \code{image}.
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
@@ -867,16 +885,19 @@ histmatch <- function(image, reference, target = "new") {
   if (!isImage(image) | !isImage(reference))
     stop("'image' and 'reference' must be Image objects.")
 
+  if (image$depth() != "8U" | reference$depth() != "8U")
+    stop("The 'image' and 'reference' depths must be 8U.")
+
   if (reference$nchan() != image$nchan())
     stop("'image' and 'reference' must have the same number of channels.")
 
   if (reference$depth() != image$depth())
     stop("'image' and 'reference' must have the same bit depth.")
 
-  cdf_target <- apply(imhist(reference)[, 1:reference$nchan() + 1, drop = FALSE], 2, cumsum)
-  cdf_image <- apply(imhist(image)[, 1:image$nchan() + 1, drop = FALSE], 2, cumsum)
+  cdf_target <- apply(imhist(reference)[, 1:reference$nchan() + 1, drop = FALSE], 2, cumsum)[1:256, ]
+  cdf_image <- apply(imhist(image)[, 1:image$nchan() + 1, drop = FALSE], 2, cumsum)[1:256, ]
 
-  map <- matrix(0, nrow = 256, ncol = image$nchan())
+  map <- matrix(0, nrow = nrow(cdf_target), ncol = image$nchan())
   for (j in 1:reference$nchan()) {
     map[, j] <- apply(abs(outer(cdf_image[, j], cdf_target[, j], "-")), 1, which.min) - 1
   }
@@ -898,7 +919,7 @@ histmatch <- function(image, reference, target = "new") {
 #'    table.}
 #'  }
 #'
-#' @param image An \code{\link{Image}} object to transform.
+#' @param image An 8-bit (8U) \code{\link{Image}} object to transform.
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
@@ -934,7 +955,7 @@ histEq <- function(image, target = "new") {
     stop("'image' is not an Image object.")
 
   if (image$depth() != "8U")
-    stop("'image' depth must be 8U.")
+    stop("The 'image' depth must be 8U.")
 
   if (image$nchan() == 1) {
     if (isImage(target)) {

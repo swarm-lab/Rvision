@@ -61,14 +61,17 @@ values:
   are stored inside (the default).}
  \item{An \code{\link{Image}} object:}{the results are stored in another
   existing \code{\link{Image}} object. This is fast but will replace the
-  content of \code{target}. \code{target} must be a single-channel, 32F
+  content of \code{target}. \code{target} must be a two-channel, 32F
   \code{\link{Image}} object with the same dimensions as \code{image1}.}
 }}
 }
 \value{
 If \code{target="new"}, the function returns an \code{\link{Image}}
  object. If \code{target} is an \code{\link{Image}} object, the function
- returns nothing and modifies that \code{\link{Image}} object in place.
+ returns nothing and modifies that \code{\link{Image}} object in place. The
+ \code{\link{Image}} object will have two channels corresponding to the x and
+ y coordinates (respectively) of the optical vector at each location in the
+ image.
 }
 \description{
 Computes a dense optical flow using the Gunnar Farneback’s algorithm.

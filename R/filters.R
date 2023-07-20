@@ -378,7 +378,7 @@ blur <- function(image, k_height = 5, k_width = 5, target = "new", in_place = NU
 #'  the value of each pixel is replaced by the median value of all the pixels in
 #'  its neighborhood.
 #'
-#' @param image An \code{\link{Image}} object.
+#' @param image An 8-bit (8U) \code{\link{Image}} object.
 #'
 #' @param k_size The half-size in pixels of the kernel (default: 5).
 #'
@@ -426,6 +426,9 @@ medianBlur <- function(image, k_size = 5, target = "new", in_place = NULL) {
 
   if (!isImage(image))
     stop("This is not an Image object.")
+
+  if (image$depth() != "8U")
+    stop("This is not an 8-bit (8U) Image object.")
 
   if (isImage(target)) {
     `_medianBlur`(image, k_size, target)

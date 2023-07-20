@@ -141,7 +141,7 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
   are stored inside (the default).</p></li>
 <li><p>An <code><a href="Image-class.html">Image</a></code> object:the results are stored in another
   existing <code><a href="Image-class.html">Image</a></code> object. This is fast but will replace the
-  content of <code>target</code>. <code>target</code> must be a single-channel, 32F
+  content of <code>target</code>. <code>target</code> must be a two-channel, 32F
   <code><a href="Image-class.html">Image</a></code> object with the same dimensions as <code>image1</code>.</p></li>
 </ul></dd>
 
@@ -154,7 +154,11 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 
 
 <p>object. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object, the function
- returns nothing and modifies that <code><a href="Image-class.html">Image</a></code> object in place.</p>
+ returns nothing and modifies that <code><a href="Image-class.html">Image</a></code> object in place. The</p>
+<p></p>
+<p><code><a href="Image-class.html">Image</a></code> object will have two channels corresponding to the x and
+ y coordinates (respectively) of the optical vector at each location in the
+ image.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

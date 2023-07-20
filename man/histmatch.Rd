@@ -7,10 +7,10 @@
 histmatch(image, reference, target = "new")
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object to transform.}
+\item{image}{An 8-bit (8U) \code{\link{Image}} object to transform.}
 
-\item{reference}{An \code{\link{Image}} object which histogram will be used
-as a reference to transform \code{image}.}
+\item{reference}{An 8-bit (8U) \code{\link{Image}} object which histogram
+will be used as a reference to transform \code{image}.}
 
 \item{target}{The location where the results should be stored. It can take 3
 values:

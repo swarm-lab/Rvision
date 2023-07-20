@@ -123,7 +123,7 @@ release <- function(x) UseMethod("release")
 #'  \item{\code{FRAME_WIDTH}: Width in pixels of the frames in the video stream.}
 #'  \item{\code{FRAME_HEIGHT}: Height in pixels of the frames in the video stream.}
 #'  \item{\code{FPS}: Frame rate in frames per second.}
-#'  \item{\code{FOURCC}: 4-character \href{http://www.fourcc.org/codecs.php}{FOURCC} code of the codec}
+#'  \item{\code{FOURCC}: 4-character \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{FOURCC} code of the codec}
 #'  \item{\code{FRAME_COUNT}: Number of frames in the video file.}
 #' }
 #'
@@ -172,7 +172,7 @@ getProp <- function(x, property) UseMethod("getProp")
 #'  \code{\link{VideoWriter}} object.
 #'
 #' @return A character string corresponding to the
-#'  \href{http://www.fourcc.org/codecs.php}{FOURCC} code of the codec.
+#'  \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{FOURCC} code of the codec.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'

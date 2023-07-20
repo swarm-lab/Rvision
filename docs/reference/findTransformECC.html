@@ -73,6 +73,7 @@
 <span>  warp_mode <span class="op">=</span> <span class="st">"affine"</span>,</span>
 <span>  max_it <span class="op">=</span> <span class="fl">200</span>,</span>
 <span>  epsilon <span class="op">=</span> <span class="fl">0.001</span>,</span>
+<span>  mask <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  filt_size <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -114,6 +115,12 @@ to transform <code>image</code> into <code>template</code>. It can be any of the
 <dd><p>The convergene tolerance (default: 1e-3).</p></dd>
 
 
+<dt>mask</dt>
+<dd><p>A binary <code><a href="Image-class.html">Image</a></code> object of the same dimensions as
+<code>template</code>. Only the pixels of <code>image</code> where <code>mask</code> is
+nonzero are used in the computation. If <code>NULL</code>, all pixels are used.</p></dd>
+
+
 <dt>filt_size</dt>
 <dd><p>The size in pixels of a gaussian blur filter applied to the
 images before computation of the transform. When set to 0 (the default), no
@@ -149,8 +156,8 @@ filtering is applied.</p></dd>
 <span class="r-in"><span><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="va">file2</span><span class="op">)</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">findTransformECC</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]      [,2]      [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0909585 0.1289127 -67.90714</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.1418543 1.1485574  17.79107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0909576 0.1289074 -67.90624</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.1418494 1.1485587  17.78965</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

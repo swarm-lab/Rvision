@@ -7,7 +7,7 @@
 LUT(image, lut, target = "new")
 }
 \arguments{
-\item{image}{An \code{\link{Image}} object.}
+\item{image}{An 8-bit (8U) \code{\link{Image}} object.}
 
 \item{lut}{A look-up table. This should be a vector with 256 elements, or a
 \code{256 x n} matrix, with n corresponding to the number of channels in

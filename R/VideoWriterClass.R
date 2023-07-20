@@ -41,8 +41,9 @@
 #'  file.
 #'
 #' @param fourcc A 4-character string corresponding to the fourcc code of the
-#'  codec to be used. A list of fourcc codes can be obtained at
-#'  \href{http://www.fourcc.org/codecs.php}{http://www.fourcc.org/codecs.php}.
+#'  codec to be used. A list of fourcc codes can be obtained at this archived
+#'  page of the fourcc site
+#'  \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{http://www.fourcc.org/codecs.php}.
 #'
 #' @param fps A numeric value corresponding to the framerate of the output video.
 #'
@@ -352,11 +353,12 @@ writerOuput <- function(x) {
 #' @title Codec Name to FOURCC Code
 #'
 #' @description \code{fource} translates the 4-character name of a video codec
-#'  into its corresponding \href{http://www.fourcc.org/codecs.php}{FOURCC} code.
+#'  into its corresponding \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{FOURCC} code.
 #'
 #' @param x A 4-element character chain corresponding to the name of a valid
-#'  video codec. A list of valid codec names can be found at
-#'  \href{http://www.fourcc.org/codecs.php}{http://www.fourcc.org/codecs.php}.
+#'  video codec. A list of valid codec names can be found at this archived
+#'  page of the fourcc site
+#'  \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{http://www.fourcc.org/codecs.php}.
 #'
 #' @return An integer value corresponding to the FOURCC code of the video codec.
 #'
