@@ -635,8 +635,6 @@ methods::evalqOnLoad({
 #'
 #' @param x A 32- or 64-bit (32F or 64F) \code{\link{Image}} object.
 #'
-#' @param ... Ignored.
-#'
 #' @param target The location where the results should be stored when passing a
 #'  sum of images to the function. It can take 3 values:
 #'  \itemize{
@@ -650,6 +648,8 @@ methods::evalqOnLoad({
 #'    dimensions, bitdepth, and number of channels as \code{x}, otherwise an
 #'    error will be thrown.}
 #'  }
+#'
+#' @param ... Ignored.
 #'
 #' @return If \code{target="new"}, the function returns an \code{\link{Image}}
 #'  object. If \code{target="self"}, the function returns nothing and modifies
@@ -669,8 +669,8 @@ methods::evalqOnLoad({
 #' @name log
 #'
 #' @export
-setGeneric("log", function(x, ..., target = "new") standardGeneric("log"),
-           useAsDefault = function(x, ..., target) base::log(x, ...),
+setGeneric("log", function(x, target = "new", ...) standardGeneric("log"),
+           useAsDefault = function(x, target, ...) base::log(x, ...),
            group = "Math")
 
 methods::evalqOnLoad({
