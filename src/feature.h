@@ -33,3 +33,21 @@ Rcpp::NumericMatrix _houghCircles(Image& image, int method, double dp, double mi
 
   return out;
 }
+
+Rcpp::NumericMatrix _houghLinesP(Image& image, double rho, double theta, int threshold,
+                                 double minLineLength, double	maxLineGap) {
+  std::vector<cv::Vec4f> lines;
+  cv::HoughLinesP(image.image, lines, rho, theta, threshold, minLineLength, maxLineGap);
+
+  Rcpp::NumericMatrix out = Rcpp::NumericMatrix(lines.size(), 4);
+  colnames(out) = Rcpp::CharacterVector::create("x1", "y1", "x2", "y2");
+
+  for (uint i = 0; i < lines.size(); i++) {
+    out(i, 0) = lines[i][0] + 1;
+    out(i, 1) = -lines[i][1] + image.nrow();
+    out(i, 2) = lines[i][2] + 1;
+    out(i, 3) = -lines[i][3] + image.nrow();
+  }
+
+  return out;
+}

@@ -399,6 +399,8 @@ RCPP_MODULE(methods_Feature) {
     _["threshold2"], _["apertureSize"], _["L2gradient"], _["target"]), "");
   function("_houghCircles", &_houghCircles, List::create(_["image"], _["method"],
     _["dp"], _["minDist"], _["param1"], _["param2"], _["minRadius"], _["maxRadius"]), "");
+  function("_houghLinesP", &_houghLinesP, List::create(_["image"], _["rho"],
+    _["theta"], _["threshold"], _["minLineLength"], _["maxLineGap"]), "");
 }
 
 #include "autothresh.h"
