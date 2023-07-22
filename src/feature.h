@@ -60,21 +60,21 @@ Rcpp::NumericMatrix _goodFeaturesToTrack(Image& image, int maxCorners, double qu
   if (image.GPU) {
     if (mask.GPU)
       cv::goodFeaturesToTrack(image.uimage, corners, maxCorners,
-                              qualityLevel, qualityLevel, mask.uimage,
+                              qualityLevel, minDistance, mask.uimage,
                               blockSize, gradientSize, useHarrisDetector, k);
 
     cv::goodFeaturesToTrack(image.uimage, corners, maxCorners,
-                            qualityLevel, qualityLevel, mask.image,
+                            qualityLevel, minDistance, mask.image,
                             blockSize, gradientSize, useHarrisDetector, k);
   }
 
   if (mask.GPU)
     cv::goodFeaturesToTrack(image.image, corners, maxCorners,
-                            qualityLevel, qualityLevel, mask.uimage,
+                            qualityLevel, minDistance, mask.uimage,
                             blockSize, gradientSize, useHarrisDetector, k);
 
   cv::goodFeaturesToTrack(image.image, corners, maxCorners,
-                          qualityLevel, qualityLevel, mask.image,
+                          qualityLevel, minDistance, mask.image,
                           blockSize, gradientSize, useHarrisDetector, k);
 
   Rcpp::NumericMatrix out = Rcpp::NumericMatrix(corners.size(), 2);
