@@ -14,8 +14,8 @@ houghLinesP(
 )
 }
 \arguments{
-\item{image}{An 8-bit (8U) single-channel (grayscale) binary
-\code{\link{Image}} object.}
+\item{image}{An 8-bit (8U) single-channel (GRAY) binary \code{\link{Image}}
+object.}
 
 \item{rho}{The distance resolution of the accumulator in pixels.}
 
@@ -31,8 +31,8 @@ that are rejected.}
 segment to link them.}
 }
 \value{
-A matrix with 4 columns corresponding x and y coordinates of the
- extremities of each detected line.
+A matrix with 4 columns corresponding to the x and y coordinates of
+ the extremities of each detected line.
 }
 \description{
 \code{houghLinesP} finds line segments in a binary image using

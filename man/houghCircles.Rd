@@ -16,8 +16,7 @@ houghCircles(
 )
 }
 \arguments{
-\item{image}{An 8-bit (8U) single-channel (grayscale) \code{\link{Image}}
-object.}
+\item{image}{An 8-bit (8U) single-channel (GRAY) \code{\link{Image}} object.}
 
 \item{method}{A character string indicating the detection method to be used.
 The available methods are "GRADIENT" and "ALT" (generally more accurate).}

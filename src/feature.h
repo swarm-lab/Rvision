@@ -51,3 +51,39 @@ Rcpp::NumericMatrix _houghLinesP(Image& image, double rho, double theta, int thr
 
   return out;
 }
+
+Rcpp::NumericMatrix _goodFeaturesToTrack(Image& image, int maxCorners, double qualityLevel,
+                                         double minDistance, Image& mask, int blockSize,
+                                         int gradientSize, bool useHarrisDetector, double k) {
+  std::vector<cv::Point2f> corners;
+
+  if (image.GPU) {
+    if (mask.GPU)
+      cv::goodFeaturesToTrack(image.uimage, corners, maxCorners,
+                              qualityLevel, qualityLevel, mask.uimage,
+                              blockSize, gradientSize, useHarrisDetector, k);
+
+    cv::goodFeaturesToTrack(image.uimage, corners, maxCorners,
+                            qualityLevel, qualityLevel, mask.image,
+                            blockSize, gradientSize, useHarrisDetector, k);
+  }
+
+  if (mask.GPU)
+    cv::goodFeaturesToTrack(image.image, corners, maxCorners,
+                            qualityLevel, qualityLevel, mask.uimage,
+                            blockSize, gradientSize, useHarrisDetector, k);
+
+  cv::goodFeaturesToTrack(image.image, corners, maxCorners,
+                          qualityLevel, qualityLevel, mask.image,
+                          blockSize, gradientSize, useHarrisDetector, k);
+
+  Rcpp::NumericMatrix out = Rcpp::NumericMatrix(corners.size(), 2);
+  colnames(out) = Rcpp::CharacterVector::create("x", "y");
+
+  for (uint i = 0; i < corners.size(); i++) {
+    out(i, 0) = corners[i].x + 1;
+    out(i, 1) = -corners[i].y + image.nrow();
+  }
+
+  return out;
+}

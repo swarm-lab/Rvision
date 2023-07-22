@@ -61,8 +61,7 @@ canny <- function(image, threshold1, threshold2, aperture_size = 3,
 #' @description \code{houghCircles} finds circles in a grayscale image using the
 #'  Hough transform.
 #'
-#' @param image An 8-bit (8U) single-channel (grayscale) \code{\link{Image}}
-#'  object.
+#' @param image An 8-bit (8U) single-channel (GRAY) \code{\link{Image}} object.
 #'
 #' @param method A character string indicating the detection method to be used.
 #'  The available methods are "GRADIENT" and "ALT" (generally more accurate).
@@ -118,7 +117,7 @@ houghCircles <- function(image, method, dp, min_dist, param1 = 100, param2 = 100
     stop("'image' is not an Image object.")
 
   if (image$depth() != "8U" | image$nchan() != 1)
-    stop("image is not an 8U single-channel 'Image' object")
+    stop("image is not an 8U single-channel 'Image' object.")
 
   meth <- switch(method, "GRADIENT" = 3, "ALT" = 4,
                  stop("This is not a valid method."))
@@ -132,8 +131,8 @@ houghCircles <- function(image, method, dp, min_dist, param1 = 100, param2 = 100
 #' @description \code{houghLinesP} finds line segments in a binary image using
 #'  the probabilistic Hough transform.
 #'
-#' @param image An 8-bit (8U) single-channel (grayscale) binary
-#'  \code{\link{Image}} object.
+#' @param image An 8-bit (8U) single-channel (GRAY) binary \code{\link{Image}}
+#'  object.
 #'
 #' @param rho The distance resolution of the accumulator in pixels.
 #'
@@ -148,8 +147,8 @@ houghCircles <- function(image, method, dp, min_dist, param1 = 100, param2 = 100
 #' @param max_line_gap The maximum allowed gap between points on the same line
 #'  segment to link them.
 #'
-#' @return A matrix with 4 columns corresponding x and y coordinates of the
-#'  extremities of each detected line.
+#' @return A matrix with 4 columns corresponding to the x and y coordinates of
+#'  the extremities of each detected line.
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
@@ -162,7 +161,88 @@ houghLinesP <- function(image, rho, theta, threshold, min_line_length = 0, max_l
     stop("'image' is not an Image object.")
 
   if (image$depth() != "8U" | image$nchan() != 1)
-    stop("image is not an 8U single-channel 'Image' object")
+    stop("image is not an 8U single-channel 'Image' object.")
 
   `_houghLinesP`(image, rho, theta, threshold, min_line_length, max_line_gap)
+}
+
+
+
+#' @title Good Features to Track
+#'
+#' @description \code{goodFeaturesToTrack} finds the most prominent corners in
+#'  an image or in a specified region of the image.
+#'
+#' @param image An 8-bit (8U) single-channel (GRAY) binary \code{\link{Image}}
+#'  object.
+#'
+#' @param max_corners The maximum number of corners to return.
+#'  \code{max_corners <= 0} implies that no limit on the maximum is set and all
+#'  detected corners are returned.
+#'
+#' @param quality_level The minimal accepted quality of the image corners. The
+#'  parameter value is multiplied by the best corner quality measure, which is
+#'  the minimal eigenvalue (if \code{use_harris = FALSE}) or the Harris function
+#'  response (if \code{use_harris = TRUE}). The corners with a quality measure
+#'  lower than the product are rejected. For example, if the best corner has a
+#'  quality measure of 1500, and \code{quality_level = 0.01}, then all the
+#'  corners with a quality measure lower than 15 are rejected.
+#'
+#' @param min_distance The minimum possible Euclidean distance between the
+#'  returned corners.
+#'
+#' @param mask A single-channel (GRAY) 8-bit (8U) \code{\link{Image}} object
+#'  with the same dimensions as \code{image}. This can be used to mask out
+#'  pixels that should not be considered when searching for corners (pixels
+#'  set to 0 in the mask will be ignored during the search).
+#'
+#' @param block_size Size of an average block for computing a derivative
+#'  covariation matrix over each pixel neighborhood (default: 3).
+#'
+#' @param gradient_size Aperture parameter for the Sobel operator used for
+#'  derivatives computation (default: 3).
+#'
+#' @param use_harris A logical indicating whether the corners should be detected
+#'  using the Harris method or the eigenvalue method (default: FALSE).
+#'
+#' @param k The free parameter of the Harris detector (ignored if
+#'  \code{use_harris = FALSE}.
+#'
+#' @return A matrix with 2 columns corresponding to the x and y coordinates of
+#'  the detected points.
+#'
+#' @references Shi, J., & Tomasi. (1994). Good features to track. 1994
+#'  Proceedings of IEEE Conference on Computer Vision and Pattern Recognition,
+#'  593–600. https://doi.org/10.1109/CVPR.1994.323794
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_gray <- changeColorSpace(balloon, "GRAY")
+#' corners <- goodFeaturesToTrack(balloon_gray, 100, 0.01, 10)
+#'
+#' @export
+goodFeaturesToTrack <- function(image, max_corners, quality_level, min_distance,
+                                mask = NULL, block_size = 3, gradient_size = 3,
+                                use_harris = FALSE, k = 0.04) {
+  if (!isImage(image))
+    stop("'image' is not an Image object.")
+
+  if (image$nchan() != 1)
+    stop("image is not a single-channel 'Image' object.")
+
+  if (image$depth() != "8U" & image$depth() != "32F")
+    stop("image is not an 8U or 32F 'Image' object.")
+
+  if (is.null(mask)) {
+    mask <- ones(nrow(image), ncol(image), 1)
+  } else {
+    if (!all(mask$dim()[1:2] == image$dim()[1:2]))
+      stop("mask does not have the same dimensions as image.")
+
+    if (mask$depth() != 1)
+      stop("mask is not an 8U 'Image' object.")
+  }
+
+  `_goodFeaturesToTrack`(image, max_corners, quality_level, min_distance, mask,
+                         block_size, gradient_size, use_harris, k)
 }
