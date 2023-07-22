@@ -125,3 +125,44 @@ houghCircles <- function(image, method, dp, min_dist, param1 = 100, param2 = 100
 
   `_houghCircles`(image, meth, dp, min_dist, param1, param2, min_radius, max_radius)
 }
+
+
+#' @title Probabilistic Hough Line Detector
+#'
+#' @description \code{houghLinesP} finds line segments in a binary image using
+#'  the probabilistic Hough transform.
+#'
+#' @param image An 8-bit (8U) single-channel (grayscale) binary
+#'  \code{\link{Image}} object.
+#'
+#' @param rho The distance resolution of the accumulator in pixels.
+#'
+#' @param theta The angle resolution of the accumulator in radians.
+#'
+#' @param threshold The accumulator threshold parameter. Only lines that get
+#'  more votes than that threshold are returned.
+#'
+#' @param min_line_length The minimum line length. Line segments shorter than
+#'  that are rejected.
+#'
+#' @param max_line_gap The maximum allowed gap between points on the same line
+#'  segment to link them.
+#'
+#' @return A matrix with 4 columns corresponding x and y coordinates of the
+#'  extremities of each detected line.
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' balloon_canny <- canny(balloon, 50, 50)
+#' lines <- houghLinesP(balloon_canny, 1, pi / 180, 80, 0, 50)
+#'
+#' @export
+houghLinesP <- function(image, rho, theta, threshold, min_line_length = 0, max_line_gap = 0) {
+  if (!isImage(image))
+    stop("'image' is not an Image object.")
+
+  if (image$depth() != "8U" | image$nchan() != 1)
+    stop("image is not an 8U single-channel 'Image' object")
+
+  `_houghLinesP`(image, rho, theta, threshold, min_line_length, max_line_gap)
+}
