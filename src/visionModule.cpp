@@ -401,6 +401,9 @@ RCPP_MODULE(methods_Feature) {
     _["dp"], _["minDist"], _["param1"], _["param2"], _["minRadius"], _["maxRadius"]), "");
   function("_houghLinesP", &_houghLinesP, List::create(_["image"], _["rho"],
     _["theta"], _["threshold"], _["minLineLength"], _["maxLineGap"]), "");
+  function("_goodFeaturesToTrack", &_goodFeaturesToTrack, List::create(_["image"],
+  _["maxCorners"], _["qualityLevel"], _["minDistance"], _["mask"],
+    _["blockSize"], _["gradientSize"], _["useHarrisDetector"],  _["k"]), "");
 }
 
 #include "autothresh.h"
