@@ -72,7 +72,7 @@ methods::evalqOnLoad({
 
   setMethod("add", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
             function(e1, e2, target) {
-              `_plusScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+              `_plusScalar`(e2, rep(e1, length.out = e2$nchan()), target)
             })
 
   setMethod("add", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
@@ -149,7 +149,7 @@ methods::evalqOnLoad({
 
   setMethod("subtract", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
             function(e1, e2, target) {
-              `_minusScalar`(e1, rep(e2, length.out = e1$nchan()), FALSE, target)
+              `_minusScalar`(e2, rep(e1, length.out = e2$nchan()), FALSE, target)
             })
 
   setMethod("subtract", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
@@ -226,7 +226,7 @@ methods::evalqOnLoad({
 
   setMethod("multiply", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
             function(e1, e2, target) {
-              `_multiplyScalar`(e1, rep(e2, length.out = e1$nchan()), target)
+              `_multiplyScalar`(e2, rep(e1, length.out = e2$nchan()), target)
             })
 
   setMethod("multiply", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
@@ -303,7 +303,7 @@ methods::evalqOnLoad({
 
   setMethod("divide", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "Rcpp_Image"),
             function(e1, e2, target) {
-              `_divideScalar`(e1, rep(e2, length.out = e1$nchan()), FALSE, target)
+              `_divideScalar`(e2, rep(e1, length.out = e2$nchan()), FALSE, target)
             })
 
   setMethod("divide", signature(e1 = "numeric", e2 = "Rcpp_Image", target = "character"),
