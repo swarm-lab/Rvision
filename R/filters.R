@@ -1455,3 +1455,116 @@ getStructuringElement <- function(k_shape = "rectangle", k_height = 5, k_width =
                stop("This is not a valid kernel shape"))
   `_getStructuringElement`(sh, k_width, k_height, anchor[1], anchor[2])
 }
+
+
+#' @title Pyramid Downsampling
+#'
+#' @description \code{prDown} blurs an image and then downsamples it.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same number of channels, and bit depth
+#'    as \code{image}, an error may be thrown. The dimensions of \code{target}
+#'    must satisfy the following conditions:
+#'      \itemize{
+#'        \item{}{\code{ abs(ncol(target) * 2 - ncol(image)) <= 2 }}
+#'        \item{}{\code{ abs(nrow(target) * 2 - nrow(image)) <= 2 }}
+#'      }
+#'    }
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{pyrUp}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' small_balloon <- pyrDown(balloon)
+#'
+#' @export
+pyrDown <- function(image, target = "new") {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  if (isImage(target)) {
+    if (target$nchan() != image$nchan() | target$depth() != image$depth())
+      stop("target is not of the same type and depth as image.")
+
+    `_pyrDown`(image, target)
+  } else if (target == "new") {
+    out <- resize(image, (image$nrow() + 1) / 2, (image$ncol() + 1) / 2)
+    `_pyrDown`(image, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
+#' @title Pyramid Upsampling
+#'
+#' @description \code{prUp} upsamples an image and then blurs it.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param target The location where the results should be stored. It can take 2
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    if \code{target} does not have the same number of channels, and bit depth
+#'    as \code{image}, an error may be thrown. The dimensions of \code{target}
+#'    must satisfy the following conditions:
+#'      \itemize{
+#'        \item{}{\code{ abs(ncol(target) - ncol(image) * 2) <= ncol(target) \%\% 2 }}
+#'        \item{}{\code{ abs(nrow(target) - nrow(image) * 2) <= nrow(target) \%\% 2 }}
+#'      }
+#'    }
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{pyrDown}}
+#'
+#' @examples
+#' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' big_balloon <- pyrUp(balloon)
+#'
+#' @export
+pyrUp <- function(image, target = "new") {
+  if (!isImage(image))
+    stop("This is not an Image object.")
+
+  if (isImage(target)) {
+    if (target$nchan() != image$nchan() | target$depth() != image$depth())
+      stop("target is not of the same type and depth as image.")
+
+    `_pyrUp`(image, target)
+  } else if (target == "new") {
+    out <- zeros(image$nrow() * 2, image$ncol() * 2, image$nchan(),
+                 image$depth(), image$space)
+    `_pyrUp`(image, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}

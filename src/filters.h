@@ -257,3 +257,31 @@ arma::Mat< float > _getStructuringElement(int k_shape, int k_width, int k_height
 //   cv2arma(k, out);
 //   return out;
 // }
+
+void _pyrDown(Image& image, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::pyrDown(image.uimage, target.uimage, cv::Size(target.uimage.cols, target.uimage.rows));
+
+    return cv::pyrDown(image.uimage, target.image, cv::Size(target.image.cols, target.image.rows));
+  }
+
+  if (target.GPU)
+    cv::pyrDown(image.image, target.uimage, cv::Size(target.uimage.cols, target.uimage.rows));
+
+    return cv::pyrDown(image.image, target.image, cv::Size(target.image.cols, target.image.rows));
+}
+
+void _pyrUp(Image& image, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::pyrUp(image.uimage, target.uimage, cv::Size(target.uimage.cols, target.uimage.rows));
+
+    return cv::pyrUp(image.uimage, target.image, cv::Size(target.image.cols, target.image.rows));
+  }
+
+  if (target.GPU)
+    cv::pyrUp(image.image, target.uimage, cv::Size(target.uimage.cols, target.uimage.rows));
+
+    return cv::pyrUp(image.image, target.image, cv::Size(target.image.cols, target.image.rows));
+}
