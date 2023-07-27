@@ -242,7 +242,6 @@ RCPP_MODULE(methods_Morphology) {
 
 #include "filters.h"
 RCPP_MODULE(methods_Filters) {
-
   function("_filter2D", &_filter2D, List::create(_["image"], _["kernel"], _["target"]), "");
   function("_sepFilter2D", &_sepFilter2D, List::create(_["image"], _["kernel_x"],
     _["kernel_y"], _["target"]), "");
@@ -277,6 +276,8 @@ RCPP_MODULE(methods_Filters) {
                         _["anchor_x"], _["anchor_y"]), "");
   // function("_getGaussianKernel", &_getGaussianKernel, List::create(_["ksize"],
   //   _["sigma"]), "");
+  function("_pyrDown", &_pyrDown, List::create(_["image"], _["target"]), "");
+  function("_pyrUp", &_pyrUp, List::create(_["image"], _["target"]), "");
 }
 
 #include "display.h"
