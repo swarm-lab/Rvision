@@ -175,8 +175,8 @@ findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "a
 #'
 #' @param descriptor_matcher A character string indicating the type of the
 #'  descriptor matcher to use. It can be one of the followings: "BruteForce",
-#'  "BruteForce-L1", "BruteForce-Hamming" (the default), or
-#'  "BruteForce-Hamming(2)".
+#'  "BruteForce-L1", "BruteForce-Hamming" (the default), "BruteForce-Hamming(2)",
+#'  or "FlannBased".
 #'
 #' @param match_frac The fraction of top matches to keep (default: 0.15).
 #'
@@ -217,6 +217,11 @@ findTransformORB <- function(template, image, warp_mode = "affine", max_features
 
   if (warp_mode == "affine" & !(homography_method %in% c("RANSAC", "LSMEDS")))
     stop("When warp_mode='affine', homography_method can only be one of 'RANSAC' or 'LSMEDS'.")
+
+  if (!(descriptor_matcher %in% c("BruteForce", "BruteForce-L1", "BruteForce-Hamming",
+                                  "BruteForce-Hamming(2)", "FlannBased")))
+    stop("Invalid descriptor matcher.")
+
 
   `_findTransformORB`(template, image,
                       switch(warp_mode,

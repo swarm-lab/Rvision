@@ -71,3 +71,9 @@ dots_gray <- changeColorSpace(dots, "GRAY")
 circ <- houghCircles(dots_gray, "ALT", 1.5, 25, 300, 0.9)
 
 }
+\seealso{
+\code{\link{houghLinesP}}
+}
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

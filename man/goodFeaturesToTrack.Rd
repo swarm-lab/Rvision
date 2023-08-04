@@ -71,3 +71,9 @@ Shi, J., & Tomasi. (1994). Good features to track. 1994
  Proceedings of IEEE Conference on Computer Vision and Pattern Recognition,
  593–600. https://doi.org/10.1109/CVPR.1994.323794
 }
+\seealso{
+\code{\link{ORBkeypoints}}
+}
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

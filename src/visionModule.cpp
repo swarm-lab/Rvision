@@ -405,6 +405,11 @@ RCPP_MODULE(methods_Feature) {
   function("_goodFeaturesToTrack", &_goodFeaturesToTrack, List::create(_["image"],
   _["maxCorners"], _["qualityLevel"], _["minDistance"], _["mask"],
     _["blockSize"], _["gradientSize"], _["useHarrisDetector"],  _["k"]), "");
+  function("_ORBkeypoints", &_ORBkeypoints, List::create(_["image"], _["mask"],
+    _["nfeatures"], _["scaleFactor"], _["nlevels"], _["edgeThreshold"],
+    _["firstLevel"], _["WTA_K"], _["scoreType"], _["patchSize"], _["fastThreshold"]), "");
+  function("_matchKeypoints", &_matchKeypoints, List::create(_["descriptor1"], _["descriptor2"],
+    _["descriptorMatcher"], _["matchFrac"]), "");
 }
 
 #include "autothresh.h"
