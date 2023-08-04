@@ -56,3 +56,6 @@ balloon_canny <- canny(balloon, 50, 50)
 Canny J. A computational approach to edge detection. IEEE Trans
  Pattern Anal Mach Intell. 1986;8: 679–698. doi:10.1109/TPAMI.1986.4767851
 }
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

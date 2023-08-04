@@ -44,3 +44,9 @@ balloon_canny <- canny(balloon, 50, 50)
 lines <- houghLinesP(balloon_canny, 1, pi / 180, 80, 0, 50)
 
 }
+\seealso{
+\code{\link{houghCircles}}
+}
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}

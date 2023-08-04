@@ -33,8 +33,8 @@ to transform \code{image} into \code{template}. It can be any of the following:
 
 \item{descriptor_matcher}{A character string indicating the type of the
 descriptor matcher to use. It can be one of the followings: "BruteForce",
-"BruteForce-L1", "BruteForce-Hamming" (the default), or
-"BruteForce-Hamming(2)".}
+"BruteForce-L1", "BruteForce-Hamming" (the default), "BruteForce-Hamming(2)",
+or "FlannBased".}
 
 \item{match_frac}{The fraction of top matches to keep (default: 0.15).}
 

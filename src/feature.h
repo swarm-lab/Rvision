@@ -14,8 +14,8 @@ void _canny(Image& image, double threshold1, double threshold2, int apertureSize
 }
 
 Rcpp::NumericMatrix _houghCircles(Image& image, int method, double dp, double minDist,
-                                  double param1, double param2, int minRadius = 0,
-                                  int maxRadius = 0) {
+                                  double param1, double param2, int minRadius,
+                                  int maxRadius) {
   std::vector<cv::Vec4f> circles;
   cv::HoughCircles(image.image, circles, method, dp, minDist, param1, param2,
                    minRadius, maxRadius);
@@ -83,6 +83,75 @@ Rcpp::NumericMatrix _goodFeaturesToTrack(Image& image, int maxCorners, double qu
   for (uint i = 0; i < corners.size(); i++) {
     out(i, 0) = corners[i].x + 1;
     out(i, 1) = -corners[i].y + image.nrow();
+  }
+
+  return out;
+}
+
+Rcpp::List _ORBkeypoints(Image& image, Image& mask, int nfeatures, float scaleFactor,
+                         int nlevels, int edgeThreshold, int firstLevel, int WTA_K,
+                         int scoreType, int patchSize, int fastThreshold) {
+  std::vector<cv::KeyPoint> kpts;
+  cv::Mat descriptors;
+  cv::Ptr<cv::Feature2D> orb;
+
+  if (scoreType == 0) {
+    orb = cv::ORB::create(nfeatures, scaleFactor, nlevels, edgeThreshold,
+                          firstLevel, WTA_K, cv::ORB::HARRIS_SCORE, patchSize,
+                          fastThreshold);
+  } else {
+    orb = cv::ORB::create(nfeatures, scaleFactor, nlevels, edgeThreshold,
+                          firstLevel, WTA_K, cv::ORB::FAST_SCORE, patchSize,
+                          fastThreshold);
+  }
+
+  if (image.GPU) {
+    if (mask.GPU) {
+      orb->detectAndCompute(image.uimage, mask.uimage, kpts, descriptors);
+    } else {
+      orb->detectAndCompute(image.uimage, mask.image, kpts, descriptors);
+    }
+  } else {
+    if (mask.GPU) {
+      orb->detectAndCompute(image.image, mask.uimage, kpts, descriptors);
+    } else {
+      orb->detectAndCompute(image.image, mask.image, kpts, descriptors);
+    }
+  }
+
+  Rcpp::NumericMatrix keypoints(kpts.size(), 6);
+  colnames(keypoints) = Rcpp::CharacterVector::create("angle", "octave",
+           "x", "y", "response", "size");
+
+  for (uint i = 0; i < kpts.size(); i++) {
+    keypoints(i, 0) = 360 - kpts[i].angle;
+    keypoints(i, 1) = kpts[i].octave;
+    keypoints(i, 2) = kpts[i].pt.x + 1;
+    keypoints(i, 3) = -kpts[i].pt.y + image.nrow();
+    keypoints(i, 4) = kpts[i].response;
+    keypoints(i, 5) = kpts[i].size;
+  }
+
+  return Rcpp::List::create(Rcpp::Named("keypoints") = keypoints,
+                            Rcpp::Named("descriptors") = Image(descriptors, "GRAY"));
+}
+
+Rcpp::NumericMatrix _matchKeypoints(Image source, Image target,
+                                    String descriptorMatcher, double matchFrac) {
+  std::vector<cv::DMatch> matches;
+  cv::Ptr<cv::DescriptorMatcher> matcher = cv::DescriptorMatcher::create(descriptorMatcher);
+  matcher->match(source.image, target.image, matches, cv::noArray() );
+  std::sort(matches.begin(), matches.end());
+  const int numGoodMatches = matches.size() * matchFrac;
+  matches.erase(matches.begin() + numGoodMatches, matches.end());
+
+  Rcpp::NumericMatrix out(matches.size(), 3);
+  colnames(out) = Rcpp::CharacterVector::create("source", "target", "distance");
+
+  for(size_t i = 0; i < matches.size(); i++) {
+    out(i, 0) = matches[i].queryIdx + 1;
+    out(i, 1) = matches[i].trainIdx + 1;
+    out(i, 2) = matches[i].distance + 1;
   }
 
   return out;

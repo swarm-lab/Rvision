@@ -49,6 +49,9 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/LUT.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/ORBkeypoints.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/Queue-class.html</loc>
   </url>
   <url>
@@ -374,6 +377,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/log.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/matchKeypoints.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/matchShapes.html</loc>
