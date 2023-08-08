@@ -354,14 +354,35 @@ Rcpp::List _minAreaRect(arma::Mat< float > points) {
 }
 
 double _arcLength(Rcpp::NumericMatrix curve, bool closed) {
-  std::vector< cv::Point > contourpoints(curve.nrow());
+  std::vector< cv::Point > curvepoints(curve.nrow());
 
   for (int i = 0; i < curve.nrow(); i++) {
-    contourpoints[i].x = curve(i, 0);
-    contourpoints[i].y = curve(i, 1);
+    curvepoints[i].x = curve(i, 0);
+    curvepoints[i].y = curve(i, 1);
   }
 
-  return cv::arcLength(contourpoints, closed);
+  return cv::arcLength(curvepoints, closed);
+}
+
+Rcpp::NumericMatrix _approxPolyDP(Rcpp::NumericMatrix curve, double epsilon, bool closed) {
+  std::vector< cv::Point > curvepoints(curve.nrow());
+  std::vector< cv::Point > approxpoints;
+
+  for (int i = 0; i < curve.nrow(); i++) {
+    curvepoints[i].x = curve(i, 0);
+    curvepoints[i].y = curve(i, 1);
+  }
+
+  cv::approxPolyDP(curvepoints, approxpoints, epsilon, closed);
+  Rcpp::NumericMatrix out(approxpoints.size(), 2);
+  colnames(out) = Rcpp::CharacterVector::create("x", "y");
+
+  for (int i = 0; i < approxpoints.size(); i++) {
+    out(i, 0) = approxpoints[i].x;
+    out(i, 1) = approxpoints[i].y;
+  }
+
+  return out;
 }
 
 Rcpp::NumericMatrix _pline(Image& image, Rcpp::NumericVector xi,

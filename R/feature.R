@@ -255,7 +255,7 @@ goodFeaturesToTrack <- function(image, max_corners, quality_level, min_distance,
     if (!all(mask$dim()[1:2] == image$dim()[1:2]))
       stop("mask does not have the same dimensions as image.")
 
-    if (mask$depth() != 1)
+    if (mask$depth() != "8U")
       stop("mask is not an 8U 'Image' object.")
   }
 

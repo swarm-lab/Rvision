@@ -881,6 +881,57 @@ arcLength <- function(curve, closed = TRUE) {
 }
 
 
+#' @title Calculate a Contour Perimeter or a Curve Length
+#'
+#' @description \code{approxPolyDP} approximates a curve or a polygon with
+#'  another curve/polygon with less vertices so that the distance between them
+#'  is less or equal to the specified precision. It uses the Douglas-Peucker
+#'  algorithm.
+#'
+#' @param curve An m x 2 matrix of 2D coordinates.
+#'
+#' @param epsilon A numeric specifying the approximation accuracy. This is the
+#'  maximum distance between the original curve and its approximation.
+#'
+#' @param closed A logical indicating whether the curve is closed (perimeter) or
+#'  not (default: TRUE).
+#'
+#' @return A matrix with two columns:
+#'  \itemize{
+#'    \item{"x": }{the x coordinates of the approximated curve.}
+#'    \item{"y": }{the y coordinates of the approximated curve.}
+#'  }
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{findContours}}
+#'
+#' @references Douglas, D. H., & Peucker, T. K. (1973). ALGORITHMS FOR THE
+#'  REDUCTION OF THE NUMBER OF POINTS REQUIRED TO REPRESENT A DIGITIZED LINE OR
+#'  ITS CARICATURE. Cartographica: The International Journal for Geographic
+#'  Information and Geovisualization, 10(2), 112–122.
+#'  doi:10.3138/FM57-6770-U75U-7727
+#'
+#' @examples
+#' dots <- image(system.file("sample_img/dots.jpg", package = "Rvision"))
+#' dots_gray <- changeColorSpace(dots, "GRAY")
+#' dots_bin <- dots_gray < 200
+#' contours <- findContours(dots_bin)
+#' ix <- contours$contours[, 1] == 0
+#' approxPolyDP(contours$contours[ix, 2:3], 10)
+#'
+#' @export
+approxPolyDP <- function(curve, epsilon, closed = TRUE) {
+  if (!is.matrix(curve))
+    stop("curve must be a m x 2 matrix.")
+
+  if (ncol(curve) != 2)
+    stop("curve must be a m x 2 matrix.")
+
+  `_approxPolyDP`(curve, epsilon, closed)
+}
+
+
 #' @title Pixel Values Along a Line Segment
 #'
 #' @description \code{improfile} finds all pixels intersected by a line segment

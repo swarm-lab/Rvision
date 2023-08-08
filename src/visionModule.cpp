@@ -358,6 +358,7 @@ RCPP_MODULE(methods_Shape) {
            _["image2"], _["method"]), "");
   function("_minAreaRect", &_minAreaRect, List::create(_["points"]), "");
   function("_arcLength", &_arcLength, List::create(_["curve"], _["closed"]), "");
+  function("_approxPolyDP", &_approxPolyDP, List::create(_["curve"], _["epsilon"], _["closed"]), "");
   function("_pline", &_pline, List::create(_["image"], _["xi"], _["yi"],
            _["connectivity"], _["leftToRight"]), "");
 }
