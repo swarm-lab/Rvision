@@ -453,6 +453,51 @@ getPerspectiveTransform <- function(from, to, from_dim, to_dim = from_dim) {
 }
 
 
+#' @title Affine Transform
+#'
+#' @description \code{getAffineTransform} computes the matrix of an affine
+#'  transform from 4 pairs of corresponding points in a source and destination
+#'  image.
+#'
+#' @param from A 4x2 matrix indicating the location (x, y) of 4 points in the
+#'  source image.
+#'
+#' @param to A 4x2 matrix indicating the location (x, y) of 4 points in the
+#'  destination image. The order of the points must correspond to the order in
+#'  \code{from}.
+#'
+#' @param from_dim A vector which first two elements indicate the number of rows
+#'  and columns of the source image.
+#'
+#' @param to_dim A vector which first two elements indicate the number of rows
+#'  and columns of the destination image. If not specified, \code{from_dim} will
+#'  be used as a default.
+#'
+#' @return A 3x3 matrix.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{warpAffine}}
+#'
+#' @examples
+#' from <- matrix(c(1, 1, 2, 5, 6, 5, 5, 1), nrow = 4, byrow = TRUE)
+#' to <- matrix(c(1, 1, 1, 5, 5, 5, 5, 1), nrow = 4, byrow = TRUE)
+#' getAffineTransform(from, to, c(1080, 1920), c(1080, 1920))
+#'
+#' @export
+getAffineTransform <- function(from, to, from_dim, to_dim = from_dim) {
+  if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
+    stop("'from' and 'to' must be 4x2 matrices.")
+
+  from[, 1] <- from[, 1] - 1
+  from[, 2] <- -from[, 2] + from_dim[1]
+  to[, 1] <- to[, 1] - 1
+  to[, 2] <- -to[, 2] + from_dim[1] - (from_dim[1] - to_dim[1])
+
+  `_getAffineTransform`(from, to)
+}
+
+
 #' @title Perspective Transformation
 #'
 #' @description \code{warpPerspective} applies a perspective transformation to

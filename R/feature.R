@@ -366,7 +366,7 @@ ORBkeypoints <- function(image, mask = NULL, n_features = 500, scale_factor = 1.
 
   st <- switch(score_type,
                "HARRIS" = 0,
-               "FAST" = 0,
+               "FAST" = 1,
                stop("Invalid score type.")
   )
 
