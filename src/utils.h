@@ -30,6 +30,18 @@ bool ImageConst5(SEXP* args, int nargs) {
   return true ;
 }
 
+bool StreamConst1(SEXP* args, int nargs) {
+  if(nargs != 2) return false;
+  if(TYPEOF(args[0]) != INTSXP) return false ;
+  return true ;
+}
+
+bool StreamConst2(SEXP* args, int nargs) {
+  if(nargs != 2) return false;
+  if(TYPEOF(args[0]) != STRSXP) return false ;
+  return true ;
+}
+
 bool QueueConst1(SEXP* args, int nargs) {
   if(nargs != 4) return false;
   if(!Rf_inherits(args[0], "Rcpp_Video")) return false ;

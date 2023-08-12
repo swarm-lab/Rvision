@@ -29,9 +29,18 @@
 #' @description Function for creating \code{\link{Stream}} objects from video
 #'  streams.
 #'
-#' @param index An integer value corresponding to the index of the camera to
-#'  read a stream from (default: 0; 0 is usually the default webcam on most
-#'  computers).
+#' @param ... Either:
+#'  \itemize{
+#'    \item{index: }{An integer value corresponding to the index of the camera
+#'      to read a stream from (default: 0; 0 is usually the default webcam on
+#'      most computers). Or...}
+#'    \item{stream_string: }{...a character string corresponfing to the URL of
+#'      video stream (eg. protocol://host:port/script_name?script_params|auth)
+#'      or a GStreamer pipeline string in gst-launch tool format if GStreamer is
+#'      used as backend API. Note that each video stream or IP camera feed has
+#'      its own URL scheme. Please refer to the documentation of source stream
+#'      to know the right URL format.}
+#'  }
 #'
 #' @param api A character string corresponding to the API to use for reading the
 #'  stream from the camera (see Note; default: "ANY").
@@ -77,8 +86,17 @@
 #' }
 #'
 #' @export
-stream <- function(index = 0, api = "ANY") {
-  new(Stream, index = index, api = api)
+stream <- function(..., api = "ANY") {
+  args <- list(...)
+
+  if (!inherits(args[[1]], "character"))
+    args[[1]] <- as.integer(args[[1]])
+
+  if (length(args) > 1)
+    if (inherits(args[[2]], "character"))
+      api <- args[[2]]
+
+  new(Stream, args[[1]], api = api)
 }
 
 

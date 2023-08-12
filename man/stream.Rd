@@ -4,12 +4,21 @@
 \alias{stream}
 \title{Create an Object of Class \code{Stream}}
 \usage{
-stream(index = 0, api = "ANY")
+stream(..., api = "ANY")
 }
 \arguments{
-\item{index}{An integer value corresponding to the index of the camera to
-read a stream from (default: 0; 0 is usually the default webcam on most
-computers).}
+\item{...}{Either:
+\itemize{
+  \item{index: }{An integer value corresponding to the index of the camera
+    to read a stream from (default: 0; 0 is usually the default webcam on
+    most computers). Or...}
+  \item{stream_string: }{...a character string corresponfing to the URL of
+    video stream (eg. protocol://host:port/script_name?script_params|auth)
+    or a GStreamer pipeline string in gst-launch tool format if GStreamer is
+    used as backend API. Note that each video stream or IP camera feed has
+    its own URL scheme. Please refer to the documentation of source stream
+    to know the right URL format.}
+}}
 
 \item{api}{A character string corresponding to the API to use for reading the
 stream from the camera (see Note; default: "ANY").}

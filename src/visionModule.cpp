@@ -94,8 +94,10 @@ RCPP_MODULE(class_Capture) {
 
   Rcpp::class_<Stream>("Stream")
     .derives<Capture>("Capture")
-    .constructor<int, std::string>()
+    .constructor< int, std::string > ("", &StreamConst1)
+    .constructor< std::string, std::string > ("", &StreamConst2)
     .method("open", &Stream::open)
+    .method("openStr", &Stream::openStr)
   ;
 
   Rcpp::class_<Queue>("Queue")
@@ -374,7 +376,9 @@ RCPP_MODULE(methods_Transform) {
   function("_getRotationMatrix2D", &_getRotationMatrix2D, List::create(_["center"],
     _["angle"], _["scale"]), "");
   function("_getPerspectiveTransform", &_getPerspectiveTransform,
-           List::create(_["from"], _["to"]), "");
+    List::create(_["from"], _["to"]), "");
+  function("_getAffineTransform", &_getAffineTransform,
+    List::create(_["from"], _["to"]), "");
   function("_warpAffine", &_warpAffine, List::create(_["image"], _["m"],
     _["interpMode"], _["borderType"], _["borderColor"], _["target"]), "");
   function("_warpPerspective", &_warpPerspective, List::create(_["image"], _["m"],
