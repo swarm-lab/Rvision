@@ -54,12 +54,13 @@ Video properties are:
  \item{\code{FRAME_WIDTH}: Width in pixels of the frames in the video stream.}
  \item{\code{FRAME_HEIGHT}: Height in pixels of the frames in the video stream.}
  \item{\code{FPS}: Frame rate in frames per second.}
- \item{\code{FOURCC}: 4-character \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{FOURCC} code of the codec}
+ \item{\code{FOURCC}: 4-character \href{https://www.fourcc.org/codecs.php}{FOURCC}
+   code of the codec}
  \item{\code{FRAME_COUNT}: Number of frames in the video file.}
 }
 
 Setting stream properties depends on a lot of things, mainly your
- operating system, the camera drivers installed on your coputer and the
+ operating system, the camera drivers installed on your computer and the
  camera itself. As a consequence, setting stream values might not work at all
  with your installation.
 

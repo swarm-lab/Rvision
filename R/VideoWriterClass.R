@@ -42,8 +42,8 @@
 #'
 #' @param fourcc A 4-character string corresponding to the fourcc code of the
 #'  codec to be used. A list of fourcc codes can be obtained at this archived
-#'  page of the fourcc site
-#'  \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{http://www.fourcc.org/codecs.php}.
+#'  page of the fourcc site \href{https://www.fourcc.org/codecs.php}{https://www.fourcc.org/codecs.php}.
+#'  Alternatively, the integer value corresponding to a fourcc code.
 #'
 #' @param fps A numeric value corresponding to the framerate of the output video.
 #'
@@ -102,6 +102,9 @@
 #' @export
 videoWriter <- function(outputFile, fourcc, fps, height, width, isColor = TRUE,
                         api = "ANY") {
+  if (is.numeric(fourcc))
+    fourcc <- as.integer(fourcc)
+
   new(VideoWriter, outputFile = outputFile, fourcc = fourcc, fps = fps,
       height = height, width = width, isColor = isColor, api = api)
 }
@@ -352,20 +355,19 @@ writerOuput <- function(x) {
 
 #' @title Codec Name to FOURCC Code
 #'
-#' @description \code{fource} translates the 4-character name of a video codec
-#'  into its corresponding \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{FOURCC} code.
+#' @description \code{fourcc} translates the 4-character name of a video codec
+#'  into its corresponding \href{https://www.fourcc.org/codecs.php}{FOURCC} code.
 #'
 #' @param x A 4-element character chain corresponding to the name of a valid
 #'  video codec. A list of valid codec names can be found at this archived
-#'  page of the fourcc site
-#'  \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{http://www.fourcc.org/codecs.php}.
+#'  page of the fourcc site \href{https://www.fourcc.org/codecs.php}{https://www.fourcc.org/codecs.php}.
 #'
 #' @return An integer value corresponding to the FOURCC code of the video codec.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{VideoWriter}}, \code{\link{videoWriter}},
-#'  \code{\link{codec}}
+#'  \code{\link{codec}}, \code{\link{invertFourcc}}
 #'
 #' @examples
 #' fourcc("xvid")
@@ -381,4 +383,34 @@ fourcc <- function(x) {
   str <- strsplit(x, "")[[1]]
 
   `_fourcc`(str[1], str[2], str[3], str[4])
+}
+
+
+#' @title FOURCC Code to Codec Name
+#'
+#' @description \code{invertFourcc} translates a
+#'  \href{https://www.fourcc.org/codecs.php}{FOURCC} code into the 4-character
+#'  name of the corresponding video codec.
+#'
+#' @param x A integer.
+#'
+#' @return A 4-character strings corresponding to the video codec.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{VideoWriter}}, \code{\link{videoWriter}},
+#'  \code{\link{codec}}, \code{\link{fourcc}}
+#'
+#' @examples
+#' invertFourcc(1684633208)
+#'
+#' @export
+invertFourcc <- function(x) {
+  if (is.numeric(x))
+    x <- as.integer(x)
+
+  if (!is.integer(x))
+    stop("x must be an integer number.")
+
+  `_invertFourcc`(x)
 }

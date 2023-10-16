@@ -33,15 +33,23 @@ int _countNonZero(Image& image) {
   return countNonZero(image.image);
 }
 
-Rcpp::NumericMatrix _minMaxLoc(Image& image) {
+Rcpp::NumericMatrix _minMaxLoc(Image& image, Image& mask) {
   double minVal, maxVal;
   cv::Point minLoc, maxLoc;
   Rcpp::NumericMatrix out(2, 3);
 
   if (image.GPU) {
-    cv::minMaxLoc(image.uimage, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat());
+    if (mask.GPU) {
+      cv::minMaxLoc(image.uimage, &minVal, &maxVal, &minLoc, &maxLoc, mask.uimage);
+    } else {
+      cv::minMaxLoc(image.uimage, &minVal, &maxVal, &minLoc, &maxLoc, mask.image);
+    }
   } else {
-    cv::minMaxLoc(image.image, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat());
+    if (mask.GPU) {
+      cv::minMaxLoc(image.image, &minVal, &maxVal, &minLoc, &maxLoc, mask.uimage);
+    } else {
+      cv::minMaxLoc(image.image, &minVal, &maxVal, &minLoc, &maxLoc, mask.image);
+    }
   }
 
   out(0, 0) = minVal;

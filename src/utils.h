@@ -54,8 +54,20 @@ bool QueueConst2(SEXP* args, int nargs) {
   return true ;
 }
 
-int getPropId(std::string propId) {
-  int numPropId = 49;
+bool VideoWriterConst1(SEXP* args, int nargs) {
+  if(nargs != 7) return false;
+  if(TYPEOF(args[1]) != STRSXP) return false ;
+  return true ;
+}
+
+bool VideoWriterConst2(SEXP* args, int nargs) {
+  if(nargs != 7) return false;
+  if(TYPEOF(args[1]) != INTSXP) return false ;
+  return true ;
+}
+
+int getCapPropId(std::string propId) {
+  int numPropId = 70;
 
   int enum_ints[] = {cv::CAP_PROP_DC1394_OFF, cv::CAP_PROP_DC1394_MODE_MANUAL,
                      cv::CAP_PROP_DC1394_MODE_AUTO, cv::CAP_PROP_DC1394_MODE_ONE_PUSH_AUTO,
@@ -73,8 +85,20 @@ int getPropId(std::string propId) {
                      cv::CAP_PROP_ISO_SPEED, cv::CAP_PROP_BACKLIGHT,
                      cv::CAP_PROP_PAN, cv::CAP_PROP_TILT, cv::CAP_PROP_ROLL, cv::CAP_PROP_IRIS,
                      cv::CAP_PROP_SETTINGS, cv::CAP_PROP_BUFFERSIZE, cv::CAP_PROP_AUTOFOCUS,
-                     cv::CAP_PROP_SAR_NUM, cv::CAP_PROP_SAR_DEN, cv::VIDEOWRITER_PROP_QUALITY,
-                     cv::VIDEOWRITER_PROP_FRAMEBYTES, cv::VIDEOWRITER_PROP_NSTRIPES};
+                     cv::CAP_PROP_SAR_NUM, cv::CAP_PROP_SAR_DEN, cv::CAP_PROP_BACKEND,
+                     cv::CAP_PROP_CHANNEL, cv::CAP_PROP_AUTO_WB, cv::CAP_PROP_WB_TEMPERATURE,
+                     cv::CAP_PROP_CODEC_PIXEL_FORMAT, cv::CAP_PROP_BITRATE, cv::CAP_PROP_ORIENTATION_META,
+                     cv::CAP_PROP_ORIENTATION_AUTO, cv::CAP_PROP_HW_ACCELERATION,
+                     cv::CAP_PROP_HW_DEVICE, cv::CAP_PROP_HW_ACCELERATION_USE_OPENCL,
+                     cv::CAP_PROP_OPEN_TIMEOUT_MSEC, cv::CAP_PROP_READ_TIMEOUT_MSEC,
+                     cv::CAP_PROP_STREAM_OPEN_TIME_USEC, cv::CAP_PROP_VIDEO_TOTAL_CHANNELS,
+                     cv::CAP_PROP_VIDEO_STREAM, cv::CAP_PROP_AUDIO_STREAM,
+                     cv::CAP_PROP_AUDIO_POS, cv::CAP_PROP_AUDIO_SHIFT_NSEC,
+                     cv::CAP_PROP_AUDIO_DATA_DEPTH, cv::CAP_PROP_AUDIO_SAMPLES_PER_SECOND,
+                     cv::CAP_PROP_AUDIO_BASE_INDEX, cv::CAP_PROP_AUDIO_TOTAL_CHANNELS,
+                     cv::CAP_PROP_AUDIO_TOTAL_STREAMS, cv::CAP_PROP_AUDIO_SYNCHRONIZE,
+                     cv::CAP_PROP_LRF_HAS_KEY_FRAME, cv::CAP_PROP_CODEC_EXTRADATA_INDEX,
+                     cv::CAP_PROP_FRAME_TYPE, cv::CAP_PROP_N_THREADS};
 
   std::string enum_strings[] = {"DC1394_OFF", "DC1394_MODE_MANUAL", "DC1394_MODE_AUTO",
                                 "DC1394_MODE_ONE_PUSH_AUTO", "POS_MSEC", "POS_FRAMES",
@@ -87,7 +111,18 @@ int getPropId(std::string propId) {
                                 "WHITE_BALANCE_RED_V", "ZOOM", "FOCUS", "GUID",
                                 "ISO_SPEED", "BACKLIGHT", "PAN", "TILT",
                                 "ROLL", "IRIS", "SETTINGS", "BUFFERSIZE", "AUTOFOCUS",
-                                "SAR_NUM", "SAR_DEN", "QUALITY", "FRAMEBYTES", "NSTRIPES"};
+                                "SAR_NUM", "SAR_DEN", "BACKEND", "CHANNEL", "AUTO_WB",
+                                "WB_TEMPERATURE", "CODEC_PIXEL_FORMAT", "BITRATE",
+                                "ORIENTATION_META", "ORIENTATION_AUTO", "HW_ACCELERATION",
+                                "HW_DEVICE", "HW_ACCELERATION_USE_OPENCL",
+                                "OPEN_TIMEOUT_MSEC", "READ_TIMEOUT_MSEC",
+                                "STREAM_OPEN_TIME_USEC", "VIDEO_TOTAL_CHANNELS",
+                                "VIDEO_STREAM", "AUDIO_STREAM", "AUDIO_POS",
+                                "AUDIO_SHIFT_NSEC", "AUDIO_DATA_DEPTH",
+                                "AUDIO_SAMPLES_PER_SECOND", "AUDIO_BASE_INDEX",
+                                "AUDIO_TOTAL_CHANNELS", "AUDIO_TOTAL_STREAMS",
+                                "AUDIO_SYNCHRONIZE", "LRF_HAS_KEY_FRAME",
+                                "CODEC_EXTRADATA_INDEX", "FRAME_TYPE", "N_THREADS"};
 
   for(int i = 0; i < numPropId; i++) {
     if(propId == enum_strings[i]) return enum_ints[i];
@@ -95,6 +130,67 @@ int getPropId(std::string propId) {
 
   Rcpp::stop("Unknown property.");
 }
+
+int getVWPropId(std::string propId) {
+  int numPropId = 8;
+
+  int enum_ints[] = {cv::VIDEOWRITER_PROP_QUALITY, cv::VIDEOWRITER_PROP_FRAMEBYTES,
+                     cv::VIDEOWRITER_PROP_NSTRIPES, cv::VIDEOWRITER_PROP_IS_COLOR,
+                     cv::VIDEOWRITER_PROP_DEPTH, cv::VIDEOWRITER_PROP_HW_ACCELERATION,
+                     cv::VIDEOWRITER_PROP_HW_DEVICE, cv::VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL};
+
+  std::string enum_strings[] = {"QUALITY", "FRAMEBYTES", "NSTRIPES", "IS_COLOR",
+                                "DEPTH", "HW_ACCELERATION", "HW_DEVICE",
+                                "HW_ACCELERATION_USE_OPENCL"};
+
+  for(int i = 1; i < numPropId; i++) {
+    if(propId == enum_strings[i]) return enum_ints[i];
+  }
+
+  Rcpp::stop("Unknown property.");
+}
+
+// int getPropId(std::string propId) {
+//   int numPropId = 49;
+//
+//   int enum_ints[] = {cv::CAP_PROP_DC1394_OFF, cv::CAP_PROP_DC1394_MODE_MANUAL,
+//                      cv::CAP_PROP_DC1394_MODE_AUTO, cv::CAP_PROP_DC1394_MODE_ONE_PUSH_AUTO,
+//                      cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, cv::CAP_PROP_POS_AVI_RATIO,
+//                      cv::CAP_PROP_FRAME_WIDTH, cv::CAP_PROP_FRAME_HEIGHT, cv::CAP_PROP_FPS,
+//                      cv::CAP_PROP_FOURCC, cv::CAP_PROP_FRAME_COUNT, cv::CAP_PROP_FORMAT,
+//                      cv::CAP_PROP_MODE, cv::CAP_PROP_BRIGHTNESS, cv::CAP_PROP_CONTRAST,
+//                      cv::CAP_PROP_SATURATION, cv::CAP_PROP_HUE, cv::CAP_PROP_GAIN,
+//                      cv::CAP_PROP_EXPOSURE, cv::CAP_PROP_CONVERT_RGB,
+//                      cv::CAP_PROP_WHITE_BALANCE_BLUE_U, cv::CAP_PROP_RECTIFICATION,
+//                      cv::CAP_PROP_MONOCHROME, cv::CAP_PROP_SHARPNESS, cv::CAP_PROP_AUTO_EXPOSURE,
+//                      cv::CAP_PROP_GAMMA, cv::CAP_PROP_TEMPERATURE, cv::CAP_PROP_TRIGGER,
+//                      cv::CAP_PROP_TRIGGER_DELAY, cv::CAP_PROP_WHITE_BALANCE_RED_V,
+//                      cv::CAP_PROP_ZOOM, cv::CAP_PROP_FOCUS, cv::CAP_PROP_GUID,
+//                      cv::CAP_PROP_ISO_SPEED, cv::CAP_PROP_BACKLIGHT,
+//                      cv::CAP_PROP_PAN, cv::CAP_PROP_TILT, cv::CAP_PROP_ROLL, cv::CAP_PROP_IRIS,
+//                      cv::CAP_PROP_SETTINGS, cv::CAP_PROP_BUFFERSIZE, cv::CAP_PROP_AUTOFOCUS,
+//                      cv::CAP_PROP_SAR_NUM, cv::CAP_PROP_SAR_DEN, cv::VIDEOWRITER_PROP_QUALITY,
+//                      cv::VIDEOWRITER_PROP_FRAMEBYTES, cv::VIDEOWRITER_PROP_NSTRIPES};
+//
+//   std::string enum_strings[] = {"DC1394_OFF", "DC1394_MODE_MANUAL", "DC1394_MODE_AUTO",
+//                                 "DC1394_MODE_ONE_PUSH_AUTO", "POS_MSEC", "POS_FRAMES",
+//                                 "POS_AVI_RATIO", "FRAME_WIDTH", "FRAME_HEIGHT", "FPS",
+//                                 "FOURCC", "FRAME_COUNT", "FORMAT", "MODE", "BRIGHTNESS",
+//                                 "CONTRAST", "SATURATION", "HUE", "GAIN", "EXPOSURE",
+//                                 "CONVERT_RGB", "WHITE_BALANCE_BLUE_U", "RECTIFICATION",
+//                                 "MONOCHROME", "SHARPNESS", "AUTO_EXPOSURE", "GAMMA",
+//                                 "TEMPERATURE", "TRIGGER", "TRIGGER_DELAY",
+//                                 "WHITE_BALANCE_RED_V", "ZOOM", "FOCUS", "GUID",
+//                                 "ISO_SPEED", "BACKLIGHT", "PAN", "TILT",
+//                                 "ROLL", "IRIS", "SETTINGS", "BUFFERSIZE", "AUTOFOCUS",
+//                                 "SAR_NUM", "SAR_DEN", "QUALITY", "FRAMEBYTES", "NSTRIPES"};
+//
+//   for(int i = 0; i < numPropId; i++) {
+//     if(propId == enum_strings[i]) return enum_ints[i];
+//   }
+//
+//   Rcpp::stop("Unknown property.");
+// }
 
 std::string type2str(int type) {
   int numImgTypes = 35; // 7 base types, with five channel options each (none or C1, ..., C4)

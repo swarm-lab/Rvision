@@ -122,8 +122,10 @@ RCPP_MODULE(class_VideoWriter) {
 
   Rcpp::class_<VideoWriter>("VideoWriter")
   .constructor()
-  .constructor<std::string, std::string, double, int, int, bool, std::string>()
+  .constructor<std::string, std::string, double, int, int, bool, std::string> ("", &VideoWriterConst1)
+  .constructor<std::string, int, double, int, int, bool, std::string> ("", &VideoWriterConst2)
   .method("open", &VideoWriter::open)
+  .method("openInt", &VideoWriter::openInt)
   .method("isOpened", &VideoWriter::isOpened)
   .method("release", &VideoWriter::release)
   .method("get", &VideoWriter::get)
@@ -139,6 +141,7 @@ RCPP_MODULE(class_VideoWriter) {
   ;
 
   function("_fourcc", &_fourcc, List::create(_["c1"], _["c2"], _["c3"], _["c4"]), "");
+  function("_invertFourcc", &_invertFourcc, List::create(_["fourcc"]), "");
 }
 
 #include "arithmetic.h"
@@ -178,7 +181,7 @@ RCPP_MODULE(methods_Statistics) {
   function("_countNonZero", &_countNonZero, List::create(_["image"]), "");
   function("_min", &_min, List::create(_["image"]), "");
   function("_max", &_max, List::create(_["image"]), "");
-  function("_minMaxLoc", &_minMaxLoc, List::create(_["image"]), "");
+  function("_minMaxLoc", &_minMaxLoc, List::create(_["image"], _["mask"]), "");
   function("_imhist", &_imhist, List::create(_["image"], _["nbins"],
     _["range"], _["mask"]), "");
   function("_bitMin", &_bitMin, List::create(_["image1"], _["image2"], _["target"]), "");
