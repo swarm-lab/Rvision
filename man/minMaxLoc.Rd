@@ -4,10 +4,15 @@
 \alias{minMaxLoc}
 \title{Coordinates of the Maxima and Minima of an Image}
 \usage{
-minMaxLoc(x)
+minMaxLoc(x, mask = NULL)
 }
 \arguments{
 \item{x}{An \code{\link{Image}} object.}
+
+\item{mask}{A single-channel (GRAY) 8-bit (8U) \code{\link{Image}} object
+with the same dimensions as \code{x}. This can be used to mask out pixels
+that should not be considered when calculating the minima and maxima (pixels
+set to 0 in the mask will be ignored during the calculation).}
 }
 \value{
 A matrix (or a list of matrices for multi-channels images).
@@ -24,7 +29,8 @@ minMaxLoc(balloon)
 
 }
 \seealso{
-\code{\link{Image}}, \code{\link{min.Rcpp_Image}}, \code{\link{max.Rcpp_Image}}.
+\code{\link{Image}}, \code{\link{min.Rcpp_Image}},
+ \code{\link{max.Rcpp_Image}}.
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

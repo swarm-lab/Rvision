@@ -232,25 +232,42 @@ mean.list <- function(x, target = "new", ...) {
 #'
 #' @param x An \code{\link{Image}} object.
 #'
+#' @param mask A single-channel (GRAY) 8-bit (8U) \code{\link{Image}} object
+#'  with the same dimensions as \code{x}. This can be used to mask out pixels
+#'  that should not be considered when calculating the minima and maxima (pixels
+#'  set to 0 in the mask will be ignored during the calculation).
+#'
 #' @return A matrix (or a list of matrices for multi-channels images).
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}, \code{\link{min.Rcpp_Image}}, \code{\link{max.Rcpp_Image}}.
+#' @seealso \code{\link{Image}}, \code{\link{min.Rcpp_Image}},
+#'  \code{\link{max.Rcpp_Image}}.
 #'
 #' @examples
 #' balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
 #' minMaxLoc(balloon)
 #'
 #' @export
-minMaxLoc <- function(x) {
+minMaxLoc <- function(x, mask = NULL) {
   if (!isImage(x))
     stop("This is not an Image object.")
 
+  if (missing(mask)) {
+    mask <- ones(nrow(x), ncol(x), 1)
+    mask %i*% 255
+  }
+
+  if (!isImage(mask))
+    stop("mask is not an 'Image' object.")
+
+  if (mask$depth() != "8U" | mask$nchan() != 1)
+    stop("mask is not an 8U single-channel 'Image' object")
+
   if (x$nchan() == 1) {
-    `_minMaxLoc`(x)
+    `_minMaxLoc`(x, mask)
   } else {
-    lapply(split(x), `_minMaxLoc`)
+    lapply(split(x), `_minMaxLoc`, mask = mask)
   }
 }
 

@@ -22,7 +22,7 @@ codec(x)
 }
 \value{
 A character string corresponding to the
- \href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{FOURCC} code of the codec.
+ \href{https://www.fourcc.org/codecs.php}{FOURCC} code of the codec.
 }
 \description{
 Retrieve the codec of a \code{\link{Video}},

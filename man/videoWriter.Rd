@@ -20,8 +20,8 @@ file.}
 
 \item{fourcc}{A 4-character string corresponding to the fourcc code of the
 codec to be used. A list of fourcc codes can be obtained at this archived
-page of the fourcc site
-\href{https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php}{http://www.fourcc.org/codecs.php}.}
+page of the fourcc site \href{https://www.fourcc.org/codecs.php}{https://www.fourcc.org/codecs.php}.
+Alternatively, the integer value corresponding to a fourcc code.}
 
 \item{fps}{A numeric value corresponding to the framerate of the output video.}
 

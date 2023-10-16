@@ -31,11 +31,11 @@ void Capture::release() {
 }
 
 bool Capture::set(std::string propId, double value) {
-  return this->cap.set(getPropId(propId), value);
+  return this->cap.set(getCapPropId(propId), value);
 }
 
 double Capture::get(std::string propId) {
-  return this->cap.get(getPropId(propId));
+  return this->cap.get(getCapPropId(propId));
 }
 
 Rcpp::NumericVector Capture::dim() {

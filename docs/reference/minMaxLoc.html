@@ -72,13 +72,20 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">minMaxLoc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">minMaxLoc</span><span class="op">(</span><span class="va">x</span>, mask <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+
+
+<dt>mask</dt>
+<dd><p>A single-channel (GRAY) 8-bit (8U) <code><a href="Image-class.html">Image</a></code> object
+with the same dimensions as <code>x</code>. This can be used to mask out pixels
+that should not be considered when calculating the minima and maxima (pixels
+set to 0 in the mask will be ignored during the calculation).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -89,7 +96,8 @@
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="Image-class.html">Image</a></code>, <code><a href="min.Rcpp_Image.html">min.Rcpp_Image</a></code>, <code><a href="min.Rcpp_Image.html">max.Rcpp_Image</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="Image-class.html">Image</a></code>, <code><a href="min.Rcpp_Image.html">min.Rcpp_Image</a></code>,
+ <code><a href="min.Rcpp_Image.html">max.Rcpp_Image</a></code>.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
