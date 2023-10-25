@@ -115,6 +115,9 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/boxPoints.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/calibrateCamera.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/canny.html</loc>
   </url>
   <url>
@@ -167,6 +170,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/convexityDefects.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/cornerSubPix.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/countNonZero.html</loc>
@@ -244,7 +250,13 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/filter2D.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/findChessboardCorners.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/findContours.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/findHomography.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/findNonZero.html</loc>
@@ -284,6 +296,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/getGaborKernel.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/getOptimalNewCameraMatrix.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/getPerspectiveTransform.html</loc>
@@ -502,6 +517,9 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/resize.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/rotate.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/rotateScale.html</loc>
   </url>
   <url>
@@ -566,6 +584,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/timelapse.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/undistort.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/video.html</loc>

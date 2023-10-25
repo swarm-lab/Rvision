@@ -36,7 +36,7 @@ getAffineTransform(from, to, c(1080, 1920), c(1080, 1920))
 
 }
 \seealso{
-\code{\link{warpAffine}}
+\code{\link{warpAffine}}, \code{\link{findHomography}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

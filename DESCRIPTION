@@ -1,8 +1,8 @@
 Package: Rvision
 Type: Package
 Title: Computer Vision Library for R
-Version: 0.7.0
-Date: 2022-01-25
+Version: 0.7.1
+Date: 2023-10-25
 Authors@R: c(
     person("Simon", "Garnier", email = "garnier@njit.edu", role = c("aut", "cre"),
       comment = c(ORCID = "0000-0002-3886-3974")),
@@ -28,7 +28,7 @@ RcppModules: class_Image, class_Capture, class_VideoWriter,
     methods_Arithmetic, methods_Statistics, methods_Comparisons, methods_Logical, 
     methods_OpticalFlow, methods_Blob, methods_Morphology, methods_Filters, 
     methods_Display, methods_Draw, methods_Geometry, methods_Shape, methods_Transform,
-    methods_Feature, methods_Autothresh, methods_Ximgproc
+    methods_Feature, methods_Autothresh, methods_Ximgproc, methods_Calib3d
 RoxygenNote: 7.2.3
 Biarch: true
 StagedInstall: false

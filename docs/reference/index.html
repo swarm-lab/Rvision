@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">Rvision</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -193,6 +193,11 @@
         <dd>Find Vertices of a Rotated Rectangle</dd>
       </dl><dl><dt>
           
+          <code><a href="calibrateCamera.html">calibrateCamera()</a></code> 
+        </dt>
+        <dd>Find a Camera's Intrinsic and Extrinsic Parameters</dd>
+      </dl><dl><dt>
+          
           <code><a href="canny.html">canny()</a></code> 
         </dt>
         <dd>Canny Edge Detector</dd>
@@ -283,6 +288,11 @@
         <dd>Find the Convexity Defects of a Polygon</dd>
       </dl><dl><dt>
           
+          <code><a href="cornerSubPix.html">cornerSubPix()</a></code> 
+        </dt>
+        <dd>Refine Corner Locations</dd>
+      </dl><dl><dt>
+          
           <code><a href="countNonZero.html">countNonZero()</a></code> 
         </dt>
         <dd>Count Non-Zero Pixels</dd>
@@ -290,7 +300,7 @@
           
           <code><a href="destroyDisplay.html">destroyDisplay()</a></code> <code><a href="destroyDisplay.html">destroyAllDisplays()</a></code> 
         </dt>
-        <dd>Destroy <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code> Display</dd>
+        <dd>Destroy <code>Image</code> Display</dd>
       </dl><dl><dt>
           
           <code><a href="dim.Rcpp_Image.html">dim(<i>&lt;Rcpp_Image&gt;</i>)</a></code> 
@@ -325,7 +335,7 @@
           
           <code><a href="display.html">display()</a></code> 
         </dt>
-        <dd>Display <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code> Object</dd>
+        <dd>Display <code>Image</code> Object</dd>
       </dl><dl><dt>
           
           <code><a href="distanceTransform.html">distanceTransform()</a></code> 
@@ -335,22 +345,22 @@
           
           <code><a href="drawArrow.html">drawArrow()</a></code> 
         </dt>
-        <dd>Draw Arrows on an <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code></dd>
+        <dd>Draw Arrows on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawCircle.html">drawCircle()</a></code> 
         </dt>
-        <dd>Draw Circles on an <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code></dd>
+        <dd>Draw Circles on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawEllipse.html">drawEllipse()</a></code> 
         </dt>
-        <dd>Draw Ellipses on an <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code></dd>
+        <dd>Draw Ellipses on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawLine.html">drawLine()</a></code> 
         </dt>
-        <dd>Draw Lines on an <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code></dd>
+        <dd>Draw Lines on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawPolyline.html">drawPolyline()</a></code> 
@@ -360,17 +370,17 @@
           
           <code><a href="drawRectangle.html">drawRectangle()</a></code> 
         </dt>
-        <dd>Draw Rectangles on an <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code></dd>
+        <dd>Draw Rectangles on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawRotatedRectangle.html">drawRotatedRectangle()</a></code> 
         </dt>
-        <dd>Draw Rotated Rectangles on an <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code></dd>
+        <dd>Draw Rotated Rectangles on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="drawText.html">drawText()</a></code> 
         </dt>
-        <dd>Draw Text on an <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code></dd>
+        <dd>Draw Text on an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="edgePreservingFilter.html">edgePreservingFilter()</a></code> 
@@ -408,9 +418,19 @@
         <dd>Image Convolution with Kernel</dd>
       </dl><dl><dt>
           
+          <code><a href="findChessboardCorners.html">findChessboardCorners()</a></code> 
+        </dt>
+        <dd>Find Calibration Chessboard in Image</dd>
+      </dl><dl><dt>
+          
           <code><a href="findContours.html">findContours()</a></code> 
         </dt>
         <dd>Find Contours in a Binary Image</dd>
+      </dl><dl><dt>
+          
+          <code><a href="findHomography.html">findHomography()</a></code> 
+        </dt>
+        <dd>Perspective Transformation Between Two Planes</dd>
       </dl><dl><dt>
           
           <code><a href="findNonZero.html">findNonZero()</a></code> 
@@ -435,7 +455,7 @@
           
           <code><a href="flip.html">flip()</a></code> 
         </dt>
-        <dd>Flip an <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code></dd>
+        <dd>Flip an <code>Image</code></dd>
       </dl><dl><dt>
           
           <code><a href="floodFill.html">floodFill()</a></code> 
@@ -476,6 +496,11 @@
           <code><a href="getGaborKernel.html">getGaborKernel()</a></code> 
         </dt>
         <dd>Gabor Filter Kernels</dd>
+      </dl><dl><dt>
+          
+          <code><a href="getOptimalNewCameraMatrix.html">getOptimalNewCameraMatrix()</a></code> 
+        </dt>
+        <dd>Camera Matrix Correction Using the Free Scaling Parameter</dd>
       </dl><dl><dt>
           
           <code><a href="getPerspectiveTransform.html">getPerspectiveTransform()</a></code> 
@@ -705,7 +730,7 @@
           
           <code><a href="newDisplay.html">newDisplay()</a></code> 
         </dt>
-        <dd>Open New <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code> Display</dd>
+        <dd>Open New <code>Image</code> Display</dd>
       </dl><dl><dt>
           
           <code><a href="niBlackThreshold.html">niBlackThreshold()</a></code> 
@@ -830,7 +855,12 @@
           
           <code><a href="resize.html">resize()</a></code> 
         </dt>
-        <dd>Resize an <code><a href="https://swarm-lab.github.io/Rvision/reference/Image-class.html">Image</a></code></dd>
+        <dd>Resize an <code>Image</code></dd>
+      </dl><dl><dt>
+          
+          <code><a href="rotate.html">rotate()</a></code> 
+        </dt>
+        <dd>Image Rotation In 90-Degree Increments</dd>
       </dl><dl><dt>
           
           <code><a href="rotateScale.html">rotateScale()</a></code> 
@@ -941,6 +971,11 @@
           <code><a href="timelapse.html">timelapse()</a></code> 
         </dt>
         <dd>Make Timelapse from <code>Stream</code> Object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="undistort.html">undistort()</a></code> 
+        </dt>
+        <dd>Compensate for Lens Distortion</dd>
       </dl><dl><dt>
           
           <code><a href="video.html">video()</a></code> 

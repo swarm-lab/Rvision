@@ -1,3 +1,58 @@
+#' @title Perspective Transformation Between Two Planes
+#'
+#' @description \code{findHomography} computes a perspective transformation
+#'  between two planes.
+#'
+#' @param template A grayscale \code{\link{Image}} object.
+#'
+#' @param src_x,src_y Vector of coordinates of the points in the original plane.
+#'
+#' @param dst_x,dst_y Vector of coordinates of the points in the target plane.
+#'
+#' @param method A character string indicating the method used to compute a
+#'  homography matrix. It can be one of the followings: "LS" (least-square),
+#'  "RANSAC" (RANSAC-based robust method; the default), "LMEDS" (Least-Median
+#'  robust method), or "RHO" (PROSAC-based robust method).
+#'
+#' @param ransac_reproj_th Maximum allowed reprojection error to treat a point
+#'  pair as an inlier (used in the RANSAC and RHO methods only). That is, if
+#'  `src_x`, `src_y`, `dst_x`, and `dst_y` are measured in pixels, it usually
+#'  makes sense to set this parameter somewhere in the range of 1 to 10.
+#'
+#' @param max_it The maximum number of RANSAC iterations.
+#'
+#' @param conf Confidence level, between 0 and 1.
+#'
+#' @return A 3x3 homography matrix.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{getPerspectiveTransform}}, \code{\link{getAffineTransform}},
+#'  \code{\link{warpPerspective}}
+#'
+#' @examples
+#' src <- cbind(x = c(0, 1, 1, 0), y = c(0, 0, 1, 1))
+#' dst <- src + 1
+#' findHomography(src[, 1], src[, 2], dst[, 1], dst[, 2])
+#'
+#' @export
+findHomography <- function(src_x, src_y, dst_x, dst_y, method = "RANSAC",
+                           ransac_reproj_th = 3, max_it = 2000, conf = 0.95) {
+  if (!all(length(src_x) == c(length(src_y), length(dst_x), length(dst_y))))
+    stop("'src_x', 'src_y', 'dst_x', and 'dst_y' must have the same length.")
+
+  `_findHomography`(src_x, src_y, dst_x, dst_y,
+                    switch(method,
+                           "LS" = 0,
+                           "RANSAC" = 4,
+                           "LMEDS" = 8,
+                           "RHO" = 16,
+                           stop("This is not a valid method. 'homography_method'
+                                  must be one of 'LS', 'RANSAC', 'LMEDS', or 'RHO'.")),
+                    ransac_reproj_th, max_it, conf)
+}
+
+
 #' @title Enhanced Correlation Coefficient Value
 #'
 #' @description \code{computeECC} computes the Enhanced Correlation Coefficient
@@ -283,6 +338,80 @@ rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, s
 }
 
 
+#' @title Image Rotation In 90-Degree Increments
+#'
+#' @description \code{rotate} rotates an image in multiples of 90 degrees.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param rotation A character string indicating the desired rotation:
+#'  \itemize{
+#'   \item{"CLOCKWISE" (default):}{rotate by 90 degrees clockwise.}
+#'   \item{"COUNTER":}{rotate by 90 degrees counterclockwise.}
+#'   \item{"180":}{rotate by 180 degrees.}
+#'  }
+#'
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \itemize{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    \code{target} must have the same bit depth and number of channels as
+#'    \code{image}. The dimensions must be the same if \code{rotation="CLOCKWISE"},
+#'    or inverted if \code{rotation="CLOCKWISE"} or \code{rotation="COUNTER"}.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{rotateScale}}
+#'
+#' @examples
+#' img <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+#' img_rotated <- rotate(img)
+#'
+#' @export
+rotate <- function(image, rotation = "CLOCKWISE", target = "new") {
+  if (!isImage(image))
+    stop("'image' is not an Image object.")
+
+  code <- switch(rotation,
+                 "CLOCKWISE" = 0,
+                 "COUNTER" = 2,
+                 "180" = 1,
+                 stop("This is not a valid rotation. 'rotation' must be one of
+                      'CLOCKWISE', 'COUNTER', or '180'."))
+
+  if (isImage(target)) {
+    if (code %in% c(0, 2) & !all(image$dim() == target$dim()[c(2:1), 3]))
+      stop("Incorrect 'target' dimensions.")
+
+    if ((code == 1) & !all(image$dim() == target$dim()))
+      stop("Incorrect 'target' dimensions.")
+
+    `_rotate`(image, code, target)
+  } else if (target == "new") {
+    if (code %in% c(0, 2)) {
+      out <- zeros(image$ncol(), image$nrow(), image$nchan(), image$depth(), image$space)
+    } else {
+      out <- zeros(image$nrow(), image$ncol(), image$nchan(), image$depth(), image$space)
+    }
+
+    `_rotate`(image, code, out)
+    out
+  } else {
+    stop("Invalid target.")
+  }
+
+}
+
+
 #' @title Affine Transformation
 #'
 #' @description \code{warpAffine} applies an affine transformation to an image.
@@ -290,8 +419,6 @@ rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, s
 #' @param image An \code{\link{Image}} object.
 #'
 #' @param warp_matrix A 2x3 numeric matrix.
-#'
-#'
 #'
 #' @param interp_mode A character string indicating the interpolation method to
 #'  be used. It can be
@@ -432,7 +559,7 @@ warpAffine <- function(image, warp_matrix, interp_mode = "linear", inverse_map =
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{warpPerspective}}
+#' @seealso \code{\link{warpPerspective}}, \code{\link{findHomography}}
 #'
 #' @examples
 #' from <- matrix(c(1, 1, 2, 5, 6, 5, 5, 1), nrow = 4, byrow = TRUE)
@@ -477,7 +604,7 @@ getPerspectiveTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{warpAffine}}
+#' @seealso \code{\link{warpAffine}}, \code{\link{findHomography}}
 #'
 #' @examples
 #' from <- matrix(c(1, 1, 2, 5, 6, 5, 5, 1), nrow = 4, byrow = TRUE)
@@ -567,7 +694,8 @@ getAffineTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{warpPerspective}}, \code{\link{findTransformECC}}
+#' @seealso \code{\link{warpPerspective}}, \code{\link{findTransformECC}},
+#'  \code{\link{findHomography}}
 #'
 #' @examples
 #' file1 <- system.file("sample_img/balloon1.png", package = "Rvision")
