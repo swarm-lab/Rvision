@@ -52,7 +52,7 @@ A list:
 }
 \examples{
 # See the help vignette:
-\dontrun{ vignette("", package = "Rvision") }
+\dontrun{ vignette("z8_calib", package = "Rvision") }
 
 }
 \seealso{

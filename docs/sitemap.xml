@@ -31,6 +31,9 @@
     <loc>https://swarm-lab.github.io/Rvision/articles/z7_stack.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/Rvision/articles/z8_calib.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/Rvision/authors.html</loc>
   </url>
   <url>
@@ -587,6 +590,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/undistort.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/undistortPoints.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/video.html</loc>

@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -467,20 +467,20 @@ images</a></li>
 plotting methods, which allows for drawing non-destructively over an
 image using <code>graphics::lines()</code>,
 <code>graphics::points()</code>, etc. For instance:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the path to the balloon1.png image provided with Rvision</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>path_to_image <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_img&quot;</span>, <span class="st">&quot;balloon1.png&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the image in memory</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>my_image <span class="ot">&lt;-</span> <span class="fu">image</span>(<span class="at">filename =</span> path_to_image)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the image using the base R plotting device</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(my_image)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw lines over the plotted image</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">170</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">5</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">325</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">5</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">290</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">5</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">440</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Find the path to the balloon1.png image provided with Rvision</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>path_to_image <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_img&quot;</span>, <span class="st">&quot;balloon1.png&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># Load the image in memory</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>my_image <span class="ot">&lt;-</span> <span class="fu">image</span>(<span class="at">filename =</span> path_to_image)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co"># Plot the image using the base R plotting device</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">plot</span>(my_image)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co"># Draw lines over the plotted image</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">170</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">5</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">325</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">5</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">290</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">5</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">440</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">5</span>)</span></code></pre></div>
 <p>Note that this method is rather slow and therefore not suitable for
 applications requiring quick refresh rates between successive images
 (e.g. when playing a video).</p>
@@ -490,25 +490,25 @@ applications requiring quick refresh rates between successive images
 <p>The second method (<code>display()</code>) uses <a href="http://opencv.org/"><code>OpenCV</code></a>’s capabilities to
 display images at high frame rates, making it suitable to play videos.
 For instance:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>path_to_video <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_vid&quot;</span>, <span class="st">&quot;Balloon.mp4&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the video file stream</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>my_video <span class="ot">&lt;-</span> <span class="fu">video</span>(<span class="at">filename =</span> path_to_video)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty display window with width and height half of that of the video </span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># (note: the display can hide behind other windows, especially on Mac)</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">newDisplay</span>(<span class="st">&quot;My display&quot;</span>, <span class="fu">nrow</span>(my_video) <span class="sc">/</span> <span class="dv">2</span>, <span class="fu">ncol</span>(my_video) <span class="sc">/</span> <span class="dv">2</span>) </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Display images (note: it creates the display window if it doesn&#39;t exist yet)</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># The 3rd argument (&#39;delay&#39;) is the minimum time in ms during which the image </span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># should be displayed before it can be replaced</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>) {</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">display</span>(<span class="fu">readNext</span>(my_video), <span class="st">&quot;My display&quot;</span>, <span class="dv">25</span>, <span class="fu">nrow</span>(my_video) <span class="sc">/</span> <span class="dv">2</span>, <span class="fu">ncol</span>(my_video) <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the display window</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">destroyDisplay</span>(<span class="st">&quot;My display&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>path_to_video <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_vid&quot;</span>, <span class="st">&quot;Balloon.mp4&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Open the video file stream</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>my_video <span class="ot">&lt;-</span> <span class="fu">video</span>(<span class="at">filename =</span> path_to_video)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co"># Create an empty display window with width and height half of that of the video </span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co"># (note: the display can hide behind other windows, especially on Mac)</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="fu">newDisplay</span>(<span class="st">&quot;My display&quot;</span>, <span class="fu">nrow</span>(my_video) <span class="sc">/</span> <span class="dv">2</span>, <span class="fu">ncol</span>(my_video) <span class="sc">/</span> <span class="dv">2</span>) </span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co"># Display images (note: it creates the display window if it doesn&#39;t exist yet)</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co"># The 3rd argument (&#39;delay&#39;) is the minimum time in ms during which the image </span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co"># should be displayed before it can be replaced</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>) {</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>  <span class="fu">display</span>(<span class="fu">readNext</span>(my_video), <span class="st">&quot;My display&quot;</span>, <span class="dv">25</span>, <span class="fu">nrow</span>(my_video) <span class="sc">/</span> <span class="dv">2</span>, <span class="fu">ncol</span>(my_video) <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>}</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co"># Close the display window</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="fu">destroyDisplay</span>(<span class="st">&quot;My display&quot;</span>)</span></code></pre></div>
 <p>Note that the <code>display()</code> method is incompatible with base
 <code>R</code> plotting methods. However, you can use the drawing
 functions provided with <code>Rvision</code> to draw over images -
@@ -522,17 +522,17 @@ destructively this time - before displaying them.</p>
 you would access the values of a <code>base::array</code>. Actually,
 <code>Rvision</code> converts the image to a <code>base::array</code>
 before returning the desired values. For instance:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_image[]                  <span class="co"># Entire image</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>my_image[<span class="dv">1</span>, <span class="dv">1</span>,]             <span class="co"># Bottom-left pixel</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>my_image[<span class="dv">1</span>,,]               <span class="co"># Bottom row of pixels</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>my_image[, <span class="dv">1</span>,]              <span class="co"># Leftmost column of pixels</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>my_image[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]         <span class="co"># All pixels between the 1st and 5th row and column</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>my_image[<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>),]  <span class="co"># Every other row and column of pixels</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>my_image[]                  <span class="co"># Entire image</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>my_image[<span class="dv">1</span>, <span class="dv">1</span>,]             <span class="co"># Bottom-left pixel</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>my_image[<span class="dv">1</span>,,]               <span class="co"># Bottom row of pixels</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>my_image[, <span class="dv">1</span>,]              <span class="co"># Leftmost column of pixels</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>my_image[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]         <span class="co"># All pixels between the 1st and 5th row and column</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>my_image[<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>),]  <span class="co"># Every other row and column of pixels</span></span></code></pre></div>
 <p>The <code>pget()</code> function can be used to quickly access the
 values of specific pixels by their x/y coordinates in the image. For
 instance:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the pixel values at x/y coordinates (110,190) and (200,100)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pget</span>(my_image, <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">110</span>, <span class="dv">200</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">190</span>, <span class="dv">100</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Return the pixel values at x/y coordinates (110,190) and (200,100)</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">pget</span>(my_image, <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">110</span>, <span class="dv">200</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">190</span>, <span class="dv">100</span>))</span></code></pre></div>
 <p>This function returns a matrix where each column corresponds to one
 of the desired pixels and each row to the value of the pixels in each of
 the channels of the image (e.g. Blue, Red, Green).</p>
@@ -554,18 +554,18 @@ and therefore behave similarly to regular monolayer matrices in base
 <p>The traditional <code>&lt;-</code> assignment operator can be used to
 replace parts of a grayscale image, like it would be used to replace any
 parts of a traditional <code>base::matrix</code>. For instance:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a grayscale copy of the my_image object created earlier</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>my_gray_image <span class="ot">&lt;-</span> <span class="fu">changeColorSpace</span>(my_image, <span class="st">&quot;GRAY&quot;</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn the bottom-left corner of the image black (0 in the grayscale space)</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>my_gray_image[<span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>] <span class="ot">&lt;-</span> <span class="dv">0</span>  </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(my_gray_image)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Make a grayscale copy of the my_image object created earlier</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>my_gray_image <span class="ot">&lt;-</span> <span class="fu">changeColorSpace</span>(my_image, <span class="st">&quot;GRAY&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># Turn the bottom-left corner of the image black (0 in the grayscale space)</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>my_gray_image[<span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>] <span class="ot">&lt;-</span> <span class="dv">0</span>  </span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="fu">plot</span>(my_gray_image)</span></code></pre></div>
 <p>Finally, the <code>pset()</code> function can be used to quickly set
 the values of specific pixels by their x/y coordinates in the image. For
 instance:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a few pixels to white inside the black square added earlier</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pset</span>(my_gray_image, <span class="dv">50</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">50</span><span class="sc">:</span><span class="dv">100</span>, <span class="st">&quot;white&quot;</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(my_gray_image)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Set a few pixels to white inside the black square added earlier</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">pset</span>(my_gray_image, <span class="dv">50</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">50</span><span class="sc">:</span><span class="dv">100</span>, <span class="st">&quot;white&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">plot</span>(my_gray_image)</span></code></pre></div>
 </div>
 <div id="color-images" class="section level3">
 <h3>3.4.1 - Color images</h3>
@@ -573,31 +573,31 @@ instance:</p>
 replace parts of a color (i.e.  multi-channel) image. However, instead
 of taking in single values for each pixel to be replaced, it will take
 one value per pixel and per channel of the image. For instance:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn the bottom-left corner of the my_image object created earlier red. This </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># is a BGRA image, so it has 4 channels which new values need to be specified.</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>my_image[<span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">255</span>) </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(my_image)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Turn the bottom-left corner of the my_image object created earlier red. This </span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co"># is a BGRA image, so it has 4 channels which new values need to be specified.</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>my_image[<span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">255</span>) </span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">plot</span>(my_image)</span></code></pre></div>
 <p>Note that if values are not specified for each channel, then the
 provided values will be recycled. For instance:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn the bottom-left corner of the my_image object completely transparent. </span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Transparency will appear as white when the image is plotted. </span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>my_image[<span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(my_image)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Turn the bottom-left corner of the my_image object completely transparent. </span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co"># Transparency will appear as white when the image is plotted. </span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>my_image[<span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="fu">plot</span>(my_image)</span></code></pre></div>
 <p>The utility function <code>col2bgr()</code> provided by
 <code>Rvision</code> (not to be confused with
 <code>grDevices::col2rgb</code> on which <code>col2bgr()</code> is
 based) will conveniently convert any of the <code>R</code>-compatible
 color specifications to color codes compatible with <code>Rvision</code>
 images. For instance:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn the bottom-left corner of the my_image object blue. </span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>my_image[<span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>] <span class="ot">&lt;-</span> <span class="fu">col2bgr</span>(<span class="st">&quot;blue&quot;</span>, <span class="at">alpha =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(my_image)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Turn the bottom-left corner of the my_image object blue. </span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>my_image[<span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">250</span>] <span class="ot">&lt;-</span> <span class="fu">col2bgr</span>(<span class="st">&quot;blue&quot;</span>, <span class="at">alpha =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">plot</span>(my_image)</span></code></pre></div>
 <p>Finally, the <code>pset()</code> function can be used to quickly set
 the values of specific pixels by their x/y coordinates in the image. For
 instance:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a few pixels to green inside the black square added earlier</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pset</span>(my_image, <span class="dv">50</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">50</span><span class="sc">:</span><span class="dv">100</span>, <span class="st">&quot;green&quot;</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(my_image)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Set a few pixels to green inside the black square added earlier</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">pset</span>(my_image, <span class="dv">50</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">50</span><span class="sc">:</span><span class="dv">100</span>, <span class="st">&quot;green&quot;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="fu">plot</span>(my_image)</span></code></pre></div>
 </div>
 </div>
 

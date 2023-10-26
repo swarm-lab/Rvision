@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -380,14 +380,14 @@ framework that is available to more users immediately.</p>
 images it receives in the memory of the CPU. Before using
 GPU-accelerated functions, the image must first be copied to the GPU
 memory. This can be done very easily as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the path to the balloon1.png image provided with Rvision</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>path_to_image <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_img&quot;</span>, <span class="st">&quot;balloon1.png&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the image in memory</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>my_image <span class="ot">&lt;-</span> <span class="fu">image</span>(<span class="at">filename =</span> path_to_image)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy the image to GPU memory</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>my_image<span class="sc">$</span><span class="fu">toGPU</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Find the path to the balloon1.png image provided with Rvision</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>path_to_image <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_img&quot;</span>, <span class="st">&quot;balloon1.png&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># Load the image in memory</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>my_image <span class="ot">&lt;-</span> <span class="fu">image</span>(<span class="at">filename =</span> path_to_image)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co"># Copy the image to GPU memory</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>my_image<span class="sc">$</span><span class="fu">toGPU</span>()</span></code></pre></div>
 <p>Once this is done, <code>Rvision</code> (<code>OpenCV</code> really)
 will automatically use the GPU-accelerated version of each operation on
 the image if it is available. Otherwise, it will default to using the
@@ -404,8 +404,8 @@ all the images use the memory of the same processor.</p>
 (e.g. if you want to then transfer the image to a
 <code>base::array</code>), you can simply apply the reverse operation as
 follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy the image back to CPU memory</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>my_image<span class="sc">$</span><span class="fu">fromGPU</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Copy the image back to CPU memory</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>my_image<span class="sc">$</span><span class="fu">fromGPU</span>()</span></code></pre></div>
 <hr />
 </div>
 <div id="caveats-to-gpu-operations" class="section level2">

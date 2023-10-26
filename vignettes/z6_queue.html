@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -399,14 +399,14 @@ removed from the queue to make space for another frame.</p>
 <h2>6.2 - Creating a queue</h2>
 <p><code>Queue</code> objects are created using the <code>queue()</code>
 function. For instance:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>path_to_video <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_vid&quot;</span>, <span class="st">&quot;Balloon.mp4&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the video file stream</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>my_video <span class="ot">&lt;-</span> <span class="fu">video</span>(<span class="at">filename =</span> path_to_video)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a queue of frames </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>my_buf <span class="ot">&lt;-</span> <span class="fu">queue</span>(my_video, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">delay =</span> <span class="dv">1000</span>, <span class="at">overflow =</span> <span class="st">&quot;pause&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Find the path to the Balloon.mp4 video provided with Rvision</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>path_to_video <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;sample_vid&quot;</span>, <span class="st">&quot;Balloon.mp4&quot;</span>, <span class="at">package =</span> <span class="st">&quot;Rvision&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># Open the video file stream</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>my_video <span class="ot">&lt;-</span> <span class="fu">video</span>(<span class="at">filename =</span> path_to_video)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co"># Create a queue of frames </span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>my_buf <span class="ot">&lt;-</span> <span class="fu">queue</span>(my_video, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">delay =</span> <span class="dv">1000</span>, <span class="at">overflow =</span> <span class="st">&quot;pause&quot;</span>)</span></code></pre></div>
 <p>The <code>queue()</code> function can take 4 parameters:</p>
 <ul>
 <li><code>x</code> corresponds to the source of the frames to be queued.
@@ -456,7 +456,7 @@ where you left off (e.g. if you have already read the first 10 frames,
 the queue will start filling up from the 11th).</p>
 <p>Once a <code>Queue</code> object is not required anymore, it can be
 released from memory as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">release</span>(my_buf)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">release</span>(my_buf)</span></code></pre></div>
 <hr />
 </div>
 <div id="using-a-queue-object" class="section level2">
@@ -467,33 +467,33 @@ happens by itself in the background so you do not need to take care of
 this. Collecting a frame from the queue into the main <code>R</code>
 thread can be done using the <code>readNext()</code> function. For
 example:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect the next available frame from the queue and store it in a new </span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Image object</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>frame <span class="ot">&lt;-</span> <span class="fu">readNext</span>(my_buf)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect the next available frame from the queue and store it in an existing </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Image object</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">readNext</span>(my_buf, <span class="at">target =</span> frame)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Collect the next available frame from the queue and store it in a new </span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># Image object</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>frame <span class="ot">&lt;-</span> <span class="fu">readNext</span>(my_buf)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co"># Collect the next available frame from the queue and store it in an existing </span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># Image object</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="fu">readNext</span>(my_buf, <span class="at">target =</span> frame)</span></code></pre></div>
 <p>At any time, you can check the state of the queue as follows:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Is the queue empty?</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">empty</span>(my_buf)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Is the queue full?</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">full</span>(my_buf)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the current number of frames in the queue? </span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(my_buf)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the maximum number of frames that the queue can hold?</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">capacity</span>(my_buf)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the index of the next frame available? (for video queues only)</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">frame</span>(my_buf)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># What are the dimensions of the queue? </span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(my_buf)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(my_buf)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(my_buf)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Is the queue empty?</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">empty</span>(my_buf)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co"># Is the queue full?</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">full</span>(my_buf)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co"># What is the current number of frames in the queue? </span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="fu">length</span>(my_buf)</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co"># What is the maximum number of frames that the queue can hold?</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="fu">capacity</span>(my_buf)</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co"># What is the index of the next frame available? (for video queues only)</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="fu">frame</span>(my_buf)</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co"># What are the dimensions of the queue? </span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="fu">dim</span>(my_buf)</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="fu">nrow</span>(my_buf)</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="fu">ncol</span>(my_buf)</span></code></pre></div>
 <hr />
 </div>
 <div id="caveats-to-using-queue-objects" class="section level2">

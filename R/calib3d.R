@@ -193,7 +193,7 @@ cornerSubPix <- function(image, corners, win_size = c(11, 11), zero_zone = c(-1,
 #'
 #' @examples
 #' # See the help vignette:
-#' \dontrun{ vignette("", package = "Rvision") }
+#' \dontrun{ vignette("z8_calib", package = "Rvision") }
 #'
 #' @export
 calibrateCamera <- function(ref_points, img_points, nrow, ncol, fixed_point = 1,
@@ -251,7 +251,7 @@ calibrateCamera <- function(ref_points, img_points, nrow, ncol, fixed_point = 1,
 #'
 #' @examples
 #' # See the help vignette:
-#' \dontrun{ vignette("", package = "Rvision") }
+#' \dontrun{ vignette("z8_calib", package = "Rvision") }
 #'
 #' @export
 getOptimalNewCameraMatrix <- function(camera_matrix, dist_coefs, nrow, ncol,
@@ -267,10 +267,12 @@ getOptimalNewCameraMatrix <- function(camera_matrix, dist_coefs, nrow, ncol,
 }
 
 
-#' @title Compensate for Lens Distortion
+#' @title Transform an Image to Compensate for Lens Distortion
 #'
 #' @description \code{undistort} transforms an image to compensate for radial
-#' and tangential lens distortion.
+#'  and tangential lens distortion.
+#'
+#' @param image An \code{\link{Image}} object.
 #'
 #' @param camera_matrix A 3x3 camera intrinsic matrix as returned by
 #'  \code{\link{calibrateCamera}}.
@@ -280,7 +282,7 @@ getOptimalNewCameraMatrix <- function(camera_matrix, dist_coefs, nrow, ncol,
 #'
 #' @param new_camera_matrix A 3x3 camera intrinsic matrix as returned by
 #'  \code{\link{getOptimalNewCameraMatrix}} if you chose to execute this
-#'  optional step (default: NULL).
+#'  optional step (default: \code{camera_matrix}).
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
@@ -300,15 +302,15 @@ getOptimalNewCameraMatrix <- function(camera_matrix, dist_coefs, nrow, ncol,
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{findChessboardCorners}}, \code{\link{cornerSubPix}},
-#'  \code{\link{calibrateCamera}}, \code{\link{getOptimalNewCameraMatrix}}
+#' @seealso \code{\link{calibrateCamera}}, \code{\link{getOptimalNewCameraMatrix}},
+#'  \code{\link{undistortPoints}}
 #'
 #' @examples
 #' # See the help vignette:
-#' \dontrun{ vignette("", package = "Rvision") }
+#' \dontrun{ vignette("z8_calib", package = "Rvision") }
 #'
 #' @export
-undistort <- function(image, camera_matrix, dist_coefs, new_camera_matrix = NULL,
+undistort <- function(image, camera_matrix, dist_coefs, new_camera_matrix = camera_matrix,
                       target = "new") {
   if (!isImage(image))
     stop("'image' is not an Image object.")
@@ -319,29 +321,72 @@ undistort <- function(image, camera_matrix, dist_coefs, new_camera_matrix = NULL
   if (!all(dim(new_camera_matrix) == 3))
     stop("'new_camera_matrix' should have exactly 3 rows and 3 columns.")
 
-  if (!all(dim(dist_coefs) == c(1, 5)))
-    stop("'dist_coefs' should have exactly 1 row and 5 columns.")
+  if (nrow(dist_coefs) != 1)
+    stop("'dist_coefs' should have exactly 1 row.")
+
+  if (!(ncol(dist_coefs) %in% c(4, 5, 8, 12, 14)))
+    stop("'dist_coefs' should have either 4, 5, 8, 12, or 14 columns.")
 
   if (isImage(target)) {
     if (identical(image, target))
       stop("'image' and 'target' cannot be the same Image object.")
 
-    if (is.null(new_camera_matrix)) {
-      `_undistortNoNCM`(image, camera_matrix, dist_coefs, target)
-    } else {
-      `_undistort`(image, camera_matrix, dist_coefs, new_camera_matrix, target)
-    }
+    `_undistort`(image, camera_matrix, dist_coefs, new_camera_matrix, target)
   } else if (target == "new") {
     out <- zeros(image$nrow(), image$ncol(), image$nchan(), image$depth(), image$space)
-
-    if (is.null(new_camera_matrix)) {
-      `_undistortNoNCM`(image, camera_matrix, dist_coefs, out)
-    } else {
-      `_undistort`(image, camera_matrix, dist_coefs, new_camera_matrix, out)
-    }
-
+    `_undistort`(image, camera_matrix, dist_coefs, new_camera_matrix, out)
     out
   } else {
     stop("Invalid target.")
   }
+}
+
+
+#' @title Transform Coordinates to Compensate for Lens Distortion
+#'
+#' @description \code{undistortPoints} transforms a set of coordinates
+#'  representing points in an image to compensate for radial and tangential lens
+#'  distortion.
+#'
+#' @param points A 2xN matrix of X/Y coordinates.
+#'
+#' @param camera_matrix A 3x3 camera intrinsic matrix as returned by
+#'  \code{\link{calibrateCamera}}.
+#'
+#' @param dist_coefs A single row matrix with 4, 5, 8, 12 or 14 elements as
+#'  returned by \code{\link{calibrateCamera}}.
+#'
+#' @param new_camera_matrix A 3x3 camera intrinsic matrix as returned by
+#'  \code{\link{getOptimalNewCameraMatrix}} if you chose to execute this
+#'  optional step (default: \code{camera_matrix}).
+#'
+#' @return A 2xN matrix of transformed X/Y coordinates.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{undistort}}, \code{\link{calibrateCamera}},
+#'  \code{\link{getOptimalNewCameraMatrix}}
+#'
+#' @examples
+#' # See the help vignette:
+#' \dontrun{ vignette("z8_calib", package = "Rvision") }
+#'
+#' @export
+undistortPoints <- function(points, camera_matrix, dist_coefs, new_camera_matrix = camera_matrix) {
+  if (!all(dim(camera_matrix) == 3))
+    stop("'camera_matrix' should have exactly 3 rows and 3 columns.")
+
+  if (!all(dim(new_camera_matrix) == 3))
+    stop("'new_camera_matrix' should have exactly 3 rows and 3 columns.")
+
+  if (nrow(dist_coefs) != 1)
+    stop("'dist_coefs' should have exactly 1 row.")
+
+  if (!(ncol(dist_coefs) %in% c(4, 5, 8, 12, 14)))
+    stop("'dist_coefs' should have either 4, 5, 8, 12, or 14 columns.")
+
+  if (ncol(points) != 2)
+    stop("'points' should have exactly 2 columns.")
+
+  `_undistortPoints`(points, camera_matrix, dist_coefs, new_camera_matrix)
 }

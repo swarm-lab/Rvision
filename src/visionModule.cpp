@@ -473,6 +473,6 @@ RCPP_MODULE(methods_Calib3d) {
                         _["centerPrincipalPoint"]), "");
   function("_undistort", &_undistort, List::create(_["image"], _["cameraMatrix"],
     _["distCoeffs"], _["newCameraMatrix"], _["target"]), "");
-  function("_undistortNoNCM", &_undistortNoNCM, List::create(_["image"],
-    _["cameraMatrix"], _["distCoeffs"], _["target"]), "");
+  function("_undistortPoints", &_undistortPoints, List::create(_["points"],
+    _["cameraMatrix"], _["distCoeffs"], _["newCameraMatrix"]), "");
 }

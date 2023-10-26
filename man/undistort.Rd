@@ -2,17 +2,19 @@
 % Please edit documentation in R/calib3d.R
 \name{undistort}
 \alias{undistort}
-\title{Compensate for Lens Distortion}
+\title{Transform an Image to Compensate for Lens Distortion}
 \usage{
 undistort(
   image,
   camera_matrix,
   dist_coefs,
-  new_camera_matrix = NULL,
+  new_camera_matrix = camera_matrix,
   target = "new"
 )
 }
 \arguments{
+\item{image}{An \code{\link{Image}} object.}
+
 \item{camera_matrix}{A 3x3 camera intrinsic matrix as returned by
 \code{\link{calibrateCamera}}.}
 
@@ -21,7 +23,7 @@ returned by \code{\link{calibrateCamera}}.}
 
 \item{new_camera_matrix}{A 3x3 camera intrinsic matrix as returned by
 \code{\link{getOptimalNewCameraMatrix}} if you chose to execute this
-optional step (default: NULL).}
+optional step (default: \code{camera_matrix}).}
 
 \item{target}{The location where the results should be stored. It can take 3
 values:
@@ -42,16 +44,16 @@ If \code{target="new"}, the function returns an \code{\link{Image}}
 }
 \description{
 \code{undistort} transforms an image to compensate for radial
-and tangential lens distortion.
+ and tangential lens distortion.
 }
 \examples{
 # See the help vignette:
-\dontrun{ vignette("", package = "Rvision") }
+\dontrun{ vignette("z8_calib", package = "Rvision") }
 
 }
 \seealso{
-\code{\link{findChessboardCorners}}, \code{\link{cornerSubPix}},
- \code{\link{calibrateCamera}}, \code{\link{getOptimalNewCameraMatrix}}
+\code{\link{calibrateCamera}}, \code{\link{getOptimalNewCameraMatrix}},
+ \code{\link{undistortPoints}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

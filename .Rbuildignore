@@ -15,3 +15,5 @@ ci_script
 ^docs$
 ^pkgdown$
 ^codecov\.yml$
+^doc$
+^Meta$

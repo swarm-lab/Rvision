@@ -146,21 +146,28 @@ void _undistort(Image& image, arma::Mat<double> cameraMatrix, arma::Mat<double> 
   cv::undistort(image.image, target.image, cameraMatrixCV, distCoeffsCV, newCameraMatrixCV);
 }
 
-void _undistortNoNCM(Image& image, arma::Mat<double> cameraMatrix, arma::Mat<double> distCoeffs,
-                     Image& target) {
-  cv::Mat_<double> cameraMatrixCV, distCoeffsCV;
-  arma2cv(cameraMatrix, cameraMatrixCV);
-  arma2cv(distCoeffs, distCoeffsCV);
-
-  if (image.GPU) {
-    if (target.GPU)
-      return cv::undistort(image.uimage, target.uimage, cameraMatrixCV, distCoeffsCV, cv::noArray());
-
-    return cv::undistort(image.uimage, target.image, cameraMatrixCV, distCoeffsCV, cv::noArray());
+Rcpp::NumericMatrix _undistortPoints(Rcpp::NumericMatrix points,
+                                     arma::Mat<double> cameraMatrix,
+                                     arma::Mat<double> distCoeffs,
+                                     arma::Mat<double> newCameraMatrix) {
+  std::vector<cv::Point2f> pointsCV, outCV;
+  for (uint i = 0; i < points.nrow(); i++) {
+    pointsCV.push_back(cv::Point2f(points(i,0), points(i, 1)));
   }
 
-  if (target.GPU)
-    return cv::undistort(image.image, target.uimage, cameraMatrixCV, distCoeffsCV, cv::noArray());
+  cv::Mat_<double> cameraMatrixCV, distCoeffsCV, newCameraMatrixCV;
+  arma2cv(cameraMatrix, cameraMatrixCV);
+  arma2cv(distCoeffs, distCoeffsCV);
+  arma2cv(newCameraMatrix, newCameraMatrixCV);
 
-  cv::undistort(image.image, target.image, cameraMatrixCV, distCoeffsCV, cv::noArray());
+  cv::undistortPoints(pointsCV, outCV, cameraMatrixCV, distCoeffsCV, cv::noArray(), newCameraMatrixCV);
+
+  Rcpp::NumericMatrix out = Rcpp::NumericMatrix(outCV.size(), 2);
+  for (uint i = 0; i < outCV.size(); i++) {
+    out(i, 0) = outCV[i].x;
+    out(i, 1) = outCV[i].y;
+  }
+
+  return out;
 }
+

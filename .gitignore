@@ -13,3 +13,5 @@ src/.DS_Store
 tmp.def
 *.insyncdl
 docs
+/doc/
+/Meta/
