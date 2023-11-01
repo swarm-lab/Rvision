@@ -50,7 +50,7 @@ findChessboardCorners <- function(image, pprow, ppcol, adaptive_threshold = TRUE
 
   flags <- 1 * adaptive_threshold + 2 * normalize + 4 * filter_quads + 8 * fast_check
 
-  `_findChessboardCorners`(image, pprow, ppcol, flags)
+  `_findChessboardCorners`(image, pprow, ppcol, flags)[,,]
 }
 
 
@@ -115,7 +115,8 @@ cornerSubPix <- function(image, corners, win_size = c(11, 11), zero_zone = c(-1,
   if (nrow(corners) < 1)
     stop("'corners' does not contain any value.")
 
-  `_cornerSubPix`(image, corners, win_size, zero_zone, maxit, eps)
+  dim(corners) <- c(nrow(corners), 1, 2)
+  `_cornerSubPix`(image, corners, win_size, zero_zone, maxit, eps)[,,]
 }
 
 
@@ -388,5 +389,6 @@ undistortPoints <- function(points, camera_matrix, dist_coefs, new_camera_matrix
   if (ncol(points) != 2)
     stop("'points' should have exactly 2 columns.")
 
-  `_undistortPoints`(points, camera_matrix, dist_coefs, new_camera_matrix)
+  dim(points) <- c(nrow(points), 1, 2)
+  `_undistortPoints`(points, camera_matrix, dist_coefs, new_camera_matrix)[,,]
 }

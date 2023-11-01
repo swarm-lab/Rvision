@@ -1,50 +1,41 @@
-Rcpp::NumericMatrix _findChessboardCorners(Image& image, int pprow, int ppcol, int flags) {
-  std::vector<cv::Point2f> corners;
+arma::Cube<float> _findChessboardCorners(Image& image, int pprow, int ppcol, int flags) {
+  cv::Mat_<cv::Vec2f> cornersCV;
 
   if (image.GPU) {
-    cv::findChessboardCorners(image.uimage, cv::Size(pprow, ppcol), corners, flags);
+    cv::findChessboardCorners(image.uimage, cv::Size(pprow, ppcol), cornersCV, flags);
   } else {
-    cv::findChessboardCorners(image.image, cv::Size(pprow, ppcol), corners, flags);
+    cv::findChessboardCorners(image.image, cv::Size(pprow, ppcol), cornersCV, flags);
   }
 
-  Rcpp::NumericMatrix out = Rcpp::NumericMatrix(corners.size(), 2);
-  colnames(out) = Rcpp::CharacterVector::create("x", "y");
+  arma::Cube<float> corners;
 
-  for (uint i = 0; i < corners.size(); i++) {
-    out(i, 0) = corners[i].x + 1;
-    out(i, 1) = -corners[i].y + image.nrow();
-  }
-
-  return out;
-}
-
-
-Rcpp::NumericMatrix _cornerSubPix(Image& image, Rcpp::NumericMatrix corners,
-                                  Rcpp::NumericVector winSize, Rcpp::NumericVector zeroZone,
-                                  int maxit, double eps) {
-  cv::TermCriteria termcrit(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, maxit, eps);
-  std::vector<cv::Point2f> corners_vec;
-
-  for (uint i = 0; i < corners.nrow(); i++) {
-    corners_vec.push_back(cv::Point2f(corners(i,0) - 1, -corners(i, 1) + image.nrow()));
-  }
-
-  if (image.GPU) {
-    cv::cornerSubPix(image.uimage, corners_vec, cv::Size(winSize(0), winSize(1)),
-                     cv::Size(zeroZone(0), zeroZone(1)), termcrit);
-  } else {
-    cv::cornerSubPix(image.image, corners_vec, cv::Size(winSize(0), winSize(1)),
-                     cv::Size(zeroZone(0), zeroZone(1)), termcrit);
-  }
-
-  for (uint i = 0; i < corners_vec.size(); i++) {
-    corners(i, 0) = corners_vec[i].x + 1;
-    corners(i, 1) = -corners_vec[i].y + image.nrow();
+  if (!cornersCV.empty()) {
+    cv2arma(cornersCV, corners);
+    corners.slice(0) += 1;
+    corners.slice(1) = -corners.slice(1) + image.nrow();
   }
 
   return corners;
 }
 
+arma::Cube<float> _cornerSubPix(Image& image, arma::Cube<float> corners,
+                                Rcpp::NumericVector winSize, Rcpp::NumericVector zeroZone,
+                                int maxit, double eps) {
+  cv::TermCriteria termcrit(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, maxit, eps);
+  cv::Mat_<cv::Vec2f> cornersCV;
+  arma2cv(corners, cornersCV);
+
+  if (image.GPU) {
+    cv::cornerSubPix(image.uimage, cornersCV, cv::Size(winSize(0), winSize(1)),
+                     cv::Size(zeroZone(0), zeroZone(1)), termcrit);
+  } else {
+    cv::cornerSubPix(image.image, cornersCV, cv::Size(winSize(0), winSize(1)),
+                     cv::Size(zeroZone(0), zeroZone(1)), termcrit);
+  }
+
+  cv2arma(cornersCV, corners);
+  return corners;
+}
 
 Rcpp::List _calibrateCameraRO(Rcpp::List refPoints, Rcpp::List imgPoints,
                               Rcpp::NumericVector imgSize, int iFixedPoint,
@@ -146,28 +137,20 @@ void _undistort(Image& image, arma::Mat<double> cameraMatrix, arma::Mat<double> 
   cv::undistort(image.image, target.image, cameraMatrixCV, distCoeffsCV, newCameraMatrixCV);
 }
 
-Rcpp::NumericMatrix _undistortPoints(Rcpp::NumericMatrix points,
-                                     arma::Mat<double> cameraMatrix,
-                                     arma::Mat<double> distCoeffs,
-                                     arma::Mat<double> newCameraMatrix) {
-  std::vector<cv::Point2f> pointsCV, outCV;
-  for (uint i = 0; i < points.nrow(); i++) {
-    pointsCV.push_back(cv::Point2f(points(i,0), points(i, 1)));
-  }
+arma::Cube<float> _undistortPoints(arma::Cube<float> points,
+                                   arma::Mat<double> cameraMatrix,
+                                   arma::Mat<double> distCoeffs,
+                                   arma::Mat<double> newCameraMatrix) {
+  cv::Mat_<cv::Vec2f> pointsCV;
+  arma2cv(points, pointsCV);
 
   cv::Mat_<double> cameraMatrixCV, distCoeffsCV, newCameraMatrixCV;
   arma2cv(cameraMatrix, cameraMatrixCV);
   arma2cv(distCoeffs, distCoeffsCV);
   arma2cv(newCameraMatrix, newCameraMatrixCV);
 
-  cv::undistortPoints(pointsCV, outCV, cameraMatrixCV, distCoeffsCV, cv::noArray(), newCameraMatrixCV);
+  cv::undistortPoints(pointsCV, pointsCV, cameraMatrixCV, distCoeffsCV, cv::noArray(), newCameraMatrixCV);
+  cv2arma(pointsCV, points);
 
-  Rcpp::NumericMatrix out = Rcpp::NumericMatrix(outCV.size(), 2);
-  for (uint i = 0; i < outCV.size(); i++) {
-    out(i, 0) = outCV[i].x;
-    out(i, 1) = outCV[i].y;
-  }
-
-  return out;
+  return points;
 }
-
