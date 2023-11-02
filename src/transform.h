@@ -10,7 +10,7 @@ arma::Mat< float > _findHomography(Rcpp::NumericVector src_x, Rcpp::NumericVecto
 
   for (uint i = 0; i < src_x.size(); i++) {
     srcPoints.push_back(cv::Point2f(src_x(i), src_y(i)));
-    dstPoints.push_back(cv::Point2f(dst_x(i), dst_x(i)));
+    dstPoints.push_back(cv::Point2f(dst_x(i), dst_y(i)));
   }
 
   warpMatrix = cv::findHomography(srcPoints, dstPoints, method,
