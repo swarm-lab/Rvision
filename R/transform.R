@@ -3,8 +3,6 @@
 #' @description \code{findHomography} computes a perspective transformation
 #'  between two planes.
 #'
-#' @param template A grayscale \code{\link{Image}} object.
-#'
 #' @param from A Nx2 matrix indicating the location (x, y) of N points in the
 #'  source image.
 #'
@@ -25,9 +23,9 @@
 #'  robust method), or "RHO" (PROSAC-based robust method).
 #'
 #' @param ransac_reproj_th Maximum allowed reprojection error to treat a point
-#'  pair as an inlier (used in the RANSAC and RHO methods only). That is, if
-#'  `src_x`, `src_y`, `dst_x`, and `dst_y` are measured in pixels, it usually
-#'  makes sense to set this parameter somewhere in the range of 1 to 10.
+#'  pair as an inlier (used in the RANSAC and RHO methods only). If `from` and
+#'  `to` are measured in pixels, it usually makes sense to set this parameter
+#'  somewhere in the range of 1 to 10.
 #'
 #' @param max_it The maximum number of RANSAC iterations.
 #'
