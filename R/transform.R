@@ -5,9 +5,19 @@
 #'
 #' @param template A grayscale \code{\link{Image}} object.
 #'
-#' @param src_x,src_y Vector of coordinates of the points in the original plane.
+#' @param from A Nx2 matrix indicating the location (x, y) of N points in the
+#'  source image.
 #'
-#' @param dst_x,dst_y Vector of coordinates of the points in the target plane.
+#' @param to A Nx2 matrix indicating the location (x, y) of N points in the
+#'  destination image. The order of the points must correspond to the order in
+#'  \code{from}.
+#'
+#' @param from_dim A vector which first two elements indicate the number of rows
+#'  and columns of the source image.
+#'
+#' @param to_dim A vector which first two elements indicate the number of rows
+#'  and columns of the destination image. If not specified, \code{from_dim} will
+#'  be used as a default.
 #'
 #' @param method A character string indicating the method used to compute a
 #'  homography matrix. It can be one of the followings: "LS" (least-square),
@@ -33,15 +43,26 @@
 #' @examples
 #' src <- cbind(x = c(0, 1, 1, 0), y = c(0, 0, 1, 1))
 #' dst <- src + 1
-#' findHomography(src[, 1], src[, 2], dst[, 1], dst[, 2])
+#' findHomography(src, dst, c(10, 10))
 #'
 #' @export
-findHomography <- function(src_x, src_y, dst_x, dst_y, method = "RANSAC",
+findHomography <- function(from, to, from_dim, to_dim = from_dim, method = "RANSAC",
                            ransac_reproj_th = 3, max_it = 2000, conf = 0.95) {
-  if (!all(length(src_x) == c(length(src_y), length(dst_x), length(dst_y))))
-    stop("'src_x', 'src_y', 'dst_x', and 'dst_y' must have the same length.")
+  if (!all(dim(from) == dim(to)))
+    stop("'from' and 'to' must have the same dimensions.")
 
-  `_findHomography`(src_x, src_y, dst_x, dst_y,
+  if (ncol(from) != 2 | ncol(to) != 2 )
+    stop("'from' and 'to' must have only two columns.")
+
+  from[, 1] <- from[, 1] - 1
+  from[, 2] <- -from[, 2] + from_dim[1]
+  to[, 1] <- to[, 1] - 1
+  to[, 2] <- -to[, 2] + from_dim[1] - (from_dim[1] - to_dim[1])
+
+  dim(from) <- c(nrow(from), 1, 2)
+  dim(to) <- c(nrow(to), 1, 2)
+
+  `_findHomography`(from, to,
                     switch(method,
                            "LS" = 0,
                            "RANSAC" = 4,

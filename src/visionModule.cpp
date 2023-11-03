@@ -370,9 +370,8 @@ RCPP_MODULE(methods_Shape) {
 
 #include "transform.h"
 RCPP_MODULE(methods_Transform) {
-  function("_findHomography", &_findHomography, List::create(_["src_x"], _["src_y"],
-    _["dst_x"], _["dst_y"], _["method"], _["ransacReprojThreshold"], _["maxIters"],
-    _["confidence"]), "");
+  function("_findHomography", &_findHomography, List::create(_["from"], _["to"],
+    _["method"], _["ransacReprojThreshold"], _["maxIters"], _["confidence"]), "");
   function("_findTransformECC", &_findTransformECC, List::create(_["image1"], _["image2"],
     _["warpMatrix"], _["warpMode"], _["count"], _["eps"],  _["mask"], _["gaussFiltSize"]), "");
   function("_computeECC", &_computeECC, List::create(_["image1"], _["image2"], _["mask"]), "");

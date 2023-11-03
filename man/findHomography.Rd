@@ -5,10 +5,10 @@
 \title{Perspective Transformation Between Two Planes}
 \usage{
 findHomography(
-  src_x,
-  src_y,
-  dst_x,
-  dst_y,
+  from,
+  to,
+  from_dim,
+  to_dim = from_dim,
   method = "RANSAC",
   ransac_reproj_th = 3,
   max_it = 2000,
@@ -16,9 +16,19 @@ findHomography(
 )
 }
 \arguments{
-\item{src_x, src_y}{Vector of coordinates of the points in the original plane.}
+\item{from}{A Nx2 matrix indicating the location (x, y) of N points in the
+source image.}
 
-\item{dst_x, dst_y}{Vector of coordinates of the points in the target plane.}
+\item{to}{A Nx2 matrix indicating the location (x, y) of N points in the
+destination image. The order of the points must correspond to the order in
+\code{from}.}
+
+\item{from_dim}{A vector which first two elements indicate the number of rows
+and columns of the source image.}
+
+\item{to_dim}{A vector which first two elements indicate the number of rows
+and columns of the destination image. If not specified, \code{from_dim} will
+be used as a default.}
 
 \item{method}{A character string indicating the method used to compute a
 homography matrix. It can be one of the followings: "LS" (least-square),
@@ -46,7 +56,7 @@ A 3x3 homography matrix.
 \examples{
 src <- cbind(x = c(0, 1, 1, 0), y = c(0, 0, 1, 1))
 dst <- src + 1
-findHomography(src[, 1], src[, 2], dst[, 1], dst[, 2])
+findHomography(src, dst, c(10, 10))
 
 }
 \seealso{

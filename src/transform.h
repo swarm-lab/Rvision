@@ -1,21 +1,15 @@
-arma::Mat< float > _findHomography(Rcpp::NumericVector src_x, Rcpp::NumericVector src_y,
-                                   Rcpp::NumericVector dst_x, Rcpp::NumericVector dst_y,
+arma::Mat< float > _findHomography(arma::Cube<float> from, arma::Cube<float> to,
                                    int method, double ransacReprojThreshold,
                                    const int maxIters, const double confidence) {
-  std::vector<cv::Point2f> srcPoints;
-  std::vector<cv::Point2f> dstPoints;
+  cv::Mat_<cv::Vec2f> fromCV, toCV;
+  arma2cv(from, fromCV);
+  arma2cv(to, toCV);
   cv::Mat mask;
   arma::Mat<float> out;
   cv::Mat_<float> warpMatrix;
 
-  for (uint i = 0; i < src_x.size(); i++) {
-    srcPoints.push_back(cv::Point2f(src_x(i), src_y(i)));
-    dstPoints.push_back(cv::Point2f(dst_x(i), dst_y(i)));
-  }
-
-  warpMatrix = cv::findHomography(srcPoints, dstPoints, method,
-                                  ransacReprojThreshold, mask, maxIters,
-                                  confidence);
+  warpMatrix = cv::findHomography(fromCV, toCV, method, ransacReprojThreshold,
+                                  mask, maxIters, confidence);
   cv2arma(warpMatrix, out);
   return out;
 }
