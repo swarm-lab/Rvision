@@ -851,7 +851,7 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
   if (isImage(target)) {
     `_distanceTransform`(image, dt, mask_size, target)
   } else if (target == "self") {
-    `_distanceTransform`(image, dt, mask_size, target)
+    `_distanceTransform`(image, dt, mask_size, image)
   } else if (target == "new") {
     out <- zeros(nrow(image), ncol(image), 1, "32F")
     `_distanceTransform`(image, dt, mask_size, out)
