@@ -20,8 +20,5 @@
 #'
 #' @references More about OpenCV at \url{http://opencv.org/}.
 #'
-#' @docType package
-#'
 #' @name Rvision
-NULL
-#> NULL
+"_PACKAGE"

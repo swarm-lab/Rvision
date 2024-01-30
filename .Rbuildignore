@@ -17,3 +17,4 @@ ci_script
 ^codecov\.yml$
 ^doc$
 ^Meta$
+.vscode

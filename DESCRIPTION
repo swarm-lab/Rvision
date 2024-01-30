@@ -15,7 +15,7 @@ License: GPL-3
 LazyData: TRUE
 NeedsCompilation: yes
 Depends: 
-    R (>= 3.5.0)
+    R (>= 4.0.0)
 Imports:
     Rcpp (>= 1.0.1),
     ROpenCVLite (>= 4.70.0),
@@ -29,8 +29,8 @@ RcppModules: class_Image, class_Capture, class_VideoWriter,
     methods_OpticalFlow, methods_Blob, methods_Morphology, methods_Filters, 
     methods_Display, methods_Draw, methods_Geometry, methods_Shape, methods_Transform,
     methods_Feature, methods_Autothresh, methods_Ximgproc, methods_Calib3d
-RoxygenNote: 7.2.3
-Biarch: true
+RoxygenNote: 7.3.1
+Biarch: false
 StagedInstall: false
 Encoding: UTF-8
 Suggests: 

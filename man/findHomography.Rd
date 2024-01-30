@@ -36,15 +36,13 @@ homography matrix. It can be one of the followings: "LS" (least-square),
 robust method), or "RHO" (PROSAC-based robust method).}
 
 \item{ransac_reproj_th}{Maximum allowed reprojection error to treat a point
-pair as an inlier (used in the RANSAC and RHO methods only). That is, if
-`src_x`, `src_y`, `dst_x`, and `dst_y` are measured in pixels, it usually
-makes sense to set this parameter somewhere in the range of 1 to 10.}
+pair as an inlier (used in the RANSAC and RHO methods only). If `from` and
+`to` are measured in pixels, it usually makes sense to set this parameter
+somewhere in the range of 1 to 10.}
 
 \item{max_it}{The maximum number of RANSAC iterations.}
 
 \item{conf}{Confidence level, between 0 and 1.}
-
-\item{template}{A grayscale \code{\link{Image}} object.}
 }
 \value{
 A 3x3 homography matrix.

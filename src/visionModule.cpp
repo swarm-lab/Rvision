@@ -15,7 +15,7 @@ using namespace Rcpp;
 RCPP_EXPOSED_CLASS(Image)
 RCPP_MODULE(class_Image) {
 
-  class_<Image>("Image")
+  Rcpp::class_<Image>("Image")
     .constructor()
     .constructor< std::string, std::string > ("", &ImageConst1)
     .constructor< arma::icube, std::string > ("", &ImageConst2)

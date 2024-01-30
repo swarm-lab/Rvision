@@ -67,7 +67,7 @@ bool VideoWriterConst2(SEXP* args, int nargs) {
 }
 
 int getCapPropId(std::string propId) {
-  int numPropId = 70;
+  int numPropId = 79;
 
   int enum_ints[] = {cv::CAP_PROP_DC1394_OFF, cv::CAP_PROP_DC1394_MODE_MANUAL,
                      cv::CAP_PROP_DC1394_MODE_AUTO, cv::CAP_PROP_DC1394_MODE_ONE_PUSH_AUTO,
@@ -98,7 +98,11 @@ int getCapPropId(std::string propId) {
                      cv::CAP_PROP_AUDIO_BASE_INDEX, cv::CAP_PROP_AUDIO_TOTAL_CHANNELS,
                      cv::CAP_PROP_AUDIO_TOTAL_STREAMS, cv::CAP_PROP_AUDIO_SYNCHRONIZE,
                      cv::CAP_PROP_LRF_HAS_KEY_FRAME, cv::CAP_PROP_CODEC_EXTRADATA_INDEX,
-                     cv::CAP_PROP_FRAME_TYPE, cv::CAP_PROP_N_THREADS};
+                     cv::CAP_PROP_FRAME_TYPE, cv::CAP_PROP_N_THREADS, 
+                     cv::CAP_PROP_IOS_DEVICE_FOCUS, cv::CAP_PROP_IOS_DEVICE_EXPOSURE,
+                     cv::CAP_PROP_IOS_DEVICE_FLASH, cv::CAP_PROP_IOS_DEVICE_WHITEBALANCE,
+                     cv::CAP_PROP_IOS_DEVICE_TORCH
+};
 
   std::string enum_strings[] = {"DC1394_OFF", "DC1394_MODE_MANUAL", "DC1394_MODE_AUTO",
                                 "DC1394_MODE_ONE_PUSH_AUTO", "POS_MSEC", "POS_FRAMES",
@@ -122,7 +126,9 @@ int getCapPropId(std::string propId) {
                                 "AUDIO_SAMPLES_PER_SECOND", "AUDIO_BASE_INDEX",
                                 "AUDIO_TOTAL_CHANNELS", "AUDIO_TOTAL_STREAMS",
                                 "AUDIO_SYNCHRONIZE", "LRF_HAS_KEY_FRAME",
-                                "CODEC_EXTRADATA_INDEX", "FRAME_TYPE", "N_THREADS"};
+                                "CODEC_EXTRADATA_INDEX", "FRAME_TYPE", "N_THREADS",
+                                "IOS_DEVICE_FOCUS", "IOS_DEVICE_EXPOSURE", "IOS_DEVICE_FLASH",
+                                "IOS_DEVICE_WHITEBALANCE", "IOS_DEVICE_TORCH"};
 
   for(int i = 0; i < numPropId; i++) {
     if(propId == enum_strings[i]) return enum_ints[i];

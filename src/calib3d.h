@@ -54,7 +54,7 @@ Rcpp::List _calibrateCameraRO(Rcpp::List refPoints, Rcpp::List imgPoints,
     Rcpp::NumericMatrix refTmp = Rcpp::as<Rcpp::NumericMatrix>(refPoints[i]);
     Rcpp::NumericMatrix imgTmp = Rcpp::as<Rcpp::NumericMatrix>(imgPoints[i]);
 
-    for (uint j = 0; j < refTmp.nrow(); j++) {
+    for (int j = 0; j < refTmp.nrow(); j++) {
       referencePoints[i].push_back(cv::Point3f(refTmp(j,0), refTmp(j,1), refTmp(j,2)));
       imagePoints[i].push_back(cv::Point2f(imgTmp(j,0) - 1, -imgTmp(j,1) + imgSize(0)));
     }
