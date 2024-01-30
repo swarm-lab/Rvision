@@ -2,7 +2,7 @@
 #'
 #' @name Image-class
 #'
-#' @aliases Rcpp_Image
+#' @aliases Rcpp_Image Image
 #'
 #' @docType class
 #'
@@ -32,24 +32,7 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{image}}, \code{\link{Video}}, \code{\link{Stream}}
-#'
-#' @export
-setClass("Image",
-  representation(
-    cpp = "C++Object"
-  ),
-  prototype(
-    cpp = NULL
-  ),
-  validity = function(object) {
-    if (is.null(object@cpp) || is(object@cpp, "Rcpp_Image")) {
-      return(TRUE)
-    } else {
-      return(FALSE)
-    }
-  }
-)
+#' @seealso \code{\link{image}}
 
 
 #' @title Create an Object of Class \code{Image}
@@ -80,7 +63,7 @@ setClass("Image",
 #'
 #' @export
 image <- function(..., colorspace = "BGR") {
-  new(Rvision::Image, ..., colorspace)
+  new(Image, ..., colorspace)
 }
 
 

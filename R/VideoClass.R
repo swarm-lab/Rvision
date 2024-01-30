@@ -2,7 +2,7 @@
 #'
 #' @name Video-class
 #'
-#' @aliases Rcpp_Video
+#' @aliases Rcpp_Video Video
 #'
 #' @docType class
 #'
@@ -30,22 +30,8 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @export
-setClass("Video",
-  representation(
-    cpp = "C++Object"
-  ),
-  prototype(
-    cpp = NULL
-  ),
-  validity = function(object) {
-    if (is.null(object@cpp) || is(object@cpp, "Rcpp_Video")) {
-      return(TRUE)
-    } else {
-      return(FALSE)
-    }
-  }
-)
+#' @seealso \code{\link{video}}, \code{\link{queue}}
+
 
 
 #' @title Create an Object of Class \code{Video}

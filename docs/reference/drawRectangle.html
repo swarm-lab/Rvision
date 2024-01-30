@@ -57,15 +57,15 @@
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Draw Rectangles on an <code>Image</code></h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Draw Rectangles on an <code><a href="Image-class.html">Image</a></code></h1>
       <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/HEAD/R/draw.R" class="external-link"><code>R/draw.R</code></a></small>
       <div class="d-none name"><code>drawRectangle.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p><code>drawRectangle</code> draws rectangles over an <code>Image</code>
+    <p><code>drawRectangle</code> draws rectangles over an <code><a href="Image-class.html">Image</a></code>
  object. This operation is destructive: it changes irreversibly the
- <code>Image</code> object and cannot be undone.</p>
+ <code><a href="Image-class.html">Image</a></code> object and cannot be undone.</p>
     </div>
 
     <div class="section level2">
@@ -76,7 +76,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>image</dt>
-<dd><p>An <code>Image</code> object.</p></dd>
+<dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
 
 
 <dt>pt1_x</dt>
@@ -120,7 +120,7 @@ rectangle is drawn.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code>Image</code>, <code><a href="drawRotatedRectangle.html">drawRotatedRectangle</a></code></p></div>
+    <div class="dont-index"><p><code><a href="Image-class.html">Image</a></code>, <code><a href="drawRotatedRectangle.html">drawRotatedRectangle</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -129,10 +129,8 @@ rectangle is drawn.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="Image-class.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">drawRectangle</span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">290</span>, <span class="fl">170</span>, <span class="fl">440</span>, <span class="fl">325</span>, thickness <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'balloon' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

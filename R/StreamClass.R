@@ -2,7 +2,7 @@
 #'
 #' @name Stream-class
 #'
-#' @aliases Rcpp_Stream
+#' @aliases Rcpp_Stream Stream
 #'
 #' @docType class
 #'
@@ -21,24 +21,7 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #' 
-#' @seealso \code{\link{VideoWriter}}, \code{\link{Stream}}
-#' 
-#' @export
-setClass("Stream",
-  representation(
-    cpp = "C++Object"
-  ),
-  prototype(
-    cpp = NULL
-  ),
-  validity = function(object) {
-    if (is.null(object@cpp) || is(object@cpp, "Rcpp_Stream")) {
-      return(TRUE)
-    } else {
-      return(FALSE)
-    }
-  }
-)
+#' @seealso \code{\link{stream}}, \code{\link{queue}}
 
 
 #' @title Create an Object of Class \code{Stream}

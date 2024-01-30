@@ -80,7 +80,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>image</dt>
-<dd><p>An an 8-bit (8U) single-channel <code>Image</code> object.</p></dd>
+<dd><p>An an 8-bit (8U) single-channel <code><a href="Image-class.html">Image</a></code> object.</p></dd>
 
 
 <dt>connectivity</dt>
@@ -114,10 +114,10 @@ components should be returned.</p></dd>
 
 <dt>target</dt>
 <dd><p>The location where the results should be stored. It can take 2
-values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the results
+values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
   are stored inside (the default).</p></li>
-<li><p>An <code>Image</code> object:the results are stored in another
-  existing <code>Image</code> object. In this case, <code>target</code> must be a
+<li><p>An <code><a href="Image-class.html">Image</a></code> object:the results are stored in another
+  existing <code><a href="Image-class.html">Image</a></code> object. In this case, <code>target</code> must be a
   single channel image with a 16U or 32S bit depth. Note that this will
   replace the content of <code>target</code>.</p></li>
 </ul></dd>
@@ -145,7 +145,7 @@ values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the r
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code>Image</code></p></div>
+    <div class="dont-index"><p><code><a href="Image-class.html">Image</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -154,14 +154,10 @@ values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the r
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="Image-class.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dots_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">dots</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots' not found</span>
 <span class="r-in"><span><span class="va">dots_bin</span> <span class="op">&lt;-</span> <span class="va">dots_gray</span> <span class="op">&lt;</span> <span class="fl">200</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots_gray' not found</span>
 <span class="r-in"><span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu">connectedComponents</span><span class="op">(</span><span class="va">dots_bin</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots_bin' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

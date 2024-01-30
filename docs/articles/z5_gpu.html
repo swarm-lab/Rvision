@@ -131,7 +131,7 @@ memory. This can be done very easily as follows:</p>
 <span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load the image in memory</span></span>
-<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>
+<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Image-class.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Copy the image to GPU memory</span></span>
 <span><span class="va">my_image</span><span class="op">$</span><span class="fu">toGPU</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>

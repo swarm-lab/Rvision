@@ -2,7 +2,7 @@
 #'
 #' @name Queue-class
 #'
-#' @aliases Rcpp_Queue
+#' @aliases Rcpp_Queue Queue
 #'
 #' @docType class
 #'
@@ -37,24 +37,7 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Video}}, \code{\link{Stream}}
-#'
-#' @export
-setClass("Queue",
-  representation(
-    cpp = "C++Object"
-  ),
-  prototype(
-    cpp = NULL
-  ),
-  validity = function(object) {
-    if (is.null(object@cpp) || is(object@cpp, "Rcpp_Queue")) {
-      return(TRUE)
-    } else {
-      return(FALSE)
-    }
-  }
-)
+#' @seealso \code{\link{queue}}, \code{\link{Video}}, \code{\link{Stream}}
 
 
 #' @title Create an Object of Class \code{Queue}

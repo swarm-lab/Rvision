@@ -82,7 +82,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>image</dt>
-<dd><p>An 8-bit (8U) single-channel (GRAY) <code>Image</code> object.</p></dd>
+<dd><p>An 8-bit (8U) single-channel (GRAY) <code><a href="Image-class.html">Image</a></code> object.</p></dd>
 
 
 <dt>method</dt>
@@ -156,12 +156,9 @@ the centers without the radiuses.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="Image-class.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dots_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">dots</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots' not found</span>
 <span class="r-in"><span><span class="va">circ</span> <span class="op">&lt;-</span> <span class="fu">houghCircles</span><span class="op">(</span><span class="va">dots_gray</span>, <span class="st">"ALT"</span>, <span class="fl">1.5</span>, <span class="fl">25</span>, <span class="fl">300</span>, <span class="fl">0.9</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots_gray' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

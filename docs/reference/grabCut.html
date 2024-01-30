@@ -81,11 +81,11 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>image</dt>
-<dd><p>An 8-bit (8U), 3-channel <code>Image</code> object to segment.</p></dd>
+<dd><p>An 8-bit (8U), 3-channel <code><a href="Image-class.html">Image</a></code> object to segment.</p></dd>
 
 
 <dt>mask</dt>
-<dd><p>An 8-bit (8U), single-channel <code>Image</code> object. Each
+<dd><p>An 8-bit (8U), single-channel <code><a href="Image-class.html">Image</a></code> object. Each
 pixel can take any of the following 4 values:</p><ul><li><p>0: an obvious background pixels.</p></li>
 <li><p>1: an obvious foreground (object) pixel.</p></li>
 <li><p>2: a possible background pixel.</p></li>
@@ -103,12 +103,12 @@ is only used when <code>mode="RECT"</code> (default: rep(1, 4)).</p></dd>
 
 
 <dt>bgdModel</dt>
-<dd><p>A 1x65, single-channel, 64-bit (64F) <code>Image</code>
+<dd><p>A 1x65, single-channel, 64-bit (64F) <code><a href="Image-class.html">Image</a></code>
 object to set and store the parameters of the background model.</p></dd>
 
 
 <dt>fgdModel</dt>
-<dd><p>A 1x65, single-channel, 64-bit (64F) <code>Image</code>
+<dd><p>A 1x65, single-channel, 64-bit (64F) <code><a href="Image-class.html">Image</a></code>
 object to set and store the parameters of the foreground model.</p></dd>
 
 
@@ -141,7 +141,7 @@ It can be any of the following:</p><ul><li><p>"RECT": The function initializes t
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code>Image</code></p></div>
+    <div class="dont-index"><p><code><a href="Image-class.html">Image</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -150,14 +150,11 @@ It can be any of the following:</p><ul><li><p>"RECT": The function initializes t
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="Image-class.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mask</span> <span class="op">&lt;-</span> <span class="fu"><a href="zeros.html">zeros</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'balloon' not found</span>
 <span class="r-in"><span><span class="va">bgdModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="zeros.html">zeros</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">65</span>, <span class="fl">1</span>, <span class="st">"64F"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fgdModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="zeros.html">zeros</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">65</span>, <span class="fl">1</span>, <span class="st">"64F"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">grabCut</span><span class="op">(</span><span class="va">balloon</span>, <span class="va">mask</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">290</span>, <span class="fl">170</span>, <span class="fl">160</span>, <span class="fl">160</span><span class="op">)</span>, <span class="va">bgdModel</span>, <span class="va">fgdModel</span>, iter <span class="op">=</span> <span class="fl">5</span>, mode <span class="op">=</span> <span class="st">"RECT"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'balloon' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

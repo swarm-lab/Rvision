@@ -203,7 +203,7 @@ image using <code><a href="https://rdrr.io/r/graphics/lines.html" class="externa
 <span><span class="va">path_to_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img"</span>, <span class="st">"balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load the image in memory</span></span>
-<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/image.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>
+<span><span class="va">my_image</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Image-class.html">image</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_image</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot the image using the base R plotting device</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_image</span><span class="op">)</span></span>
@@ -228,7 +228,7 @@ For instance:</p>
 <span><span class="va">path_to_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid"</span>, <span class="st">"Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Open the video file stream</span></span>
-<span><span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/video.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span></span>
+<span><span class="va">my_video</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Video-class.html">video</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="va">path_to_video</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create an empty display window with width and height half of that of the video </span></span>
 <span><span class="co"># (note: the display can hide behind other windows, especially on Mac)</span></span>

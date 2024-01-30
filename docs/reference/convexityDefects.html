@@ -106,18 +106,44 @@ produced by <code><a href="findContours.html">findContours</a></code>)</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="Image-class.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dots_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">dots</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots' not found</span>
 <span class="r-in"><span><span class="va">dots_bin</span> <span class="op">&lt;-</span> <span class="va">dots_gray</span> <span class="op">&lt;</span> <span class="fl">200</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots_gray' not found</span>
 <span class="r-in"><span><span class="va">contours</span> <span class="op">&lt;-</span> <span class="fu"><a href="findContours.html">findContours</a></span><span class="op">(</span><span class="va">dots_bin</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots_bin' not found</span>
 <span class="r-in"><span><span class="va">contour0</span> <span class="op">&lt;-</span> <span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span><span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">0</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'contours' not found</span>
 <span class="r-in"><span><span class="fu">convexityDefects</span><span class="op">(</span><span class="va">contour0</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'contour0' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       start_index end_index farthest_pt_index fixpt_depth</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]           1         2                 2         210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]           3         4                 4         186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]           5         6                 6         162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]           7         8                 8         114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]          17        18                18         142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]          20        21                21         142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]          24        25                25         114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]          28        29                29         190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]          32        33                33         186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]          37        38                38         186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11,]          41        42                42         162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [12,]          43        44                44         114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13,]          53        54                54         142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [14,]          58        59                59         142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15,]          62        63                63         114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16,]          67        68                68         114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17,]          69        70                70         142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [18,]          72        73                73         142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19,]          76        77                77         114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20,]          80        81                81         162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21,]          86        87                87         201</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22,]          89        90                90         201</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [23,]          91        92                92         162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [24,]          97        98                98         114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25,]         105       106               106         142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26,]         107       108               108         154</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [27,]         110       111               111         142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28,]         114       115               115         114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29,]         122       123               123         190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [30,]         126       127               127         186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31,]         128       129               129         210</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

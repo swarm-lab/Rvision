@@ -92,14 +92,12 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="Image-class.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">blobs</span> <span class="op">&lt;-</span> <span class="fu"><a href="simpleBlobDetector.html">simpleBlobDetector</a></span><span class="op">(</span><span class="fu"><a href="invert.html">invert</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span>, min_threshold <span class="op">=</span> <span class="fl">25</span>, max_threshold <span class="op">=</span> <span class="fl">220</span>,</span></span>
 <span class="r-in"><span>                            filter_by_area <span class="op">=</span> <span class="cn">TRUE</span>, min_area <span class="op">=</span> <span class="fl">200</span>, max_area <span class="op">=</span> <span class="cn">Inf</span>,</span></span>
 <span class="r-in"><span>                            filter_by_color <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots' not found</span>
 <span class="r-in"><span><span class="fu">isBlob</span><span class="op">(</span><span class="va">blobs</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'blobs' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

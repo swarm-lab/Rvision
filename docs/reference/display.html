@@ -61,16 +61,16 @@
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Display <code>Image</code> Object</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Display <code><a href="Image-class.html">Image</a></code> Object</h1>
       <small class="dont-index">Source: <a href="https://github.com/swarm-lab/Rvision/blob/HEAD/R/display.R" class="external-link"><code>R/display.R</code></a></small>
       <div class="d-none name"><code>display.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p><code>display</code> displays <code>Image</code> objects in special
+    <p><code>display</code> displays <code><a href="Image-class.html">Image</a></code> objects in special
  windows created by <code><a href="newDisplay.html">newDisplay</a></code> (or creates it if it does not
  exist yet). This function is faster than the generic <code><a href="plot.Image.html">plot.Image</a></code>
- function for displaying <code>Image</code> objects, but cannot be used in
+ function for displaying <code><a href="Image-class.html">Image</a></code> objects, but cannot be used in
  combination with base R plotting utilities.</p>
     </div>
 
@@ -89,7 +89,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>image</dt>
-<dd><p>An <code>Image</code> object.</p></dd>
+<dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
 
 
 <dt>window_name</dt>
@@ -126,7 +126,7 @@ See notes in <code><a href="resize.html">resize</a></code> for all accepted inte
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code>Image</code>, <code><a href="newDisplay.html">newDisplay</a></code>, <code><a href="destroyDisplay.html">destroyDisplay</a></code>,
+    <div class="dont-index"><p><code><a href="Image-class.html">Image</a></code>, <code><a href="newDisplay.html">newDisplay</a></code>, <code><a href="destroyDisplay.html">destroyDisplay</a></code>,
  <code><a href="plot.Image.html">plot.Image</a></code></p></div>
     </div>
     <div class="section level2">
@@ -137,7 +137,7 @@ See notes in <code><a href="resize.html">resize</a></code> for all accepted inte
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="Image-class.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">display</span><span class="op">(</span><span class="va">balloon</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span>, width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>

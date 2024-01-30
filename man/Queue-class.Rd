@@ -3,8 +3,41 @@
 \docType{class}
 \name{Queue-class}
 \alias{Queue-class}
+\alias{queue}
 \alias{Rcpp_Queue}
+\alias{Queue}
 \title{An S4 Class Containing a Queue of Images}
+\usage{
+queue(x, size = 10, delay = 1000, overflow = "pause")
+}
+\arguments{
+\item{x}{Either a \code{\link{Video}} or a \code{\link{Stream}} object.}
+
+\item{size}{The number of frames that the \code{\link{Queue}} object can
+store (default: 10). This number is fixed if \code{overflow} is set to
+\code{"pause"} or \code{"replace"}. This number may increase if
+\code{overflow} is set to \code{"grow"} and the queue becomes full.}
+
+\item{delay}{Time in microseconds between two queue updates (default: 1000).
+Increasing the delay will slow down the speed at which the queue fills up.
+Decreasing it will fill up the queue faster but will use up more processing
+resources.}
+
+\item{overflow}{A character string indicating what the \code{\link{Queue}}
+object should do when it is full. Three methods are available:
+\itemize{
+ \item{"pause": }{the queue will stop retrieving and storing new frames
+  until a frame is read by the user.}
+ \item{"replace": }{the oldest frame in the queue is discarded to make space
+  for a new frame. }
+ \item{"grow": }{the size of the queue is doubled every time it fills up.
+  This should be used with extreme caution as it can lead to excessive
+  memory usage.}
+}}
+}
+\value{
+A \code{\link{Queue}} object.
+}
 \description{
 A \code{Queue} object contains a self-filling, asynchronous
  queue of images retrieved from a \code{\link{Video}} or \code{\link{Stream}}
@@ -17,6 +50,9 @@ A \code{Queue} object contains a self-filling, asynchronous
  pre-loaded frames are, therefore, immediately available when needed,
  effectively eliminating the wait time between two frame reads (as long as
  the queue reads and stores new frames faster than R can process them).
+
+Function for creating \code{\link{Queue}} objects for
+ \code{\link{Video}} and \code{\link{Stream}} objects.
 }
 \section{Slots}{
 
@@ -39,8 +75,13 @@ neither).}
 \item{\code{reset}}{Function to empty the queue and start collecting new frames.}
 }}
 
+\examples{
+balloon <- video(system.file("sample_vid/Balloon.mp4", package = "Rvision"))
+buf <- queue(balloon)
+
+}
 \seealso{
-\code{\link{Video}}, \code{\link{Stream}}
+\code{\link{queue}}, \code{\link{Video}}, \code{\link{Stream}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

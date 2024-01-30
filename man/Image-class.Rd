@@ -3,14 +3,34 @@
 \docType{class}
 \name{Image-class}
 \alias{Image-class}
+\alias{image}
 \alias{Rcpp_Image}
+\alias{Image}
 \title{An S4 Class Containing an OpenCV Image}
+\usage{
+image(..., colorspace = "BGR")
+}
+\arguments{
+\item{...}{When created from an image file, \code{image} takes one argument
+that is a character string indicating the path to the image file. When
+created from an array (e.g. a matrix), it takes this array as its single
+argument. An \code{Image} object can also be created without any argument,
+in which case it is empty and can be populated with an image later.}
+
+\item{colorspace}{A string indicating the desired color space for the image.}
+}
+\value{
+An \code{\link{Image}} object.
+}
 \description{
 \code{Image} objects are the base objects of the
  \pkg{\link{Rvision}} package. They contain an
  \href{http://opencv.org/}{OpenCV} image that can originate from an image
  file, an array, a video file or a video stream. This image can be
  manipulated using the functions of \pkg{\link{Rvision}}.
+
+Function for creating \code{\link{Image}} objects from arrays
+ and image files.
 }
 \section{Slots}{
 
@@ -34,8 +54,19 @@
 \item{\code{write}}{A function to write the object to a file.}
 }}
 
+\note{
+\code{Image} objects can be created from video files and video streams
+ using the following functions: \code{\link{video}}, \code{\link{stream}}.
+}
+\examples{
+balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))
+noise <- image(array(sample(0:255, 100 * 100 * 3, replace = TRUE), dim = c(100, 100, 3)))
+
+}
 \seealso{
-\code{\link{image}}, \code{\link{Video}}, \code{\link{Stream}}
+\code{\link{image}}
+
+\code{\link{Image}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

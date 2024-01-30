@@ -63,9 +63,9 @@
     </div>
 
     <div class="ref-description section level2">
-    <p><code>histmatch</code> transforms an <code>Image</code> object so
+    <p><code>histmatch</code> transforms an <code><a href="Image-class.html">Image</a></code> object so
  that its histogram matches (approximately) that of another
- <code>Image</code> object.</p>
+ <code><a href="Image-class.html">Image</a></code> object.</p>
     </div>
 
     <div class="section level2">
@@ -76,22 +76,22 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>image</dt>
-<dd><p>An 8-bit (8U) <code>Image</code> object to transform.</p></dd>
+<dd><p>An 8-bit (8U) <code><a href="Image-class.html">Image</a></code> object to transform.</p></dd>
 
 
 <dt>reference</dt>
-<dd><p>An 8-bit (8U) <code>Image</code> object which histogram
+<dd><p>An 8-bit (8U) <code><a href="Image-class.html">Image</a></code> object which histogram
 will be used as a reference to transform <code>image</code>.</p></dd>
 
 
 <dt>target</dt>
 <dd><p>The location where the results should be stored. It can take 3
-values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the results
+values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
   are stored inside (the default).</p></li>
 <li><p>"self":the results are stored back into <code>image</code> (faster but
   destructive).</p></li>
-<li><p>An <code>Image</code> object:the results are stored in another
-  existing <code>Image</code> object. This is fast and will not replace the
+<li><p>An <code><a href="Image-class.html">Image</a></code> object:the results are stored in another
+  existing <code><a href="Image-class.html">Image</a></code> object. This is fast and will not replace the
   content of <code>image</code> but will replace that of <code>target</code>. Note that
   if <code>target</code> does not have the same dimensions, number of channels,
   and bit depth as <code>image</code>, nothing will be stored.</p></li>
@@ -102,18 +102,18 @@ values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the r
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>If <code>target="new"</code>, the function returns an <code>Image</code></p>
+<p>If <code>target="new"</code>, the function returns an <code><a href="Image-class.html">Image</a></code></p>
 
 
 <p>object. If <code>target="self"</code>, the function returns nothing and modifies</p>
 <p></p>
-<p><code>image</code> in place. If <code>target</code> is an <code>Image</code> object,
- the function returns nothing and modifies that <code>Image</code> object in
+<p><code>image</code> in place. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code> object,
+ the function returns nothing and modifies that <code><a href="Image-class.html">Image</a></code> object in
  place.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code>Image</code>, <code>histmatch</code></p></div>
+    <div class="dont-index"><p><code><a href="Image-class.html">Image</a></code>, <code>histmatch</code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -122,12 +122,9 @@ values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the r
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
-<span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="Image-class.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="Image-class.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dots_matched</span> <span class="op">&lt;-</span> <span class="fu">histmatch</span><span class="op">(</span><span class="va">dots</span>, <span class="va">balloon</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

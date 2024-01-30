@@ -73,7 +73,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>image</dt>
-<dd><p>An <code>Image</code> object.</p></dd>
+<dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
 
 
 <dt>channel</dt>
@@ -82,14 +82,14 @@
 
 <dt>target</dt>
 <dd><p>The location where the results should be stored. It can take 2
-values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the results
+values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
   are stored inside (the default).</p></li>
-<li><p>An <code>Image</code> object:the results are stored in another
-  existing <code>Image</code> object. This is fast and will not replace the
+<li><p>An <code><a href="Image-class.html">Image</a></code> object:the results are stored in another
+  existing <code><a href="Image-class.html">Image</a></code> object. This is fast and will not replace the
   content of <code>image</code> but will replace that of <code>target</code>. Note that
   if <code>target</code> does not have the same dimensions and bit depth as
   <code>image</code>, an error may be thrown. <code>target</code> should also be a
-  single-channel <code>Image</code> object or an error will be thrown.</p></li>
+  single-channel <code><a href="Image-class.html">Image</a></code> object or an error will be thrown.</p></li>
 </ul></dd>
 
 </dl></div>
@@ -99,17 +99,17 @@ values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the r
 
 <p>If <code>target="new"</code>, the function returns a single-channel</p>
 <p></p>
-<p><code>Image</code> object. If <code>target</code> is an <code>Image</code></p>
+<p><code><a href="Image-class.html">Image</a></code> object. If <code>target</code> is an <code><a href="Image-class.html">Image</a></code></p>
 
 
-<p>object, the function returns nothing and modifies that <code>Image</code></p>
+<p>object, the function returns nothing and modifies that <code><a href="Image-class.html">Image</a></code></p>
 
 
 <p>object in place.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code>Image</code>, <code><a href="split.html">split</a></code>, <code><a href="merge.html">merge</a></code></p></div>
+    <div class="dont-index"><p><code><a href="Image-class.html">Image</a></code>, <code><a href="split.html">split</a></code>, <code><a href="merge.html">merge</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -118,10 +118,12 @@ values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the r
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="Image-class.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">extractChannel</span><span class="op">(</span><span class="va">balloon</span>, <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'balloon' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class: image. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimensions: 640x360.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Type: GRAY, 1-channel, 8U.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GPU: FALSE.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

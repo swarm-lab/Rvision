@@ -334,9 +334,6 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/huInvariants.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/image.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/imageArithmetic.html</loc>
   </url>
   <url>
@@ -484,9 +481,6 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/pyrUp.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/queue.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/queue_dimensions.html</loc>
   </url>
   <url>
@@ -559,9 +553,6 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/sqrt.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/stream.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/stream_dimensions.html</loc>
   </url>
   <url>
@@ -595,13 +586,7 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/undistortPoints.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/video.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/videoStack.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/videoWriter.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/video_dimensions.html</loc>
