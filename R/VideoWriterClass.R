@@ -29,8 +29,23 @@
 #' @slot release Function to release the object from memory.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
+#' 
 #' @export
-"VideoWriter"
+setClass("VideoWriter",
+  representation(
+    cpp = "C++Object"
+  ),
+  prototype(
+    cpp = NULL
+  ),
+  validity = function(object) {
+    if (is.null(object@cpp) || is(object@cpp, "Rcpp_VideoWriter")) {
+      return(TRUE)
+    } else {
+      return(FALSE)
+    }
+  }
+)
 
 
 #' @title Create an object of class \code{VideoWriter}

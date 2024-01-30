@@ -59,7 +59,7 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Retrieve the dimensions an <code><a href="Image-class.html">Image</a></code> object.</p>
+    <p>Retrieve the dimensions an <code>Image</code> object.</p>
     </div>
 
     <div class="section level2">
@@ -71,7 +71,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>An <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+<dd><p>An <code>Image</code> object.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -83,7 +83,7 @@
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="Image-class.html">Image</a></code>, <code><a href="image.html">image</a></code></p></div>
+    <div class="dont-index"><p><code>Image</code>, <code><a href="image.html">image</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -93,8 +93,9 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 360 640   3</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'balloon' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

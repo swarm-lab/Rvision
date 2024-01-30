@@ -3,15 +3,8 @@
 \docType{class}
 \name{VideoWriter-class}
 \alias{VideoWriter-class}
-\alias{VideoWriter}
 \alias{Rcpp_VideoWriter}
 \title{An S4 Class Containing an OpenCV Video Writer}
-\format{
-An object of class \code{C++Class} of length 1.
-}
-\usage{
-VideoWriter
-}
 \description{
 A \code{VideoWriter} object contains an \href{http://opencv.org/}{OpenCV}
  video writer to an output file.
@@ -42,4 +35,3 @@ of the video writer.}
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
-\keyword{datasets}

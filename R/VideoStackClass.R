@@ -19,11 +19,12 @@
 #'
 #' @export
 setClass("VideoStack",
-         contains = "list",
-         slots = c(nframes = "numeric"),
-         prototype = structure(
-           list(),
-           nframes = numeric())
+  contains = "list",
+  slots = c(nframes = "numeric"),
+  prototype = structure(
+    list(),
+    nframes = numeric()
+  )
 )
 
 

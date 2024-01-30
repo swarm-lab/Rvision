@@ -75,7 +75,7 @@
     <dl><dt>x</dt>
 <dd><p>Either a Nx2 matrix of the X-Y coordinates of a polygon (e.g., a
 contour produced by <code><a href="findContours.html">findContours</a></code>), or a single-channel
-<code><a href="Image-class.html">Image</a></code> object.</p></dd>
+<code>Image</code> object.</p></dd>
 
 
 <dt>binary</dt>
@@ -115,36 +115,17 @@ where \((\bar{x}, \bar{y})\) is the mass center:
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/dots.jpg"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
 <span class="r-in"><span><span class="va">dots_gray</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="va">dots</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots' not found</span>
 <span class="r-in"><span><span class="va">dots_bin</span> <span class="op">&lt;-</span> <span class="va">dots_gray</span> <span class="op">&lt;</span> <span class="fl">200</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots_gray' not found</span>
 <span class="r-in"><span><span class="va">contours</span> <span class="op">&lt;-</span> <span class="fu"><a href="findContours.html">findContours</a></span><span class="op">(</span><span class="va">dots_bin</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dots_bin' not found</span>
 <span class="r-in"><span><span class="va">contour0</span> <span class="op">&lt;-</span> <span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span><span class="va">contours</span><span class="op">$</span><span class="va">contours</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">0</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'contours' not found</span>
 <span class="r-in"><span><span class="fu">moments</span><span class="op">(</span><span class="va">contour0</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    moment         value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     m00  8.958500e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     m10  5.043943e+06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     m01  4.582793e+05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     m20  2.846367e+09</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     m11  2.575802e+08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     m02  2.981324e+07</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     m30  1.609871e+12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     m21  1.450999e+11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     m12  1.674067e+10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    m03  2.181108e+09</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11   mu20  6.454539e+06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12   mu11 -4.467378e+05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13   mu02  6.369592e+06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14   mu30  3.439845e+05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15   mu21 -5.259778e+06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16   mu12  5.018900e+05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17   mu03  4.303903e+06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18   nu20  8.042566e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19   nu11 -5.566499e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20   nu02  7.936719e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21   nu30  4.528461e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22   nu21 -6.924352e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23   nu12  6.607243e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24   nu03  5.665970e-04</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'contour0' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

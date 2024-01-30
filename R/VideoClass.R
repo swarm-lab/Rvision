@@ -31,7 +31,21 @@
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @export
-"Video"
+setClass("Video",
+  representation(
+    cpp = "C++Object"
+  ),
+  prototype(
+    cpp = NULL
+  ),
+  validity = function(object) {
+    if (is.null(object@cpp) || is(object@cpp, "Rcpp_Video")) {
+      return(TRUE)
+    } else {
+      return(FALSE)
+    }
+  }
+)
 
 
 #' @title Create an Object of Class \code{Video}

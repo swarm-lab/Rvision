@@ -82,11 +82,11 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>template</dt>
-<dd><p>A grayscale <code><a href="Image-class.html">Image</a></code> object.</p></dd>
+<dd><p>A grayscale <code>Image</code> object.</p></dd>
 
 
 <dt>image</dt>
-<dd><p>A grayscale <code><a href="Image-class.html">Image</a></code> object of the same dimensions as
+<dd><p>A grayscale <code>Image</code> object of the same dimensions as
 <code>template</code>.</p></dd>
 
 
@@ -117,7 +117,7 @@ to transform <code>image</code> into <code>template</code>. It can be any of the
 
 
 <dt>mask</dt>
-<dd><p>A binary <code><a href="Image-class.html">Image</a></code> object of the same dimensions as
+<dd><p>A binary <code>Image</code> object of the same dimensions as
 <code>template</code>. Only the pixels of <code>image</code> where <code>mask</code> is
 nonzero are used in the computation. If <code>NULL</code>, all pixels are used.</p></dd>
 
@@ -154,11 +154,11 @@ filtering is applied.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">file1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">file2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon2.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">balloon1</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="va">file1</span><span class="op">)</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
 <span class="r-in"><span><span class="va">balloon2</span> <span class="op">&lt;-</span> <span class="fu"><a href="changeColorSpace.html">changeColorSpace</a></span><span class="op">(</span><span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="va">file2</span><span class="op">)</span>, <span class="st">"GRAY"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
 <span class="r-in"><span><span class="fu">findTransformECC</span><span class="op">(</span><span class="va">balloon1</span>, <span class="va">balloon2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]      [,2]      [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0909576 0.1289074 -67.90624</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.1418494 1.1485587  17.78965</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'balloon1' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

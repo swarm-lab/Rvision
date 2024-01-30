@@ -3,15 +3,8 @@
 \docType{class}
 \name{Video-class}
 \alias{Video-class}
-\alias{Video}
 \alias{Rcpp_Video}
 \title{An S4 Class Containing an OpenCV Video}
-\format{
-An object of class \code{C++Class} of length 1.
-}
-\usage{
-Video
-}
 \description{
 A \code{Video} object contains an \href{http://opencv.org/}{OpenCV}
  video that originates from a video file.
@@ -42,4 +35,3 @@ in the stream.}
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
-\keyword{datasets}

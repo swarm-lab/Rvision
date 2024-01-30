@@ -61,8 +61,8 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Overloaded <code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></code> to handle <code><a href="Image-class.html">Image</a></code>
- objects and lists of <code><a href="Image-class.html">Image</a></code> objects.</p>
+    <p>Overloaded <code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></code> to handle <code>Image</code>
+ objects and lists of <code>Image</code> objects.</p>
     </div>
 
     <div class="section level2">
@@ -73,7 +73,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>An <code><a href="Image-class.html">Image</a></code> object or a list of <code><a href="Image-class.html">Image</a></code>
+<dd><p>An <code>Image</code> object or a list of <code>Image</code>
 objects.</p></dd>
 
 
@@ -84,10 +84,10 @@ an image or a list of images.</p></dd>
 
 <dt>target</dt>
 <dd><p>The location where the results should be stored when passing a
-sum of images to the function. It can take 2 values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
+sum of images to the function. It can take 2 values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the results
   are stored inside (the default).</p></li>
-<li><p>An <code><a href="Image-class.html">Image</a></code> object:the results are stored in another
-  existing <code><a href="Image-class.html">Image</a></code> object. This is fast but will replace the
+<li><p>An <code>Image</code> object:the results are stored in another
+  existing <code>Image</code> object. This is fast but will replace the
   content of <code>target</code>. Note that <code>target</code> should have the same
   dimensions and number of channels as the images in the list, otherwise an
   error will be thrown.</p></li>
@@ -98,21 +98,21 @@ sum of images to the function. It can take 2 values:</p><ul><li><p>"new":a new <
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>If <code>x</code> is an <code><a href="Image-class.html">Image</a></code> object, the function returns a
+<p>If <code>x</code> is an <code>Image</code> object, the function returns a
  numeric value (for single-channel images) or a vector of numeric values (for
  multi-channel images).</p>
 
 
-<p>If <code>x</code> is a list of <code><a href="Image-class.html">Image</a></code> objects and <code>target="new"</code>,
- the function returns an <code><a href="Image-class.html">Image</a></code> object. If <code>target</code> is an</p>
+<p>If <code>x</code> is a list of <code>Image</code> objects and <code>target="new"</code>,
+ the function returns an <code>Image</code> object. If <code>target</code> is an</p>
 <p></p>
-<p><code><a href="Image-class.html">Image</a></code> object, the function returns nothing and modifies that</p>
+<p><code>Image</code> object, the function returns nothing and modifies that</p>
 <p></p>
-<p><code><a href="Image-class.html">Image</a></code> object in place.</p>
+<p><code>Image</code> object in place.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="Image-class.html">Image</a></code></p></div>
+    <div class="dont-index"><p><code>Image</code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -122,9 +122,9 @@ sum of images to the function. It can take 2 values:</p><ul><li><p>"new":a new <
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
 <span class="r-in"><span><span class="fu">sum</span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        B        G        R </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37967180 34473652 29520940 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in h(simpleError(msg, call)):</span> error in evaluating the argument 'x' in selecting a method for function 'sum': object 'balloon' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">balloon_vid</span> <span class="op">&lt;-</span> <span class="fu"><a href="video.html">video</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_vid/Balloon.mp4"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">img_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="readNext.html">readNext</a></span><span class="op">(</span><span class="va">balloon_vid</span><span class="op">)</span><span class="op">)</span></span></span>

@@ -3,15 +3,8 @@
 \docType{class}
 \name{Stream-class}
 \alias{Stream-class}
-\alias{Stream}
 \alias{Rcpp_Stream}
 \title{An S4 Class Containing an OpenCV Stream}
-\format{
-An object of class \code{C++Class} of length 1.
-}
-\usage{
-Stream
-}
 \description{
 A \code{Stream} object contains an \href{http://opencv.org/}{OpenCV}
  stream that originates from a camera connected to the computer.
@@ -30,7 +23,9 @@ A \code{Stream} object contains an \href{http://opencv.org/}{OpenCV}
 \item{\code{release}}{Function to release the object from memory.}
 }}
 
+\seealso{
+\code{\link{VideoWriter}}, \code{\link{Stream}}
+}
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
-\keyword{datasets}

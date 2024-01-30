@@ -3,15 +3,8 @@
 \docType{class}
 \name{Queue-class}
 \alias{Queue-class}
-\alias{Queue}
 \alias{Rcpp_Queue}
 \title{An S4 Class Containing a Queue of Images}
-\format{
-An object of class \code{C++Class} of length 1.
-}
-\usage{
-Queue
-}
 \description{
 A \code{Queue} object contains a self-filling, asynchronous
  queue of images retrieved from a \code{\link{Video}} or \code{\link{Stream}}
@@ -47,9 +40,8 @@ neither).}
 }}
 
 \seealso{
-\code{\link{Image}}, \code{\link{Video}}, \code{\link{Stream}}
+\code{\link{Video}}, \code{\link{Stream}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
-\keyword{datasets}

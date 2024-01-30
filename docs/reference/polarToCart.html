@@ -73,21 +73,21 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>magnitude</dt>
-<dd><p>A 32- or 64-bit (32F or 64F) <code><a href="Image-class.html">Image</a></code>
+<dd><p>A 32- or 64-bit (32F or 64F) <code>Image</code>
 object corresponding to the magnitudes of the vector field.</p></dd>
 
 
 <dt>angle</dt>
-<dd><p>A 32- or 64-bit (32F or 64F) <code><a href="Image-class.html">Image</a></code>
+<dd><p>A 32- or 64-bit (32F or 64F) <code>Image</code>
 object corresponding to the angles of the vector field.</p></dd>
 
 
 <dt>x</dt>
 <dd><p>The location where the x coordinates should be stored. It can take 2
-values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
+values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the results
   are stored inside (the default).</p></li>
-<li><p>An <code><a href="Image-class.html">Image</a></code> object:the results are stored in another
-  existing <code><a href="Image-class.html">Image</a></code> object. Note that an error will be thrown if
+<li><p>An <code>Image</code> object:the results are stored in another
+  existing <code>Image</code> object. Note that an error will be thrown if
   <code>x</code> does not have the same dimensions, number of channels, and bit
   depth as <code>magnitude</code> and <code>angle</code>.</p></li>
 </ul></dd>
@@ -95,10 +95,10 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
 
 <dt>y</dt>
 <dd><p>The location where the y coordinates should be stored. It can take 2
-values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></code> object is created and the results
+values:</p><ul><li><p>"new":a new <code>Image</code> object is created and the results
   are stored inside (the default).</p></li>
-<li><p>An <code><a href="Image-class.html">Image</a></code> object:the results are stored in another
-  existing <code><a href="Image-class.html">Image</a></code> object. Note that an error will be thrown if
+<li><p>An <code>Image</code> object:the results are stored in another
+  existing <code>Image</code> object. Note that an error will be thrown if
   <code>y</code> does not have the same dimensions, number of channels, and bit
   depth as <code>magnitude</code> and <code>angle</code>.</p></li>
 </ul></dd>
@@ -114,11 +114,11 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
     
 
 <p>If <code>x="new"</code> and <code>y="new"</code>, the function returns a list
- containing two <code><a href="Image-class.html">Image</a></code> objects. If <code>x</code> and <code>y</code> are</p>
+ containing two <code>Image</code> objects. If <code>x</code> and <code>y</code> are</p>
 <p></p>
-<p><code><a href="Image-class.html">Image</a></code> objects, the function returns nothing and modifies these</p>
+<p><code>Image</code> objects, the function returns nothing and modifies these</p>
 <p></p>
-<p><code><a href="Image-class.html">Image</a></code> objects in place.</p>
+<p><code>Image</code> objects in place.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -132,16 +132,15 @@ values:</p><ul><li><p>"new":a new <code><a href="Image-class.html">Image</a></co
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balloon</span> <span class="op">&lt;-</span> <span class="fu"><a href="image.html">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"sample_img/balloon1.png"</span>, package <span class="op">=</span> <span class="st">"Rvision"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'Image' is not an exported object from 'namespace:Rvision'</span>
 <span class="r-in"><span><span class="va">field</span> <span class="op">&lt;-</span> <span class="fu"><a href="spatialGradient.html">spatialGradient</a></span><span class="op">(</span><span class="va">balloon</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'balloon' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">field</span>, <span class="va">changeBitDepth</span>, bitdepth <span class="op">=</span> <span class="st">"32F"</span>, target <span class="op">=</span> <span class="st">"self"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $dx</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $dy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'field' not found</span>
 <span class="r-in"><span><span class="va">field_converted</span> <span class="op">&lt;-</span> <span class="fu"><a href="cartToPolar.html">cartToPolar</a></span><span class="op">(</span><span class="va">field</span><span class="op">$</span><span class="va">dx</span>, <span class="va">field</span><span class="op">$</span><span class="va">dy</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'field' not found</span>
 <span class="r-in"><span><span class="va">field_deconverted</span> <span class="op">&lt;-</span> <span class="fu">polarToCart</span><span class="op">(</span><span class="va">field_converted</span><span class="op">$</span><span class="va">magnitude</span>, <span class="va">field_converted</span><span class="op">$</span><span class="va">angle</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'field_converted' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

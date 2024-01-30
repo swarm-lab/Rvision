@@ -20,8 +20,25 @@
 #' @slot release Function to release the object from memory.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
+#' 
+#' @seealso \code{\link{VideoWriter}}, \code{\link{Stream}}
+#' 
 #' @export
-"Stream"
+setClass("Stream",
+  representation(
+    cpp = "C++Object"
+  ),
+  prototype(
+    cpp = NULL
+  ),
+  validity = function(object) {
+    if (is.null(object@cpp) || is(object@cpp, "Rcpp_Stream")) {
+      return(TRUE)
+    } else {
+      return(FALSE)
+    }
+  }
+)
 
 
 #' @title Create an Object of Class \code{Stream}

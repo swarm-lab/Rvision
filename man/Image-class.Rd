@@ -3,20 +3,14 @@
 \docType{class}
 \name{Image-class}
 \alias{Image-class}
-\alias{Image}
 \alias{Rcpp_Image}
 \title{An S4 Class Containing an OpenCV Image}
-\format{
-An object of class \code{C++Class} of length 1.
-}
-\usage{
-Image
-}
 \description{
-\code{Image} objects are the base objects of the \pkg{\link{Rvision}}
- package. They contain an \href{http://opencv.org/}{OpenCV} image that can
- originate from an image file, an array, a video file or a video stream.
- This image can be manipulated using the functions of \pkg{\link{Rvision}}.
+\code{Image} objects are the base objects of the
+ \pkg{\link{Rvision}} package. They contain an
+ \href{http://opencv.org/}{OpenCV} image that can originate from an image
+ file, an array, a video file or a video stream. This image can be
+ manipulated using the functions of \pkg{\link{Rvision}}.
 }
 \section{Slots}{
 
@@ -46,4 +40,3 @@ Image
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
-\keyword{datasets}
