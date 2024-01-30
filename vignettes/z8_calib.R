@@ -92,6 +92,9 @@
 #    col = "gray", lty = 2, lwd = 3
 #  )
 
+## ----out.width = "100%", echo=FALSE-------------------------------------------
+knitr::include_graphics('../man/figures/z8_coverage.png') 
+
 ## ----eval=FALSE, echo=TRUE----------------------------------------------------
 #  calib <- calibrateCamera(ref_points, img_points,
 #    nrow(vid), ncol(vid), maxit = 10000
@@ -110,6 +113,9 @@
 #  # Plot the original and undistorted images on top of each other.
 #  conc <- concatenate(border(fr, 0, 25, 0, 0, border_color = "white"), fr_undist)
 #  plot(conc)
+
+## ----out.width = "100%", echo=FALSE-------------------------------------------
+knitr::include_graphics('../man/figures/z8_comparison.png') 
 
 ## ----eval=FALSE, echo=TRUE----------------------------------------------------
 #  library(rlist)

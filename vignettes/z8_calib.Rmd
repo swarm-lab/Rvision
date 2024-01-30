@@ -7,6 +7,9 @@ vignette: >
   %\VignetteIndexEntry{8 - Camera calibration}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+resource_files:
+  - '../man/figures/z8_coverage.png'
+  - '../man/figures/z8_comparison.png'
 ---
 
 ## 8.1 - Camera calibration
@@ -166,7 +169,9 @@ abline(
 )
 ```
 
-![](z8_coverage.png){width=100%}
+```{r out.width = "100%", echo=FALSE}
+knitr::include_graphics('../man/figures/z8_coverage.png') 
+```
 
 In this particular example, the coverage is not perfect, but it is good enough 
 for our demonstration purposes.
@@ -205,7 +210,9 @@ conc <- concatenate(border(fr, 0, 25, 0, 0, border_color = "white"), fr_undist)
 plot(conc)
 ```
 
-![](z8_comparison.png){width=100%}
+```{r out.width = "100%", echo=FALSE}
+knitr::include_graphics('../man/figures/z8_comparison.png') 
+```
 
 Notice how the barrel distortion visible in the original image (top) is 
 corrected in the undistorted image (bottom).
