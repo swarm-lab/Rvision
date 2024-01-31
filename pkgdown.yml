@@ -9,7 +9,8 @@ articles:
   z5_gpu: z5_gpu.html
   z6_queue: z6_queue.html
   z7_stack: z7_stack.html
-last_built: 2023-10-17T00:32Z
+  z8_calib: z8_calib.html
+last_built: 2024-01-31T03:05Z
 urls:
   reference: https://swarm-lab.github.io/Rvision/reference
   article: https://swarm-lab.github.io/Rvision/articles
