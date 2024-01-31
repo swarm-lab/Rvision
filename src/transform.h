@@ -1,3 +1,19 @@
+arma::Mat< float > _findHomography(arma::Cube<float> from, arma::Cube<float> to,
+                                   int method, double ransacReprojThreshold,
+                                   const int maxIters, const double confidence) {
+  cv::Mat_<cv::Vec2f> fromCV, toCV;
+  arma2cv(from, fromCV);
+  arma2cv(to, toCV);
+  cv::Mat mask;
+  arma::Mat<float> out;
+  cv::Mat_<float> warpMatrix;
+
+  warpMatrix = cv::findHomography(fromCV, toCV, method, ransacReprojThreshold,
+                                  mask, maxIters, confidence);
+  cv2arma(warpMatrix, out);
+  return out;
+}
+
 double _computeECC(Image& image1, Image& image2, Image& mask) {
   if (image1.GPU) {
     if (image2.GPU)
@@ -129,6 +145,20 @@ arma::Mat< float > _getRotationMatrix2D(arma::fvec center, double angle, double 
   return out;
 }
 
+void _rotate(Image& image, int rotateCode, Image& target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::rotate(image.uimage, target.uimage, rotateCode);
+
+    return cv::rotate(image.uimage, target.image, rotateCode);
+  }
+
+  if (target.GPU)
+    return cv::rotate(image.image, target.uimage, rotateCode);
+
+  cv::rotate(image.image, target.image, rotateCode);
+}
+
 void _warpAffine(Image& image, arma::Mat< float > m, int interpMode, int borderType,
                  Rcpp::NumericVector borderColor, Image& target) {
   cv::Mat_< float > warpMatrix;
@@ -166,7 +196,7 @@ arma::Mat< float > _getPerspectiveTransform(arma::Mat< float > from, arma::Mat< 
     cv::Point2f(to(2, 0), to(2, 1)),
     cv::Point2f(to(3, 0), to(3, 1)) };
 
-  cv::Mat_< float > perspMatrix = getPerspectiveTransform(from_p, to_p);
+  cv::Mat_< float > perspMatrix = cv::getPerspectiveTransform(from_p, to_p);
   cv2arma(perspMatrix, out);
   return out;
 }
@@ -186,7 +216,7 @@ arma::Mat< float > _getAffineTransform(arma::Mat< float > from, arma::Mat< float
     cv::Point2f(to(2, 0), to(2, 1)),
     cv::Point2f(to(3, 0), to(3, 1)) };
 
-  cv::Mat_< float > affineMatrix = getAffineTransform(from_p, to_p);
+  cv::Mat_< float > affineMatrix = cv::getAffineTransform(from_p, to_p);
   cv2arma(affineMatrix, out);
   return out;
 }

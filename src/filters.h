@@ -269,7 +269,7 @@ void _pyrDown(Image& image, Image& target) {
   if (target.GPU)
     cv::pyrDown(image.image, target.uimage, cv::Size(target.uimage.cols, target.uimage.rows));
 
-    return cv::pyrDown(image.image, target.image, cv::Size(target.image.cols, target.image.rows));
+  return cv::pyrDown(image.image, target.image, cv::Size(target.image.cols, target.image.rows));
 }
 
 void _pyrUp(Image& image, Image& target) {
@@ -283,5 +283,5 @@ void _pyrUp(Image& image, Image& target) {
   if (target.GPU)
     cv::pyrUp(image.image, target.uimage, cv::Size(target.uimage.cols, target.uimage.rows));
 
-    return cv::pyrUp(image.image, target.image, cv::Size(target.image.cols, target.image.rows));
+  return cv::pyrUp(image.image, target.image, cv::Size(target.image.cols, target.image.rows));
 }

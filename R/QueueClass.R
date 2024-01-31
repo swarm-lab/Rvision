@@ -2,7 +2,7 @@
 #'
 #' @name Queue-class
 #'
-#' @aliases Rcpp_Queue
+#' @aliases Rcpp_Queue Queue
 #'
 #' @docType class
 #'
@@ -37,10 +37,7 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{Image}}, \code{\link{Video}}, \code{\link{Stream}}
-#'
-#' @export
-"Queue"
+#' @seealso \code{\link{queue}}, \code{\link{Video}}, \code{\link{Stream}}
 
 
 #' @title Create an Object of Class \code{Queue}

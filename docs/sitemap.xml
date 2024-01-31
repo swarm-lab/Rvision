@@ -31,6 +31,9 @@
     <loc>https://swarm-lab.github.io/Rvision/articles/z7_stack.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/Rvision/articles/z8_calib.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/Rvision/authors.html</loc>
   </url>
   <url>
@@ -115,6 +118,9 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/boxPoints.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/calibrateCamera.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/canny.html</loc>
   </url>
   <url>
@@ -167,6 +173,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/convexityDefects.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/cornerSubPix.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/countNonZero.html</loc>
@@ -244,7 +253,13 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/filter2D.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/findChessboardCorners.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/findContours.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/findHomography.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/findNonZero.html</loc>
@@ -286,6 +301,9 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/getGaborKernel.html</loc>
   </url>
   <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/getOptimalNewCameraMatrix.html</loc>
+  </url>
+  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/getPerspectiveTransform.html</loc>
   </url>
   <url>
@@ -314,9 +332,6 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/huInvariants.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/image.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/imageArithmetic.html</loc>
@@ -466,9 +481,6 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/pyrUp.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/queue.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/queue_dimensions.html</loc>
   </url>
   <url>
@@ -500,6 +512,9 @@
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/resize.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/rotate.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/rotateScale.html</loc>
@@ -538,9 +553,6 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/sqrt.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/stream.html</loc>
-  </url>
-  <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/stream_dimensions.html</loc>
   </url>
   <url>
@@ -568,13 +580,13 @@
     <loc>https://swarm-lab.github.io/Rvision/reference/timelapse.html</loc>
   </url>
   <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/video.html</loc>
+    <loc>https://swarm-lab.github.io/Rvision/reference/undistort.html</loc>
+  </url>
+  <url>
+    <loc>https://swarm-lab.github.io/Rvision/reference/undistortPoints.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/videoStack.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/videoWriter.html</loc>
   </url>
   <url>
     <loc>https://swarm-lab.github.io/Rvision/reference/video_dimensions.html</loc>

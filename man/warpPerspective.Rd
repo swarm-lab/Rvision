@@ -93,7 +93,8 @@ balloon2_transformed <- warpPerspective(balloon2, ecc)
 
 }
 \seealso{
-\code{\link{warpPerspective}}, \code{\link{findTransformECC}}
+\code{\link{warpPerspective}}, \code{\link{findTransformECC}},
+ \code{\link{findHomography}}
 }
 \author{
 Simon Garnier, \email{garnier@njit.edu}

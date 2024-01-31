@@ -1,18 +1,15 @@
 #' @useDynLib Rvision, .registration = TRUE
 #' @import Rcpp
 #' @import methods
-#' @importFrom graphics arrows par plot rasterImage points symbols
-#' @importFrom stats median.default
 #' @import pbapply
 #' @import ROpenCVLite
+#' @importFrom graphics arrows par plot rasterImage points symbols
+#' @importFrom stats median.default
 #' @importFrom grDevices col2rgb
 
 ### Load package module ###
 Rcpp::loadModule("class_Image", TRUE)
 Rcpp::loadModule("class_Capture", TRUE)
-# Rcpp::loadModule("class_Video", TRUE)
-# Rcpp::loadModule("class_BufferedVideo", TRUE)
-# Rcpp::loadModule("class_Stream", TRUE)
 Rcpp::loadModule("class_VideoWriter", TRUE)
 Rcpp::loadModule("methods_Arithmetic", TRUE)
 Rcpp::loadModule("methods_Statistics", TRUE)
@@ -30,6 +27,7 @@ Rcpp::loadModule("methods_Transform", TRUE)
 Rcpp::loadModule("methods_Feature", TRUE)
 Rcpp::loadModule("methods_Autothresh", TRUE)
 Rcpp::loadModule("methods_Ximgproc", TRUE)
+Rcpp::loadModule("methods_Calib3d", TRUE)
 
 
 ### Define generic arithmetic methods ###

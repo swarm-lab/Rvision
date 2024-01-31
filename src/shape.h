@@ -377,7 +377,7 @@ Rcpp::NumericMatrix _approxPolyDP(Rcpp::NumericMatrix curve, double epsilon, boo
   Rcpp::NumericMatrix out(approxpoints.size(), 2);
   colnames(out) = Rcpp::CharacterVector::create("x", "y");
 
-  for (int i = 0; i < approxpoints.size(); i++) {
+  for (unsigned int i = 0; i < approxpoints.size(); i++) {
     out(i, 0) = approxpoints[i].x;
     out(i, 1) = approxpoints[i].y;
   }

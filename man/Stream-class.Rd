@@ -3,18 +3,39 @@
 \docType{class}
 \name{Stream-class}
 \alias{Stream-class}
-\alias{Stream}
+\alias{stream}
 \alias{Rcpp_Stream}
+\alias{Stream}
 \title{An S4 Class Containing an OpenCV Stream}
-\format{
-An object of class \code{C++Class} of length 1.
-}
 \usage{
-Stream
+stream(..., api = "ANY")
+}
+\arguments{
+\item{...}{Either:
+\itemize{
+  \item{index: }{An integer value corresponding to the index of the camera
+    to read a stream from (default: 0; 0 is usually the default webcam on
+    most computers). Or...}
+  \item{stream_string: }{...a character string corresponfing to the URL of
+    video stream (eg. protocol://host:port/script_name?script_params|auth)
+    or a GStreamer pipeline string in gst-launch tool format if GStreamer is
+    used as backend API. Note that each video stream or IP camera feed has
+    its own URL scheme. Please refer to the documentation of source stream
+    to know the right URL format.}
+}}
+
+\item{api}{A character string corresponding to the API to use for reading the
+stream from the camera (see Note; default: "ANY").}
+}
+\value{
+A \code{\link{Stream}} object.
 }
 \description{
 A \code{Stream} object contains an \href{http://opencv.org/}{OpenCV}
  stream that originates from a camera connected to the computer.
+
+Function for creating \code{\link{Stream}} objects from video
+ streams.
 }
 \section{Slots}{
 
@@ -30,7 +51,47 @@ A \code{Stream} object contains an \href{http://opencv.org/}{OpenCV}
 \item{\code{release}}{Function to release the object from memory.}
 }}
 
+\note{
+Hereafter is a list of all supported APIs. Note that not all APIs will
+ be available on your computer (actually most of them will not be).
+ \itemize{
+  \item{"ANY": }{automatically select an API.}
+  \item{"VFW": }{Video For Windows.}
+  \item{"V4L", "V4L2": }{Video For Linux.}
+  \item{"FIREWIRE", "FIREWARE", "IEEE1394", "DC1394", "CMU1394": }{IEEE 1394 drivers.}
+  \item{"QT": }{Quicktime.}
+  \item{"UNICAP": }{Unicap drivers.}
+  \item{"DSHOW": }{DirectShow.}
+  \item{"PVAPI": }{PvAPI, Prosilica GigE SDK.}
+  \item{"OPENNI": }{OpenNI (for Kinect).}
+  \item{"OPENNI_ASUS": }{OpenNI (for Asus Xtion).}
+  \item{"XIAPI": }{XIMEA Camera API.}
+  \item{"AVFOUNDATION": }{AVFoundation framework for iOS and OSX > Lion.}
+  \item{"GIGANETIX": }{Smartek Giganetix GigEVisionSDK.}
+  \item{"MSMF": }{Microsoft Media Foundation.}
+  \item{"WINRT": }{Microsoft Windows Runtime using Media Foundation.}
+  \item{"INTELPERC": }{Intel Perceptual Computing SDK.}
+  \item{"OPENNI2": }{OpenNI2 (for Kinect).}
+  \item{"OPENNI2_ASUS": }{OpenNI2 (for Asus Xtion and Occipital Structure sensors).}
+  \item{"GPHOTO2": }{gPhoto2 connection.}
+  \item{"GSTREAMER": }{GStreamer.}
+  \item{"FFMPEG": }{FFMPEG library.}
+  \item{"IMAGES": }{OpenCV Image Sequence.}
+  \item{"ARAVIS": }{Aravis SDK.}
+  \item{"OPENCV_MJPEG": }{Built-in OpenCV MotionJPEG codec.}
+  \item{"INTEL_MFX": }{Intel MediaSDK.}
+ }
+}
+\examples{
+\dontrun{
+live <- stream(0)
+release(live)
+}
+
+}
+\seealso{
+\code{\link{stream}}, \code{\link{queue}}
+}
 \author{
 Simon Garnier, \email{garnier@njit.edu}
 }
-\keyword{datasets}

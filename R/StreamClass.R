@@ -2,7 +2,7 @@
 #'
 #' @name Stream-class
 #'
-#' @aliases Rcpp_Stream
+#' @aliases Rcpp_Stream Stream
 #'
 #' @docType class
 #'
@@ -20,8 +20,8 @@
 #' @slot release Function to release the object from memory.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
-#' @export
-"Stream"
+#' 
+#' @seealso \code{\link{stream}}, \code{\link{queue}}
 
 
 #' @title Create an Object of Class \code{Stream}

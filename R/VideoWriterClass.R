@@ -2,7 +2,7 @@
 #'
 #' @name VideoWriter-class
 #'
-#' @aliases Rcpp_VideoWriter
+#' @aliases Rcpp_VideoWriter VideoWriter
 #'
 #' @docType class
 #'
@@ -29,8 +29,8 @@
 #' @slot release Function to release the object from memory.
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
-#' @export
-"VideoWriter"
+#'
+#' @seealso \code{\link{videoWriter}}
 
 
 #' @title Create an object of class \code{VideoWriter}

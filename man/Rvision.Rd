@@ -2,6 +2,7 @@
 % Please edit documentation in R/Rvision-package.R
 \docType{package}
 \name{Rvision}
+\alias{Rvision-package}
 \alias{Rvision}
 \title{Rvision: Computer vision library for R}
 \description{
@@ -20,6 +21,15 @@ camera streams.
 }
 \references{
 More about OpenCV at \url{http://opencv.org/}.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://swarm-lab.github.io/Rvision/}
+  \item \url{https://github.com/swarm-lab/Rvision}
+  \item Report bugs at \url{https://github.com/swarm-lab/Rvision/issues}
+}
+
 }
 \author{
 Simon Garnier <garnier@njit.edu>

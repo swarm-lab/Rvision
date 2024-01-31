@@ -488,7 +488,7 @@ void _changeBitDepth(Image& image, int depth, double scale, Image& target) {
     if (target.GPU)
       return image.uimage.convertTo(target.uimage, depth, scale);
 
-    return image.uimage.convertTo(target.image, depth, scale);;
+    return image.uimage.convertTo(target.image, depth, scale);
   }
 
   if (target.GPU)

@@ -32,6 +32,8 @@ camera streams or are limited in their processing speed and/or volume.
 + [4 - In-place, copy, and target operations](https://swarm-lab.github.io/Rvision/articles/z4_inplace.html)
 + [5 - GPU operations](https://swarm-lab.github.io/Rvision/articles/z5_gpu.html)
 + [6 - Capture queues](https://swarm-lab.github.io/Rvision/articles/z6_queue.html)
++ [7 - Video stacks](https://swarm-lab.github.io/Rvision/articles/z7_stack.html)
++ [8 - Camera calibration](https://swarm-lab.github.io/Rvision/articles/z8_calib.html)
 
 --- 
 

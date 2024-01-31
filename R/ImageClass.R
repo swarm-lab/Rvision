@@ -2,14 +2,15 @@
 #'
 #' @name Image-class
 #'
-#' @aliases Rcpp_Image
+#' @aliases Rcpp_Image Image
 #'
 #' @docType class
 #'
-#' @description \code{Image} objects are the base objects of the \pkg{\link{Rvision}}
-#'  package. They contain an \href{http://opencv.org/}{OpenCV} image that can
-#'  originate from an image file, an array, a video file or a video stream.
-#'  This image can be manipulated using the functions of \pkg{\link{Rvision}}.
+#' @description \code{Image} objects are the base objects of the
+#'  \pkg{\link{Rvision}} package. They contain an
+#'  \href{http://opencv.org/}{OpenCV} image that can originate from an image
+#'  file, an array, a video file or a video stream. This image can be
+#'  manipulated using the functions of \pkg{\link{Rvision}}.
 #'
 #' @slot depth A function returning the bit depth of the object.
 #'
@@ -31,10 +32,7 @@
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
-#' @seealso \code{\link{image}}, \code{\link{Video}}, \code{\link{Stream}}
-#'
-#' @export
-"Image"
+#' @seealso \code{\link{image}}
 
 
 #' @title Create an Object of Class \code{Image}
@@ -65,7 +63,7 @@
 #'
 #' @export
 image <- function(..., colorspace = "BGR") {
-  new(Rvision::Image, ..., colorspace)
+  new(Image, ..., colorspace)
 }
 
 

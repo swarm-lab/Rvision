@@ -15,7 +15,7 @@ using namespace Rcpp;
 RCPP_EXPOSED_CLASS(Image)
 RCPP_MODULE(class_Image) {
 
-  class_<Image>("Image")
+  Rcpp::class_<Image>("Image")
     .constructor()
     .constructor< std::string, std::string > ("", &ImageConst1)
     .constructor< arma::icube, std::string > ("", &ImageConst2)
@@ -370,6 +370,8 @@ RCPP_MODULE(methods_Shape) {
 
 #include "transform.h"
 RCPP_MODULE(methods_Transform) {
+  function("_findHomography", &_findHomography, List::create(_["from"], _["to"],
+    _["method"], _["ransacReprojThreshold"], _["maxIters"], _["confidence"]), "");
   function("_findTransformECC", &_findTransformECC, List::create(_["image1"], _["image2"],
     _["warpMatrix"], _["warpMode"], _["count"], _["eps"],  _["mask"], _["gaussFiltSize"]), "");
   function("_computeECC", &_computeECC, List::create(_["image1"], _["image2"], _["mask"]), "");
@@ -378,6 +380,7 @@ RCPP_MODULE(methods_Transform) {
     _["homographyMethod"]), "");
   function("_getRotationMatrix2D", &_getRotationMatrix2D, List::create(_["center"],
     _["angle"], _["scale"]), "");
+  function("_rotate", &_rotate, List::create(_["image"], _["rotateCode"], _["target"]), "");
   function("_getPerspectiveTransform", &_getPerspectiveTransform,
     List::create(_["from"], _["to"]), "");
   function("_getAffineTransform", &_getAffineTransform,
@@ -452,4 +455,23 @@ RCPP_MODULE(methods_Ximgproc) {
                         _["k"], _["binarizationMethod"], _["r"], _["target"]), "");
   function("_thinning", &_thinning,
            List::create(_["image"], _["thinningType"], _["target"]), "");
+}
+
+#include "calib3d.h"
+RCPP_MODULE(methods_Calib3d) {
+  function("_findChessboardCorners", &_findChessboardCorners,
+           List::create(_["image"], _["pprow"], _["ppcol"], _["flags"]), "");
+  function("_cornerSubPix", &_cornerSubPix,
+           List::create(_["image"], _["corners"], _["winSize"], _["zeroZone"],
+                        _["maxit"], _["eps"]), "");
+  function("_calibrateCameraRO", &_calibrateCameraRO,
+           List::create(_["refPoints"], _["imgPoints"], _["imgSize"], _["iFixedPoint"],
+                        _["flags"], _["maxit"], _["eps"]), "");
+  function("_getOptimalNewCameraMatrix", &_getOptimalNewCameraMatrix,
+           List::create(_["cameraMatrix"], _["distCoeffs"], _["imgSize"], _["alpha"],
+                        _["centerPrincipalPoint"]), "");
+  function("_undistort", &_undistort, List::create(_["image"], _["cameraMatrix"],
+    _["distCoeffs"], _["newCameraMatrix"], _["target"]), "");
+  function("_undistortPoints", &_undistortPoints, List::create(_["points"],
+    _["cameraMatrix"], _["distCoeffs"], _["newCameraMatrix"]), "");
 }
