@@ -1,3 +1,30 @@
+# Rvision 0.8.0
+
+**Full Changelog**: https://github.com/swarm-lab/Rvision/compare/v0.7.0...v0.8.0
+
+## New features
+
+* Add camera calibration functions and tutorial.
+* Add mask to ECC and minMaxLoc functions.
+* Add line detection with probabilistic Hough transform.
+* Add goodFeaturesToTrack function (finds the most prominent corners in an image).
+* Add pyramid resampling functions (up- and down-).
+* Add ORB keypoint detection and matching. 
+* Add approxPolyDP (Douglas-Peucker algorithm for approximates a polygon with another polygon with less vertices).
+* Add affine transform matrix computation.
+* Add string argument for streams (users can now pass the URL of a video stream or a GStreamer pipeline string). 
++ Add invertFourcc function to recover a codec's name from its fourcc code.
+* Add function to perform 90-degree rotations of images.
+* Add undistort function for individual coordinates.
+
+## Minor improvements and fixes
+
+* The documentation has been fixed/improved in several places.
+* Many bug fixes here and there.
+* Update capture and writer properties utilities. 
+
+---
+
 # Rvision 0.7.0
 
 ## New features
