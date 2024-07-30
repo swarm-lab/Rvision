@@ -13,8 +13,8 @@
 #' \tabular{ll}{
 #'  Package: \tab Rvision\cr
 #'  Type: \tab Package\cr
-#'  Version: \tab 0.1.0\cr
-#'  Date: \tab 2016-07-06\cr
+#'  Version: \tab 0.8.0\cr
+#'  Date: \tab 2024-01-31\cr
 #'  License: \tab GPL-3\cr
 #' }
 #'

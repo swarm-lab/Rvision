@@ -18,6 +18,7 @@ Depends:
     R (>= 4.0.0)
 Imports:
     Rcpp (>= 1.0.1),
+    RcppArmadillo,
     ROpenCVLite (>= 4.70.0),
     methods,
     pbapply,
@@ -29,7 +30,7 @@ RcppModules: class_Image, class_Capture, class_VideoWriter,
     methods_OpticalFlow, methods_Blob, methods_Morphology, methods_Filters, 
     methods_Display, methods_Draw, methods_Geometry, methods_Shape, methods_Transform,
     methods_Feature, methods_Autothresh, methods_Ximgproc, methods_Calib3d
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Biarch: false
 StagedInstall: false
 Encoding: UTF-8

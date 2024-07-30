@@ -1,5 +1,7 @@
-// [[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
+
+// [[Rcpp::depends(RcppArmadillo)]]
+
 using namespace Rcpp;
 
 #include "opencv2/opencv.hpp"
@@ -292,7 +294,7 @@ RCPP_MODULE(methods_Display) {
   function("_display", &_display, List::create(_["image"], _["window_name"],
     _["delay"], _["height"], _["width"], _["interpolation"]), "");
   function("_destroyDisplay", &_destroyDisplay, List::create(_["window_name"]), "");
-  function("_destroyAllDisplays", &_destroyAllDisplays, "", "");
+  function("_destroyAllDisplays", &_destroyAllDisplays, List::create(), "");
   function("_selectBoundingBoxes", &_selectBoundingBoxes, List::create(_["image"],
     _["window_name"], _["crosshair"]), "");
   function("_click", &_click, List::create(_["window_name"]), "");
