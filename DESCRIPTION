@@ -19,7 +19,7 @@ Depends:
 Imports:
     Rcpp (>= 1.0.1),
     RcppArmadillo,
-    ROpenCVLite (>= 4.70.0),
+    ROpenCVLite (>= 4.90.2),
     methods,
     pbapply,
     stats,
