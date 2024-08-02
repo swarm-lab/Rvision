@@ -12,7 +12,7 @@ object.}
 
 \item{method}{The name of the automated thresholding algorithm to use. It can
  be any of the following:
- \itemize{
+ \describe{
   \item{"none":}{the user-defined `threshold` value is used (the default).}
   \item{"ImageJ":}{the default auto thresholding algorithm of ImageJ.}
   \item{"Huang":}{Huang’s fuzzy thresholding method.}

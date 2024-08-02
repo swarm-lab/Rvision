@@ -28,7 +28,7 @@ identity matrix with the appropriate dimensions.}
 
 \item{warp_mode}{A character string indicating the type of warping required
 to transform \code{image} into \code{template}. It can be any of the following:
-\itemize{
+\describe{
  \item{"translation":}{simple translational transformation.}
  \item{"euclidean":}{Euclidean (rigid) transformation (translation + rotation).}
  \item{"affine" (default):}{affine transformation (Euclidean + shear; this

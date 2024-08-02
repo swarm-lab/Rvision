@@ -7,7 +7,7 @@
 #'
 #' @param mode Mode of the contour retrieval algorithm. It can take the following
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'     \item{'external': }{retrieves only the extreme outer contours (the default).}
 #'     \item{'list': }{retrieves all of the contours without establishing any
 #'        hierarchical relationships.}
@@ -22,7 +22,7 @@
 #'
 #' @param method Method for approximating the contours. It can take the following
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'     \item{'none': }{stores absolutely all the contour points.}
 #'     \item{'simple': }{compresses horizontal, vertical, and diagonal segments
 #'        and leaves only their end points (the default).}
@@ -38,9 +38,9 @@
 #'  the whole image context.
 #'
 #' @return A list of two matrices:
-#' \itemize{
+#' \describe{
 #'    \item{"contours": }{a matrix with 3 columns:
-#'       \itemize{
+#'       \describe{
 #'          \item{"id": }{the contour identity (indicates the set of points
 #'             belonging to the same contour).}
 #'          \item{"x": }{the x coordinates of the contour points.}
@@ -48,7 +48,7 @@
 #'       }
 #'    }
 #'    \item{"hierarchy": }{a matrix with 5 columns:
-#'       \itemize{
+#'       \describe{
 #'          \item{"id": }{the contour identity.}
 #'          \item{"after": }{the identity of the next contour at the same
 #'             hierarchical level.}
@@ -80,35 +80,43 @@
 #'
 #' @export
 findContours <- function(image, mode = "external", method = "simple", offset = c(0, 0)) {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' must be an Image object.")
+  }
 
-  if (image$nchan() != 1 || image$depth() != "8U")
+  if (image$nchan() != 1 || image$depth() != "8U") {
     stop("'image' must be an 8-bit (8U) single-channel (GRAY) Image object.")
+  }
 
-  if (!(mode %in% c("external", "list", "ccomp", "tree")))
+  if (!(mode %in% c("external", "list", "ccomp", "tree"))) {
     stop("'mode' must be one of 'external', 'list', 'ccomp', or 'tree'.")
+  }
 
-  if (!(method %in% c("none", "simple", "l1", "kcos")))
+  if (!(method %in% c("none", "simple", "l1", "kcos"))) {
     stop("'method' must be one of 'none', 'simple', 'l1', or 'kcos'.")
+  }
 
-  if (!is.vector(offset) | length(offset) != 2 | !is.numeric(offset))
+  if (!is.vector(offset) | length(offset) != 2 | !is.numeric(offset)) {
     stop("'offset' must be a 2-element numerical vector.")
+  }
 
   `_findContours`(image,
-                  mode = switch(mode,
-                                "external" = 0,
-                                "list" = 1,
-                                "ccomp" = 2,
-                                "tree" = 3,
-                                stop("This is not a valid mode.")),
-                  method = switch(method,
-                                  "none" = 1,
-                                  "simple" = 2,
-                                  "l1" = 3,
-                                  "kcos" = 4,
-                                  stop("This is not a valid method.")),
-                  offset)
+    mode = switch(mode,
+      "external" = 0,
+      "list" = 1,
+      "ccomp" = 2,
+      "tree" = 3,
+      stop("This is not a valid mode.")
+    ),
+    method = switch(method,
+      "none" = 1,
+      "simple" = 2,
+      "l1" = 3,
+      "kcos" = 4,
+      stop("This is not a valid method.")
+    ),
+    offset
+  )
 }
 
 
@@ -139,11 +147,13 @@ findContours <- function(image, mode = "external", method = "simple", offset = c
 #'
 #' @export
 contourArea <- function(x, y, oriented = FALSE) {
-  if (!is.vector(x) | !is.vector(y))
+  if (!is.vector(x) | !is.vector(y)) {
     stop("x and y must be vectors of the same length.")
+  }
 
-  if (length(x) != length(y))
+  if (length(x) != length(y)) {
     stop("x and y must be vectors of the same length.")
+  }
 
   `_contourArea`(x, y, oriented)
 }
@@ -159,7 +169,7 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'
 #' @param connectivity The connectivity neighborhood to decide whether 2 pixels
 #'  are contiguous. This parameter can take two values:
-#'  \itemize{
+#'  \describe{
 #'   \item{4: }{the neighborhood of a pixel are the four pixels located above
 #'    (north), below (south), to the left (west) and right (east) of the pixel.}
 #'   \item{8 (the default): }{the neighborhood of a pixel includes the four
@@ -168,12 +178,14 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'  }
 #'
 #' @param algorithm A character string specifying the connected components
-#'  labeling algorithm to use. This parameter can take two values:
-#'  \itemize{
-#'   \item{"grana" (the default): }{Block-based connected-component labeling for
-#'    8-way connectivity, scan array union find labeling for 4-way connectivity.}
-#'   \item{"wu": }{Scan array union find labeling for both 8-way and 4-way
-#'    connectivity.}
+#'  labeling algorithm to use. This parameter can take six values:
+#'  \describe{
+#'   \item{"grana"/"BBDT": }{BBDT algorithm for 8-way connectivity, SAUF
+#'    algorithm for 4-way connectivity.}
+#'   \item{"wu"/"SAUF": }{SAUF algorithm for 8-way connectivity, SAUF algorithm
+#'    for 4-way connectivity.}
+#'   \item{"bolelli"/"spaghetti" (the default): }{Spaghetti algorithm for 8-way
+#'    connectivity, Spaghetti4C algorithm for 4-way connectivity.}
 #'  }
 #'
 #' @param table A boolean indicating whether the coordinates of the pixels of
@@ -184,7 +196,7 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -194,7 +206,7 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'  }
 #'
 #' @return A list with 1 to 4 items:
-#'  \itemize{
+#'  \describe{
 #'   \item{n: }{the number of connected components in the image. It is always
 #'    returned.}
 #'   \item{table: }{if \code{table=TRUE}, a matrix with 3 columns representing
@@ -210,6 +222,28 @@ contourArea <- function(x, y, oriented = FALSE) {
 #'    number of the component, and the background pixels by zero.}
 #'  }
 #'
+#' @references
+#' Costantino Grana, Daniele Borghesani, and Rita Cucchiara. Optimized
+#'  Block-Based Connected Components Labeling With Decision Trees. IEEE
+#'  Transactions on Image Processing, 19(6):1596–1609, 2010.
+#'
+#' Kesheng Wu, Ekow Otoo, and Kenji Suzuki. Optimizing two-pass
+#'  connected-component labeling algorithms. Pattern Analysis and Applications,
+#'  12(2):117–135, Jun 2009.
+#'
+#' Federico Bolelli, Michele Cancilla, and Costantino Grana. Two More Strategies
+#'  to Speed Up Connected Components Labeling Algorithms. In Image Analysis and
+#'  Processing - ICIAP 2017, volume 10485, pages 48–58. Springer, 2017.
+#'
+#' Federico Bolelli, Stefano Allegretti, Lorenzo Baraldi, and Costantino Grana.
+#'  Spaghetti Labeling: Directed Acyclic Graphs for Block-Based Connected
+#'  Components Labeling. IEEE Transactions on Image Processing, 29(1):1999–2012,
+#'  2019.
+#'
+#' Federico Bolelli, Stefano Allegretti, and Costantino Grana. One dag to rule
+#'  them all. IEEE Transactions on Pattern Analysis and Machine Intelligence,
+#'  2021.
+#'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @seealso \code{\link{Image}}
@@ -221,25 +255,34 @@ contourArea <- function(x, y, oriented = FALSE) {
 #' cc <- connectedComponents(dots_bin)
 #'
 #' @export
-connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
+connectedComponents <- function(image, connectivity = 8, algorithm = "bolelli",
                                 table = TRUE, stats = TRUE, target = "new") {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' must be an Image object.")
+  }
 
-  if (!(image$nchan() == 1 && image$depth() == "8U"))
+  if (!(image$nchan() == 1 && image$depth() == "8U")) {
     stop("'image' must be an 8U single-channel (GRAY) Image object.")
+  }
 
-  if (!(connectivity %in% c(4, 8)))
+  if (!(connectivity %in% c(4, 8))) {
     stop("'connectivity' must be either 4 or 8.")
+  }
 
   algo <- switch(algorithm,
-                 "grana" = 1,
-                 "wu" = 0,
-                 stop("This is not a valid algorithm."))
+    "wu" = 0,
+    "grana" = 1,
+    "bolelli" = 2,
+    "SAUF" = 3,
+    "BBDT" = 4,
+    "spaghetti" = 5,
+    stop("This is not a valid algorithm.")
+  )
 
   if (isImage(target)) {
-    if (!(target$nchan() == 1 && (target$depth() == "32S" || target$depth() == "16U")))
+    if (!(target$nchan() == 1 && (target$depth() == "32S" || target$depth() == "16U"))) {
       stop("'target' must be a 16U or 32S single-channel (GRAY) Image object.")
+    }
 
     if (table) {
       if (stats) {
@@ -325,14 +368,17 @@ connectedComponents <- function(image, connectivity = 8, algorithm = "grana",
 #'
 #' @export
 watershed <- function(image, markers) {
-  if (!isImage(image) | !isImage(markers))
+  if (!isImage(image) | !isImage(markers)) {
     stop("'image' and 'markers' must be Image objects.")
+  }
 
-  if (image$depth() != "8U" | image$nchan() != 3)
+  if (image$depth() != "8U" | image$nchan() != 3) {
     stop("'image' must be a 3-channel, 8U Image object.")
+  }
 
-  if (markers$depth() != "32S" | markers$space != "GRAY")
+  if (markers$depth() != "32S" | markers$space != "GRAY") {
     stop("'markers' must be a 32S GRAY Image object.")
+  }
 
   `_watershed`(image, markers)
 }
@@ -349,7 +395,7 @@ watershed <- function(image, markers) {
 #'
 #' @param method A character string indicating the method to use in order to fit
 #'  the ellipse. It can take the following values:
-#'  \itemize{
+#'  \describe{
 #'     \item{'original': }{least square.}
 #'     \item{'ams': }{Approximate Mean Square (AMS) proposed in Taubin (1991).}
 #'     \item{'direct': }{Direct least square method proposed in Fitzgibbon, Pilu,
@@ -378,17 +424,20 @@ watershed <- function(image, markers) {
 #'
 #' @export
 fitEllipse <- function(x, y, method = "original") {
-  if (!is.vector(x) | !is.vector(y))
+  if (!is.vector(x) | !is.vector(y)) {
     stop("x and y must be vectors.")
+  }
 
-  if (length(x) != length(y))
+  if (length(x) != length(y)) {
     stop("x and y must have the same length.")
+  }
 
   switch(method,
-         "original" = `_fitEllipse`(cbind(x, y)),
-         "ams" = `_fitEllipseAMS`(cbind(x, y)),
-         "direct" = `_fitEllipseDirect`(cbind(x, y)),
-         stop("Invalid method."))
+    "original" = `_fitEllipse`(cbind(x, y)),
+    "ams" = `_fitEllipseAMS`(cbind(x, y)),
+    "direct" = `_fitEllipseDirect`(cbind(x, y)),
+    stop("Invalid method.")
+  )
 }
 
 
@@ -414,11 +463,13 @@ fitEllipse <- function(x, y, method = "original") {
 #'
 #' @export
 minAreaRect <- function(x, y) {
-  if (!is.vector(x) | !is.vector(y))
+  if (!is.vector(x) | !is.vector(y)) {
     stop("x and y must be vectors.")
+  }
 
-  if (length(x) != length(y))
+  if (length(x) != length(y)) {
     stop("x and y must have the same length.")
+  }
 
   `_minAreaRect`(cbind(x, y))
 }
@@ -446,17 +497,21 @@ minAreaRect <- function(x, y) {
 #'
 #' @export
 boxPoints <- function(rect) {
-  if (!is.list(rect))
+  if (!is.list(rect)) {
     stop("rect must be a list as created by minAreaRect and fitEllipse.")
+  }
 
-  if (!all(c("angle", "height", "width", "center") %in% names(rect)))
+  if (!all(c("angle", "height", "width", "center") %in% names(rect))) {
     stop("rect must be a list as created by minAreaRect and fitEllipse.")
+  }
 
-  if (!is.numeric(rect$angle) | !is.numeric(rect$height) | !is.numeric(rect$width) | !is.numeric(rect$center))
+  if (!is.numeric(rect$angle) | !is.numeric(rect$height) | !is.numeric(rect$width) | !is.numeric(rect$center)) {
     stop("rect must be a list as created by minAreaRect and fitEllipse.")
+  }
 
-  if (length(rect$angle) != 1 | length(rect$height) != 1 | length(rect$width) != 1 | length(rect$center) != 2)
+  if (length(rect$angle) != 1 | length(rect$height) != 1 | length(rect$width) != 1 | length(rect$center) != 2) {
     stop("rect must be a list as created by minAreaRect and fitEllipse.")
+  }
 
   if (rect$width > rect$height) {
     angle <- (rect$angle + 90) * pi / 180
@@ -471,14 +526,18 @@ boxPoints <- function(rect) {
   a <- sin(angle) * 0.5
   b <- cos(angle) * 0.5
 
-  x <- c(rect$center[1] - a * h - b * w,
-         rect$center[1] - a * h + b * w,
-         rect$center[1] + a * h + b * w,
-         rect$center[1] + a * h - b * w)
-  y <- c(rect$center[2] + b * h - a * w,
-         rect$center[2] + b * h + a * w,
-         rect$center[2] - b * h + a * w,
-         rect$center[2] - b * h - a * w)
+  x <- c(
+    rect$center[1] - a * h - b * w,
+    rect$center[1] - a * h + b * w,
+    rect$center[1] + a * h + b * w,
+    rect$center[1] + a * h - b * w
+  )
+  y <- c(
+    rect$center[2] + b * h - a * w,
+    rect$center[2] + b * h + a * w,
+    rect$center[2] - b * h + a * w,
+    rect$center[2] - b * h - a * w
+  )
   cbind(x, y)
 }
 
@@ -504,11 +563,13 @@ boxPoints <- function(rect) {
 #'
 #' @export
 convexHull <- function(x, y, clockwise = TRUE) {
-  if (!is.vector(x) | !is.vector(y))
+  if (!is.vector(x) | !is.vector(y)) {
     stop("x and y must be vectors.")
+  }
 
-  if (length(x) != length(y))
+  if (length(x) != length(y)) {
     stop("x and y must have the same length.")
+  }
 
   `_convexHull`(cbind(x, y), clockwise) + 1
 }
@@ -524,7 +585,7 @@ convexHull <- function(x, y, clockwise = TRUE) {
 #'  produced by \code{\link{findContours}})
 #'
 #' @return A matrix with 4 columns:
-#'  \itemize{
+#'  \describe{
 #'    \item{"start_index": }{index of the first point of the contour belonging to
 #'     a convexity defect.}
 #'    \item{"end_index": }{index of the last point of the contour belonging to
@@ -549,11 +610,13 @@ convexHull <- function(x, y, clockwise = TRUE) {
 #'
 #' @export
 convexityDefects <- function(x) {
-  if (!is.matrix(x))
+  if (!is.matrix(x)) {
     stop("x must be a Nx2 matrix.")
+  }
 
-  if (ncol(x) != 2)
+  if (ncol(x) != 2) {
     stop("x must be a Nx2 matrix.")
+  }
 
   convex_hull <- convexHull(x[, 1], x[, 2])
   out <- `_convexityDefects`(x, convex_hull - 1)
@@ -575,7 +638,7 @@ convexityDefects <- function(x) {
 #'  treated as 1's. The parameter is used for images only.
 #'
 #' @return A data frame with 2 columns:
-#'  \itemize{
+#'  \describe{
 #'    \item{"moment": }{the name of the moment. See Note below.}
 #'    \item{"value": }{the value of the moment.}
 #' }
@@ -606,24 +669,32 @@ convexityDefects <- function(x) {
 #' @export
 moments <- function(x, binary = FALSE) {
   if (isImage(x)) {
-    if (nchan(x) != 1)
+    if (nchan(x) != 1) {
       stop("x must be a single channel image.")
+    }
     data.frame(
-      moment = c("m00", "m10", "m01", "m20", "m11", "m02", "m30", "m21",
-                 "m12", "m03", "mu20", "mu11", "mu02", "mu30", "mu21",
-                 "mu12", "mu03", "nu20", "nu11", "nu02", "nu30", "nu21",
-                 "nu12", "nu03"),
-      value = `_momentsIMG`(x, binary))
+      moment = c(
+        "m00", "m10", "m01", "m20", "m11", "m02", "m30", "m21",
+        "m12", "m03", "mu20", "mu11", "mu02", "mu30", "mu21",
+        "mu12", "mu03", "nu20", "nu11", "nu02", "nu30", "nu21",
+        "nu12", "nu03"
+      ),
+      value = `_momentsIMG`(x, binary)
+    )
   } else if (is.matrix(x)) {
-    if (ncol(x) != 2)
+    if (ncol(x) != 2) {
       stop("x must be a Nx2 matrix.")
+    }
 
     data.frame(
-      moment = c("m00", "m10", "m01", "m20", "m11", "m02", "m30", "m21",
-                 "m12", "m03", "mu20", "mu11", "mu02", "mu30", "mu21",
-                 "mu12", "mu03", "nu20", "nu11", "nu02", "nu30", "nu21",
-                 "nu12", "nu03"),
-      value = `_momentsCT`(x))
+      moment = c(
+        "m00", "m10", "m01", "m20", "m11", "m02", "m30", "m21",
+        "m12", "m03", "mu20", "mu11", "mu02", "mu30", "mu21",
+        "mu12", "mu03", "nu20", "nu11", "nu02", "nu30", "nu21",
+        "nu12", "nu03"
+      ),
+      value = `_momentsCT`(x)
+    )
   } else {
     stop("x must either be a Nx2 matrix or a single-channel image.")
   }
@@ -639,7 +710,7 @@ moments <- function(x, binary = FALSE) {
 #' @param moments A data frame as produced by \code{\link{moments}}.
 #'
 #' @return A data frame with 2 columns:
-#'  \itemize{
+#'  \describe{
 #'    \item{"invariant": }{the name of the invariant See Note below.}
 #'    \item{"value": }{the value of the invariant.}
 #' }
@@ -676,30 +747,31 @@ moments <- function(x, binary = FALSE) {
 #'
 #' @export
 huInvariants <- function(moments) {
-  if (!all(names(moments) == c("moment", "value")))
+  if (!all(names(moments) == c("moment", "value"))) {
     stop("moments must be a data frame as produced by `moments`.")
+  }
 
   data.frame(
     invariant = paste0("Hu", 1:8),
     value = c(
       moments$value[18] + moments$value[20],
-      (moments$value[18] - moments$value[20]) ^ 2 + 4 * moments$value[19] ^ 2,
-      (moments$value[21] - 3 * moments$value[23]) ^ 2 + (3 * moments$value[22] - moments$value[24]) ^ 2,
-      (moments$value[21] + moments$value[23]) ^ 2 + (moments$value[22] + moments$value[24]) ^ 2,
+      (moments$value[18] - moments$value[20])^2 + 4 * moments$value[19]^2,
+      (moments$value[21] - 3 * moments$value[23])^2 + (3 * moments$value[22] - moments$value[24])^2,
+      (moments$value[21] + moments$value[23])^2 + (moments$value[22] + moments$value[24])^2,
       (moments$value[21] - 3 * moments$value[23]) * (moments$value[21] + moments$value[23]) *
-        ((moments$value[21] + moments$value[23]) ^ 2 - 3 * (moments$value[22] + moments$value[24]) ^ 2) +
+        ((moments$value[21] + moments$value[23])^2 - 3 * (moments$value[22] + moments$value[24])^2) +
         (3 * moments$value[22] - moments$value[24]) * (moments$value[22] + moments$value[24]) *
-        (3 * (moments$value[21] + moments$value[23]) ^ 2 - (moments$value[22] + moments$value[24]) ^ 2),
+          (3 * (moments$value[21] + moments$value[23])^2 - (moments$value[22] + moments$value[24])^2),
       (moments$value[18] - moments$value[20]) *
-        ((moments$value[21] + moments$value[23]) ^ 2 - (moments$value[22] + moments$value[24]) ^ 2) +
+        ((moments$value[21] + moments$value[23])^2 - (moments$value[22] + moments$value[24])^2) +
         4 * moments$value[19] * (moments$value[21] + moments$value[23]) * (moments$value[22] + moments$value[24]),
       (3 * moments$value[22] - moments$value[24]) * (moments$value[22] + moments$value[24]) *
-        (3 * (moments$value[21] + moments$value[23]) ^ 2 - (moments$value[22] + moments$value[24]) ^ 2) -
+        (3 * (moments$value[21] + moments$value[23])^2 - (moments$value[22] + moments$value[24])^2) -
         (moments$value[21] - 3 * moments$value[23]) * (moments$value[22] + moments$value[24]) *
-        (3 * (moments$value[21] + moments$value[23]) ^ 2 - (moments$value[22] + moments$value[24]) ^ 2),
-      moments$value[19] * ((moments$value[21] + moments$value[23]) ^2 - (moments$value[24] + moments$value[23]) ^ 2) -
+          (3 * (moments$value[21] + moments$value[23])^2 - (moments$value[22] + moments$value[24])^2),
+      moments$value[19] * ((moments$value[21] + moments$value[23])^2 - (moments$value[24] + moments$value[23])^2) -
         (moments$value[18] - moments$value[20]) * (moments$value[21] + moments$value[23]) *
-        (moments$value[24] + moments$value[22])
+          (moments$value[24] + moments$value[22])
     )
   )
 }
@@ -756,33 +828,41 @@ huInvariants <- function(moments) {
 #' @export
 matchShapes <- function(x1, x2, method = "I1") {
   if (isImage(x1)) {
-    if (!isImage(x2))
+    if (!isImage(x2)) {
       stop("x2 must be an image.")
+    }
 
-    if (nchan(x1) != 1 | nchan(x2) != 1)
+    if (nchan(x1) != 1 | nchan(x2) != 1) {
       stop("x1 and x2 must be single-channel images.")
+    }
 
-    `_matchShapesIMG`(x1, x2,
-                      switch (method,
-                              "I1" = 1,
-                              "I2" = 2,
-                              "I3" = 3,
-                              stop("This is not a valid mode.")
-                      ))
+    `_matchShapesIMG`(
+      x1, x2,
+      switch(method,
+        "I1" = 1,
+        "I2" = 2,
+        "I3" = 3,
+        stop("This is not a valid mode.")
+      )
+    )
   } else if (is.matrix(x1)) {
-    if (!is.matrix(x2))
+    if (!is.matrix(x2)) {
       stop("x2 must be a matrix.")
+    }
 
-    if (ncol(x1) != 2 | ncol(x2) != 2)
+    if (ncol(x1) != 2 | ncol(x2) != 2) {
       stop("x1 and x2 must be 2-column matrices.")
+    }
 
-    `_matchShapesCT`(x1, x2,
-                     switch (method,
-                             "I1" = 1,
-                             "I2" = 2,
-                             "I3" = 3,
-                             stop("This is not a valid mode.")
-                     ))
+    `_matchShapesCT`(
+      x1, x2,
+      switch(method,
+        "I1" = 1,
+        "I2" = 2,
+        "I3" = 3,
+        stop("This is not a valid mode.")
+      )
+    )
   } else {
     stop("x1 and x2 must either be 2-column matrices or images.")
   }
@@ -800,7 +880,7 @@ matchShapes <- function(x1, x2, method = "I1") {
 #'  for which to run the function.
 #'
 #' @return A matrix with 3 columns:
-#'  \itemize{
+#'  \describe{
 #'    \item{"id": }{the contour identity (indicates the set of points belonging
 #'     to the same contour).}
 #'    \item{"x": }{the x coordinates of the points inside the contour.}
@@ -820,28 +900,35 @@ matchShapes <- function(x1, x2, method = "I1") {
 #'
 #' @export
 pixelsInContour <- function(contours, id = NULL) {
-  if (!all(names(contours) == c("contours", "hierarchy")))
+  if (!all(names(contours) == c("contours", "hierarchy"))) {
     stop("contours must be a list of two data frames as produced by `findContours`.")
+  }
 
-  if (!is.null(id))
+  if (!is.null(id)) {
     contours$contours <- contours$contours[contours$contours[, 1] %in% id, ]
+  }
 
-  do.call(rbind,
-          lapply(split.data.frame(contours$contours, contours$contours[, 1]),
-                 function(contour) {
-                   shift_x <- min(contour[, 2])
-                   shift_y <- min(contour[, 3])
-                   contour[, 2] <- contour[, 2] - shift_x + 1
-                   contour[, 3] <- contour[, 3] - shift_y + 1
+  do.call(
+    rbind,
+    lapply(
+      split.data.frame(contours$contours, contours$contours[, 1]),
+      function(contour) {
+        shift_x <- min(contour[, 2])
+        shift_y <- min(contour[, 3])
+        contour[, 2] <- contour[, 2] - shift_x + 1
+        contour[, 3] <- contour[, 3] - shift_y + 1
 
-                   mask <- zeros(nrow = max(contour[, 3]),
-                                 ncol = max(contour[, 2]), 1, "8U")
-                   fillConvexPoly(mask, contour[, 2:3])
-                   nz <- findNonZero(mask)
-                   nz[, 1] <- nz[, 1] + shift_x - 1
-                   nz[, 2] <- nz[, 2] + shift_y - 1
-                   cbind(id = contour[1, 1], nz)
-                 })
+        mask <- zeros(
+          nrow = max(contour[, 3]),
+          ncol = max(contour[, 2]), 1, "8U"
+        )
+        fillConvexPoly(mask, contour[, 2:3])
+        nz <- findNonZero(mask)
+        nz[, 1] <- nz[, 1] + shift_x - 1
+        nz[, 2] <- nz[, 2] + shift_y - 1
+        cbind(id = contour[1, 1], nz)
+      }
+    )
   )
 }
 
@@ -871,11 +958,13 @@ pixelsInContour <- function(contours, id = NULL) {
 #'
 #' @export
 arcLength <- function(curve, closed = TRUE) {
-  if (!is.matrix(curve))
+  if (!is.matrix(curve)) {
     stop("curve must be a m x 2 matrix.")
+  }
 
-  if (ncol(curve) != 2)
+  if (ncol(curve) != 2) {
     stop("curve must be a m x 2 matrix.")
+  }
 
   `_arcLength`(curve, closed)
 }
@@ -897,7 +986,7 @@ arcLength <- function(curve, closed = TRUE) {
 #'  not (default: TRUE).
 #'
 #' @return A matrix with two columns:
-#'  \itemize{
+#'  \describe{
 #'    \item{"x": }{the x coordinates of the approximated curve.}
 #'    \item{"y": }{the y coordinates of the approximated curve.}
 #'  }
@@ -922,11 +1011,13 @@ arcLength <- function(curve, closed = TRUE) {
 #'
 #' @export
 approxPolyDP <- function(curve, epsilon, closed = TRUE) {
-  if (!is.matrix(curve))
+  if (!is.matrix(curve)) {
     stop("curve must be a m x 2 matrix.")
+  }
 
-  if (ncol(curve) != 2)
+  if (ncol(curve) != 2) {
     stop("curve must be a m x 2 matrix.")
+  }
 
   `_approxPolyDP`(curve, epsilon, closed)
 }
@@ -945,7 +1036,7 @@ approxPolyDP <- function(curve, epsilon, closed = TRUE) {
 #'
 #' @param connectivity The connectivity neighborhood to decide whether 2 pixels
 #'  are contiguous. This parameter can take two values:
-#'  \itemize{
+#'  \describe{
 #'   \item{4: }{the neighborhood of a pixel are the four pixels located above
 #'    (north), below (south), to the left (west) and right (east) of the pixel.}
 #'   \item{8 (the default): }{the neighborhood of a pixel includes the four
@@ -971,8 +1062,9 @@ approxPolyDP <- function(curve, epsilon, closed = TRUE) {
 #'
 #' @export
 improfile <- function(image, xi, yi, connectivity = 8, left_to_right = FALSE) {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' must be an Image object.")
+  }
 
   pos <- `_pline`(image, xi - 1, -yi + nrow(image), connectivity, left_to_right)
   pos[, 1] <- pos[, 1] + 1

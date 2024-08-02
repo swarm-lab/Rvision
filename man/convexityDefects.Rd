@@ -12,7 +12,7 @@ produced by \code{\link{findContours}})}
 }
 \value{
 A matrix with 4 columns:
- \itemize{
+ \describe{
    \item{"start_index": }{index of the first point of the contour belonging to
     a convexity defect.}
    \item{"end_index": }{index of the last point of the contour belonging to

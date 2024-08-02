@@ -12,7 +12,7 @@ dimensions, number of channels, and bit depth.}
 
 \item{target}{The location where the results should be stored when passing a
 list of images to the function. It can take 3 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{An \code{\link{Image}} object:}{the results are stored in another

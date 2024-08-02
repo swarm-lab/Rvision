@@ -27,7 +27,7 @@ used only if \code{threshold_type} is set to "binary" or "inverse".}
 
 \item{method}{The name of the automated thresholding algorithm to use. It can
  be any of the following:
- \itemize{
+ \describe{
   \item{"none":}{the user-defined `threshold` value is used (the default).}
   \item{"ImageJ":}{the default auto thresholding algorithm of ImageJ.}
   \item{"Huang":}{Huang’s fuzzy thresholding method.}
@@ -58,7 +58,7 @@ Details about the functioning of each method can be found at
 
 \item{threshold_type}{The name of the threshold type to use. It can be any of
 the following:
-\itemize{
+\describe{
  \item{"binary":}{each pixel is replaced by `max_value` if its value is above
   the threshold, and by zero otherwise (the default).}
  \item{"inverse":}{each pixel is replaced by zero if its value is above the
@@ -78,7 +78,7 @@ set to 0 in the mask will be ignored during the threshold calculation).}
 
 \item{target}{The location where the results should be stored. It can take 3
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{"self":}{the results are stored back into \code{image} (faster but

@@ -10,7 +10,7 @@
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{e1} if it is an
@@ -112,12 +112,12 @@ setGeneric("%i!=%", function(e1, e2) { standardGeneric("%i!=%") })
 #'  of the following (see \url{https://bit.ly/2RjELvJ} for a full description of
 #'  each comparison method):
 #'  \itemize{
-#'   \item "SQDIFF"
-#'   \item "SQDIFF_NORMED"
-#'   \item "CCORR"
-#'   \item "CCORR_NORMED"
-#'   \item "CCOEFF"
-#'   \item "CCOEFF_NORMED"
+#'   \item{"SQDIFF"}
+#'   \item{"SQDIFF_NORMED"}
+#'   \item{"CCORR"}
+#'   \item{"CCORR_NORMED"}
+#'   \item{"CCOEFF"}
+#'   \item{"CCOEFF_NORMED"}
 #'  }
 #'
 #' @param mask An \code{\link{Image}} object with the same dimensions as
@@ -130,7 +130,7 @@ setGeneric("%i!=%", function(e1, e2) { standardGeneric("%i!=%") })
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -257,7 +257,7 @@ matchTemplate <- function(image, template, method, mask = NULL, target = "new") 
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another

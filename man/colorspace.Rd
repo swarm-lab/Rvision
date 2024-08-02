@@ -12,11 +12,11 @@ colorspace(x)
 \value{
 A character string indicating the color space of the image. For now,
  it can only be one of the following:
- \itemize{
-  \item BGR: an image with 3 channels, Blue, Green, and Red.
-  \item BGRA: an image with 3 channels, Blue, Green, Red, and Alpha
-              (transparency).
-  \item GRAY: a grayscale image (1 channel only).
+ \describe{
+  \item{BGR:}{an image with 3 channels, Blue, Green, and Red.}
+  \item{BGRA:}{an image with 3 channels, Blue, Green, Red, and Alpha
+              (transparency).}
+  \item{GRAY:}{a grayscale image (1 channel only).}
  }
 }
 \description{

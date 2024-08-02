@@ -11,7 +11,7 @@ findContours(image, mode = "external", method = "simple", offset = c(0, 0))
 
 \item{mode}{Mode of the contour retrieval algorithm. It can take the following
 values:
-\itemize{
+\describe{
    \item{'external': }{retrieves only the extreme outer contours (the default).}
    \item{'list': }{retrieves all of the contours without establishing any
       hierarchical relationships.}
@@ -26,7 +26,7 @@ values:
 
 \item{method}{Method for approximating the contours. It can take the following
 values:
-\itemize{
+\describe{
    \item{'none': }{stores absolutely all the contour points.}
    \item{'simple': }{compresses horizontal, vertical, and diagonal segments
       and leaves only their end points (the default).}
@@ -43,9 +43,9 @@ the whole image context.}
 }
 \value{
 A list of two matrices:
-\itemize{
+\describe{
    \item{"contours": }{a matrix with 3 columns:
-      \itemize{
+      \describe{
          \item{"id": }{the contour identity (indicates the set of points
             belonging to the same contour).}
          \item{"x": }{the x coordinates of the contour points.}
@@ -53,7 +53,7 @@ A list of two matrices:
       }
    }
    \item{"hierarchy": }{a matrix with 5 columns:
-      \itemize{
+      \describe{
          \item{"id": }{the contour identity.}
          \item{"after": }{the identity of the next contour at the same
             hierarchical level.}

@@ -24,14 +24,14 @@ that is considered by the algorithm (default: 5).}
 
 \item{method}{The inpainting method to be used. It can only be one of the
 following:
-\itemize{
+\describe{
   \item{"NS": }{Navier-Stokes based method (the default).}
   \item{"Telea": }{Alexandru Telea's method.}
 }}
 
 \item{target}{The location where the results should be stored. It can take 3
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{"self":}{the results are stored back into \code{image} (faster but

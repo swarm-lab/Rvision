@@ -30,7 +30,7 @@
 #'  streams.
 #'
 #' @param ... Either:
-#'  \itemize{
+#'  \describe{
 #'    \item{index: }{An integer value corresponding to the index of the camera
 #'      to read a stream from (default: 0; 0 is usually the default webcam on
 #'      most computers). Or...}
@@ -49,7 +49,7 @@
 #'
 #' @note Hereafter is a list of all supported APIs. Note that not all APIs will
 #'  be available on your computer (actually most of them will not be).
-#'  \itemize{
+#'  \describe{
 #'   \item{"ANY": }{automatically select an API.}
 #'   \item{"VFW": }{Video For Windows.}
 #'   \item{"V4L", "V4L2": }{Video For Linux.}

@@ -15,9 +15,9 @@ getStructuringElement(
 \item{k_shape}{A string corresponding to the shape of the structuring element.
 Valid kernel shapes are:
 \itemize{
-  \item{"rectangle" (the default):}{}
-  \item{"cross"}{}
-  \item{"ellipse"}{}
+  \item{"rectangle" (the default)}
+  \item{"cross"}
+  \item{"ellipse"}
 }}
 
 \item{k_height}{The half-height in pixels of the structuring element.}

@@ -6,7 +6,7 @@
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{e1} if it is an
@@ -122,7 +122,7 @@ setGeneric("%i^%", function(e1, e2) { standardGeneric("%i^%") })
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{e1} (faster but
@@ -185,7 +185,7 @@ addWeighted <- function(e1, e2, weight = c(0.5, 0.5), target = "new") {
 #'
 #' @param magnitude The location where the magnitude should be stored. It can
 #'  take 2 values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -196,7 +196,7 @@ addWeighted <- function(e1, e2, weight = c(0.5, 0.5), target = "new") {
 #'
 #' @param angle The location where the angle should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -281,7 +281,7 @@ cartToPolar <- function(x, y, magnitude = "new", angle = "new", degree = FALSE) 
 #'
 #' @param x The location where the x coordinates should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -292,7 +292,7 @@ cartToPolar <- function(x, y, magnitude = "new", angle = "new", degree = FALSE) 
 #'
 #' @param y The location where the y coordinates should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -378,7 +378,7 @@ polarToCart <- function(magnitude, angle, x = "new", y = "new", degree = FALSE) 
 #'
 #' @param target The location where the results should be stored when passing a
 #'  sum of images to the function. It can take 3 values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{x} (faster but

@@ -47,16 +47,16 @@ Set or get the values of various properties of the
 }
 \note{
 Video properties are:
-\itemize{
- \item{\code{POS_MSEC}: Current position of the video file in milliseconds.}
- \item{\code{POS_FRAMES}: 0-based index of the frame to be decoded/captured next.}
- \item{\code{POS_AVI_RATIO} Relative position of the video file: 0=start of the film, 1=end of the film.}
- \item{\code{FRAME_WIDTH}: Width in pixels of the frames in the video stream.}
- \item{\code{FRAME_HEIGHT}: Height in pixels of the frames in the video stream.}
- \item{\code{FPS}: Frame rate in frames per second.}
- \item{\code{FOURCC}: 4-character \href{https://www.fourcc.org/codecs.php}{FOURCC}
+\describe{
+ \item{\code{POS_MSEC}: }{Current position of the video file in milliseconds.}
+ \item{\code{POS_FRAMES}: }{0-based index of the frame to be decoded/captured next.}
+ \item{\code{POS_AVI_RATIO}: }{Relative position of the video file: 0=start of the film, 1=end of the film.}
+ \item{\code{FRAME_WIDTH}: }{Width in pixels of the frames in the video stream.}
+ \item{\code{FRAME_HEIGHT}: }{Height in pixels of the frames in the video stream.}
+ \item{\code{FPS}: }{Frame rate in frames per second.}
+ \item{\code{FOURCC}: }{4-character \href{https://www.fourcc.org/codecs.php}{FOURCC}
    code of the codec}
- \item{\code{FRAME_COUNT}: Number of frames in the video file.}
+ \item{\code{FRAME_COUNT}: }{Number of frames in the video file.}
 }
 
 Setting stream properties depends on a lot of things, mainly your
@@ -65,15 +65,15 @@ Setting stream properties depends on a lot of things, mainly your
  with your installation.
 
  Stream properties are:
- \itemize{
-   \item{\code{FRAME_WIDTH}: Width in pixels of the frames in the video stream.}
-   \item{\code{FRAME_HEIGHT}: Height in pixels of the frames in the video stream.}
-   \item{\code{BRIGHTNESS}: Brightness of the image}
-   \item{\code{CONTRAST}: Contrast of the image }
-   \item{\code{SATURATION}: Saturation of the image}
-   \item{\code{HUE}: Hue of the image}
-   \item{\code{GAIN}: Gain of the image}
-   \item{\code{EXPOSURE}: Exposure}
+ \describe{
+   \item{\code{FRAME_WIDTH}: }{Width in pixels of the frames in the video stream.}
+   \item{\code{FRAME_HEIGHT}: }{Height in pixels of the frames in the video stream.}
+   \item{\code{BRIGHTNESS}: }{Brightness of the image}
+   \item{\code{CONTRAST}: }{Contrast of the image }
+   \item{\code{SATURATION}: }{Saturation of the image}
+   \item{\code{HUE}: }{Hue of the image}
+   \item{\code{GAIN}: }{Gain of the image}
+   \item{\code{EXPOSURE}: }{Exposure}
  }
 }
 \examples{

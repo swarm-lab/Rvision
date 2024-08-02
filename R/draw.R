@@ -646,14 +646,14 @@ fillConvexPoly <- function(image, polygon, color = "white") {
 #'
 #' @param method The inpainting method to be used. It can only be one of the
 #'  following:
-#'  \itemize{
+#'  \describe{
 #'    \item{"NS": }{Navier-Stokes based method (the default).}
 #'    \item{"Telea": }{Alexandru Telea's method.}
 #'  }
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -743,7 +743,7 @@ inpaint <- function(image, mask, radius = 5, method = "NS", target = "new", in_p
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but

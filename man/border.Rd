@@ -25,7 +25,7 @@ set to the same value as \code{top}.}
 \item{border_type}{A character string indicating the extrapolation method to
 use when filling empty pixels created during the transformation. It can be
 any of the following:
-\itemize{
+\describe{
  \item{"constant" (the default):}{\code{iiiiii|abcdefgh|iiiiii} with \code{i}
   specified by \code{border_value}.}
  \item{"replicate":}{\code{aaaaaa|abcdefgh|hhhhhh}.}
@@ -41,7 +41,7 @@ compatible with \code{\link{col2bgr}} representing the color of the border
 
 \item{target}{The location where the results should be stored. It can take 3
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{"self":}{the results are stored back into \code{image} (faster but

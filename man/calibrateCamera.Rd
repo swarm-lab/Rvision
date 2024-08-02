@@ -46,7 +46,7 @@ iterative algorithm stops (default: \code{.Machine$double.eps}).}
 }
 \value{
 A list of matrices:
- \itemize{
+ \describe{
   \item{\code{camera_matrix}:}{a 3x3 camera intrinsic matrix.}
   \item{\code{dist_coeffs:}}{a single row matrix with 4, 5, 8, 12 or 14
    elements representing distortion coefficients.}
@@ -71,7 +71,9 @@ A list of matrices:
 }
 \examples{
 # See the help vignette:
-\dontrun{ vignette("z8_calib", package = "Rvision") }
+\dontrun{
+vignette("z8_calib", package = "Rvision")
+}
 
 }
 \references{

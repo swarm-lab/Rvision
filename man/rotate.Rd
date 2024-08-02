@@ -10,7 +10,7 @@ rotate(image, rotation = "CLOCKWISE", target = "new")
 \item{image}{An \code{\link{Image}} object.}
 
 \item{rotation}{A character string indicating the desired rotation:
-\itemize{
+\describe{
  \item{"CLOCKWISE" (default):}{rotate by 90 degrees clockwise.}
  \item{"COUNTER":}{rotate by 90 degrees counterclockwise.}
  \item{"180":}{rotate by 180 degrees.}
@@ -18,7 +18,7 @@ rotate(image, rotation = "CLOCKWISE", target = "new")
 
 \item{target}{The location where the results should be stored. It can take 3
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{An \code{\link{Image}} object:}{the results are stored in another

@@ -284,9 +284,9 @@ nchan <- function(x) {
 #'
 #' @return A character string indicating the bit depth of the image. For now, it
 #'  can only be one of the following:
-#'  \itemize{
-#'   \item 8U: an image with a bit depth of 8 unsigned bits.
-#'   \item 16U: an image with a bit depth of 16 unsigned bits.
+#'  \describe{
+#'   \item{8U:}{an image with a bit depth of 8 unsigned bits.}
+#'   \item{16U:}{an image with a bit depth of 16 unsigned bits.}
 #'  }
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -315,11 +315,11 @@ bitdepth <- function(x) {
 #'
 #' @return A character string indicating the color space of the image. For now,
 #'  it can only be one of the following:
-#'  \itemize{
-#'   \item BGR: an image with 3 channels, Blue, Green, and Red.
-#'   \item BGRA: an image with 3 channels, Blue, Green, Red, and Alpha
-#'               (transparency).
-#'   \item GRAY: a grayscale image (1 channel only).
+#'  \describe{
+#'   \item{BGR:}{an image with 3 channels, Blue, Green, and Red.}
+#'   \item{BGRA:}{an image with 3 channels, Blue, Green, Red, and Alpha
+#'               (transparency).}
+#'   \item{GRAY:}{a grayscale image (1 channel only).}
 #'  }
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
@@ -386,7 +386,7 @@ as.matrix.Rcpp_Image <- function(x, ...) {
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -468,7 +468,7 @@ split <- function(x) {
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -528,7 +528,7 @@ merge <- function(x, target = "new") {
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -896,7 +896,7 @@ pset <- function(image, x, y, color) {
 #' @param border_type A character string indicating the extrapolation method to
 #'  use when filling empty pixels created during the transformation. It can be
 #'  any of the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"constant" (the default):}{\code{iiiiii|abcdefgh|iiiiii} with \code{i}
 #'    specified by \code{border_value}.}
 #'   \item{"replicate":}{\code{aaaaaa|abcdefgh|hhhhhh}.}
@@ -912,7 +912,7 @@ pset <- function(image, x, y, color) {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -989,7 +989,7 @@ border <- function(image, top, bottom = top, left = top, right = top,
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -1118,7 +1118,7 @@ ones <- function(nrow, ncol, nchan = 3, bitdepth = "8U", colorspace = "BGR") {
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another

@@ -21,7 +21,7 @@ and the pixels outside the ROI painted black (default: TRUE).}
 \value{
 If \code{return_mask == FALSE}, a data frame with the following two
  columns:
- \itemize{
+ \describe{
   \item{x: }{the x coordinates of the ROI polygon.}
   \item{y: }{the y coordinates of the ROI polygon.}
  }

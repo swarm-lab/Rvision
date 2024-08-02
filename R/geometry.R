@@ -17,12 +17,19 @@
 #'  the image must be resized (default: NULL). Ignored if \code{height} is set.
 #'
 #' @param interpolation A character string representing the type of interpolation
-#'  to use during resizing (default: "linear"). See notes for all accepted
-#'  interpolation methods.
+#'  to use during resizing (default: "linear"). It can be any of the following:
+#'  \describe{
+#'   \item{"nearest": }{nearest neighbor interpolation.}
+#'   \item{"linear": }{bilinear interpolation.}
+#'   \item{"cubic": }{bicubic interpolation.}
+#'   \item{"area": }{resampling using pixel area relation.}
+#'   \item{"Lanczos": }{Lanczos interpolation over 8x8 neighborhood.}
+#'   \item{"exact": }{bit exact bilinear interpolation.}
+#'  }
 #'
-#' @param target The location where the results should be stored. It can take 3
+#' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -35,16 +42,6 @@
 #' @return If \code{target="new"}, the function returns an \code{\link{Image}}
 #'  object. If \code{target} is an \code{\link{Image}} object, the function
 #'  returns nothing and modifies that \code{\link{Image}} object in place.
-#'
-#' @note The following interpolation methods are supported:
-#'  \itemize{
-#'   \item{"nearest": }{nearest neighbor interpolation.}
-#'   \item{"linear": }{bilinear interpolation.}
-#'   \item{"cubic": }{bicubic interpolation.}
-#'   \item{"area": }{resampling using pixel area relation.}
-#'   \item{"Lanczos": }{Lanczos interpolation over 8x8 neighborhood.}
-#'   \item{"exact": }{bit exact bilinear interpolation.}
-#'  }
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
@@ -138,7 +135,7 @@ resize <- function(image, height = NULL, width = NULL, fx = NULL, fy = NULL,
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but

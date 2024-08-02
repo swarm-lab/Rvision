@@ -15,7 +15,7 @@ object corresponding to the angles of the vector field.}
 
 \item{x}{The location where the x coordinates should be stored. It can take 2
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -26,7 +26,7 @@ values:
 
 \item{y}{The location where the y coordinates should be stored. It can take 2
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{An \code{\link{Image}} object:}{the results are stored in another

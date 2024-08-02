@@ -15,7 +15,7 @@ image boundaries but then the line will be clipped on the image boundaries.}
 
 \item{connectivity}{The connectivity neighborhood to decide whether 2 pixels
 are contiguous. This parameter can take two values:
-\itemize{
+\describe{
  \item{4: }{the neighborhood of a pixel are the four pixels located above
   (north), below (south), to the left (west) and right (east) of the pixel.}
  \item{8 (the default): }{the neighborhood of a pixel includes the four

@@ -68,10 +68,10 @@ BRIEF descriptor (default: 31).}
 }
 \value{
 A list with two elements:
- \itemize{
+ \describe{
    \item{keypoints: }{a matrix containing the following information about
     each keypoint: }
-     \itemize{
+     \describe{
        \item{angle: }{the keypoint orientation in degrees, between 0 and 360,
          measured relative to the image coordinate system, i.e., clockwise.}
        \item{octave: }{the pyramid layer from which the keypoint was

@@ -30,7 +30,15 @@ window.}
 
 \item{interpolation}{A character string representing the type of interpolation
 to use if the display size is different from the image size (default: "linear").
-See notes in \code{\link{resize}} for all accepted interpolation methods.}
+It can be any of the following: 
+\describe{
+ \item{"nearest": }{nearest neighbor interpolation.}
+ \item{"linear": }{bilinear interpolation.}
+ \item{"cubic": }{bicubic interpolation.}
+ \item{"area": }{resampling using pixel area relation.}
+ \item{"Lanczos": }{Lanczos interpolation over 8x8 neighborhood.}
+ \item{"exact": }{bit exact bilinear interpolation.}
+}}
 }
 \value{
 This function does not return anything.

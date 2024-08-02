@@ -11,7 +11,7 @@
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -48,7 +48,7 @@ readFrame <- function(x, pos, target = "new") UseMethod("readFrame")
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -116,16 +116,16 @@ release <- function(x) UseMethod("release")
 #'  \code{property}.
 #'
 #' @note Video properties are:
-#' \itemize{
-#'  \item{\code{POS_MSEC}: Current position of the video file in milliseconds.}
-#'  \item{\code{POS_FRAMES}: 0-based index of the frame to be decoded/captured next.}
-#'  \item{\code{POS_AVI_RATIO} Relative position of the video file: 0=start of the film, 1=end of the film.}
-#'  \item{\code{FRAME_WIDTH}: Width in pixels of the frames in the video stream.}
-#'  \item{\code{FRAME_HEIGHT}: Height in pixels of the frames in the video stream.}
-#'  \item{\code{FPS}: Frame rate in frames per second.}
-#'  \item{\code{FOURCC}: 4-character \href{https://www.fourcc.org/codecs.php}{FOURCC}
+#' \describe{
+#'  \item{\code{POS_MSEC}: }{Current position of the video file in milliseconds.}
+#'  \item{\code{POS_FRAMES}: }{0-based index of the frame to be decoded/captured next.}
+#'  \item{\code{POS_AVI_RATIO}: }{Relative position of the video file: 0=start of the film, 1=end of the film.}
+#'  \item{\code{FRAME_WIDTH}: }{Width in pixels of the frames in the video stream.}
+#'  \item{\code{FRAME_HEIGHT}: }{Height in pixels of the frames in the video stream.}
+#'  \item{\code{FPS}: }{Frame rate in frames per second.}
+#'  \item{\code{FOURCC}: }{4-character \href{https://www.fourcc.org/codecs.php}{FOURCC}
 #'    code of the codec}
-#'  \item{\code{FRAME_COUNT}: Number of frames in the video file.}
+#'  \item{\code{FRAME_COUNT}: }{Number of frames in the video file.}
 #' }
 #'
 #' Setting stream properties depends on a lot of things, mainly your
@@ -134,15 +134,15 @@ release <- function(x) UseMethod("release")
 #'  with your installation.
 #'
 #'  Stream properties are:
-#'  \itemize{
-#'    \item{\code{FRAME_WIDTH}: Width in pixels of the frames in the video stream.}
-#'    \item{\code{FRAME_HEIGHT}: Height in pixels of the frames in the video stream.}
-#'    \item{\code{BRIGHTNESS}: Brightness of the image}
-#'    \item{\code{CONTRAST}: Contrast of the image }
-#'    \item{\code{SATURATION}: Saturation of the image}
-#'    \item{\code{HUE}: Hue of the image}
-#'    \item{\code{GAIN}: Gain of the image}
-#'    \item{\code{EXPOSURE}: Exposure}
+#'  \describe{
+#'    \item{\code{FRAME_WIDTH}: }{Width in pixels of the frames in the video stream.}
+#'    \item{\code{FRAME_HEIGHT}: }{Height in pixels of the frames in the video stream.}
+#'    \item{\code{BRIGHTNESS}: }{Brightness of the image}
+#'    \item{\code{CONTRAST}: }{Contrast of the image }
+#'    \item{\code{SATURATION}: }{Saturation of the image}
+#'    \item{\code{HUE}: }{Hue of the image}
+#'    \item{\code{GAIN}: }{Gain of the image}
+#'    \item{\code{EXPOSURE}: }{Exposure}
 #'  }
 #'
 #' @author Simon Garnier, \email{garnier@@njit.edu}

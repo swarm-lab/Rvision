@@ -476,4 +476,10 @@ RCPP_MODULE(methods_Calib3d) {
     _["distCoeffs"], _["newCameraMatrix"], _["target"]), "");
   function("_undistortPoints", &_undistortPoints, List::create(_["points"],
     _["cameraMatrix"], _["distCoeffs"], _["newCameraMatrix"]), "");
+  function("_initUndistortRectifyMap", &_initUndistortRectifyMap, List::create(
+    _["cameraMatrix"], _["distCoeffs"], _["R"], _["newCameraMatrix"],
+    _["height"], _["width"]), "");
+  function("_remap", &_remap, List::create(_["image"], _["map1"],
+    _["map2"], _["interpolation"], _["borderMode"], _["borderColor"],
+    _["target"]), "");
 }
