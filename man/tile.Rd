@@ -17,7 +17,7 @@ repeated along the horizontal axis.}
 
 \item{target}{The location where the results should be stored. It can take 2
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{An \code{\link{Image}} object:}{the results are stored in another

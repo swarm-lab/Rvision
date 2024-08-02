@@ -8,7 +8,7 @@
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -88,7 +88,7 @@ filter2D <- function(image, kernel, target = "new", in_place = NULL) {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -172,7 +172,7 @@ sepFilter2D <- function(image, kernel_x, kernel_y, target = "new", in_place = NU
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -244,7 +244,7 @@ gaussianBlur <- function(image, k_height = 5, k_width = 5, sigma_x = 1,
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -315,7 +315,7 @@ boxFilter <- function(image, k_height = 5, k_width = 5, target = "new", in_place
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -378,13 +378,15 @@ blur <- function(image, k_height = 5, k_width = 5, target = "new", in_place = NU
 #'  the value of each pixel is replaced by the median value of all the pixels in
 #'  its neighborhood.
 #'
-#' @param image An 8-bit (8U) \code{\link{Image}} object.
+#' @param image If \code{k_size=1} or \code{k_size=3}, an 8-bit (8U), 16-bit 
+#'  (16U) or 32-bit (32F) \code{\link{Image}} object. For any other value of 
+#'  \code{k_size}, an 8-bit (8U) \code{\link{Image}} object.
 #'
-#' @param k_size The half-size in pixels of the kernel (default: 5).
+#' @param k_size The half-size in pixels of the kernel (default: 2).
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -413,7 +415,7 @@ blur <- function(image, k_height = 5, k_width = 5, target = "new", in_place = NU
 #' balloon_blur <- medianBlur(balloon, 11)
 #'
 #' @export
-medianBlur <- function(image, k_size = 5, target = "new", in_place = NULL) {
+medianBlur <- function(image, k_size = 2, target = "new", in_place = NULL) {
   if (!missing(in_place)) {
     if (in_place) {
       warning("in_place is deprecated. Use target='self' instead.")
@@ -427,8 +429,16 @@ medianBlur <- function(image, k_size = 5, target = "new", in_place = NULL) {
   if (!isImage(image))
     stop("This is not an Image object.")
 
-  if (image$depth() != "8U")
-    stop("This is not an 8-bit (8U) Image object.")
+  if (!(k_size %in% c(1, 2))) {
+    if (image$depth() != "8U")
+      stop("This is not an 8-bit (8U) Image object.")
+  } else {
+    if (!(image$depth() %in% c("8U", "16U", "32F")))
+      stop("This is not an 8-bit (8U), 16-bit (16U), or 32-bit (32F) Image object.")
+  }
+
+  # if (image$depth() != "8U")
+  #   stop("This is not an 8-bit (8U) Image object.")
 
   if (isImage(target)) {
     `_medianBlur`(image, k_size, target)
@@ -461,7 +471,7 @@ medianBlur <- function(image, k_size = 5, target = "new", in_place = NULL) {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -536,7 +546,7 @@ sqrBoxFilter <- function(image, k_height = 5, k_width = 5, normalize = TRUE,
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -613,7 +623,7 @@ scharr <- function(image, dx = 1, dy = 0, scale = 1, target = "new", in_place = 
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -684,7 +694,7 @@ sobel <- function(image, dx = 1, dy = 1, k_size = 5, scale = 1, target = "new",
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -789,7 +799,7 @@ spatialGradient <- function(image, k_size = 5) {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -875,7 +885,7 @@ bilateralFilter <- function(image, d = 5, sigma_color = 25, sigma_space = 25,
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -971,7 +981,7 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #'
 #' @param method The name of the automated thresholding algorithm to use. It can
 #'  be any of the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"none":}{the user-defined `threshold` value is used (the default).}
 #'   \item{"ImageJ":}{the default auto thresholding algorithm of ImageJ.}
 #'   \item{"Huang":}{Huang’s fuzzy thresholding method.}
@@ -1002,7 +1012,7 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #'
 #' @param threshold_type The name of the threshold type to use. It can be any of
 #'  the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"binary":}{each pixel is replaced by `max_value` if its value is above
 #'    the threshold, and by zero otherwise (the default).}
 #'   \item{"inverse":}{each pixel is replaced by zero if its value is above the
@@ -1022,7 +1032,7 @@ adaptiveThreshold <- function(image, max_value = 255, method = "mean",
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -1183,7 +1193,7 @@ threshold <- function(image, thresh = 127, max_value = 255, method = "none",
 #'
 #' @param method The name of the automated thresholding algorithm to use. It can
 #'  be any of the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"none":}{the user-defined `threshold` value is used (the default).}
 #'   \item{"ImageJ":}{the default auto thresholding algorithm of ImageJ.}
 #'   \item{"Huang":}{Huang’s fuzzy thresholding method.}
@@ -1317,7 +1327,7 @@ autothreshold <- function(image, method = "ImageJ", mask = NULL) {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -1422,9 +1432,9 @@ getGaborKernel <- function(width = 31, height = 31, sigma = 5, theta = pi,
 #' @param k_shape A string corresponding to the shape of the structuring element.
 #'  Valid kernel shapes are:
 #'  \itemize{
-#'    \item{"rectangle" (the default):}{}
-#'    \item{"cross"}{}
-#'    \item{"ellipse"}{}
+#'    \item{"rectangle" (the default)}
+#'    \item{"cross"}
+#'    \item{"ellipse"}
 #'  }
 #'
 #' @param k_height The half-height in pixels of the structuring element.
@@ -1465,7 +1475,7 @@ getStructuringElement <- function(k_shape = "rectangle", k_height = 5, k_width =
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -1475,8 +1485,8 @@ getStructuringElement <- function(k_shape = "rectangle", k_height = 5, k_width =
 #'    as \code{image}, an error may be thrown. The dimensions of \code{target}
 #'    must satisfy the following conditions:
 #'      \itemize{
-#'        \item{}{\code{ abs(ncol(target) * 2 - ncol(image)) <= 2 }}
-#'        \item{}{\code{ abs(nrow(target) * 2 - nrow(image)) <= 2 }}
+#'        \item{\code{ abs(ncol(target) * 2 - ncol(image)) <= 2 }}
+#'        \item{\code{ abs(nrow(target) * 2 - nrow(image)) <= 2 }}
 #'      }
 #'    }
 #'  }
@@ -1521,7 +1531,7 @@ pyrDown <- function(image, target = "new") {
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -1531,8 +1541,8 @@ pyrDown <- function(image, target = "new") {
 #'    as \code{image}, an error may be thrown. The dimensions of \code{target}
 #'    must satisfy the following conditions:
 #'      \itemize{
-#'        \item{}{\code{ abs(ncol(target) - ncol(image) * 2) <= ncol(target) \%\% 2 }}
-#'        \item{}{\code{ abs(nrow(target) - nrow(image) * 2) <= nrow(target) \%\% 2 }}
+#'        \item{\code{ abs(ncol(target) - ncol(image) * 2) <= ncol(target) \%\% 2 }}
+#'        \item{\code{ abs(nrow(target) - nrow(image) * 2) <= nrow(target) \%\% 2 }}
 #'      }
 #'    }
 #'  }

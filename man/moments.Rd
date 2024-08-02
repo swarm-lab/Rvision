@@ -16,7 +16,7 @@ treated as 1's. The parameter is used for images only.}
 }
 \value{
 A data frame with 2 columns:
- \itemize{
+ \describe{
    \item{"moment": }{the name of the moment. See Note below.}
    \item{"value": }{the value of the moment.}
 }

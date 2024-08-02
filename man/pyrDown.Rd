@@ -11,7 +11,7 @@ pyrDown(image, target = "new")
 
 \item{target}{The location where the results should be stored. It can take 2
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -21,8 +21,8 @@ values:
   as \code{image}, an error may be thrown. The dimensions of \code{target}
   must satisfy the following conditions:
     \itemize{
-      \item{}{\code{ abs(ncol(target) * 2 - ncol(image)) <= 2 }}
-      \item{}{\code{ abs(nrow(target) * 2 - nrow(image)) <= 2 }}
+      \item{\code{ abs(ncol(target) * 2 - ncol(image)) <= 2 }}
+      \item{\code{ abs(nrow(target) * 2 - nrow(image)) <= 2 }}
     }
   }
 }}

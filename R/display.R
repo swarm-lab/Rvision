@@ -53,7 +53,15 @@ newDisplay <- function(window_name = "Display", height = 480, width = 640) {
 #'
 #' @param interpolation A character string representing the type of interpolation
 #'  to use if the display size is different from the image size (default: "linear").
-#'  See notes in \code{\link{resize}} for all accepted interpolation methods.
+#'  It can be any of the following: 
+#'  \describe{
+#'   \item{"nearest": }{nearest neighbor interpolation.}
+#'   \item{"linear": }{bilinear interpolation.}
+#'   \item{"cubic": }{bicubic interpolation.}
+#'   \item{"area": }{resampling using pixel area relation.}
+#'   \item{"Lanczos": }{Lanczos interpolation over 8x8 neighborhood.}
+#'   \item{"exact": }{bit exact bilinear interpolation.}
+#'  }
 #'
 #' @return This function does not return anything.
 #'
@@ -138,7 +146,7 @@ destroyAllDisplays <- function() {
 #'  window (default: "Display").
 #'
 #' @return A data frame with the following 3 columns:
-#'  \itemize{
+#'  \describe{
 #'   \item{x: }{the x coordinate of the mouse click.}
 #'   \item{y: }{the y coordinate of the mouse click.}
 #'   \item{button: }{the mouse button that was pressed (0: left button; 1: right
@@ -189,7 +197,7 @@ click <- function(image, scale = 1, window_name = "Display") {
 #'
 #' @return If \code{return_mask == FALSE}, a data frame with the following two
 #'  columns:
-#'  \itemize{
+#'  \describe{
 #'   \item{x: }{the x coordinates of the ROI polygon.}
 #'   \item{y: }{the y coordinates of the ROI polygon.}
 #'  }

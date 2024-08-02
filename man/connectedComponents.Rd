@@ -7,7 +7,7 @@
 connectedComponents(
   image,
   connectivity = 8,
-  algorithm = "grana",
+  algorithm = "bolelli",
   table = TRUE,
   stats = TRUE,
   target = "new"
@@ -18,7 +18,7 @@ connectedComponents(
 
 \item{connectivity}{The connectivity neighborhood to decide whether 2 pixels
 are contiguous. This parameter can take two values:
-\itemize{
+\describe{
  \item{4: }{the neighborhood of a pixel are the four pixels located above
   (north), below (south), to the left (west) and right (east) of the pixel.}
  \item{8 (the default): }{the neighborhood of a pixel includes the four
@@ -27,12 +27,14 @@ are contiguous. This parameter can take two values:
 }}
 
 \item{algorithm}{A character string specifying the connected components
-labeling algorithm to use. This parameter can take two values:
-\itemize{
- \item{"grana" (the default): }{Block-based connected-component labeling for
-  8-way connectivity, scan array union find labeling for 4-way connectivity.}
- \item{"wu": }{Scan array union find labeling for both 8-way and 4-way
-  connectivity.}
+labeling algorithm to use. This parameter can take six values:
+\describe{
+ \item{"grana"/"BBDT": }{BBDT algorithm for 8-way connectivity, SAUF
+  algorithm for 4-way connectivity.}
+ \item{"wu"/"SAUF": }{SAUF algorithm for 8-way connectivity, SAUF algorithm
+  for 4-way connectivity.}
+ \item{"bolelli"/"spaghetti" (the default): }{Spaghetti algorithm for 8-way
+  connectivity, Spaghetti4C algorithm for 4-way connectivity.}
 }}
 
 \item{table}{A boolean indicating whether the coordinates of the pixels of
@@ -43,7 +45,7 @@ components should be returned.}
 
 \item{target}{The location where the results should be stored. It can take 2
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -54,7 +56,7 @@ values:
 }
 \value{
 A list with 1 to 4 items:
- \itemize{
+ \describe{
   \item{n: }{the number of connected components in the image. It is always
    returned.}
   \item{table: }{if \code{table=TRUE}, a matrix with 3 columns representing
@@ -80,6 +82,28 @@ dots_gray <- changeColorSpace(dots, "GRAY")
 dots_bin <- dots_gray < 200
 cc <- connectedComponents(dots_bin)
 
+}
+\references{
+Costantino Grana, Daniele Borghesani, and Rita Cucchiara. Optimized
+ Block-Based Connected Components Labeling With Decision Trees. IEEE
+ Transactions on Image Processing, 19(6):1596–1609, 2010.
+
+Kesheng Wu, Ekow Otoo, and Kenji Suzuki. Optimizing two-pass
+ connected-component labeling algorithms. Pattern Analysis and Applications,
+ 12(2):117–135, Jun 2009.
+
+Federico Bolelli, Michele Cancilla, and Costantino Grana. Two More Strategies
+ to Speed Up Connected Components Labeling Algorithms. In Image Analysis and
+ Processing - ICIAP 2017, volume 10485, pages 48–58. Springer, 2017.
+
+Federico Bolelli, Stefano Allegretti, Lorenzo Baraldi, and Costantino Grana.
+ Spaghetti Labeling: Directed Acyclic Graphs for Block-Based Connected
+ Components Labeling. IEEE Transactions on Image Processing, 29(1):1999–2012,
+ 2019.
+
+Federico Bolelli, Stefano Allegretti, and Costantino Grana. One dag to rule
+ them all. IEEE Transactions on Pattern Analysis and Machine Intelligence,
+ 2021.
 }
 \seealso{
 \code{\link{Image}}

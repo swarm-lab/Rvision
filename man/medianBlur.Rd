@@ -4,16 +4,18 @@
 \alias{medianBlur}
 \title{Blurs an Image Using a Median Filter}
 \usage{
-medianBlur(image, k_size = 5, target = "new", in_place = NULL)
+medianBlur(image, k_size = 2, target = "new", in_place = NULL)
 }
 \arguments{
-\item{image}{An 8-bit (8U) \code{\link{Image}} object.}
+\item{image}{If \code{k_size=1} or \code{k_size=3}, an 8-bit (8U), 16-bit 
+(16U) or 32-bit (32F) \code{\link{Image}} object. For any other value of 
+\code{k_size}, an 8-bit (8U) \code{\link{Image}} object.}
 
-\item{k_size}{The half-size in pixels of the kernel (default: 5).}
+\item{k_size}{The half-size in pixels of the kernel (default: 2).}
 
 \item{target}{The location where the results should be stored. It can take 3
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{"self":}{the results are stored back into \code{image} (faster but

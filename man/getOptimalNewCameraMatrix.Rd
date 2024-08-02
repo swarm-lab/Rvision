@@ -34,7 +34,7 @@ source image (determined by alpha) to the corrected image.}
 }
 \value{
 A list:
- \itemize{
+ \describe{
   \item{\code{camera_matrix}:}{the new 3x3 camera intrinsic matrix.}
   \item{\code{roi:}}{a 4-element list defining a rectangle that outlines
    the all-valid-pixels region in the undistorted image.}
@@ -52,7 +52,9 @@ A list:
 }
 \examples{
 # See the help vignette:
-\dontrun{ vignette("z8_calib", package = "Rvision") }
+\dontrun{
+vignette("z8_calib", package = "Rvision")
+}
 
 }
 \seealso{

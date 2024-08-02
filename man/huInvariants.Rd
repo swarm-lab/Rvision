@@ -11,7 +11,7 @@ huInvariants(moments)
 }
 \value{
 A data frame with 2 columns:
- \itemize{
+ \describe{
    \item{"invariant": }{the name of the invariant See Note below.}
    \item{"value": }{the value of the invariant.}
 }

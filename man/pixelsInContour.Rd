@@ -14,7 +14,7 @@ for which to run the function.}
 }
 \value{
 A matrix with 3 columns:
- \itemize{
+ \describe{
    \item{"id": }{the contour identity (indicates the set of points belonging
     to the same contour).}
    \item{"x": }{the x coordinates of the points inside the contour.}

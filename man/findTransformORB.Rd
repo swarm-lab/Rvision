@@ -22,7 +22,7 @@ findTransformORB(
 
 \item{warp_mode}{A character string indicating the type of warping required
 to transform \code{image} into \code{template}. It can be any of the following:
-\itemize{
+\describe{
  \item{"affine" (default):}{affine transformation (Euclidean + shear; this
   transformation will preserve parallelism between lines).}
  \item{"homography":}{homography transformation (affine + perspective; this

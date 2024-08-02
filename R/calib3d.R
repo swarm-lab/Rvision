@@ -36,21 +36,25 @@
 #' @seealso \code{\link{cornerSubPix}}, \code{\link{calibrateCamera}}
 #'
 #' @examples
-#' checkerboard <- image(system.file("sample_img/checkerboard6x9.png", package = "Rvision"))
+#' checkerboard <- image(
+#'   system.file("sample_img/checkerboard6x9.png", package = "Rvision")
+#' )
 #' pts <- findChessboardCorners(checkerboard, 6, 9)
 #'
 #' @export
 findChessboardCorners <- function(image, pprow, ppcol, adaptive_threshold = TRUE,
                                   normalize = TRUE, filter_quads = FALSE, fast_check = TRUE) {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (image$depth() != "8U")
+  if (image$depth() != "8U") {
     stop("'image' is not an 8U 'Image' object.")
+  }
 
   flags <- 1 * adaptive_threshold + 2 * normalize + 4 * filter_quads + 8 * fast_check
 
-  `_findChessboardCorners`(image, pprow, ppcol, flags)[,,]
+  `_findChessboardCorners`(image, pprow, ppcol, flags)[, , ]
 }
 
 
@@ -100,23 +104,28 @@ findChessboardCorners <- function(image, pprow, ppcol, adaptive_threshold = TRUE
 #' @export
 cornerSubPix <- function(image, corners, win_size = c(11, 11), zero_zone = c(-1, -1),
                          maxit = 30, eps = 0.0001) {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (image$depth() != "8U")
+  if (image$depth() != "8U") {
     stop("'image' is not an 8U 'Image' object.")
+  }
 
-  if (image$nchan() != 1)
+  if (image$nchan() != 1) {
     stop("'image' is not a single channel 'Image' object.")
+  }
 
-  if (ncol(corners) != 2)
+  if (ncol(corners) != 2) {
     stop("'corners' is not a 2-column matrix.")
+  }
 
-  if (nrow(corners) < 1)
+  if (nrow(corners) < 1) {
     stop("'corners' does not contain any value.")
+  }
 
   dim(corners) <- c(nrow(corners), 1, 2)
-  `_cornerSubPix`(image, corners, win_size, zero_zone, maxit, eps)[,,]
+  `_cornerSubPix`(image, corners, win_size, zero_zone, maxit, eps)[, , ]
 }
 
 
@@ -155,7 +164,7 @@ cornerSubPix <- function(image, corners, win_size = c(11, 11), zero_zone = c(-1,
 #'  iterative algorithm stops (default: \code{.Machine$double.eps}).
 #'
 #' @return A list of matrices:
-#'  \itemize{
+#'  \describe{
 #'   \item{\code{camera_matrix}:}{a 3x3 camera intrinsic matrix.}
 #'   \item{\code{dist_coeffs:}}{a single row matrix with 4, 5, 8, 12 or 14
 #'    elements representing distortion coefficients.}
@@ -194,19 +203,25 @@ cornerSubPix <- function(image, corners, win_size = c(11, 11), zero_zone = c(-1,
 #'
 #' @examples
 #' # See the help vignette:
-#' \dontrun{ vignette("z8_calib", package = "Rvision") }
+#' \dontrun{
+#' vignette("z8_calib", package = "Rvision")
+#' }
 #'
 #' @export
 calibrateCamera <- function(ref_points, img_points, nrow, ncol, fixed_point = 1,
                             maxit = 30, eps = .Machine$double.eps) {
-  if (length(ref_points) != length(img_points))
+  if (length(ref_points) != length(img_points)) {
     stop("'ref_points' and 'img_points' should have the same length.")
+  }
 
-  if (!all(sapply(ref_points, nrow) == sapply(img_points, nrow)))
+  if (!all(sapply(ref_points, nrow) == sapply(img_points, nrow))) {
     stop("Each matrix in 'ref_points' should have the same number of rows as the corresponding matrix in 'img_points'.")
+  }
 
-  `_calibrateCameraRO`(ref_points, img_points, c(nrow, ncol), fixed_point,
-                       0, maxit, eps)
+  `_calibrateCameraRO`(
+    ref_points, img_points, c(nrow, ncol), fixed_point,
+    0, maxit, eps
+  )
 }
 
 
@@ -240,7 +255,7 @@ calibrateCamera <- function(ref_points, img_points, nrow, ncol, fixed_point = 1,
 #'  source image (determined by alpha) to the corrected image.
 #'
 #' @return A list:
-#'  \itemize{
+#'  \describe{
 #'   \item{\code{camera_matrix}:}{the new 3x3 camera intrinsic matrix.}
 #'   \item{\code{roi:}}{a 4-element list defining a rectangle that outlines
 #'    the all-valid-pixels region in the undistorted image.}
@@ -252,19 +267,25 @@ calibrateCamera <- function(ref_points, img_points, nrow, ncol, fixed_point = 1,
 #'
 #' @examples
 #' # See the help vignette:
-#' \dontrun{ vignette("z8_calib", package = "Rvision") }
+#' \dontrun{
+#' vignette("z8_calib", package = "Rvision")
+#' }
 #'
 #' @export
 getOptimalNewCameraMatrix <- function(camera_matrix, dist_coefs, nrow, ncol,
                                       alpha = 0, center_principal_point = FALSE) {
-  if (!all(dim(camera_matrix) == 3))
+  if (!all(dim(camera_matrix) == 3)) {
     stop("'camera_matrix' should have exactly 3 rows and 3 columns.")
+  }
 
-  if (!all(dim(dist_coefs) == c(1, 5)))
+  if (!all(dim(dist_coefs) == c(1, 5))) {
     stop("'dist_coefs' should have exactly 1 row and 5 columns.")
+  }
 
-  `_getOptimalNewCameraMatrix`(camera_matrix, dist_coefs, c(nrow, ncol), alpha,
-                               center_principal_point)
+  `_getOptimalNewCameraMatrix`(
+    camera_matrix, dist_coefs, c(nrow, ncol), alpha,
+    center_principal_point
+  )
 }
 
 
@@ -287,7 +308,7 @@ getOptimalNewCameraMatrix <- function(camera_matrix, dist_coefs, nrow, ncol,
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -308,29 +329,37 @@ getOptimalNewCameraMatrix <- function(camera_matrix, dist_coefs, nrow, ncol,
 #'
 #' @examples
 #' # See the help vignette:
-#' \dontrun{ vignette("z8_calib", package = "Rvision") }
+#' \dontrun{
+#' vignette("z8_calib", package = "Rvision")
+#' }
 #'
 #' @export
 undistort <- function(image, camera_matrix, dist_coefs, new_camera_matrix = camera_matrix,
                       target = "new") {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (!all(dim(camera_matrix) == 3))
+  if (!all(dim(camera_matrix) == 3)) {
     stop("'camera_matrix' should have exactly 3 rows and 3 columns.")
+  }
 
-  if (!all(dim(new_camera_matrix) == 3))
+  if (!all(dim(new_camera_matrix) == 3)) {
     stop("'new_camera_matrix' should have exactly 3 rows and 3 columns.")
+  }
 
-  if (nrow(dist_coefs) != 1)
+  if (nrow(dist_coefs) != 1) {
     stop("'dist_coefs' should have exactly 1 row.")
+  }
 
-  if (!(ncol(dist_coefs) %in% c(4, 5, 8, 12, 14)))
+  if (!(ncol(dist_coefs) %in% c(4, 5, 8, 12, 14))) {
     stop("'dist_coefs' should have either 4, 5, 8, 12, or 14 columns.")
+  }
 
   if (isImage(target)) {
-    if (identical(image, target))
+    if (identical(image, target)) {
       stop("'image' and 'target' cannot be the same Image object.")
+    }
 
     `_undistort`(image, camera_matrix, dist_coefs, new_camera_matrix, target)
   } else if (target == "new") {
@@ -370,25 +399,210 @@ undistort <- function(image, camera_matrix, dist_coefs, new_camera_matrix = came
 #'
 #' @examples
 #' # See the help vignette:
-#' \dontrun{ vignette("z8_calib", package = "Rvision") }
+#' \dontrun{
+#' vignette("z8_calib", package = "Rvision")
+#' }
 #'
 #' @export
 undistortPoints <- function(points, camera_matrix, dist_coefs, new_camera_matrix = camera_matrix) {
-  if (!all(dim(camera_matrix) == 3))
+  if (!all(dim(camera_matrix) == 3)) {
     stop("'camera_matrix' should have exactly 3 rows and 3 columns.")
+  }
 
-  if (!all(dim(new_camera_matrix) == 3))
+  if (!all(dim(new_camera_matrix) == 3)) {
     stop("'new_camera_matrix' should have exactly 3 rows and 3 columns.")
+  }
 
-  if (nrow(dist_coefs) != 1)
+  if (nrow(dist_coefs) != 1) {
     stop("'dist_coefs' should have exactly 1 row.")
+  }
 
-  if (!(ncol(dist_coefs) %in% c(4, 5, 8, 12, 14)))
+  if (!(ncol(dist_coefs) %in% c(4, 5, 8, 12, 14))) {
     stop("'dist_coefs' should have either 4, 5, 8, 12, or 14 columns.")
+  }
 
-  if (ncol(points) != 2)
+  if (ncol(points) != 2) {
     stop("'points' should have exactly 2 columns.")
+  }
 
   dim(points) <- c(nrow(points), 1, 2)
-  `_undistortPoints`(points, camera_matrix, dist_coefs, new_camera_matrix)[,,]
+  `_undistortPoints`(points, camera_matrix, dist_coefs, new_camera_matrix)[, , ]
+}
+
+
+#' @title Compute an Undistortion and Rectification Transformation Map
+#'
+#' @description \code{initUndistortRectifyMap} computes the joint undistortion
+#'  and rectification transformation and represents the result in the form of
+#'  maps for \code{\link{remap}}. The undistorted image looks like original, as
+#'  if it is captured with a camera using the camera matrix \code{new_camera_matrix}
+#'  and zero distortion. In case of a monocular camera, \code{new_camera_matrix}
+#'  is usually equal to \code{camera_matrix}, or it can be computed by
+#'  \code{\link{getOptimalNewCameraMatrix}} for a better control over scaling.
+#'
+#' @param camera_matrix A 3x3 camera intrinsic matrix as returned by
+#'  \code{\link{calibrateCamera}}.
+#'
+#' @param dist_coefs A single row matrix with 4, 5, 8, 12 or 14 elements as
+#'  returned by \code{\link{calibrateCamera}}.
+#'
+#' @param new_camera_matrix A 3x3 camera intrinsic matrix as returned by
+#'  \code{\link{getOptimalNewCameraMatrix}} if you chose to execute this
+#'  optional step (default: \code{camera_matrix}).
+#' 
+#' @param nrow,ncol The number of rows and columns of the undistorted image. 
+#'
+#' @return A 2xN matrix of transformed X/Y coordinates.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{undistort}}, \code{\link{calibrateCamera}},
+#'  \code{\link{getOptimalNewCameraMatrix}}
+#'
+#' @examples
+#' # See the help vignette:
+#' \dontrun{
+#' vignette("z8_calib", package = "Rvision")
+#' }
+#'
+#' @export
+initUndistortRectifyMap <- function(
+    camera_matrix, dist_coefs, new_camera_matrix = camera_matrix, 
+    nrow, ncol) {
+  if (!all(dim(camera_matrix) == 3)) {
+    stop("'camera_matrix' should have exactly 3 rows and 3 columns.")
+  }
+
+  if (!all(dim(new_camera_matrix) == 3)) {
+    stop("'new_camera_matrix' should have exactly 3 rows and 3 columns.")
+  }
+
+  if (nrow(dist_coefs) != 1) {
+    stop("'dist_coefs' should have exactly 1 row.")
+  }
+
+  `_initUndistortRectifyMap`(
+    camera_matrix, dist_coefs, diag(3), new_camera_matrix, nrow, ncol
+  )
+}
+
+#' @title Geometrical Transformation to an Image
+#' 
+#' @description \code{remap} transforms the source image using the specified 
+#'  maps and interpolation methods. 
+#' 
+#' @param image An \code{\link{Image}} object.
+#' 
+#' @param map1,map2 \code{\link{Image}} objects representing a joint
+#'  undistortion and rectification transformation as computed by 
+#'  \code{\link{initUndistortRectifyMap}}.
+#'  
+#' @param interpolation A character string representing the type of interpolation
+#'  to use during transformation (default: "linear"). See notes for all accepted
+#'  interpolation methods. It can be any of the following: 
+#'  \describe{
+#'   \item{"nearest": }{nearest neighbor interpolation.}
+#'   \item{"linear": }{bilinear interpolation.}
+#'   \item{"cubic": }{bicubic interpolation.}
+#'   \item{"Lanczos": }{Lanczos interpolation over 8x8 neighborhood.}
+#'  }
+#' 
+#' @param border_type A character string indicating the extrapolation method to
+#'  use when filling empty pixels created during the transformation. It can be
+#'  any of the following:
+#'  \describe{
+#'   \item{"constant" (the default):}{\code{iiiiii|abcdefgh|iiiiii} with \code{i}
+#'    specified by \code{border_value}.}
+#'   \item{"replicate":}{\code{aaaaaa|abcdefgh|hhhhhh}.}
+#'   \item{"reflect":}{\code{fedcba|abcdefgh|hgfedc}.}
+#'   \item{"wrap":}{\code{cdefgh|abcdefgh|abcdef}.}
+#'   \item{"reflect_101":}{\code{gfedcb|abcdefgh|gfedcb}.}
+#'   \item{"transparent":}{\code{uvwxyz|abcdefgh|ijklmn}.}
+#'  }
+#' 
+#' @param border_color A value or vector of any kind of R color specification
+#'  compatible with \code{\link{col2bgr}} representing the color of the border
+#'  (default: "black").
+#' 
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \describe{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast but will replace the
+#'    content of \code{target}. Note that \code{target} must have the same 
+#'    dimensions, bit depth and number of channels as \code{image} but that it 
+#'    cannot be \code{image} itself or an error will be thrown.}
+#'  }
+#' 
+#' @export
+remap <- function(
+    image, map1, map2, interpolation = "linear",
+    border_type = "constant", border_color = "black", target = "new") {
+  if (!isImage(image)) {
+    stop("'image' is not an Image object.")
+  }
+
+  if (!isImage(map1)) {
+    stop("'map1' is not an Image object.")
+  }
+
+  if (!isImage(map2)) {
+    stop("'map2' is not an Image object.")
+  }
+
+  if ((map1$depth() != map2$depth()) || !all(map1$dim() == map2$dim()) ||
+    (map1$nchan() != 1) || (map2$nchan() != 1)) {
+    stop("'map1' and 'map2' must be single-channel images with the same dimensions and bit depth.")
+  }
+
+  interp <- switch(interpolation,
+    nearest = 0,
+    linear = 1,
+    cubic = 2,
+    Lanczos = 4,
+    stop("This is not a valid interpolation method.")
+  )
+
+  border_mode <- switch(border_type,
+    constant = 0,
+    replicate = 1,
+    reflect = 2,
+    wrap = 3,
+    reflect_101 = 4,
+    transparent = 5,
+    stop("This is not a valid border type.")
+  )
+
+  if (isImage(target)) {
+    if (identical(image, target)) {
+      stop("'image' and 'target' cannot be the same Image object.")
+    }
+
+    if (!all(target$dim()[1:2] == map1$dim()[1:2])) {
+      stop("'target' must have the same dimensions as 'map1'.")
+    }
+
+    if ((target$nchan() != image$nchan()) || (target$depth() != image$depth())) {
+      stop("'target' must have the same bit depth and number of channels as 'image'.")
+    }
+
+    `_remap`(
+      image, map1, map2, interp, border_mode,
+      col2bgr(border_color), target
+    )
+  } else if (target == "new") {
+    out <- zeros(
+      map1$nrow(), map1$ncol(), image$nchan(),
+      image$depth(), image$space
+    )
+    `_remap`(
+      image, map1, map2, interp, border_mode,
+      col2bgr(border_color), out
+    )
+    out
+  } else {
+    stop("Invalid target.")
+  }
 }

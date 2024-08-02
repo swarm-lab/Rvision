@@ -24,7 +24,7 @@ condition is satisfied (default: 255). It is used only if
 
 \item{threshold_type}{The name of the threshold type to use. It can be any of
 the following:
-\itemize{
+\describe{
  \item{"binary":}{each pixel is replaced by `max_value` if its value is above
   the threshold, and by zero otherwise (the default).}
  \item{"inverse":}{each pixel is replaced by zero if its value is above the
@@ -48,10 +48,10 @@ with the standard deviation and subtracted from the mean.}
 \item{method}{A string indicating the binarization method to use. It can be
 any of the following:
 \itemize{
- \item{"Niblack (the default)"}{}
- \item{"Sauvola"}{}
- \item{"Wolf"}{}
- \item{"Nick"}{}
+ \item{"Niblack (the default)"}
+ \item{"Sauvola"}
+ \item{"Wolf"}
+ \item{"Nick"}
 }}
 
 \item{r}{A user-adjustable parameter used by Sauvola's technique. This is the
@@ -59,7 +59,7 @@ dynamic range of standard deviation.}
 
 \item{target}{The location where the results should be stored. It can take 3
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{"self":}{the results are stored back into \code{image} (faster but

@@ -11,7 +11,7 @@ distanceTransform(image, distance_type = "L1", mask_size = 3, target = "new")
 
 \item{distance_type}{A character string indicating the type of distance
 to be calculated. It can be any of the following:
-\itemize{
+\describe{
  \item{"L1" (the default):}{\code{distance = |x1-x2| + |y1-y2|}.}
  \item{"L2":}{the simple euclidean distance.}
  \item{"C":}{\code{distance = max(|x1-x2|,|y1-y2|)}.}
@@ -23,7 +23,7 @@ to be calculated. It can be any of the following:
 
 \item{mask_size}{A numeric value indicating the size of the distance
 transform mask. It can be any of the following:
-\itemize{
+\describe{
  \item{0:}{used only to indicate the Felzenszwalb algorithm when
   \code{distance_type = "L2"}.}
  \item{3 (the default):}{3x3 mask.}
@@ -32,7 +32,7 @@ transform mask. It can be any of the following:
 
 \item{target}{The location where the results should be stored. It can take 3
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{"self":}{the results are stored back into \code{image} (faster but

@@ -30,7 +30,7 @@ default L1 norm is enough (default: FALSE).}
 
 \item{target}{The location where the results should be stored. It can take 3
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{An \code{\link{Image}} object:}{the results are stored in another

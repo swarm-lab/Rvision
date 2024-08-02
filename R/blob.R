@@ -74,7 +74,7 @@
 #'  discarded. (default: Inf).
 #'
 #' @return A data frame of class \code{blob} with the following columns:
-#' \itemize{
+#' \describe{
 #'    \item{"id":}{a unique identifier for each blob in the image.}
 #'    \item{"x":}{the x coordinate of each blob in the image.}
 #'    \item{"y":}{the y coordinate of each blob in the image.}

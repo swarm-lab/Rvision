@@ -16,7 +16,7 @@ window (default: "Display").}
 }
 \value{
 A data frame with the following 3 columns:
- \itemize{
+ \describe{
   \item{x: }{the x coordinate of the mouse click.}
   \item{y: }{the y coordinate of the mouse click.}
   \item{button: }{the mouse button that was pressed (0: left button; 1: right

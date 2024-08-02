@@ -18,7 +18,7 @@
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -318,10 +318,10 @@ goodFeaturesToTrack <- function(image, max_corners, quality_level, min_distance,
 #'  (default: 20)
 #'
 #' @return A list with two elements:
-#'  \itemize{
+#'  \describe{
 #'    \item{keypoints: }{a matrix containing the following information about
 #'     each keypoint: }
-#'      \itemize{
+#'      \describe{
 #'        \item{angle: }{the keypoint orientation in degrees, between 0 and 360,
 #'          measured relative to the image coordinate system, i.e., clockwise.}
 #'        \item{octave: }{the pyramid layer from which the keypoint was

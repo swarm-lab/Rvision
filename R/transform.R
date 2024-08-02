@@ -142,7 +142,7 @@ computeECC <- function(template, image, mask = NULL) {
 #'
 #' @param warp_mode A character string indicating the type of warping required
 #'  to transform \code{image} into \code{template}. It can be any of the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"translation":}{simple translational transformation.}
 #'   \item{"euclidean":}{Euclidean (rigid) transformation (translation + rotation).}
 #'   \item{"affine" (default):}{affine transformation (Euclidean + shear; this
@@ -238,7 +238,7 @@ findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "a
 #'
 #' @param warp_mode A character string indicating the type of warping required
 #'  to transform \code{image} into \code{template}. It can be any of the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"affine" (default):}{affine transformation (Euclidean + shear; this
 #'    transformation will preserve parallelism between lines).}
 #'   \item{"homography":}{homography transformation (affine + perspective; this
@@ -364,7 +364,7 @@ rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, s
 #' @param image An \code{\link{Image}} object.
 #'
 #' @param rotation A character string indicating the desired rotation:
-#'  \itemize{
+#'  \describe{
 #'   \item{"CLOCKWISE" (default):}{rotate by 90 degrees clockwise.}
 #'   \item{"COUNTER":}{rotate by 90 degrees counterclockwise.}
 #'   \item{"180":}{rotate by 180 degrees.}
@@ -372,7 +372,7 @@ rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, s
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -442,7 +442,7 @@ rotate <- function(image, rotation = "CLOCKWISE", target = "new") {
 #' @param interp_mode A character string indicating the interpolation method to
 #'  be used. It can be
 #'  any of the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"nearest":}{nearest neighbor interpolation.}
 #'   \item{"linear" (the default):}{bilinear interpolation.}
 #'   \item{"cubic":}{bicubic interpolation.}
@@ -459,7 +459,7 @@ rotate <- function(image, rotation = "CLOCKWISE", target = "new") {
 #' @param border_type A character string indicating the extrapolation method to
 #'  use when filling empty pixels created during the transformation. It can be
 #'  any of the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"constant" (the default):}{\code{iiiiii|abcdefgh|iiiiii} with \code{i}
 #'    specified by \code{border_value}.}
 #'   \item{"replicate":}{\code{aaaaaa|abcdefgh|hhhhhh}.}
@@ -475,7 +475,7 @@ rotate <- function(image, rotation = "CLOCKWISE", target = "new") {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -656,7 +656,7 @@ getAffineTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #' @param interp_mode A character string indicating the interpolation method to
 #'  be used. It can be
 #'  any of the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"nearest":}{nearest neighbor interpolation.}
 #'   \item{"linear" (the default):}{bilinear interpolation.}
 #'   \item{"cubic":}{bicubic interpolation.}
@@ -673,7 +673,7 @@ getAffineTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #' @param border_type A character string indicating the extrapolation method to
 #'  use when filling empty pixels created during the transformation. It can be
 #'  any of the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"constant" (the default):}{\code{iiiiii|abcdefgh|iiiiii} with \code{i}
 #'    specified by \code{border_value}.}
 #'   \item{"replicate":}{\code{aaaaaa|abcdefgh|hhhhhh}.}
@@ -689,7 +689,7 @@ getAffineTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -773,7 +773,7 @@ warpPerspective <- function(image, warp_matrix, interp_mode = "linear", inverse_
 #'
 #' @param distance_type A character string indicating the type of distance
 #'  to be calculated. It can be any of the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"L1" (the default):}{\code{distance = |x1-x2| + |y1-y2|}.}
 #'   \item{"L2":}{the simple euclidean distance.}
 #'   \item{"C":}{\code{distance = max(|x1-x2|,|y1-y2|)}.}
@@ -785,7 +785,7 @@ warpPerspective <- function(image, warp_matrix, interp_mode = "linear", inverse_
 #'
 #' @param mask_size A numeric value indicating the size of the distance
 #'  transform mask. It can be any of the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{0:}{used only to indicate the Felzenszwalb algorithm when
 #'    \code{distance_type = "L2"}.}
 #'   \item{3 (the default):}{3x3 mask.}
@@ -794,7 +794,7 @@ warpPerspective <- function(image, warp_matrix, interp_mode = "linear", inverse_
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -892,7 +892,7 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
 #'
 #' @param connectivity The connetivity neighborhood to decide whether 2 pixels
 #'  are contiguous. This parameter can take two values:
-#'  \itemize{
+#'  \describe{
 #'   \item{4: }{the neighborhood of a pixel are the four pixels located above
 #'    (north), below (south), to the left (west) and right (east) of the pixel.}
 #'   \item{8 (the default): }{the neighborhood of a pixel includes the four
@@ -968,7 +968,7 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = 0,
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -1050,7 +1050,7 @@ LUT <- function(image, lut, target = "new") {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -1120,7 +1120,7 @@ histmatch <- function(image, reference, target = "new") {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -1193,7 +1193,7 @@ histEq <- function(image, target = "new") {
 #'
 #' @param mask An 8-bit (8U), single-channel \code{\link{Image}} object. Each
 #'  pixel can take any of the following 4 values:
-#'  \itemize{
+#'  \describe{
 #'     \item{0: }{an obvious background pixels.}
 #'     \item{1: }{an obvious foreground (object) pixel.}
 #'     \item{2: }{a possible background pixel.}
@@ -1219,7 +1219,7 @@ histEq <- function(image, target = "new") {
 #'
 #' @param mode A character string indicating the operation mode of the function.
 #'  It can be any of the following:
-#'  \itemize{
+#'  \describe{
 #'     \item{"RECT": }{The function initializes the state and the mask using the
 #'      provided \code{rect}. After that it runs \code{iter} iterations of the
 #'      algorithm.}
@@ -1282,7 +1282,7 @@ grabCut <- function(image, mask, rect = rep(1, 4), bgdModel, fgdModel, iter = 1,
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -1402,7 +1402,7 @@ concatenate <- function(image1, image2, direction = "vertical", target = "new") 
 #'
 #' @param target The location where the results should be stored. It can take 2
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -1495,7 +1495,7 @@ reduce <- function(image, dim, fun = "sum", target = "new") {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but

@@ -18,7 +18,7 @@ with \code{\link{col2bgr}} representing the color of each rectangle's outline
 
 \item{target}{The location where the results should be stored. It can take 2
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{"self":}{the results are stored back into \code{image} (faster but

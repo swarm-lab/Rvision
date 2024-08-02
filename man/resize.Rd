@@ -30,12 +30,19 @@ the image must be resized (default: NULL). Ignored if \code{width} is set.}
 the image must be resized (default: NULL). Ignored if \code{height} is set.}
 
 \item{interpolation}{A character string representing the type of interpolation
-to use during resizing (default: "linear"). See notes for all accepted
-interpolation methods.}
+to use during resizing (default: "linear"). It can be any of the following:
+\describe{
+ \item{"nearest": }{nearest neighbor interpolation.}
+ \item{"linear": }{bilinear interpolation.}
+ \item{"cubic": }{bicubic interpolation.}
+ \item{"area": }{resampling using pixel area relation.}
+ \item{"Lanczos": }{Lanczos interpolation over 8x8 neighborhood.}
+ \item{"exact": }{bit exact bilinear interpolation.}
+}}
 
-\item{target}{The location where the results should be stored. It can take 3
+\item{target}{The location where the results should be stored. It can take 2
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{An \code{\link{Image}} object:}{the results are stored in another
@@ -52,17 +59,6 @@ If \code{target="new"}, the function returns an \code{\link{Image}}
 }
 \description{
 \code{resize} returns a resized version of an \code{\link{Image}}.
-}
-\note{
-The following interpolation methods are supported:
- \itemize{
-  \item{"nearest": }{nearest neighbor interpolation.}
-  \item{"linear": }{bilinear interpolation.}
-  \item{"cubic": }{bicubic interpolation.}
-  \item{"area": }{resampling using pixel area relation.}
-  \item{"Lanczos": }{Lanczos interpolation over 8x8 neighborhood.}
-  \item{"exact": }{bit exact bilinear interpolation.}
- }
 }
 \examples{
 balloon <- image(system.file("sample_img/balloon1.png", package = "Rvision"))

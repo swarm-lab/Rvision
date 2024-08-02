@@ -17,12 +17,12 @@ than \code{image} in any dimension.}
 of the following (see \url{https://bit.ly/2RjELvJ} for a full description of
 each comparison method):
 \itemize{
- \item "SQDIFF"
- \item "SQDIFF_NORMED"
- \item "CCORR"
- \item "CCORR_NORMED"
- \item "CCOEFF"
- \item "CCOEFF_NORMED"
+ \item{"SQDIFF"}
+ \item{"SQDIFF_NORMED"}
+ \item{"CCORR"}
+ \item{"CCORR_NORMED"}
+ \item{"CCOEFF"}
+ \item{"CCOEFF_NORMED"}
 }}
 
 \item{mask}{An \code{\link{Image}} object with the same dimensions as
@@ -35,7 +35,7 @@ number of channels as \code{template}. It can be an 8U or 32F
 
 \item{target}{The location where the results should be stored. It can take 2
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{An \code{\link{Image}} object:}{the results are stored in another

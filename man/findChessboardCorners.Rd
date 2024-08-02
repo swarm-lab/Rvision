@@ -50,7 +50,9 @@ You can find a suitable chessboard pattern at
  \url{https://github.com/opencv/opencv/blob/4.x/doc/pattern.png}
 }
 \examples{
-checkerboard <- image(system.file("sample_img/checkerboard6x9.png", package = "Rvision"))
+checkerboard <- image(
+  system.file("sample_img/checkerboard6x9.png", package = "Rvision")
+)
 pts <- findChessboardCorners(checkerboard, 6, 9)
 
 }

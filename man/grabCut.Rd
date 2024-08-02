@@ -19,7 +19,7 @@ grabCut(
 
 \item{mask}{An 8-bit (8U), single-channel \code{\link{Image}} object. Each
 pixel can take any of the following 4 values:
-\itemize{
+\describe{
    \item{0: }{an obvious background pixels.}
    \item{1: }{an obvious foreground (object) pixel.}
    \item{2: }{a possible background pixel.}
@@ -45,7 +45,7 @@ further calls with \code{mode="MASK"} or \code{mode="MASK"}.}
 
 \item{mode}{A character string indicating the operation mode of the function.
 It can be any of the following:
-\itemize{
+\describe{
    \item{"RECT": }{The function initializes the state and the mask using the
     provided \code{rect}. After that it runs \code{iter} iterations of the
     algorithm.}

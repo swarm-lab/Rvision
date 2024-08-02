@@ -14,7 +14,7 @@
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -82,7 +82,7 @@ anisotropicDiffusion <- function(image, alpha = 0.1, K = 1, n_iters = 1, target 
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -158,7 +158,7 @@ edgePreservingFilter <- function(image, d = 11, threshold = 5, target = "new") {
 #'
 #' @param threshold_type The name of the threshold type to use. It can be any of
 #'  the following:
-#'  \itemize{
+#'  \describe{
 #'   \item{"binary":}{each pixel is replaced by `max_value` if its value is above
 #'    the threshold, and by zero otherwise (the default).}
 #'   \item{"inverse":}{each pixel is replaced by zero if its value is above the
@@ -182,10 +182,10 @@ edgePreservingFilter <- function(image, d = 11, threshold = 5, target = "new") {
 #' @param method A string indicating the binarization method to use. It can be
 #'  any of the following:
 #'  \itemize{
-#'   \item{"Niblack (the default)"}{}
-#'   \item{"Sauvola"}{}
-#'   \item{"Wolf"}{}
-#'   \item{"Nick"}{}
+#'   \item{"Niblack (the default)"}
+#'   \item{"Sauvola"}
+#'   \item{"Wolf"}
+#'   \item{"Nick"}
 #'  }
 #'
 #' @param r A user-adjustable parameter used by Sauvola's technique. This is the
@@ -193,7 +193,7 @@ edgePreservingFilter <- function(image, d = 11, threshold = 5, target = "new") {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but
@@ -279,13 +279,13 @@ niBlackThreshold <- function(image, max_value = 255, threshold_type = "binary",
 #' @param method A string indicating the binarization method to use. It can be
 #'  any of the following:
 #'  \itemize{
-#'   \item{"Zhang-Suen (the default)"}{}
-#'   \item{"Guo-Hall"}{}
+#'   \item{"Zhang-Suen (the default)"}
+#'   \item{"Guo-Hall"}
 #'  }
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{image} (faster but

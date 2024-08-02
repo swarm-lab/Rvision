@@ -39,7 +39,7 @@ applied.}
 
 \item{target}{The location where the results should be stored. It can take 3
 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{"self":}{the results are stored back into \code{image} (faster but
@@ -67,7 +67,7 @@ If \code{target="new"}, the function returns an \code{\link{Image}}
 \note{
 There are 8 types of morphological operations that can be achieved with
  this function:
- \itemize{
+ \describe{
    \item{"erode":}{for each point, returns the minimum of the points in its
     neighborhood, with that neighborhood defined by the kernel.}
    \item{"dilate":}{for each point, returns the maximum of the points in its
@@ -88,9 +88,9 @@ There are 8 types of morphological operations that can be achieved with
 There are 3 types of predetermined kernel shapes that can be used with
  this function when a custom \code{kernel} is not provided:
  \itemize{
-   \item{"rectangle" (the default):}{}
-   \item{"cross"}{}
-   \item{"ellipse"}{}
+   \item{"rectangle"}
+   \item{"cross"}
+   \item{"ellipse"}
  }
 }
 \examples{

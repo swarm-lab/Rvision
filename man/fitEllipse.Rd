@@ -13,7 +13,7 @@ fitEllipse(x, y, method = "original")
 
 \item{method}{A character string indicating the method to use in order to fit
 the ellipse. It can take the following values:
-\itemize{
+\describe{
    \item{'original': }{least square.}
    \item{'ams': }{Approximate Mean Square (AMS) proposed in Taubin (1991).}
    \item{'direct': }{Direct least square method proposed in Fitzgibbon, Pilu,

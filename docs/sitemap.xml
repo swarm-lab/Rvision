@@ -1,624 +1,212 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/404.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/articles/z1_install.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/articles/z2_io.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/articles/z3_basic.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/articles/z4_inplace.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/articles/z5_gpu.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/articles/z6_queue.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/articles/z7_stack.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/articles/z8_calib.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/index.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/CLAHE.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/Image-class.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/LUT.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/ORBkeypoints.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/Queue-class.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/Rvision.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/RvisionAck.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/Stream-class.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/Video-class.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/VideoStack-class.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/VideoWriter-class.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/adaptiveThreshold.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/addWeighted.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/anisotropicDiffusion.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/api.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/approxPolyDP.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/arcLength.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/as.array.Rcpp_Image.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/autothreshold.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/bilateralFilter.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/bitdepth.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/blur.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/border.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/boxFilter.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/boxPoints.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/calibrateCamera.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/canny.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/capacity.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/cartToPolar.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/cc_table.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/changeBitDepth.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/changeColorSpace.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/click.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/cloneImage.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/codec.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/col2bgr.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/colorspace.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/compare.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/computeECC.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/concatenate.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/connectedComponents.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/contourArea.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/convexHull.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/convexityDefects.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/cornerSubPix.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/countNonZero.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/destroyDisplay.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/dim.Rcpp_Image.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/dim.Rcpp_Queue.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/dim.Rcpp_Stream.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/dim.Rcpp_Video.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/dim.Rcpp_VideoWriter.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/dim.VideoStack.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/display.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/distanceTransform.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/drawArrow.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/drawCircle.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/drawEllipse.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/drawLine.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/drawPolyline.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/drawRectangle.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/drawRotatedRectangle.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/drawText.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/edgePreservingFilter.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/exp.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/extractChannel.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/farneback.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/fillConvexPoly.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/fillPoly.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/filter2D.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/findChessboardCorners.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/findContours.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/findHomography.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/findNonZero.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/findTransformECC.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/findTransformORB.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/fitEllipse.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/flip.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/floodFill.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/fourcc.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/fps.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/frame.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/full.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/gaussianBlur.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/getAffineTransform.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/getGaborKernel.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/getOptimalNewCameraMatrix.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/getPerspectiveTransform.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/getStructuringElement.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/getTextSize.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/goodFeaturesToTrack.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/grabCut.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/histEq.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/histmatch.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/houghCircles.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/houghLinesP.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/huInvariants.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/imageArithmetic.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/imageLogic.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/imageMinMax.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/imhist.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/improfile.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/inPlaceArithmetic.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/inPlaceComparison.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/inPlaceLogical.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/inRange.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/inpaint.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/insertChannel.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/invert.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/invertFourcc.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/isBlob.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/isImage.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/isQueue.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/isStream.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/isVideo.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/isVideoStack.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/isVideoWriter.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/laplacian.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/log.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/matchKeypoints.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/matchShapes.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/matchTemplate.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/mean.Rcpp_Image.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/mean.list.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/medianBlur.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/merge.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/min.Rcpp_Image.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/minAreaRect.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/minMaxLoc.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/moments.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/morph.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/newDisplay.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/niBlackThreshold.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/nrow.Rcpp_Image.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/ones.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/pget.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/pixelsInContour.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/plot.Image.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/plot.blob.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/plotOF.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/polarToCart.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/pow.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/pset.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/pyrDown.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/pyrUp.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/queue_dimensions.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/randn.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/randu.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/readFrame.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/readHIS.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/readMulti.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/readNext.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/reduce.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/release.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/reset.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/resize.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/rotate.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/rotateScale.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/scharr.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/selectROI.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/sepFilter2D.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/setProp.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/setTo.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/simpleBlobDetector.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/sobel.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/spatialGradient.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/split.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/sqrBoxFilter.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/sqrt.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/stream_dimensions.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/sub-.Rcpp_Image.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/sub-.VideoStack.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/subImage.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/sum.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/thinning.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/threshold.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/tile.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/timelapse.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/undistort.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/undistortPoints.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/videoStack.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/video_dimensions.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/videostack_dimensions.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/videowriter_dimensions.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/warpAffine.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/warpPerspective.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/watershed.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/write.Image.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/writeFrame.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/writeMulti.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/writerOuput.html</loc>
-  </url>
-  <url>
-    <loc>https://swarm-lab.github.io/Rvision/reference/zeros.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://swarm-lab.github.io/Rvision/404.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/LICENSE-text.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/articles/index.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/articles/z1_install.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/articles/z2_io.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/articles/z3_basic.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/articles/z4_inplace.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/articles/z5_gpu.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/articles/z6_queue.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/articles/z7_stack.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/articles/z8_calib.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/authors.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/index.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/news/index.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/CLAHE.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/Image-class.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/LUT.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/ORBkeypoints.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/Queue-class.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/Rvision.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/RvisionAck.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/Stream-class.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/Video-class.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/VideoStack-class.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/VideoWriter-class.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/adaptiveThreshold.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/addWeighted.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/anisotropicDiffusion.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/api.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/approxPolyDP.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/arcLength.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/as.array.Rcpp_Image.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/autothreshold.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/bilateralFilter.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/bitdepth.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/blur.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/border.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/boxFilter.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/boxPoints.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/calibrateCamera.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/canny.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/capacity.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/cartToPolar.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/cc_table.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/changeBitDepth.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/changeColorSpace.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/click.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/cloneImage.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/codec.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/col2bgr.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/colorspace.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/compare.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/computeECC.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/concatenate.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/connectedComponents.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/contourArea.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/convexHull.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/convexityDefects.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/cornerSubPix.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/countNonZero.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/destroyDisplay.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/dim.Rcpp_Image.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/dim.Rcpp_Queue.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/dim.Rcpp_Stream.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/dim.Rcpp_Video.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/dim.Rcpp_VideoWriter.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/dim.VideoStack.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/display.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/distanceTransform.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/drawArrow.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/drawCircle.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/drawEllipse.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/drawLine.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/drawPolyline.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/drawRectangle.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/drawRotatedRectangle.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/drawText.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/edgePreservingFilter.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/exp.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/extractChannel.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/farneback.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/fillConvexPoly.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/fillPoly.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/filter2D.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/findChessboardCorners.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/findContours.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/findHomography.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/findNonZero.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/findTransformECC.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/findTransformORB.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/fitEllipse.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/flip.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/floodFill.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/fourcc.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/fps.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/frame.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/full.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/gaussianBlur.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/getAffineTransform.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/getGaborKernel.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/getOptimalNewCameraMatrix.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/getPerspectiveTransform.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/getStructuringElement.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/getTextSize.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/goodFeaturesToTrack.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/grabCut.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/histEq.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/histmatch.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/houghCircles.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/houghLinesP.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/huInvariants.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/imageArithmetic.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/imageLogic.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/imageMinMax.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/imhist.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/improfile.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/inPlaceArithmetic.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/inPlaceComparison.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/inPlaceLogical.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/inRange.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/index.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/initUndistortRectifyMap.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/inpaint.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/insertChannel.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/invert.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/invertFourcc.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/isBlob.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/isImage.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/isQueue.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/isStream.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/isVideo.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/isVideoStack.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/isVideoWriter.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/laplacian.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/log.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/matchKeypoints.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/matchShapes.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/matchTemplate.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/mean.Rcpp_Image.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/mean.list.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/medianBlur.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/merge.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/min.Rcpp_Image.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/minAreaRect.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/minMaxLoc.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/moments.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/morph.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/newDisplay.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/niBlackThreshold.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/nrow.Rcpp_Image.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/ones.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/pget.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/pixelsInContour.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/plot.Image.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/plot.blob.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/plotOF.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/polarToCart.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/pow.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/pset.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/pyrDown.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/pyrUp.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/queue_dimensions.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/randn.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/randu.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/readFrame.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/readHIS.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/readMulti.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/readNext.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/reduce.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/release.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/remap.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/reset.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/resize.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/rotate.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/rotateScale.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/scharr.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/selectROI.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/sepFilter2D.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/setProp.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/setTo.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/simpleBlobDetector.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/sobel.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/spatialGradient.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/split.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/sqrBoxFilter.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/sqrt.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/stream_dimensions.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/sub-.Rcpp_Image.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/sub-.VideoStack.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/subImage.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/sum.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/thinning.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/threshold.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/tile.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/timelapse.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/undistort.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/undistortPoints.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/videoStack.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/video_dimensions.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/videostack_dimensions.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/videowriter_dimensions.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/warpAffine.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/warpPerspective.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/watershed.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/write.Image.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/writeFrame.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/writeMulti.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/writerOuput.html</loc></url>
+<url><loc>https://swarm-lab.github.io/Rvision/reference/zeros.html</loc></url>
 </urlset>
+

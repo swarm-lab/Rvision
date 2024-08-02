@@ -68,7 +68,7 @@ range.Rcpp_Image <- function(x, ...) {
 #'
 #' @param target The location where the results should be stored. It can take 3
 #'  values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{"self":}{the results are stored back into \code{e1} if it is an
@@ -175,7 +175,7 @@ mean.Rcpp_Image <- function(x, ..., mask = NA) {
 #'
 #' @param target The location where the results should be stored when passing a
 #'  list of images to the function. It can take 3 values:
-#'  \itemize{
+#'  \describe{
 #'   \item{"new":}{a new \code{\link{Image}} object is created and the results
 #'    are stored inside (the default).}
 #'   \item{An \code{\link{Image}} object:}{the results are stored in another

@@ -11,7 +11,7 @@ sqrt(x, target = "new")
 
 \item{target}{The location where the results should be stored when passing a
 sum of images to the function. It can take 3 values:
-\itemize{
+\describe{
  \item{"new":}{a new \code{\link{Image}} object is created and the results
   are stored inside (the default).}
  \item{"self":}{the results are stored back into \code{x} (faster but

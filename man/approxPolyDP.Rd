@@ -17,7 +17,7 @@ not (default: TRUE).}
 }
 \value{
 A matrix with two columns:
- \itemize{
+ \describe{
    \item{"x": }{the x coordinates of the approximated curve.}
    \item{"y": }{the y coordinates of the approximated curve.}
  }

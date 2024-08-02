@@ -10,7 +10,7 @@
 * Add goodFeaturesToTrack function (finds the most prominent corners in an image).
 * Add pyramid resampling functions (up- and down-).
 * Add ORB keypoint detection and matching. 
-* Add approxPolyDP (Douglas-Peucker algorithm for approximates a polygon with another polygon with less vertices).
+* Add approxPolyDP (Douglas-Peucker algorithm for approximating a polygon with another polygon with fewer vertices).
 * Add affine transform matrix computation.
 * Add string argument for streams (users can now pass the URL of a video stream or a GStreamer pipeline string). 
 + Add invertFourcc function to recover a codec's name from its fourcc code.

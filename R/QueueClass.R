@@ -59,7 +59,7 @@
 #'
 #' @param overflow A character string indicating what the \code{\link{Queue}}
 #'  object should do when it is full. Three methods are available:
-#'  \itemize{
+#'  \describe{
 #'   \item{"pause": }{the queue will stop retrieving and storing new frames
 #'    until a frame is read by the user.}
 #'   \item{"replace": }{the oldest frame in the queue is discarded to make space

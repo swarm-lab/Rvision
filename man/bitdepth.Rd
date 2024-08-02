@@ -12,9 +12,9 @@ bitdepth(x)
 \value{
 A character string indicating the bit depth of the image. For now, it
  can only be one of the following:
- \itemize{
-  \item 8U: an image with a bit depth of 8 unsigned bits.
-  \item 16U: an image with a bit depth of 16 unsigned bits.
+ \describe{
+  \item{8U:}{an image with a bit depth of 8 unsigned bits.}
+  \item{16U:}{an image with a bit depth of 16 unsigned bits.}
  }
 }
 \description{
