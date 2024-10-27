@@ -46,11 +46,13 @@
 #' @export
 findHomography <- function(from, to, from_dim, to_dim = from_dim, method = "RANSAC",
                            ransac_reproj_th = 3, max_it = 2000, conf = 0.95) {
-  if (!all(dim(from) == dim(to)))
+  if (!all(dim(from) == dim(to))) {
     stop("'from' and 'to' must have the same dimensions.")
+  }
 
-  if (ncol(from) != 2 | ncol(to) != 2 )
+  if (ncol(from) != 2 | ncol(to) != 2) {
     stop("'from' and 'to' must have only two columns.")
+  }
 
   from[, 1] <- from[, 1] - 1
   from[, 2] <- -from[, 2] + from_dim[1]
@@ -60,15 +62,18 @@ findHomography <- function(from, to, from_dim, to_dim = from_dim, method = "RANS
   dim(from) <- c(nrow(from), 1, 2)
   dim(to) <- c(nrow(to), 1, 2)
 
-  `_findHomography`(from, to,
-                    switch(method,
-                           "LS" = 0,
-                           "RANSAC" = 4,
-                           "LMEDS" = 8,
-                           "RHO" = 16,
-                           stop("This is not a valid method. 'homography_method'
-                                  must be one of 'LS', 'RANSAC', 'LMEDS', or 'RHO'.")),
-                    ransac_reproj_th, max_it, conf)
+  `_findHomography`(
+    from, to,
+    switch(method,
+      "LS" = 0,
+      "RANSAC" = 4,
+      "LMEDS" = 8,
+      "RHO" = 16,
+      stop("This is not a valid method. 'homography_method'
+                                  must be one of 'LS', 'RANSAC', 'LMEDS', or 'RHO'.")
+    ),
+    ransac_reproj_th, max_it, conf
+  )
 }
 
 
@@ -105,17 +110,21 @@ findHomography <- function(from, to, from_dim, to_dim = from_dim, method = "RANS
 #'
 #' @export
 computeECC <- function(template, image, mask = NULL) {
-  if (!isImage(template))
+  if (!isImage(template)) {
     stop("'template' is not an Image object.")
+  }
 
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (template$space != "GRAY" | image$space != "GRAY")
+  if (template$space != "GRAY" | image$space != "GRAY") {
     stop("'template' and 'image' must be grayscale images.")
+  }
 
-  if (!all(template$dim() == image$dim()))
+  if (!all(template$dim() == image$dim())) {
     stop("'template' and 'image' must have the same dimensions.")
+  }
 
   if (is.null(mask)) {
     mask <- ones(template$nrow(), template$ncol(), 1, template$depth())
@@ -183,31 +192,37 @@ computeECC <- function(template, image, mask = NULL) {
 #' @export
 findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "affine",
                              max_it = 200, epsilon = 1e-3, mask = NULL, filt_size = 0) {
-  if (!isImage(template))
+  if (!isImage(template)) {
     stop("'template' is not an Image object.")
+  }
 
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (template$space != "GRAY" | image$space != "GRAY")
+  if (template$space != "GRAY" | image$space != "GRAY") {
     stop("'template' and 'image' must be grayscale images.")
+  }
 
-  if (!all(template$dim() == image$dim()))
+  if (!all(template$dim() == image$dim())) {
     stop("'template' and 'image' must have the same dimensions.")
+  }
 
   if (warp_mode == "homography") {
     if (is.null(warp_matrix)) {
       warp_matrix <- diag(1, 3, 3)
     } else {
-      if (!all(dim(warp_matrix) == c(3, 3)))
+      if (!all(dim(warp_matrix) == c(3, 3))) {
         stop("warp_matrix must be a 3x3 matrix.")
+      }
     }
   } else {
     if (is.null(warp_matrix)) {
       warp_matrix <- diag(1, 2, 3)
     } else {
-      if (!all(dim(warp_matrix) == c(2, 3)))
+      if (!all(dim(warp_matrix) == c(2, 3))) {
         stop("warp_matrix must be a 2x3 matrix.")
+      }
     }
   }
 
@@ -215,14 +230,17 @@ findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "a
     mask <- ones(template$nrow(), template$ncol(), 1, template$depth())
   }
 
-  `_findTransformECC`(template, image, warp_matrix,
-                      switch(warp_mode,
-                             "translation" = 0,
-                             "euclidean" = 1,
-                             "affine" = 2,
-                             "homography" = 3,
-                             stop("This is not a valid transformation. 'warp_mode' must be one of 'translation', 'euclidean', 'affine', or 'homography'.")),
-                      max_it, epsilon, mask, filt_size)
+  `_findTransformECC`(
+    template, image, warp_matrix,
+    switch(warp_mode,
+      "translation" = 0,
+      "euclidean" = 1,
+      "affine" = 2,
+      "homography" = 3,
+      stop("This is not a valid transformation. 'warp_mode' must be one of 'translation', 'euclidean', 'affine', or 'homography'.")
+    ),
+    max_it, epsilon, mask, filt_size
+  )
 }
 
 
@@ -280,36 +298,47 @@ findTransformECC <- function(template, image, warp_matrix = NULL, warp_mode = "a
 findTransformORB <- function(template, image, warp_mode = "affine", max_features = 500,
                              descriptor_matcher = "BruteForce-Hamming",
                              match_frac = 0.15, homography_method = "RANSAC") {
-  if (!isImage(template))
+  if (!isImage(template)) {
     stop("'template' is not an Image object.")
+  }
 
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (template$space != "GRAY" | image$space != "GRAY")
+  if (template$space != "GRAY" | image$space != "GRAY") {
     stop("'template' and 'image' must be grayscale images.")
+  }
 
-  if (warp_mode == "affine" & !(homography_method %in% c("RANSAC", "LSMEDS")))
+  if (warp_mode == "affine" & !(homography_method %in% c("RANSAC", "LSMEDS"))) {
     stop("When warp_mode='affine', homography_method can only be one of 'RANSAC' or 'LSMEDS'.")
+  }
 
-  if (!(descriptor_matcher %in% c("BruteForce", "BruteForce-L1", "BruteForce-Hamming",
-                                  "BruteForce-Hamming(2)", "FlannBased")))
+  if (!(descriptor_matcher %in% c(
+    "BruteForce", "BruteForce-L1", "BruteForce-Hamming",
+    "BruteForce-Hamming(2)", "FlannBased"
+  ))) {
     stop("Invalid descriptor matcher.")
+  }
 
 
-  `_findTransformORB`(template, image,
-                      switch(warp_mode,
-                             "affine" = 2,
-                             "homography" = 3,
-                             stop("This is not a valid transformation. 'warp_mode' must be one of 'affine' or 'homography'.")),
-                      max_features, descriptor_matcher,
-                      match_frac, switch(homography_method,
-                                         "LS" = 0,
-                                         "RANSAC" = 4,
-                                         "LMEDS" = 8,
-                                         "RHO" = 16,
-                                         stop("This is not a valid method. 'homography_method'
-                                  must be one of 'LS', 'RANSAC', 'LMEDS', or 'RHO'.")))
+  `_findTransformORB`(
+    template, image,
+    switch(warp_mode,
+      "affine" = 2,
+      "homography" = 3,
+      stop("This is not a valid transformation. 'warp_mode' must be one of 'affine' or 'homography'.")
+    ),
+    max_features, descriptor_matcher,
+    match_frac, switch(homography_method,
+      "LS" = 0,
+      "RANSAC" = 4,
+      "LMEDS" = 8,
+      "RHO" = 16,
+      stop("This is not a valid method. 'homography_method'
+                                  must be one of 'LS', 'RANSAC', 'LMEDS', or 'RHO'.")
+    )
+  )
 }
 
 
@@ -343,11 +372,13 @@ findTransformORB <- function(template, image, warp_mode = "affine", max_features
 #'
 #' @export
 rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, scale = 1, ...) {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (length(center) != 2)
+  if (length(center) != 2) {
     stop("'center' must be a numeric vector of length 2.")
+  }
 
   center[1] <- center[1] - 1
   center[2] <- -center[2] + nrow(image)
@@ -397,22 +428,26 @@ rotateScale <- function(image, center = (dim(image)[2:1] - 1) / 2, angle = 90, s
 #'
 #' @export
 rotate <- function(image, rotation = "CLOCKWISE", target = "new") {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
   code <- switch(rotation,
-                 "CLOCKWISE" = 0,
-                 "COUNTER" = 2,
-                 "180" = 1,
-                 stop("This is not a valid rotation. 'rotation' must be one of
-                      'CLOCKWISE', 'COUNTER', or '180'."))
+    "CLOCKWISE" = 0,
+    "COUNTER" = 2,
+    "180" = 1,
+    stop("This is not a valid rotation. 'rotation' must be one of
+                      'CLOCKWISE', 'COUNTER', or '180'.")
+  )
 
   if (isImage(target)) {
-    if (code %in% c(0, 2) & !all(image$dim() == target$dim()[c(2:1), 3]))
+    if (code %in% c(0, 2) & !all(image$dim() == target$dim()[c(2:1), 3])) {
       stop("Incorrect 'target' dimensions.")
+    }
 
-    if ((code == 1) & !all(image$dim() == target$dim()))
+    if ((code == 1) & !all(image$dim() == target$dim())) {
       stop("Incorrect 'target' dimensions.")
+    }
 
     `_rotate`(image, code, target)
   } else if (target == "new") {
@@ -427,7 +462,6 @@ rotate <- function(image, rotation = "CLOCKWISE", target = "new") {
   } else {
     stop("Invalid target.")
   }
-
 }
 
 
@@ -451,6 +485,11 @@ rotate <- function(image, rotation = "CLOCKWISE", target = "new") {
 #'    image is zoomed, it is similar to the nearest neighbor method.}
 #'   \item{"lanczos4":}{Lanczos interpolation over 8x8 neighborhood.}
 #'   \item{"linear_exact":}{bit exact bilinear interpolation.}
+#'   \item{"nearest_exact":}{Bit exact nearest neighbor interpolation. This will
+#'    produce same results as the nearest neighbor method in PIL, scikit-image
+#'    or Matlab.}
+#'   \item{"fill_outliers":}{fills all of the destination image pixels. If some
+#'    of them correspond to outliers in the source image, they are set to zero.}
 #'  }
 #'
 #' @param inverse_map A logical. TRUE if \code{warp_matrix} represents an inverse
@@ -513,40 +552,52 @@ rotate <- function(image, rotation = "CLOCKWISE", target = "new") {
 warpAffine <- function(image, warp_matrix, interp_mode = "linear", inverse_map = TRUE,
                        border_type = "constant", border_color = "black",
                        target = "new", output_size = dim(image)[1:2]) {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (!all(dim(warp_matrix) == c(2, 3)))
+  if (!all(dim(warp_matrix) == c(2, 3))) {
     stop("'warp_matrix' should have exactly 2 rows and 3 columns.")
+  }
 
-  if (length(output_size) != 2 | !is.numeric(output_size))
+  if (length(output_size) != 2 | !is.numeric(output_size)) {
     stop("'output_size' should be a numeric vector of length 2.")
+  }
 
-  interp_modes <- c("nearest", "linear", "cubic", "area", "lanczos4", "linear_exact")
-  interp_vals <- 0:5
-  if (!all(interp_mode %in% interp_modes))
+  interp_modes <- c("nearest", "linear", "cubic", "area", "lanczos4", "linear_exact", "nearest_exact", "fill_outliers")
+  interp_vals <- c(0:6, 8)
+  if (!all(interp_mode %in% interp_modes)) {
     stop("This is not a valid combination of interpolation modes.")
+  }
 
   border_types <- c("constant", "replicate", "reflect", "wrap", "reflect_101", "transparent")
   border_vals <- 0:5
-  if (!(border_type %in% border_types))
+  if (!(border_type %in% border_types)) {
     stop("This is not a valid border type.")
+  }
 
-  if (!is.logical(inverse_map))
+  if (!is.logical(inverse_map)) {
     stop("inverse_map must be a logical.")
+  }
 
   if (isImage(target)) {
-    `_warpAffine`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
-                  border_vals[border_type == border_types], col2bgr(border_color), target)
+    `_warpAffine`(
+      image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+      border_vals[border_type == border_types], col2bgr(border_color), target
+    )
   } else if (target == "self") {
-    `_warpAffine`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
-                  border_vals[border_type == border_types], col2bgr(border_color),
-                  image)
+    `_warpAffine`(
+      image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+      border_vals[border_type == border_types], col2bgr(border_color),
+      image
+    )
   } else if (target == "new") {
     out <- zeros(output_size[1], output_size[2], image$nchan(), image$depth(), image$space)
-    `_warpAffine`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
-                  border_vals[border_type == border_types], col2bgr(border_color),
-                  out)
+    `_warpAffine`(
+      image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+      border_vals[border_type == border_types], col2bgr(border_color),
+      out
+    )
     out
   } else {
     stop("Invalid target.")
@@ -587,8 +638,9 @@ warpAffine <- function(image, warp_matrix, interp_mode = "linear", inverse_map =
 #'
 #' @export
 getPerspectiveTransform <- function(from, to, from_dim, to_dim = from_dim) {
-  if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
+  if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2))) {
     stop("'from' and 'to' must be 4x2 matrices.")
+  }
 
   from[, 1] <- from[, 1] - 1
   from[, 2] <- -from[, 2] + from_dim[1]
@@ -632,8 +684,9 @@ getPerspectiveTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #'
 #' @export
 getAffineTransform <- function(from, to, from_dim, to_dim = from_dim) {
-  if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2)))
+  if (any(dim(from) != c(4, 2)) | any(dim(to) != c(4, 2))) {
     stop("'from' and 'to' must be 4x2 matrices.")
+  }
 
   from[, 1] <- from[, 1] - 1
   from[, 2] <- -from[, 2] + from_dim[1]
@@ -665,6 +718,11 @@ getAffineTransform <- function(from, to, from_dim, to_dim = from_dim) {
 #'    image is zoomed, it is similar to the nearest neighbor method.}
 #'   \item{"lanczos4":}{Lanczos interpolation over 8x8 neighborhood.}
 #'   \item{"linear_exact":}{bit exact bilinear interpolation.}
+#'   \item{"nearest_exact":}{Bit exact nearest neighbor interpolation. This will
+#'    produce same results as the nearest neighbor method in PIL, scikit-image
+#'    or Matlab.}
+#'   \item{"fill_outliers":}{fills all of the destination image pixels. If some
+#'    of them correspond to outliers in the source image, they are set to zero.}
 #'  }
 #'
 #' @param inverse_map A logical. TRUE if \code{warp_matrix} represents an inverse
@@ -728,35 +786,231 @@ getAffineTransform <- function(from, to, from_dim, to_dim = from_dim) {
 warpPerspective <- function(image, warp_matrix, interp_mode = "linear", inverse_map = TRUE,
                             border_type = "constant", border_color = "black",
                             target = "new", output_size = dim(image)[1:2]) {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (!all(dim(warp_matrix) == c(3, 3)))
+  if (!all(dim(warp_matrix) == c(3, 3))) {
     stop("'warp_matrix' should have exactly 3 rows and 3 columns.")
+  }
 
-  interp_modes <- c("nearest", "linear", "cubic", "area", "lanczos4", "linear_exact")
-  interp_vals <- 0:5
-  if (!all(interp_mode %in% interp_modes))
+  interp_modes <- c("nearest", "linear", "cubic", "area", "lanczos4", "linear_exact", "nearest_exact", "fill_outliers")
+  interp_vals <- c(0:6, 8)
+  if (!all(interp_mode %in% interp_modes)) {
     stop("This is not a valid combination of interpolation modes.")
+  }
 
   border_types <- c("constant", "replicate", "reflect", "wrap", "reflect_101", "transparent")
   border_vals <- 0:5
-  if (!(border_type %in% border_types))
+  if (!(border_type %in% border_types)) {
     stop("This is not a valid border type.")
+  }
 
-  if (!is.logical(inverse_map))
+  if (!is.logical(inverse_map)) {
     stop("inverse_map must be a logical.")
+  }
 
   if (isImage(target)) {
-    `_warpPerspective`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
-                       border_vals[border_type == border_types], col2bgr(border_color), target)
+    `_warpPerspective`(
+      image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+      border_vals[border_type == border_types], col2bgr(border_color), target
+    )
   } else if (target == "self") {
-    `_warpPerspective`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
-                       border_vals[border_type == border_types], col2bgr(border_color), image)
+    `_warpPerspective`(
+      image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+      border_vals[border_type == border_types], col2bgr(border_color), image
+    )
   } else if (target == "new") {
     out <- zeros(output_size[1], output_size[2], image$nchan(), image$depth(), image$space)
-    `_warpPerspective`(image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
-                       border_vals[border_type == border_types], col2bgr(border_color), out)
+    `_warpPerspective`(
+      image, warp_matrix, interp_vals[interp_modes == interp_mode] + inverse_map * 16,
+      border_vals[border_type == border_types], col2bgr(border_color), out
+    )
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
+#' @title Linear-Polar Transformation
+#'
+#' @description \code{linearPolar} remaps an image to polar coordinates space.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param center description
+#'
+#' @param max_radius description
+#'
+#' @param interp_mode A character string indicating the interpolation method to
+#'  be used. It can be
+#'  any of the following:
+#'  \describe{
+#'   \item{"nearest":}{nearest neighbor interpolation.}
+#'   \item{"linear" (the default):}{bilinear interpolation.}
+#'   \item{"cubic":}{bicubic interpolation.}
+#'   \item{"area":}{resampling using pixel area relation. It may be a preferred
+#'    method for image decimation, as it gives moiré-free results, but when the
+#'    image is zoomed, it is similar to the nearest neighbor method.}
+#'   \item{"lanczos4":}{Lanczos interpolation over 8x8 neighborhood.}
+#'   \item{"linear_exact":}{bit exact bilinear interpolation.}
+#'   \item{"nearest_exact":}{Bit exact nearest neighbor interpolation. This will
+#'    produce same results as the nearest neighbor method in PIL, scikit-image
+#'    or Matlab.}
+#'   \item{"fill_outliers":}{fills all of the destination image pixels. If some
+#'    of them correspond to outliers in the source image, they are set to zero.}
+#'  }
+#'
+#' @param inverse_map A logical. TRUE if \code{image} is a semilog-polar 
+#'  transformed image and you want to inverse that transformation. If FALSE, 
+#'  then the image will be semilog-polar transformed (the default). 
+#'
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \describe{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    \code{target} must have the same bit depth and number of channels as
+#'    \code{image} but can have different dimensions.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{linearPolar}}
+#'
+#' @examples
+#' file <- system.file("sample_img/dots.png", package = "Rvision")
+#' balloon <- changeColorSpace(image(file), "GRAY")
+#'
+#' @export
+linearPolar <- function(
+    image, center = dim(image)[1:2] / 2, max_radius = min(dim(image)[1:2]) / 2,
+    interp_mode = "linear", inverse_map = FALSE,
+    target = "new") {
+  if (!isImage(image)) {
+    stop("'image' is not an Image object.")
+  }
+
+  interp_modes <- c("nearest", "linear", "cubic", "area", "lanczos4", "linear_exact", "nearest_exact", "fill_outliers")
+  interp_vals <- c(0:6, 8)
+  if (!all(interp_mode %in% interp_modes)) {
+    stop("This is not a valid combination of interpolation modes.")
+  }
+
+  if (!is.logical(inverse_map)) {
+    stop("inverse_map must be a logical.")
+  }
+
+  if (isImage(target)) {
+    `_linearPolar`(
+      image, center, max_radius, interp_vals[interp_modes == interp_mode] + inverse_map * 16, target
+    )
+  } else if (target == "new") {
+    out <- zeros(image$nrow(), image$ncol(), image$nchan(), image$depth(), image$space)
+    `_linearPolar`(
+      image, center, max_radius, interp_vals[interp_modes == interp_mode] + inverse_map * 16, out
+    )
+    out
+  } else {
+    stop("Invalid target.")
+  }
+}
+
+
+#' @title Semilog-Polar Transformation
+#'
+#' @description \code{logPolar} remaps an image to semilog-polar coordinates
+#'  space.
+#'
+#' @param image An \code{\link{Image}} object.
+#'
+#' @param center description
+#'
+#' @param max_radius description
+#'
+#' @param interp_mode A character string indicating the interpolation method to
+#'  be used. It can be
+#'  any of the following:
+#'  \describe{
+#'   \item{"nearest":}{nearest neighbor interpolation.}
+#'   \item{"linear" (the default):}{bilinear interpolation.}
+#'   \item{"cubic":}{bicubic interpolation.}
+#'   \item{"area":}{resampling using pixel area relation. It may be a preferred
+#'    method for image decimation, as it gives moiré-free results, but when the
+#'    image is zoomed, it is similar to the nearest neighbor method.}
+#'   \item{"lanczos4":}{Lanczos interpolation over 8x8 neighborhood.}
+#'   \item{"linear_exact":}{bit exact bilinear interpolation.}
+#'   \item{"nearest_exact":}{Bit exact nearest neighbor interpolation. This will
+#'    produce same results as the nearest neighbor method in PIL, scikit-image
+#'    or Matlab.}
+#'   \item{"fill_outliers":}{fills all of the destination image pixels. If some
+#'    of them correspond to outliers in the source image, they are set to zero.}
+#'  }
+#'
+#' @param inverse_map A logical. TRUE if \code{image} is a semilog-polar 
+#'  transformed image and you want to inverse that transformation. If FALSE, 
+#'  then the image will be semilog-polar transformed (the default). 
+#'
+#' @param target The location where the results should be stored. It can take 3
+#'  values:
+#'  \describe{
+#'   \item{"new":}{a new \code{\link{Image}} object is created and the results
+#'    are stored inside (the default).}
+#'   \item{An \code{\link{Image}} object:}{the results are stored in another
+#'    existing \code{\link{Image}} object. This is fast and will not replace the
+#'    content of \code{image} but will replace that of \code{target}. Note that
+#'    \code{target} must have the same bit depth and number of channels as
+#'    \code{image} but can have different dimensions.}
+#'  }
+#'
+#' @return If \code{target="new"}, the function returns an \code{\link{Image}}
+#'  object. If \code{target} is an \code{\link{Image}} object, the function
+#'  returns nothing and modifies that \code{\link{Image}} object in place.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @seealso \code{\link{linearPolar}}
+#'
+#' @examples
+#' file <- system.file("sample_img/dots.png", package = "Rvision")
+#' balloon <- changeColorSpace(image(file), "GRAY")
+#'
+#' @export
+logPolar <- function(
+    image, center = dim(image)[1:2] / 2, max_radius = min(dim(image)[1:2]) / 2,
+    interp_mode = "linear", inverse_map = FALSE,
+    target = "new") {
+  if (!isImage(image)) {
+    stop("'image' is not an Image object.")
+  }
+
+  interp_modes <- c("nearest", "linear", "cubic", "area", "lanczos4", "linear_exact", "nearest_exact", "fill_outliers")
+  interp_vals <- c(0:6, 8)
+  if (!all(interp_mode %in% interp_modes)) {
+    stop("This is not a valid combination of interpolation modes.")
+  }
+
+  if (!is.logical(inverse_map)) {
+    stop("inverse_map must be a logical.")
+  }
+
+  if (isImage(target)) {
+    `_logPolar`(
+      image, center, max_radius, interp_vals[interp_modes == interp_mode] + inverse_map * 16, target
+    )
+  } else if (target == "new") {
+    out <- zeros(image$nrow(), image$ncol(), image$nchan(), image$depth(), image$space)
+    `_logPolar`(
+      image, center, max_radius, interp_vals[interp_modes == interp_mode] + inverse_map * 16, out
+    )
     out
   } else {
     stop("Invalid target.")
@@ -825,20 +1079,23 @@ warpPerspective <- function(image, warp_matrix, interp_mode = "linear", inverse_
 #' @export
 distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
                               target = "new") {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (image$space != "GRAY")
+  if (image$space != "GRAY") {
     stop("'image' should be a grayscale object.")
+  }
 
-  if (min(image) > 0)
+  if (min(image) > 0) {
     stop("There are no zero pixel in this image.")
+  }
 
-  if (!(mask_size %in% c(0, 3, 5)))
+  if (!(mask_size %in% c(0, 3, 5))) {
     stop("This is not a valid mask size. 'mask_size' must be one of 0, 3, or 5.")
+  }
 
-  dt <- switch(
-    distance_type,
+  dt <- switch(distance_type,
     "L1" = 1,
     "L2" = 2,
     "C" = 3,
@@ -846,7 +1103,8 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
     "FAIR" = 5,
     "WELSCH" = 6,
     "HUBER" = 7,
-    stop("This is not a valid distance type. 'distance_type' must be one of 'L1', 'L2', 'C', 'L12', 'FAIR', 'WELSCH', or 'HUBER'."))
+    stop("This is not a valid distance type. 'distance_type' must be one of 'L1', 'L2', 'C', 'L12', 'FAIR', 'WELSCH', or 'HUBER'.")
+  )
 
   if (isImage(target)) {
     `_distanceTransform`(image, dt, mask_size, target)
@@ -938,19 +1196,24 @@ distanceTransform <- function(image, distance_type = "L1", mask_size = 3,
 #' @export
 floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = 0,
                       up_diff = 0, connectivity = 4) {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (length(seed) != 2)
+  if (length(seed) != 2) {
     stop("'seed' should be a vector of length 2.")
+  }
 
-  if (!(connectivity %in% c(4, 8)))
+  if (!(connectivity %in% c(4, 8))) {
     stop("'connectivity' must be either 4 or 8.")
+  }
 
-  `_floodFill`(image, c(seed[1] - 1, -seed[2] + nrow(image)), col2bgr(color, alpha = TRUE),
-               rep(lo_diff, length.out = image$nchan()),
-               rep(up_diff, length.out = image$nchan()),
-               connectivity)
+  `_floodFill`(
+    image, c(seed[1] - 1, -seed[2] + nrow(image)), col2bgr(color, alpha = TRUE),
+    rep(lo_diff, length.out = image$nchan()),
+    rep(up_diff, length.out = image$nchan()),
+    connectivity
+  )
 }
 
 
@@ -997,31 +1260,37 @@ floodFill <- function(image, seed = c(1, 1), color = "white", lo_diff = 0,
 #'
 #' @export
 LUT <- function(image, lut, target = "new") {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (image$depth() != "8U")
+  if (image$depth() != "8U") {
     stop("The 'image' depth must be 8U.")
+  }
 
   if (is.vector(lut)) {
-    if (length(lut) != 256)
+    if (length(lut) != 256) {
       stop("'lut' should have 256 elements.")
+    }
 
     im_lut <- image(array(lut, dim = c(1, 256, image$nchan())))
   }
 
   if (is.matrix(lut)) {
-    if (nrow(lut) != 256)
+    if (nrow(lut) != 256) {
       stop("'lut' should have 256 rows")
+    }
 
-    if (ncol(lut) != image$nchan())
+    if (ncol(lut) != image$nchan()) {
       stop("'lut' should have the same number of columns as the number of channels in 'image'.")
+    }
 
     im_lut <- image(array(lut, dim = c(1, 256, image$nchan())))
   }
 
-  if (im_lut$depth() != image$depth())
+  if (im_lut$depth() != image$depth()) {
     changeBitDepth(im_lut, image$depth(), target = "self")
+  }
 
   if (isImage(target)) {
     `_LUT`(image, im_lut, target)
@@ -1079,17 +1348,21 @@ LUT <- function(image, lut, target = "new") {
 #'
 #' @export
 histmatch <- function(image, reference, target = "new") {
-  if (!isImage(image) | !isImage(reference))
+  if (!isImage(image) | !isImage(reference)) {
     stop("'image' and 'reference' must be Image objects.")
+  }
 
-  if (image$depth() != "8U" | reference$depth() != "8U")
+  if (image$depth() != "8U" | reference$depth() != "8U") {
     stop("The 'image' and 'reference' depths must be 8U.")
+  }
 
-  if (reference$nchan() != image$nchan())
+  if (reference$nchan() != image$nchan()) {
     stop("'image' and 'reference' must have the same number of channels.")
+  }
 
-  if (reference$depth() != image$depth())
+  if (reference$depth() != image$depth()) {
     stop("'image' and 'reference' must have the same bit depth.")
+  }
 
   cdf_target <- apply(imhist(reference)[, 1:reference$nchan() + 1, drop = FALSE], 2, cumsum)[1:256, ]
   cdf_image <- apply(imhist(image)[, 1:image$nchan() + 1, drop = FALSE], 2, cumsum)[1:256, ]
@@ -1148,11 +1421,13 @@ histmatch <- function(image, reference, target = "new") {
 #'
 #' @export
 histEq <- function(image, target = "new") {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (image$depth() != "8U")
+  if (image$depth() != "8U") {
     stop("The 'image' depth must be 8U.")
+  }
 
   if (image$nchan() == 1) {
     if (isImage(target)) {
@@ -1247,24 +1522,36 @@ histEq <- function(image, target = "new") {
 #' @export
 grabCut <- function(image, mask, rect = rep(1, 4), bgdModel, fgdModel, iter = 1,
                     mode = "EVAL") {
-  if (!isImage(image) | !isImage(mask) | !isImage(bgdModel) | !isImage(fgdModel))
+  if (!isImage(image) | !isImage(mask) | !isImage(bgdModel) | !isImage(fgdModel)) {
     stop("'image', 'mask', 'bgdModel', and 'fgdModel' should all be Image objects.")
+  }
 
-  if (image$depth() != "8U" | mask$depth() != "8U")
+  if (image$depth() != "8U" | mask$depth() != "8U") {
     stop("'image' and 'mask' must have an 8U bit depth.")
+  }
 
-  if (bgdModel$depth() != "64F" | fgdModel$depth() != "64F")
+  if (bgdModel$depth() != "64F" | fgdModel$depth() != "64F") {
     stop("'bgdModel' and 'fgdModel' must have an 64F bit depth.")
+  }
 
-  if (image$nchan() != 3)
+  if (image$nchan() != 3) {
     stop("'image' must have 3 channels.")
+  }
 
-  if (mask$nchan() != 1 | bgdModel$nchan() != 1 | fgdModel$nchan() != 1)
+  if (mask$nchan() != 1 | bgdModel$nchan() != 1 | fgdModel$nchan() != 1) {
     stop("''mask', 'bgdModel', and 'fgdModel' must have 1 channel only.")
+  }
 
-  `_grabCut`(image, mask, rect, bgdModel, fgdModel, iter,
-             switch(mode, RECT = 0, MASK = 1, EVAL = 2, FREEZE = 3,
-                    stop("This is not a valid mode.")))
+  `_grabCut`(
+    image, mask, rect, bgdModel, fgdModel, iter,
+    switch(mode,
+      RECT = 0,
+      MASK = 1,
+      EVAL = 2,
+      FREEZE = 3,
+      stop("This is not a valid mode.")
+    )
+  )
 }
 
 
@@ -1309,37 +1596,46 @@ grabCut <- function(image, mask, rect = rep(1, 4), bgdModel, fgdModel, iter = 1,
 #'
 #' @export
 concatenate <- function(image1, image2, direction = "vertical", target = "new") {
-  if (!isImage(image1))
+  if (!isImage(image1)) {
     stop("'image1' is not an Image object.")
+  }
 
-  if (!isImage(image2))
+  if (!isImage(image2)) {
     stop("'image2' is not an Image object.")
+  }
 
-  if (image1$depth() != image2$depth())
+  if (image1$depth() != image2$depth()) {
     stop("'image1' and 'image2' must have the same depth.")
+  }
 
-  if (image1$nchan() != image2$nchan())
+  if (image1$nchan() != image2$nchan()) {
     stop("'image1' and 'image2' must have the same number of channels.")
+  }
 
   if (direction == "vertical") {
-    if (image1$ncol() != image2$ncol())
+    if (image1$ncol() != image2$ncol()) {
       stop("'image1' and 'image2' must have the same width.")
+    }
 
     if (isImage(target)) {
-      if (target$depth() != image1$depth())
+      if (target$depth() != image1$depth()) {
         stop("'target' must have the same depth as 'image1' and 'image2'.")
+      }
 
-      if (target$nchan() != image1$nchan())
+      if (target$nchan() != image1$nchan()) {
         stop("'target' must have the same number of channels as 'image1' and 'image2'.")
+      }
 
-      if (target$ncol() != image1$ncol())
+      if (target$ncol() != image1$ncol()) {
         stop("'target' must have the same width as 'image1' and 'image2'.")
+      }
 
-      if (target$nrow() != (image1$nrow() + image2$nrow()))
+      if (target$nrow() != (image1$nrow() + image2$nrow())) {
         stop("The height of 'target' must be the sum of the heights of 'image1' and 'image2'.")
+      }
 
       `_vconcat`(image1, image2, target)
-    }  else if (target == "new") {
+    } else if (target == "new") {
       out <- zeros(image1$nrow() + image2$nrow(), image1$ncol(), image1$nchan(), image1$depth())
       `_vconcat`(image1, image2, out)
       out
@@ -1347,24 +1643,29 @@ concatenate <- function(image1, image2, direction = "vertical", target = "new") 
       stop("Invalid target.")
     }
   } else if (direction == "horizontal") {
-    if (image1$nrow() != image2$nrow())
+    if (image1$nrow() != image2$nrow()) {
       stop("'image1' and 'image2' must have the same height.")
+    }
 
     if (isImage(target)) {
-      if (target$depth() != image1$depth())
+      if (target$depth() != image1$depth()) {
         stop("'target' must have the same depth as 'image1' and 'image2'.")
+      }
 
-      if (target$nchan() != image1$nchan())
+      if (target$nchan() != image1$nchan()) {
         stop("'target' must have the same number of channels as 'image1' and 'image2'.")
+      }
 
-      if (target$nrow() != image1$nrow())
+      if (target$nrow() != image1$nrow()) {
         stop("'target' must have the same height as 'image1' and 'image2'.")
+      }
 
-      if (target$ncol() != (image1$ncol() + image2$ncol()))
+      if (target$ncol() != (image1$ncol() + image2$ncol())) {
         stop("The width of 'target' must be the sum of the widths of 'image1' and 'image2'.")
+      }
 
       `_hconcat`(image1, image2, target)
-    }  else if (target == "new") {
+    } else if (target == "new") {
       out <- zeros(image1$nrow(), image1$ncol() + image2$ncol(), image1$nchan(), image1$depth())
       `_hconcat`(image1, image2, out)
       out
@@ -1432,21 +1733,23 @@ concatenate <- function(image1, image2, direction = "vertical", target = "new") 
 #'
 #' @export
 reduce <- function(image, dim, fun = "sum", target = "new") {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (!(dim %in% 1:2))
+  if (!(dim %in% 1:2)) {
     stop("Invalid 'dim'")
+  }
 
   dim <- abs(2 - dim)
 
-  rtype <- switch(
-    fun,
+  rtype <- switch(fun,
     "sum" = 0,
     "mean" = 1,
     "max" = 2,
     "min" = 3,
-    stop("Invalid reduction function."))
+    stop("Invalid reduction function.")
+  )
 
   if (isImage(target)) {
     `_reduce`(image, dim, rtype, target)
@@ -1527,21 +1830,26 @@ reduce <- function(image, dim, fun = "sum", target = "new") {
 #'
 #' @export
 CLAHE <- function(image, clip_limit = 40, n_tiles = c(8, 8), target = "new") {
-  if (!isImage(image))
+  if (!isImage(image)) {
     stop("'image' is not an Image object.")
+  }
 
-  if (image$depth() != "8U" | image$depth() != "8U")
+  if (image$depth() != "8U" | image$depth() != "8U") {
     stop("'image' is not an 8U or a 16U 'Image' object")
+  }
 
-  if (image$nchan() != 1)
+  if (image$nchan() != 1) {
     stop("'image' is not a single-channel 'Image' object")
+  }
 
   if (isImage(target)) {
-    if (image$depth() != target$depth())
+    if (image$depth() != target$depth()) {
       stop("'image' and 'target' do not have the same bit depth.")
+    }
 
-    if (image$nchan() != target$nchan())
+    if (image$nchan() != target$nchan()) {
       stop("'image' and 'target' do not have the same number of channels.")
+    }
 
     `_CLAHE`(image, clip_limit, n_tiles, target)
   } else if (target == "self") {

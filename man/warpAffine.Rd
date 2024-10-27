@@ -32,6 +32,11 @@ any of the following:
   image is zoomed, it is similar to the nearest neighbor method.}
  \item{"lanczos4":}{Lanczos interpolation over 8x8 neighborhood.}
  \item{"linear_exact":}{bit exact bilinear interpolation.}
+ \item{"nearest_exact":}{Bit exact nearest neighbor interpolation. This will
+  produce same results as the nearest neighbor method in PIL, scikit-image
+  or Matlab.}
+ \item{"fill_outliers":}{fills all of the destination image pixels. If some
+  of them correspond to outliers in the source image, they are set to zero.}
 }}
 
 \item{inverse_map}{A logical. TRUE if \code{warp_matrix} represents an inverse

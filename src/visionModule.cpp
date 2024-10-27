@@ -391,6 +391,10 @@ RCPP_MODULE(methods_Transform) {
     _["interpMode"], _["borderType"], _["borderColor"], _["target"]), "");
   function("_warpPerspective", &_warpPerspective, List::create(_["image"], _["m"],
     _["interpMode"], _["borderType"], _["borderColor"], _["target"]), "");
+  function("_linearPolar", &_linearPolar, List::create(_["image"], _["center"],
+    _["M"], _["interpMode"], _["target"]), "");
+  function("_logPolar", &_logPolar, List::create(_["image"], _["center"],
+    _["M"], _["interpMode"], _["target"]), "");
   function("_distanceTransform", &_distanceTransform, List::create(_["image"],
     _["distanceType"], _["maskSize"], _["target"]), "");
   function("_floodFill", &_floodFill, List::create(_["image"], _["seedPoint"],

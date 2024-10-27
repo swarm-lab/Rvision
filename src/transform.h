@@ -1,6 +1,6 @@
-arma::Mat< float > _findHomography(arma::Cube<float> from, arma::Cube<float> to,
-                                   int method, double ransacReprojThreshold,
-                                   const int maxIters, const double confidence) {
+arma::Mat<float> _findHomography(arma::Cube<float> from, arma::Cube<float> to,
+                                 int method, double ransacReprojThreshold,
+                                 const int maxIters, const double confidence) {
   cv::Mat_<cv::Vec2f> fromCV, toCV;
   arma2cv(from, fromCV);
   arma2cv(to, toCV);
@@ -14,7 +14,7 @@ arma::Mat< float > _findHomography(arma::Cube<float> from, arma::Cube<float> to,
   return out;
 }
 
-double _computeECC(Image& image1, Image& image2, Image& mask) {
+double _computeECC(Image &image1, Image &image2, Image &mask) {
   if (image1.GPU) {
     if (image2.GPU)
       return cv::computeECC(image1.uimage, image2.uimage, mask.image);
@@ -28,54 +28,71 @@ double _computeECC(Image& image1, Image& image2, Image& mask) {
   return cv::computeECC(image1.image, image2.image, mask.image);
 }
 
-arma::Mat< float > _findTransformECC(Image& image1, Image& image2, arma::Mat< float > warpMatrix,
-                                     int warpMode, int count, double eps, Image& mask,
-                                     int gaussFiltSize) {
-  cv::Mat_< float > CVwarpMatrix;
+arma::Mat<float> _findTransformECC(Image &image1, Image &image2,
+                                   arma::Mat<float> warpMatrix, int warpMode,
+                                   int count, double eps, Image &mask,
+                                   int gaussFiltSize) {
+  cv::Mat_<float> CVwarpMatrix;
   arma2cv(warpMatrix, CVwarpMatrix);
 
   if (gaussFiltSize > 0) {
     if (image1.GPU) {
       if (image2.GPU) {
-        cv::findTransformECC(image1.uimage, image2.uimage, CVwarpMatrix, warpMode,
-                             cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             mask.image, gaussFiltSize);
+        cv::findTransformECC(
+            image1.uimage, image2.uimage, CVwarpMatrix, warpMode,
+            cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
+                             count, eps),
+            mask.image, gaussFiltSize);
       } else {
-        cv::findTransformECC(image1.uimage, image2.image, CVwarpMatrix, warpMode,
-                             cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             mask.image, gaussFiltSize);
+        cv::findTransformECC(
+            image1.uimage, image2.image, CVwarpMatrix, warpMode,
+            cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
+                             count, eps),
+            mask.image, gaussFiltSize);
       }
     } else {
       if (image2.GPU) {
-        cv::findTransformECC(image1.image, image2.uimage, CVwarpMatrix, warpMode,
-                             cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             mask.image, gaussFiltSize);
+        cv::findTransformECC(
+            image1.image, image2.uimage, CVwarpMatrix, warpMode,
+            cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
+                             count, eps),
+            mask.image, gaussFiltSize);
       } else {
-        cv::findTransformECC(image1.image, image2.image, CVwarpMatrix, warpMode,
-                             cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             mask.image, gaussFiltSize);
+        cv::findTransformECC(
+            image1.image, image2.image, CVwarpMatrix, warpMode,
+            cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
+                             count, eps),
+            mask.image, gaussFiltSize);
       }
     }
   } else {
     if (image1.GPU) {
       if (image2.GPU) {
-        cv::findTransformECC(image1.uimage, image2.uimage, CVwarpMatrix, warpMode,
-                             cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             mask.image);
+        cv::findTransformECC(
+            image1.uimage, image2.uimage, CVwarpMatrix, warpMode,
+            cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
+                             count, eps),
+            mask.image);
       } else {
-        cv::findTransformECC(image1.uimage, image2.image, CVwarpMatrix, warpMode,
-                             cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             mask.image);
+        cv::findTransformECC(
+            image1.uimage, image2.image, CVwarpMatrix, warpMode,
+            cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
+                             count, eps),
+            mask.image);
       }
     } else {
       if (image2.GPU) {
-        cv::findTransformECC(image1.image, image2.uimage, CVwarpMatrix, warpMode,
-                             cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             mask.image);
+        cv::findTransformECC(
+            image1.image, image2.uimage, CVwarpMatrix, warpMode,
+            cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
+                             count, eps),
+            mask.image);
       } else {
-        cv::findTransformECC(image1.image, image2.image, CVwarpMatrix, warpMode,
-                             cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, count, eps),
-                             mask.image);
+        cv::findTransformECC(
+            image1.image, image2.image, CVwarpMatrix, warpMode,
+            cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
+                             count, eps),
+            mask.image);
       }
     }
   }
@@ -84,11 +101,11 @@ arma::Mat< float > _findTransformECC(Image& image1, Image& image2, arma::Mat< fl
   return warpMatrix;
 }
 
-arma::Mat< float > _findTransformORB(Image& image1, Image& image2, int warpMode,
-                                     int maxFeatures, String descriptorMatcher,
-                                     double matchFrac, int homographyMethod) {
-  arma::Mat< float > out;
-  cv::Mat_< float > warpMatrix;
+arma::Mat<float> _findTransformORB(Image &image1, Image &image2, int warpMode,
+                                   int maxFeatures, String descriptorMatcher,
+                                   double matchFrac, int homographyMethod) {
+  arma::Mat<float> out;
+  cv::Mat_<float> warpMatrix;
 
   std::vector<cv::KeyPoint> keypoints1, keypoints2;
   cv::Mat descriptors1, descriptors2;
@@ -114,7 +131,8 @@ arma::Mat< float > _findTransformORB(Image& image1, Image& image2, int warpMode,
   }
 
   std::vector<cv::DMatch> matches;
-  cv::Ptr<cv::DescriptorMatcher> matcher = cv::DescriptorMatcher::create(descriptorMatcher);
+  cv::Ptr<cv::DescriptorMatcher> matcher =
+      cv::DescriptorMatcher::create(descriptorMatcher);
   matcher->match(descriptors1, descriptors2, matches, cv::Mat());
 
   std::sort(matches.begin(), matches.end());
@@ -124,28 +142,31 @@ arma::Mat< float > _findTransformORB(Image& image1, Image& image2, int warpMode,
 
   std::vector<cv::Point2f> points1, points2;
 
-  for(size_t i = 0; i < matches.size(); i++) {
-    points1.push_back(keypoints1[ matches[i].queryIdx ].pt);
-    points2.push_back(keypoints2[ matches[i].trainIdx ].pt);
+  for (size_t i = 0; i < matches.size(); i++) {
+    points1.push_back(keypoints1[matches[i].queryIdx].pt);
+    points2.push_back(keypoints2[matches[i].trainIdx].pt);
   }
 
   if (warpMode == 3)
     warpMatrix = cv::findHomography(points1, points2, homographyMethod);
   else
-    warpMatrix = cv::estimateAffine2D(points1, points2, cv::noArray(), homographyMethod);
+    warpMatrix =
+        cv::estimateAffine2D(points1, points2, cv::noArray(), homographyMethod);
 
   cv2arma(warpMatrix, out);
   return out;
 }
 
-arma::Mat< float > _getRotationMatrix2D(arma::fvec center, double angle, double scale) {
-  arma::Mat< float > out;
-  cv::Mat_< float > warpMatrix = getRotationMatrix2D(cv::Point2f(center(0), center(1)), angle, scale);
+arma::Mat<float> _getRotationMatrix2D(arma::fvec center, double angle,
+                                      double scale) {
+  arma::Mat<float> out;
+  cv::Mat_<float> warpMatrix =
+      getRotationMatrix2D(cv::Point2f(center(0), center(1)), angle, scale);
   cv2arma(warpMatrix, out);
   return out;
 }
 
-void _rotate(Image& image, int rotateCode, Image& target) {
+void _rotate(Image &image, int rotateCode, Image &target) {
   if (image.GPU) {
     if (target.GPU)
       return cv::rotate(image.uimage, target.uimage, rotateCode);
@@ -159,109 +180,161 @@ void _rotate(Image& image, int rotateCode, Image& target) {
   cv::rotate(image.image, target.image, rotateCode);
 }
 
-void _warpAffine(Image& image, arma::Mat< float > m, int interpMode, int borderType,
-                 Rcpp::NumericVector borderColor, Image& target) {
-  cv::Mat_< float > warpMatrix;
+void _warpAffine(Image &image, arma::Mat<float> m, int interpMode,
+                 int borderType, Rcpp::NumericVector borderColor,
+                 Image &target) {
+  cv::Mat_<float> warpMatrix;
   arma2cv(m, warpMatrix);
 
   if (image.GPU) {
     if (target.GPU)
-      return cv::warpAffine(image.uimage, target.uimage, warpMatrix, target.uimage.size(),
-                            interpMode, borderType, col2Scalar(borderColor));
+      return cv::warpAffine(image.uimage, target.uimage, warpMatrix,
+                            target.uimage.size(), interpMode, borderType,
+                            col2Scalar(borderColor));
 
-    return cv::warpAffine(image.uimage, target.image, warpMatrix, target.image.size(),
-                          interpMode, borderType, col2Scalar(borderColor));
+    return cv::warpAffine(image.uimage, target.image, warpMatrix,
+                          target.image.size(), interpMode, borderType,
+                          col2Scalar(borderColor));
   }
 
   if (target.GPU)
-    return cv::warpAffine(image.image, target.uimage, warpMatrix, target.uimage.size(),
-                          interpMode, borderType, col2Scalar(borderColor));
+    return cv::warpAffine(image.image, target.uimage, warpMatrix,
+                          target.uimage.size(), interpMode, borderType,
+                          col2Scalar(borderColor));
 
   cv::warpAffine(image.image, target.image, warpMatrix, target.image.size(),
                  interpMode, borderType, col2Scalar(borderColor));
 }
 
-arma::Mat< float > _getPerspectiveTransform(arma::Mat< float > from, arma::Mat< float > to) {
-  arma::Mat< float > out;
+arma::Mat<float> _getPerspectiveTransform(arma::Mat<float> from,
+                                          arma::Mat<float> to) {
+  arma::Mat<float> out;
 
   cv::Point2f from_p[] = {
-    cv::Point2f(from(0, 0), from(0, 1)),
-    cv::Point2f(from(1, 0), from(1, 1)),
-    cv::Point2f(from(2, 0), from(2, 1)),
-    cv::Point2f(from(3, 0), from(3, 1)) };
+      cv::Point2f(from(0, 0), from(0, 1)), cv::Point2f(from(1, 0), from(1, 1)),
+      cv::Point2f(from(2, 0), from(2, 1)), cv::Point2f(from(3, 0), from(3, 1))};
 
   cv::Point2f to_p[] = {
-    cv::Point2f(to(0, 0), to(0, 1)),
-    cv::Point2f(to(1, 0), to(1, 1)),
-    cv::Point2f(to(2, 0), to(2, 1)),
-    cv::Point2f(to(3, 0), to(3, 1)) };
+      cv::Point2f(to(0, 0), to(0, 1)), cv::Point2f(to(1, 0), to(1, 1)),
+      cv::Point2f(to(2, 0), to(2, 1)), cv::Point2f(to(3, 0), to(3, 1))};
 
-  cv::Mat_< float > perspMatrix = cv::getPerspectiveTransform(from_p, to_p);
+  cv::Mat_<float> perspMatrix = cv::getPerspectiveTransform(from_p, to_p);
   cv2arma(perspMatrix, out);
   return out;
 }
 
-arma::Mat< float > _getAffineTransform(arma::Mat< float > from, arma::Mat< float > to) {
-  arma::Mat< float > out;
+arma::Mat<float> _getAffineTransform(arma::Mat<float> from,
+                                     arma::Mat<float> to) {
+  arma::Mat<float> out;
 
   cv::Point2f from_p[] = {
-    cv::Point2f(from(0, 0), from(0, 1)),
-    cv::Point2f(from(1, 0), from(1, 1)),
-    cv::Point2f(from(2, 0), from(2, 1)),
-    cv::Point2f(from(3, 0), from(3, 1)) };
+      cv::Point2f(from(0, 0), from(0, 1)), cv::Point2f(from(1, 0), from(1, 1)),
+      cv::Point2f(from(2, 0), from(2, 1)), cv::Point2f(from(3, 0), from(3, 1))};
 
   cv::Point2f to_p[] = {
-    cv::Point2f(to(0, 0), to(0, 1)),
-    cv::Point2f(to(1, 0), to(1, 1)),
-    cv::Point2f(to(2, 0), to(2, 1)),
-    cv::Point2f(to(3, 0), to(3, 1)) };
+      cv::Point2f(to(0, 0), to(0, 1)), cv::Point2f(to(1, 0), to(1, 1)),
+      cv::Point2f(to(2, 0), to(2, 1)), cv::Point2f(to(3, 0), to(3, 1))};
 
-  cv::Mat_< float > affineMatrix = cv::getAffineTransform(from_p, to_p);
+  cv::Mat_<float> affineMatrix = cv::getAffineTransform(from_p, to_p);
   cv2arma(affineMatrix, out);
   return out;
 }
 
-void _warpPerspective(Image& image, arma::Mat< float > m, int interpMode, int borderType,
-                      Rcpp::NumericVector borderColor, Image& target) {
-  cv::Mat_< float > warpMatrix;
+void _warpPerspective(Image &image, arma::Mat<float> m, int interpMode,
+                      int borderType, Rcpp::NumericVector borderColor,
+                      Image &target) {
+  cv::Mat_<float> warpMatrix;
   arma2cv(m, warpMatrix);
 
   if (image.GPU) {
     if (target.GPU)
-      return cv::warpPerspective(image.uimage, target.uimage, warpMatrix, target.uimage.size(),
-                                 interpMode, borderType, col2Scalar(borderColor));
+      return cv::warpPerspective(image.uimage, target.uimage, warpMatrix,
+                                 target.uimage.size(), interpMode, borderType,
+                                 col2Scalar(borderColor));
 
-    return cv::warpPerspective(image.uimage, target.image, warpMatrix, target.image.size(),
-                               interpMode, borderType, col2Scalar(borderColor));
+    return cv::warpPerspective(image.uimage, target.image, warpMatrix,
+                               target.image.size(), interpMode, borderType,
+                               col2Scalar(borderColor));
   }
 
   if (target.GPU)
-    return cv::warpPerspective(image.image, target.uimage, warpMatrix, target.uimage.size(),
-                               interpMode, borderType, col2Scalar(borderColor));
+    return cv::warpPerspective(image.image, target.uimage, warpMatrix,
+                               target.uimage.size(), interpMode, borderType,
+                               col2Scalar(borderColor));
 
-  cv::warpPerspective(image.image, target.image, warpMatrix, target.image.size(),
-                      interpMode, borderType, col2Scalar(borderColor));
+  cv::warpPerspective(image.image, target.image, warpMatrix,
+                      target.image.size(), interpMode, borderType,
+                      col2Scalar(borderColor));
 }
 
-void _distanceTransform(Image& image, int distanceType, int maskSize, Image& target) {
+void _linearPolar(Image &image, Rcpp::NumericVector center, double M,
+                  int interpMode, Image &target) {
+
   if (image.GPU) {
     if (target.GPU)
-      return cv::distanceTransform(image.uimage, target.uimage, distanceType, maskSize,
-                                   target.uimage.type());
+      return cv::linearPolar(
+          image.uimage, target.uimage,
+          cv::Point2f(center(0) - 1, -center(1) + image.nrow()), M, interpMode);
 
-    return cv::distanceTransform(image.uimage, target.image, distanceType, maskSize,
-                                 target.image.type());
+    return cv::linearPolar(
+        image.uimage, target.image,
+        cv::Point2f(center(0) - 1, -center(1) + image.nrow()), M, interpMode);
   }
 
   if (target.GPU)
-    return cv::distanceTransform(image.image, target.uimage, distanceType, maskSize,
-                                 target.uimage.type());
+    return cv::linearPolar(
+        image.image, target.uimage,
+        cv::Point2f(center(0) - 1, -center(1) + image.nrow()), M, interpMode);
+
+  cv::linearPolar(image.image, target.image,
+                  cv::Point2f(center(0) - 1, -center(1) + image.nrow()), M,
+                  interpMode);
+}
+
+void _logPolar(Image &image, Rcpp::NumericVector center, double M,
+               int interpMode, Image &target) {
+
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::logPolar(image.uimage, target.uimage,
+                          cv::Point2f(center(0) - 1, -center(1) + image.nrow()),
+                          M, interpMode);
+
+    return cv::logPolar(image.uimage, target.image,
+                        cv::Point2f(center(0) - 1, -center(1) + image.nrow()),
+                        M, interpMode);
+  }
+
+  if (target.GPU)
+    return cv::logPolar(image.image, target.uimage,
+                        cv::Point2f(center(0) - 1, -center(1) + image.nrow()),
+                        M, interpMode);
+
+  cv::logPolar(image.image, target.image,
+               cv::Point2f(center(0) - 1, -center(1) + image.nrow()), M,
+               interpMode);
+}
+
+void _distanceTransform(Image &image, int distanceType, int maskSize,
+                        Image &target) {
+  if (image.GPU) {
+    if (target.GPU)
+      return cv::distanceTransform(image.uimage, target.uimage, distanceType,
+                                   maskSize, target.uimage.type());
+
+    return cv::distanceTransform(image.uimage, target.image, distanceType,
+                                 maskSize, target.image.type());
+  }
+
+  if (target.GPU)
+    return cv::distanceTransform(image.image, target.uimage, distanceType,
+                                 maskSize, target.uimage.type());
 
   cv::distanceTransform(image.image, target.image, distanceType, maskSize,
                         target.image.type());
 }
 
-int _floodFill(Image& image, IntegerVector seedPoint, NumericVector newVal,
+int _floodFill(Image &image, IntegerVector seedPoint, NumericVector newVal,
                NumericVector loDiff, NumericVector upDiff, int connectivity) {
   int area;
 
@@ -278,7 +351,7 @@ int _floodFill(Image& image, IntegerVector seedPoint, NumericVector newVal,
   return area;
 }
 
-void _LUT(Image& image, Image& lut, Image& target) {
+void _LUT(Image &image, Image &lut, Image &target) {
   if (image.GPU) {
     if (target.GPU)
       return cv::LUT(image.uimage, lut.image, target.uimage);
@@ -292,7 +365,7 @@ void _LUT(Image& image, Image& lut, Image& target) {
   cv::LUT(image.image, lut.image, target.image);
 }
 
-void _histEqGRAY(Image& image, Image& target) {
+void _histEqGRAY(Image &image, Image &target) {
   if (image.GPU) {
     if (target.GPU)
       return cv::equalizeHist(image.uimage, target.uimage);
@@ -306,11 +379,11 @@ void _histEqGRAY(Image& image, Image& target) {
   cv::equalizeHist(image.image, target.image);
 }
 
-void _histEqBGR(Image& image, Image& target) {
+void _histEqBGR(Image &image, Image &target) {
   if (image.GPU) {
     cv::UMat ycrcb;
     cv::cvtColor(image.uimage, ycrcb, cv::COLOR_BGR2YCrCb);
-    std::vector< cv::UMat > channels;
+    std::vector<cv::UMat> channels;
     cv::split(ycrcb, channels);
     cv::equalizeHist(channels[0], channels[0]);
     cv::merge(channels, ycrcb);
@@ -323,7 +396,7 @@ void _histEqBGR(Image& image, Image& target) {
 
   cv::Mat ycrcb;
   cv::cvtColor(image.image, ycrcb, cv::COLOR_BGR2YCrCb);
-  std::vector< cv::Mat > channels;
+  std::vector<cv::Mat> channels;
   cv::split(ycrcb, channels);
   cv::equalizeHist(channels[0], channels[0]);
   cv::merge(channels, ycrcb);
@@ -334,8 +407,8 @@ void _histEqBGR(Image& image, Image& target) {
   cv::cvtColor(ycrcb, target.image, cv::COLOR_YCrCb2BGR);
 }
 
-void _grabCut(Image& image, Image& mask, Rcpp::NumericVector rect, Image& bgdModel,
-              Image& fgdModel, int iterCount, int mode) {
+void _grabCut(Image &image, Image &mask, Rcpp::NumericVector rect,
+              Image &bgdModel, Image &fgdModel, int iterCount, int mode) {
   cv::Rect r;
   r.x = rect(0) - 1;
   r.y = -(rect(1) + rect(3)) + image.nrow();
@@ -344,41 +417,48 @@ void _grabCut(Image& image, Image& mask, Rcpp::NumericVector rect, Image& bgdMod
 
   if (image.GPU) {
     if (!mask.GPU | !bgdModel.GPU | !fgdModel.GPU)
-      Rcpp::stop("'image' is on the GPU. 'mask', 'bgdModel', and 'fgdModel' should be as well.");
+      Rcpp::stop("'image' is on the GPU. 'mask', 'bgdModel', and 'fgdModel' "
+                 "should be as well.");
 
-    cv::grabCut(image.uimage, mask.uimage, r, bgdModel.uimage, fgdModel.uimage, iterCount, mode);
+    cv::grabCut(image.uimage, mask.uimage, r, bgdModel.uimage, fgdModel.uimage,
+                iterCount, mode);
   } else {
     if (mask.GPU | bgdModel.GPU | fgdModel.GPU)
-      Rcpp::stop("'image' is on the CPU. 'mask', 'bgdModel', and 'fgdModel' should be as well.");
+      Rcpp::stop("'image' is on the CPU. 'mask', 'bgdModel', and 'fgdModel' "
+                 "should be as well.");
 
-    cv::grabCut(image.image, mask.image, r, bgdModel.image, fgdModel.image, iterCount, mode);
+    cv::grabCut(image.image, mask.image, r, bgdModel.image, fgdModel.image,
+                iterCount, mode);
   }
 }
 
-void _vconcat(Image& image1, Image& image2, Image& target) {
+void _vconcat(Image &image1, Image &image2, Image &target) {
   cv::vconcat(image1.image, image2.image, target.image);
 }
 
-void _hconcat(Image& image1, Image& image2, Image& target) {
+void _hconcat(Image &image1, Image &image2, Image &target) {
   cv::hconcat(image1.image, image2.image, target.image);
 }
 
-void _reduce(Image& image, int dim, int rtype, Image& target) {
+void _reduce(Image &image, int dim, int rtype, Image &target) {
   if (image.GPU) {
     if (target.GPU)
-      return cv::reduce(image.uimage, target.uimage, dim, rtype, target.uimage.depth());
+      return cv::reduce(image.uimage, target.uimage, dim, rtype,
+                        target.uimage.depth());
 
-    return cv::reduce(image.uimage, target.image, dim, rtype, target.image.depth());
+    return cv::reduce(image.uimage, target.image, dim, rtype,
+                      target.image.depth());
   }
 
   if (target.GPU)
-    return cv::reduce(image.image, target.uimage, dim, rtype, target.uimage.depth());
+    return cv::reduce(image.image, target.uimage, dim, rtype,
+                      target.uimage.depth());
 
   cv::reduce(image.image, target.image, dim, rtype, target.image.depth());
 }
 
-void _CLAHE(Image& image, double clipLimit, Rcpp::IntegerVector nTiles,
-            Image& target) {
+void _CLAHE(Image &image, double clipLimit, Rcpp::IntegerVector nTiles,
+            Image &target) {
   cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
   clahe->setClipLimit(clipLimit);
   clahe->setTilesGridSize(cv::Size(nTiles[0], nTiles[1]));
