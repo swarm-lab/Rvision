@@ -487,3 +487,15 @@ RCPP_MODULE(methods_Calib3d) {
     _["map2"], _["interpolation"], _["borderMode"], _["borderColor"],
     _["target"]), "");
 }
+#include "dnn.h"
+RCPP_EXPOSED_CLASS(Net)
+RCPP_MODULE(class_Net) {
+
+  Rcpp::class_<Net>("Net")
+    .constructor<std::string, std::string, std::string>()
+    .method("empty", &Net::empty)
+    .method("getLayerNames", &Net::getLayerNames)
+    .method("setInput", &Net::setInput)
+    .method("forward", &Net::forward)
+  ;
+}
