@@ -32,6 +32,7 @@ RcppExport SEXP _rcpp_module_boot_methods_Feature();
 RcppExport SEXP _rcpp_module_boot_methods_Autothresh();
 RcppExport SEXP _rcpp_module_boot_methods_Ximgproc();
 RcppExport SEXP _rcpp_module_boot_methods_Calib3d();
+RcppExport SEXP _rcpp_module_boot_class_Net();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_class_Image", (DL_FUNC) &_rcpp_module_boot_class_Image, 0},
@@ -54,6 +55,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_methods_Autothresh", (DL_FUNC) &_rcpp_module_boot_methods_Autothresh, 0},
     {"_rcpp_module_boot_methods_Ximgproc", (DL_FUNC) &_rcpp_module_boot_methods_Ximgproc, 0},
     {"_rcpp_module_boot_methods_Calib3d", (DL_FUNC) &_rcpp_module_boot_methods_Calib3d, 0},
+    {"_rcpp_module_boot_class_Net", (DL_FUNC) &_rcpp_module_boot_class_Net, 0},
     {NULL, NULL, 0}
 };
 
